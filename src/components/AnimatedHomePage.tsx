@@ -85,7 +85,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ duration: 0.5 }}
       >
                                       <motion.h1
-                 className="mb-8 text-black dark:text-white font-playfair"
+                 className="mb-8 text-black dark:text-white font-playfair italic"
                  style={{ fontSize: '24px', lineHeight: '1.2' }}
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}

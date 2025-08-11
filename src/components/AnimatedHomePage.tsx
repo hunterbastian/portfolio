@@ -35,15 +35,15 @@ const experience = [
 ]
 
 const skills = [
-  { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300' },
-  { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300' },
-  { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300' },
-  { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300' },
-  { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300' },
-  { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300' },
-  { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300' },
-  { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300' },
-  { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300' }
+  { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-purple-500' },
+  { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-pink-500' },
+  { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-500' },
+  { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-500' },
+  { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-500' },
+  { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-cyan-500' },
+  { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-gray-500' },
+  { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-500' },
+  { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-500' }
 ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
@@ -328,7 +328,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 whileHover={{ scale: 1.05 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2`}
               >
-                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                <div className={`w-1.5 h-1.5 ${skill.dotColor} rounded-full`}></div>
                 {skill.icon}
                 {skill.name}
               </motion.span>
@@ -344,7 +344,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 whileHover={{ scale: 1.05 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2`}
               >
-                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                <div className={`w-1.5 h-1.5 ${skill.dotColor} rounded-full`}></div>
                 {skill.icon}
                 {skill.name}
               </motion.span>

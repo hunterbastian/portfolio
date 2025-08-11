@@ -34,17 +34,50 @@ const experience = [
   }
 ]
 
-const skills = [
-  { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-purple-300 shadow-sm shadow-purple-200', orbColor: '#C4A5E7', hoverRotation: -8 },
-  { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-pink-300 shadow-sm shadow-pink-200', orbColor: '#F7A8C4', hoverRotation: 6 },
-  { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-300 shadow-sm shadow-orange-200', orbColor: '#FFB366', hoverRotation: -4 },
-  { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-300 shadow-sm shadow-yellow-200', orbColor: '#FFD93D', hoverRotation: 9 },
-  { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-300 shadow-sm shadow-blue-200', orbColor: '#93C5FD', hoverRotation: -7 },
-  { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-cyan-300 shadow-sm shadow-cyan-200', orbColor: '#67E8F9', hoverRotation: 5 },
-  { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-gray-300 shadow-sm shadow-gray-200', orbColor: '#D1D5DB', hoverRotation: -6 },
-  { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-300 shadow-sm shadow-red-200', orbColor: '#FCA5A5', hoverRotation: 8 },
-  { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-300 shadow-sm shadow-indigo-200', orbColor: '#A5B4FC', hoverRotation: -5 }
-]
+  const skills = [
+    { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-purple-300 shadow-sm shadow-purple-200', orbColor: '#C4A5E7', hoverRotation: -8 },
+    { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-pink-300 shadow-sm shadow-pink-200', orbColor: '#F7A8C4', hoverRotation: 6 },
+    { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-300 shadow-sm shadow-orange-200', orbColor: '#FFB366', hoverRotation: -4 },
+    { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-300 shadow-sm shadow-yellow-200', orbColor: '#FFD93D', hoverRotation: 9 },
+    { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-300 shadow-sm shadow-blue-200', orbColor: '#93C5FD', hoverRotation: -7 },
+    { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-cyan-300 shadow-sm shadow-cyan-200', orbColor: '#67E8F9', hoverRotation: 5 },
+    { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-gray-300 shadow-sm shadow-gray-200', orbColor: '#D1D5DB', hoverRotation: -6 },
+    { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-300 shadow-sm shadow-red-200', orbColor: '#FCA5A5', hoverRotation: 8 },
+    { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-300 shadow-sm shadow-indigo-200', orbColor: '#A5B4FC', hoverRotation: -5 }
+  ]
+
+  const creatingProjects = [
+    {
+      name: 'PlatSupply',
+      description: 'Online digital product marketplace. Wallpapers, presets and courses.',
+      link: '#'
+    },
+    {
+      name: 'The Manual',
+      description: 'A monthly newsletter sharing stories, experiences and links to interesting things. I share stuff I don\'t share anywhere else.',
+      link: '#'
+    },
+    {
+      name: 'YouTube / Tech',
+      description: 'Uploading videos covering premium tech, design and lifestyle.',
+      link: '#'
+    },
+    {
+      name: 'YouTube / Business & Finance',
+      description: 'Uploading videos covering business and finance related topics.',
+      link: '#'
+    },
+    {
+      name: 'Link Lowdown',
+      description: 'Finding and sharing the most interesting things across the internet.',
+      link: '#'
+    },
+    {
+      name: 'Video Creator Course',
+      description: 'Teaching and sharing all of the knowledge I\'ve learned from over a decade of making videos.',
+      link: '#'
+    }
+  ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
@@ -405,6 +438,67 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 {skill.icon}
                 {skill.name}
               </motion.span>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Creating Section */}
+      <motion.section
+        id="creating"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.0, duration: 0.5 }}
+        className="py-16"
+      >
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-bold mb-8 font-inter text-left" style={{ fontSize: '26px' }}>Creating</h2>
+          
+          <div className="space-y-8">
+            {creatingProjects.map((project, index) => (
+              <motion.div
+                key={project.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.1 + index * 0.1, duration: 0.3 }}
+                className="group"
+              >
+                <motion.a
+                  href={project.link}
+                  className="block"
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="font-bold text-gray-900 dark:text-white text-lg">
+                          {project.name}
+                        </h3>
+                        <motion.svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300"
+                          whileHover={{ rotate: 45 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <line x1="7" y1="17" x2="17" y2="7"></line>
+                          <polyline points="7,7 17,7 17,17"></polyline>
+                        </motion.svg>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {project.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.a>
+              </motion.div>
             ))}
           </div>
         </div>

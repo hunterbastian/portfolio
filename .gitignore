@@ -23,7 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local env files
+.env
 .env*.local
+.env.production
+.env.development
 
 # Vercel
 .vercel
@@ -38,3 +41,11 @@ next-env.d.ts
 
 # OS
 Thumbs.db
+
+# Security
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer

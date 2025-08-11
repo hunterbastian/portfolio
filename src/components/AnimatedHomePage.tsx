@@ -107,7 +107,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
                {/* Availability Indicator */}
                <motion.div
-                 className="mb-8 max-w-2xl mx-auto"
+                 className="mb-8 max-w-2xl mx-auto flex justify-start"
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.25, duration: 0.5 }}
@@ -135,12 +135,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  </div>
                </motion.div>
 
-                       <motion.div
-                 className="flex flex-col sm:flex-row gap-4 justify-center"
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.3, duration: 0.5 }}
-               >
+                                             <motion.div
+                className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+              >
                  <a
                    href="#projects"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"

@@ -25,7 +25,7 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
   const allCategories = ['all', ...categories]
 
   return (
-    <div className="flex flex-wrap gap-2 mb-8 max-w-2xl mx-auto">
+    <div className="flex flex-wrap gap-2 justify-center mb-8">
       {allCategories.map((category) => (
         <motion.button
           key={category}

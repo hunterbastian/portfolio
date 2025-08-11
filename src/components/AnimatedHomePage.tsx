@@ -184,7 +184,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ delay: 0.4, duration: 0.5 }}
       >
                        <motion.div
-                 className="text-center mb-12"
+                 className="text-left mb-12"
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.5, duration: 0.5 }}

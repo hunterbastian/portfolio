@@ -278,8 +278,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
              >
                <h2 className="font-bold mb-4 font-inter" style={{ fontSize: '26px' }}>Collaborations</h2>
         
-        {/* LinkedIn Button */}
-        <div className="mb-8">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="https://linkedin.com/in/hunterbastian"
             target="_blank"
@@ -288,9 +287,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           >
             LinkedIn
           </a>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
                            <a
                    href="mailto:hello@hunterbastian.com"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"

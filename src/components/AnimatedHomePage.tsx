@@ -203,7 +203,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       transition={{ delay: 0.5, duration: 0.5 }}
       className="py-16"
     >
-                     <h2 className="font-bold mb-4 font-inter text-center" style={{ fontSize: '26px' }}>Experience</h2>
+      <div className="max-w-2xl mx-auto">
+        <h2 className="font-bold mb-4 font-inter text-left" style={{ fontSize: '26px' }}>Experience</h2>
+      </div>
       <div className="space-y-6 max-w-2xl mx-auto">
         {experience.map((job, index) => {
           const isExpanded = expandedJobs.has(index)

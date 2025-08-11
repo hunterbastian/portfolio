@@ -327,7 +327,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2`}
               >
-                <div className={`w-1.5 h-1.5 ${skill.dotColor} rounded-full`}></div>
+                <div className={`w-2 h-2 ${skill.dotColor} rounded-full relative`} style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent 70%)`,
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                  border: '0.5px solid rgba(255, 255, 255, 0.2)'
+                }}></div>
                 {skill.icon}
                 {skill.name}
               </motion.span>
@@ -346,7 +350,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2`}
               >
-                <div className={`w-1.5 h-1.5 ${skill.dotColor} rounded-full`}></div>
+                <div className={`w-2 h-2 ${skill.dotColor} rounded-full relative`} style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent 70%)`,
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
+                  border: '0.5px solid rgba(255, 255, 255, 0.2)'
+                }}></div>
                 {skill.icon}
                 {skill.name}
               </motion.span>

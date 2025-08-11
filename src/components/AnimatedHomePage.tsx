@@ -35,15 +35,15 @@ const experience = [
 ]
 
 const skills = [
-  { name: 'UX Design', icon: null, color: 'text-purple-600' },
-  { name: 'UI Design', icon: null, color: 'text-pink-600' },
-  { name: 'HTML', icon: null, color: 'text-orange-600' },
-  { name: 'JavaScript', icon: null, color: 'text-yellow-600' },
-  { name: 'CSS', icon: null, color: 'text-blue-600' },
-  { name: 'React', icon: null, color: 'text-cyan-600' },
-  { name: 'Next.js', icon: null, color: 'text-gray-600' },
-  { name: 'Figma', icon: null, color: 'text-red-600' },
-  { name: 'Framer', icon: null, color: 'text-indigo-600' }
+  { name: 'UX Design', icon: null, color: 'text-black dark:text-white' },
+  { name: 'UI Design', icon: null, color: 'text-black dark:text-white' },
+  { name: 'HTML', icon: null, color: 'text-black dark:text-white' },
+  { name: 'JavaScript', icon: null, color: 'text-black dark:text-white' },
+  { name: 'CSS', icon: null, color: 'text-black dark:text-white' },
+  { name: 'React', icon: null, color: 'text-black dark:text-white' },
+  { name: 'Next.js', icon: null, color: 'text-black dark:text-white' },
+  { name: 'Figma', icon: null, color: 'text-black dark:text-white' },
+  { name: 'Framer', icon: null, color: 'text-black dark:text-white' }
 ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {

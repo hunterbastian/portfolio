@@ -35,15 +35,15 @@ const experience = [
 ]
 
 const skills = [
-  { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-purple-500' },
-  { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-pink-500' },
-  { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-500' },
-  { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-500' },
-  { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-500' },
-  { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-cyan-500' },
-  { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-gray-500' },
-  { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-500' },
-  { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-500' }
+  { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-purple-300 shadow-sm shadow-purple-200' },
+  { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-pink-300 shadow-sm shadow-pink-200' },
+  { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-300 shadow-sm shadow-orange-200' },
+  { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-300 shadow-sm shadow-yellow-200' },
+  { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-300 shadow-sm shadow-blue-200' },
+  { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-cyan-300 shadow-sm shadow-cyan-200' },
+  { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-gray-300 shadow-sm shadow-gray-200' },
+  { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-300 shadow-sm shadow-red-200' },
+  { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-300 shadow-sm shadow-indigo-200' }
 ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {

@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #F8F8F8;
+  --foreground: #171717;
+  --background-rgb: 248, 248, 248;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --background-rgb: 10, 10, 10;
+  }
+  
+  .card {
+    background: #111111;
+  }
+  
+  .primary {
+    background: #ffffff;
+    color: #000000;
+  }
+  
+  .secondary {
+    background: #262626;
+    color: #ededed;
+  }
+  
+  .muted {
+    background: #262626;
+    color: #a3a3a3;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+  position: relative;
+  min-height: 100vh;
+}
+
+
+
+
+
+
+
+/* Hide gradients in experience section */
+.experience-section {
+  position: relative;
+  z-index: 1;
+  border-radius: 8px;
+}
+
+.experience-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--background);
+  border-radius: 8px;
+  z-index: -1;
+}
+
+
+
+
+
+.footer-gradient > * {
+  position: relative;
+  z-index: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+  .footer-gradient {
+    background: linear-gradient(
+      135deg,
+      #2a2a2a 0%,
+      #3a2f2a 20%,
+      #4a3a2f 40%,
+      #5a453a 60%,
+      #6a5045 80%,
+      #7a5b50 100%
+    );
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(229 231 235);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(156 163 175);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(107 114 128);
+}
+
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-track {
+    background: rgb(31 41 55);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(75 85 99);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(107 114 128);
+  }
+}

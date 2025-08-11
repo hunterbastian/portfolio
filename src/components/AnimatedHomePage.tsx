@@ -35,15 +35,15 @@ const experience = [
 ]
 
 const skills = [
-  { name: 'UX Design', icon: null, color: 'bg-purple-100 text-purple-700 border-purple-200' },
-  { name: 'UI Design', icon: null, color: 'bg-pink-100 text-pink-700 border-pink-200' },
-  { name: 'HTML', icon: null, color: 'bg-orange-100 text-orange-700 border-orange-200' },
-  { name: 'JavaScript', icon: null, color: 'bg-yellow-100 text-yellow-700 border-yellow-200' },
-  { name: 'CSS', icon: null, color: 'bg-blue-100 text-blue-700 border-blue-200' },
-  { name: 'React', icon: null, color: 'bg-cyan-100 text-cyan-700 border-cyan-200' },
-  { name: 'Next.js', icon: null, color: 'bg-gray-100 text-gray-700 border-gray-200' },
-  { name: 'Figma', icon: null, color: 'bg-red-100 text-red-700 border-red-200' },
-  { name: 'Framer', icon: null, color: 'bg-indigo-100 text-indigo-700 border-indigo-200' }
+  { name: 'UX Design', icon: null, color: 'bg-purple-50 text-purple-600 border-purple-100' },
+  { name: 'UI Design', icon: null, color: 'bg-pink-50 text-pink-600 border-pink-100' },
+  { name: 'HTML', icon: null, color: 'bg-orange-50 text-orange-600 border-orange-100' },
+  { name: 'JavaScript', icon: null, color: 'bg-yellow-50 text-yellow-600 border-yellow-100' },
+  { name: 'CSS', icon: null, color: 'bg-blue-50 text-blue-600 border-blue-100' },
+  { name: 'React', icon: null, color: 'bg-cyan-50 text-cyan-600 border-cyan-100' },
+  { name: 'Next.js', icon: null, color: 'bg-gray-50 text-gray-600 border-gray-100' },
+  { name: 'Figma', icon: null, color: 'bg-red-50 text-red-600 border-red-100' },
+  { name: 'Framer', icon: null, color: 'bg-indigo-50 text-indigo-600 border-indigo-100' }
 ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {

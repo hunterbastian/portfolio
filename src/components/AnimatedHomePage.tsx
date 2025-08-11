@@ -327,7 +327,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
-                 background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`
+                 background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
+                 border: `1px solid ${skill.orbColor}20`
                }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{
@@ -355,7 +356,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
-                 background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`
+                 background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
+                 border: `1px solid ${skill.orbColor}20`
                }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{

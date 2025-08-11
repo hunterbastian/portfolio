@@ -5,6 +5,14 @@ import { Project, ProjectFrontmatter } from '@/types/project'
 
 const projectsDirectory = path.join(process.cwd(), 'content/projects')
 
+// Security: Validate slug to prevent path traversal attacks
+function validateSlug(slug: string): boolean {
+  // Only allow alphanumeric characters, hyphens, and underscores
+  // This prevents path traversal attacks like ../../../etc/passwd
+  const slugRegex = /^[a-zA-Z0-9_-]+$/
+  return slugRegex.test(slug) && slug.length > 0 && slug.length <= 100
+}
+
 export function getAllProjects(): Project[] {
   if (!fs.existsSync(projectsDirectory)) {
     return []
@@ -31,7 +39,23 @@ export function getAllProjects(): Project[] {
 
 export function getProjectBySlug(slug: string): Project | null {
   try {
+    // Security: Validate slug to prevent path traversal attacks
+    if (!validateSlug(slug)) {
+      console.warn(`Invalid slug attempted: ${slug}`)
+      return null
+    }
+
     const fullPath = path.join(projectsDirectory, `${slug}.mdx`)
+    
+    // Security: Additional check to ensure the resolved path is within projectsDirectory
+    const resolvedPath = path.resolve(fullPath)
+    const resolvedProjectsDir = path.resolve(projectsDirectory)
+    
+    if (!resolvedPath.startsWith(resolvedProjectsDir)) {
+      console.warn(`Path traversal attempt detected: ${slug}`)
+      return null
+    }
+
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(fileContents)
 

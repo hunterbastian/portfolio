@@ -349,7 +349,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                transition={{ delay: 0.9, duration: 0.5 }}
                className="py-16"
              >
-        <h2 className="font-bold mb-8 font-inter text-center" style={{ fontSize: '26px' }}>Tech Stack</h2>
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-bold mb-8 font-inter text-left" style={{ fontSize: '26px' }}>Tech Stack</h2>
+        </div>
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between gap-3 mb-3">
             {skills.slice(0, 5).map((skill, index) => (

@@ -325,26 +325,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   scale: 1.05, 
                   rotate: skill.hoverRotation
                 }}
-                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative overflow-hidden`}
+                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
-                 background: `linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 40%)`,
-                 backdropFilter: 'blur(10px)',
-                 border: '1px solid rgba(255, 255, 255, 0.1)'
+                 background: `rgba(255, 255, 255, 0.05)`,
+                 border: '1px solid rgba(255, 255, 255, 0.08)'
                }}
               >
-                <div className="w-3 h-3 rounded-full relative" style={{
-                  background: `
-                    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.3) 30%, ${skill.orbColor} 60%),
-                    linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent 70%)
-                  `,
+                <div className="w-2.5 h-2.5 rounded-full relative" style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
                   boxShadow: `
-                    0 4px 20px rgba(0, 0, 0, 0.3),
-                    0 2px 8px rgba(0, 0, 0, 0.2),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.6),
-                    inset 0 -1px 2px rgba(0, 0, 0, 0.1),
-                    0 0 0 1px rgba(255, 255, 255, 0.3)
-                  `,
-                  filter: 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2))'
+                    0 2px 6px rgba(0, 0, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                  `
                 }}></div>
                 {skill.icon}
                 {skill.name}
@@ -362,26 +354,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   scale: 1.05, 
                   rotate: skill.hoverRotation
                 }}
-                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative overflow-hidden`}
+                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
-                 background: `linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 40%)`,
-                 backdropFilter: 'blur(10px)',
-                 border: '1px solid rgba(255, 255, 255, 0.1)'
+                 background: `rgba(255, 255, 255, 0.05)`,
+                 border: '1px solid rgba(255, 255, 255, 0.08)'
                }}
               >
-                <div className="w-3 h-3 rounded-full relative" style={{
-                  background: `
-                    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.3) 30%, ${skill.orbColor} 60%),
-                    linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent 70%)
-                  `,
+                <div className="w-2.5 h-2.5 rounded-full relative" style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
                   boxShadow: `
-                    0 4px 20px rgba(0, 0, 0, 0.3),
-                    0 2px 8px rgba(0, 0, 0, 0.2),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.6),
-                    inset 0 -1px 2px rgba(0, 0, 0, 0.1),
-                    0 0 0 1px rgba(255, 255, 255, 0.3)
-                  `,
-                  filter: 'drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2))'
+                    0 2px 6px rgba(0, 0, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                  `
                 }}></div>
                 {skill.icon}
                 {skill.name}

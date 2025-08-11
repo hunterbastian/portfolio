@@ -129,7 +129,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                      ></motion.div>
                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full relative z-20"></div>
                    </div>
-                   <span className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                   <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
                      Accepting clients
                    </span>
                  </div>

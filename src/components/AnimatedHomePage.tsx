@@ -354,11 +354,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + index * 0.1, duration: 0.3 }}
-                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
-               style={{
-                 background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                 border: `1px solid ${skill.orbColor}20`
-               }}
+                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
+                style={{
+                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
+                  border: `1px solid ${skill.orbColor}20`,
+                  fontSize: '10px'
+                }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{
                   background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
@@ -379,11 +380,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + (index + 5) * 0.1, duration: 0.3 }}
-                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
-               style={{
-                 background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                 border: `1px solid ${skill.orbColor}20`
-               }}
+                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
+                style={{
+                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
+                  border: `1px solid ${skill.orbColor}20`,
+                  fontSize: '10px'
+                }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{
                   background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,

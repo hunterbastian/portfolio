@@ -91,7 +91,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.1, duration: 0.5 }}
                >
-                 I'm Hunter Bastian, <span className="text-gray-600">Interaction Designer</span>
+                 I'm Hunter Bastian, <span className="text-gray-600">an Interaction Designer</span>
                </motion.h1>
                
                <motion.div

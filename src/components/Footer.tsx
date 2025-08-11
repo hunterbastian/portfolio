@@ -1,9 +1,8 @@
 export default function Footer() {
   return (
     <footer 
-      className="border-t footer-gradient relative"
+      className="border-t bg-background relative"
       style={{
-        background: 'linear-gradient(135deg, #F0F8FF 0%, #F3FAFE 25%, #F6FCFE 50%, #F9F8FE 75%, #FCF4FE 100%)',
         zIndex: 20
       }}
     >

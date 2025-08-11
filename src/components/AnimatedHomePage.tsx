@@ -184,12 +184,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ delay: 0.4, duration: 0.5 }}
       >
                        <motion.div
-                 className="text-left mb-12"
+                 className="mb-12 max-w-2xl mx-auto"
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.5, duration: 0.5 }}
                >
-                 <h2 className="font-bold mb-4 font-inter" style={{ fontSize: '26px' }}>Projects</h2>
+                 <h2 className="font-bold mb-4 font-inter text-left" style={{ fontSize: '26px' }}>Projects</h2>
                </motion.div>
 
               {children}

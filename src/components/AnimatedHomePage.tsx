@@ -35,15 +35,15 @@ const experience = [
 ]
 
 const skills = [
-  { name: 'UX Design', icon: null, color: 'text-black dark:text-white' },
-  { name: 'UI Design', icon: null, color: 'text-black dark:text-white' },
-  { name: 'HTML', icon: null, color: 'text-black dark:text-white' },
-  { name: 'JavaScript', icon: null, color: 'text-black dark:text-white' },
-  { name: 'CSS', icon: null, color: 'text-black dark:text-white' },
-  { name: 'React', icon: null, color: 'text-black dark:text-white' },
-  { name: 'Next.js', icon: null, color: 'text-black dark:text-white' },
-  { name: 'Figma', icon: null, color: 'text-black dark:text-white' },
-  { name: 'Framer', icon: null, color: 'text-black dark:text-white' }
+  { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300' },
+  { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300' },
+  { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300' },
+  { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300' },
+  { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300' },
+  { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300' },
+  { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300' },
+  { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300' },
+  { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300' }
 ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {

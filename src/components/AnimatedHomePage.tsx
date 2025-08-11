@@ -284,20 +284,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             href="https://linkedin.com/in/hunterbastian"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            style={{ 
-              backgroundColor: '#E3F2FD', 
-              color: '#0A66C2',
-              border: '1px solid #BBDEFB'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#D1E7FF'
-              e.target.style.borderColor = '#90CAF9'
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#E3F2FD'
-              e.target.style.borderColor = '#BBDEFB'
-            }}
+            className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-[#E3F2FD] text-[#0A66C2] border border-[#BBDEFB] hover:bg-[#D1E7FF] hover:border-[#90CAF9]"
           >
             LinkedIn
           </a>

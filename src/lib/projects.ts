@@ -40,7 +40,19 @@ export function getProjectBySlug(slug: string): Project | null {
       frontmatter: data as ProjectFrontmatter,
       content,
     }
-  } catch {
+  } catch (error) {
+    // Log the error for debugging purposes
+    console.error(`Error loading project ${slug}:`, error)
+    
+    // In production, you might want to send this to an error tracking service
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Full error details:', {
+        slug,
+        path: path.join(projectsDirectory, `${slug}.mdx`),
+        error: error instanceof Error ? error.message : 'Unknown error'
+      })
+    }
+    
     return null
   }
 }

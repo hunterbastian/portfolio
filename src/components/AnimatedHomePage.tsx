@@ -384,22 +384,19 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                transition={{ duration: 4, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
+                 '--skill-color': skill.orbColor,
                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
                  border: `1px solid ${skill.orbColor}20`,
                  position: 'relative',
                  overflow: 'hidden',
                  transition: 'all 4s cubic-bezier(0.4, 0, 0.2, 1)',
                  transitionDelay: '0.2s'
-               }}
+               } as React.CSSProperties}
                onMouseEnter={(e) => {
-                 e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}45, ${skill.orbColor}25, transparent)`;
-                 e.currentTarget.style.boxShadow = `0 0 30px ${skill.orbColor}40, 0 0 60px ${skill.orbColor}20, inset 0 1px 0 rgba(255, 255, 255, 0.4)`;
-                 e.currentTarget.style.filter = 'brightness(1.1)';
+                 e.currentTarget.classList.add('tech-hover');
                }}
                onMouseLeave={(e) => {
-                 e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`;
-                 e.currentTarget.style.boxShadow = 'none';
-                 e.currentTarget.style.filter = 'none';
+                 e.currentTarget.classList.remove('tech-hover');
                }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{
@@ -427,22 +424,19 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                transition={{ duration: 4, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
+                 '--skill-color': skill.orbColor,
                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
                  border: `1px solid ${skill.orbColor}20`,
                  position: 'relative',
                  overflow: 'hidden',
                  transition: 'all 4s cubic-bezier(0.4, 0, 0.2, 1)',
                  transitionDelay: '0.2s'
-               }}
+               } as React.CSSProperties}
                onMouseEnter={(e) => {
-                 e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}45, ${skill.orbColor}25, transparent)`;
-                 e.currentTarget.style.boxShadow = `0 0 30px ${skill.orbColor}40, 0 0 60px ${skill.orbColor}20, inset 0 1px 0 rgba(255, 255, 255, 0.4)`;
-                 e.currentTarget.style.filter = 'brightness(1.1)';
+                 e.currentTarget.classList.add('tech-hover');
                }}
                onMouseLeave={(e) => {
-                 e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`;
-                 e.currentTarget.style.boxShadow = 'none';
-                 e.currentTarget.style.filter = 'none';
+                 e.currentTarget.classList.remove('tech-hover');
                }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{

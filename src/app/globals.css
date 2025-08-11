@@ -132,3 +132,12 @@ body {
     background: rgb(107 114 128);
   }
 }
+
+/* Tech stack hover effects */
+.tech-hover {
+  filter: brightness(1.1) !important;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--skill-color) 45%, transparent), color-mix(in srgb, var(--skill-color) 25%, transparent), transparent) !important;
+  box-shadow: 0 0 30px color-mix(in srgb, var(--skill-color) 40%, transparent), 
+              0 0 60px color-mix(in srgb, var(--skill-color) 20%, transparent), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}

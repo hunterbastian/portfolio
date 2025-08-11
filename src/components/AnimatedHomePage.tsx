@@ -321,14 +321,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + index * 0.1, duration: 0.3 }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  rotate: skill.hoverRotation
-                }}
+                               whileHover={{ 
+                 scale: 1.08, 
+                 rotate: skill.hoverRotation
+               }}
+               transition={{ duration: 0.2, ease: "easeOut" }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                 border: `1px solid ${skill.orbColor}20`
+                 border: `1px solid ${skill.orbColor}20`,
+                 position: 'relative',
+                 overflow: 'hidden'
+               }}
+               onMouseEnter={(e) => {
+                 e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}45, ${skill.orbColor}25, transparent)`;
+                 e.currentTarget.style.boxShadow = `0 4px 20px ${skill.orbColor}30, inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+               }}
+               onMouseLeave={(e) => {
+                 e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`;
+                 e.currentTarget.style.boxShadow = 'none';
                }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{
@@ -350,14 +361,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + (index + 5) * 0.1, duration: 0.3 }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  rotate: skill.hoverRotation
-                }}
+                               whileHover={{ 
+                 scale: 1.08, 
+                 rotate: skill.hoverRotation
+               }}
+               transition={{ duration: 0.2, ease: "easeOut" }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                 border: `1px solid ${skill.orbColor}20`
+                 border: `1px solid ${skill.orbColor}20`,
+                 position: 'relative',
+                 overflow: 'hidden'
+               }}
+               onMouseEnter={(e) => {
+                 e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}45, ${skill.orbColor}25, transparent)`;
+                 e.currentTarget.style.boxShadow = `0 4px 20px ${skill.orbColor}30, inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+               }}
+               onMouseLeave={(e) => {
+                 e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`;
+                 e.currentTarget.style.boxShadow = 'none';
                }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{

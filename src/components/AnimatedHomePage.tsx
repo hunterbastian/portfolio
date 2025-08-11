@@ -289,7 +289,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  <h2 className="font-bold mb-4 font-inter text-left" style={{ fontSize: '26px' }}>Collaborations</h2>
                </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row gap-4 justify-start">
           <motion.a
             href="https://linkedin.com/in/hunterbastian"
             target="_blank"
@@ -338,6 +339,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           >
             View Resume
           </a>
+          </div>
         </div>
       </motion.section>
 

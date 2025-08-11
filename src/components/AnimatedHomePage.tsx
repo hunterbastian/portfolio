@@ -112,7 +112,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.25, duration: 0.5 }}
                >
-                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-full shadow-md shadow-green-100/30 dark:shadow-green-900/15">
+                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-full shadow-lg shadow-green-100/40 dark:shadow-green-900/25">
                    <div className="relative flex items-center justify-center">
                      <motion.div 
                        className="absolute w-1.5 h-1.5 bg-green-400 rounded-full z-0"

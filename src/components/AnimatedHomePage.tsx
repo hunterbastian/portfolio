@@ -121,7 +121,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                          opacity: [0.6, 0.2, 0, 0, 0]
                        }}
                        transition={{
-                         duration: 2,
+                         duration: 1.5,
                          repeat: Infinity,
                          ease: [0.4, 0.0, 0.2, 1],
                          repeatDelay: 0

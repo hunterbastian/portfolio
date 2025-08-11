@@ -112,7 +112,28 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.25, duration: 0.5 }}
                >
-                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-full shadow-lg shadow-green-100/40 dark:shadow-green-900/25">
+                 <motion.div 
+                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full relative overflow-hidden"
+                   style={{
+                     background: `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`,
+                     border: `1px solid #BBF7D0`,
+                     position: 'relative',
+                     overflow: 'hidden'
+                   }}
+                   whileHover={{ 
+                     scale: 1.08, 
+                     rotate: 2
+                   }}
+                   transition={{ duration: 0.2, ease: "easeOut" }}
+                   onMouseEnter={(e) => {
+                     e.currentTarget.style.background = `linear-gradient(90deg, #DCFCE7, #BBF7D0, transparent)`;
+                     e.currentTarget.style.boxShadow = `0 4px 20px rgba(34, 197, 94, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+                   }}
+                   onMouseLeave={(e) => {
+                     e.currentTarget.style.background = `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`;
+                     e.currentTarget.style.boxShadow = '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)';
+                   }}
+                 >
                    <div className="relative flex items-center justify-center">
                      <motion.div 
                        className="absolute w-1.5 h-1.5 bg-green-400 rounded-full z-0"
@@ -132,7 +153,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                    <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
                      Accepting clients
                    </span>
-                 </div>
+                 </motion.div>
                </motion.div>
 
                       <motion.div

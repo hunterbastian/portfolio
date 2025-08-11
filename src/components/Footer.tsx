@@ -13,7 +13,7 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex items-center space-x-4">
-          <p className="font-garamond" style={{ fontSize: '11px', color: '#2D3748', fontWeight: '500' }}>
+          <p style={{ fontSize: '11px', color: '#2D3748', fontWeight: '500' }}>
             CRAFTED BY HUNTER BASTIAN
           </p>
         </div>

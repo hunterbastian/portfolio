@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono, Inter } from 'next/font/google'
+import { JetBrains_Mono, Inter, EB_Garamond } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -25,6 +25,12 @@ const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
   style: ['italic'],
   variable: '--font-playfair'
+})
+
+const ebGaramond = EB_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-garamond'
 })
 
 export const metadata: Metadata = {
@@ -54,7 +60,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable}`}>
+                   <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable}`}>
                        <div className="min-h-screen flex flex-col">
                  <Header />
                  <main className="flex-1">{children}</main>

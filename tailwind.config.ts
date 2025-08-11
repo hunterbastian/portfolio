@@ -13,6 +13,7 @@ const config: Config = {
         'sans': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
         'inter': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
         'playfair': ['var(--font-playfair)', 'Playfair Display', 'serif'],
+        'garamond': ['var(--font-garamond)', 'EB Garamond', 'serif'],
       },
       colors: {
         background: 'var(--background)',

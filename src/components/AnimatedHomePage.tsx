@@ -358,7 +358,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 style={{
                   background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
                   border: `1px solid ${skill.orbColor}20`,
-                  fontSize: '10px'
+                  fontSize: '12px'
                 }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{
@@ -384,7 +384,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 style={{
                   background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
                   border: `1px solid ${skill.orbColor}20`,
-                  fontSize: '10px'
+                  fontSize: '12px'
                 }}
               >
                 <div className="w-2.5 h-2.5 rounded-full relative" style={{

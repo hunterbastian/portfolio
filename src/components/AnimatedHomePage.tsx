@@ -366,18 +366,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             onClick={scrollToTop}
             className="fixed bottom-8 right-8 z-50 group"
             style={{
-              background: '#E74C3C',
+              background: '#EC7063',
               backdropFilter: 'blur(40px) saturate(180%)',
               WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-              border: '1.5px solid rgba(231, 76, 60, 0.6)',
+              border: '1.5px solid rgba(236, 112, 99, 0.6)',
               borderRadius: '20px',
               padding: '14px',
-              boxShadow: '0 12px 48px rgba(231, 76, 60, 0.25), 0 3px 12px rgba(231, 76, 60, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(231, 76, 60, 0.2)',
+              boxShadow: '0 12px 48px rgba(236, 112, 99, 0.25), 0 3px 12px rgba(236, 112, 99, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(236, 112, 99, 0.2)',
             }}
             whileHover={{ 
               scale: 1.08,
-              background: '#EC7063',
-              boxShadow: '0 16px 60px rgba(231, 76, 60, 0.35), 0 4px 16px rgba(231, 76, 60, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 0 1px rgba(231, 76, 60, 0.3)',
+              background: '#F1948A',
+              boxShadow: '0 16px 60px rgba(236, 112, 99, 0.35), 0 4px 16px rgba(236, 112, 99, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 0 1px rgba(236, 112, 99, 0.3)',
             }}
             whileTap={{ scale: 0.92 }}
           >

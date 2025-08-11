@@ -19,7 +19,7 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
     } else {
       params.set('category', category)
     }
-    router.push(`/?${params.toString()}`)
+    router.replace(`/?${params.toString()}`, { scroll: false })
   }
 
   const allCategories = ['all', ...categories]

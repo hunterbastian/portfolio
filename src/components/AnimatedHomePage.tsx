@@ -35,15 +35,15 @@ const experience = [
 ]
 
 const skills = [
-  { name: 'UX Design', icon: null },
-  { name: 'UI Design', icon: null },
-  { name: 'HTML', icon: null },
-  { name: 'JavaScript', icon: null },
-  { name: 'CSS', icon: null },
-  { name: 'React', icon: null },
-  { name: 'Next.js', icon: null },
-  { name: 'Figma', icon: null },
-  { name: 'Framer', icon: null }
+  { name: 'UX Design', icon: null, color: 'bg-purple-100 text-purple-700 border-purple-200' },
+  { name: 'UI Design', icon: null, color: 'bg-pink-100 text-pink-700 border-pink-200' },
+  { name: 'HTML', icon: null, color: 'bg-orange-100 text-orange-700 border-orange-200' },
+  { name: 'JavaScript', icon: null, color: 'bg-yellow-100 text-yellow-700 border-yellow-200' },
+  { name: 'CSS', icon: null, color: 'bg-blue-100 text-blue-700 border-blue-200' },
+  { name: 'React', icon: null, color: 'bg-cyan-100 text-cyan-700 border-cyan-200' },
+  { name: 'Next.js', icon: null, color: 'bg-gray-100 text-gray-700 border-gray-200' },
+  { name: 'Figma', icon: null, color: 'bg-red-100 text-red-700 border-red-200' },
+  { name: 'Framer', icon: null, color: 'bg-indigo-100 text-indigo-700 border-indigo-200' }
 ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
@@ -326,7 +326,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + index * 0.1, duration: 0.3 }}
                 whileHover={{ scale: 1.05 }}
-                className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium flex items-center"
+                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center border`}
               >
                 {skill.icon}
                 {skill.name}
@@ -341,7 +341,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + (index + 5) * 0.1, duration: 0.3 }}
                 whileHover={{ scale: 1.05 }}
-                className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium flex items-center"
+                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center border`}
               >
                 {skill.icon}
                 {skill.name}

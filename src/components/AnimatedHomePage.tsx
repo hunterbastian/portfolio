@@ -125,7 +125,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                      rotate: 2
                    }}
                    whileTap={{ scale: 0.95 }}
-                   transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                   transition={{ duration: 4, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
                    onClick={() => {
                      const collaborationsSection = document.getElementById('collaborations');
                      if (collaborationsSection) {
@@ -381,14 +381,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                                whileHover={{ 
                  scale: 1.05
                }}
-               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+               transition={{ duration: 4, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
                  border: `1px solid ${skill.orbColor}20`,
                  position: 'relative',
                  overflow: 'hidden',
-                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                 transition: 'all 4s cubic-bezier(0.4, 0, 0.2, 1)',
+                 transitionDelay: '0.2s'
                }}
                onMouseEnter={(e) => {
                  e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}45, ${skill.orbColor}25, transparent)`;
@@ -423,14 +424,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                                whileHover={{ 
                  scale: 1.05
                }}
-               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+               transition={{ duration: 4, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 relative`}
                style={{
                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
                  border: `1px solid ${skill.orbColor}20`,
                  position: 'relative',
                  overflow: 'hidden',
-                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                 transition: 'all 4s cubic-bezier(0.4, 0, 0.2, 1)',
+                 transitionDelay: '0.2s'
                }}
                onMouseEnter={(e) => {
                  e.currentTarget.style.background = `linear-gradient(90deg, ${skill.orbColor}45, ${skill.orbColor}25, transparent)`;

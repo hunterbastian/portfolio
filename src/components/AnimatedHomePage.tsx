@@ -326,8 +326,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + index * 0.1, duration: 0.3 }}
                 whileHover={{ scale: 1.05 }}
-                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center`}
+                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2`}
               >
+                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
                 {skill.icon}
                 {skill.name}
               </motion.span>
@@ -341,8 +342,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + (index + 5) * 0.1, duration: 0.3 }}
                 whileHover={{ scale: 1.05 }}
-                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center`}
+                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2`}
               >
+                <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
                 {skill.icon}
                 {skill.name}
               </motion.span>

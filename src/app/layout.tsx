@@ -23,7 +23,8 @@ import { Playfair_Display } from 'next/font/google'
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  style: ['italic'],
+  style: ['normal', 'italic'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-playfair'
 })
 

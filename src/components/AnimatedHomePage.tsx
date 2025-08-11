@@ -279,14 +279,33 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                <h2 className="font-bold mb-4 font-inter" style={{ fontSize: '26px' }}>Collaborations</h2>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
+          <motion.a
             href="https://linkedin.com/in/hunterbastian"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-[#E3F2FD] text-[#0A66C2] border border-[#BBDEFB] hover:bg-[#D1E7FF] hover:border-[#90CAF9]"
+            className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-[#0A66C2] relative overflow-hidden"
+            style={{
+              background: `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`,
+              border: `1px solid #BBDEFB`,
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            whileHover={{ 
+              scale: 1.08, 
+              rotate: -3
+            }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = `linear-gradient(90deg, #BBDEFB, #90CAF9, transparent)`;
+              e.currentTarget.style.boxShadow = `0 4px 20px rgba(13, 102, 194, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`;
+              e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+            }}
           >
             LinkedIn
-          </a>
+          </motion.a>
                            <a
                    href="mailto:hello@hunterbastian.com"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"

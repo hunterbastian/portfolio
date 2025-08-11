@@ -35,15 +35,15 @@ const experience = [
 ]
 
 const skills = [
-  { name: 'UX Design', icon: null, color: 'bg-purple-50 text-purple-600 border-purple-100' },
-  { name: 'UI Design', icon: null, color: 'bg-pink-50 text-pink-600 border-pink-100' },
-  { name: 'HTML', icon: null, color: 'bg-orange-50 text-orange-600 border-orange-100' },
-  { name: 'JavaScript', icon: null, color: 'bg-yellow-50 text-yellow-600 border-yellow-100' },
-  { name: 'CSS', icon: null, color: 'bg-blue-50 text-blue-600 border-blue-100' },
-  { name: 'React', icon: null, color: 'bg-cyan-50 text-cyan-600 border-cyan-100' },
-  { name: 'Next.js', icon: null, color: 'bg-gray-50 text-gray-600 border-gray-100' },
-  { name: 'Figma', icon: null, color: 'bg-red-50 text-red-600 border-red-100' },
-  { name: 'Framer', icon: null, color: 'bg-indigo-50 text-indigo-600 border-indigo-100' }
+  { name: 'UX Design', icon: null, color: 'text-purple-600' },
+  { name: 'UI Design', icon: null, color: 'text-pink-600' },
+  { name: 'HTML', icon: null, color: 'text-orange-600' },
+  { name: 'JavaScript', icon: null, color: 'text-yellow-600' },
+  { name: 'CSS', icon: null, color: 'text-blue-600' },
+  { name: 'React', icon: null, color: 'text-cyan-600' },
+  { name: 'Next.js', icon: null, color: 'text-gray-600' },
+  { name: 'Figma', icon: null, color: 'text-red-600' },
+  { name: 'Framer', icon: null, color: 'text-indigo-600' }
 ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
@@ -326,7 +326,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + index * 0.1, duration: 0.3 }}
                 whileHover={{ scale: 1.05 }}
-                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center border`}
+                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center`}
               >
                 {skill.icon}
                 {skill.name}
@@ -341,7 +341,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.0 + (index + 5) * 0.1, duration: 0.3 }}
                 whileHover={{ scale: 1.05 }}
-                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center border`}
+                className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center`}
               >
                 {skill.icon}
                 {skill.name}

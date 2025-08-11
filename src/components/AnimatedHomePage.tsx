@@ -112,37 +112,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.25, duration: 0.5 }}
                >
-                 <motion.div 
-                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full relative overflow-hidden cursor-pointer"
-                   style={{
-                     background: `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`,
-                     border: `1px solid #BBF7D0`,
-                     position: 'relative',
-                     overflow: 'hidden'
-                   }}
-                   whileHover={{ 
-                     scale: 1.08, 
-                     rotate: 2
-                   }}
-                   whileTap={{ scale: 0.95 }}
-                   transition={{ duration: 4, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
-                   onClick={() => {
-                     const collaborationsSection = document.getElementById('collaborations');
-                     if (collaborationsSection) {
-                       collaborationsSection.scrollIntoView({ 
-                         behavior: 'smooth',
-                         block: 'start'
-                       });
-                     }
-                   }}
-                   onMouseEnter={(e) => {
-                     e.currentTarget.style.background = `linear-gradient(90deg, #DCFCE7, #BBF7D0, transparent)`;
-                     e.currentTarget.style.boxShadow = `0 2px 8px rgba(34, 197, 94, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)`;
-                   }}
-                   onMouseLeave={(e) => {
-                     e.currentTarget.style.background = `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`;
-                     e.currentTarget.style.boxShadow = '0 1px 3px 0 rgb(0 0 0 / 0.1)';
-                   }}
+                                 <div 
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
+                  style={{
+                    background: `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`,
+                    border: `1px solid #BBF7D0`
+                  }}
                  >
                    <div className="relative flex items-center justify-center">
                      <motion.div 
@@ -160,10 +135,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                      ></motion.div>
                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full relative z-20"></div>
                    </div>
-                   <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
-                     Accepting clients
-                   </span>
-                 </motion.div>
+                                     <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
+                    Accepting clients
+                  </span>
+                </div>
                </motion.div>
 
                       <motion.div

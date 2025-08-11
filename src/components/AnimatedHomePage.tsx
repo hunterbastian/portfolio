@@ -101,7 +101,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  transition={{ delay: 0.2, duration: 0.5 }}
                >
                  <p className="text-gray-600 dark:text-gray-300 text-justify" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-                   Digital designer and student pursuing a B.S. in Web Design and Development at Utah Valley University with an emphasis in Interaction Design. Currently working as a Video Producer at Catapult. Passionate about creating digital experiences and leading creative teams. Experience designing for mobile and web platforms in Figma, as well as front-end development in React and Next.js.
+                   Digital designer and student pursuing a B.S. in Web Design and Development at Utah Valley University with an emphasis in <strong>Interaction Design</strong>. Currently working as a Video Producer at Catapult. Passionate about creating digital experiences and leading creative teams. Experience designing for mobile and web platforms in Figma, as well as front-end development in React and Next.js.
                  </p>
                </motion.div>
 

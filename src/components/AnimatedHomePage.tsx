@@ -35,15 +35,15 @@ const experience = [
 ]
 
 const skills = [
-  { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-purple-300 shadow-sm shadow-purple-200', hoverRotation: -8 },
-  { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-pink-300 shadow-sm shadow-pink-200', hoverRotation: 6 },
-  { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-300 shadow-sm shadow-orange-200', hoverRotation: -4 },
-  { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-300 shadow-sm shadow-yellow-200', hoverRotation: 9 },
-  { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-300 shadow-sm shadow-blue-200', hoverRotation: -7 },
-  { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-cyan-300 shadow-sm shadow-cyan-200', hoverRotation: 5 },
-  { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-gray-300 shadow-sm shadow-gray-200', hoverRotation: -6 },
-  { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-300 shadow-sm shadow-red-200', hoverRotation: 8 },
-  { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-300 shadow-sm shadow-indigo-200', hoverRotation: -5 }
+  { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-purple-300 shadow-sm shadow-purple-200', orbColor: '#C4A5E7', hoverRotation: -8 },
+  { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-pink-300 shadow-sm shadow-pink-200', orbColor: '#F7A8C4', hoverRotation: 6 },
+  { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-300 shadow-sm shadow-orange-200', orbColor: '#FFB366', hoverRotation: -4 },
+  { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-300 shadow-sm shadow-yellow-200', orbColor: '#FFD93D', hoverRotation: 9 },
+  { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-300 shadow-sm shadow-blue-200', orbColor: '#93C5FD', hoverRotation: -7 },
+  { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-cyan-300 shadow-sm shadow-cyan-200', orbColor: '#67E8F9', hoverRotation: 5 },
+  { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-gray-300 shadow-sm shadow-gray-200', orbColor: '#D1D5DB', hoverRotation: -6 },
+  { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-300 shadow-sm shadow-red-200', orbColor: '#FCA5A5', hoverRotation: 8 },
+  { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-300 shadow-sm shadow-indigo-200', orbColor: '#A5B4FC', hoverRotation: -5 }
 ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
@@ -327,8 +327,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2`}
               >
-                <div className={`w-2 h-2 ${skill.dotColor} rounded-full relative`} style={{
-                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent 70%)`,
+                <div className="w-2 h-2 rounded-full relative" style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), ${skill.orbColor} 70%)`,
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
                   border: '0.5px solid rgba(255, 255, 255, 0.2)'
                 }}></div>
@@ -350,8 +350,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
                 className={`${skill.color} px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2`}
               >
-                <div className={`w-2 h-2 ${skill.dotColor} rounded-full relative`} style={{
-                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent 70%)`,
+                <div className="w-2 h-2 rounded-full relative" style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), ${skill.orbColor} 70%)`,
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
                   border: '0.5px solid rgba(255, 255, 255, 0.2)'
                 }}></div>

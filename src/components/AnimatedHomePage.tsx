@@ -196,7 +196,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       transition={{ delay: 0.5, duration: 0.5 }}
       className="py-16"
     >
-                     <h2 className="mb-8 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 'bold', fontSize: '26px' }}>Experience</h2>
+                     <h2 className="font-bold mb-4 font-inter text-center" style={{ fontSize: '26px' }}>Experience</h2>
       <div className="space-y-6 max-w-2xl mx-auto">
         {experience.map((job, index) => {
           const isExpanded = expandedJobs.has(index)
@@ -276,7 +276,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                transition={{ delay: 0.8, duration: 0.5 }}
                className="py-16 text-center"
              >
-               <h2 className="mb-6" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 'bold', fontSize: '26px' }}>Collaborations</h2>
+               <h2 className="font-bold mb-4 font-inter" style={{ fontSize: '26px' }}>Collaborations</h2>
         
         {/* LinkedIn Button */}
         <div className="mb-8">
@@ -316,7 +316,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                transition={{ delay: 0.9, duration: 0.5 }}
                className="py-16"
              >
-        <h2 className="mb-8 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 'bold', fontSize: '26px' }}>Tech Stack</h2>
+        <h2 className="font-bold mb-4 font-inter text-center" style={{ fontSize: '26px' }}>Tech Stack</h2>
         <div className="flex flex-wrap gap-3 justify-center max-w-2xl mx-auto">
           {skills.map((skill, index) => (
             <motion.span

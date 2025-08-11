@@ -116,7 +116,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
                   style={{
                     background: `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`,
-                    border: `1px solid #BBF7D0`
+                    border: `1px solid #BBF7D0`,
+                    boxShadow: `0 2px 8px rgba(34, 197, 94, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2)`
                   }}
                  >
                    <div className="relative flex items-center justify-center">

@@ -48,33 +48,18 @@ const experience = [
 
   const creatingProjects = [
     {
-      name: 'PlatSupply',
-      description: 'Online digital product marketplace. Wallpapers, presets and courses.',
+      name: 'Project Name',
+      description: 'Brief description of the project.',
       link: '#'
     },
     {
-      name: 'The Manual',
-      description: 'A monthly newsletter sharing stories, experiences and links to interesting things. I share stuff I don\'t share anywhere else.',
+      name: 'Another Project',
+      description: 'Brief description of another project.',
       link: '#'
     },
     {
-      name: 'YouTube / Tech',
-      description: 'Uploading videos covering premium tech, design and lifestyle.',
-      link: '#'
-    },
-    {
-      name: 'YouTube / Business & Finance',
-      description: 'Uploading videos covering business and finance related topics.',
-      link: '#'
-    },
-    {
-      name: 'Link Lowdown',
-      description: 'Finding and sharing the most interesting things across the internet.',
-      link: '#'
-    },
-    {
-      name: 'Video Creator Course',
-      description: 'Teaching and sharing all of the knowledge I\'ve learned from over a decade of making videos.',
+      name: 'Third Project',
+      description: 'Brief description of the third project.',
       link: '#'
     }
   ]
@@ -444,65 +429,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </motion.section>
 
       {/* Creating Section */}
-      <motion.section
-        id="creating"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.0, duration: 0.5 }}
-        className="py-16"
-      >
+      <section id="creating" className="py-16">
         <div className="max-w-2xl mx-auto">
           <h2 className="font-bold mb-8 font-inter text-left" style={{ fontSize: '26px' }}>Creating</h2>
           
-          <div className="space-y-8">
+          <div className="space-y-6">
             {creatingProjects.map((project, index) => (
-              <motion.div
-                key={project.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.1 + index * 0.1, duration: 0.3 }}
-                className="group"
-              >
-                <motion.a
-                  href={project.link}
-                  className="block"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="font-bold text-gray-900 dark:text-white text-lg">
-                          {project.name}
-                        </h3>
-                        <motion.svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300"
-                          whileHover={{ rotate: 45 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <line x1="7" y1="17" x2="17" y2="7"></line>
-                          <polyline points="7,7 17,7 17,17"></polyline>
-                        </motion.svg>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.a>
-              </motion.div>
+              <div key={project.name}>
+                <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">
+                  {project.name}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {project.description}
+                </p>
+              </div>
             ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Vision Pro Style Back to Top Button */}
       <AnimatePresence>

@@ -333,7 +333,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               </motion.span>
             ))}
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-12">
             {skills.slice(5).map((skill, index) => (
               <motion.span
                 key={skill.name}

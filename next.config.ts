@@ -3,9 +3,6 @@ import createMDX from '@next/mdx'
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  experimental: {
-    mdxRs: true,
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,

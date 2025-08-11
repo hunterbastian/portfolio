@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
-const navigation: { name: string; href: string }[] = []
+const navigation: Array<{ name: string; href: string }> = []
 
 export default function Header() {
   const pathname = usePathname()

@@ -31,12 +31,33 @@ export function getAllProjects(): Project[] {
 
 export function getProjectBySlug(slug: string): Project | null {
   try {
-    const fullPath = path.join(projectsDirectory, `${slug}.mdx`)
+    // Validate slug to prevent path traversal attacks
+    if (!slug || typeof slug !== 'string') {
+      return null
+    }
+    
+    // Remove any directory traversal patterns and normalize the slug
+    const normalizedSlug = slug.replace(/[^a-zA-Z0-9\-_]/g, '')
+    
+    // Ensure the slug only contains safe characters
+    if (normalizedSlug !== slug || slug.includes('..') || slug.includes('/') || slug.includes('\\')) {
+      console.warn(`Invalid slug detected: ${slug}`)
+      return null
+    }
+    
+    const fullPath = path.join(projectsDirectory, `${normalizedSlug}.mdx`)
+    
+    // Ensure the resolved path is within the projects directory
+    if (!fullPath.startsWith(projectsDirectory)) {
+      console.warn(`Path traversal attempt detected: ${slug}`)
+      return null
+    }
+    
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(fileContents)
 
     return {
-      slug,
+      slug: normalizedSlug,
       frontmatter: data as ProjectFrontmatter,
       content,
     }

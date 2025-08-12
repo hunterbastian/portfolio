@@ -166,7 +166,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <div className="flex flex-col sm:flex-row justify-start gap-4">
+                <div className="flex flex-col sm:flex-row justify-between gap-4">
                  <a
                    href="#projects"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
@@ -180,10 +180,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                    Experience
                  </a>
                  <a
-                   href="#collaborations"
+                   href="#contact"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                  >
-                   Collaborations
+                   Contact
                  </a>
                  <a
                    href="#tech-stack"
@@ -215,16 +215,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               {children}
     </motion.section>
 
-    {/* Collaborations Section */}
+    {/* Contact Section */}
     <motion.section
-      id="collaborations"
+      id="contact"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6, duration: 0.5 }}
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-4" style={{ fontSize: '24px', fontWeight: '400' }}>Collaborations</h2>
+        <h2 className="font-playfair italic text-left mb-4" style={{ fontSize: '24px', fontWeight: '400' }}>Contact</h2>
       </div>
 
       <div className="max-w-2xl mx-auto">
@@ -452,6 +452,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Other stuff Section */}
+      <motion.section 
+        id="other-stuff" 
+        className="py-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.0, duration: 0.5 }}
+      >
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Other stuff</h2>
+          
+          <div className="space-y-6">
+            <p className="text-gray-600 dark:text-gray-300" style={{ lineHeight: '1.6' }}>
+              Creative agency making high quality, professional content for companies and brands. Primarily for their websites and socials.
+            </p>
           </div>
         </div>
       </motion.section>

@@ -207,7 +207,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.5, duration: 0.5 }}
                >
-                 <h2 className="font-bold mb-4 font-inter text-left" style={{ fontSize: '26px' }}>Projects</h2>
+                 <h2 className="font-playfair italic text-left" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
                </motion.div>
 
               {children}
@@ -222,7 +222,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-bold mb-4 font-inter text-left" style={{ fontSize: '26px' }}>Collaborations</h2>
+        <h2 className="font-playfair italic text-left mb-4" style={{ fontSize: '24px', fontWeight: '400' }}>Collaborations</h2>
       </div>
 
       <div className="max-w-2xl mx-auto">
@@ -288,7 +288,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-bold mb-4 font-inter text-left" style={{ fontSize: '26px' }}>Experience</h2>
+        <h2 className="font-playfair italic text-left mb-4" style={{ fontSize: '24px', fontWeight: '400' }}>Experience</h2>
       </div>
       <div className="space-y-6 max-w-2xl mx-auto">
         {experience.map((job, index) => {
@@ -370,7 +370,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                className="py-16"
              >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-bold mb-8 font-inter text-left" style={{ fontSize: '26px' }}>Tech Stack</h2>
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Tech Stack</h2>
         </div>
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between gap-3 mb-3">
@@ -437,7 +437,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ delay: 0.9, duration: 0.5 }}
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-bold mb-8 font-inter text-left" style={{ fontSize: '26px' }}>Creating</h2>
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Creating</h2>
           
           <div className="space-y-6">
             {creatingProjects.map((project, index) => (

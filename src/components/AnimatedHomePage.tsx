@@ -213,12 +213,78 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               {children}
     </motion.section>
 
+    {/* Collaborations Section */}
+    <motion.section
+      id="collaborations"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.6, duration: 0.5 }}
+      className="py-16"
+    >
+      <div className="max-w-2xl mx-auto">
+        <h2 className="font-bold mb-4 font-inter text-left" style={{ fontSize: '26px' }}>Collaborations</h2>
+      </div>
+
+      <div className="max-w-2xl mx-auto">
+        <div className="flex flex-col sm:flex-row gap-4 justify-start">
+          <motion.a
+            href="https://linkedin.com/in/hunterbastian"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-[#0A66C2] relative overflow-hidden"
+            style={{
+              background: `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`,
+              border: `1px solid #BBDEFB`,
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            whileHover={{ 
+              scale: 1.08, 
+              rotate: -3
+            }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = `linear-gradient(90deg, #BBDEFB, #90CAF9, transparent)`;
+              e.currentTarget.style.boxShadow = `0 4px 20px rgba(13, 102, 194, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`;
+              e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+            }}
+          >
+            <svg 
+              className="w-4 h-4 mr-2" 
+              viewBox="0 0 24 24" 
+              fill="currentColor"
+            >
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </motion.a>
+          <a
+            href="mailto:hello@hunterbastian.com"
+            className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            Contact
+          </a>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            Resume
+          </a>
+        </div>
+      </div>
+    </motion.section>
+
     {/* Experience Section */}
     <motion.section
       id="experience"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.5, duration: 0.5 }}
+      transition={{ delay: 0.7, duration: 0.5 }}
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
@@ -295,78 +361,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </div>
     </motion.section>
 
-                 {/* Collaborations Section */}
-             <motion.section
-               id="collaborations"
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: 0.8, duration: 0.5 }}
-               className="py-16"
-             >
-               <div className="max-w-2xl mx-auto">
-                 <h2 className="font-bold mb-4 font-inter text-left" style={{ fontSize: '26px' }}>Collaborations</h2>
-               </div>
-        
-        <div className="max-w-2xl mx-auto">
-          <div className="flex flex-col sm:flex-row gap-4 justify-start">
-          <motion.a
-            href="https://linkedin.com/in/hunterbastian"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-[#0A66C2] relative overflow-hidden"
-            style={{
-              background: `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`,
-              border: `1px solid #BBDEFB`,
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-            whileHover={{ 
-              scale: 1.08, 
-              rotate: -3
-            }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = `linear-gradient(90deg, #BBDEFB, #90CAF9, transparent)`;
-              e.currentTarget.style.boxShadow = `0 4px 20px rgba(13, 102, 194, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`;
-              e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
-            }}
-          >
-            <svg 
-              className="w-4 h-4 mr-2" 
-              viewBox="0 0 24 24" 
-              fill="currentColor"
-            >
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-            LinkedIn
-          </motion.a>
-                           <a
-                   href="mailto:hello@hunterbastian.com"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                 >
-                   Contact
-                 </a>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          >
-            View Resume
-          </a>
-          </div>
-        </div>
-      </motion.section>
-
                    {/* Tech Stack Section */}
              <motion.section
                id="tech-stack"
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: 0.9, duration: 0.5 }}
+               transition={{ delay: 0.8, duration: 0.5 }}
                className="py-16"
              >
         <div className="max-w-2xl mx-auto">
@@ -429,7 +429,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </motion.section>
 
       {/* Creating Section */}
-      <section id="creating" className="py-16">
+      <motion.section 
+        id="creating" 
+        className="py-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9, duration: 0.5 }}
+      >
         <div className="max-w-2xl mx-auto">
           <h2 className="font-bold mb-8 font-inter text-left" style={{ fontSize: '26px' }}>Creating</h2>
           
@@ -446,7 +452,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Vision Pro Style Back to Top Button */}
       <AnimatePresence>

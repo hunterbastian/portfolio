@@ -161,7 +161,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                </motion.div>
 
                       <motion.div
-                className="flex flex-col sm:flex-row justify-between gap-4 max-w-2xl mx-auto"
+                className="flex flex-col sm:flex-row justify-start gap-4 max-w-2xl mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}

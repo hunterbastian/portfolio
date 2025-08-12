@@ -161,11 +161,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                </motion.div>
 
                       <motion.div
-                className="flex flex-col sm:flex-row justify-start gap-4 max-w-2xl mx-auto"
+                className="max-w-2xl mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
+                <div className="flex flex-col sm:flex-row justify-start gap-4">
                  <a
                    href="#projects"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
@@ -190,6 +191,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  >
                    Stack
                  </a>
+                </div>
                </motion.div>
       </motion.section>
 

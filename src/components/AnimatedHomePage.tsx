@@ -370,7 +370,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                className="py-16"
              >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Tech Stack</h2>
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Stack</h2>
         </div>
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between gap-3 mb-3">

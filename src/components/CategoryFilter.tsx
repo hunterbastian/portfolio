@@ -24,23 +24,5 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
 
   const allCategories = ['all', ...categories]
 
-  return (
-    <div className="flex flex-wrap gap-2 justify-center mb-8">
-      {allCategories.map((category) => (
-        <motion.button
-          key={category}
-          onClick={() => handleCategoryChange(category)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-            activeCategory === category
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-          }`}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {category === 'all' ? 'All Projects' : category}
-        </motion.button>
-      ))}
-    </div>
-  )
+  return null
 }

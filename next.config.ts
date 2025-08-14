@@ -7,6 +7,13 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    minimumCacheTTL: 31536000, // 1 year
+  },
+  experimental: {
+    optimizePackageImports: ['framer-motion'],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 }
 

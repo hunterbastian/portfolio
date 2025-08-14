@@ -45,6 +45,35 @@ body {
   font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
   position: relative;
   min-height: 100vh;
+  /* Reduce layout shift */
+  contain: layout style paint;
+  /* Optimize for performance */
+  will-change: scroll-position;
+}
+
+/* Critical above-the-fold styles */
+.hero-section {
+  min-height: 50vh;
+  contain: layout style paint;
+}
+
+/* Optimize animations */
+.motion-element {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+/* Preload skeleton styles */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 

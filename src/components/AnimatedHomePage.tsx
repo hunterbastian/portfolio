@@ -3,6 +3,9 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ReactNode, useState, useEffect } from 'react'
 
+// Lazy load components that are below the fold
+// Note: Sections are now implemented directly in this component
+
 interface AnimatedHomePageProps {
   children: ReactNode
 }
@@ -97,40 +100,39 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     <div className="container mx-auto max-w-6xl px-4 py-8">
       {/* Hero Section */}
       <motion.section 
-        className="text-center py-16"
+        className="text-center py-16 hero-section"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
                 <motion.h1
-                 className="mb-8 text-black dark:text-white font-playfair italic max-w-2xl mx-auto text-left"
+                 className="mb-2 text-black dark:text-white font-playfair italic max-w-2xl mx-auto text-left motion-element"
                  style={{ fontSize: '34px', lineHeight: '1.2' }}
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.1, duration: 0.5 }}
                >
-                 I'm Hunter Bastian, <span className="text-gray-600">an Interaction Designer</span>
+                 Hunter Bastian
                </motion.h1>
                
-               <motion.div
-                 className="mb-8 max-w-2xl mx-auto text-left"
+               <motion.h2
+                 className="mb-8 text-gray-600 dark:text-gray-400 font-playfair italic max-w-2xl mx-auto text-left"
+                 style={{ fontSize: '20px', lineHeight: '1.2' }}
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.2, duration: 0.5 }}
+                 transition={{ delay: 0.12, duration: 0.5 }}
                >
-                 <p className="text-gray-600 dark:text-gray-300 text-justify" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-                   Digital designer and student pursuing a B.S. in Web Design and Development at Utah Valley University with an emphasis in <strong style={{ color: '#EC7063' }}>Interaction Design</strong>. Currently in the position of Utah Valley University <strong style={{ color: '#EC7063' }}>Digital Media Department Representative</strong>. Passionate about creating digital experiences and leading creative teams. Experience designing for mobile and web platforms in Figma, as well as front-end development in React and Next.js.
-                 </p>
-                              </motion.div>
-
+                 Interaction Designer
+               </motion.h2>
+               
                {/* Availability Indicator */}
                <motion.div
                  className="mb-8 max-w-2xl mx-auto flex justify-start"
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.25, duration: 0.5 }}
+                 transition={{ delay: 0.15, duration: 0.5 }}
                >
-                                 <div 
+                 <div 
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
                   style={{
                     background: `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`,
@@ -154,11 +156,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                      ></motion.div>
                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full relative z-20"></div>
                    </div>
-                                     <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
+                   <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
                     Accepting clients
                   </span>
                 </div>
                </motion.div>
+               
+               <motion.div
+                 className="mb-8 max-w-2xl mx-auto text-left"
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.2, duration: 0.5 }}
+               >
+                 <p className="text-gray-600 dark:text-gray-300 text-justify" style={{ fontSize: '15px', lineHeight: '1.6' }}>
+                   Digital designer and student pursuing a B.S. in Web Design and Development at Utah Valley University with an emphasis in <strong>Interaction Design</strong>. Currently in the position of Utah Valley University <strong>Digital Media Department Representative</strong>. Passionate about creating digital experiences and leading creative teams. Experience designing for mobile and web platforms in Figma, as well as front-end development in React and Next.js.
+                 </p>
+                              </motion.div>
+
+
 
                       <motion.div
                 className="max-w-2xl mx-auto"
@@ -191,9 +206,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  >
                    Stack
                  </a>
+                 <a
+                   href="#everyday-tech"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                 >
+                   Everyday Tech
+                 </a>
                 </div>
                </motion.div>
-      </motion.section>
+            </motion.section>
 
       {/* Projects Section */}
       <motion.section 
@@ -204,82 +225,82 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ delay: 0.4, duration: 0.5 }}
       >
                        <motion.div
-                 className="mb-12 max-w-2xl mx-auto"
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.5, duration: 0.5 }}
-               >
-                 <h2 className="font-playfair italic text-left" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
-               </motion.div>
+                className="mb-12 max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                <h2 className="font-playfair italic text-left" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
+              </motion.div>
 
-              {children}
-    </motion.section>
+             {children}
+   </motion.section>
 
-    {/* Contact Section */}
-    <motion.section
-      id="contact"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6, duration: 0.5 }}
-      className="py-16"
-    >
-      <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-4" style={{ fontSize: '24px', fontWeight: '400' }}>Contact</h2>
-      </div>
+   {/* Contact Section */}
+   <motion.section
+     id="contact"
+     initial={{ opacity: 0, y: 20 }}
+     animate={{ opacity: 1, y: 0 }}
+     transition={{ delay: 0.6, duration: 0.5 }}
+     className="py-16"
+   >
+     <div className="max-w-2xl mx-auto">
+       <h2 className="font-playfair italic text-left mb-4" style={{ fontSize: '24px', fontWeight: '400' }}>Contact</h2>
+     </div>
 
-      <div className="max-w-2xl mx-auto">
-        <div className="flex flex-col sm:flex-row gap-4 justify-start">
-          <motion.a
-            href="https://linkedin.com/in/hunterbastian"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-[#0A66C2] relative overflow-hidden"
-            style={{
-              background: `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`,
-              border: `1px solid #BBDEFB`,
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-            whileHover={{ 
-              scale: 1.08, 
-              rotate: -3
-            }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = `linear-gradient(90deg, #BBDEFB, #90CAF9, transparent)`;
-              e.currentTarget.style.boxShadow = `0 4px 20px rgba(13, 102, 194, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`;
-              e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
-            }}
-          >
-            <svg 
-              className="w-4 h-4 mr-2" 
-              viewBox="0 0 24 24" 
-              fill="currentColor"
-            >
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-            LinkedIn
-          </motion.a>
-          <a
-            href="mailto:hello@hunterbastian.com"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          >
-            Contact
-          </a>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          >
-            Resume
-          </a>
-        </div>
-      </div>
-    </motion.section>
+     <div className="max-w-2xl mx-auto">
+       <div className="flex flex-col sm:flex-row gap-4 justify-start">
+         <motion.a
+           href="https://linkedin.com/in/hunterbastian"
+           target="_blank"
+           rel="noopener noreferrer"
+           className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-[#0A66C2] relative overflow-hidden"
+           style={{
+             background: `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`,
+             border: `1px solid #BBDEFB`,
+             position: 'relative',
+             overflow: 'hidden'
+           }}
+           whileHover={{ 
+             scale: 1.08, 
+             rotate: -3
+           }}
+           transition={{ duration: 0.2, ease: "easeOut" }}
+           onMouseEnter={(e) => {
+             e.currentTarget.style.background = `linear-gradient(90deg, #BBDEFB, #90CAF9, transparent)`;
+             e.currentTarget.style.boxShadow = `0 4px 20px rgba(13, 102, 194, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+           }}
+           onMouseLeave={(e) => {
+             e.currentTarget.style.background = `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`;
+             e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+           }}
+         >
+           <svg 
+             className="w-4 h-4 mr-2" 
+             viewBox="0 0 24 24" 
+             fill="currentColor"
+           >
+             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+           </svg>
+           LinkedIn
+         </motion.a>
+         <a
+           href="mailto:hello@hunterbastian.com"
+           className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+         >
+           Contact
+         </a>
+         <a
+           href="/resume.pdf"
+           target="_blank"
+           rel="noopener noreferrer"
+           className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+         >
+           Resume
+         </a>
+       </div>
+     </div>
+   </motion.section>
 
     {/* Experience Section */}
     <motion.section
@@ -363,73 +384,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </div>
     </motion.section>
 
-                   {/* Tech Stack Section */}
-             <motion.section
-               id="tech-stack"
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: 0.8, duration: 0.5 }}
-               className="py-16"
-             >
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Stack</h2>
-        </div>
-        <div className="max-w-2xl mx-auto">
-          <div className="flex justify-between gap-3 mb-3">
-            {skills.slice(0, 5).map((skill, index) => (
-              <motion.span
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.0 + index * 0.1, duration: 0.3 }}
-                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
-                style={{
-                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                  border: `1px solid ${skill.orbColor}20`,
-                  fontSize: '12px'
-                }}
-              >
-                <div className="w-2.5 h-2.5 rounded-full relative" style={{
-                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
-                  boxShadow: `
-                    0 2px 6px rgba(0, 0, 0, 0.15),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
-                  `
-                }}></div>
-                {skill.icon}
-                {skill.name}
-              </motion.span>
-            ))}
-          </div>
-          <div className="flex gap-12">
-            {skills.slice(5).map((skill, index) => (
-              <motion.span
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.0 + (index + 5) * 0.1, duration: 0.3 }}
-                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
-                style={{
-                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                  border: `1px solid ${skill.orbColor}20`,
-                  fontSize: '12px'
-                }}
-              >
-                <div className="w-2.5 h-2.5 rounded-full relative" style={{
-                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
-                  boxShadow: `
-                    0 2px 6px rgba(0, 0, 0, 0.15),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
-                  `
-                }}></div>
-                {skill.icon}
-                {skill.name}
-              </motion.span>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
       {/* Creating Section */}
       <motion.section 
         id="creating" 
@@ -468,10 +422,159 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Other stuff</h2>
           
           <div className="space-y-6">
-            <p className="text-gray-600 dark:text-gray-300" style={{ lineHeight: '1.6' }}>
+            <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>
               Creative agency making high quality, professional content for companies and brands. Primarily for their websites and socials.
             </p>
           </div>
+        </div>
+      </motion.section>
+
+      {/* Tech Stack Section */}
+      <motion.section
+        id="tech-stack"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.1, duration: 0.5 }}
+        className="py-16"
+      >
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Stack</h2>
+        </div>
+        <div className="max-w-2xl mx-auto">
+          <div className="flex justify-between gap-3 mb-3">
+            {skills.slice(0, 5).map((skill, index) => (
+              <motion.span
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.2 + index * 0.1, duration: 0.3 }}
+                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
+                style={{
+                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
+                  border: `1px solid ${skill.orbColor}20`,
+                  fontSize: '12px'
+                }}
+              >
+                <div className="w-2.5 h-2.5 rounded-full relative" style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
+                  boxShadow: `
+                    0 2px 6px rgba(0, 0, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                  `
+                }}></div>
+                {skill.icon}
+                {skill.name}
+              </motion.span>
+            ))}
+          </div>
+          <div className="flex gap-12">
+            {skills.slice(5).map((skill, index) => (
+              <motion.span
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.2 + (index + 5) * 0.1, duration: 0.3 }}
+                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
+                style={{
+                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
+                  border: `1px solid ${skill.orbColor}20`,
+                  fontSize: '12px'
+                }}
+              >
+                <div className="w-2.5 h-2.5 rounded-full relative" style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
+                  boxShadow: `
+                    0 2px 6px rgba(0, 0, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                  `
+                }}></div>
+                {skill.icon}
+                {skill.name}
+              </motion.span>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Everyday Tech Section */}
+      <motion.section
+        id="everyday-tech"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.3, duration: 0.5 }}
+        className="py-16"
+      >
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Everyday Tech</h2>
+        </div>
+        <div className="max-w-2xl mx-auto">
+          <motion.ul 
+            className="space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.4, duration: 0.5 }}
+          >
+            <motion.li 
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              style={{ fontSize: '15px', lineHeight: '1.6' }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.5, duration: 0.3 }}
+            >
+              <span className="text-gray-400 mt-1">•</span>
+              <span><strong>Phone:</strong> iPhone 15 Pro (Natural Titanium)</span>
+            </motion.li>
+            <motion.li 
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              style={{ fontSize: '15px', lineHeight: '1.6' }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.6, duration: 0.3 }}
+            >
+              <span className="text-gray-400 mt-1">•</span>
+              <span><strong>Laptop:</strong> MacBook Pro 14&quot; (Silver, M4 Pro)</span>
+            </motion.li>
+            <motion.li 
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              style={{ fontSize: '15px', lineHeight: '1.6' }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.7, duration: 0.3 }}
+            >
+              <span className="text-gray-400 mt-1">•</span>
+              <span><strong>Tablet:</strong> iPad Pro M2 (Silver)</span>
+            </motion.li>
+            <motion.li 
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              style={{ fontSize: '15px', lineHeight: '1.6' }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.8, duration: 0.3 }}
+            >
+              <span className="text-gray-400 mt-1">•</span>
+              <span><strong>Watch:</strong> Apple Watch Series 9 (Midnight)</span>
+            </motion.li>
+            <motion.li 
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              style={{ fontSize: '15px', lineHeight: '1.6' }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.9, duration: 0.3 }}
+            >
+              <span className="text-gray-400 mt-1">•</span>
+              <span><strong>Mouse:</strong> Logitech MX Anywhere 3 (Graphite)</span>
+            </motion.li>
+            <motion.li 
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              style={{ fontSize: '15px', lineHeight: '1.6' }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 2.0, duration: 0.3 }}
+            >
+              <span className="text-gray-400 mt-1">•</span>
+              <span><strong>Headphones:</strong> AirPods</span>
+            </motion.li>
+          </motion.ul>
         </div>
       </motion.section>
 

@@ -106,8 +106,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ duration: 0.5 }}
       >
                 <motion.h1
-                 className="mb-2 text-black dark:text-white font-playfair italic max-w-2xl mx-auto text-left motion-element"
-                 style={{ fontSize: '34px', lineHeight: '1.2' }}
+                 className="mb-6 text-black dark:text-white font-playfair italic max-w-2xl mx-auto text-left motion-element"
+                 style={{ fontSize: '40px', lineHeight: '1.2' }}
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.1, duration: 0.5 }}
@@ -115,15 +115,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  Hunter Bastian
                </motion.h1>
                
-               <motion.h2
-                 className="mb-8 text-gray-600 dark:text-gray-400 font-playfair italic max-w-2xl mx-auto text-left"
-                 style={{ fontSize: '20px', lineHeight: '1.2' }}
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.12, duration: 0.5 }}
-               >
-                 Interaction Designer
-               </motion.h2>
+
                
                {/* Availability Indicator */}
                <motion.div
@@ -169,7 +161,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  transition={{ delay: 0.2, duration: 0.5 }}
                >
                  <p className="text-gray-600 dark:text-gray-300 text-justify" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-                   Digital designer and student pursuing a B.S. in Web Design and Development at Utah Valley University with an emphasis in <strong>Interaction Design</strong>. Currently in the position of Utah Valley University <strong>Digital Media Department Representative</strong>. Passionate about creating digital experiences and leading creative teams. Experience designing for mobile and web platforms in Figma, as well as front-end development in React and Next.js.
+                   <strong>Interaction Designer</strong> and student pursuing a B.S. in Web Design and Development at Utah Valley University with an emphasis in <strong>Interaction Design</strong>. Currently in the position of Utah Valley University <strong>Digital Media Department Representative</strong>. Passionate about creating digital experiences and leading creative teams. Experience designing for mobile and web platforms in Figma, as well as front-end development in React and Next.js.
                  </p>
                               </motion.div>
 
@@ -225,12 +217,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ delay: 0.4, duration: 0.5 }}
       >
                        <motion.div
-                className="mb-12 max-w-2xl mx-auto"
+                className="max-w-2xl mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                <h2 className="font-playfair italic text-left" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
+                <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
               </motion.div>
 
              {children}
@@ -245,7 +237,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
      className="py-16"
    >
      <div className="max-w-2xl mx-auto">
-       <h2 className="font-playfair italic text-left mb-4" style={{ fontSize: '24px', fontWeight: '400' }}>Contact</h2>
+       <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Contact</h2>
      </div>
 
      <div className="max-w-2xl mx-auto">
@@ -311,7 +303,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-4" style={{ fontSize: '24px', fontWeight: '400' }}>Experience</h2>
+        <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Experience</h2>
       </div>
       <div className="space-y-6 max-w-2xl mx-auto">
         {experience.map((job, index) => {

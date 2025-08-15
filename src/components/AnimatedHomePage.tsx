@@ -176,64 +176,49 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <div className="flex flex-col sm:flex-row justify-between gap-4">
                  <a
                    href="#projects"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   style={{ fontSize: '11px' }}
                  >
-                   Projects
+                   PROJECTS
                  </a>
                  <a
                    href="#experience"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   style={{ fontSize: '11px' }}
                  >
-                   Experience
+                   EXPERIENCE
                  </a>
                  <a
                    href="#contact"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   style={{ fontSize: '11px' }}
                  >
-                   Contact
+                   CONTACT
                  </a>
                  <a
                    href="#tech-stack"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   style={{ fontSize: '11px' }}
                  >
-                   Stack
+                   STACK
                  </a>
                  <a
                    href="#everyday-tech"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   style={{ fontSize: '11px' }}
                  >
-                   Everyday Tech
+                   EVERYDAY TECH
                  </a>
                 </div>
                </motion.div>
             </motion.section>
-
-      {/* Projects Section */}
-      <motion.section 
-        id="projects" 
-        className="py-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
-      >
-                       <motion.div
-                className="max-w-2xl mx-auto"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              >
-                <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
-              </motion.div>
-
-             {children}
-   </motion.section>
 
    {/* Contact Section */}
    <motion.section
      id="contact"
      initial={{ opacity: 0, y: 20 }}
      animate={{ opacity: 1, y: 0 }}
-     transition={{ delay: 0.6, duration: 0.5 }}
+     transition={{ delay: 0.4, duration: 0.5 }}
      className="py-16"
    >
      <div className="max-w-2xl mx-auto">
@@ -246,12 +231,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
            href="https://linkedin.com/in/hunterbastian"
            target="_blank"
            rel="noopener noreferrer"
-           className="inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-[#0A66C2] relative overflow-hidden"
+           className="inline-flex items-center justify-center rounded-md px-6 py-3 font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-[#0A66C2] relative overflow-hidden"
            style={{
              background: `linear-gradient(90deg, #E3F2FD, #D1E7FF, transparent)`,
              border: `1px solid #BBDEFB`,
              position: 'relative',
-             overflow: 'hidden'
+             overflow: 'hidden',
+             fontSize: '11px'
            }}
            whileHover={{ 
              scale: 1.08, 
@@ -274,24 +260,46 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
            >
              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
            </svg>
-           LinkedIn
+           LINKEDIN
          </motion.a>
          <a
            href="mailto:hello@hunterbastian.com"
-           className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+           className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+           style={{ fontSize: '11px' }}
          >
-           Contact
+           CONTACT
          </a>
          <a
            href="/resume.pdf"
            target="_blank"
            rel="noopener noreferrer"
-           className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+           className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+           style={{ fontSize: '11px' }}
          >
-           Resume
+           DOWNLOAD RESUME
          </a>
        </div>
      </div>
+   </motion.section>
+
+      {/* Projects Section */}
+      <motion.section 
+        id="projects" 
+        className="py-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+      >
+                       <motion.div
+                className="max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
+              </motion.div>
+
+             {children}
    </motion.section>
 
     {/* Experience Section */}
@@ -299,8 +307,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       id="experience"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.7, duration: 0.5 }}
+      transition={{ delay: 0.6, duration: 0.5 }}
       className="py-16"
+      style={{ backgroundColor: '#DEDCDB' }}
     >
       <div className="max-w-2xl mx-auto">
         <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Experience</h2>
@@ -387,104 +396,26 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="max-w-2xl mx-auto">
           <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Creating</h2>
           
-          <div className="space-y-6">
+          <motion.ul 
+            className="space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.0, duration: 0.5 }}
+          >
             {creatingProjects.map((project, index) => (
-              <div key={project.name}>
-                <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">
-                  {project.name}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {project.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Other stuff Section */}
-      <motion.section 
-        id="other-stuff" 
-        className="py-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.0, duration: 0.5 }}
-      >
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Other stuff</h2>
-          
-          <div className="space-y-6">
-            <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-              Creative agency making high quality, professional content for companies and brands. Primarily for their websites and socials.
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Tech Stack Section */}
-      <motion.section
-        id="tech-stack"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.1, duration: 0.5 }}
-        className="py-16"
-      >
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Stack</h2>
-        </div>
-        <div className="max-w-2xl mx-auto">
-          <div className="flex justify-between gap-3 mb-3">
-            {skills.slice(0, 5).map((skill, index) => (
-              <motion.span
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2 + index * 0.1, duration: 0.3 }}
-                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
-                style={{
-                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                  border: `1px solid ${skill.orbColor}20`,
-                  fontSize: '12px'
-                }}
+              <motion.li 
+                key={project.name}
+                className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+                style={{ fontSize: '15px', lineHeight: '1.6' }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.1 + index * 0.1, duration: 0.3 }}
               >
-                <div className="w-2.5 h-2.5 rounded-full relative" style={{
-                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
-                  boxShadow: `
-                    0 2px 6px rgba(0, 0, 0, 0.15),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
-                  `
-                }}></div>
-                {skill.icon}
-                {skill.name}
-              </motion.span>
+                <span className="text-gray-400 mt-1">•</span>
+                <span><strong>{project.name}:</strong> {project.description}</span>
+              </motion.li>
             ))}
-          </div>
-          <div className="flex gap-12">
-            {skills.slice(5).map((skill, index) => (
-              <motion.span
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2 + (index + 5) * 0.1, duration: 0.3 }}
-                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
-                style={{
-                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                  border: `1px solid ${skill.orbColor}20`,
-                  fontSize: '12px'
-                }}
-              >
-                <div className="w-2.5 h-2.5 rounded-full relative" style={{
-                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
-                  boxShadow: `
-                    0 2px 6px rgba(0, 0, 0, 0.15),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
-                  `
-                }}></div>
-                {skill.icon}
-                {skill.name}
-              </motion.span>
-            ))}
-          </div>
+          </motion.ul>
         </div>
       </motion.section>
 
@@ -567,6 +498,92 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <span><strong>Headphones:</strong> AirPods</span>
             </motion.li>
           </motion.ul>
+        </div>
+      </motion.section>
+
+      {/* Other stuff Section */}
+      <motion.section 
+        id="other-stuff" 
+        className="py-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.3, duration: 0.5 }}
+      >
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Other stuff</h2>
+          
+          <div className="space-y-6">
+            <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>
+              Creative agency making high quality, professional content for companies and brands. Primarily for their websites and socials.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Tech Stack Section */}
+      <motion.section
+        id="tech-stack"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.4, duration: 0.5 }}
+        className="py-16"
+      >
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Stack</h2>
+        </div>
+        <div className="max-w-2xl mx-auto">
+          <div className="flex justify-between gap-3 mb-3">
+            {skills.slice(0, 5).map((skill, index) => (
+              <motion.span
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.5 + index * 0.1, duration: 0.3 }}
+                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
+                style={{
+                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
+                  border: `1px solid ${skill.orbColor}20`,
+                  fontSize: '12px'
+                }}
+              >
+                <div className="w-2.5 h-2.5 rounded-full relative" style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
+                  boxShadow: `
+                    0 2px 6px rgba(0, 0, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                  `
+                }}></div>
+                {skill.icon}
+                {skill.name}
+              </motion.span>
+            ))}
+          </div>
+          <div className="flex gap-12">
+            {skills.slice(5).map((skill, index) => (
+              <motion.span
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.5 + (index + 5) * 0.1, duration: 0.3 }}
+                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
+                style={{
+                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
+                  border: `1px solid ${skill.orbColor}20`,
+                  fontSize: '12px'
+                }}
+              >
+                <div className="w-2.5 h-2.5 rounded-full relative" style={{
+                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
+                  boxShadow: `
+                    0 2px 6px rgba(0, 0, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                  `
+                }}></div>
+                {skill.icon}
+                {skill.name}
+              </motion.span>
+            ))}
+          </div>
         </div>
       </motion.section>
 

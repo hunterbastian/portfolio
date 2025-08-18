@@ -455,19 +455,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               transition={{ delay: 1.6, duration: 0.3 }}
             >
               <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Laptop:</strong> MacBook Pro 14&quot; (Silver, M4 Pro)</span>
+              <span><strong>Laptop:</strong> MacBook Air 15&quot; M2 (Starlight)</span>
             </motion.li>
 
-            <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
-              style={{ fontSize: '15px', lineHeight: '1.6' }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.8, duration: 0.3 }}
-            >
-              <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Watch:</strong> Apple Watch Series 9 (Midnight)</span>
-            </motion.li>
+
             <motion.li 
               className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
               style={{ fontSize: '15px', lineHeight: '1.6' }}

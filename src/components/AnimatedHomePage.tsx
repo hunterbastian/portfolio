@@ -209,6 +209,26 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                </motion.div>
             </motion.section>
 
+      {/* Projects Section */}
+      <motion.section 
+        id="projects" 
+        className="py-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+      >
+                       <motion.div
+                className="max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
+              </motion.div>
+
+             {children}
+   </motion.section>
+
    {/* Contact Section */}
    <motion.section
      id="contact"
@@ -276,26 +296,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
          </a>
        </div>
      </div>
-   </motion.section>
-
-      {/* Projects Section */}
-      <motion.section 
-        id="projects" 
-        className="py-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
-      >
-                       <motion.div
-                className="max-w-2xl mx-auto"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-              >
-                <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
-              </motion.div>
-
-             {children}
    </motion.section>
 
     {/* Experience Section */}

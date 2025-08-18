@@ -486,7 +486,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               transition={{ delay: 2.0, duration: 0.3 }}
             >
               <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Headphones:</strong> AirPods</span>
+              <span><strong>Headphones:</strong> AirPods Pro 2</span>
             </motion.li>
           </motion.ul>
         </div>

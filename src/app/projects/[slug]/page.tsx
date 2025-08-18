@@ -62,27 +62,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <h1 className="text-4xl md:text-5xl font-bold mb-8">{frontmatter.title}</h1>
         </div>
 
-        {/* Hero Image/Video */}
+        {/* Hero Image */}
         <div className="aspect-video relative rounded-xl overflow-hidden mb-12">
-          {frontmatter.image.endsWith('.mp4') ? (
-            <video
-              src={frontmatter.image}
-              className="w-full h-full object-cover"
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-          ) : (
-            <Image
-              src={frontmatter.image}
-              alt={frontmatter.title}
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
-            />
-          )}
+          <Image
+            src={frontmatter.image}
+            alt={frontmatter.title}
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
+          />
         </div>
 
         {/* Project Details */}

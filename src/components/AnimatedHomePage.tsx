@@ -506,7 +506,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           
           <div className="space-y-6">
             <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-              Creative agency making high quality, professional content for companies and brands. Primarily for their websites and socials.
+              College student who likes software and hiking. Also likes film photography and mountains.
             </p>
           </div>
         </div>

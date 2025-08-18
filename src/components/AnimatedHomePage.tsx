@@ -52,7 +52,7 @@ const experience = [
   const creatingProjects = [
     {
       name: 'Project on Instagram',
-      description: 'Creative projects and content shared on social media.',
+      description: 'COMING SOON',
       link: '#'
     },
     {

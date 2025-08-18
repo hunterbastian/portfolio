@@ -39,7 +39,7 @@ const components = {
   h1: (props: any) => <h1 className="text-3xl font-bold mb-6" {...props} />,
   h2: (props: any) => <h2 className="text-2xl font-semibold mb-4 mt-8" {...props} />,
   h3: (props: any) => <h3 className="text-xl font-semibold mb-3 mt-6" {...props} />,
-  p: (props: any) => <p className="mb-4 leading-relaxed" {...props} />,
+  p: (props: any) => <p className="mb-4 leading-relaxed text-base" {...props} />,
   ul: (props: any) => <ul className="list-disc list-inside mb-4 space-y-2" {...props} />,
   ol: (props: any) => <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />,
   li: (props: any) => <li className="ml-4" {...props} />,
@@ -162,7 +162,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         )}
 
         {/* MDX Content with fallback */}
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-base dark:prose-invert max-w-none text-base">
           {(() => {
             try {
               return <MDXRemote source={content} components={components} />

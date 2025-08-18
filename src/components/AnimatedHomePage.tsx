@@ -15,7 +15,7 @@ const experience = [
     year: '2024 - Present',
     company: 'Catapult',
     title: 'Video Producer',
-    description: 'Description coming soon.'
+    description: 'Produce and edit marketing videos for Catapult products including banner stands, from planning and filming to post-production in Final Cut Pro. Deliver optimized content for YouTube to support marketing campaigns and ensure alignment with brand standards.'
   },
   {
     year: '2024 - Present',

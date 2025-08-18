@@ -340,7 +340,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6, duration: 0.5 }}
-      className="py-16"
+      className="py-16 rounded-lg"
       style={{ backgroundColor: '#DEDCDB' }}
     >
       <div className="max-w-2xl mx-auto">

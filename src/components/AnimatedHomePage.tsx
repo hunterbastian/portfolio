@@ -61,8 +61,8 @@ const experience = [
       link: '#'
     },
     {
-      name: 'Third Project',
-      description: 'Brief description of the third project.',
+      name: 'Digital Studio',
+      description: 'in the works',
       link: '#'
     }
   ]

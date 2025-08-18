@@ -6,7 +6,7 @@ export interface ProjectFrontmatter {
   image: string
   github?: string
   demo?: string
-  featured: boolean
+  featured?: boolean
   date: string
 }
 

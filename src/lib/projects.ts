@@ -49,7 +49,8 @@ export function getProjectBySlug(slug: string): Project | null {
       console.error('Full error details:', {
         slug,
         path: path.join(projectsDirectory, `${slug}.mdx`),
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : 'No stack trace'
       })
     }
     

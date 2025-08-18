@@ -178,13 +178,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                    PROJECTS
                  </a>
                  <a
-                   href="#experience"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                   style={{ fontSize: '11px' }}
-                 >
-                   EXPERIENCE
-                 </a>
-                 <a
                    href="#contact"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                    style={{ fontSize: '11px' }}
@@ -192,11 +185,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                    CONTACT
                  </a>
                  <a
-                   href="#tech-stack"
+                   href="#experience"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                    style={{ fontSize: '11px' }}
                  >
-                   STACK
+                   EXPERIENCE
+                 </a>
+                 <a
+                   href="#about-me"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   style={{ fontSize: '11px' }}
+                 >
+                   ABOUT ME
+                 </a>
+                 <a
+                   href="#creating"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   style={{ fontSize: '11px' }}
+                 >
+                   CREATING
                  </a>
                  <a
                    href="#everyday-tech"
@@ -204,6 +211,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                    style={{ fontSize: '11px' }}
                  >
                    EVERYDAY TECH
+                 </a>
+                 <a
+                   href="#tech-stack"
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                   style={{ fontSize: '11px' }}
+                 >
+                   STACK
                  </a>
                 </div>
                </motion.div>

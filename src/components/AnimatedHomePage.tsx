@@ -229,20 +229,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
              {children}
    </motion.section>
 
-   {/* Accepting Clients Section */}
-   <motion.section
-     className="py-8"
-     initial={{ opacity: 0, y: 20 }}
-     animate={{ opacity: 1, y: 0 }}
-     transition={{ delay: 0.6, duration: 0.5 }}
-   >
-     <div className="max-w-2xl mx-auto text-center">
-       <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-         Accepting clients
-       </p>
-     </div>
-   </motion.section>
-
    {/* Contact Section */}
    <motion.section
      id="contact"

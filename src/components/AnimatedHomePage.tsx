@@ -476,7 +476,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               transition={{ delay: 1.9, duration: 0.3 }}
             >
               <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Mouse:</strong> Logitech MX Anywhere 3 (Graphite)</span>
+              <span><strong>Mouse:</strong> Apple Trackpad and Logitech G502 Hero</span>
             </motion.li>
             <motion.li 
               className="flex items-start gap-3 text-gray-600 dark:text-gray-300"

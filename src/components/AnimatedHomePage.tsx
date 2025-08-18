@@ -173,49 +173,49 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  <a
                    href="#projects"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                   style={{ fontSize: '11px' }}
+                   style={{ fontSize: '10px' }}
                  >
                    PROJECTS
                  </a>
                  <a
                    href="#contact"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                   style={{ fontSize: '11px' }}
+                   style={{ fontSize: '10px' }}
                  >
                    CONTACT
                  </a>
                  <a
                    href="#experience"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                   style={{ fontSize: '11px' }}
+                   style={{ fontSize: '10px' }}
                  >
                    EXPERIENCE
                  </a>
                  <a
                    href="#about-me"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                   style={{ fontSize: '11px' }}
+                   style={{ fontSize: '10px' }}
                  >
                    ABOUT ME
                  </a>
                  <a
                    href="#creating"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                   style={{ fontSize: '11px' }}
+                   style={{ fontSize: '10px' }}
                  >
                    CREATING
                  </a>
                  <a
                    href="#everyday-tech"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                   style={{ fontSize: '11px' }}
+                   style={{ fontSize: '10px' }}
                  >
                    EVERYDAY TECH
                  </a>
                  <a
                    href="#tech-stack"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                   style={{ fontSize: '11px' }}
+                   style={{ fontSize: '10px' }}
                  >
                    STACK
                  </a>

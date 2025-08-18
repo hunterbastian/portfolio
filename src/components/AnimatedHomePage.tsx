@@ -169,7 +169,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <div className="flex flex-col sm:flex-row justify-between gap-4">
+                <div className="flex flex-col sm:flex-row justify-start gap-4">
                  <a
                    href="#projects"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"

@@ -55,11 +55,7 @@ const experience = [
       description: 'COMING SOON',
       link: '#'
     },
-    {
-      name: 'Future Book Release',
-      description: 'COMING SOON',
-      link: '#'
-    },
+
     {
       name: 'Digital Studio',
       description: 'in the works',

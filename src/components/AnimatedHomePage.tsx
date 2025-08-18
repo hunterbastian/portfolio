@@ -415,16 +415,35 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </motion.section>
 
+      {/* About me Section */}
+      <motion.section 
+        id="about-me" 
+        className="py-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.3, duration: 0.5 }}
+      >
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>About me</h2>
+          
+          <div className="space-y-6">
+            <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>
+              College student who likes software and hiking. Also likes film photography and mountains.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
       {/* Everyday Tech Section */}
       <motion.section
         id="everyday-tech"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.3, duration: 0.5 }}
+        transition={{ delay: 1.4, duration: 0.5 }}
         className="py-16"
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Everyday Tech</h2>
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Everyday tech</h2>
         </div>
         <div className="max-w-2xl mx-auto">
           <motion.ul 
@@ -489,31 +508,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </motion.section>
 
-      {/* About me Section */}
-      <motion.section 
-        id="about-me" 
-        className="py-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.3, duration: 0.5 }}
-      >
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>About me</h2>
-          
-          <div className="space-y-6">
-            <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>
-              College student who likes software and hiking. Also likes film photography and mountains.
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
       {/* Tech Stack Section */}
       <motion.section
         id="tech-stack"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.5 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
         className="py-16"
       >
         <div className="max-w-2xl mx-auto">

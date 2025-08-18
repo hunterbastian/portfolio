@@ -489,16 +489,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </motion.section>
 
-      {/* Other stuff Section */}
+      {/* About me Section */}
       <motion.section 
-        id="other-stuff" 
+        id="about-me" 
         className="py-16"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.3, duration: 0.5 }}
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Other stuff</h2>
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>About me</h2>
           
           <div className="space-y-6">
             <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>

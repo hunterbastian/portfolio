@@ -15,8 +15,8 @@ function ProjectGrid({ category }: { category?: string }) {
     : projects
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="flex gap-6 transition-transform duration-500 ease-out group">
+    <div className="max-w-2xl mx-auto">
+      <div className="flex gap-6 transition-transform duration-500 ease-out group overflow-visible">
         {filteredProjects.map((project, index) => {
           const isFirst = index === 0
           const isLast = index === filteredProjects.length - 1

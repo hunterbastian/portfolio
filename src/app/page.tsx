@@ -18,20 +18,61 @@ function ProjectGrid({ category }: { category?: string }) {
     <div className="flex justify-center">
       <div className="flex gap-6 transition-transform duration-500 ease-out group overflow-visible">
         {filteredProjects.map((project, index) => {
+          const totalProjects = filteredProjects.length
           const isFirst = index === 0
-          const isLast = index === filteredProjects.length - 1
+          const isLast = index === totalProjects - 1
+          
+          // Calculate rotation based on position
+          let rotation = 0
+          if (isFirst) rotation = -3
+          else if (isLast) rotation = 3
+          else if (totalProjects > 2) {
+            // Distribute rotations for middle projects
+            const middleIndex = index - 1
+            const middleCount = totalProjects - 2
+            const rotationStep = 6 / (middleCount + 1) // Distribute between -3 and 3
+            rotation = -3 + rotationStep * (middleIndex + 1)
+          }
+          
           return (
             <div 
               key={project.slug}
-              className={`
-                flex-shrink-0 transition-all duration-500 ease-out
-                ${isFirst 
-                  ? 'w-64 transform -rotate-3 scale-90 group-hover:rotate-0 group-hover:scale-100 group-hover:translate-x-12' 
-                  : isLast 
-                    ? 'w-64 transform rotate-3 scale-90 group-hover:rotate-0 group-hover:scale-100 group-hover:-translate-x-12' 
-                    : 'w-80 group-hover:-translate-x-6'
+              className="flex-shrink-0 w-64 transition-all duration-500 ease-out"
+              style={{
+                transform: `rotate(${rotation}deg) scale(0.9)`,
+              }}
+              onMouseEnter={(e) => {
+                const parent = e.currentTarget.closest('.group');
+                if (parent) {
+                  parent.classList.add('hovered');
+                  const allCards = parent.querySelectorAll('[data-project-card]');
+                  allCards.forEach((card) => {
+                    (card as HTMLElement).style.transform = 'rotate(0deg) scale(1)';
+                  });
                 }
-              `}
+              }}
+              onMouseLeave={(e) => {
+                const parent = e.currentTarget.closest('.group');
+                if (parent) {
+                  parent.classList.remove('hovered');
+                  const allCards = parent.querySelectorAll('[data-project-card]');
+                  allCards.forEach((card, idx) => {
+                    const isFirstCard = idx === 0;
+                    const isLastCard = idx === allCards.length - 1;
+                    let cardRotation = 0;
+                    if (isFirstCard) cardRotation = -3;
+                    else if (isLastCard) cardRotation = 3;
+                    else if (allCards.length > 2) {
+                      const middleIdx = idx - 1;
+                      const middleCount = allCards.length - 2;
+                      const rotStep = 6 / (middleCount + 1);
+                      cardRotation = -3 + rotStep * (middleIdx + 1);
+                    }
+                    (card as HTMLElement).style.transform = `rotate(${cardRotation}deg) scale(0.9)`;
+                  });
+                }
+              }}
+              data-project-card
             >
               <ProjectCard
                 slug={project.slug}

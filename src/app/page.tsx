@@ -26,10 +26,10 @@ function ProjectGrid({ category }: { category?: string }) {
               className={`
                 flex-shrink-0 transition-all duration-500 ease-out
                 ${isFirst 
-                  ? 'w-64 transform -rotate-3 scale-90 group-hover:rotate-0 group-hover:scale-100 group-hover:translate-x-8' 
+                  ? 'w-64 transform -rotate-3 scale-90 group-hover:rotate-0 group-hover:scale-100 group-hover:translate-x-12' 
                   : isLast 
-                    ? 'w-64 transform rotate-3 scale-90 group-hover:rotate-0 group-hover:scale-100 group-hover:-translate-x-8' 
-                    : 'w-80 group-hover:-translate-x-4'
+                    ? 'w-64 transform rotate-3 scale-90 group-hover:rotate-0 group-hover:scale-100 group-hover:-translate-x-12' 
+                    : 'w-80 group-hover:-translate-x-6'
                 }
               `}
             >

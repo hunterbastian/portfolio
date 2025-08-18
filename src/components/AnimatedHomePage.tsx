@@ -51,8 +51,8 @@ const experience = [
 
   const creatingProjects = [
     {
-      name: 'Project Name',
-      description: 'Brief description of the project.',
+      name: 'Project on Instagram',
+      description: 'Creative projects and content shared on social media.',
       link: '#'
     },
     {

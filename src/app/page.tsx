@@ -15,15 +15,30 @@ function ProjectGrid({ category }: { category?: string }) {
     : projects
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {filteredProjects.map((project, index) => (
-        <ProjectCard
-          key={project.slug}
-          slug={project.slug}
-          frontmatter={project.frontmatter}
-          index={index}
-        />
-      ))}
+    <div className="relative overflow-hidden">
+      <div className="flex gap-6 transition-transform duration-500 ease-out group">
+        {filteredProjects.map((project, index) => {
+          const isLast = index === filteredProjects.length - 1
+          return (
+            <div 
+              key={project.slug}
+              className={`
+                flex-shrink-0 transition-all duration-500 ease-out
+                ${isLast 
+                  ? 'w-64 transform rotate-3 scale-90 group-hover:rotate-0 group-hover:scale-100 group-hover:-translate-x-8' 
+                  : 'w-80 group-hover:-translate-x-4'
+                }
+              `}
+            >
+              <ProjectCard
+                slug={project.slug}
+                frontmatter={project.frontmatter}
+                index={index}
+              />
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }

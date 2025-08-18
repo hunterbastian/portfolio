@@ -479,6 +479,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <span className="text-gray-400 mt-1">•</span>
               <span><strong>Headphones:</strong> AirPods Pro 2</span>
             </motion.li>
+            <motion.li 
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              style={{ fontSize: '15px', lineHeight: '1.6' }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 2.1, duration: 0.3 }}
+            >
+              <span className="text-gray-400 mt-1">•</span>
+              <span><strong>Desk:</strong> IKEA</span>
+            </motion.li>
           </motion.ul>
         </div>
       </motion.section>

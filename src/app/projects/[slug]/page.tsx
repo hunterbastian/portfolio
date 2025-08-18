@@ -159,6 +159,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                       <video
                         src={videoSrc}
                         controls
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
                         className="w-full rounded-lg shadow-lg"
                         style={{ marginTop: '16px' }}
                       />

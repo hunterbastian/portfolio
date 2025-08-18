@@ -170,7 +170,28 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   );
                 }
               }
-              // Skip empty paragraphs or HTML tags we can't handle
+              // Handle image tags
+              if (paragraph.includes('<img')) {
+                const srcMatch = paragraph.match(/src="([^"]+)"/);
+                const altMatch = paragraph.match(/alt="([^"]+)"/);
+                const imgSrc = srcMatch ? srcMatch[1] : '';
+                const imgAlt = altMatch ? altMatch[1] : '';
+                if (imgSrc) {
+                  return (
+                    <div key={index} className="mb-8 mt-8">
+                      <Image
+                        src={imgSrc}
+                        alt={imgAlt}
+                        width={800}
+                        height={600}
+                        className="w-full rounded-lg shadow-lg"
+                        style={{ marginTop: '16px' }}
+                      />
+                    </div>
+                  );
+                }
+              }
+              // Skip empty paragraphs or other HTML tags we can't handle
               if (paragraph.trim().startsWith('<') || paragraph.trim() === '') {
                 return null;
               }

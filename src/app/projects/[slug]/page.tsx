@@ -130,10 +130,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         {/* Simple Content Display */}
         <div className="prose prose-lg dark:prose-invert max-w-none">
-          <div className="mb-6">
-            <h2 className="text-2xl font-semibold mb-4">Description</h2>
-            <p className="text-lg leading-relaxed mb-6">{frontmatter.description}</p>
-          </div>
+          {frontmatter.description && frontmatter.description.trim() && (
+            <div className="mb-6">
+              <h2 className="text-2xl font-semibold mb-4">Description</h2>
+              <p className="text-lg leading-relaxed mb-6">{frontmatter.description}</p>
+            </div>
+          )}
           
           {/* Content with basic formatting */}
           <div className="space-y-4">

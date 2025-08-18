@@ -175,7 +175,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     Content Display Issue
                   </h3>
                   <p className="text-yellow-700 dark:text-yellow-300 mb-4">
-                    There was an issue rendering the formatted content. Here's the raw content:
+                    There was an issue rendering the formatted content. Here&apos;s the raw content:
                   </p>
                   <div className="bg-white dark:bg-gray-800 p-4 rounded border">
                     <pre className="whitespace-pre-wrap text-sm">{content}</pre>

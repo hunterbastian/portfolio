@@ -37,42 +37,10 @@ function ProjectGrid({ category }: { category?: string }) {
           return (
             <div 
               key={project.slug}
-              className="flex-shrink-0 w-64 transition-all duration-500 ease-out"
+              className="flex-shrink-0 w-64 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
               style={{
                 transform: `rotate(${rotation}deg) scale(0.9)`,
               }}
-              onMouseEnter={(e) => {
-                const parent = e.currentTarget.closest('.group');
-                if (parent) {
-                  parent.classList.add('hovered');
-                  const allCards = parent.querySelectorAll('[data-project-card]');
-                  allCards.forEach((card) => {
-                    (card as HTMLElement).style.transform = 'rotate(0deg) scale(1)';
-                  });
-                }
-              }}
-              onMouseLeave={(e) => {
-                const parent = e.currentTarget.closest('.group');
-                if (parent) {
-                  parent.classList.remove('hovered');
-                  const allCards = parent.querySelectorAll('[data-project-card]');
-                  allCards.forEach((card, idx) => {
-                    const isFirstCard = idx === 0;
-                    const isLastCard = idx === allCards.length - 1;
-                    let cardRotation = 0;
-                    if (isFirstCard) cardRotation = -3;
-                    else if (isLastCard) cardRotation = 3;
-                    else if (allCards.length > 2) {
-                      const middleIdx = idx - 1;
-                      const middleCount = allCards.length - 2;
-                      const rotStep = 6 / (middleCount + 1);
-                      cardRotation = -3 + rotStep * (middleIdx + 1);
-                    }
-                    (card as HTMLElement).style.transform = `rotate(${cardRotation}deg) scale(0.9)`;
-                  });
-                }
-              }}
-              data-project-card
             >
               <ProjectCard
                 slug={project.slug}

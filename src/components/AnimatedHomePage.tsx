@@ -229,6 +229,20 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
              {children}
    </motion.section>
 
+   {/* Accepting Clients Section */}
+   <motion.section
+     className="py-8"
+     initial={{ opacity: 0, y: 20 }}
+     animate={{ opacity: 1, y: 0 }}
+     transition={{ delay: 0.6, duration: 0.5 }}
+   >
+     <div className="max-w-2xl mx-auto text-center">
+       <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: '1.6' }}>
+         Accepting clients
+       </p>
+     </div>
+   </motion.section>
+
    {/* Contact Section */}
    <motion.section
      id="contact"
@@ -381,47 +395,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </div>
     </motion.section>
 
-      {/* Creating Section */}
-      <motion.section 
-        id="creating" 
-        className="py-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9, duration: 0.5 }}
-      >
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Creating</h2>
-          
-          <motion.ul 
-            className="space-y-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.0, duration: 0.5 }}
-          >
-            {creatingProjects.map((project, index) => (
-              <motion.li 
-                key={project.name}
-                className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
-                style={{ fontSize: '15px', lineHeight: '1.6' }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.1 + index * 0.1, duration: 0.3 }}
-              >
-                <span className="text-gray-400 mt-1">•</span>
-                <span><strong>{project.name}:</strong> {project.description}</span>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </div>
-      </motion.section>
-
       {/* About me Section */}
       <motion.section 
         id="about-me" 
         className="py-16"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.3, duration: 0.5 }}
+        transition={{ delay: 0.9, duration: 0.5 }}
       >
         <div className="max-w-2xl mx-auto">
           <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>About me</h2>
@@ -434,12 +414,46 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </motion.section>
 
+      {/* Creating Section */}
+      <motion.section 
+        id="creating" 
+        className="py-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.0, duration: 0.5 }}
+      >
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Creating</h2>
+          
+          <motion.ul 
+            className="space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.1, duration: 0.5 }}
+          >
+            {creatingProjects.map((project, index) => (
+              <motion.li 
+                key={project.name}
+                className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+                style={{ fontSize: '15px', lineHeight: '1.6' }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.2 + index * 0.1, duration: 0.3 }}
+              >
+                <span className="text-gray-400 mt-1">•</span>
+                <span><strong>{project.name}:</strong> {project.description}</span>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
+      </motion.section>
+
       {/* Everyday Tech Section */}
       <motion.section
         id="everyday-tech"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.5 }}
+        transition={{ delay: 1.3, duration: 0.5 }}
         className="py-16"
       >
         <div className="max-w-2xl mx-auto">

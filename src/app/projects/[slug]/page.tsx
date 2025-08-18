@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getAllProjects, getProjectBySlug } from '@/lib/projects'
 import type { Metadata } from 'next'
 
@@ -35,33 +34,6 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   }
 }
 
-const components = {
-  h1: (props: any) => <h1 className="text-3xl font-bold mb-6" {...props} />,
-  h2: (props: any) => <h2 className="text-2xl font-semibold mb-4 mt-8" {...props} />,
-  h3: (props: any) => <h3 className="text-xl font-semibold mb-3 mt-6" {...props} />,
-  p: (props: any) => <p className="mb-4 leading-relaxed text-base" {...props} />,
-  ul: (props: any) => <ul className="list-disc list-inside mb-4 space-y-2" {...props} />,
-  ol: (props: any) => <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />,
-  li: (props: any) => <li className="ml-4" {...props} />,
-  code: (props: any) => (
-    <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono" {...props} />
-  ),
-  pre: (props: any) => (
-    <pre className="bg-muted p-4 rounded-lg overflow-x-auto mb-4" {...props} />
-  ),
-  blockquote: (props: any) => (
-    <blockquote className="border-l-4 border-primary pl-4 italic mb-4" {...props} />
-  ),
-  a: (props: any) => (
-    <a
-      className="text-primary hover:text-primary/80 underline underline-offset-4"
-      target="_blank"
-      rel="noopener noreferrer"
-      {...props}
-    />
-  ),
-}
-
 export default async function ProjectPage({ params }: ProjectPageProps) {
   try {
     const { slug } = await params
@@ -72,11 +44,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     }
 
     const { frontmatter, content } = project
-
-    // Validate that we have the necessary content
-    if (!frontmatter || !content) {
-      throw new Error('Invalid project data')
-    }
 
     return (
       <article className="container mx-auto max-w-4xl px-4 py-8">
@@ -161,29 +128,31 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         )}
 
-        {/* MDX Content with fallback */}
-        <div className="prose prose-base dark:prose-invert max-w-none text-base">
-          {(() => {
-            try {
-              return <MDXRemote source={content} components={components} />
-            } catch (error) {
-              console.error('MDX rendering error:', error)
-              // Fallback to plain text with basic formatting
-              return (
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold mb-4 text-yellow-800 dark:text-yellow-200">
-                    Content Display Issue
-                  </h3>
-                  <p className="text-yellow-700 dark:text-yellow-300 mb-4">
-                    There was an issue rendering the formatted content. Here&apos;s the raw content:
-                  </p>
-                  <div className="bg-white dark:bg-gray-800 p-4 rounded border">
-                    <pre className="whitespace-pre-wrap text-sm">{content}</pre>
-                  </div>
-                </div>
-              )
-            }
-          })()}
+        {/* Simple Content Display */}
+        <div className="prose prose-lg dark:prose-invert max-w-none">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold mb-4">Description</h2>
+            <p className="text-lg leading-relaxed mb-6">{frontmatter.description}</p>
+          </div>
+          
+          {/* Content with basic formatting */}
+          <div className="space-y-4">
+            {content.split('\n\n').map((paragraph, index) => {
+              if (paragraph.trim().startsWith('# ')) {
+                return <h1 key={index} className="text-3xl font-bold mt-8 mb-4">{paragraph.replace('# ', '')}</h1>
+              }
+              if (paragraph.trim().startsWith('## ')) {
+                return <h2 key={index} className="text-2xl font-semibold mt-6 mb-3">{paragraph.replace('## ', '')}</h2>
+              }
+              if (paragraph.trim().startsWith('### ')) {
+                return <h3 key={index} className="text-xl font-semibold mt-4 mb-2">{paragraph.replace('### ', '')}</h3>
+              }
+              if (paragraph.trim().length > 0) {
+                return <p key={index} className="mb-4 leading-relaxed">{paragraph}</p>
+              }
+              return null
+            })}
+          </div>
         </div>
       </article>
     )

@@ -149,6 +149,27 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               if (paragraph.trim().startsWith('### ')) {
                 return <h3 key={index} className="text-xl font-semibold mt-4 mb-2">{paragraph.replace('### ', '')}</h3>
               }
+              // Handle video tags
+              if (paragraph.includes('<video')) {
+                const videoMatch = paragraph.match(/src="([^"]+)"/);
+                const videoSrc = videoMatch ? videoMatch[1] : '';
+                if (videoSrc) {
+                  return (
+                    <div key={index} className="mb-8 mt-8">
+                      <video
+                        src={videoSrc}
+                        controls
+                        className="w-full rounded-lg shadow-lg"
+                        style={{ marginTop: '16px' }}
+                      />
+                    </div>
+                  );
+                }
+              }
+              // Skip empty paragraphs or HTML tags we can't handle
+              if (paragraph.trim().startsWith('<') || paragraph.trim() === '') {
+                return null;
+              }
               if (paragraph.trim().length > 0) {
                 return <p key={index} className="mb-4 leading-relaxed">{paragraph}</p>
               }

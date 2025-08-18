@@ -136,7 +136,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               >
                 <div className="flex flex-wrap justify-start gap-2 sm:gap-4">
                  <motion.a
-                   href="#projects"
+                   href="#case-studies"
                    className="inline-flex items-center justify-center rounded-md px-6 py-3 font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap relative overflow-hidden"
                    style={{
                      background: `linear-gradient(90deg, #F8FAFC, #E2E8F0, transparent)`,
@@ -158,7 +158,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                      e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
                    }}
                  >
-                   PROJECTS
+                   CASE STUDIES
                  </motion.a>
                  <a
                    href="#contact"
@@ -206,9 +206,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                </motion.div>
             </motion.section>
 
-      {/* Projects Section */}
+      {/* Case Studies Section */}
       <motion.section 
-        id="projects" 
+        id="case-studies" 
         className="py-16"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -220,7 +220,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Projects</h2>
+                <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Case Studies</h2>
               </motion.div>
 
              {children}

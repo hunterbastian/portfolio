@@ -170,13 +170,31 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
                 <div className="flex flex-wrap justify-start gap-2 sm:gap-4">
-                 <a
+                 <motion.a
                    href="#projects"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
+                   className="inline-flex items-center justify-center rounded-md px-6 py-3 font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap relative overflow-hidden"
+                   style={{
+                     background: `linear-gradient(90deg, #FFF3E0, #FFE0B2, transparent)`,
+                     border: `1px solid #FFCC80`,
+                     color: '#E65100',
+                     fontSize: '10px'
+                   }}
+                   whileHover={{ 
+                     scale: 1.08, 
+                     rotate: -3
+                   }}
+                   transition={{ duration: 0.2, ease: "easeOut" }}
+                   onMouseEnter={(e) => {
+                     e.currentTarget.style.background = `linear-gradient(90deg, #FFCC80, #FFB74D, transparent)`;
+                     e.currentTarget.style.boxShadow = `0 4px 20px rgba(230, 81, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+                   }}
+                   onMouseLeave={(e) => {
+                     e.currentTarget.style.background = `linear-gradient(90deg, #FFF3E0, #FFE0B2, transparent)`;
+                     e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+                   }}
                  >
                    PROJECTS
-                 </a>
+                 </motion.a>
                  <a
                    href="#contact"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"

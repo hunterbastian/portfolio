@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { ReactNode, useState, useEffect } from 'react'
+import Image from 'next/image'
 
 // Lazy load components that are below the fold
 // Note: Sections are now implemented directly in this component
@@ -101,6 +102,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
+                {/* Profile Picture */}
+                <motion.div
+                  className="mb-6 flex justify-start max-w-2xl mx-auto"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.0, duration: 0.5 }}
+                >
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-lg">
+                    <Image
+                      src="/images/portfolio/IMG_2600.jpg"
+                      alt="Hunter Bastian Profile"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                </motion.div>
+
                 <motion.h1
                  className="mb-6 text-black dark:text-white font-playfair italic max-w-2xl mx-auto text-left motion-element"
                  style={{ fontSize: '40px', lineHeight: '1.2' }}

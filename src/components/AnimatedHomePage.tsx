@@ -113,42 +113,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                
 
                
-               {/* Availability Indicator */}
-               <motion.div
-                 className="mb-8 max-w-2xl mx-auto flex justify-start"
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.15, duration: 0.5 }}
-               >
-                 <div 
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
-                  style={{
-                    background: `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`,
-                    border: `1px solid #BBF7D0`,
-                    boxShadow: `0 2px 8px rgba(34, 197, 94, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2)`
-                  }}
-                 >
-                   <div className="relative flex items-center justify-center">
-                     <motion.div 
-                       className="absolute w-1.5 h-1.5 bg-green-400 rounded-full z-0"
-                       animate={{
-                         scale: [1.3, 3.2, 3.2, 3.2],
-                         opacity: [0.6, 0.2, 0, 0, 0]
-                       }}
-                       transition={{
-                         duration: 3,
-                         repeat: Infinity,
-                         ease: [0.4, 0.0, 0.2, 1],
-                         repeatDelay: 0
-                       }}
-                     ></motion.div>
-                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full relative z-20"></div>
-                   </div>
-                   <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
-                    Accepting clients
-                  </span>
-                </div>
-               </motion.div>
+
                
                <motion.div
                  className="mb-8 max-w-2xl mx-auto text-left"
@@ -259,6 +224,45 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               </motion.div>
 
              {children}
+   </motion.section>
+
+   {/* Accepting Clients Section */}
+   <motion.section
+     className="py-8"
+     initial={{ opacity: 0, y: 20 }}
+     animate={{ opacity: 1, y: 0 }}
+     transition={{ delay: 0.6, duration: 0.5 }}
+   >
+     <div className="max-w-2xl mx-auto flex justify-center">
+       <div 
+         className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
+         style={{
+           background: `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`,
+           border: `1px solid #BBF7D0`,
+           boxShadow: `0 2px 8px rgba(34, 197, 94, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2)`
+         }}
+       >
+         <div className="relative flex items-center justify-center">
+           <motion.div 
+             className="absolute w-1.5 h-1.5 bg-green-400 rounded-full z-0"
+             animate={{
+               scale: [1.3, 3.2, 3.2, 3.2],
+               opacity: [0.6, 0.2, 0, 0, 0]
+             }}
+             transition={{
+               duration: 3,
+               repeat: Infinity,
+               ease: [0.4, 0.0, 0.2, 1],
+               repeatDelay: 0
+             }}
+           ></motion.div>
+           <div className="w-1.5 h-1.5 bg-green-500 rounded-full relative z-20"></div>
+         </div>
+         <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
+           Accepting clients
+         </span>
+       </div>
+     </div>
    </motion.section>
 
    {/* Contact Section */}

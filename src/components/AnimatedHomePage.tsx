@@ -445,7 +445,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               transition={{ delay: 1.5, duration: 0.3 }}
             >
               <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Phone:</strong> iPhone 15 Pro (Natural Titanium)</span>
+              <span><strong>Phone:</strong> iPhone 15 Pro Natural Titanium</span>
             </motion.li>
             <motion.li 
               className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
@@ -455,7 +455,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               transition={{ delay: 1.6, duration: 0.3 }}
             >
               <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Laptop:</strong> MacBook Air 15&quot; M2 (Starlight)</span>
+              <span><strong>Laptop:</strong> MacBook Air 15&quot; M2 Starlight</span>
             </motion.li>
 
 

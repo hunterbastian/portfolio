@@ -4,7 +4,7 @@ export default function Footer() {
       className="border-t relative"
       style={{
         zIndex: 20,
-        backgroundColor: '#DEDCDB'
+        backgroundColor: 'rgba(222, 220, 219, 0.7)'
       }}
     >
       <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0 px-4 mx-auto max-w-6xl">

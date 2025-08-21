@@ -2,6 +2,10 @@
 
 ## Version History
 
+### **v2.2.0** - Animation Fix *(August 2025)*
+- Fixed Case Studies button animation cutoff on left side
+- Reduced hover animation scale and rotation for better containment
+
 ### **v2.1.0** - Documentation & Tracking *(August 2025)*
 - Added comprehensive changelog for tracking portfolio evolution
 - Documented all features and technical decisions

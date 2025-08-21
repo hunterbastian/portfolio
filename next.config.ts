@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  // Add Google Fonts optimization and fallback handling
+  env: {
+    NEXT_FONT_GOOGLE_DISPLAY: 'swap'
+  }
 }
 
 const withMDX = createMDX({

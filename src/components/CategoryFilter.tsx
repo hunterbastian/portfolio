@@ -24,5 +24,25 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
 
   const allCategories = ['all', ...categories]
 
-  return null
+  return (
+    <div className="flex justify-center mb-8">
+      <div className="flex flex-wrap gap-2">
+        {allCategories.map((category) => (
+          <motion.button
+            key={category}
+            onClick={() => handleCategoryChange(category)}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              activeCategory === category
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted text-muted-foreground hover:bg-muted/80'
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {category === 'all' ? 'All' : category}
+          </motion.button>
+        ))}
+      </div>
+    </div>
+  )
 }

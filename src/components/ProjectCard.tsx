@@ -44,6 +44,11 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
               loop
               muted
               playsInline
+              onError={(e) => {
+                console.warn('Video failed to load:', e)
+                // Hide video element if it fails to load
+                e.currentTarget.style.display = 'none'
+              }}
             />
           )}
           

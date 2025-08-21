@@ -1,38 +1,8 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono, Inter, EB_Garamond } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-
-
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-jetbrains-mono'
-})
-
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter'
-})
-
-// Import PP Editorial New from local files or use a similar Google Font alternative
-// Since PP Editorial New isn't available on Google Fonts, we'll use Playfair Display Italic as a substitute
-import { Playfair_Display } from 'next/font/google'
-
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  style: ['normal', 'italic'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-playfair'
-})
-
-const ebGaramond = EB_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-garamond'
-})
 
 export const metadata: Metadata = {
   title: 'Hunter Bastian - Portfolio',
@@ -61,13 +31,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-                   <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable}`}>
-                       <div className="min-h-screen flex flex-col">
-                 <Header />
-                 <main className="flex-1">{children}</main>
-                 <Footer />
-               </div>
-               <SpeedInsights />
+      <body className="font-mono">
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
+        <SpeedInsights />
       </body>
     </html>
   )

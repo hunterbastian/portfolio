@@ -2,6 +2,14 @@
 
 ## Version History
 
+### **v2.3.2** - Text Size Fix *(August 2025)*
+- Fixed bio text size back to original (text-base/16px instead of text-lg/18px)
+- Restored proper typography sizing that was accidentally changed during mobile optimization
+
+### **v2.3.1** - Build Fix *(August 2025)*
+- Fixed TypeScript errors in iframe props (allowtransparency → allowTransparency)
+- Resolved Vercel build failure
+
 ### **v2.3.0** - Animation Consistency *(August 2025)*
 - Restored Case Studies button animation to match Download Resume button
 - Both buttons now have matching hover effects (scale: 1.08, rotate: -3°)

@@ -2,9 +2,13 @@
 
 ## Version History
 
+### **v2.3.0** - Animation Consistency *(August 2025)*
+- Restored Case Studies button animation to match Download Resume button
+- Both buttons now have matching hover effects (scale: 1.08, rotate: -3°)
+- Intentional left-side cutoff during animation for dynamic visual effect
+
 ### **v2.2.0** - Animation Fix *(August 2025)*
-- Fixed Case Studies button animation cutoff on left side
-- Reduced hover animation scale and rotation for better containment
+- ~~Fixed Case Studies button animation cutoff~~ (Reverted - cutoff is intentional)
 
 ### **v2.1.0** - Documentation & Tracking *(August 2025)*
 - Added comprehensive changelog for tracking portfolio evolution

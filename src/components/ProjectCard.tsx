@@ -19,7 +19,8 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         whileHover={{ y: -5 }}
-        className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-all hover:shadow-lg"
+        whileTap={{ scale: 0.98 }}
+        className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-all hover:shadow-lg active:shadow-md touch-manipulation"
       >
         <div className="aspect-video relative overflow-hidden">
           {/* Static Image - shown by default */}

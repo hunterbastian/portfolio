@@ -1,0 +1,124 @@
+/* Advanced Viewport Optimizations */
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .hover-only:hover {
+    transform: none !important;
+  }
+  
+  /* Larger touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve tap highlighting */
+  * {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Crisp text rendering */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  /* Improve contrast on dark backgrounds */
+  .text-gray-600 {
+    color: rgb(156 163 175) !important;
+  }
+  
+  .text-gray-500 {
+    color: rgb(107 114 128) !important;
+  }
+}
+
+/* Landscape mobile optimizations */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  /* Reduce vertical padding on landscape phones */
+  .landscape-reduce-padding {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+}
+
+/* Safe area insets for iOS */
+@supports (padding: env(safe-area-inset-top)) {
+  .safe-area-padding {
+    padding-top: env(safe-area-inset-top);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+  }
+}
+
+/* Optimize scrolling performance */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Container queries for responsive design */
+@container (max-width: 640px) {
+  .container-responsive {
+    font-size: 0.875rem;
+  }
+}
+
+/* Viewport units that account for mobile browsers */
+.full-viewport-height {
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height */
+}
+
+.full-viewport-width {
+  width: 100vw;
+  width: 100dvw; /* Dynamic viewport width */
+}
+
+/* Focus management for keyboard navigation */
+.focus-visible:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Text selection optimization */
+::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: inherit;
+}
+
+/* Smooth font rendering across devices */
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent zoom on input focus (iOS Safari) */
+input, select, textarea {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 767px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}

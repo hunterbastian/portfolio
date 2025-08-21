@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono, Inter, EB_Garamond } from 'next/font/google'
 import './globals.css'
+import './viewport.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -34,12 +35,35 @@ const ebGaramond = EB_Garamond({
   variable: '--font-garamond'
 })
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover'
+}
+
 export const metadata: Metadata = {
   title: 'Hunter Bastian - Portfolio',
   description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
   keywords: ['Hunter Bastian', 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
   authors: [{ name: 'Hunter Bastian' }],
   creator: 'Hunter Bastian',
+
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' }
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    other: [
+      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon-512x512.png', sizes: '512x512', type: 'image/png' }
+    ]
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -61,7 +85,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-                   <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable}`}>
+                   <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable} safe-area-padding`}>
                        <div className="min-h-screen flex flex-col">
                  <Header />
                  <main className="flex-1">{children}</main>

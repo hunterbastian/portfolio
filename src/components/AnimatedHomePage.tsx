@@ -245,8 +245,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                      fontSize: '10px'
                    }}
                    whileHover={{ 
-                     scale: 1.02, 
-                     rotate: -1
+                     scale: 1.08, 
+                     rotate: -3
                    }}
                    transition={{ duration: 0.2, ease: "easeOut" }}
                    onMouseEnter={(e) => {

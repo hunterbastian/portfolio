@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ReactNode, useState, useEffect } from 'react'
 import Image from 'next/image'
+import ResumePreview from './ResumePreview'
+import ResumeModal from './ResumeModal'
 
 // Lazy load components that are below the fold
 // Note: Sections are now implemented directly in this component
@@ -81,6 +83,8 @@ const education = [
   ]
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
+  const [showResumePreview, setShowResumePreview] = useState(false)
+  const [showResumeModal, setShowResumeModal] = useState(false)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [showBackToTop, setShowBackToTop] = useState(false)
 
@@ -118,9 +122,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Left Gem */}
+        {/* Left Object */}
         <motion.div
-          className="absolute -left-20 top-1/3 transform -translate-y-1/2 hidden xl:block"
+          className="absolute -left-24 top-1/3 transform -translate-y-1/2 hidden xl:block"
           initial={{ opacity: 0, x: -50, rotate: -15 }}
           animate={{ 
             opacity: 1, 
@@ -141,7 +145,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           }}
         >
                     <iframe
-            allowTransparency={true}
+            allowtransparency="true"
             style={{ 
               width: '320px', 
               height: '320px', 
@@ -149,7 +153,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               border: 'none'
             }}
             src="https://app.endlesstools.io/embed/b6f39d54-23c2-429f-a315-4ea4eb90320b"
-            title="Left Gem 3D Model"
+            title="Left Object 3D Model"
             allow="clipboard-write; encrypted-media; gyroscope; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
@@ -344,7 +348,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
      transition={{ delay: 0.4, duration: 0.5 }}
      className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0 relative"
    >
-     {/* Right Gem next to Contact */}
+     {/* Right Object next to Contact */}
      <motion.div
        className="absolute -right-16 top-1/4 transform -translate-y-1/2 hidden xl:block"
        initial={{ opacity: 0, x: 50, rotate: 15 }}
@@ -367,7 +371,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
        }}
      >
        <iframe
-         allowTransparency={true}
+         allowtransparency="true"
          style={{ 
            width: '200px', 
            height: '200px', 
@@ -375,7 +379,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
            border: 'none'
          }}
          src="https://app.endlesstools.io/embed/fe304cc2-31e6-42b6-acf2-9f540b14cbd8"
-         title="Right Gem 3D Model"
+         title="Right Object 3D Model"
          allow="clipboard-write; encrypted-media; gyroscope; web-share"
          referrerPolicy="strict-origin-when-cross-origin"
          allowFullScreen
@@ -518,34 +522,37 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
            </svg>
            <span className="text-xs sm:hidden font-medium">Dribbble</span>
          </motion.a>
-         <motion.a
-           href="https://www.linkedin.com/in/hunterbastian/overlay/1635552698012/single-media-viewer/?profileId=ACoAAC7RbTIBGWPDHk4B6HEkBw3Nb8ePF8eaLOQ"
-           target="_blank"
-           rel="noopener noreferrer"
-           className="inline-flex items-center justify-center rounded-md px-5 py-2.5 font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap relative overflow-hidden"
-           style={{
-             background: `linear-gradient(90deg, #F8FAFC, #E2E8F0, transparent)`,
-             border: `1px solid #CBD5E1`,
-             color: '#475569',
-             fontSize: '10px'
-           }}
-           whileHover={{ 
-             scale: 1.08, 
-             rotate: -3
-           }}
-           whileTap={{ scale: 0.95 }}
-           transition={{ duration: 0.2, ease: "easeOut" }}
-           onMouseEnter={(e) => {
-             e.currentTarget.style.background = `linear-gradient(90deg, #CBD5E1, #94A3B8, transparent)`;
-             e.currentTarget.style.boxShadow = `0 4px 20px rgba(71, 85, 105, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
-           }}
-           onMouseLeave={(e) => {
-             e.currentTarget.style.background = `linear-gradient(90deg, #F8FAFC, #E2E8F0, transparent)`;
-             e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
-           }}
-         >
-           DOWNLOAD RESUME
-                 </motion.a>
+                 <div className="relative">
+          <motion.button
+            onClick={() => setShowResumeModal(true)}
+            className="inline-flex items-center justify-center rounded-md px-5 py-2.5 font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap relative overflow-hidden cursor-pointer"
+            style={{
+              background: `linear-gradient(90deg, #F8FAFC, #E2E8F0, transparent)`,
+              border: `1px solid #CBD5E1`,
+              color: '#475569',
+              fontSize: '10px'
+            }}
+            whileHover={{ 
+              scale: 1.08, 
+              rotate: -3
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = `linear-gradient(90deg, #CBD5E1, #94A3B8, transparent)`;
+              e.currentTarget.style.boxShadow = `0 4px 20px rgba(71, 85, 105, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+              setShowResumePreview(true);
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = `linear-gradient(90deg, #F8FAFC, #E2E8F0, transparent)`;
+              e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+              setShowResumePreview(false);
+            }}
+          >
+            VIEW RESUME
+          </motion.button>
+          <ResumePreview isVisible={showResumePreview} />
+        </div>
       </div>
       
       {/* Accepting Clients Indicator */}
@@ -958,6 +965,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </motion.button>
         )}
       </AnimatePresence>
+
+      {/* Resume Modal */}
+      <ResumeModal 
+        isOpen={showResumeModal} 
+        onClose={() => setShowResumeModal(false)} 
+      />
     </div>
   )
 }

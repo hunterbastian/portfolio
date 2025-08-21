@@ -7,9 +7,12 @@
   },
   "scripts": {
     "dev": "next dev",
+    "dev:turbo": "next dev --turbo",
     "build": "next build",
+    "build:analyze": "ANALYZE=true npm run build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "performance": "npm run build && npm run build:analyze"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
@@ -24,9 +27,11 @@
     "next-mdx-remote": "^5.0.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "three": "^0.179.1"
+    "three": "^0.179.1",
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.5.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^20.17.6",
     "@types/react": "^19.0.1",

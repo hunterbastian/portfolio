@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import ScrollIndicator from './ScrollIndicator'
 
 const navigation: Array<{ name: string; href: string }> = []
 
@@ -14,11 +15,14 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center px-4 mx-auto max-w-6xl">
-                       <Link href="/" className="flex items-center space-x-2">
-                 <span className="font-bold" style={{ fontSize: '11px' }}>
-                   HB
-                 </span>
-               </Link>
+        <div className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center">
+            <span className="font-bold" style={{ fontSize: '11px' }}>
+              HB
+            </span>
+          </Link>
+          <ScrollIndicator />
+        </div>
         
         <nav className="ml-auto flex items-center space-x-6">
           {navigation.map((item) => (
@@ -61,6 +65,7 @@ export default function Header() {
               {language}
             </button>
           </div>
+
         </nav>
       </div>
     </header>

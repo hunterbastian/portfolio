@@ -141,7 +141,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           }}
         >
                     <iframe
-            allowtransparency="true"
+            allowTransparency={true}
             style={{ 
               width: '320px', 
               height: '320px', 
@@ -708,7 +708,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           }}
         >
                     <iframe
-            allowtransparency="true"
+            allowTransparency={true}
             style={{ 
               width: '200px', 
               height: '200px', 

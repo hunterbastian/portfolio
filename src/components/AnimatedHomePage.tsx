@@ -237,7 +237,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <div className="flex flex-wrap justify-start gap-2 sm:gap-4">
                  <motion.a
                    href="#case-studies"
-                   className="inline-flex items-center justify-center rounded-md px-6 py-3 font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap relative overflow-hidden"
+                   className="inline-flex items-center justify-center rounded-md px-6 py-3 font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap relative"
                    style={{
                      background: `linear-gradient(90deg, #F8FAFC, #E2E8F0, transparent)`,
                      border: `1px solid #CBD5E1`,
@@ -245,8 +245,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                      fontSize: '10px'
                    }}
                    whileHover={{ 
-                     scale: 1.08, 
-                     rotate: -3
+                     scale: 1.02, 
+                     rotate: -1
                    }}
                    transition={{ duration: 0.2, ease: "easeOut" }}
                    onMouseEnter={(e) => {

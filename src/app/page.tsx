@@ -2,13 +2,14 @@ import { getAllProjects, getAllCategories } from '@/lib/projects'
 import ProjectCard from '@/components/ProjectCard'
 import ClientWrapper from '@/components/ClientWrapper'
 import AnimatedHomePage from '@/components/AnimatedHomePage'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 
 interface HomePageProps {
   searchParams: Promise<{ category?: string }>
 }
 
 function ProjectGrid({ category }: { category?: string }) {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const projects = getAllProjects()
   const filteredProjects = category && category !== 'all' 
     ? projects.filter(project => project.frontmatter.category === category)
@@ -42,7 +43,10 @@ function ProjectGrid({ category }: { category?: string }) {
                 className="flex-shrink-0 w-64 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
                 style={{
                   transform: `rotate(${rotation}deg) scale(0.9)`,
+                  opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.4
                 }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
                 <ProjectCard
                   slug={project.slug}
@@ -59,7 +63,15 @@ function ProjectGrid({ category }: { category?: string }) {
       <div className="lg:hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-6">
           {filteredProjects.map((project, index) => (
-            <div key={project.slug} className="w-full">
+            <div 
+              key={project.slug} 
+              className="w-full transition-opacity duration-300 ease-out"
+              style={{
+                opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.4
+              }}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
               <ProjectCard
                 slug={project.slug}
                 frontmatter={project.frontmatter}

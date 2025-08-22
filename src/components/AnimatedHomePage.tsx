@@ -187,10 +187,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.1, duration: 0.5 }}
                >
-                 <h1 className="text-black dark:text-white font-playfair italic font-bold text-left motion-element text-fluid-3xl lg:text-fluid-4xl" style={{ lineHeight: '1.2' }}>
+                 <h1 className="text-black dark:text-white font-playfair italic font-semibold text-left motion-element text-fluid-3xl lg:text-fluid-4xl" style={{ lineHeight: '1.2' }}>
                    Hunter Bastian
                  </h1>
-                 <h2 className="text-black dark:text-white font-playfair italic font-bold text-left motion-element text-fluid-3xl lg:text-fluid-4xl" style={{ lineHeight: '1.2' }}>
+                 <h2 className="text-black dark:text-white font-playfair italic font-semibold text-left motion-element text-fluid-3xl lg:text-fluid-4xl" style={{ lineHeight: '1.2' }}>
                    Interaction Designer
                  </h2>
                </motion.div>

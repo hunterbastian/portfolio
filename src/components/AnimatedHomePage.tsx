@@ -170,9 +170,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.0, duration: 0.5 }}
                 >
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-lg">
+                  <div className="relative w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-lg">
                     <Image
-                      src="/images/portfolio/IMG_2600.jpg"
+                      src="/favicon/Frame.svg"
                       alt="Hunter Bastian Profile"
                       fill
                       className="object-cover"

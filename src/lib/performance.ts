@@ -7,7 +7,7 @@ export function preloadCriticalResources() {
   if (typeof window !== 'undefined') {
     // Preload hero image
     const heroImage = new Image()
-    heroImage.src = '/images/portfolio/IMG_2600.jpg'
+    heroImage.src = '/favicon/Frame.svg'
     
     // Preload project images (first 3 for above-the-fold)
     const projectImages = [

@@ -54,16 +54,17 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
+      { url: '/favicon/Frame.svg', type: 'image/svg+xml' },
       { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon/favicon.ico', sizes: 'any' }
     ],
     apple: [
-      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+      { url: '/favicon/Frame.svg', sizes: '180x180', type: 'image/svg+xml' }
     ],
     other: [
-      { url: '/favicon/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/favicon/favicon-512x512.png', sizes: '512x512', type: 'image/png' }
+      { url: '/favicon/Frame.svg', sizes: '192x192', type: 'image/svg+xml' },
+      { url: '/favicon/Frame.svg', sizes: '512x512', type: 'image/svg+xml' }
     ]
   },
   openGraph: {

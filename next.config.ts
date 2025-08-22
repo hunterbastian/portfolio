@@ -24,12 +24,14 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['framer-motion', '@react-three/fiber', '@react-three/drei'],
     optimizeCss: true, // Enable CSS optimization
     webpackBuildWorker: true, // Use worker threads for builds
-    turbo: {
-      resolveAlias: {
-        // Optimize common libraries
-        'react': 'react',
-        'react-dom': 'react-dom',
-      },
+  },
+  
+  // Turbopack configuration (moved from experimental.turbo)
+  turbopack: {
+    resolveAlias: {
+      // Optimize common libraries
+      'react': 'react',
+      'react-dom': 'react-dom',
     },
   },
   

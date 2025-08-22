@@ -367,7 +367,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
      </motion.div>
 
      <div className="max-w-2xl mx-auto">
-       <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-lg sm:text-xl lg:text-2xl" style={{ fontWeight: '400' }}>Contact</h2>
+       <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Contact</h2>
      </div>
 
      
@@ -580,7 +580,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
      className="py-16"
    >
      <div className="max-w-2xl mx-auto">
-       <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Experience</h2>
+       <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Experience</h2>
        
        <div className="rounded-lg p-6 space-y-6" style={{ backgroundColor: 'rgba(222, 220, 219, 0.7)' }}>
         {experience.map((job, index) => {
@@ -663,7 +663,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Education</h2>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Education</h2>
         
         <div className="rounded-lg p-6 space-y-6" style={{ backgroundColor: 'rgba(222, 220, 219, 0.7)' }}>
           {education.map((edu, index) => (
@@ -711,7 +711,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       >
 
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-lg sm:text-xl lg:text-2xl" style={{ fontWeight: '400' }}>About me</h2>
+          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>About me</h2>
           
           <div className="space-y-6">
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base" style={{ lineHeight: '1.6' }}>

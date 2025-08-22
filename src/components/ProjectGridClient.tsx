@@ -49,7 +49,7 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
                 className="flex-shrink-0 w-64 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
                 style={{
                   transform: `rotate(${rotation}deg) scale(0.9)`,
-                  opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.4
+                  opacity: hoveredIndex === index ? 1 : 0.7
                 }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -73,7 +73,7 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
               key={project.slug} 
               className="w-full transition-opacity duration-300 ease-out"
               style={{
-                opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.4
+                opacity: hoveredIndex === index ? 1 : 0.7
               }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}

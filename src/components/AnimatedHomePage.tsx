@@ -219,15 +219,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  <p className="text-gray-600 dark:text-gray-300 text-base" style={{ lineHeight: '1.6' }}>
                    <strong>Interaction Designer and undergraduate at Utah Valley University</strong> pursuing a <strong>B.S. in Web Design and Development</strong> with an emphasis in Interaction Design. Currently serving as the Digital Media Department Representative, I am passionate about creating meaningful digital experiences and leading creative teams. My background blends design and development. I have experience designing for mobile and web platforms in Figma, alongside front-end development skills in HTML, CSS, JavaScript, React, and Next.js.
                  </p>
-                 <motion.p 
-                   className="text-gray-500 dark:text-gray-400 mt-2"
-                   style={{ fontSize: '12px' }}
-                   initial={{ opacity: 0 }}
-                   animate={{ opacity: 1 }}
-                   transition={{ delay: 1.0, duration: 0.5 }}
-                 >
-                   ← Also love dinosaurs!
-                 </motion.p>
+                                 <motion.div 
+                  className="mt-3 inline-block"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                >
+                  <div
+                    className="px-4 py-2 rounded-full text-white text-xs font-medium backdrop-blur-md border border-white/20"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
+                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                      backdropFilter: 'blur(10px)',
+                      fontSize: '11px',
+                      letterSpacing: '0.025em'
+                    }}
+                  >
+                    ← Also love dinosaurs!
+                  </div>
+                </motion.div>
                               </motion.div>
 
 

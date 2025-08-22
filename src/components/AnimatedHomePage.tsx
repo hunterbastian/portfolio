@@ -170,12 +170,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.0, duration: 0.5 }}
                 >
-                  <div className="relative w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-lg bg-white">
+                  <div className="relative w-16 h-16">
                     <Image
                       src="/favicon/Frame.svg"
                       alt="Hunter Bastian Profile"
                       fill
-                      className="object-contain p-1"
+                      className="object-contain"
                       priority
                     />
                   </div>
@@ -188,12 +188,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.1, duration: 0.5 }}
                >
-                 <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white flex-shrink-0">
+                 <div className="relative w-12 h-12 flex-shrink-0">
                    <Image
                      src="/favicon/Frame.svg"
                      alt="Hunter Bastian Logo"
                      fill
-                     className="object-contain p-1"
+                     className="object-contain"
                      priority
                    />
                  </div>

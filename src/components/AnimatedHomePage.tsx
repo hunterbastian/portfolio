@@ -181,24 +181,19 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   </div>
                 </motion.div>
 
-                <motion.h1
-                 className="mb-6 text-black dark:text-white font-playfair italic text-left motion-element text-fluid-3xl lg:text-fluid-4xl flex items-center gap-3"
-                 style={{ lineHeight: '1.2' }}
+                <motion.div
+                 className="mb-6"
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.1, duration: 0.5 }}
                >
-                 <div className="relative w-12 h-12 flex-shrink-0">
-                   <Image
-                     src="/favicon/Frame.svg"
-                     alt="Hunter Bastian Logo"
-                     fill
-                     className="object-contain"
-                     priority
-                   />
-                 </div>
-                 Hunter Bastian
-               </motion.h1>
+                 <h1 className="text-black dark:text-white font-playfair italic font-bold text-left motion-element text-fluid-3xl lg:text-fluid-4xl" style={{ lineHeight: '1.2' }}>
+                   Hunter Bastian
+                 </h1>
+                 <h2 className="text-black dark:text-white font-playfair italic font-bold text-left motion-element text-fluid-3xl lg:text-fluid-4xl" style={{ lineHeight: '1.2' }}>
+                   Interaction Designer
+                 </h2>
+               </motion.div>
                
                <motion.div
                  className="mb-4 text-left flex items-center gap-2"

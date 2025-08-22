@@ -163,23 +163,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
 
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
-                {/* Profile Picture */}
-                <motion.div
-                  className="mb-6 flex justify-start"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.0, duration: 0.5 }}
-                >
-                  <div className="relative w-16 h-16">
-                    <Image
-                      src="/favicon/Frame.svg"
-                      alt="Hunter Bastian Profile"
-                      fill
-                      className="object-contain"
-                      priority
-                    />
-                  </div>
-                </motion.div>
+
 
                 <motion.div
                  className="mb-6"

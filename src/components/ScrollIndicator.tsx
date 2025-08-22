@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 export default function ScrollIndicator() {
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0.08) // Start with minimum value
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
     setIsMounted(true)
     
     const updateScrollProgress = () => {
+      if (typeof window === 'undefined') return
+      
       const scrollTop = window.scrollY
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
       const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0
@@ -32,46 +34,18 @@ export default function ScrollIndicator() {
     }
   }, [])
 
-  // Show a static version during SSR, then animate when mounted
-  if (!isMounted) {
-    return (
-      <div className="relative w-3 h-3 ml-2 flex-shrink-0">
-        <div className="absolute inset-0 rounded-full border border-foreground/30" />
-        <svg className="absolute inset-0 w-3 h-3 -rotate-90" viewBox="0 0 12 12">
-          <circle
-            cx="6"
-            cy="6"
-            r="4.5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            className="text-foreground/70"
-            strokeDasharray={`${2 * Math.PI * 4.5}`}
-            strokeDashoffset={`${2 * Math.PI * 4.5 * (1 - 0.08)}`}
-          />
-        </svg>
-        <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-foreground/50 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
-      </div>
-    )
-  }
-
-  return (
-    <motion.div
-      className="relative w-3 h-3 ml-2 flex-shrink-0"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-    >
-      {/* Background circle */}
-      <div className="absolute inset-0 rounded-full border border-foreground/30" />
+  // Consistent structure for SSR and client-side to prevent hydration issues
+  const circleStructure = (
+    <div className="relative w-3 h-3 ml-2 flex-shrink-0">
+      {/* Background circle - always visible */}
+      <div className="absolute inset-0 rounded-full border border-gray-300 dark:border-gray-600" />
       
       {/* Progress circle */}
       <svg
         className="absolute inset-0 w-3 h-3 -rotate-90"
         viewBox="0 0 12 12"
       >
-        <motion.circle
+        <circle
           cx="6"
           cy="6"
           r="4.5"
@@ -79,27 +53,33 @@ export default function ScrollIndicator() {
           stroke="currentColor"
           strokeWidth="1.5"
           strokeLinecap="round"
-          className="text-foreground/70"
+          className="text-gray-600 dark:text-gray-400"
           strokeDasharray={`${2 * Math.PI * 4.5}`}
-          initial={{ strokeDashoffset: `${2 * Math.PI * 4.5}` }}
-          animate={{ 
-            strokeDashoffset: `${2 * Math.PI * 4.5 * (1 - scrollProgress)}` 
-          }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 400, 
-            damping: 40 
+          strokeDashoffset={`${2 * Math.PI * 4.5 * (1 - scrollProgress)}`}
+          style={{
+            transition: isMounted ? 'stroke-dashoffset 0.1s ease-out' : 'none'
           }}
         />
       </svg>
       
-      {/* Center dot */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 w-1 h-1 bg-foreground/50 rounded-full transform -translate-x-1/2 -translate-y-1/2"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.2, duration: 0.2, ease: "easeOut" }}
-      />
+
+    </div>
+  )
+
+  // If not mounted (SSR), return static version
+  if (!isMounted) {
+    return circleStructure
+  }
+
+  // When mounted, wrap with motion for smooth animations
+  return (
+    <motion.div
+      initial={{ opacity: 0.8 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="contents" // Use contents to avoid extra wrapper
+    >
+      {circleStructure}
     </motion.div>
   )
 }

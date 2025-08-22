@@ -28,7 +28,7 @@
 - **Social Media**: Redesigned for mobile with grid layout and text labels
 - **Typography**: Custom Tailwind config with fluid font sizing using `clamp()`
 - **Bug Fixes**: Fixed Next.js viewport warnings and font compatibility issues
-- **Content**: Added "← Also love dinosaurs!" personal note
+
 
 ### **v1.0.0** - Initial Launch *(Previous)*
 - Next.js portfolio with project showcase

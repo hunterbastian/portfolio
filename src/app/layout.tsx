@@ -5,6 +5,7 @@ import './viewport.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 
 
@@ -93,6 +94,7 @@ export default function RootLayout({
                  <Footer />
                                </div>
                 <SpeedInsights />
+                <Analytics />
                 
                 {/* Service Worker Registration - DISABLED FOR DEVELOPMENT */}
                 {process.env.NODE_ENV === 'production' && (

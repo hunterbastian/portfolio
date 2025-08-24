@@ -219,31 +219,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
                 <div className="flex flex-wrap justify-start gap-2 sm:gap-4">
-                 <motion.a
+                 <a
                    href="#case-studies"
-                   className="inline-flex items-center justify-center rounded-md px-6 py-3 font-medium shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap relative"
-                   style={{
-                     background: `linear-gradient(90deg, #F8FAFC, #E2E8F0, transparent)`,
-                     border: `1px solid #CBD5E1`,
-                     color: '#475569',
-                     fontSize: '10px'
-                   }}
-                   whileHover={{ 
-                     scale: 1.08, 
-                     rotate: -3
-                   }}
-                   transition={{ duration: 0.2, ease: "easeOut" }}
-                   onMouseEnter={(e) => {
-                     e.currentTarget.style.background = `linear-gradient(90deg, #CBD5E1, #94A3B8, transparent)`;
-                     e.currentTarget.style.boxShadow = `0 4px 20px rgba(71, 85, 105, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
-                   }}
-                   onMouseLeave={(e) => {
-                     e.currentTarget.style.background = `linear-gradient(90deg, #F8FAFC, #E2E8F0, transparent)`;
-                     e.currentTarget.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
-                   }}
+                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
+                   style={{ fontSize: '10px' }}
                  >
                    CASE STUDIES
-                 </motion.a>
+                 </a>
                  <a
                    href="#contact"
                    className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"

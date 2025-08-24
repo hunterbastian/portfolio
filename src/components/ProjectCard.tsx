@@ -58,13 +58,6 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
           )}
           
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
-          
-          {/* Tooltip */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none">
-            <div className="bg-white/90 backdrop-blur-md rounded-full px-4 py-2 shadow-lg border border-white/20">
-              <span className="text-gray-800 font-medium text-sm">View</span>
-            </div>
-          </div>
         </div>
         
         <div className="p-6">

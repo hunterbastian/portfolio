@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ProjectCard from '@/components/ProjectCard'
 import { ProjectFrontmatter } from '@/types/project'
 
@@ -16,10 +16,36 @@ interface ProjectGridClientProps {
 
 export default function ProjectGridClient({ category, projects }: ProjectGridClientProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [showTooltip, setShowTooltip] = useState(false)
   
   const filteredProjects = category && category !== 'all' 
     ? projects.filter(project => project.frontmatter.category === category)
     : projects
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY })
+    }
+
+    if (showTooltip) {
+      window.addEventListener('mousemove', handleMouseMove)
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [showTooltip])
+
+  const handleMouseEnter = (index: number) => {
+    setHoveredIndex(index)
+    setShowTooltip(true)
+  }
+
+  const handleMouseLeave = () => {
+    setHoveredIndex(null)
+    setShowTooltip(false)
+  }
 
   return (
     <>
@@ -51,8 +77,8 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
                   transform: `rotate(${rotation}deg) scale(0.9)`,
                   opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.7
                 }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={handleMouseLeave}
               >
                 <ProjectCard
                   slug={project.slug}
@@ -75,8 +101,8 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
               style={{
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.7
               }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
             >
               <ProjectCard
                 slug={project.slug}
@@ -87,6 +113,22 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
           ))}
         </div>
       </div>
+
+      {/* Cursor-following tooltip */}
+      {showTooltip && (
+        <div 
+          className="fixed pointer-events-none z-50 transition-all duration-200 ease-out"
+          style={{
+            left: mousePosition.x + 20,
+            top: mousePosition.y - 40,
+            transform: 'translate3d(0, 0, 0)', // GPU acceleration
+          }}
+        >
+          <div className="bg-white/90 backdrop-blur-md rounded-full px-4 py-2 shadow-lg border border-white/20">
+            <span className="text-gray-800 font-medium text-sm whitespace-nowrap">View Project</span>
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -76,6 +76,17 @@ export default function Header() {
             </button>
           </div>
 
+          {/* Profile Picture */}
+          <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/10 border border-white/20">
+            <Image
+              src="/favicon/Frame.svg"
+              alt="Hunter Bastian Profile"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+
         </nav>
       </div>
     </header>

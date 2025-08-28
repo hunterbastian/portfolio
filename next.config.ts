@@ -51,15 +51,20 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/((?!api/).*)',
+        source: '/',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
+            value: 'public, max-age=60, stale-while-revalidate=300',
           },
+        ],
+      },
+      {
+        source: '/projects/:path*',
+        headers: [
           {
-            key: 'CDN-Cache-Control',
-            value: 'public, max-age=60',
+            key: 'Cache-Control',
+            value: 'public, max-age=300, stale-while-revalidate=600',
           },
         ],
       },

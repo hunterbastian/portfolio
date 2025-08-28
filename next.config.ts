@@ -47,27 +47,34 @@ const nextConfig: NextConfig = {
   // Compression and caching
   compress: true,
   
-  // Headers for better caching
+  // Headers for optimal caching strategy
   async headers() {
     return [
+      // HTML pages - Always fresh on production domain
       {
-        source: '/',
+        source: '/((?!api|_next/static|images).*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=60, stale-while-revalidate=300',
+            value: 'public, max-age=0, must-revalidate',
+          },
+          {
+            key: 'CDN-Cache-Control', 
+            value: 'public, max-age=60',
           },
         ],
       },
+      // Static JS/CSS assets - Long-term immutable cache
       {
-        source: '/projects/:path*',
+        source: '/_next/static/:all*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=300, stale-while-revalidate=600',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
+      // Images - Long-term cache with versioning
       {
         source: '/images/:all*',
         headers: [
@@ -77,12 +84,13 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // API routes - No cache
       {
-        source: '/_next/static/:all*',
+        source: '/api/:all*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'no-store',
           },
         ],
       },

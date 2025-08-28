@@ -1,9 +1,8 @@
-// Service Worker for Portfolio - Basic offline support
-const CACHE_NAME = 'portfolio-v1'
+// Service Worker for Portfolio - Assets only, fresh HTML always
+const CACHE_NAME = 'portfolio-assets-v2'
 const STATIC_ASSETS = [
-  '/',
   '/favicon/favicon.ico',
-  '/favicon/favicon-32x32.png',
+  '/favicon/favicon-32x32.png', 
   '/favicon/apple-touch-icon.png',
   '/images/portfolio/IMG_2600.jpg',
   '/images/projects/brand-identity-system.svg',
@@ -38,7 +37,7 @@ self.addEventListener('activate', event => {
   )
 })
 
-// Fetch event - serve from cache when offline
+// Fetch event - Network first for HTML, cache for assets
 self.addEventListener('fetch', event => {
   // Only handle GET requests
   if (event.request.method !== 'GET') return
@@ -46,45 +45,45 @@ self.addEventListener('fetch', event => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) return
   
-  // Skip API routes and dynamic content
+  // Skip API routes
   if (event.request.url.includes('/api/')) return
   
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached version if available
-        if (response) {
-          return response
-        }
-        
-        // Otherwise, fetch from network
-        return fetch(event.request)
-          .then(response => {
-            // Don't cache non-successful responses
-            if (!response || response.status !== 200 || response.type !== 'basic') {
+  // Determine if this is a static asset
+  const isStaticAsset = event.request.url.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|avif|woff|woff2)$/) ||
+                        event.request.url.includes('/_next/static/')
+  
+  if (isStaticAsset) {
+    // Cache first for static assets
+    event.respondWith(
+      caches.match(event.request)
+        .then(response => {
+          if (response) return response
+          
+          return fetch(event.request)
+            .then(response => {
+              if (response && response.status === 200) {
+                const responseToCache = response.clone()
+                caches.open(CACHE_NAME)
+                  .then(cache => cache.put(event.request, responseToCache))
+              }
               return response
-            }
-            
-            // Clone the response
-            const responseToCache = response.clone()
-            
-            // Cache pages and static assets
-            if (event.request.url.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|avif)$/)) {
-              caches.open(CACHE_NAME)
-                .then(cache => {
-                  cache.put(event.request, responseToCache)
-                })
-            }
-            
-            return response
-          })
-          .catch(() => {
-            // Offline fallback for pages
-            if (event.request.mode === 'navigate') {
-              return caches.match('/')
-            }
-            return null
-          })
-      })
-  )
+            })
+        })
+    )
+  } else {
+    // Network first for HTML pages - ALWAYS FRESH
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => {
+          // Only fallback to cache for navigation requests when truly offline
+          if (event.request.mode === 'navigate') {
+            return new Response(
+              '<html><body><h1>Offline</h1><p>Please check your connection</p></body></html>',
+              { headers: { 'Content-Type': 'text/html' } }
+            )
+          }
+          return null
+        })
+    )
+  }
 })

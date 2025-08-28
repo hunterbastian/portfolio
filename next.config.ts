@@ -55,7 +55,11 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=60, must-revalidate',
+            value: 'public, max-age=0, must-revalidate',
+          },
+          {
+            key: 'CDN-Cache-Control',
+            value: 'public, max-age=60',
           },
         ],
       },

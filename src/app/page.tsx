@@ -4,6 +4,9 @@ import AnimatedHomePage from '@/components/AnimatedHomePage'
 import ProjectGridClient from '@/components/ProjectGridClient'
 import { Suspense } from 'react'
 
+// Revalidate every 60 seconds in production
+export const revalidate = 60
+
 interface HomePageProps {
   searchParams: Promise<{ category?: string }>
 }

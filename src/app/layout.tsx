@@ -88,7 +88,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-                   <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable} safe-area-padding`}>
+                   <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable} safe-area-padding bg-background text-foreground`}>
                        <div className="min-h-screen flex flex-col">
                  <Header />
                  <main className="flex-1">{children}</main>

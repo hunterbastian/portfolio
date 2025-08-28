@@ -310,43 +310,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
      transition={{ delay: 0.4, duration: 0.5 }}
      className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0 relative"
    >
-     {/* Right Object next to Contact */}
-     <motion.div
-       className="absolute -right-16 top-1/4 transform -translate-y-1/2 hidden xl:block"
-       initial={{ opacity: 0, x: 50, rotate: 15 }}
-       animate={{ 
-         opacity: 1, 
-         x: 0, 
-         rotate: 0,
-         y: [0, -12, 0],
-       }}
-       transition={{ 
-         opacity: { delay: 0.8, duration: 0.8, ease: "easeOut" },
-         x: { delay: 0.8, duration: 0.8, ease: "easeOut" },
-         rotate: { delay: 0.8, duration: 0.8, ease: "easeOut" },
-         y: { 
-           delay: 1.8,
-           duration: 5, 
-           repeat: Infinity, 
-           ease: "easeInOut"
-         }
-       }}
-     >
-       <iframe
-         allowTransparency={true}
-         style={{ 
-           width: '200px', 
-           height: '200px', 
-           backgroundColor: 'transparent',
-           border: 'none'
-         }}
-         src="https://app.endlesstools.io/embed/fe304cc2-31e6-42b6-acf2-9f540b14cbd8"
-         title="Right Object 3D Model"
-         allow="clipboard-write; encrypted-media; gyroscope; web-share"
-         referrerPolicy="strict-origin-when-cross-origin"
-         allowFullScreen
-       />
-     </motion.div>
+
 
      <div className="max-w-2xl mx-auto">
        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Contact</h2>
@@ -691,6 +655,43 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.5 }}
       >
+        {/* Right Object next to About Me */}
+        <motion.div
+          className="absolute -right-16 top-1/2 transform -translate-y-1/2 hidden xl:block"
+          initial={{ opacity: 0, x: 50, rotate: 15 }}
+          animate={{ 
+            opacity: 1, 
+            x: 0, 
+            rotate: 0,
+            y: [0, -12, 0],
+          }}
+          transition={{ 
+            opacity: { delay: 1.2, duration: 0.8, ease: "easeOut" },
+            x: { delay: 1.2, duration: 0.8, ease: "easeOut" },
+            rotate: { delay: 1.2, duration: 0.8, ease: "easeOut" },
+            y: { 
+              delay: 2.0,
+              duration: 5, 
+              repeat: Infinity, 
+              ease: "easeInOut"
+            }
+          }}
+        >
+          <iframe
+            allowTransparency={true}
+            style={{ 
+              width: '200px', 
+              height: '200px', 
+              backgroundColor: 'transparent',
+              border: 'none'
+            }}
+            src="https://app.endlesstools.io/embed/fe304cc2-31e6-42b6-acf2-9f540b14cbd8"
+            title="Right Object 3D Model"
+            allow="clipboard-write; encrypted-media; gyroscope; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </motion.div>
 
         <div className="max-w-2xl mx-auto">
           <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>About me</h2>

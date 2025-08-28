@@ -4,7 +4,7 @@ import AnimatedHomePage from '@/components/AnimatedHomePage'
 import ProjectGridClient from '@/components/ProjectGridClient'
 import { Suspense } from 'react'
 
-// Revalidate every 60 seconds in production
+// Revalidate every 1 minute in production
 export const revalidate = 60
 
 interface HomePageProps {

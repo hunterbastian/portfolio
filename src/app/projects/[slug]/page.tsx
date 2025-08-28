@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { getAllProjects, getProjectBySlug } from '@/lib/projects'
 import type { Metadata } from 'next'
 
-// Revalidate every 10 minutes for individual project pages
-export const revalidate = 600
+// Revalidate every 5 minutes for individual project pages
+export const revalidate = 300
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>

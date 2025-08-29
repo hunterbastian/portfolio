@@ -29,47 +29,68 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
     setHoveredIndex(null)
   }
 
+  // Split projects into rows: first 3 on top row, rest on bottom row
+  const topRowProjects = filteredProjects.slice(0, 3)
+  const bottomRowProjects = filteredProjects.slice(3)
+
+  const renderProjectRow = (projects: Project[], rowIndex: number) => {
+    return (
+      <div className="flex gap-6 justify-center transition-transform duration-500 ease-out group overflow-visible">
+        {projects.map((project, index) => {
+          const totalInRow = projects.length
+          const isFirst = index === 0
+          const isLast = index === totalInRow - 1
+          const actualIndex = rowIndex === 0 ? index : index + 3 // Maintain original index for animations
+          
+          // Calculate rotation based on position in row
+          let rotation = 0
+          if (totalInRow === 1) {
+            rotation = 0 // No rotation for single item
+          } else if (isFirst) {
+            rotation = -3
+          } else if (isLast) {
+            rotation = 3
+          } else if (totalInRow > 2) {
+            // Distribute rotations for middle projects
+            const middleIndex = index - 1
+            const middleCount = totalInRow - 2
+            const rotationStep = 6 / (middleCount + 1) // Distribute between -3 and 3
+            rotation = -3 + rotationStep * (middleIndex + 1)
+          }
+          
+          return (
+            <div 
+              key={project.slug}
+              className="flex-shrink-0 w-64 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
+              style={{
+                transform: `rotate(${rotation}deg) scale(0.9)`,
+                opacity: hoveredIndex === null ? 1 : hoveredIndex === actualIndex ? 1 : 0.7
+              }}
+              onMouseEnter={() => handleMouseEnter(actualIndex)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <ProjectCard
+                slug={project.slug}
+                frontmatter={project.frontmatter}
+                index={actualIndex}
+              />
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
   return (
     <>
-      {/* Desktop Layout - Original with rotation effects */}
-      <div className="hidden lg:flex justify-center">
-        <div className="flex gap-6 transition-transform duration-500 ease-out group overflow-visible">
-          {filteredProjects.map((project, index) => {
-            const totalProjects = filteredProjects.length
-            const isFirst = index === 0
-            const isLast = index === totalProjects - 1
-            
-            // Calculate rotation based on position
-            let rotation = 0
-            if (isFirst) rotation = -3
-            else if (isLast) rotation = 3
-            else if (totalProjects > 2) {
-              // Distribute rotations for middle projects
-              const middleIndex = index - 1
-              const middleCount = totalProjects - 2
-              const rotationStep = 6 / (middleCount + 1) // Distribute between -3 and 3
-              rotation = -3 + rotationStep * (middleIndex + 1)
-            }
-            
-            return (
-              <div 
-                key={project.slug}
-                className="flex-shrink-0 w-64 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
-                style={{
-                  transform: `rotate(${rotation}deg) scale(0.9)`,
-                  opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.7
-                }}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <ProjectCard
-                  slug={project.slug}
-                  frontmatter={project.frontmatter}
-                  index={index}
-                />
-              </div>
-            )
-          })}
+      {/* Desktop Layout - Multi-row with rotation effects */}
+      <div className="hidden lg:block">
+        <div className="space-y-8">
+          {/* Top Row - First 3 projects */}
+          {topRowProjects.length > 0 && renderProjectRow(topRowProjects, 0)}
+          
+          {/* Bottom Row - Remaining projects */}
+          {bottomRowProjects.length > 0 && renderProjectRow(bottomRowProjects, 1)}
         </div>
       </div>
       

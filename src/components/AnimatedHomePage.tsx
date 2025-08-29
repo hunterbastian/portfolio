@@ -145,7 +145,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           }}
         >
                     <iframe
-            allowTransparency={true}
+            allowtransparency="true"
             style={{ 
               width: '320px', 
               height: '320px', 
@@ -197,7 +197,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
                
                <motion.div
-                 className="mb-8 text-left"
+                 className="mb-4 text-left"
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.2, duration: 0.5 }}
@@ -217,7 +217,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       {/* Case Studies Section */}
       <motion.section 
         id="case-studies" 
-        className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0"
+        className="pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 px-4 sm:px-6 lg:px-0"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
@@ -612,7 +612,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           }}
         >
           <iframe
-            allowTransparency={true}
+            allowtransparency="true"
             style={{ 
               width: '200px', 
               height: '200px', 

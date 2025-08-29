@@ -12,11 +12,13 @@ export default function PerformanceMonitor() {
             console.log('LCP:', entry.startTime)
           }
           if (entry.entryType === 'first-input') {
-            console.log('FID:', entry.processingStart - entry.startTime)
+            const firstInputEntry = entry as PerformanceEventTiming
+            console.log('FID:', firstInputEntry.processingStart - firstInputEntry.startTime)
           }
           if (entry.entryType === 'layout-shift') {
-            if (!entry.hadRecentInput) {
-              console.log('CLS:', entry.value)
+            const layoutShiftEntry = entry as LayoutShift
+            if (!layoutShiftEntry.hadRecentInput) {
+              console.log('CLS:', layoutShiftEntry.value)
             }
           }
         }

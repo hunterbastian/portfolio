@@ -210,71 +210,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
 
 
-                      <motion.div
-                className=""
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-              >
-                <div className="flex flex-wrap justify-start gap-2 sm:gap-4">
-                 <a
-                   href="#case-studies"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
-                 >
-                   CASE STUDIES
-                 </a>
-                 <a
-                   href="#contact"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
-                 >
-                   CONTACT
-                 </a>
-                 <a
-                   href="#experience"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
-                 >
-                   EXPERIENCE
-                 </a>
-                 <a
-                   href="#education"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
-                 >
-                   EDUCATION
-                 </a>
-                 <a
-                   href="#about-me"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
-                 >
-                   ABOUT ME
-                 </a>
-                 <a
-                   href="#creating"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
-                 >
-                   CREATING
-                 </a>
-                 <a
-                   href="#everyday-tech"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
-                 >
-                   EVERYDAY TECH
-                 </a>
-                 <a
-                   href="#tech-stack"
-                   className="inline-flex items-center justify-center rounded-md border border-input bg-gray-50 px-6 py-3 font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap"
-                   style={{ fontSize: '10px' }}
-                 >
-                   STACK
-                 </a>
-                </div>
-               </motion.div>
+ 
         </div>
       </motion.section>
 

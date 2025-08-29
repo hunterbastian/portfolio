@@ -9,13 +9,13 @@ import ScrollIndicator from './ScrollIndicator'
 
 const navigation: Array<{ name: string; href: string }> = [
   { name: 'CASE STUDIES', href: '#case-studies' },
-  { name: 'ABOUT ME', href: '#about-me' },
+  { name: 'CONTACT', href: '#contact' },
   { name: 'EXPERIENCE', href: '#experience' },
-  { name: 'CONTACT', href: '#contact' }
+  { name: 'EDUCATION', href: '#education' }
 ]
 
 const moreNavigation: Array<{ name: string; href: string }> = [
-  { name: 'EDUCATION', href: '#education' },
+  { name: 'ABOUT ME', href: '#about-me' },
   { name: 'CREATING', href: '#creating' },
   { name: 'EVERYDAY TECH', href: '#everyday-tech' },
   { name: 'STACK', href: '#tech-stack' }

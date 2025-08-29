@@ -88,6 +88,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="HB Portfolio" />
+        
+        {/* Resource Hints */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
+        <link rel="dns-prefetch" href="//app.endlesstools.io" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      </head>
                    <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable} safe-area-padding bg-background text-foreground`}>
                        <div className="min-h-screen flex flex-col">
                  <Header />

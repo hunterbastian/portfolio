@@ -50,17 +50,13 @@ const nextConfig: NextConfig = {
   // Headers for optimal caching strategy
   async headers() {
     return [
-      // HTML pages - Always fresh on production domain
+      // HTML routes - No cache for fresh content
       {
-        source: '/((?!api|_next/static|images).*)',
+        source: '/((?!api|_next/static|images|favicon).*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
-          {
-            key: 'CDN-Cache-Control', 
-            value: 'public, max-age=60',
+            value: 'no-store',
           },
         ],
       },
@@ -74,9 +70,29 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Images - Long-term cache with versioning
+      // Images - Long-term immutable cache
       {
         source: '/images/:all*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Fonts - Long-term immutable cache
+      {
+        source: '/fonts/:all*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // Favicon files - Long-term cache
+      {
+        source: '/favicon/:all*',
         headers: [
           {
             key: 'Cache-Control',

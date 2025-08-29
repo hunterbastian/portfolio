@@ -1,4 +1,5 @@
 import HeroCanvasWrapper from '@/components/HeroCanvasWrapper'
+import Link from 'next/link'
 
 export default function TestCanvasPage() {
   return (
@@ -64,7 +65,7 @@ export default function TestCanvasPage() {
           <h3 className="text-lg font-semibold mb-2">Features Demonstrated:</h3>
           <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
             <li>✅ Dynamic import with <code>next/dynamic</code> and <code>ssr: false</code></li>
-            <li>✅ Canvas with <code>frameloop="demand"</code> and <code>dpr={`[1, 1.75]`}</code></li>
+            <li>✅ Canvas with <code>frameloop=&quot;demand&quot;</code> and <code>dpr={`[1, 1.75]`}</code></li>
             <li>✅ Lightweight placeholder while loading</li>
             <li>✅ Proper resource disposal on unmount</li>
             <li>✅ Multiple instances without conflicts</li>
@@ -74,12 +75,12 @@ export default function TestCanvasPage() {
 
         {/* Back button */}
         <div className="text-center">
-          <a 
+          <Link 
             href="/"
             className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium"
           >
             ← Back to Portfolio
-          </a>
+          </Link>
         </div>
       </div>
     </div>

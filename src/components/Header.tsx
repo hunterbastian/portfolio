@@ -25,9 +25,10 @@ export default function Header() {
               <Image
                 src="/favicon/Frame.svg"
                 alt="Hunter Bastian Logo"
-                fill
+                width={11}
+                height={11}
                 className="object-contain"
-                priority
+                sizes="11px"
               />
             </div>
           </Link>

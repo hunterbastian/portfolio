@@ -56,10 +56,10 @@ export default function HeroCanvas({ className = '' }: HeroCanvasProps) {
 
   // Cleanup Three.js resources on unmount
   useEffect(() => {
+    const canvas = canvasRef.current
     return () => {
       // Dispose of any remaining Three.js resources
-      if (canvasRef.current) {
-        const canvas = canvasRef.current
+      if (canvas) {
         const context = canvas.getContext('webgl') || canvas.getContext('webgl2')
         if (context) {
           // Force context loss to free GPU memory

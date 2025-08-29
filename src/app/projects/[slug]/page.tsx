@@ -189,6 +189,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         height={600}
                         className="w-full rounded-lg shadow-lg"
                         style={{ marginTop: '16px' }}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
                       />
                     </div>
                   );

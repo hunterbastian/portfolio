@@ -2,6 +2,9 @@
 
 ## Version History
 
+### **v2.3.3** - Spacing Consistency *(August 2025)*
+- Improved section spacing consistency throughout portfolio
+
 ### **v2.3.2** - Text Size Fix *(August 2025)*
 - Fixed bio text size back to original (text-base/16px instead of text-lg/18px)
 - Restored proper typography sizing that was accidentally changed during mobile optimization

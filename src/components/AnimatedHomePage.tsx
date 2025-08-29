@@ -196,8 +196,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                </motion.div>
 
                
-               <motion.div
-                 className="mb-4 text-left"
+                              <motion.div
+                 className="mb-2 text-left"
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.2, duration: 0.5 }}
@@ -205,7 +205,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  <p className="text-gray-600 dark:text-gray-300 text-base" style={{ lineHeight: '1.6' }}>
                    <strong>Undergraduate at Utah Valley University</strong> pursuing a <strong>B.S. in Web Design and Development</strong> with an emphasis in Interaction Design. Currently serving as the Digital Media Department Representative, I am passionate about creating meaningful digital experiences. My background blends design and development. I have experience designing for mobile and web platforms in Figma, alongside front-end development skills in HTML, CSS, JavaScript, React, and Next.js.
                  </p>
- 
+
                               </motion.div>
 
 

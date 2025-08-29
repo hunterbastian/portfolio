@@ -217,7 +217,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       {/* Case Studies Section */}
       <motion.section 
         id="case-studies" 
-        className="pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 px-4 sm:px-6 lg:px-0"
+        className="py-16 px-4 sm:px-6 lg:px-0"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}

@@ -58,12 +58,17 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
             rotation = -3 + rotationStep * (middleIndex + 1)
           }
           
+          // Make bottom row projects smaller than top row
+          const isBottomRow = rowIndex === 1
+          const cardWidth = isBottomRow ? "w-52" : "w-64" // 208px vs 256px
+          const baseScale = isBottomRow ? 0.8 : 0.9
+          
           return (
             <div 
               key={project.slug}
-              className="flex-shrink-0 w-64 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
+              className={`flex-shrink-0 ${cardWidth} transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100`}
               style={{
-                transform: `rotate(${rotation}deg) scale(0.9)`,
+                transform: `rotate(${rotation}deg) scale(${baseScale})`,
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === actualIndex ? 1 : 0.7
               }}
               onMouseEnter={() => handleMouseEnter(actualIndex)}

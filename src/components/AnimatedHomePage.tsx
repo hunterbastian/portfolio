@@ -117,7 +117,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     <div className="container mx-auto max-w-6xl px-4 py-8">
       {/* Hero Section */}
       <motion.section 
-        className="py-16 relative"
+        className="pt-16 pb-8 sm:pb-12 lg:pb-16 relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -217,7 +217,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       {/* Case Studies Section */}
       <motion.section 
         id="case-studies" 
-        className="py-16 px-4 sm:px-6 lg:px-0"
+        className="pt-0 pb-8 sm:pb-12 lg:pb-16 px-4 sm:px-6 lg:px-0"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
@@ -228,7 +228,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Case Studies</h2>
+                <h2 className="font-playfair italic text-left mb-3 sm:mb-4 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Case Studies</h2>
               </motion.div>
 
              {children}
@@ -647,7 +647,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ delay: 1.1, duration: 0.5 }}
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-lg sm:text-xl lg:text-2xl" style={{ fontWeight: '400' }}>Creating</h2>
+          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Creating</h2>
           
           <motion.ul 
             className="space-y-4"
@@ -681,7 +681,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0"
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-lg sm:text-xl lg:text-2xl" style={{ fontWeight: '400' }}>Everyday tech</h2>
+          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Everyday tech</h2>
         </div>
         <div className="max-w-2xl mx-auto">
           <motion.ul 
@@ -755,7 +755,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="py-16"
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8" style={{ fontSize: '24px', fontWeight: '400' }}>Stack</h2>
+          <h2 className="font-playfair italic text-left mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Stack</h2>
         </div>
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between gap-3 mb-3">

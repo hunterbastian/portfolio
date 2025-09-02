@@ -62,8 +62,7 @@ const education = [
     { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-300 shadow-sm shadow-orange-200', orbColor: '#FFB366', hoverRotation: -4 },
     { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-300 shadow-sm shadow-yellow-200', orbColor: '#FFD93D', hoverRotation: 9 },
     { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-300 shadow-sm shadow-blue-200', orbColor: '#93C5FD', hoverRotation: -7 },
-    { name: 'React', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-cyan-300 shadow-sm shadow-cyan-200', orbColor: '#67E8F9', hoverRotation: 5 },
-    { name: 'Next.js', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-gray-300 shadow-sm shadow-gray-200', orbColor: '#D1D5DB', hoverRotation: -6 },
+    { name: 'AI Models', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-violet-300 shadow-sm shadow-violet-200', orbColor: '#A78BFA', hoverRotation: 4 },
     { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-300 shadow-sm shadow-red-200', orbColor: '#FCA5A5', hoverRotation: 8 },
     { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-300 shadow-sm shadow-indigo-200', orbColor: '#A5B4FC', hoverRotation: -5 }
   ]
@@ -117,7 +116,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     <div className="container mx-auto max-w-6xl px-4 py-8">
       {/* Hero Section */}
       <motion.section 
-        className="pt-16 pb-8 sm:pb-12 lg:pb-16 relative"
+        className="py-16 relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -203,7 +202,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  transition={{ delay: 0.2, duration: 0.5 }}
                >
                  <p className="text-gray-600 dark:text-gray-300 text-base" style={{ lineHeight: '1.6' }}>
-                   <strong>Undergraduate at Utah Valley University</strong> pursuing a <strong>B.S. in Web Design and Development</strong> with an emphasis in Interaction Design. Currently serving as the Digital Media Department Representative, I am passionate about creating meaningful digital experiences. My background blends design and development. I have experience designing for mobile and web platforms in Figma, alongside front-end development skills in HTML, CSS, JavaScript, React, and Next.js.
+                   <strong>Undergraduate at Utah Valley University</strong> pursuing a <strong>B.S. in Web Design and Development</strong> with an emphasis in Interaction Design. Currently serving as the Digital Media Department Representative, I am passionate about creating meaningful digital experiences. My background blends design and development. I have experience designing for mobile and web platforms in Figma, alongside front-end development skills in HTML, CSS, JavaScript, React, and Next.js with AI first enthusiasm.
                  </p>
 
                               </motion.div>
@@ -217,7 +216,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       {/* Case Studies Section */}
       <motion.section 
         id="case-studies" 
-        className="pt-0 pb-8 sm:pb-12 lg:pb-16 px-4 sm:px-6 lg:px-0"
+        className="py-16 px-4 sm:px-6 lg:px-0"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
@@ -228,7 +227,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                <h2 className="font-playfair italic text-left mb-3 sm:mb-4 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Case Studies</h2>
+                <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Case Studies</h2>
               </motion.div>
 
              {children}
@@ -584,48 +583,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       {/* About me Section */}
       <motion.section 
         id="about-me" 
-        className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0 relative"
+        className="py-16 px-4 sm:px-6 lg:px-0 relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.5 }}
       >
-        {/* Right Object next to About Me */}
-        <motion.div
-          className="absolute -right-16 top-1/2 transform -translate-y-1/2 hidden xl:block"
-          initial={{ opacity: 0, x: 50, rotate: 15 }}
-          animate={{ 
-            opacity: 1, 
-            x: 0, 
-            rotate: 0,
-            y: [0, -12, 0],
-          }}
-          transition={{ 
-            opacity: { delay: 1.2, duration: 0.8, ease: "easeOut" },
-            x: { delay: 1.2, duration: 0.8, ease: "easeOut" },
-            rotate: { delay: 1.2, duration: 0.8, ease: "easeOut" },
-            y: { 
-              delay: 2.0,
-              duration: 5, 
-              repeat: Infinity, 
-              ease: "easeInOut"
-            }
-          }}
-        >
-          <iframe
-
-            style={{ 
-              width: '200px', 
-              height: '200px', 
-              backgroundColor: 'transparent',
-              border: 'none'
-            }}
-            src="https://app.endlesstools.io/embed/fe304cc2-31e6-42b6-acf2-9f540b14cbd8"
-            title="Right Object 3D Model"
-            allow="clipboard-write; encrypted-media; gyroscope; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
-        </motion.div>
+        
 
         <div className="max-w-2xl mx-auto">
           <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>About me</h2>
@@ -641,7 +604,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       {/* Creating Section */}
       <motion.section 
         id="creating" 
-        className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0"
+        className="py-16 px-4 sm:px-6 lg:px-0"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.1, duration: 0.5 }}
@@ -758,110 +721,32 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <h2 className="font-playfair italic text-left mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Stack</h2>
         </div>
         <div className="max-w-2xl mx-auto">
-          <div className="flex justify-between gap-3 mb-3">
-            {skills.slice(0, 5).map((skill, index) => (
-              <motion.span
+          <motion.ul 
+            className="space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.5 }}
+          >
+            {skills.map((skill, index) => (
+              <motion.li 
                 key={skill.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.5 + index * 0.1, duration: 0.3 }}
-                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
-                style={{
-                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                  border: `1px solid ${skill.orbColor}20`,
-                  fontSize: '12px'
-                }}
+                className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+                style={{ fontSize: '15px', lineHeight: '1.6' }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.6 + index * 0.1, duration: 0.3 }}
               >
-                <div className="w-2.5 h-2.5 rounded-full relative" style={{
-                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
-                  boxShadow: `
-                    0 2px 6px rgba(0, 0, 0, 0.15),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
-                  `
-                }}></div>
-                {skill.icon}
-                {skill.name}
-              </motion.span>
+                <span className="text-gray-400 mt-1">•</span>
+                <span>{skill.name}</span>
+              </motion.li>
             ))}
-          </div>
-          <div className="flex gap-12">
-            {skills.slice(5).map((skill, index) => (
-              <motion.span
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.5 + (index + 5) * 0.1, duration: 0.3 }}
-                className={`${skill.color} px-4 py-2 rounded-full font-medium flex items-center gap-2 relative`}
-                style={{
-                  background: `linear-gradient(90deg, ${skill.orbColor}30, ${skill.orbColor}15, transparent)`,
-                  border: `1px solid ${skill.orbColor}20`,
-                  fontSize: '12px'
-                }}
-              >
-                <div className="w-2.5 h-2.5 rounded-full relative" style={{
-                  background: `radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), ${skill.orbColor} 70%)`,
-                  boxShadow: `
-                    0 2px 6px rgba(0, 0, 0, 0.15),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.4)
-                  `
-                }}></div>
-                {skill.icon}
-                {skill.name}
-              </motion.span>
-            ))}
-          </div>
+          </motion.ul>
         </div>
       </motion.section>
 
-      {/* Vision Pro Style Back to Top Button */}
-      <AnimatePresence>
-        {showBackToTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-50 group"
-            style={{
-              background: '#EC7063',
-              backdropFilter: 'blur(40px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-              border: '1.5px solid rgba(236, 112, 99, 0.6)',
-              borderRadius: '20px',
-              padding: '14px',
-              boxShadow: '0 12px 48px rgba(236, 112, 99, 0.25), 0 3px 12px rgba(236, 112, 99, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 1px rgba(236, 112, 99, 0.2)',
-            }}
-            whileHover={{ 
-              scale: 1.08,
-              background: '#F1948A',
-              boxShadow: '0 16px 60px rgba(236, 112, 99, 0.35), 0 4px 16px rgba(236, 112, 99, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 0 1px rgba(236, 112, 99, 0.3)',
-            }}
-            whileTap={{ scale: 0.92 }}
-          >
-            <motion.svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-white"
-              style={{ filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3))' }}
-              animate={{ y: [0, -2, 0] }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <path d="m18 15-6-6-6 6"/>
-            </motion.svg>
-          </motion.button>
-        )}
-      </AnimatePresence>
+      
+
+      {/* Back-to-top button disabled per request */}
 
       {/* Resume Modal */}
       <ResumeModal 

@@ -53,7 +53,7 @@ body {
 
 /* Critical above-the-fold styles */
 .hero-section {
-  min-height: 50vh;
+  min-height: 0;
   contain: layout style paint;
 }
 

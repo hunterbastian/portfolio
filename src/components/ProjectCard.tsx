@@ -15,20 +15,19 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
   return (
     <Link href={`/projects/${slug}`} className="block">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
+        initial={{ opacity: 0, y: 18, scale: 0.985 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ type: 'spring', stiffness: 140, damping: 18, mass: 0.9, delay: index * 0.06 }}
         whileHover={{ 
-          y: -8, 
-          scale: 1.05,
+          y: -4, 
+          scale: 1.02,
           transition: { 
-            type: "spring", 
-            stiffness: 300, 
-            damping: 20,
-            duration: 0.3
+            type: 'spring', 
+            stiffness: 180, 
+            damping: 22
           }
         }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{ scale: 0.99 }}
         className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-all hover:shadow-2xl active:shadow-md touch-manipulation"
       >
         <div className="aspect-video relative overflow-hidden">
@@ -37,7 +36,8 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
             src={frontmatter.image}
             alt={frontmatter.title}
             fill
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={index < 3} // Priority load for first 3 images
             placeholder="blur"
@@ -60,8 +60,8 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
         </div>
         
-        <div className="p-6">
-          <h3 className="font-semibold uppercase group-hover:text-primary transition-colors duration-300 ease-out" style={{ fontSize: '15px' }}>
+        <div className="p-4">
+          <h3 className="font-semibold uppercase group-hover:text-primary transition-colors duration-300 ease-out" style={{ fontSize: '14px' }}>
             {frontmatter.title}
           </h3>
         </div>

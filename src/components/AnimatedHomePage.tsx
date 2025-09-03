@@ -204,11 +204,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  <p className="text-gray-600 dark:text-gray-300 text-base" style={{ lineHeight: '1.6' }}>
                    <strong>Undergraduate at Utah Valley University</strong> pursuing a <strong>B.S. in Web Design and Development</strong> with an emphasis in Interaction Design. Currently serving as the Digital Media Department Representative, I am passionate about creating meaningful digital experiences. My background blends design and development. I have experience designing for mobile and web platforms in Figma, alongside front-end development skills in HTML, CSS, JavaScript, React, and Next.js with AI first enthusiasm.
                  </p>
+ 
+                               </motion.div>
 
-                              </motion.div>
+              
 
-
-
+ 
+ 
  
         </div>
       </motion.section>

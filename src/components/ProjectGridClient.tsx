@@ -61,9 +61,9 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
           return (
             <div 
               key={project.slug}
-              className="flex-shrink-0 w-60 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
+              className="flex-shrink-0 w-56 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
               style={{
-                transform: `rotate(${rotation}deg) scale(0.88)`,
+                transform: `rotate(${rotation}deg) scale(0.85)`,
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === actualIndex ? 1 : 0.7
               }}
               onMouseEnter={() => handleMouseEnter(actualIndex)}

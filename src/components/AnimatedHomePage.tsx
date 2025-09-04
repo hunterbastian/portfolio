@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ReactNode, useState, useEffect } from 'react'
 import Image from 'next/image'
+
 import ResumePreview from './ResumePreview'
 import ResumeModal from './ResumeModal'
 
@@ -121,48 +122,44 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Left Object */}
-        <motion.div
-          className="absolute -left-24 top-1/3 transform -translate-y-1/2 hidden xl:block"
-          initial={{ opacity: 0, x: -50, rotate: -15 }}
-          animate={{ 
-            opacity: 1, 
-            x: 0, 
-            rotate: 0,
-            y: [0, -8, 0],
-          }}
-          transition={{ 
-            opacity: { delay: 0.6, duration: 0.8, ease: "easeOut" },
-            x: { delay: 0.6, duration: 0.8, ease: "easeOut" },
-            rotate: { delay: 0.6, duration: 0.8, ease: "easeOut" },
-            y: { 
-              delay: 1.4,
-              duration: 4, 
-              repeat: Infinity, 
-              ease: "easeInOut"
-            }
-          }}
-        >
-                    <iframe
-
-            style={{ 
-              width: '320px', 
-              height: '320px', 
-              backgroundColor: 'transparent',
-              border: 'none'
-            }}
-            src="https://app.endlesstools.io/embed/b6f39d54-23c2-429f-a315-4ea4eb90320b"
-            title="Left Object 3D Model"
-            allow="clipboard-write; encrypted-media; gyroscope; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
-        </motion.div>
-
-
-
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
 
+                {/* 3D Object above title */}
+                <motion.div
+                  className="flex justify-center mb-4"
+                  initial={{ opacity: 0, y: -30, rotate: -15 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0, 
+                    rotate: 0
+                  }}
+                  transition={{ 
+                    opacity: { delay: 0.3, duration: 0.8, ease: "easeOut" },
+                    y: { delay: 0.3, duration: 0.8, ease: "easeOut" },
+                    rotate: { delay: 0.3, duration: 0.8, ease: "easeOut" }
+                  }}
+                  style={{
+                    border: '1px solid rgba(156, 163, 175, 0.3)',
+                    borderRadius: '16px',
+                    padding: '2px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.02)',
+                    width: 'fit-content'
+                  }}
+                >
+                  <iframe
+                    style={{ 
+                      width: '130px', 
+                      height: '130px', 
+                      backgroundColor: 'transparent',
+                      border: 'none'
+                    }}
+                    src="https://app.endlesstools.io/embed/b6f39d54-23c2-429f-a315-4ea4eb90320b"
+                    title="3D Model"
+                    allow="clipboard-write; encrypted-media; gyroscope; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </motion.div>
 
                 <motion.div
                  className="mb-6"
@@ -189,23 +186,32 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  >
                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                  </svg>
-                 <span className="text-gray-500 dark:text-gray-400" style={{ fontSize: '14px' }}>
+                 <span className="text-gray-500 dark:text-gray-400 font-garamond-narrow" style={{ fontSize: '14px' }}>
                    Lehi, UT
                  </span>
                </motion.div>
 
                
-                              <motion.div
-                 className="mb-2 text-left"
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 transition={{ delay: 0.2, duration: 0.5 }}
-               >
-                 <p className="text-gray-600 dark:text-gray-300 text-base" style={{ lineHeight: '1.6' }}>
-                   <strong>Undergraduate at Utah Valley University</strong> pursuing a <strong>B.S. in Web Design and Development</strong> with an emphasis in Interaction Design. Currently serving as the Digital Media Department Representative, I am passionate about creating meaningful digital experiences. My background blends design and development. I have experience designing for mobile and web platforms in Figma, alongside front-end development skills in HTML, CSS, JavaScript, React, and Next.js with AI first enthusiasm.
-                 </p>
- 
-                               </motion.div>
+                                                            <motion.div
+                className="mb-2 text-left space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+              >
+                <div className="space-y-3">
+                  <p className="text-gray-600 dark:text-gray-300 text-base font-garamond-narrow" style={{ lineHeight: '1.6' }}>
+                    <strong className="text-gray-800 dark:text-gray-200">Undergraduate at Utah Valley University</strong> pursuing a <strong className="text-gray-800 dark:text-gray-200">B.S. in Web Design and Development</strong> with an emphasis in <strong className="text-gray-800 dark:text-gray-200">Interaction Design</strong>.
+                  </p>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 text-base font-garamond-narrow" style={{ lineHeight: '1.6' }}>
+                    Currently serving as the <em className="text-gray-700 dark:text-gray-300">Digital Media Department Representative</em>, I am passionate about creating meaningful digital experiences. My background blends design and development.
+                  </p>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 text-base font-garamond-narrow" style={{ lineHeight: '1.6' }}>
+                    I have experience designing for mobile and web platforms in <strong className="text-gray-800 dark:text-gray-200">Figma</strong>, alongside front-end development skills in <strong className="text-gray-800 dark:text-gray-200">HTML, CSS, JavaScript, React, and Next.js</strong> with <strong className="text-purple-600 dark:text-purple-400">AI first enthusiasm</strong>.
+                  </p>
+                </div>
+              </motion.div>
 
               
 
@@ -442,7 +448,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             ></motion.div>
             <div className="w-1.5 h-1.5 bg-green-500 rounded-full relative z-20"></div>
           </div>
-          <span className="text-gray-600 dark:text-gray-300 font-medium" style={{ fontSize: '12px' }}>
+          <span className="text-gray-600 dark:text-gray-300 font-medium font-garamond-narrow" style={{ fontSize: '12px' }}>
             Accepting clients
           </span>
         </div>
@@ -479,15 +485,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 onClick={() => toggleJob(index)}
               >
                 <div className="flex items-center space-x-8">
-                  <span className="text-muted-foreground text-sm font-mono w-12">
+                  <span className="text-muted-foreground text-sm font-mono w-12 font-garamond-narrow">
                     {job.year}
                   </span>
-                  <span className="font-medium">
+                  <span className="font-medium font-garamond-narrow">
                     {job.company}
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <span className="text-muted-foreground text-sm">
+                  <span className="text-muted-foreground text-sm font-garamond-narrow">
                     {job.title}
                   </span>
                   <motion.div
@@ -556,21 +562,21 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               transition={{ delay: 0.9 + index * 0.1, duration: 0.3 }}
             >
               <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                <div className="text-gray-500 dark:text-gray-400 text-sm font-medium min-w-[100px]">
+                <div className="text-gray-500 dark:text-gray-400 text-sm font-medium min-w-[100px] font-garamond-narrow">
                   {edu.year}
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base mb-1">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base mb-1 font-garamond-narrow">
                     {edu.institution}
                   </h3>
-                  <p className="text-gray-800 dark:text-gray-200 text-sm mb-1">
+                  <p className="text-gray-800 dark:text-gray-200 text-sm mb-1 font-garamond-narrow">
                     {edu.degree}
                   </p>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm font-garamond-narrow">
                     {edu.level}
                   </p>
                   {edu.note && (
-                    <p className="text-gray-500 dark:text-gray-500 text-xs mt-1 font-medium" style={{ opacity: 0.6 }}>
+                    <p className="text-gray-500 dark:text-gray-500 text-xs mt-1 font-medium font-garamond-narrow" style={{ opacity: 0.6 }}>
                       {edu.note}
                     </p>
                   )}
@@ -596,7 +602,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>About me</h2>
           
           <div className="space-y-6">
-            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base" style={{ lineHeight: '1.6' }}>
+            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base font-garamond-narrow" style={{ lineHeight: '1.6' }}>
               I started with photography and graphic design, and now I explore how design, technology, and the outdoors connect. I believe good design can move us all forward!
             </p>
           </div>
@@ -623,7 +629,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             {creatingProjects.map((project, index) => (
               <motion.li 
                 key={project.name}
-                className="flex items-start gap-3 text-gray-600 dark:text-gray-300 text-sm sm:text-base"
+                className="flex items-start gap-3 text-gray-600 dark:text-gray-300 text-sm sm:text-base font-garamond-narrow"
                 style={{ lineHeight: '1.6' }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -656,7 +662,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             transition={{ delay: 1.4, duration: 0.5 }}
           >
             <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
               style={{ fontSize: '15px', lineHeight: '1.6' }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -666,7 +672,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <span><strong>Phone:</strong> iPhone 15 Pro Natural Titanium</span>
             </motion.li>
             <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
               style={{ fontSize: '15px', lineHeight: '1.6' }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -678,7 +684,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
 
             <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
               style={{ fontSize: '15px', lineHeight: '1.6' }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -688,7 +694,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <span><strong>Mouse:</strong> Apple Trackpad and Logitech G502 Hero</span>
             </motion.li>
             <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
               style={{ fontSize: '15px', lineHeight: '1.6' }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -698,7 +704,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <span><strong>Headphones:</strong> AirPods Pro 2</span>
             </motion.li>
             <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
               style={{ fontSize: '15px', lineHeight: '1.6' }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}

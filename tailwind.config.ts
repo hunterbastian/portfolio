@@ -14,6 +14,7 @@ const config: Config = {
         'inter': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
         'playfair': ['var(--font-playfair)', 'Playfair Display', 'serif'],
         'garamond': ['var(--font-garamond)', 'EB Garamond', 'serif'],
+        'garamond-narrow': ['var(--font-garamond-narrow)', 'Source Serif 4', 'Crimson Text', 'EB Garamond', 'serif'],
       },
       screens: {
         'xs': '375px',      // Extra small phones

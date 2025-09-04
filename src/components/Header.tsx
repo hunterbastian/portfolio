@@ -26,6 +26,7 @@ export default function Header() {
   const [language, setLanguage] = useState('EN')
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Close dropdown when clicking outside
@@ -42,165 +43,227 @@ export default function Header() {
     }
   }, [])
 
+  // Track active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [...navigation, ...moreNavigation].map(item => item.href.substring(1))
+      const scrollPosition = window.scrollY + 100 // Offset for header
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(`#${sectionId}`)
+            break
+          }
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Check initial position
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center px-4 mx-auto max-w-6xl">
-        {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="font-bold" style={{ fontSize: '11px' }}>
-              HB
-            </span>
-            <div className="relative" style={{ width: '11px', height: '11px' }}>
-              <Image
-                src="/favicon/Frame.svg"
-                alt="Hunter Bastian Logo"
-                width={11}
-                height={11}
-                className="object-contain"
-                sizes="11px"
-              />
-            </div>
-          </Link>
-          <ScrollIndicator />
-        </div>
-        
-        {/* Desktop Navigation */}
-        <nav className="ml-auto hidden lg:flex items-center space-x-4">
-          {navigation.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="relative font-medium transition-colors hover:text-foreground/80 text-foreground/60 px-2 py-1"
-              style={{ fontSize: '10px' }}
-            >
-              {item.name}
-            </a>
-          ))}
-          
-          {/* More Dropdown */}
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={() => setShowMoreMenu(!showMoreMenu)}
-              className="relative font-medium transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 px-2 py-1"
-              style={{ fontSize: '10px' }}
-            >
-              MORE
-              <svg 
-                className={`w-3 h-3 transition-transform ${showMoreMenu ? 'rotate-180' : ''}`}
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </button>
-            
-            {showMoreMenu && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full right-0 mt-2 w-40 bg-background border rounded-md shadow-lg py-1 z-50"
-              >
-                {moreNavigation.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setShowMoreMenu(false)}
-                    className="block px-3 py-2 text-foreground/60 hover:text-foreground hover:bg-muted transition-colors"
-                    style={{ fontSize: '10px' }}
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </motion.div>
-            )}
+    <header className="sticky top-0 z-50 w-full py-3 px-4">
+      <div className="container mx-auto max-w-6xl">
+        <div className="flex h-14 items-center px-6 backdrop-blur supports-[backdrop-filter]:bg-background/80 border border-border/40 rounded-t shadow-md" style={{ backgroundColor: 'rgba(245, 244, 243, 0.8)' }}>
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="font-bold" style={{ fontSize: '11px' }}>
+                HB
+              </span>
+              <div className="relative" style={{ width: '11px', height: '11px' }}>
+                <Image
+                  src="/favicon/Frame.svg"
+                  alt="Hunter Bastian Logo"
+                  width={11}
+                  height={11}
+                  className="object-contain"
+                  sizes="11px"
+                />
+              </div>
+            </Link>
+            <ScrollIndicator />
           </div>
           
-          {/* Language Switcher */}
-          <button
-            onClick={() => setLanguage(language === 'EN' ? 'ES' : 'EN')}
-            className="relative font-medium transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 px-2 py-1"
-            style={{ fontSize: '10px' }}
-          >
-            <svg 
-              className="w-3 h-3" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M2 12h20"/>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-            {language}
-          </button>
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setShowMobileMenu(!showMobileMenu)}
-          className="ml-auto lg:hidden p-2"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            {showMobileMenu ? (
-              <path d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {showMobileMenu && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="lg:hidden border-t bg-background/95 backdrop-blur"
-        >
-          <div className="container mx-auto max-w-6xl px-4 py-4 space-y-2">
-            {[...navigation, ...moreNavigation].map((item) => (
+          {/* Desktop Navigation */}
+          <nav className="ml-auto hidden lg:flex items-center space-x-4">
+            {navigation.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                onClick={() => setShowMobileMenu(false)}
-                className="block py-2 text-foreground/60 hover:text-foreground transition-colors"
-                style={{ fontSize: '12px' }}
+                className={`relative font-medium transition-all duration-200 px-2 py-1 font-garamond-narrow group ${
+                  activeSection === item.href 
+                    ? 'text-foreground' 
+                    : 'text-foreground/60 hover:text-foreground/80'
+                }`}
+                style={{ fontSize: '10px' }}
               >
                 {item.name}
+                {/* Active/Hover Line */}
+                <span className={`absolute bottom-0 left-1/2 h-0.5 bg-gray-600 transition-all duration-200 transform -translate-x-1/2 ${
+                  activeSection === item.href 
+                    ? 'w-full opacity-100' 
+                    : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                }`} />
               </a>
             ))}
             
-            <div className="pt-2 border-t">
+            {/* More Dropdown */}
+            <div className="relative" ref={dropdownRef}>
               <button
-                onClick={() => setLanguage(language === 'EN' ? 'ES' : 'EN')}
-                className="flex items-center gap-2 py-2 text-foreground/60 hover:text-foreground transition-colors"
-                style={{ fontSize: '12px' }}
+                onClick={() => setShowMoreMenu(!showMoreMenu)}
+                className={`relative font-medium transition-all duration-200 flex items-center gap-1 px-2 py-1 font-garamond-narrow group ${
+                  moreNavigation.some(item => activeSection === item.href)
+                    ? 'text-foreground'
+                    : 'text-foreground/60 hover:text-foreground/80'
+                }`}
+                style={{ fontSize: '10px' }}
               >
+                MORE
                 <svg 
-                  className="w-4 h-4" 
+                  className={`w-3 h-3 transition-transform ${showMoreMenu ? 'rotate-180' : ''}`}
                   fill="none" 
                   stroke="currentColor" 
                   strokeWidth="2"
                   viewBox="0 0 24 24"
                 >
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M2 12h20"/>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  <path d="M6 9l6 6 6-6"/>
                 </svg>
-                Language: {language}
+                {/* Active/Hover Line */}
+                <span className={`absolute bottom-0 left-1/2 h-0.5 bg-gray-600 transition-all duration-200 transform -translate-x-1/2 ${
+                  moreNavigation.some(item => activeSection === item.href)
+                    ? 'w-full opacity-100' 
+                    : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
+                }`} />
               </button>
+              
+              {showMoreMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-full right-0 mt-2 w-40 backdrop-blur supports-[backdrop-filter]:bg-background/80 border rounded shadow-md py-1 z-50"
+                  style={{ backgroundColor: 'rgba(245, 244, 243, 0.8)' }}
+                >
+                  {moreNavigation.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setShowMoreMenu(false)}
+                      className={`block px-3 py-2 transition-colors font-garamond-narrow ${
+                        activeSection === item.href
+                          ? 'text-foreground bg-muted'
+                          : 'text-foreground/60 hover:text-foreground hover:bg-muted'
+                      }`}
+                      style={{ fontSize: '10px' }}
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </motion.div>
+              )}
+            </div>
+            
+            {/* Language Switcher */}
+            <button
+              onClick={() => setLanguage(language === 'EN' ? 'ES' : 'EN')}
+              className="relative font-medium transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 px-2 py-1 font-garamond-narrow"
+              style={{ fontSize: '10px' }}
+            >
+              <svg 
+                className="w-3 h-3" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              {language}
+            </button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
+            className="ml-auto lg:hidden p-2"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              {showMobileMenu ? (
+                <path d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+          className="lg:hidden px-4 mt-0"
+        >
+          <div className="container mx-auto max-w-6xl">
+            <div className="backdrop-blur supports-[backdrop-filter]:bg-background/80 border border-border/40 border-t-0 rounded-b shadow-md px-6 py-4 space-y-2" style={{ backgroundColor: 'rgba(245, 244, 243, 0.8)' }}>
+              {[...navigation, ...moreNavigation].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setShowMobileMenu(false)}
+                  className={`block py-2 transition-colors font-garamond-narrow relative ${
+                    activeSection === item.href
+                      ? 'text-foreground'
+                      : 'text-foreground/60 hover:text-foreground'
+                  }`}
+                  style={{ fontSize: '12px' }}
+                >
+                  {item.name}
+                  {activeSection === item.href && (
+                    <span className="absolute left-0 top-1/2 w-0.5 h-4 bg-gray-600 transform -translate-y-1/2" />
+                  )}
+                </a>
+              ))}
+              
+              <div className="pt-2 border-t">
+                <button
+                  onClick={() => setLanguage(language === 'EN' ? 'ES' : 'EN')}
+                  className="flex items-center gap-2 py-2 text-foreground/60 hover:text-foreground transition-colors font-garamond-narrow"
+                  style={{ fontSize: '12px' }}
+                >
+                  <svg 
+                    className="w-4 h-4" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M2 12h20"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                  Language: {language}
+                </button>
+              </div>
             </div>
           </div>
         </motion.div>

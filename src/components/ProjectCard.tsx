@@ -61,7 +61,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
         </div>
         
         <div className="p-4">
-          <h3 className="font-semibold uppercase group-hover:text-primary transition-colors duration-300 ease-out" style={{ fontSize: '14px' }}>
+          <h3 className="font-semibold uppercase group-hover:text-primary transition-colors duration-300 ease-out font-garamond-narrow" style={{ fontSize: '14px' }}>
             {frontmatter.title}
           </h3>
         </div>

@@ -58,14 +58,14 @@ const education = [
 ]
 
   const skills = [
+    { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-300 shadow-sm shadow-red-200', orbColor: '#FCA5A5', hoverRotation: 8 },
+    { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-300 shadow-sm shadow-indigo-200', orbColor: '#A5B4FC', hoverRotation: -5 },
     { name: 'UX Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-purple-300 shadow-sm shadow-purple-200', orbColor: '#C4A5E7', hoverRotation: -8 },
     { name: 'UI Design', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-pink-300 shadow-sm shadow-pink-200', orbColor: '#F7A8C4', hoverRotation: 6 },
     { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-300 shadow-sm shadow-orange-200', orbColor: '#FFB366', hoverRotation: -4 },
     { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-300 shadow-sm shadow-yellow-200', orbColor: '#FFD93D', hoverRotation: 9 },
     { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-300 shadow-sm shadow-blue-200', orbColor: '#93C5FD', hoverRotation: -7 },
-    { name: 'AI Models', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-violet-300 shadow-sm shadow-violet-200', orbColor: '#A78BFA', hoverRotation: 4 },
-    { name: 'Figma', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-red-300 shadow-sm shadow-red-200', orbColor: '#FCA5A5', hoverRotation: 8 },
-    { name: 'Framer', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-indigo-300 shadow-sm shadow-indigo-200', orbColor: '#A5B4FC', hoverRotation: -5 }
+    { name: 'AI Models', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-violet-300 shadow-sm shadow-violet-200', orbColor: '#A78BFA', hoverRotation: 4 }
   ]
 
   const creatingProjects = [
@@ -114,7 +114,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   }
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-8">
+    <div className="container mx-auto max-w-8xl px-4 py-8">
       {/* Hero Section */}
       <motion.section 
         className="py-16 relative"
@@ -122,11 +122,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
+        <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0 text-center">
 
                 {/* 3D Object above title */}
                 <motion.div
-                  className="flex justify-center mb-4"
+                  className="flex justify-center items-center mb-8 mx-auto"
                   initial={{ opacity: 0, y: -30, rotate: -15 }}
                   animate={{ 
                     opacity: 1, 
@@ -139,11 +139,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     rotate: { delay: 0.3, duration: 0.8, ease: "easeOut" }
                   }}
                   style={{
-                    border: '1px solid rgba(156, 163, 175, 0.3)',
-                    borderRadius: '16px',
-                    padding: '2px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                    width: 'fit-content'
+                    width: 'fit-content',
+                    margin: '0 auto'
                   }}
                 >
                   <iframe
@@ -167,14 +164,23 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.1, duration: 0.5 }}
                >
-                 <h1 className="text-black dark:text-white font-playfair italic font-semibold text-left motion-element text-fluid-3xl lg:text-fluid-4xl" style={{ lineHeight: '1.2' }}>
+                 <h1 className="text-black dark:text-white font-playfair italic font-semibold text-center motion-element text-fluid-3xl lg:text-fluid-4xl" style={{ lineHeight: '1.2' }}>
                    Hunter Bastian
                  </h1>
+                 <motion.p
+                   className="text-gray-600 dark:text-gray-400 text-center font-garamond-narrow mt-2"
+                   style={{ fontSize: '14px', letterSpacing: '0.5px' }}
+                   initial={{ opacity: 0, y: 10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ delay: 0.2, duration: 0.5 }}
+                 >
+                   Interaction designer
+                 </motion.p>
 
                </motion.div>
                
                <motion.div
-                 className="mb-4 text-left flex items-center gap-2"
+                 className="mb-4 text-center flex items-center justify-center gap-2"
                  initial={{ opacity: 0, y: 10 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.15, duration: 0.5 }}
@@ -193,22 +199,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
                
                                                             <motion.div
-                className="mb-2 text-left space-y-4"
+                className="mb-2 text-center space-y-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
                 <div className="space-y-3">
-                  <p className="text-gray-600 dark:text-gray-300 text-base font-garamond-narrow" style={{ lineHeight: '1.6' }}>
-                    <strong className="text-gray-800 dark:text-gray-200">Undergraduate at Utah Valley University</strong> pursuing a <strong className="text-gray-800 dark:text-gray-200">B.S. in Web Design and Development</strong> with an emphasis in <strong className="text-gray-800 dark:text-gray-200">Interaction Design</strong>.
+                  <p className="text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow" style={{ lineHeight: '1.6' }}>
+                    <span className="text-gray-800 dark:text-gray-200">Undergraduate at Utah Valley University</span> pursuing a <strong className="text-gray-800 dark:text-gray-200">B.S. in Web Design and Development</strong> with an emphasis in <strong className="text-gray-800 dark:text-gray-200">Interaction Design</strong>. Currently serving as the <em className="text-gray-700 dark:text-gray-300">Digital Media Department Representative</em>, I am passionate about creating meaningful digital experiences. My background blends design and development.
                   </p>
                   
-                  <p className="text-gray-600 dark:text-gray-300 text-base font-garamond-narrow" style={{ lineHeight: '1.6' }}>
-                    Currently serving as the <em className="text-gray-700 dark:text-gray-300">Digital Media Department Representative</em>, I am passionate about creating meaningful digital experiences. My background blends design and development.
-                  </p>
-                  
-                  <p className="text-gray-600 dark:text-gray-300 text-base font-garamond-narrow" style={{ lineHeight: '1.6' }}>
-                    I have experience designing for mobile and web platforms in <strong className="text-gray-800 dark:text-gray-200">Figma</strong>, alongside front-end development skills in <strong className="text-gray-800 dark:text-gray-200">HTML, CSS, JavaScript, React, and Next.js</strong> with <strong className="text-purple-600 dark:text-purple-400">AI first enthusiasm</strong>.
+                  <p className="text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow" style={{ lineHeight: '1.6' }}>
+                    I have experience designing for <strong className="text-gray-800 dark:text-gray-200">mobile and web platforms in Figma</strong>, alongside front-end development skills in <span className="text-gray-800 dark:text-gray-200">HTML, CSS, JavaScript</span> with <strong className="text-red-500 dark:text-red-400 font-bold" style={{ color: '#FF3B30', textShadow: '0 0 8px rgba(255, 59, 48, 0.4)' }}>AI first enthusiasm</strong>.
                   </p>
                 </div>
               </motion.div>
@@ -235,7 +237,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
               >
-                <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Case Studies</h2>
+                <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Case Studies</h2>
               </motion.div>
 
              {children}
@@ -254,13 +256,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
 
      <div className="max-w-2xl mx-auto">
-       <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Contact</h2>
+       <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Contact</h2>
      </div>
 
      
 
      <div className="max-w-2xl mx-auto">
-       <div className="grid grid-cols-2 sm:flex sm:flex-row gap-4 sm:gap-4 justify-start items-center sm:items-center">
+               <div className="grid grid-cols-2 sm:flex sm:flex-row gap-4 sm:gap-4 justify-center items-center sm:items-center">
          <motion.a
            href="https://linkedin.com/in/hunterbastian"
            target="_blank"
@@ -421,38 +423,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <ResumePreview isVisible={showResumePreview} />
         </div>
       </div>
-      
-      {/* Accepting Clients Indicator */}
-      <div className="max-w-2xl mx-auto mt-6 flex justify-start">
-        <div
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
-          style={{
-            background: `linear-gradient(90deg, #F0FDF4, #DCFCE7, transparent)`,
-            border: `1px solid #BBF7D0`,
-            boxShadow: `0 2px 8px rgba(34, 197, 94, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2)`
-          }}
-        >
-          <div className="relative flex items-center justify-center">
-            <motion.div
-              className="absolute w-1.5 h-1.5 bg-green-400 rounded-full z-0"
-              animate={{
-                scale: [1.3, 3.2, 3.2, 3.2],
-                opacity: [0.6, 0.2, 0, 0, 0]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: [0.4, 0.0, 0.2, 1],
-                repeatDelay: 0
-              }}
-            ></motion.div>
-            <div className="w-1.5 h-1.5 bg-green-500 rounded-full relative z-20"></div>
-          </div>
-          <span className="text-gray-600 dark:text-gray-300 font-medium font-garamond-narrow" style={{ fontSize: '12px' }}>
-            Accepting clients
-          </span>
-        </div>
-      </div>
     </div>
 
 
@@ -467,7 +437,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
      className="py-16"
    >
      <div className="max-w-2xl mx-auto">
-       <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Experience</h2>
+       <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Experience</h2>
        
        <div className="rounded-lg p-6 space-y-6" style={{ backgroundColor: 'rgba(222, 220, 219, 0.7)' }}>
         {experience.map((job, index) => {
@@ -550,7 +520,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Education</h2>
+        <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Education</h2>
         
         <div className="rounded-lg p-6 space-y-6" style={{ backgroundColor: 'rgba(222, 220, 219, 0.7)' }}>
           {education.map((edu, index) => (
@@ -588,26 +558,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </div>
     </motion.section>
 
-      {/* About me Section */}
-      <motion.section 
-        id="about-me" 
-        className="py-16 px-4 sm:px-6 lg:px-0 relative"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.0, duration: 0.5 }}
-      >
-        
-
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>About me</h2>
-          
-          <div className="space-y-6">
-            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base font-garamond-narrow" style={{ lineHeight: '1.6' }}>
-              I started with photography and graphic design, and now I explore how design, technology, and the outdoors connect. I believe good design can move us all forward!
-            </p>
-          </div>
-        </div>
-      </motion.section>
 
       {/* Creating Section */}
       <motion.section 
@@ -618,10 +568,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         transition={{ delay: 1.1, duration: 0.5 }}
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Creating</h2>
+          <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Creating</h2>
           
           <motion.ul 
-            className="space-y-4"
+            className="space-y-4 text-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.5 }}
@@ -629,13 +579,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             {creatingProjects.map((project, index) => (
               <motion.li 
                 key={project.name}
-                className="flex items-start gap-3 text-gray-600 dark:text-gray-300 text-sm sm:text-base font-garamond-narrow"
+                className="flex items-center justify-center gap-3 text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow"
                 style={{ lineHeight: '1.6' }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3 + index * 0.1, duration: 0.3 }}
               >
-                <span className="text-gray-400 mt-1">•</span>
+                <span className="text-gray-400">•</span>
                 <span><strong>{project.name}:</strong> {project.description}</span>
               </motion.li>
             ))}
@@ -652,68 +602,107 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0"
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Everyday tech</h2>
+          <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Everyday tech</h2>
         </div>
         <div className="max-w-2xl mx-auto">
-          <motion.ul 
-            className="space-y-4"
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.5 }}
           >
-            <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
-              style={{ fontSize: '15px', lineHeight: '1.6' }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+            <motion.div 
+              className="bg-white/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-lg p-3 border border-gray-200/30 dark:border-gray-700/30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5, duration: 0.3 }}
             >
-              <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Phone:</strong> iPhone 15 Pro Natural Titanium</span>
-            </motion.li>
-            <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
-              style={{ fontSize: '15px', lineHeight: '1.6' }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-garamond-narrow mb-1">Phone</div>
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-200 font-garamond-narrow">iPhone 15 Pro Natural Titanium</div>
+            </motion.div>
+            
+            <motion.div 
+              className="bg-white/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-lg p-3 border border-gray-200/30 dark:border-gray-700/30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.6, duration: 0.3 }}
             >
-              <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Laptop:</strong> MacBook Air 15&quot; M2 Starlight</span>
-            </motion.li>
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-garamond-narrow mb-1">Laptop</div>
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-200 font-garamond-narrow">MacBook Air 15&quot; M2 Starlight</div>
+            </motion.div>
 
+            <motion.div 
+              className="bg-white/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-lg p-3 border border-gray-200/30 dark:border-gray-700/30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.7, duration: 0.3 }}
+            >
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-garamond-narrow mb-1">Mouse</div>
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-200 font-garamond-narrow">Apple Trackpad & Logitech G502</div>
+            </motion.div>
+            
+            <motion.div 
+              className="bg-white/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-lg p-3 border border-gray-200/30 dark:border-gray-700/30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.8, duration: 0.3 }}
+            >
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-garamond-narrow mb-1">Headphones</div>
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-200 font-garamond-narrow">AirPods Pro 2</div>
+            </motion.div>
 
-            <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
-              style={{ fontSize: '15px', lineHeight: '1.6' }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+            <motion.div 
+              className="bg-white/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-lg p-3 border border-gray-200/30 dark:border-gray-700/30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.9, duration: 0.3 }}
             >
-              <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Mouse:</strong> Apple Trackpad and Logitech G502 Hero</span>
-            </motion.li>
-            <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
-              style={{ fontSize: '15px', lineHeight: '1.6' }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-garamond-narrow mb-1">Desk</div>
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-200 font-garamond-narrow">IKEA</div>
+            </motion.div>
+            
+            <motion.div 
+              className="bg-white/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-lg p-3 border border-gray-200/30 dark:border-gray-700/30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.0, duration: 0.3 }}
             >
-              <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Headphones:</strong> AirPods Pro 2</span>
-            </motion.li>
-            <motion.li 
-              className="flex items-start gap-3 text-gray-600 dark:text-gray-300 font-garamond-narrow"
-              style={{ fontSize: '15px', lineHeight: '1.6' }}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-garamond-narrow mb-1">Watch</div>
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-200 font-garamond-narrow">Apple Watch</div>
+            </motion.div>
+
+            <motion.div 
+              className="bg-white/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-lg p-3 border border-gray-200/30 dark:border-gray-700/30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.1, duration: 0.3 }}
             >
-              <span className="text-gray-400 mt-1">•</span>
-              <span><strong>Desk:</strong> IKEA</span>
-            </motion.li>
-          </motion.ul>
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-garamond-narrow mb-1">Decoration</div>
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-200 font-garamond-narrow">Lego Flowers</div>
+            </motion.div>
+            
+            <motion.div 
+              className="bg-gradient-to-r from-blue-25 to-purple-25 dark:from-blue-900/10 dark:to-purple-900/10 backdrop-blur-sm rounded-lg p-3 border border-blue-100/30 dark:border-blue-800/20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.2, duration: 0.3 }}
+              style={{ backgroundColor: 'rgba(239, 246, 255, 0.3)' }}
+            >
+              <div className="text-xs text-blue-400 dark:text-blue-500 font-garamond-narrow font-medium mb-1">Wishlist</div>
+              <div className="text-sm font-medium text-blue-500 dark:text-blue-400 font-garamond-narrow">Apple Studio Display</div>
+            </motion.div>
+            
+            <motion.div 
+              className="bg-gradient-to-r from-blue-25 to-purple-25 dark:from-blue-900/10 dark:to-purple-900/10 backdrop-blur-sm rounded-lg p-3 border border-blue-100/30 dark:border-blue-800/20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.3, duration: 0.3 }}
+              style={{ backgroundColor: 'rgba(239, 246, 255, 0.3)' }}
+            >
+              <div className="text-xs text-blue-400 dark:text-blue-500 font-garamond-narrow font-medium mb-1">Wishlist</div>
+              <div className="text-sm font-medium text-blue-500 dark:text-blue-400 font-garamond-narrow">Keychron K3</div>
+            </motion.div>
+          </motion.div>
         </div>
       </motion.section>
 
@@ -726,29 +715,29 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="py-16"
       >
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-playfair italic text-left mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Stack</h2>
+          <h2 className="font-playfair italic text-center mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Stack</h2>
         </div>
-        <div className="max-w-2xl mx-auto">
-          <motion.ul 
-            className="space-y-4"
+        <div className="max-w-4xl mx-auto">
+          <motion.div 
+            className="flex flex-wrap justify-center gap-x-8 gap-y-4 max-w-3xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 0.5 }}
           >
             {skills.map((skill, index) => (
-              <motion.li 
+              <motion.div 
                 key={skill.name}
-                className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
-                style={{ fontSize: '15px', lineHeight: '1.6' }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.6 + index * 0.1, duration: 0.3 }}
               >
-                <span className="text-gray-400 mt-1">•</span>
-                <span>{skill.name}</span>
-              </motion.li>
+                <span className="text-sm font-garamond-narrow text-gray-700 dark:text-gray-300 tracking-wider uppercase font-medium">
+                  {skill.name}
+                </span>
+              </motion.div>
             ))}
-          </motion.ul>
+          </motion.div>
         </div>
       </motion.section>
 

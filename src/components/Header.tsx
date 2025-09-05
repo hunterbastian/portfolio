@@ -15,7 +15,6 @@ const navigation: Array<{ name: string; href: string }> = [
 ]
 
 const moreNavigation: Array<{ name: string; href: string }> = [
-  { name: 'ABOUT ME', href: '#about-me' },
   { name: 'CREATING', href: '#creating' },
   { name: 'EVERYDAY TECH', href: '#everyday-tech' },
   { name: 'STACK', href: '#tech-stack' }
@@ -27,7 +26,10 @@ export default function Header() {
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [underlineStyle, setUnderlineStyle] = useState({ width: 0, left: 0 })
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLElement>(null)
+  const itemRefs = useRef<{ [key: string]: HTMLAnchorElement | null }>({})
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -42,6 +44,31 @@ export default function Header() {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
+  // Update underline position when active section changes
+  useEffect(() => {
+    const updateUnderline = () => {
+      const activeItem = itemRefs.current[activeSection]
+      if (activeItem && navRef.current) {
+        const navRect = navRef.current.getBoundingClientRect()
+        const itemRect = activeItem.getBoundingClientRect()
+        
+        setUnderlineStyle({
+          width: itemRect.width - 16, // Account for padding (px-2 = 8px each side)
+          left: itemRect.left - navRect.left + 8 // Offset by padding to center under text
+        })
+      } else {
+        setUnderlineStyle({ width: 0, left: 0 })
+      }
+    }
+
+    updateUnderline()
+    window.addEventListener('resize', updateUnderline)
+    
+    return () => {
+      window.removeEventListener('resize', updateUnderline)
+    }
+  }, [activeSection])
 
   // Track active section on scroll
   useEffect(() => {
@@ -70,8 +97,8 @@ export default function Header() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-50 w-full py-3 px-4">
-      <div className="container mx-auto max-w-6xl">
+    <header className="sticky top-0 z-50 w-full py-3 px-6">
+      <div className="container mx-auto max-w-8xl">
         <div className="flex h-14 items-center px-6 backdrop-blur supports-[backdrop-filter]:bg-background/80 border border-border/40 rounded-t shadow-md" style={{ backgroundColor: 'rgba(245, 244, 243, 0.8)' }}>
           {/* Logo */}
           <div className="flex items-center space-x-2">
@@ -94,12 +121,13 @@ export default function Header() {
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="ml-auto hidden lg:flex items-center space-x-4">
+          <nav ref={navRef} className="ml-auto hidden lg:flex items-center space-x-4 relative">
             {navigation.map((item) => (
               <a
                 key={item.href}
+                ref={(el) => { itemRefs.current[item.href] = el }}
                 href={item.href}
-                className={`relative font-medium transition-all duration-200 px-2 py-1 font-garamond-narrow group ${
+                className={`relative font-medium transition-colors duration-200 px-2 py-1 font-garamond-narrow ${
                   activeSection === item.href 
                     ? 'text-foreground' 
                     : 'text-foreground/60 hover:text-foreground/80'
@@ -107,14 +135,22 @@ export default function Header() {
                 style={{ fontSize: '10px' }}
               >
                 {item.name}
-                {/* Active/Hover Line */}
-                <span className={`absolute bottom-0 left-1/2 h-0.5 bg-gray-600 transition-all duration-200 transform -translate-x-1/2 ${
-                  activeSection === item.href 
-                    ? 'w-full opacity-100' 
-                    : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'
-                }`} />
               </a>
             ))}
+            
+            {/* Sliding underline */}
+            <motion.div
+              className="absolute bottom-1 h-0.5 bg-gray-600 rounded-full"
+              animate={{
+                width: underlineStyle.width,
+                x: underlineStyle.left
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30
+              }}
+            />
             
             {/* More Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -221,9 +257,9 @@ export default function Header() {
           initial={{ opacity: 0, y: -10, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -10, scale: 0.95 }}
-          className="lg:hidden px-4 mt-0"
+          className="lg:hidden px-6 mt-0"
         >
-          <div className="container mx-auto max-w-6xl">
+          <div className="container mx-auto max-w-8xl">
             <div className="backdrop-blur supports-[backdrop-filter]:bg-background/80 border border-border/40 border-t-0 rounded-b shadow-md px-6 py-4 space-y-2" style={{ backgroundColor: 'rgba(245, 244, 243, 0.8)' }}>
               {[...navigation, ...moreNavigation].map((item) => (
                 <a

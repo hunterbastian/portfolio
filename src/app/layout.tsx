@@ -60,11 +60,11 @@ export const metadata: Metadata = {
       { url: '/favicon/favicon.ico', sizes: 'any' }
     ],
     apple: [
-      { url: '/favicon/Frame.svg', sizes: '180x180', type: 'image/svg+xml' }
+      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
     ],
     other: [
-      { url: '/favicon/Frame.svg', sizes: '192x192', type: 'image/svg+xml' },
-      { url: '/favicon/Frame.svg', sizes: '512x512', type: 'image/svg+xml' }
+      { url: '/favicon/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon/favicon-512x512.png', sizes: '512x512', type: 'image/png' }
     ]
   },
   openGraph: {

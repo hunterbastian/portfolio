@@ -65,6 +65,7 @@ const education = [
     { name: 'HTML', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-orange-300 shadow-sm shadow-orange-200', orbColor: '#FFB366', hoverRotation: -4 },
     { name: 'JavaScript', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-yellow-300 shadow-sm shadow-yellow-200', orbColor: '#FFD93D', hoverRotation: 9 },
     { name: 'CSS', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-blue-300 shadow-sm shadow-blue-200', orbColor: '#93C5FD', hoverRotation: -7 },
+    { name: 'ChatGPT', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-emerald-300 shadow-sm shadow-emerald-200', orbColor: '#6EE7B7', hoverRotation: 7 },
     { name: 'AI Models', icon: null, color: 'text-gray-700 dark:text-gray-300', dotColor: 'bg-violet-300 shadow-sm shadow-violet-200', orbColor: '#A78BFA', hoverRotation: 4 }
   ]
 
@@ -640,7 +641,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.6 + index * 0.1, duration: 0.3 }}
               >
-                <span className="text-sm font-garamond-narrow text-gray-700 dark:text-gray-300 tracking-wider uppercase font-medium">
+                <span className="text-sm font-garamond-narrow text-gray-700 dark:text-gray-300 tracking-wider uppercase font-medium whitespace-nowrap">
                   {skill.name}
                 </span>
               </motion.div>

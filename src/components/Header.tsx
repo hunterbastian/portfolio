@@ -50,12 +50,12 @@ export default function Header() {
         <div 
           className="flex h-14 items-center justify-between px-8 backdrop-blur-xl border shadow-lg"
           style={{
-            borderRadius: '50px',
-            background: 'linear-gradient(180deg, rgba(56, 178, 172, 0.25) 0%, rgba(20, 184, 166, 0.22) 30%, rgba(13, 148, 136, 0.28) 100%)',
-            backdropFilter: 'blur(24px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(24px) saturate(150%)',
-            boxShadow: '0 4px 20px rgba(56, 178, 172, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(56, 178, 172, 0.2)',
-            border: '1px solid rgba(255, 255, 255, 0.2)'
+            borderRadius: '12px',
+            background: 'linear-gradient(180deg, rgba(248, 250, 252, 0.85) 0%, rgba(241, 245, 249, 0.8) 50%, rgba(226, 232, 240, 0.85) 100%)',
+            backdropFilter: 'blur(20px) saturate(120%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(120%)',
+            boxShadow: '0 2px 16px rgba(100, 116, 139, 0.15), 0 0 0 1px rgba(148, 163, 184, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+            border: '1px solid rgba(148, 163, 184, 0.25)'
           }}
         >
           {/* Logo */}
@@ -64,7 +64,13 @@ export default function Header() {
             whileTap={{ scale: 0.9 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <Link href="/" className="font-bold text-xs text-white">
+            <Link 
+              href="/" 
+              className="font-bold text-sm text-slate-700"
+              style={{
+                textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)'
+              }}
+            >
               HB
             </Link>
           </motion.div>
@@ -75,26 +81,31 @@ export default function Header() {
               <motion.a
                 key={item.href}
                 href={item.href}
-                className={`text-xs font-medium transition-all duration-200 px-3 py-2 rounded-full relative ${
+                className={`text-xs font-medium transition-all duration-200 px-3 py-2 rounded-lg relative ${
                   activeSection === item.href 
-                    ? 'text-white font-semibold' 
-                    : 'text-white/85 hover:text-white'
+                    ? 'text-slate-800 font-semibold' 
+                    : 'text-slate-600 hover:text-slate-800'
                 }`}
+                style={{
+                  textShadow: activeSection === item.href 
+                    ? '0 1px 2px rgba(255, 255, 255, 0.9)' 
+                    : '0 1px 2px rgba(255, 255, 255, 0.6)',
+                  ...{
+                    backdropFilter: activeSection === item.href ? 'blur(8px) saturate(110%)' : 'none',
+                    background: activeSection === item.href 
+                      ? 'rgba(148, 163, 184, 0.15)' 
+                      : 'transparent',
+                    boxShadow: activeSection === item.href 
+                      ? 'inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 3px rgba(100, 116, 139, 0.1)'
+                      : 'none'
+                  }
+                }}
                 whileHover={{ 
                   scale: 1.02,
-                  backgroundColor: 'rgba(255, 255, 255, 0.15)'
+                  backgroundColor: 'rgba(148, 163, 184, 0.1)'
                 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                style={{
-                  backdropFilter: activeSection === item.href ? 'blur(12px) saturate(150%)' : 'none',
-                  background: activeSection === item.href 
-                    ? 'rgba(255, 255, 255, 0.25)' 
-                    : 'transparent',
-                  boxShadow: activeSection === item.href 
-                    ? 'inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -1px 0 rgba(56, 178, 172, 0.2)'
-                    : 'none'
-                }}
               >
                 {item.name}
               </motion.a>
@@ -104,10 +115,13 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <motion.button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="md:hidden p-2 rounded-full text-white"
+            className="md:hidden p-2 rounded-lg text-slate-700"
+            style={{
+              textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)'
+            }}
             whileHover={{ 
               scale: 1.05,
-              backgroundColor: 'rgba(255, 255, 255, 0.15)'
+              backgroundColor: 'rgba(148, 163, 184, 0.15)'
             }}
             whileTap={{ scale: 0.9 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
@@ -143,12 +157,12 @@ export default function Header() {
             <div 
               className="backdrop-blur-xl border shadow-lg px-6 py-4 space-y-3"
               style={{
-                borderRadius: '24px',
-                background: 'linear-gradient(180deg, rgba(56, 178, 172, 0.25) 0%, rgba(20, 184, 166, 0.22) 30%, rgba(13, 148, 136, 0.28) 100%)',
-                backdropFilter: 'blur(24px) saturate(150%)',
-                WebkitBackdropFilter: 'blur(24px) saturate(150%)',
-                boxShadow: '0 4px 20px rgba(56, 178, 172, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(56, 178, 172, 0.2)',
-                border: '1px solid rgba(255, 255, 255, 0.2)'
+                borderRadius: '16px',
+                background: 'linear-gradient(180deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.85) 50%, rgba(226, 232, 240, 0.9) 100%)',
+                backdropFilter: 'blur(20px) saturate(120%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(120%)',
+                boxShadow: '0 4px 20px rgba(100, 116, 139, 0.2), 0 0 0 1px rgba(148, 163, 184, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
+                border: '1px solid rgba(148, 163, 184, 0.3)'
               }}
             >
               {navigation.map((item, index) => (
@@ -158,15 +172,23 @@ export default function Header() {
                   onClick={() => setShowMobileMenu(false)}
                   className={`block py-3 px-3 text-sm transition-all rounded-lg ${
                     activeSection === item.href
-                      ? 'text-white font-semibold'
-                      : 'text-white/85 hover:text-white'
+                      ? 'text-slate-800 font-semibold'
+                      : 'text-slate-600 hover:text-slate-800'
                   }`}
+                  style={{
+                    textShadow: activeSection === item.href 
+                      ? '0 1px 2px rgba(255, 255, 255, 0.9)' 
+                      : '0 1px 2px rgba(255, 255, 255, 0.6)',
+                    background: activeSection === item.href 
+                      ? 'rgba(148, 163, 184, 0.1)'
+                      : 'transparent'
+                  }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.2 }}
                   whileHover={{ 
                     scale: 1.01,
-                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    backgroundColor: 'rgba(148, 163, 184, 0.15)',
                     x: 3
                   }}
                   whileTap={{ scale: 0.98 }}

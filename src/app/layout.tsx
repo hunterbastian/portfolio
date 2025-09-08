@@ -111,7 +111,7 @@ export default function RootLayout({
                  <main id="main-content" role="main" className="flex-1">{children}</main>
                  <Footer />
                                </div>
-               <GradualBlur preset="page-footer" position="bottom" target="page" height="12rem" strength={3.5} curve="bezier" divCount={10} style={{ left: 0, right: 0, bottom: 0 }} />
+               <GradualBlur preset="page-footer" position="bottom" target="page" height="14rem" strength={4} curve="bezier" divCount={12} style={{ left: 0, right: 0, bottom: 0, zIndex: 9999 }} />
                 <SpeedInsights />
                 <Analytics />
                 

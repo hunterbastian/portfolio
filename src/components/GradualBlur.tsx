@@ -213,6 +213,9 @@ const GradualBlur: React.FC<GradualBlurProps> = (props) => {
         maskImage: `linear-gradient(${direction}, ${gradient})`,
         WebkitMaskImage: `linear-gradient(${direction}, ${gradient})`,
         backdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
+        WebkitBackdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
+        backgroundColor: 'rgba(255,255,255,0.01)',
+        willChange: 'backdrop-filter',
         opacity: config.opacity,
         transition:
           config.animated && config.animated !== 'scroll'

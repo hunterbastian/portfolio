@@ -237,8 +237,6 @@ const GradualBlur: React.FC<GradualBlurProps> = (props) => {
           }
         : {
             // Fallback: visual gradient fade (no blur) so the effect is still visible on browsers without backdrop-filter
-            maskImage: `linear-gradient(${direction}, ${gradient})`,
-            WebkitMaskImage: `linear-gradient(${direction}, ${gradient})`,
             background:
               config.position === 'bottom'
                 ? 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 40%, rgba(0,0,0,0.12) 100%)'

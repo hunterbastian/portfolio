@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei'
 import { Mesh } from 'three'
 
@@ -9,17 +9,12 @@ import { Mesh } from 'three'
 function AnimatedSphere() {
   const meshRef = useRef<Mesh>(null)
 
-  useEffect(() => {
-    const animate = () => {
-      if (meshRef.current) {
-        meshRef.current.rotation.x += 0.01
-        meshRef.current.rotation.y += 0.01
-      }
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += 0.01
+      meshRef.current.rotation.y += 0.01
     }
-
-    const interval = setInterval(animate, 16) // ~60fps
-    return () => clearInterval(interval)
-  }, [])
+  })
 
   return (
     <Sphere ref={meshRef} args={[1, 64, 64]} position={[0, 0, 0]}>
@@ -76,7 +71,7 @@ export default function HeroCanvas({ className = '' }: HeroCanvasProps) {
     <div className={`relative ${className}`}>
       <Canvas
         ref={canvasRef}
-        frameloop="demand" // Only render when needed
+        frameloop="always" // Continuous render for smooth animations
         dpr={[1, 1.75]} // Device pixel ratio range
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ 

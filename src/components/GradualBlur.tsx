@@ -245,6 +245,11 @@ const GradualBlur: React.FC<GradualBlurProps> = (props) => {
       ;(baseStyle as any)[config.position] = 0
       ;(baseStyle as any).left = 0
       ;(baseStyle as any).right = 0
+      if (config.position === 'bottom') {
+        ;(baseStyle as any).top = 'auto'
+      } else if (config.position === 'top') {
+        ;(baseStyle as any).bottom = 'auto'
+      }
     } else if (isHorizontal) {
       baseStyle.width = responsiveWidth || (responsiveHeight as any)
       baseStyle.height = '100%'

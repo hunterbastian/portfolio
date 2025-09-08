@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint-type-lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Type Check
+        run: npx tsc --noEmit
+      - name: Build
+        run: npm run build
+      - name: Start server
+        run: npm start &
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000
+      - name: Lighthouse CI
+        run: |
+          npx -y lighthouse http://localhost:3000 \
+            --only-categories=performance,accessibility,seo,best-practices \
+            --budgets-path=.lighthousebudgets.json \
+            --output json --output-path ./lhci.json --quiet || true
+      - name: Upload LH report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: lhci.json
+
+

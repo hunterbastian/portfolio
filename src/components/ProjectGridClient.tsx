@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import ProjectCard from '@/components/ProjectCard'
 import { ProjectFrontmatter } from '@/types/project'
 
@@ -16,6 +17,20 @@ interface ProjectGridClientProps {
 
 export default function ProjectGridClient({ category, projects }: ProjectGridClientProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const router = useRouter()
+  
+  // Prefetch project pages on idle
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const idleId = (window as any).requestIdleCallback?.(() => {
+      projects.slice(0, 6).forEach((p) => router.prefetch(`/projects/${p.slug}`))
+    })
+    return () => {
+      if ((window as any).cancelIdleCallback && idleId) {
+        (window as any).cancelIdleCallback(idleId)
+      }
+    }
+  }, [projects, router])
   
   const filteredProjects = category && category !== 'all' 
     ? projects.filter(project => project.frontmatter.category === category)

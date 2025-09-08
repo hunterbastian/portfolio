@@ -11,7 +11,7 @@ import Script from 'next/script'
 
 const jetbrainsMono = JetBrains_Mono({ 
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['500', '700'],
   variable: '--font-jetbrains-mono'
 })
 
@@ -26,14 +26,14 @@ import { Playfair_Display } from 'next/font/google'
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  style: ['normal', 'italic'],
-  weight: ['400', '500', '600', '700'],
+  style: ['italic'],
+  weight: ['400', '600'],
   variable: '--font-playfair'
 })
 
 const ebGaramond = EB_Garamond({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '600'],
   variable: '--font-garamond'
 })
 

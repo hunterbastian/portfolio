@@ -38,10 +38,10 @@ export default function NotFound() {
           
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
-              href="/about"
+              href="/#case-studies"
               className="inline-flex items-center justify-center rounded-md border border-input bg-background px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
             >
-              About Me
+              Case Studies
             </Link>
           </motion.div>
         </div>

@@ -46,7 +46,11 @@ export default function UnicornOrb({
           setTimeout(removeWatermark, 300)
           setTimeout(removeWatermark, 1000)
         }
-      } catch {}
+      } catch (error) {
+        // Silently handle UnicornStudio initialization errors
+        // This is expected if the library isn't loaded yet
+        console.debug('UnicornStudio not ready yet:', error)
+      }
     }
 
     const anyWindow = window as unknown as { UnicornStudio?: { init: () => void; isInitialized?: boolean }; __usScriptLoading?: boolean }

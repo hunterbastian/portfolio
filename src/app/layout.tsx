@@ -115,9 +115,9 @@ export default function RootLayout({
                  preset="page-footer"
                  target="page"
                  position="bottom"
-                 height="10rem"
-                 strength={3}
-                 divCount={5}
+                 height="25vh"
+                 strength={4}
+                 divCount={12}
                  curve="bezier"
                  exponential={true}
                  opacity={1}

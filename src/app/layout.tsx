@@ -113,56 +113,6 @@ export default function RootLayout({
                 <SpeedInsights />
                 <Analytics />
                 
-                {/* Fixed Viewport Blur Effect */}
-                <Script id="viewport-blur" strategy="afterInteractive">
-                  {`
-                    function createViewportBlur() {
-                      // Remove any existing blur
-                      const existing = document.querySelector('#viewport-blur-overlay');
-                      if (existing) existing.remove();
-                      
-                      const blurDiv = document.createElement('div');
-                      blurDiv.id = 'viewport-blur-overlay';
-                      blurDiv.style.cssText = \`
-                        position: fixed !important;
-                        top: auto !important;
-                        bottom: 0px !important;
-                        left: 0px !important;
-                        right: 0px !important;
-                        width: 100% !important;
-                        height: 35vh !important;
-                        margin: 0 !important;
-                        padding: 0 !important;
-                        background: linear-gradient(0deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.05) 60%, transparent 100%) !important;
-                        backdrop-filter: blur(12px) !important;
-                        -webkit-backdrop-filter: blur(12px) !important;
-                        pointer-events: none !important;
-                        z-index: 999999 !important;
-                        transform: translateZ(0) !important;
-                        will-change: transform !important;
-                        contain: layout style paint !important;
-                      \`;
-                      
-                      // Append to body as the very last element
-                      document.body.appendChild(blurDiv);
-                      
-                      // Force a repaint
-                      blurDiv.offsetHeight;
-                      
-                      console.log('Viewport blur overlay created:', blurDiv.getBoundingClientRect());
-                    }
-                    
-                    // Create immediately
-                    createViewportBlur();
-                    
-                    // Also create after page fully loads
-                    window.addEventListener('load', createViewportBlur);
-                    
-                    // Recreate on resize to ensure positioning
-                    window.addEventListener('resize', createViewportBlur);
-                  `}
-                </Script>
-
                 {/* Service Worker Registration - DISABLED FOR DEVELOPMENT */}
                 {process.env.NODE_ENV === 'production' && (
                   <Script id="sw-registration" strategy="afterInteractive">

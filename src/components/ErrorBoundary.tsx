@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 
 interface ErrorBoundaryProps {
   children: React.ReactNode
@@ -39,7 +40,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
             <button onClick={this.handleReset} className="px-4 py-2 rounded bg-primary text-primary-foreground">
               Try again
             </button>
-            <a href="/" className="px-4 py-2 rounded border">Go Home</a>
+            <Link href="/" className="px-4 py-2 rounded border">Go Home</Link>
           </div>
         </div>
       )

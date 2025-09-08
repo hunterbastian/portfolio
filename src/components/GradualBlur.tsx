@@ -250,7 +250,7 @@ const GradualBlur: React.FC<GradualBlurProps> = (props) => {
     }
 
     return divs
-  }, [config, isHovered])
+  }, [config, isHovered, supportsBackdrop])
 
   const containerStyle: CSSProperties = useMemo(() => {
     const isVertical = ['top', 'bottom'].includes(config.position)

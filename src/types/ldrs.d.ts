@@ -1,7 +1,8 @@
 // TypeScript declarations for LDRS web components
 
-declare namespace JSX {
-  interface IntrinsicElements {
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
     'l-zoomies': {
       size?: string
       speed?: string
@@ -52,5 +53,8 @@ declare namespace JSX {
       speed?: string
       color?: string
     }
+    }
   }
 }
+
+export {}

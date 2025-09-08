@@ -4,7 +4,6 @@ import './globals.css'
 import './viewport.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import GradualBlur from '@/components/GradualBlur'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
@@ -112,18 +111,20 @@ export default function RootLayout({
                  <Footer />
                                </div>
                
-               {/* Fixed viewport blur overlay */}
-               <GradualBlur 
-                 target="page"
-                 position="bottom"
-                 height="35vh"
-                 strength={5}
-                 divCount={16}
-                 curve="bezier"
-                 exponential={true}
-                 opacity={1}
-                 zIndex={9999}
-                 style={{ position: 'fixed', bottom: 0, left: 0, right: 0, pointerEvents: 'none' }}
+               {/* Simple fixed viewport blur - always at bottom of screen */}
+               <div 
+                 style={{
+                   position: 'fixed',
+                   bottom: 0,
+                   left: 0,
+                   right: 0,
+                   height: '35vh',
+                   background: 'linear-gradient(to top, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.02) 70%, transparent 100%)',
+                   backdropFilter: 'blur(8px)',
+                   WebkitBackdropFilter: 'blur(8px)',
+                   pointerEvents: 'none',
+                   zIndex: 9999
+                 }}
                />
                 <SpeedInsights />
                 <Analytics />

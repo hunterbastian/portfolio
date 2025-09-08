@@ -51,6 +51,7 @@ export const metadata: Metadata = {
   keywords: ['Hunter Bastian', 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
   authors: [{ name: 'Hunter Bastian' }],
   creator: 'Hunter Bastian',
+  metadataBase: new URL('https://portfolio-hunterbastians-projects.vercel.app'),
 
   icons: {
     icon: [
@@ -103,9 +104,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>
                    <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable} safe-area-padding bg-background text-foreground`}>
+                       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                        <div className="min-h-screen flex flex-col">
                  <Header />
-                 <main className="flex-1">{children}</main>
+                 <main id="main-content" role="main" className="flex-1">{children}</main>
                  <Footer />
                                </div>
                 <SpeedInsights />

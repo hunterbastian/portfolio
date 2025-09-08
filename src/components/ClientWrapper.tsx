@@ -1,7 +1,8 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
+import { setupLazyLoading } from '@/lib/performance'
 import CategoryFilter from './CategoryFilter'
 
 interface ClientWrapperProps {
@@ -14,6 +15,9 @@ function CategoryFilterWrapper({ categories }: { categories: string[] }) {
 }
 
 export default function ClientWrapper({ categories, children }: ClientWrapperProps) {
+  useEffect(() => {
+    setupLazyLoading()
+  }, [])
   return (
     <>
       <Suspense fallback={<div>Loading filters...</div>}>

@@ -5,7 +5,8 @@ import { ReactNode, useState, useEffect } from 'react'
 import Image from 'next/image'
 
 import ResumePreview from './ResumePreview'
-import ResumeModal from './ResumeModal'
+import dynamic from 'next/dynamic'
+const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 
 // Lazy load components that are below the fold
 // Note: Sections are now implemented directly in this component
@@ -622,6 +623,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.5 }}
         className="py-16"
+        data-animate
       >
         <div className="max-w-2xl mx-auto">
           <h2 className="font-playfair italic text-center mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>Stack</h2>

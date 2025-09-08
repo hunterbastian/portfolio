@@ -8,13 +8,23 @@ import { Mesh } from 'three'
 // Animated sphere component
 function AnimatedSphere() {
   const meshRef = useRef<Mesh>(null)
+  const isVisibleRef = useRef<boolean>(true)
 
   useFrame(() => {
-    if (meshRef.current) {
+    if (meshRef.current && isVisibleRef.current) {
       meshRef.current.rotation.x += 0.01
       meshRef.current.rotation.y += 0.01
     }
   })
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      isVisibleRef.current = document.visibilityState === 'visible'
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+    handleVisibility()
+    return () => document.removeEventListener('visibilitychange', handleVisibility)
+  }, [])
 
   return (
     <Sphere ref={meshRef} args={[1, 64, 64]} position={[0, 0, 0]}>
@@ -72,7 +82,7 @@ export default function HeroCanvas({ className = '' }: HeroCanvasProps) {
       <Canvas
         ref={canvasRef}
         frameloop="always" // Continuous render for smooth animations
-        dpr={[1, 1.75]} // Device pixel ratio range
+        dpr={[1, 1.25]} // Lower DPR on mobile for better perf
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ 
           antialias: true,

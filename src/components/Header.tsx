@@ -76,7 +76,7 @@ export default function Header() {
           </motion.div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-6" role="navigation" aria-label="Primary">
             {navigation.map((item) => (
               <motion.a
                 key={item.href}
@@ -86,6 +86,7 @@ export default function Header() {
                     ? 'text-slate-800 font-semibold' 
                     : 'text-slate-600 hover:text-slate-800'
                 }`}
+                aria-current={activeSection === item.href ? 'page' : undefined}
                 style={{
                   textShadow: activeSection === item.href 
                     ? '0 1px 2px rgba(255, 255, 255, 0.9)' 

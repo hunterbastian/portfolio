@@ -37,7 +37,7 @@ type GradualBlurProps = PropsWithChildren<{
     | 'sidebar'
     | 'page-header'
     | 'page-footer'
-  gpuOptimized?: number
+  gpuOptimized?: boolean
   hoverIntensity?: number
   target?: 'parent' | 'page'
 

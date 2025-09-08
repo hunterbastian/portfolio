@@ -111,7 +111,7 @@ export default function RootLayout({
                  <main id="main-content" role="main" className="flex-1">{children}</main>
                  <Footer />
                                </div>
-               <GradualBlur height="160px" blurPx={18} />
+               <GradualBlur preset="page-footer" position="bottom" target="page" height="10rem" strength={3} curve="bezier" divCount={8} />
                 <SpeedInsights />
                 <Analytics />
                 

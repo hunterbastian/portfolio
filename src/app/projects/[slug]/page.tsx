@@ -3,6 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getAllProjects, getProjectBySlug } from '@/lib/projects'
 import type { Metadata } from 'next'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import mdxComponents from '@/components/mdx/MDXComponents'
 
 // Revalidate every 5 minutes for individual project pages
 export const revalidate = 300
@@ -131,80 +133,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         )}
 
-        {/* Simple Content Display */}
+        {/* MDX Content */}
         <div className="prose prose-lg dark:prose-invert max-w-none">
-          {frontmatter.description && frontmatter.description.trim() && (
-            <div className="mb-6">
-              <h2 className="text-2xl font-semibold mb-4">Description</h2>
-              <p className="text-lg leading-relaxed mb-6">{frontmatter.description}</p>
-            </div>
-          )}
-          
-          {/* Content with basic formatting */}
-          <div className="space-y-4">
-            {content.split('\n\n').map((paragraph, index) => {
-              if (paragraph.trim().startsWith('# ')) {
-                return <h1 key={index} className="text-3xl font-bold mt-8 mb-4">{paragraph.replace('# ', '')}</h1>
-              }
-              if (paragraph.trim().startsWith('## ')) {
-                return <h2 key={index} className="text-2xl font-semibold mt-6 mb-3">{paragraph.replace('## ', '')}</h2>
-              }
-              if (paragraph.trim().startsWith('### ')) {
-                return <h3 key={index} className="text-xl font-semibold mt-4 mb-2">{paragraph.replace('### ', '')}</h3>
-              }
-              // Handle video tags
-              if (paragraph.includes('<video')) {
-                const videoMatch = paragraph.match(/src="([^"]+)"/);
-                const videoSrc = videoMatch ? videoMatch[1] : '';
-                if (videoSrc) {
-                  return (
-                    <div key={index} className="mb-8 mt-8">
-                      <video
-                        src={videoSrc}
-                        controls
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full rounded-lg shadow-lg"
-                        style={{ marginTop: '16px' }}
-                      />
-                    </div>
-                  );
-                }
-              }
-              // Handle image tags
-              if (paragraph.includes('<img')) {
-                const srcMatch = paragraph.match(/src="([^"]+)"/);
-                const altMatch = paragraph.match(/alt="([^"]+)"/);
-                const imgSrc = srcMatch ? srcMatch[1] : '';
-                const imgAlt = altMatch ? altMatch[1] : '';
-                if (imgSrc) {
-                  return (
-                    <div key={index} className="mb-8 mt-8">
-                      <Image
-                        src={imgSrc}
-                        alt={imgAlt}
-                        width={800}
-                        height={600}
-                        className="w-full rounded-lg shadow-lg"
-                        style={{ marginTop: '16px' }}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
-                      />
-                    </div>
-                  );
-                }
-              }
-              // Skip empty paragraphs or other HTML tags we can't handle
-              if (paragraph.trim().startsWith('<') || paragraph.trim() === '') {
-                return null;
-              }
-              if (paragraph.trim().length > 0) {
-                return <p key={index} className="mb-4 leading-relaxed">{paragraph}</p>
-              }
-              return null
-            })}
-          </div>
+          <MDXRemote source={content} components={mdxComponents as any} />
         </div>
       </article>
     )

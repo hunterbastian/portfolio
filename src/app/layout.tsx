@@ -110,25 +110,33 @@ export default function RootLayout({
                  <main id="main-content" role="main" className="flex-1">{children}</main>
                  <Footer />
                                </div>
-               
-               {/* Simple fixed viewport blur - always at bottom of screen */}
-               <div 
-                 style={{
-                   position: 'fixed',
-                   bottom: 0,
-                   left: 0,
-                   right: 0,
-                   height: '35vh',
-                   background: 'linear-gradient(to top, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.02) 70%, transparent 100%)',
-                   backdropFilter: 'blur(8px)',
-                   WebkitBackdropFilter: 'blur(8px)',
-                   pointerEvents: 'none',
-                   zIndex: 9999
-                 }}
-               />
                 <SpeedInsights />
                 <Analytics />
                 
+                {/* Fixed Viewport Blur Effect */}
+                <Script id="viewport-blur" strategy="afterInteractive">
+                  {`
+                    if (typeof window !== 'undefined') {
+                      const blurDiv = document.createElement('div');
+                      blurDiv.style.cssText = \`
+                        position: fixed !important;
+                        bottom: 0 !important;
+                        left: 0 !important;
+                        right: 0 !important;
+                        width: 100vw !important;
+                        height: 35vh !important;
+                        background: linear-gradient(to top, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.08) 40%, rgba(0,0,0,0.02) 70%, transparent 100%) !important;
+                        backdrop-filter: blur(8px) !important;
+                        -webkit-backdrop-filter: blur(8px) !important;
+                        pointer-events: none !important;
+                        z-index: 99999 !important;
+                        transform: translateZ(0) !important;
+                      \`;
+                      document.body.appendChild(blurDiv);
+                    }
+                  `}
+                </Script>
+
                 {/* Service Worker Registration - DISABLED FOR DEVELOPMENT */}
                 {process.env.NODE_ENV === 'production' && (
                   <Script id="sw-registration" strategy="afterInteractive">

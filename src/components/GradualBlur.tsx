@@ -179,6 +179,18 @@ const GradualBlur: React.FC<GradualBlurProps> = (props) => {
 
   const isVisible = useIntersectionObserver(containerRef, config.animated === 'scroll')
 
+  const supportsBackdrop = useMemo(() => {
+    if (typeof window === 'undefined' || typeof (window as any).CSS === 'undefined') return true
+    try {
+      return (
+        (window as any).CSS.supports('backdrop-filter', 'blur(1px)') ||
+        (window as any).CSS.supports('-webkit-backdrop-filter', 'blur(1px)')
+      )
+    } catch {
+      return true
+    }
+  }, [])
+
   const blurDivs = useMemo(() => {
     const divs: React.ReactNode[] = []
     const increment = 100 / config.divCount
@@ -209,19 +221,32 @@ const GradualBlur: React.FC<GradualBlurProps> = (props) => {
 
       const direction = getGradientDirection(config.position)
 
-      const divStyle: CSSProperties = {
-        maskImage: `linear-gradient(${direction}, ${gradient})`,
-        WebkitMaskImage: `linear-gradient(${direction}, ${gradient})`,
-        backdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
-        WebkitBackdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
-        backgroundColor: 'rgba(255,255,255,0.01)',
-        willChange: 'backdrop-filter',
-        opacity: config.opacity,
-        transition:
-          config.animated && config.animated !== 'scroll'
-            ? `backdrop-filter ${config.duration} ${config.easing}`
-            : undefined,
-      }
+      const divStyle: CSSProperties = supportsBackdrop
+        ? {
+            maskImage: `linear-gradient(${direction}, ${gradient})`,
+            WebkitMaskImage: `linear-gradient(${direction}, ${gradient})`,
+            backdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
+            WebkitBackdropFilter: `blur(${blurValue.toFixed(3)}rem)`,
+            backgroundColor: 'rgba(255,255,255,0.01)',
+            willChange: 'backdrop-filter',
+            opacity: config.opacity,
+            transition:
+              config.animated && config.animated !== 'scroll'
+                ? `backdrop-filter ${config.duration} ${config.easing}`
+                : undefined,
+          }
+        : {
+            // Fallback: visual gradient fade (no blur) so the effect is still visible on browsers without backdrop-filter
+            maskImage: `linear-gradient(${direction}, ${gradient})`,
+            WebkitMaskImage: `linear-gradient(${direction}, ${gradient})`,
+            background:
+              config.position === 'bottom'
+                ? 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 40%, rgba(0,0,0,0.12) 100%)'
+                : config.position === 'top'
+                ? 'linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 40%, rgba(0,0,0,0.12) 100%)'
+                : 'linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 100%)',
+            opacity: config.opacity,
+          }
 
       divs.push(<div key={i} className="absolute inset-0" style={divStyle} />)
     }

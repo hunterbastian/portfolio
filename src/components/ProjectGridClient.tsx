@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ProjectCard from '@/components/ProjectCard'
+import { Skeleton } from '@/components/ui/skeleton'
 import { ProjectFrontmatter } from '@/types/project'
 
 interface Project {
@@ -84,11 +85,17 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
               onMouseEnter={() => handleMouseEnter(actualIndex)}
               onMouseLeave={handleMouseLeave}
             >
-              <ProjectCard
-                slug={project.slug}
-                frontmatter={project.frontmatter}
-                index={actualIndex}
-              />
+              {project.frontmatter?.image ? (
+                <ProjectCard
+                  slug={project.slug}
+                  frontmatter={project.frontmatter}
+                  index={actualIndex}
+                />
+              ) : (
+                <div className="aspect-video w-full">
+                  <Skeleton className="h-full w-full rounded-xl" />
+                </div>
+              )}
             </div>
           )
         })}

@@ -1,9 +1,10 @@
-'use client'
+ 'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ProjectFrontmatter } from '@/types/project'
+import { useState } from 'react'
 
 interface ProjectCardProps {
   slug: string
@@ -12,6 +13,7 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ slug, frontmatter, index }: ProjectCardProps) {
+  const [imgSrc, setImgSrc] = useState(frontmatter.image)
   return (
     <Link href={`/projects/${slug}`} className="block">
       <motion.div
@@ -33,7 +35,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
         <div className="aspect-video relative overflow-hidden">
           {/* Static Image - shown by default */}
           <Image
-            src={frontmatter.image}
+            src={imgSrc}
             alt={frontmatter.title}
             fill
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -43,6 +45,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkrHB0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyuw=="
             loading={index < 3 ? "eager" : "lazy"}
+            onError={() => setImgSrc('/images/placeholder.svg')}
           />
           
           {/* Video overlay - shown on hover for Porsche App only */}

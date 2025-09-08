@@ -269,13 +269,30 @@ const GradualBlur: React.FC<GradualBlurProps> = (props) => {
     if (isVertical) {
       baseStyle.height = responsiveHeight
       baseStyle.width = responsiveWidth || '100%'
-      ;(baseStyle as any)[config.position] = 0
-      ;(baseStyle as any).left = 0
-      ;(baseStyle as any).right = 0
-      if (config.position === 'bottom') {
-        ;(baseStyle as any).top = 'auto'
-      } else if (config.position === 'top') {
-        ;(baseStyle as any).bottom = 'auto'
+      
+      if (isPageTarget) {
+        // For page target (viewport positioning), ensure it sticks to viewport edges
+        if (config.position === 'bottom') {
+          ;(baseStyle as any).bottom = 0
+          ;(baseStyle as any).left = 0
+          ;(baseStyle as any).right = 0
+          ;(baseStyle as any).top = 'auto'
+        } else if (config.position === 'top') {
+          ;(baseStyle as any).top = 0
+          ;(baseStyle as any).left = 0
+          ;(baseStyle as any).right = 0
+          ;(baseStyle as any).bottom = 'auto'
+        }
+      } else {
+        // For parent target (relative positioning)
+        ;(baseStyle as any)[config.position] = 0
+        ;(baseStyle as any).left = 0
+        ;(baseStyle as any).right = 0
+        if (config.position === 'bottom') {
+          ;(baseStyle as any).top = 'auto'
+        } else if (config.position === 'top') {
+          ;(baseStyle as any).bottom = 'auto'
+        }
       }
     } else if (isHorizontal) {
       baseStyle.width = responsiveWidth || (responsiveHeight as any)

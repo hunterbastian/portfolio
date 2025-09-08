@@ -121,6 +121,7 @@ export default function RootLayout({
                  curve="bezier"
                  exponential={true}
                  opacity={1}
+                 zIndex={9999}
                />
                 <SpeedInsights />
                 <Analytics />

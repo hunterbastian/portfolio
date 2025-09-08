@@ -262,7 +262,7 @@ const GradualBlur: React.FC<GradualBlurProps> = (props) => {
       pointerEvents: config.hoverIntensity ? 'auto' : 'none',
       opacity: isVisible ? 1 : 0,
       transition: config.animated ? `opacity ${config.duration} ${config.easing}` : undefined,
-      zIndex: isPageTarget ? (config.zIndex || 0) + 100 : config.zIndex,
+      zIndex: config.zIndex || 9999,
       ...config.style,
     }
 

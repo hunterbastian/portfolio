@@ -111,8 +111,9 @@ export default function RootLayout({
                  <main id="main-content" role="main" className="flex-1">{children}</main>
                  <Footer />
                                </div>
+               
+               {/* Fixed viewport blur overlay */}
                <GradualBlur 
-                 preset="page-footer"
                  target="page"
                  position="bottom"
                  height="35vh"
@@ -122,6 +123,7 @@ export default function RootLayout({
                  exponential={true}
                  opacity={1}
                  zIndex={9999}
+                 style={{ position: 'fixed', bottom: 0, left: 0, right: 0, pointerEvents: 'none' }}
                />
                 <SpeedInsights />
                 <Analytics />

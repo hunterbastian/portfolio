@@ -4,6 +4,7 @@ import './globals.css'
 import './viewport.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import GradualBlur from '@/components/GradualBlur'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
@@ -110,6 +111,7 @@ export default function RootLayout({
                  <main id="main-content" role="main" className="flex-1">{children}</main>
                  <Footer />
                                </div>
+               <GradualBlur height="160px" blurPx={18} />
                 <SpeedInsights />
                 <Analytics />
                 

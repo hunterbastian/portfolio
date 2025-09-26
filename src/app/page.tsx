@@ -1,4 +1,4 @@
-import { getAllProjects, getAllCategories } from '@/lib/projects'
+import { getAllProjects } from '@/lib/projects'
 import ClientWrapper from '@/components/ClientWrapper'
 import AnimatedHomePage from '@/components/AnimatedHomePage'
 import ProjectGridClient from '@/components/ProjectGridClient'
@@ -14,14 +14,13 @@ interface HomePageProps {
 }
 
 export default async function HomePage({ searchParams }: HomePageProps) {
-  const categories = getAllCategories()
   const projects = getAllProjects()
-  const params = await searchParams
+  const params = (await searchParams) ?? {}
 
   return (
     <LoadingScreen duration={1000}>
       <AnimatedHomePage>
-        <ClientWrapper categories={categories}>
+        <ClientWrapper>
           <Suspense fallback={<ProjectLoader />}>
             <ProjectGridClient category={params.category} projects={projects} />
           </Suspense>

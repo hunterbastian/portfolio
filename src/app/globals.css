@@ -64,6 +64,21 @@ body {
   perspective: 1000;
 }
 
+.contact-button {
+  background: var(--contact-gradient);
+  border: 1px solid var(--contact-border);
+  box-shadow: var(--contact-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.contact-button:hover,
+.contact-button:focus-visible {
+  background: var(--contact-gradient-hover, var(--contact-gradient));
+  box-shadow: var(--contact-shadow-hover, var(--contact-shadow));
+}
+
 /* Preload skeleton styles */
 .skeleton {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);

@@ -21,9 +21,12 @@ const nextConfig: NextConfig = {
   
   // Advanced Performance Features
   experimental: {
-    optimizePackageImports: ['framer-motion', '@react-three/fiber', '@react-three/drei'],
+    optimizePackageImports: ['framer-motion', '@react-three/fiber', '@react-three/drei', 'three', 'react', 'react-dom'],
     optimizeCss: true, // Enable CSS optimization
     webpackBuildWorker: true, // Use worker threads for builds
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
   },
   
   // Turbopack configuration (moved from experimental.turbo)
@@ -37,8 +40,20 @@ const nextConfig: NextConfig = {
   
   // Production Optimizations
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'], // Keep error and warn logs
+    } : false,
     styledComponents: false, // Disable if not using styled-components
+    reactRemoveProperties: process.env.NODE_ENV === 'production' ? {
+      properties: ['^data-test'],
+    } : false,
+  },
+  
+  // Enable modularizeImports for better tree-shaking
+  modularizeImports: {
+    '@react-three/drei': {
+      transform: '@react-three/drei/{{member}}',
+    },
   },
   
   // Output optimization

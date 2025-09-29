@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei'
 import { Mesh } from 'three'
 
@@ -9,11 +9,13 @@ import { Mesh } from 'three'
 function AnimatedSphere() {
   const meshRef = useRef<Mesh>(null)
   const isVisibleRef = useRef<boolean>(true)
+  const { invalidate } = useThree()
 
   useFrame(() => {
     if (meshRef.current && isVisibleRef.current) {
       meshRef.current.rotation.x += 0.01
       meshRef.current.rotation.y += 0.01
+      invalidate() // Trigger next frame in demand mode
     }
   })
 
@@ -81,13 +83,13 @@ export default function HeroCanvas({ className = '' }: HeroCanvasProps) {
     <div className={`relative ${className}`}>
       <Canvas
         ref={canvasRef}
-        frameloop="always" // Continuous render for smooth animations
+        frameloop="demand" // Render only when needed for better performance
         dpr={[1, 1.25]} // Lower DPR on mobile for better perf
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ 
-          antialias: true,
+          antialias: false, // Disable antialias for better performance
           alpha: true,
-          powerPreference: "high-performance"
+          powerPreference: "default" // Use default instead of high-performance
         }}
         style={{ 
           width: '100%', 

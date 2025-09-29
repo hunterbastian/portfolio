@@ -4,37 +4,34 @@ import './globals.css'
 import './viewport.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import PerformanceMonitor from '@/components/PerformanceMonitor'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 
 
+// Optimized: Reduced to 2 primary fonts for better performance
 const jetbrainsMono = JetBrains_Mono({ 
   subsets: ['latin'],
   weight: ['500', '700'],
-  variable: '--font-jetbrains-mono'
-})
-
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter'
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true, // Better font fallback
 })
 
 // Import PP Editorial New from local files or use a similar Google Font alternative
-// Since PP Editorial New isn't available on Google Fonts, we'll use Playfair Display Italic as a substitute
+// Using Playfair Display for elegant headings
 import { Playfair_Display } from 'next/font/google'
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  style: ['italic'],
+  style: ['italic', 'normal'],
   weight: ['400', '600'],
-  variable: '--font-playfair'
-})
-
-const ebGaramond = EB_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '600'],
-  variable: '--font-garamond'
+  variable: '--font-playfair',
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true,
 })
 
 export const viewport = {
@@ -96,14 +93,13 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="HB Portfolio" />
         
-        {/* Resource Hints */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
-        <link rel="dns-prefetch" href="//app.endlesstools.io" />
+        {/* Resource Hints - Optimized for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
+        <link rel="dns-prefetch" href="//analytics.vercel.com" />
       </head>
-                   <body className={`${jetbrainsMono.className} ${inter.variable} ${playfairDisplay.variable} ${ebGaramond.variable} safe-area-padding bg-background text-foreground`}>
+                   <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
                        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                        <div className="min-h-screen flex flex-col">
                  <Header />
@@ -112,6 +108,7 @@ export default function RootLayout({
                                </div>
                 <SpeedInsights />
                 <Analytics />
+                {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                 
                 {/* Service Worker Registration - DISABLED FOR DEVELOPMENT */}
                 {process.env.NODE_ENV === 'production' && (

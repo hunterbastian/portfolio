@@ -42,16 +42,18 @@ export function getProjectBySlug(slug: string): Project | null {
     }
   } catch (error) {
     // Log the error for debugging purposes
-    console.error(`Error loading project ${slug}:`, error)
-    
-    // In production, you might want to send this to an error tracking service
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Full error details:', {
-        slug,
-        path: path.join(projectsDirectory, `${slug}.mdx`),
-        error: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : 'No stack trace'
-      })
+    if (error && typeof error === 'object') {
+      console.error(`Error loading project ${slug}:`, error)
+      
+      // In production, you might want to send this to an error tracking service
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Full error details:', {
+          slug,
+          path: path.join(projectsDirectory, `${slug}.mdx`),
+          error: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error && error.stack ? error.stack : 'No stack trace'
+        })
+      }
     }
     
     return null

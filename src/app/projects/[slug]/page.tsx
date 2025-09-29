@@ -135,12 +135,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         {/* MDX Content */}
         <div className="prose prose-lg dark:prose-invert max-w-none">
-          <MDXRemote source={content} components={mdxComponents as any} />
+          <MDXRemote source={content} components={mdxComponents} />
         </div>
       </article>
     )
-  } catch (error) {
-    console.error('Error rendering project page:', error)
+  } catch (error: unknown) {
+    // Safely log the error
+    if (error instanceof Error) {
+      console.error('Error rendering project page:', error.message)
+    } else {
+      console.error('Error rendering project page:', String(error))
+    }
+    
     return (
       <div className="container mx-auto max-w-4xl px-4 py-8">
         <h1 className="text-2xl font-bold text-red-600">Error Loading Project</h1>

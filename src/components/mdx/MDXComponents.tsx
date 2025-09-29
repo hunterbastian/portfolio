@@ -68,7 +68,7 @@ export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = ({ c
   </div>
 )
 
-export const mdxComponents = {
+const mdxComponents = {
   h1: H1,
   h2: H2,
   h3: H3,

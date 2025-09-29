@@ -37,6 +37,13 @@
 
 html {
   scroll-behavior: smooth;
+  /* Enable smooth scrolling on all platforms */
+  -webkit-overflow-scrolling: touch;
+}
+
+* {
+  /* Smooth transitions for all interactive elements */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -49,6 +56,10 @@ body {
   contain: layout style paint;
   /* Optimize for performance */
   will-change: scroll-position;
+  /* Enable GPU acceleration */
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Critical above-the-fold styles */
@@ -61,7 +72,35 @@ body {
 .motion-element {
   transform: translateZ(0);
   backface-visibility: hidden;
-  perspective: 1000;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Smooth image loading */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transition: opacity 0.3s ease-in-out;
+}
+
+img:not([src]):not([srcset]) {
+  opacity: 0;
+}
+
+/* Smooth link transitions */
+a {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth button interactions */
+button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 .contact-button {
@@ -144,6 +183,26 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Smooth reveal animations */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+[data-reveal].reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger animation delays */
+[data-reveal]:nth-child(1) { transition-delay: 0ms; }
+[data-reveal]:nth-child(2) { transition-delay: 100ms; }
+[data-reveal]:nth-child(3) { transition-delay: 200ms; }
+[data-reveal]:nth-child(4) { transition-delay: 300ms; }
+[data-reveal]:nth-child(5) { transition-delay: 400ms; }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {

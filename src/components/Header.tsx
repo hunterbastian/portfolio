@@ -4,6 +4,20 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
+// Smooth scroll handler
+const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  e.preventDefault()
+  const target = document.querySelector(href)
+  if (target) {
+    target.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+    // Update URL without scrolling
+    window.history.pushState({}, '', href)
+  }
+}
+
 const navigation: Array<{ name: string; href: string }> = [
   { name: 'CASE STUDIES', href: '#case-studies' },
   { name: 'CONTACT', href: '#contact' },
@@ -81,7 +95,8 @@ export default function Header() {
               <motion.a
                 key={item.href}
                 href={item.href}
-                className={`text-xs font-medium transition-all duration-200 px-3 py-2 rounded-lg relative ${
+                onClick={(e) => handleSmoothScroll(e, item.href)}
+                className={`text-xs font-medium transition-all duration-300 px-3 py-2 rounded-lg relative cursor-pointer ${
                   activeSection === item.href 
                     ? 'text-slate-800 font-semibold' 
                     : 'text-slate-600 hover:text-slate-800'
@@ -102,11 +117,16 @@ export default function Header() {
                   }
                 }}
                 whileHover={{ 
-                  scale: 1.02,
-                  backgroundColor: 'rgba(148, 163, 184, 0.1)'
+                  scale: 1.05,
+                  backgroundColor: 'rgba(148, 163, 184, 0.15)',
+                  y: -1
                 }}
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 20
+                }}
               >
                 {item.name}
               </motion.a>
@@ -170,8 +190,11 @@ export default function Header() {
                 <motion.a
                   key={item.href}
                   href={item.href}
-                  onClick={() => setShowMobileMenu(false)}
-                  className={`block py-3 px-3 text-sm transition-all rounded-lg ${
+                  onClick={(e) => {
+                    handleSmoothScroll(e, item.href)
+                    setShowMobileMenu(false)
+                  }}
+                  className={`block py-3 px-3 text-sm transition-all duration-300 rounded-lg cursor-pointer ${
                     activeSection === item.href
                       ? 'text-slate-800 font-semibold'
                       : 'text-slate-600 hover:text-slate-800'

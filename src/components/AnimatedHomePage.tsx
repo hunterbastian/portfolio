@@ -209,27 +209,6 @@ function HeroSection() {
       transition={{ duration: 0.5 }}
     >
       <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0 text-center">
-        <motion.div
-          className="flex justify-center items-center mb-8 mx-auto"
-          initial={{ opacity: 0, y: -30, rotate: -15 }}
-          animate={{ opacity: 1, y: 0, rotate: 0 }}
-          transition={{
-            opacity: { delay: 0.3, duration: 0.8, ease: 'easeOut' },
-            y: { delay: 0.3, duration: 0.8, ease: 'easeOut' },
-            rotate: { delay: 0.3, duration: 0.8, ease: 'easeOut' }
-          }}
-          style={{ width: 'fit-content', margin: '0 auto' }}
-        >
-          <iframe
-            style={{ width: '130px', height: '130px', backgroundColor: 'transparent', border: 'none' }}
-            src="https://app.endlesstools.io/embed/b6f39d54-23c2-429f-a315-4ea4eb90320b"
-            title="3D Model"
-            allow="clipboard-write; encrypted-media; gyroscope; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
-        </motion.div>
-
         <motion.div className="mb-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}>
           <h1
             className="text-black dark:text-white font-playfair italic font-semibold text-center motion-element text-fluid-3xl lg:text-fluid-4xl"
@@ -673,6 +652,26 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <CreatingSection projects={creatingProjects} />
       <EverydayTechSection items={everydayTech} />
       <TechStackSection skills={skills} />
+
+      {/* Floating Dinosaur at Bottom */}
+      <motion.div
+        className="flex justify-center items-center py-8"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          opacity: { delay: 1.8, duration: 0.8, ease: 'easeOut' },
+          y: { delay: 1.8, duration: 0.8, ease: 'easeOut' }
+        }}
+      >
+        <iframe
+          style={{ width: '130px', height: '130px', backgroundColor: 'transparent', border: 'none' }}
+          src="https://app.endlesstools.io/embed/b6f39d54-23c2-429f-a315-4ea4eb90320b"
+          title="3D Model"
+          allow="clipboard-write; encrypted-media; gyroscope; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        />
+      </motion.div>
 
       <ResumeModal isOpen={showResumeModal} onClose={() => setShowResumeModal(false)} />
     </div>

@@ -271,6 +271,49 @@ function HeroSection() {
   )
 }
 
+interface HeroContactProps {
+  links: ContactLinkItem[]
+  showResumePreview: boolean
+  onResumeOpen: () => void
+  onResumeHover: () => void
+  onResumeLeave: () => void
+}
+
+function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHover, onResumeLeave }: HeroContactProps) {
+  return (
+    <motion.section
+      id="contact"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4, duration: 0.5 }}
+      className="py-8 px-4 sm:px-6 lg:px-0"
+    >
+      <div className="max-w-3xl mx-auto">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center">
+          {links.map((link) => (
+            <ContactLink key={link.label} link={link} />
+          ))}
+          <div className="relative">
+            <motion.button
+              onClick={onResumeOpen}
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-medium text-sm text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
+              whileHover={{ y: -1 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              onMouseEnter={onResumeHover}
+              onMouseLeave={onResumeLeave}
+              onFocus={onResumeHover}
+              onBlur={onResumeLeave}
+            >
+              <span className="font-light tracking-wide">RESUME</span>
+            </motion.button>
+            <ResumePreview isVisible={showResumePreview} />
+          </div>
+        </div>
+      </div>
+    </motion.section>
+  )
+}
+
 function CaseStudiesSection({ children }: { children: ReactNode }) {
   return (
     <motion.section
@@ -312,54 +355,6 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
   )
 }
 
-interface ContactSectionProps {
-  links: ContactLinkItem[]
-  showResumePreview: boolean
-  onResumeOpen: () => void
-  onResumeHover: () => void
-  onResumeLeave: () => void
-}
-
-function ContactSection({ links, showResumePreview, onResumeOpen, onResumeHover, onResumeLeave }: ContactSectionProps) {
-  return (
-    <motion.section
-      id="contact"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.5 }}
-      className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-0"
-    >
-      <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-center mb-12 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
-          Contact
-        </h2>
-      </div>
-
-      <div className="max-w-3xl mx-auto">
-        <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center">
-          {links.map((link) => (
-            <ContactLink key={link.label} link={link} />
-          ))}
-          <div className="relative">
-            <motion.button
-              onClick={onResumeOpen}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-medium text-sm text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-              onMouseEnter={onResumeHover}
-              onMouseLeave={onResumeLeave}
-              onFocus={onResumeHover}
-              onBlur={onResumeLeave}
-            >
-              <span className="font-light tracking-wide">RESUME</span>
-            </motion.button>
-            <ResumePreview isVisible={showResumePreview} />
-          </div>
-        </div>
-      </div>
-    </motion.section>
-  )
-}
 
 interface ExperienceSectionProps {
   experienceItems: ExperienceItem[]
@@ -620,14 +615,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   return (
     <div className="container mx-auto max-w-8xl px-4 py-8">
       <HeroSection />
-      <CaseStudiesSection>{children}</CaseStudiesSection>
-      <ContactSection
+      <HeroContactSection
         links={contactLinks}
         showResumePreview={showResumePreview}
         onResumeOpen={() => setShowResumeModal(true)}
         onResumeHover={() => setShowResumePreview(true)}
         onResumeLeave={() => setShowResumePreview(false)}
       />
+      <CaseStudiesSection>{children}</CaseStudiesSection>
       <ExperienceSection experienceItems={experience} expandedJobs={expandedJobs} onToggle={toggleJob} />
       <EducationSection educationItems={education} />
       <CreatingSection projects={creatingProjects} />

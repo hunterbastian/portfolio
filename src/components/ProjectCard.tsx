@@ -27,13 +27,13 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
           delay: index * 0.08 
         }}
         whileHover={{ 
-          y: -6, 
-          scale: 1.03,
+          y: -3, 
+          scale: 1.01,
           transition: { 
             type: 'spring', 
-            stiffness: 300, 
-            damping: 25,
-            mass: 0.5
+            stiffness: 150, 
+            damping: 30,
+            mass: 0.8
           }
         }}
         whileTap={{ 
@@ -48,7 +48,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
             src={imgSrc}
             alt={frontmatter.title}
             fill
-            className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-110"
+            className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-105"
             style={{ 
               transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
               willChange: 'transform'

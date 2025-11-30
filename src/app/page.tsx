@@ -19,7 +19,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <AnimatedHomePage>
-      <ClientWrapper categories={categories}>
+      <ClientWrapper>
         <Suspense fallback={<ProjectLoader />}>
           <ProjectGridClient category={params.category} projects={projects} />
         </Suspense>

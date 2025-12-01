@@ -217,7 +217,7 @@ function HeroSection() {
             Hunter Bastian
           </h1>
           <motion.div
-            className="text-gray-600 dark:text-gray-400 text-center font-garamond-narrow mt-2 flex items-center justify-center gap-3"
+            className="text-gray-600 dark:text-gray-400 text-center font-garamond-narrow mt-4 flex items-center justify-center gap-3"
             style={{ fontSize: '14px', letterSpacing: '0.5px' }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

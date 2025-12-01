@@ -252,7 +252,11 @@ function HeroSection() {
               className="text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow"
               style={{ lineHeight: '1.6' }}
             >
-              Interaction Design student at UVU with experience designing and building digital products. I work in Figma and front-end code, and I&apos;m passionate about creating clean, meaningful user experiences.
+              Interaction Design student at UVU with experience designing and building digital products. I work in Figma and front-end code, and I&apos;m passionate about creating clean, meaningful user experiences, with an{' '}
+              <span className="text-red-500 dark:text-red-400 font-bold" style={{ textShadow: '0 0 8px rgba(255, 59, 48, 0.4)' }}>
+                AI first mindset
+              </span>
+              .
             </p>
           </div>
         </motion.div>

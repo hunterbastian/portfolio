@@ -208,16 +208,16 @@ function HeroSection() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0 text-center">
+      <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
         <motion.div className="mb-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}>
           <h1
-            className="text-black dark:text-white font-playfair italic font-semibold text-center motion-element text-fluid-3xl lg:text-fluid-4xl"
+            className="text-black dark:text-white font-playfair italic font-semibold motion-element text-fluid-3xl lg:text-fluid-4xl"
             style={{ lineHeight: '1.2' }}
           >
             Hunter Bastian
           </h1>
           <motion.div
-            className="text-gray-600 dark:text-gray-400 text-center font-garamond-narrow mt-4 flex items-center justify-center gap-3"
+            className="text-gray-600 dark:text-gray-400 font-garamond-narrow mt-4 flex items-center gap-3"
             style={{ fontSize: '14px', letterSpacing: '0.5px' }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -235,7 +235,7 @@ function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="mb-2 text-center space-y-4"
+          className="mb-2 space-y-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
@@ -276,7 +276,7 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
       className="py-8 px-4 sm:px-6 lg:px-0"
     >
       <div className="max-w-3xl mx-auto">
-        <div className="flex flex-col sm:flex-row gap-3 justify-center items-stretch sm:items-center">
+        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
           {links.map((link) => (
             <ContactLink key={link.label} link={link} />
           ))}
@@ -316,7 +316,7 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
           Case Studies
         </h2>
       </motion.div>
@@ -325,7 +325,7 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
 
       {/* Archive Button */}
       <motion.div
-        className="flex justify-center mt-8"
+        className="flex justify-start mt-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
@@ -374,7 +374,7 @@ function ExperienceSection({ experienceItems, expandedJobs, onToggle }: Experien
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
           Experience
         </h2>
 
@@ -442,7 +442,7 @@ function EducationSection({ educationItems }: { educationItems: EducationItem[] 
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
           Education
         </h2>
 
@@ -486,7 +486,7 @@ function CreatingSection({ projects }: { projects: CreatingProject[] }) {
       transition={{ delay: 1.1, duration: 0.5 }}
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
           Creating
         </h2>
 
@@ -522,7 +522,7 @@ function EverydayTechSection({ items }: { items: string[] }) {
       className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-center mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
           Everyday tech
         </h2>
       </div>
@@ -567,13 +567,13 @@ function TechStackSection({ skills: skillItems }: { skills: SkillItem[] }) {
       data-animate
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-center mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-8 text-fluid-lg lg:text-fluid-2xl" style={{ fontWeight: '400' }}>
           Stack
         </h2>
       </div>
       <div className="max-w-4xl mx-auto">
         <motion.div
-          className="flex flex-wrap justify-center gap-x-6 gap-y-3 max-w-2xl mx-auto"
+          className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.5 }}
@@ -633,7 +633,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       {/* Floating Dinosaur at Bottom */}
       <motion.div
-        className="flex justify-center items-center py-8"
+        className="flex justify-start items-center py-8"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{

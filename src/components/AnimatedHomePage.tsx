@@ -573,7 +573,7 @@ function TechStackSection({ skills: skillItems }: { skills: SkillItem[] }) {
       </div>
       <div className="max-w-4xl mx-auto">
         <motion.div
-          className="flex flex-wrap justify-center gap-x-8 gap-y-4 max-w-3xl mx-auto"
+          className="flex flex-wrap justify-center gap-x-6 gap-y-3 max-w-2xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.5 }}

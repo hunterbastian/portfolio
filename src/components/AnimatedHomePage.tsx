@@ -214,7 +214,7 @@ function HeroSection() {
             className="text-black dark:text-white font-playfair italic font-semibold text-center motion-element text-fluid-3xl lg:text-fluid-4xl"
             style={{ lineHeight: '1.2' }}
           >
-            HUNTER BASTIAN
+            Hunter Bastian
           </h1>
           <motion.div
             className="text-gray-600 dark:text-gray-400 text-center font-garamond-narrow mt-2 flex items-center justify-center gap-3"

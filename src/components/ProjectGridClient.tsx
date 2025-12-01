@@ -51,7 +51,7 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
 
   const renderProjectRow = (projects: Project[], rowIndex: number) => {
     return (
-      <div className="flex gap-6 justify-center transition-transform duration-500 ease-out group overflow-visible">
+      <div className="flex gap-6 justify-center overflow-visible">
         {projects.map((project, index) => {
           const totalInRow = projects.length
           const isFirst = index === 0
@@ -74,12 +74,14 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
             rotation = -3 + rotationStep * (middleIndex + 1)
           }
           
+          const isHovered = hoveredIndex === actualIndex
+          
           return (
             <div 
               key={project.slug}
-              className="flex-shrink-0 w-52 transition-all duration-500 ease-out group-hover:!rotate-0 group-hover:!scale-100"
+              className="flex-shrink-0 w-52 transition-all duration-500 ease-out"
               style={{
-                transform: `rotate(${rotation}deg) scale(0.80)`,
+                transform: isHovered ? 'rotate(0deg) scale(1)' : `rotate(${rotation}deg) scale(0.80)`,
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === actualIndex ? 1 : 0.7
               }}
               onMouseEnter={() => handleMouseEnter(actualIndex)}

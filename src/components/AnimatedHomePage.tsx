@@ -216,29 +216,22 @@ function HeroSection() {
           >
             Hunter Bastian
           </h1>
-          <motion.p
-            className="text-gray-600 dark:text-gray-400 text-center font-garamond-narrow mt-2"
+          <motion.div
+            className="text-gray-600 dark:text-gray-400 text-center font-garamond-narrow mt-2 flex items-center justify-center gap-3"
             style={{ fontSize: '14px', letterSpacing: '0.5px' }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Interaction designer
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          className="mb-4 text-center flex items-center justify-center gap-2"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.5 }}
-        >
-          <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-          </svg>
-          <span className="text-gray-500 dark:text-gray-400 font-garamond-narrow" style={{ fontSize: '14px' }}>
-            Lehi, UT
-          </span>
+            <span>Interaction designer</span>
+            <span className="text-gray-400 dark:text-gray-500">|</span>
+            <div className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+              </svg>
+              <span>Lehi, UT</span>
+            </div>
+          </motion.div>
         </motion.div>
 
         <motion.div

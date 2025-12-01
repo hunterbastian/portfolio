@@ -24,6 +24,32 @@ export function getAllProjects(): Project[] {
         content,
       }
     })
+    .filter((project) => !project.frontmatter.archived) // Filter out archived projects
+    .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
+
+  return projects
+}
+
+export function getArchivedProjects(): Project[] {
+  if (!fs.existsSync(projectsDirectory)) {
+    return []
+  }
+
+  const fileNames = fs.readdirSync(projectsDirectory)
+  const projects = fileNames
+    .filter((name) => name.endsWith('.mdx'))
+    .map((name) => {
+      const fullPath = path.join(projectsDirectory, name)
+      const fileContents = fs.readFileSync(fullPath, 'utf8')
+      const { data, content } = matter(fileContents)
+
+      return {
+        slug: name.replace(/\.mdx$/, ''),
+        frontmatter: data as ProjectFrontmatter,
+        content,
+      }
+    })
+    .filter((project) => project.frontmatter.archived === true) // Only archived projects
     .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
 
   return projects

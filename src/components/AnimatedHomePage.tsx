@@ -335,6 +335,21 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
       </motion.div>
 
       {children}
+
+      {/* Archive Button */}
+      <motion.div
+        className="flex justify-center mt-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+      >
+        <a
+          href="/archive"
+          className="text-xs text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors font-light tracking-wide"
+        >
+          Archive
+        </a>
+      </motion.div>
     </motion.section>
   )
 }

@@ -252,17 +252,7 @@ function HeroSection() {
               className="text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow"
               style={{ lineHeight: '1.6' }}
             >
-              <span className="text-gray-800 dark:text-gray-200">Undergraduate at Utah Valley University</span> pursuing a{' '}
-              <strong className="text-gray-800 dark:text-gray-200">B.S. in Web Design and Development</strong> with an emphasis in{' '}
-              <strong className="text-gray-800 dark:text-gray-200">Interaction Design</strong>. Currently serving as the{' '}
-              <em className="text-gray-700 dark:text-gray-300">Digital Media Department Representative</em>, I am passionate about creating{' '}
-              <strong className="text-gray-800 dark:text-gray-200">meaningful digital experiences</strong>. I have experience designing for{' '}
-              <strong className="text-gray-800 dark:text-gray-200">mobile and web platforms in Figma</strong>, alongside front-end development
-              skills in <span className="text-gray-800 dark:text-gray-200">HTML, CSS, JavaScript</span> with{' '}
-              <strong className="text-red-500 dark:text-red-400 font-bold" style={{ color: '#FF3B30', textShadow: '0 0 8px rgba(255, 59, 48, 0.4)' }}>
-                AI first enthusiasm
-              </strong>
-              .
+              Interaction Design student at UVU with experience designing and building digital products. I work in Figma and front-end code, and I'm passionate about creating clean, meaningful user experiences.
             </p>
           </div>
         </motion.div>

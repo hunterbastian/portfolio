@@ -506,11 +506,11 @@ function CreatingSection({ projects }: { projects: CreatingProject[] }) {
           Creating
         </h2>
 
-        <motion.ul className="space-y-4 text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 0.5 }}>
+        <motion.ul className="space-y-4 text-left" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 0.5 }}>
           {projects.map((project, index) => (
             <motion.li
               key={project.name}
-              className="flex items-center justify-center gap-3 text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow"
+              className="flex items-center justify-start gap-3 text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow"
               style={{ lineHeight: '1.6' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

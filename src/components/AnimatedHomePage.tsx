@@ -290,7 +290,7 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
               onClick={onResumeOpen}
               className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
               style={{
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.08)'
+                boxShadow: '0 0 12px rgba(6, 182, 212, 0.5)'
               }}
               whileHover={{ y: -1 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
@@ -332,19 +332,21 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
       {children}
 
       {/* Archive Button */}
-      <motion.div
-        className="flex justify-start mt-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-      >
-        <a
-          href="/archive"
-          className="text-xs text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors font-light tracking-wide"
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
+        <motion.div
+          className="flex justify-start mt-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
         >
-          Archive
-        </a>
-      </motion.div>
+          <a
+            href="/archive"
+            className="text-xs text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors font-light tracking-wide"
+          >
+            Archive
+          </a>
+        </motion.div>
+      </div>
     </motion.section>
   )
 }

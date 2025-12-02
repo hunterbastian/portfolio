@@ -98,6 +98,24 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
         <link rel="dns-prefetch" href="//analytics.vercel.com" />
+        
+        {/* Text selection highlight - Aqua */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            ::selection {
+              background-color: rgba(0, 255, 255, 0.3) !important;
+              color: inherit !important;
+            }
+            ::-moz-selection {
+              background-color: rgba(0, 255, 255, 0.3) !important;
+              color: inherit !important;
+            }
+            ::-webkit-selection {
+              background-color: rgba(0, 255, 255, 0.3) !important;
+              color: inherit !important;
+            }
+          `
+        }} />
       </head>
                    <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
                        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>

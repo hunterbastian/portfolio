@@ -275,7 +275,7 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
       transition={{ delay: 0.4, duration: 0.5 }}
       className="py-8 px-4 sm:px-6 lg:px-0"
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-2xl mx-auto">
         <div className="flex flex-col gap-4">
           {/* Social Links Row */}
           <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">

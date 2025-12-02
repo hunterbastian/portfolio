@@ -58,7 +58,14 @@ export default function Header() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-50 w-full py-4 px-6" style={{ backgroundColor: 'rgba(15, 23, 42, 0.85)' }}>
+    <header 
+      className="sticky top-0 z-50 w-full py-4 px-6" 
+      style={{ 
+        backgroundColor: 'rgba(15, 23, 42, 0.75)',
+        backdropFilter: 'blur(12px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(12px) saturate(180%)'
+      }}
+    >
       <div className="container mx-auto max-w-6xl">
         <div 
           className="flex h-14 items-center justify-between px-8 border-b"
@@ -115,7 +122,14 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {showMobileMenu && (
-        <div className="md:hidden px-6 pb-4 mt-4" style={{ backgroundColor: 'rgba(15, 23, 42, 0.95)' }}>
+        <div 
+          className="md:hidden px-6 pb-4 mt-4" 
+          style={{ 
+            backgroundColor: 'rgba(15, 23, 42, 0.85)',
+            backdropFilter: 'blur(12px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(12px) saturate(180%)'
+          }}
+        >
           <div className="container mx-auto max-w-6xl">
             <div className="border-t pt-4 space-y-2" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
               {navigation.map((item) => (

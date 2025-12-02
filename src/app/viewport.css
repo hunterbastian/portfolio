@@ -101,7 +101,7 @@
 
 /* Text selection optimization */
 ::selection {
-  background-color: rgba(59, 130, 246, 0.3);
+  background-color: rgba(0, 255, 255, 0.3);
   color: inherit;
 }
 

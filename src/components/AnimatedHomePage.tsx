@@ -276,14 +276,19 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
       className="py-8 px-4 sm:px-6 lg:px-0"
     >
       <div className="max-w-3xl mx-auto">
-        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-          {links.map((link) => (
-            <ContactLink key={link.label} link={link} />
-          ))}
+        <div className="flex flex-col gap-4">
+          {/* Social Links Row */}
+          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+            {links.map((link) => (
+              <ContactLink key={link.label} link={link} />
+            ))}
+          </div>
+          
+          {/* Resume Button Row */}
           <div className="relative">
             <motion.button
               onClick={onResumeOpen}
-              className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
               whileHover={{ y: -1 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
               onMouseEnter={onResumeHover}

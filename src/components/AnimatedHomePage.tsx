@@ -649,7 +649,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       {/* Floating Dinosaur at Bottom */}
       <motion.div
-        className="flex justify-start items-center py-8"
+        className="flex justify-center items-center py-8"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{

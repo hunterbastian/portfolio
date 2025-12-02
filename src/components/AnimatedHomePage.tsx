@@ -334,7 +334,7 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
       {/* Archive Button */}
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
         <motion.div
-          className="flex justify-start mt-8"
+          className="flex justify-start mt-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}

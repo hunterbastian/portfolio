@@ -99,19 +99,19 @@
   outline-offset: 2px;
 }
 
-/* Text selection optimization - Clean matcha aesthetic */
+/* Text selection optimization - Matcha aesthetic */
 ::selection {
-  background: rgba(168, 192, 154, 0.25);
+  background: rgba(165, 201, 122, 0.3);
   color: inherit;
 }
 
 ::-moz-selection {
-  background: rgba(168, 192, 154, 0.25);
+  background: rgba(165, 201, 122, 0.3);
   color: inherit;
 }
 
 ::-webkit-selection {
-  background: rgba(168, 192, 154, 0.25);
+  background: rgba(165, 201, 122, 0.3);
   color: inherit;
 }
 

@@ -249,12 +249,12 @@ function HeroSection() {
               <span 
                 className="font-bold" 
                 style={{ 
-                  background: 'linear-gradient(135deg, #9CAF88 0%, #A8C09A 50%, #B5C99A 100%)',
+                  background: 'linear-gradient(135deg, #9BC88A 0%, #A5C97A 50%, #B5D4A3 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  textShadow: '0 0 12px rgba(156, 175, 136, 0.4)',
-                  filter: 'drop-shadow(0 0 4px rgba(168, 192, 154, 0.3))'
+                  textShadow: '0 0 16px rgba(165, 201, 122, 0.5)',
+                  filter: 'drop-shadow(0 0 6px rgba(155, 200, 138, 0.4))'
                 }}
               >
                 AI first mindset
@@ -300,10 +300,10 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
               onClick={onResumeOpen}
               className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs rounded-sm transition-all duration-300"
               style={{
-                background: 'linear-gradient(135deg, rgba(156, 175, 136, 0.08) 0%, rgba(168, 192, 154, 0.12) 50%, rgba(181, 201, 154, 0.08) 100%)',
-                border: '1px solid #A8C09A',
-                color: '#9CAF88',
-                boxShadow: '0 0 12px rgba(168, 192, 154, 0.3), inset 0 0 8px rgba(156, 175, 136, 0.1)',
+                background: 'linear-gradient(135deg, rgba(155, 200, 138, 0.1) 0%, rgba(165, 201, 122, 0.15) 50%, rgba(181, 212, 163, 0.1) 100%)',
+                border: '1px solid #A5C97A',
+                color: '#9BC88A',
+                boxShadow: '0 0 16px rgba(165, 201, 122, 0.4), inset 0 0 10px rgba(155, 200, 138, 0.15)',
                 backdropFilter: 'blur(8px)',
                 WebkitBackdropFilter: 'blur(8px)'
               }}

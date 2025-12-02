@@ -236,19 +236,19 @@ button:active {
   }
 }
 
-/* Text selection highlight - Clean matcha aesthetic */
+/* Text selection highlight - Matcha aesthetic */
 ::selection {
-  background: rgba(168, 192, 154, 0.25) !important;
+  background: rgba(165, 201, 122, 0.3) !important;
   color: inherit;
 }
 
 ::-moz-selection {
-  background: rgba(168, 192, 154, 0.25) !important;
+  background: rgba(165, 201, 122, 0.3) !important;
   color: inherit;
 }
 
 ::-webkit-selection {
-  background: rgba(168, 192, 154, 0.25) !important;
+  background: rgba(165, 201, 122, 0.3) !important;
   color: inherit;
 }
 

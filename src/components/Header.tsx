@@ -58,15 +58,16 @@ export default function Header() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-50 w-full py-4 px-6 bg-white dark:bg-gray-950">
+    <header className="sticky top-0 z-50 w-full py-4 px-6" style={{ backgroundColor: 'rgba(15, 23, 42, 0.85)' }}>
       <div className="container mx-auto max-w-6xl">
         <div 
-          className="flex h-14 items-center justify-between px-8 border-b border-gray-200 dark:border-gray-800"
+          className="flex h-14 items-center justify-between px-8 border-b"
+          style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}
         >
           {/* Logo */}
           <Link 
             href="/" 
-            className="font-medium text-sm text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+            className="font-medium text-sm text-gray-100 hover:text-gray-300 transition-colors"
           >
             HB
           </Link>
@@ -80,8 +81,8 @@ export default function Header() {
                 onClick={(e) => handleSmoothScroll(e, item.href)}
                 className={`text-xs font-light tracking-wide transition-colors cursor-pointer ${
                   activeSection === item.href 
-                    ? 'text-gray-900 dark:text-gray-100' 
-                    : 'text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100'
+                    ? 'text-gray-100' 
+                    : 'text-gray-400 hover:text-gray-200'
                 }`}
                 aria-current={activeSection === item.href ? 'page' : undefined}
               >
@@ -93,7 +94,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="md:hidden p-2 text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+            className="md:hidden p-2 text-gray-100 hover:text-gray-300 transition-colors"
           >
             <svg
               className="w-5 h-5"
@@ -114,9 +115,9 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {showMobileMenu && (
-        <div className="md:hidden px-6 pb-4 mt-4 bg-white dark:bg-gray-950">
+        <div className="md:hidden px-6 pb-4 mt-4" style={{ backgroundColor: 'rgba(15, 23, 42, 0.95)' }}>
           <div className="container mx-auto max-w-6xl">
-            <div className="border-t border-gray-200 dark:border-gray-800 pt-4 space-y-2">
+            <div className="border-t pt-4 space-y-2" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
               {navigation.map((item) => (
                 <a
                   key={item.href}
@@ -127,8 +128,8 @@ export default function Header() {
                   }}
                   className={`block py-3 px-3 text-sm transition-colors cursor-pointer ${
                     activeSection === item.href
-                      ? 'text-gray-900 dark:text-gray-100'
-                      : 'text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100'
+                      ? 'text-gray-100'
+                      : 'text-gray-400 hover:text-gray-200'
                   }`}
                 >
                   {item.name}

@@ -99,19 +99,19 @@
   outline-offset: 2px;
 }
 
-/* Text selection optimization */
+/* Text selection optimization - Frutiger Aero retro cyan */
 ::selection {
-  background-color: rgba(0, 255, 255, 0.3);
+  background-color: rgba(0, 229, 255, 0.4);
   color: inherit;
 }
 
 ::-moz-selection {
-  background-color: rgba(0, 255, 255, 0.3);
+  background-color: rgba(0, 229, 255, 0.4);
   color: inherit;
 }
 
 ::-webkit-selection {
-  background-color: rgba(0, 255, 255, 0.3);
+  background-color: rgba(0, 229, 255, 0.4);
   color: inherit;
 }
 

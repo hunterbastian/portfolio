@@ -236,19 +236,19 @@ button:active {
   }
 }
 
-/* Text selection highlight - Aqua color */
+/* Text selection highlight - Frutiger Aero retro cyan */
 ::selection {
-  background-color: rgba(0, 255, 255, 0.3) !important;
+  background-color: rgba(0, 229, 255, 0.4) !important;
   color: inherit;
 }
 
 ::-moz-selection {
-  background-color: rgba(0, 255, 255, 0.3) !important;
+  background-color: rgba(0, 229, 255, 0.4) !important;
   color: inherit;
 }
 
 ::-webkit-selection {
-  background-color: rgba(0, 255, 255, 0.3) !important;
+  background-color: rgba(0, 229, 255, 0.4) !important;
   color: inherit;
 }
 

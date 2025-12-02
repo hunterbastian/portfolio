@@ -246,7 +246,7 @@ function HeroSection() {
               style={{ lineHeight: '1.6' }}
             >
               Interaction Design student at UVU with experience designing and building digital products. I work in Figma and front-end code, and I&apos;m passionate about creating clean, meaningful user experiences, with an{' '}
-              <span className="font-bold" style={{ color: '#00FFFF', textShadow: '0 0 16px rgba(0, 255, 255, 0.7)' }}>
+              <span className="font-bold" style={{ color: '#00E5FF', textShadow: '0 0 20px rgba(0, 229, 255, 0.9), 0 0 40px rgba(0, 229, 255, 0.5)' }}>
                 AI first mindset
               </span>
               .
@@ -290,8 +290,8 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
               onClick={onResumeOpen}
               className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
               style={{
-                boxShadow: '0 0 16px rgba(0, 255, 255, 0.7)',
-                borderColor: '#00FFFF'
+                boxShadow: '0 0 20px rgba(0, 229, 255, 0.9), 0 0 40px rgba(0, 229, 255, 0.5)',
+                borderColor: '#00E5FF'
               }}
               whileHover={{ y: -1 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}

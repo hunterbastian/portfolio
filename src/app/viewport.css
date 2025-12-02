@@ -101,18 +101,21 @@
 
 /* Text selection optimization - Frutiger Aero retro cyan */
 ::selection {
-  background-color: rgba(0, 229, 255, 0.4);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.5) 0%, rgba(0, 229, 255, 0.6) 50%, rgba(0, 217, 255, 0.5) 100%);
   color: inherit;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
 }
 
 ::-moz-selection {
-  background-color: rgba(0, 229, 255, 0.4);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.5) 0%, rgba(0, 229, 255, 0.6) 50%, rgba(0, 217, 255, 0.5) 100%);
   color: inherit;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
 }
 
 ::-webkit-selection {
-  background-color: rgba(0, 229, 255, 0.4);
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.5) 0%, rgba(0, 229, 255, 0.6) 50%, rgba(0, 217, 255, 0.5) 100%);
   color: inherit;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
 }
 
 /* Smooth font rendering across devices */

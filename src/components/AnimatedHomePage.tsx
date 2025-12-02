@@ -542,9 +542,9 @@ function EverydayTechSection({ items }: { items: string[] }) {
           Everyday tech
         </h2>
       </div>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-2xl mx-auto">
         <motion.div
-          className="flex flex-wrap justify-center gap-x-8 gap-y-4 max-w-3xl mx-auto"
+          className="flex flex-wrap justify-start gap-x-8 gap-y-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.5 }}
@@ -552,7 +552,7 @@ function EverydayTechSection({ items }: { items: string[] }) {
           {items.map((item, index) => (
             <motion.div
               key={item}
-              className="text-center"
+              className="text-left"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5 + index * 0.1, duration: 0.3 }}

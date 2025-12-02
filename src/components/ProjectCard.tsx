@@ -77,30 +77,10 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out" />
         </div>
         
-        <div className="p-5 space-y-3">
-          <div>
-            <h3 className="font-medium tracking-wider group-hover:text-primary transition-all duration-500 ease-out font-garamond-narrow mb-2" style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              {frontmatter.title}
-            </h3>
-            {frontmatter.description && (
-              <p className="text-sm text-gray-600 dark:text-gray-400 font-garamond-narrow line-clamp-2" style={{ fontSize: '12px', lineHeight: '1.5' }}>
-                {frontmatter.description}
-              </p>
-            )}
-          </div>
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-            {frontmatter.category && (
-              <span className="text-xs text-gray-500 dark:text-gray-500 font-light tracking-wide">
-                {frontmatter.category}
-              </span>
-            )}
-            {frontmatter.tags && frontmatter.tags.length > 0 && (
-              <span className="text-xs text-gray-400 dark:text-gray-600">
-                {frontmatter.tags.slice(0, 2).join(' • ')}
-                {frontmatter.tags.length > 2 && ' • ...'}
-              </span>
-            )}
-          </div>
+        <div className="p-4">
+          <h3 className="font-medium tracking-wider group-hover:text-primary transition-all duration-500 ease-out font-garamond-narrow" style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            {frontmatter.title}
+          </h3>
         </div>
       </motion.div>
     </Link>

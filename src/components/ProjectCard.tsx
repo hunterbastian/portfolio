@@ -77,14 +77,9 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
         </div>
         
         <div className="p-4">
-          <h3 className="font-semibold uppercase group-hover:text-primary transition-all duration-500 ease-out font-garamond-narrow group-hover:tracking-wide" style={{ fontSize: '14px' }}>
+          <h3 className="font-medium tracking-wider group-hover:text-primary transition-all duration-500 ease-out font-garamond-narrow" style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
             {frontmatter.title}
           </h3>
-          {frontmatter.description && (
-            <p className="text-xs text-gray-500 dark:text-gray-500 italic mt-1 font-garamond-narrow" style={{ fontStyle: 'italic' }}>
-              {frontmatter.description}
-            </p>
-          )}
         </div>
       </motion.div>
     </Link>

@@ -21,10 +21,7 @@ const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string
 const navigation: Array<{ name: string; href: string }> = [
   { name: 'CASE STUDIES', href: '#case-studies' },
   { name: 'EXPERIENCE', href: '#experience' },
-  { name: 'EDUCATION', href: '#education' },
-  { name: 'CREATING', href: '#creating' },
-  { name: 'EVERYDAY TECH', href: '#everyday-tech' },
-  { name: 'STACK', href: '#tech-stack' }
+  { name: 'EDUCATION', href: '#education' }
 ]
 
 export default function Header() {

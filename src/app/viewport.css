@@ -105,6 +105,16 @@
   color: inherit;
 }
 
+::-moz-selection {
+  background-color: rgba(0, 255, 255, 0.3);
+  color: inherit;
+}
+
+::-webkit-selection {
+  background-color: rgba(0, 255, 255, 0.3);
+  color: inherit;
+}
+
 /* Smooth font rendering across devices */
 body {
   text-rendering: optimizeLegibility;

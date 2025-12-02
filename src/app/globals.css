@@ -236,23 +236,20 @@ button:active {
   }
 }
 
-/* Text selection highlight - Frutiger Aero retro cyan */
+/* Text selection highlight - Clean matcha aesthetic */
 ::selection {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.5) 0%, rgba(0, 229, 255, 0.6) 50%, rgba(0, 217, 255, 0.5) 100%) !important;
+  background: rgba(168, 192, 154, 0.25) !important;
   color: inherit;
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.8) !important;
 }
 
 ::-moz-selection {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.5) 0%, rgba(0, 229, 255, 0.6) 50%, rgba(0, 217, 255, 0.5) 100%) !important;
+  background: rgba(168, 192, 154, 0.25) !important;
   color: inherit;
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.8) !important;
 }
 
 ::-webkit-selection {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.5) 0%, rgba(0, 229, 255, 0.6) 50%, rgba(0, 217, 255, 0.5) 100%) !important;
+  background: rgba(168, 192, 154, 0.25) !important;
   color: inherit;
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.8) !important;
 }
 
 

@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic'
 import { CSSProperties, ReactNode, useState } from 'react'
 
 import ResumePreview from './ResumePreview'
-import GlareButton from './GlareButton'
 
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 
@@ -292,7 +291,7 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
           
           {/* Resume Button Row */}
           <div className="relative overflow-visible">
-            <GlareButton
+            <motion.button
               onClick={onResumeOpen}
               className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
               style={{
@@ -307,7 +306,7 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
               onBlur={onResumeLeave}
             >
               <span className="font-light tracking-wide">RESUME</span>
-            </GlareButton>
+            </motion.button>
             <ResumePreview isVisible={showResumePreview} />
           </div>
         </div>
@@ -346,14 +345,14 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
         >
-          <GlareButton
+          <motion.a
             href="/archive"
             className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
             whileHover={{ y: -1 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
           >
             <span className="font-light tracking-wide">Archive</span>
-          </GlareButton>
+          </motion.a>
         </motion.div>
       </div>
     </motion.section>
@@ -362,7 +361,7 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
   return (
-    <GlareButton
+    <motion.a
       href={link.href}
       target="_blank"
       rel="noopener noreferrer"
@@ -372,7 +371,7 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
     >
       {link.icon}
       <span className="font-light tracking-wide">{link.label}</span>
-    </GlareButton>
+    </motion.a>
   )
 }
 

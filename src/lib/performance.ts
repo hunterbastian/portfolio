@@ -6,19 +6,19 @@
 export function preloadCriticalResources() {
   if (typeof window !== 'undefined') {
     // Preload hero image
-    const heroImage = new Image()
-    heroImage.src = '/favicon/Frame.svg'
+    const heroImageElement = new Image()
+    heroImageElement.src = '/favicon/Frame.svg'
     
     // Preload project images (first 3 for above-the-fold)
-    const projectImages = [
+    const projectImageUrls = [
       '/images/projects/brand-identity-system.svg',
       '/images/projects/porscheapp.png',
       '/images/projects/wanderutah.png'
     ]
     
-    projectImages.forEach(src => {
-      const img = new Image()
-      img.src = src
+    projectImageUrls.forEach(imageUrl => {
+      const imageElement = new Image()
+      imageElement.src = imageUrl
     })
   }
 }
@@ -31,11 +31,11 @@ export function setupLazyLoading(): () => void {
     return () => {}
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in')
+  const animationObserver = new IntersectionObserver(
+    (observerEntries) => {
+      observerEntries.forEach(observerEntry => {
+        if (observerEntry.isIntersecting) {
+          observerEntry.target.classList.add('animate-in')
         }
       })
     },
@@ -43,13 +43,13 @@ export function setupLazyLoading(): () => void {
   )
 
   const animatedElements = Array.from(document.querySelectorAll('[data-animate]'))
-  animatedElements.forEach(el => {
-    observer.observe(el)
+  animatedElements.forEach(animatedElement => {
+    animationObserver.observe(animatedElement)
   })
 
   return () => {
-    animatedElements.forEach(el => observer.unobserve(el))
-    observer.disconnect()
+    animatedElements.forEach(animatedElement => animationObserver.unobserve(animatedElement))
+    animationObserver.disconnect()
   }
 }
 
@@ -59,23 +59,23 @@ export function setupLazyLoading(): () => void {
 export function optimizeIframeLoading() {
   if (typeof window !== 'undefined') {
     // Lazy load iframes when they come into view
-    const iframes = document.querySelectorAll('iframe[data-src]')
+    const lazyIframes = document.querySelectorAll('iframe[data-src]')
     
     if ('IntersectionObserver' in window) {
-      const iframeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const iframe = entry.target as HTMLIFrameElement
-            if (iframe.dataset.src) {
-              iframe.src = iframe.dataset.src
-              iframe.removeAttribute('data-src')
-              iframeObserver.unobserve(iframe)
+      const iframeLoadObserver = new IntersectionObserver((observerEntries) => {
+        observerEntries.forEach(observerEntry => {
+          if (observerEntry.isIntersecting) {
+            const iframeElement = observerEntry.target as HTMLIFrameElement
+            if (iframeElement.dataset.src) {
+              iframeElement.src = iframeElement.dataset.src
+              iframeElement.removeAttribute('data-src')
+              iframeLoadObserver.unobserve(iframeElement)
             }
           }
         })
       }, { threshold: 0.1 })
       
-      iframes.forEach(iframe => iframeObserver.observe(iframe))
+      lazyIframes.forEach(iframeElement => iframeLoadObserver.observe(iframeElement))
     }
   }
 }

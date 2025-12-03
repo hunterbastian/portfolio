@@ -15,67 +15,67 @@ export default function UnicornOrb({
   height = 420,
   className = ''
 }: UnicornOrbProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null)
+  const orbContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    const removeWatermark = () => {
-      const container = containerRef.current
-      if (!container) return
+    const removeUnicornWatermark = () => {
+      const orbContainer = orbContainerRef.current
+      if (!orbContainer) return
       // Hide typical watermark link
-      container.querySelectorAll<HTMLAnchorElement>('a[href*="unicornstudio"]').forEach((el) => {
-        el.style.display = 'none'
+      orbContainer.querySelectorAll<HTMLAnchorElement>('a[href*="unicornstudio"]').forEach((linkElement) => {
+        linkElement.style.display = 'none'
       })
       // Heuristic: hide elements containing the phrase
-      container.querySelectorAll<HTMLElement>('*').forEach((node) => {
-        const text = (node.textContent || '').trim().toLowerCase()
-        if (text.includes('unicorn studio')) {
-          node.style.display = 'none'
+      orbContainer.querySelectorAll<HTMLElement>('*').forEach((domNode) => {
+        const textContent = (domNode.textContent || '').trim().toLowerCase()
+        if (textContent.includes('unicorn studio')) {
+          domNode.style.display = 'none'
         }
       })
     }
 
     // If UnicornStudio is already on the page, just init again to pick up new nodes
-    const maybeInit = () => {
+    const initializeUnicornStudio = () => {
       try {
-        const anyWindow = window as unknown as { UnicornStudio?: { init: () => void; isInitialized?: boolean } }
-        if (anyWindow.UnicornStudio) {
-          anyWindow.UnicornStudio.init()
-          anyWindow.UnicornStudio.isInitialized = true
+        const windowWithUnicornStudio = window as unknown as { UnicornStudio?: { init: () => void; isInitialized?: boolean } }
+        if (windowWithUnicornStudio.UnicornStudio) {
+          windowWithUnicornStudio.UnicornStudio.init()
+          windowWithUnicornStudio.UnicornStudio.isInitialized = true
           // Attempt to remove watermark shortly after init
-          setTimeout(removeWatermark, 50)
-          setTimeout(removeWatermark, 300)
-          setTimeout(removeWatermark, 1000)
+          setTimeout(removeUnicornWatermark, 50)
+          setTimeout(removeUnicornWatermark, 300)
+          setTimeout(removeUnicornWatermark, 1000)
         }
       } catch {}
     }
 
-    const anyWindow = window as unknown as { UnicornStudio?: { init: () => void; isInitialized?: boolean }; __usScriptLoading?: boolean }
-    if (!anyWindow.UnicornStudio && !anyWindow.__usScriptLoading) {
-      anyWindow.__usScriptLoading = true
-      const script = document.createElement('script')
-      script.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js'
-      script.async = true
-      script.onload = () => {
-        anyWindow.__usScriptLoading = false
-        maybeInit()
+    const windowWithUnicornStudio = window as unknown as { UnicornStudio?: { init: () => void; isInitialized?: boolean }; __unicornScriptLoading?: boolean }
+    if (!windowWithUnicornStudio.UnicornStudio && !windowWithUnicornStudio.__unicornScriptLoading) {
+      windowWithUnicornStudio.__unicornScriptLoading = true
+      const unicornScript = document.createElement('script')
+      unicornScript.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js'
+      unicornScript.async = true
+      unicornScript.onload = () => {
+        windowWithUnicornStudio.__unicornScriptLoading = false
+        initializeUnicornStudio()
       }
-      ;(document.head || document.body).appendChild(script)
+      ;(document.head || document.body).appendChild(unicornScript)
     } else {
       // Already present or loading — try init in case it is ready
-      maybeInit()
+      initializeUnicornStudio()
     }
 
     // Observe future mutations inside the container to hide any late-added label
-    const observer = new MutationObserver(() => removeWatermark())
-    if (containerRef.current) {
-      observer.observe(containerRef.current, { childList: true, subtree: true })
+    const mutationObserver = new MutationObserver(() => removeUnicornWatermark())
+    if (orbContainerRef.current) {
+      mutationObserver.observe(orbContainerRef.current, { childList: true, subtree: true })
     }
-    return () => observer.disconnect()
+    return () => mutationObserver.disconnect()
   }, [])
 
   return (
     <div
-      ref={containerRef}
+      ref={orbContainerRef}
       data-us-project={projectId}
       className={className}
       style={{ width, height }}

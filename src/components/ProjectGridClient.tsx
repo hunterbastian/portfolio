@@ -23,12 +23,12 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
   // Prefetch project pages on idle
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const idleId = (window as any).requestIdleCallback?.(() => {
-      projects.slice(0, 6).forEach((p) => router.prefetch(`/projects/${p.slug}`))
+    const idleCallbackId = (window as any).requestIdleCallback?.(() => {
+      projects.slice(0, 6).forEach((project) => router.prefetch(`/projects/${project.slug}`))
     })
     return () => {
-      if ((window as any).cancelIdleCallback && idleId) {
-        (window as any).cancelIdleCallback(idleId)
+      if ((window as any).cancelIdleCallback && idleCallbackId) {
+        (window as any).cancelIdleCallback(idleCallbackId)
       }
     }
   }, [projects, router])

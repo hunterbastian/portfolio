@@ -290,7 +290,7 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
           </div>
           
           {/* Resume Button Row */}
-          <div className="relative">
+          <div className="relative overflow-visible">
             <motion.button
               onClick={onResumeOpen}
               className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"

@@ -8,6 +8,12 @@ import ResumePreview from './ResumePreview'
 
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 
+// Lazy load the dinosaur iframe to improve initial load
+const LazyDinosaur = dynamic(() => import('./LazyDinosaur'), { 
+  ssr: false,
+  loading: () => null
+})
+
 interface AnimatedHomePageProps {
   children: ReactNode
 }
@@ -206,10 +212,10 @@ function HeroSection() {
       className="py-16 relative"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
     >
       <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
-        <motion.div className="mb-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}>
+        <motion.div className="mb-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.3 }}>
           <h1
             className="text-black dark:text-white font-playfair italic font-semibold motion-element text-fluid-3xl lg:text-fluid-4xl"
             style={{ lineHeight: '1.2' }}
@@ -221,7 +227,7 @@ function HeroSection() {
             style={{ fontSize: '14px', letterSpacing: '0.5px' }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
           >
             <span>Interaction designer</span>
             <span className="text-gray-400 dark:text-gray-500">|</span>
@@ -238,7 +244,7 @@ function HeroSection() {
           className="mb-2 space-y-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          transition={{ delay: 0.1, duration: 0.3 }}
         >
           <div className="space-y-3">
             <p
@@ -277,7 +283,7 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
       id="contact"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.5 }}
+      transition={{ delay: 0.2, duration: 0.3 }}
       className="py-8 px-4 sm:px-6 lg:px-0"
     >
       <div className="max-w-2xl mx-auto">
@@ -322,13 +328,13 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
       className="py-16 px-4 sm:px-6 lg:px-0"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.5 }}
+      transition={{ delay: 0.2, duration: 0.3 }}
     >
       <motion.div
         className="max-w-2xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
+        transition={{ delay: 0.25, duration: 0.3 }}
       >
         <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '400' }}>
           Case Studies
@@ -649,25 +655,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <EverydayTechSection items={everydayTech} />
       <TechStackSection skills={skills} />
 
-      {/* Floating Dinosaur at Bottom */}
-      <motion.div
-        className="flex justify-center items-center py-8"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          opacity: { delay: 1.8, duration: 0.8, ease: 'easeOut' },
-          y: { delay: 1.8, duration: 0.8, ease: 'easeOut' }
-        }}
-      >
-        <iframe
-          style={{ width: '130px', height: '130px', backgroundColor: 'transparent', border: 'none' }}
-          src="https://app.endlesstools.io/embed/b6f39d54-23c2-429f-a315-4ea4eb90320b"
-          title="3D Model"
-          allow="clipboard-write; encrypted-media; gyroscope; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        />
-      </motion.div>
+      {/* Floating Dinosaur at Bottom - Lazy loaded */}
+      <LazyDinosaur />
 
       <ResumeModal isOpen={showResumeModal} onClose={() => setShowResumeModal(false)} />
     </div>

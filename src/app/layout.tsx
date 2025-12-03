@@ -15,9 +15,10 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['500', '700'],
   variable: '--font-jetbrains-mono',
-  display: 'swap',
+  display: 'swap', // Don't block rendering
   preload: true,
   adjustFontFallback: true, // Better font fallback
+  fallback: ['ui-monospace', 'monospace'], // Immediate fallback
 })
 
 // Import PP Editorial New from local files or use a similar Google Font alternative
@@ -29,9 +30,10 @@ const playfairDisplay = Playfair_Display({
   style: ['italic', 'normal'],
   weight: ['400', '600'],
   variable: '--font-playfair',
-  display: 'swap',
-  preload: true,
+  display: 'swap', // Don't block rendering
+  preload: false, // Defer non-critical font
   adjustFontFallback: true,
+  fallback: ['Georgia', 'serif'], // Immediate fallback
 })
 
 export const viewport = {
@@ -98,6 +100,17 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
         <link rel="dns-prefetch" href="//analytics.vercel.com" />
+        <link rel="dns-prefetch" href="//app.endlesstools.io" />
+        
+        {/* Critical CSS - Inline for faster FCP */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Critical above-the-fold styles */
+            body { margin: 0; font-family: ui-monospace, monospace; }
+            .hero-section { min-height: 60vh; }
+            h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.2; }
+          `
+        }} />
         
         {/* Text selection highlight - Aqua */}
         <style dangerouslySetInnerHTML={{
@@ -127,15 +140,20 @@ export default function RootLayout({
                 <SpeedInsights 
                   sampleRate={1}
                 />
-                <Analytics />
+                <Analytics 
+                  mode={process.env.NODE_ENV === 'production' ? 'production' : 'development'}
+                />
                 {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                 
-                {/* Service Worker Registration - DISABLED FOR DEVELOPMENT */}
+                {/* Service Worker Registration - Deferred for better performance */}
                 {process.env.NODE_ENV === 'production' && (
-                  <Script id="sw-registration" strategy="afterInteractive">
+                  <Script 
+                    id="sw-registration" 
+                    strategy="lazyOnload"
+                  >
                     {`
-                      if ('serviceWorker' in navigator) {
-                        window.addEventListener('load', function() {
+                      if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
+                        requestIdleCallback(function() {
                           navigator.serviceWorker.register('/sw.js')
                             .then(function(registration) {
                               console.log('SW registered: ', registration);
@@ -143,7 +161,7 @@ export default function RootLayout({
                             .catch(function(registrationError) {
                               console.log('SW registration failed: ', registrationError);
                             });
-                        });
+                        }, { timeout: 5000 });
                       }
                     `}
                   </Script>

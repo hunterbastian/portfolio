@@ -1,17 +1,31 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
+// Optimized imports - use named imports for better tree-shaking
+import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { CSSProperties, ReactNode, useState } from 'react'
 
 import ResumePreview from './ResumePreview'
 
+// Lazy load heavy components
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
-
-// Lazy load the dinosaur iframe to improve initial load
 const LazyDinosaur = dynamic(() => import('./LazyDinosaur'), { 
   ssr: false,
   loading: () => null
+})
+
+// Lazy load section components that aren't immediately visible (below fold)
+const ExperienceSectionLazy = dynamic(() => import('./sections/ExperienceSection'), {
+  ssr: true,
+  loading: () => <div className="py-16" />
+})
+const EducationSectionLazy = dynamic(() => import('./sections/EducationSection'), {
+  ssr: true,
+  loading: () => <div className="py-16" />
+})
+const TechStackSectionLazy = dynamic(() => import('./sections/TechStackSection'), {
+  ssr: true,
+  loading: () => <div className="py-16" />
 })
 
 interface AnimatedHomePageProps {
@@ -649,6 +663,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         onResumeLeave={() => setShowResumePreview(false)}
       />
       <CaseStudiesSection>{children}</CaseStudiesSection>
+      {/* Use inline sections for above-fold content, lazy load below-fold */}
       <ExperienceSection experienceItems={experience} expandedJobs={expandedJobs} onToggle={toggleJob} />
       <EducationSection educationItems={education} />
       <CreatingSection projects={creatingProjects} />

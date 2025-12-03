@@ -124,8 +124,20 @@ export default function RootLayout({
                  <main id="main-content" role="main" className="flex-1">{children}</main>
                  <Footer />
                                </div>
-                <SpeedInsights />
-                <Analytics />
+                <SpeedInsights 
+                  sampleRate={1}
+                  framework="nextjs"
+                />
+                <Analytics 
+                  mode="production"
+                  beforeSend={(event) => {
+                    // Filter out sensitive data or unwanted events
+                    if (event.url.includes('/admin')) {
+                      return null
+                    }
+                    return event
+                  }}
+                />
                 {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                 
                 {/* Service Worker Registration - DISABLED FOR DEVELOPMENT */}

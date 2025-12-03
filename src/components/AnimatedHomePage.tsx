@@ -345,12 +345,14 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
         >
-          <a
+          <motion.a
             href="/archive"
-            className="text-xs text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors font-light tracking-wide"
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
+            whileHover={{ y: -1 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
           >
-            Archive
-          </a>
+            <span className="font-light tracking-wide">Archive</span>
+          </motion.a>
         </motion.div>
       </div>
     </motion.section>

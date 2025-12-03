@@ -3,10 +3,10 @@
  */
 
 export function smoothScrollTo(elementId: string) {
-  const element = document.getElementById(elementId)
-  if (!element) return
+  const targetElement = document.getElementById(elementId)
+  if (!targetElement) return
 
-  element.scrollIntoView({
+  targetElement.scrollIntoView({
     behavior: 'smooth',
     block: 'start',
     inline: 'nearest'
@@ -16,29 +16,29 @@ export function smoothScrollTo(elementId: string) {
 /**
  * Enhanced scroll with easing
  */
-export function smoothScrollToWithEasing(targetPosition: number, duration: number = 800) {
-  const startPosition = window.pageYOffset
-  const distance = targetPosition - startPosition
-  let startTime: number | null = null
+export function smoothScrollToWithEasing(targetPosition: number, animationDuration: number = 800) {
+  const initialScrollPosition = window.pageYOffset
+  const scrollDistance = targetPosition - initialScrollPosition
+  let animationStartTime: number | null = null
 
-  function animation(currentTime: number) {
-    if (startTime === null) startTime = currentTime
-    const timeElapsed = currentTime - startTime
-    const progress = Math.min(timeElapsed / duration, 1)
+  function animateScrollStep(currentTimestamp: number) {
+    if (animationStartTime === null) animationStartTime = currentTimestamp
+    const elapsedTime = currentTimestamp - animationStartTime
+    const scrollProgress = Math.min(elapsedTime / animationDuration, 1)
     
     // Easing function (ease-in-out-cubic)
-    const ease = progress < 0.5
-      ? 4 * progress * progress * progress
-      : 1 - Math.pow(-2 * progress + 2, 3) / 2
+    const easingValue = scrollProgress < 0.5
+      ? 4 * scrollProgress * scrollProgress * scrollProgress
+      : 1 - Math.pow(-2 * scrollProgress + 2, 3) / 2
 
-    window.scrollTo(0, startPosition + distance * ease)
+    window.scrollTo(0, initialScrollPosition + scrollDistance * easingValue)
 
-    if (timeElapsed < duration) {
-      requestAnimationFrame(animation)
+    if (elapsedTime < animationDuration) {
+      requestAnimationFrame(animateScrollStep)
     }
   }
 
-  requestAnimationFrame(animation)
+  requestAnimationFrame(animateScrollStep)
 }
 
 /**
@@ -47,12 +47,12 @@ export function smoothScrollToWithEasing(targetPosition: number, duration: numbe
 export function initScrollReveal() {
   if (typeof window === 'undefined') return
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('reveal')
-          observer.unobserve(entry.target)
+  const scrollRevealObserver = new IntersectionObserver(
+    (observerEntries) => {
+      observerEntries.forEach((observerEntry) => {
+        if (observerEntry.isIntersecting) {
+          observerEntry.target.classList.add('reveal')
+          scrollRevealObserver.unobserve(observerEntry.target)
         }
       })
     },
@@ -62,9 +62,9 @@ export function initScrollReveal() {
     }
   )
 
-  document.querySelectorAll('[data-reveal]').forEach((el) => {
-    observer.observe(el)
+  document.querySelectorAll('[data-reveal]').forEach((revealElement) => {
+    scrollRevealObserver.observe(revealElement)
   })
 
-  return () => observer.disconnect()
+  return () => scrollRevealObserver.disconnect()
 }

@@ -126,18 +126,8 @@ export default function RootLayout({
                                </div>
                 <SpeedInsights 
                   sampleRate={1}
-                  framework="nextjs"
                 />
-                <Analytics 
-                  mode="production"
-                  beforeSend={(event) => {
-                    // Filter out sensitive data or unwanted events
-                    if (event.url.includes('/admin')) {
-                      return null
-                    }
-                    return event
-                  }}
-                />
+                <Analytics />
                 {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                 
                 {/* Service Worker Registration - DISABLED FOR DEVELOPMENT */}

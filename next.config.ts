@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['framer-motion', '@react-three/fiber', '@react-three/drei', 'three', 'react', 'react-dom'],
     optimizeCss: true, // Enable CSS optimization
     webpackBuildWorker: true, // Use worker threads for builds
-    ppr: true, // Enable Partial Prerendering for instant page loads
+    // Note: PPR requires Next.js canary - keeping Suspense boundaries for similar benefits
     serverActions: {
       bodySizeLimit: '2mb',
     },

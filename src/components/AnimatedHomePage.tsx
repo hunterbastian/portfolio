@@ -256,14 +256,14 @@ function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="mb-2 space-y-4"
+          className="mb-0 space-y-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.3 }}
         >
           <div className="space-y-3">
             <p
-              className="text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow"
+              className="text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow mb-0"
               style={{ lineHeight: '1.6' }}
             >
               Interaction Design student at UVU with experience designing and building digital products. I work in Figma and front-end code, and I&apos;m passionate about creating clean, meaningful user experiences, with an{' '}

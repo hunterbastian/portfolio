@@ -349,7 +349,7 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.25, duration: 0.3 }}
       >
-        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Case Studies
         </h2>
       </motion.div>
@@ -417,7 +417,7 @@ function ExperienceSection({ experienceItems, expandedJobs, onToggle }: Experien
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Experience
         </h2>
 
@@ -485,7 +485,7 @@ function EducationSection({ educationItems }: { educationItems: EducationItem[] 
       className="py-16"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Education
         </h2>
 
@@ -529,7 +529,7 @@ function CreatingSection({ projects }: { projects: CreatingProject[] }) {
       transition={{ delay: 1.1, duration: 0.5 }}
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Creating
         </h2>
 
@@ -568,7 +568,7 @@ function EverydayTechSection({ items }: { items: string[] }) {
       className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0"
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Everyday tech
         </h2>
       </div>
@@ -613,7 +613,7 @@ function TechStackSection({ skills: skillItems }: { skills: SkillItem[] }) {
       data-animate
     >
       <div className="max-w-2xl mx-auto">
-        <h2 className="font-playfair italic text-left mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '400' }}>
+        <h2 className="font-playfair italic text-left mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Stack
         </h2>
       </div>

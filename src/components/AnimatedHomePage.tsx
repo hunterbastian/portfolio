@@ -339,7 +339,7 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
   return (
     <motion.section
       id="case-studies"
-      className="py-16 px-4 sm:px-6 lg:px-0"
+      className="py-16 px-4 sm:px-6 lg:px-0 relative z-10"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.3 }}
@@ -537,7 +537,7 @@ function CreatingSection({ projects }: { projects: CreatingProject[] }) {
   return (
     <motion.section
       id="creating"
-      className="py-16 px-4 sm:px-6 lg:px-0"
+      className="py-16 px-4 sm:px-6 lg:px-0 relative z-10"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.1, duration: 0.5 }}

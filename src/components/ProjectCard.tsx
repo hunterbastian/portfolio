@@ -63,7 +63,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
           y: ySpring,
         }}
         whileHover={{ 
-          scale: 1.02,
+          scale: 1.01,
           transition: { 
             type: 'spring', 
             stiffness: 80, 

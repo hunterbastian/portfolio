@@ -29,6 +29,9 @@
   background-position:
     -100% -100%,
     0 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: var(--gh-br);
 }
 
 .glare-hover:hover {

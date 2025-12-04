@@ -389,7 +389,7 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       borderRadius="4px"
       borderColor="transparent"
       glareColor="#ffffff"
-      glareOpacity={0.4}
+      glareOpacity={0.5}
       glareAngle={-30}
       glareSize={300}
       transitionDuration={800}
@@ -403,7 +403,7 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
         href={link.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900 relative z-10"
+        className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900 relative z-0"
         whileHover={{ y: -1 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >

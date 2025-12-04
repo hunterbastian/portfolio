@@ -386,7 +386,7 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       width="fit-content"
       height="fit-content"
       background="transparent"
-      borderRadius="4px"
+      borderRadius="2px"
       borderColor="transparent"
       glareColor="#ffffff"
       glareOpacity={0.5}
@@ -396,7 +396,8 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       playOnce={false}
       style={{
         border: 'none',
-        boxShadow: 'none'
+        boxShadow: 'none',
+        overflow: 'hidden'
       }}
     >
       <motion.a

@@ -3,7 +3,7 @@
   height: var(--gh-height);
   background: var(--gh-bg);
   border-radius: var(--gh-br);
-  border: 1px solid var(--gh-border);
+  border: none;
   overflow: hidden;
   position: relative;
   display: inline-grid;

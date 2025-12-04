@@ -297,8 +297,8 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.3 }}
-      className="pt-0 pb-8 px-4 sm:px-6 lg:px-0 -mt-4"
-      style={{ marginTop: '-0.5rem' }}
+      className="pt-0 pb-8 px-4 sm:px-6 lg:px-0"
+      style={{ marginTop: '-2rem' }}
     >
       <div className="max-w-2xl mx-auto">
         <div className="flex flex-col gap-4">

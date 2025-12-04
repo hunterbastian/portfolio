@@ -373,7 +373,7 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
             }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
           >
-            <span className="font-light tracking-wide relative z-10">Archive</span>
+            <span className="font-light tracking-wide relative z-10">Other</span>
           </motion.a>
         </motion.div>
       </div>

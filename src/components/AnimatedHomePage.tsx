@@ -547,23 +547,26 @@ function CreatingSection({ projects }: { projects: CreatingProject[] }) {
           Creating
         </h2>
 
-        <motion.ul className="space-y-4 text-left" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 0.5 }}>
+        <motion.div 
+          className="flex flex-wrap justify-start gap-x-8 gap-y-4" 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 1.2, duration: 0.5 }}
+        >
           {projects.map((project, index) => (
-            <motion.li
+            <motion.div
               key={project.name}
-              className="flex items-center justify-start gap-3 text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow"
-              style={{ lineHeight: '1.6' }}
+              className="text-left"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3 + index * 0.1, duration: 0.3 }}
             >
-              <span className="text-gray-400">•</span>
-              <span>
-                <strong>{project.name}:</strong> {project.description}
+              <span className="text-sm font-garamond-narrow tracking-wider uppercase font-medium text-gray-700 dark:text-gray-300">
+                {project.name}: {project.description}
               </span>
-            </motion.li>
+            </motion.div>
           ))}
-        </motion.ul>
+        </motion.div>
       </div>
     </motion.section>
   )

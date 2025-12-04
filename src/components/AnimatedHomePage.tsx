@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { CSSProperties, ReactNode, useState } from 'react'
 
 import ResumePreview from './ResumePreview'
+import GlareHover from './GlareHover'
 
 // Lazy load heavy components
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
@@ -381,17 +382,53 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
   return (
-    <motion.a
-      href={link.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-colors duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
-      whileHover={{ y: -1 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
+    <GlareHover
+      width="fit-content"
+      height="fit-content"
+      background={link.gradient}
+      borderRadius="4px"
+      borderColor={link.border}
+      glareColor="#ffffff"
+      glareOpacity={0.3}
+      glareAngle={-30}
+      glareSize={300}
+      transitionDuration={800}
+      playOnce={false}
+      style={{
+        boxShadow: link.shadow
+      }}
     >
-      {link.icon}
-      <span className="font-light tracking-wide">{link.label}</span>
-    </motion.a>
+      <motion.a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-white rounded-sm transition-all duration-300 relative z-10"
+        style={{
+          background: 'transparent',
+          border: 'none',
+          boxShadow: 'none'
+        }}
+        whileHover={link.hoverMotion}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
+        onMouseEnter={(e) => {
+          const parent = e.currentTarget.closest('.glare-hover') as HTMLElement
+          if (parent) {
+            parent.style.background = link.hoverGradient
+            parent.style.boxShadow = link.hoverShadow
+          }
+        }}
+        onMouseLeave={(e) => {
+          const parent = e.currentTarget.closest('.glare-hover') as HTMLElement
+          if (parent) {
+            parent.style.background = link.gradient
+            parent.style.boxShadow = link.shadow
+          }
+        }}
+      >
+        {link.icon}
+        <span className="font-light tracking-wide">{link.label}</span>
+      </motion.a>
+    </GlareHover>
   )
 }
 

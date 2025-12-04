@@ -15,10 +15,8 @@ export default function ResumePreview({ isVisible }: ResumePreviewProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 10 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="absolute left-1/2 z-50 pointer-events-none"
+          className="absolute left-0 bottom-full mb-3 z-50 pointer-events-none"
           style={{ 
-            transform: 'translate(-50%, -50%)',
-            top: '50%',
             willChange: 'transform, opacity'
           }}
         >

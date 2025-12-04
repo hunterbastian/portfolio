@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic'
 import { CSSProperties, ReactNode, useState } from 'react'
 
 import ResumePreview from './ResumePreview'
-import GlareHover from './GlareHover'
 
 // Lazy load heavy components
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
@@ -367,11 +366,14 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
         >
           <motion.a
             href="/archive"
-            className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
-            whileHover={{ y: -1 }}
+            className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden"
+            whileHover={{ 
+              y: -2,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+            }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
           >
-            <span className="font-light tracking-wide">Archive</span>
+            <span className="font-light tracking-wide relative z-10">Archive</span>
           </motion.a>
         </motion.div>
       </div>
@@ -381,36 +383,20 @@ function CaseStudiesSection({ children }: { children: ReactNode }) {
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
   return (
-    <GlareHover
-      width="fit-content"
-      height="fit-content"
-      background="transparent"
-      borderRadius="2px"
-      borderColor="transparent"
-      glareColor="#ffffff"
-      glareOpacity={0.5}
-      glareAngle={-30}
-      glareSize={300}
-      transitionDuration={800}
-      playOnce={false}
-      style={{
-        border: 'none',
-        boxShadow: 'none',
-        overflow: 'hidden'
+    <motion.a
+      href={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden"
+      whileHover={{ 
+        y: -2,
+        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
       }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
     >
-      <motion.a
-        href={link.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900 relative z-0"
-        whileHover={{ y: -1 }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
-      >
-        {link.icon}
-        <span className="font-light tracking-wide">{link.label}</span>
-      </motion.a>
-    </GlareHover>
+      {link.icon}
+      <span className="font-light tracking-wide relative z-10">{link.label}</span>
+    </motion.a>
   )
 }
 

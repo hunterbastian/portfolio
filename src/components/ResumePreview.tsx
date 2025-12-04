@@ -15,9 +15,10 @@ export default function ResumePreview({ isVisible }: ResumePreviewProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 10 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
+          className="absolute left-1/2 z-50 pointer-events-none"
           style={{ 
-            transform: 'translateX(-50%)',
+            transform: 'translate(-50%, -50%)',
+            top: '50%',
             willChange: 'transform, opacity'
           }}
         >
@@ -81,10 +82,6 @@ export default function ResumePreview({ isVisible }: ResumePreviewProps) {
             </div>
           </div>
           
-          {/* Arrow pointing down to button */}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2">
-            <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-300"></div>
-          </div>
         </motion.div>
       )}
     </AnimatePresence>

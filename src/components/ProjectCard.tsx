@@ -1,10 +1,9 @@
- 'use client'
+'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { ProjectFrontmatter } from '@/types/project'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
 interface ProjectCardProps {
   slug: string
@@ -14,71 +13,15 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ slug, frontmatter, index }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
-  const cardRef = useRef<HTMLDivElement>(null)
-  
-  // Motion values for magnetic effect
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  
-  // Smooth spring animation for the magnetic effect
-  const springConfig = { damping: 25, stiffness: 150 }
-  const xSpring = useSpring(x, springConfig)
-  const ySpring = useSpring(y, springConfig)
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return
-    
-    const rect = cardRef.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    
-    // Calculate offset from center (limited to small movement)
-    const offsetX = (e.clientX - centerX) * 0.08
-    const offsetY = (e.clientY - centerY) * 0.08
-    
-    x.set(offsetX)
-    y.set(offsetY)
-  }
-
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-  }
 
   return (
     <Link href={`/projects/${slug}`} className="block">
-      <motion.div
-        ref={cardRef}
-        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ 
-          type: 'spring', 
-          stiffness: 100, 
-          damping: 20, 
-          mass: 0.8,
-          delay: index * 0.08 
-        }}
+      <div
+        className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.98] active:shadow-md touch-manipulation"
         style={{
-          x: xSpring,
-          y: ySpring,
+          opacity: 1,
+          animationDelay: `${index * 80}ms`,
         }}
-        whileHover={{ 
-          scale: 1.01,
-          transition: { 
-            type: 'spring', 
-            stiffness: 80, 
-            damping: 25,
-            mass: 1.2,
-            duration: 0.6
-          }
-        }}
-        whileTap={{ 
-          scale: 0.98,
-          transition: { duration: 0.1 }
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-all hover:shadow-2xl active:shadow-md touch-manipulation"
       >
         <div className="aspect-video relative overflow-hidden">
           {/* Static Image - shown by default */}
@@ -121,7 +64,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
             {frontmatter.title}
           </h3>
         </div>
-      </motion.div>
+      </div>
     </Link>
   )
 }

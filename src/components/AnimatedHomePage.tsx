@@ -1,9 +1,7 @@
 'use client'
 
-// Optimized imports - use named imports for better tree-shaking
-import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { CSSProperties, ReactNode, useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 import ResumePreview from './ResumePreview'
 
@@ -12,20 +10,6 @@ const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 const LazyDinosaur = dynamic(() => import('./LazyDinosaur'), { 
   ssr: false,
   loading: () => null
-})
-
-// Lazy load section components that aren't immediately visible (below fold)
-const ExperienceSectionLazy = dynamic(() => import('./sections/ExperienceSection'), {
-  ssr: true,
-  loading: () => <div className="py-16" />
-})
-const EducationSectionLazy = dynamic(() => import('./sections/EducationSection'), {
-  ssr: true,
-  loading: () => <div className="py-16" />
-})
-const TechStackSectionLazy = dynamic(() => import('./sections/TechStackSection'), {
-  ssr: true,
-  loading: () => <div className="py-16" />
 })
 
 interface AnimatedHomePageProps {
@@ -222,26 +206,18 @@ const contactLinks: ContactLinkItem[] = [
 
 function HeroSection() {
   return (
-    <motion.section
-      className="pt-16 pb-0 relative"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
+    <section className="pt-16 pb-0 relative animate-fade-in">
       <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
-        <motion.div className="mb-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05, duration: 0.3 }}>
+        <div className="mb-6">
           <h1
-            className="text-black dark:text-white font-playfair italic font-semibold motion-element text-fluid-3xl lg:text-fluid-4xl"
+            className="text-black dark:text-white font-playfair italic font-semibold text-fluid-3xl lg:text-fluid-4xl"
             style={{ lineHeight: '1.2' }}
           >
             Hunter Bastian
           </h1>
-          <motion.div
+          <div
             className="text-gray-600 dark:text-gray-400 font-garamond-narrow mt-4 flex items-center gap-3"
             style={{ fontSize: '14px', letterSpacing: '0.5px' }}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.3 }}
           >
             <span>Interaction designer</span>
             <span className="text-gray-400 dark:text-gray-500">|</span>
@@ -251,15 +227,10 @@ function HeroSection() {
               </svg>
               <span>Lehi, UT</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div
-          className="mb-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
-        >
+        <div className="mb-0">
           <p
             className="text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow mb-0"
             style={{ lineHeight: '1.6', margin: 0, padding: 0 }}
@@ -275,9 +246,9 @@ function HeroSection() {
             </span>
             .
           </p>
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 
@@ -291,13 +262,10 @@ interface HeroContactProps {
 
 function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHover, onResumeLeave }: HeroContactProps) {
   return (
-    <motion.section
+    <section
       id="contact"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.3 }}
-      className="pt-0 pb-8 px-4 sm:px-6 lg:px-0 relative z-20"
-      style={{ marginTop: '-18rem' }}
+      className="pt-0 pb-8 px-4 sm:px-6 lg:px-0 relative z-20 animate-fade-in"
+      style={{ marginTop: '-18rem', animationDelay: '100ms' }}
     >
       <div className="max-w-2xl mx-auto">
         <div className="flex flex-col gap-4">
@@ -310,93 +278,68 @@ function HeroContactSection({ links, showResumePreview, onResumeOpen, onResumeHo
           
           {/* Resume Button Row */}
           <div className="relative overflow-visible">
-            <motion.button
+            <button
               onClick={onResumeOpen}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900 hover:-translate-y-0.5"
               style={{
                 borderColor: '#1e3a8a',
                 color: '#1e3a8a'
               }}
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
               onMouseEnter={onResumeHover}
               onMouseLeave={onResumeLeave}
               onFocus={onResumeHover}
               onBlur={onResumeLeave}
             >
               <span className="font-light tracking-wide">RESUME</span>
-            </motion.button>
+            </button>
             <ResumePreview isVisible={showResumePreview} />
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 
 function CaseStudiesSection({ children }: { children: ReactNode }) {
   return (
-    <motion.section
+    <section
       id="case-studies"
       className="py-16 px-4 sm:px-6 lg:px-0 relative z-10"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.3 }}
     >
-      <motion.div
-        className="max-w-2xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.25, duration: 0.3 }}
-      >
+      <div className="max-w-2xl mx-auto">
         <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Case Studies
         </h2>
-      </motion.div>
+      </div>
 
       {children}
 
       {/* Archive Button */}
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
-        <motion.div
-          className="flex justify-start mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-        >
-          <motion.a
+        <div className="flex justify-start mt-12">
+          <a
             href="/archive"
-            className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden"
-            whileHover={{ 
-              y: -2,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-            }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
           >
             <span className="font-light tracking-wide relative z-10">Other</span>
-          </motion.a>
-        </motion.div>
+          </a>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
   return (
-    <motion.a
+    <a
       href={link.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden"
-      whileHover={{ 
-        y: -2,
-        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-      }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
+      className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
     >
       {link.icon}
       <span className="font-light tracking-wide relative z-10">{link.label}</span>
-    </motion.a>
+    </a>
   )
 }
 
@@ -409,13 +352,7 @@ interface ExperienceSectionProps {
 
 function ExperienceSection({ experienceItems, expandedJobs, onToggle }: ExperienceSectionProps) {
   return (
-    <motion.section
-      id="experience"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6, duration: 0.5 }}
-      className="py-16"
-    >
+    <section id="experience" className="py-16">
       <div className="max-w-2xl mx-auto">
         <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Experience
@@ -426,11 +363,8 @@ function ExperienceSection({ experienceItems, expandedJobs, onToggle }: Experien
             const isExpanded = expandedJobs.has(index)
 
             return (
-              <motion.div
+              <div
                 key={job.company}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + index * 0.05, duration: 0.3 }}
                 className="border-b border-gray-200 dark:border-gray-700 last:border-b-0"
               >
                 <button
@@ -444,59 +378,49 @@ function ExperienceSection({ experienceItems, expandedJobs, onToggle }: Experien
                   </div>
                   <div className="flex items-center space-x-3">
                     <span className="text-muted-foreground text-sm font-garamond-narrow">{job.title}</span>
-                    <motion.div animate={{ rotate: isExpanded ? 45 : 0 }} transition={{ duration: 0.2 }} className="w-5 h-5 flex items-center justify-center">
+                    <div 
+                      className="w-5 h-5 flex items-center justify-center transition-transform duration-200"
+                      style={{ transform: isExpanded ? 'rotate(45deg)' : 'rotate(0deg)' }}
+                    >
                       <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
                       </svg>
-                    </motion.div>
+                    </div>
                   </div>
                 </button>
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pb-4 pl-20 pr-4">
-                        <p className="text-muted-foreground text-sm leading-relaxed">{job.description}</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
+                <div
+                  className="overflow-hidden transition-all duration-300"
+                  style={{
+                    maxHeight: isExpanded ? '500px' : '0px',
+                    opacity: isExpanded ? 1 : 0,
+                  }}
+                >
+                  <div className="pb-4 pl-20 pr-4">
+                    <p className="text-muted-foreground text-sm leading-relaxed">{job.description}</p>
+                  </div>
+                </div>
+              </div>
             )
           })}
         </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 
 function EducationSection({ educationItems }: { educationItems: EducationItem[] }) {
   return (
-    <motion.section
-      id="education"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.8, duration: 0.5 }}
-      className="py-16"
-    >
+    <section id="education" className="py-16">
       <div className="max-w-2xl mx-auto">
         <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Education
         </h2>
 
         <div className="rounded-lg p-6 space-y-6" style={{ backgroundColor: 'rgba(222, 220, 219, 0.7)' }}>
-          {educationItems.map((edu, index) => (
-            <motion.div
+          {educationItems.map((edu) => (
+            <div
               key={edu.institution}
               className="border-b border-gray-200 dark:border-gray-700 last:border-b-0 pb-6 last:pb-0"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 + index * 0.1, duration: 0.3 }}
             >
               <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                 <div className="text-gray-500 dark:text-gray-400 text-sm font-medium min-w-[100px] font-garamond-narrow">{edu.year}</div>
@@ -511,82 +435,48 @@ function EducationSection({ educationItems }: { educationItems: EducationItem[] 
                   )}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 
 function CreatingSection({ projects }: { projects: CreatingProject[] }) {
   return (
-    <motion.section
-      id="creating"
-      className="py-16 px-4 sm:px-6 lg:px-0 relative z-10"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.1, duration: 0.5 }}
-    >
+    <section id="creating" className="py-16 px-4 sm:px-6 lg:px-0 relative z-10">
       <div className="max-w-2xl mx-auto">
         <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Creating
         </h2>
 
-        <motion.div 
-          className="flex flex-wrap justify-start gap-x-8 gap-y-4" 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          transition={{ delay: 1.2, duration: 0.5 }}
-        >
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.name}
-              className="text-left"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3 + index * 0.1, duration: 0.3 }}
-            >
+        <div className="flex flex-wrap justify-start gap-x-8 gap-y-4">
+          {projects.map((project) => (
+            <div key={project.name} className="text-left">
               <span className="text-sm font-garamond-narrow tracking-wider uppercase font-medium text-gray-700 dark:text-gray-300">
                 {project.name}: {project.description}
               </span>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 
 function EverydayTechSection({ items }: { items: string[] }) {
   return (
-    <motion.section
-      id="everyday-tech"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.4, duration: 0.5 }}
-      className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0"
-    >
+    <section id="everyday-tech" className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0">
       <div className="max-w-2xl mx-auto">
         <h2 className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Everyday tech
         </h2>
       </div>
       <div className="max-w-2xl mx-auto">
-        <motion.div
-          className="flex flex-wrap justify-start gap-x-8 gap-y-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4, duration: 0.5 }}
-        >
-          {items.map((item, index) => (
-            <motion.div
-              key={item}
-              className="text-left"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5 + index * 0.1, duration: 0.3 }}
-            >
+        <div className="flex flex-wrap justify-start gap-x-8 gap-y-4">
+          {items.map((item) => (
+            <div key={item} className="text-left">
               <span
                 className={`text-sm font-garamond-narrow tracking-wider uppercase font-medium ${
                   item.startsWith('Wishlist:') ? 'text-blue-500 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'
@@ -594,52 +484,34 @@ function EverydayTechSection({ items }: { items: string[] }) {
               >
                 {item}
               </span>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 
 function TechStackSection({ skills: skillItems }: { skills: SkillItem[] }) {
   return (
-    <motion.section
-      id="tech-stack"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.5, duration: 0.5 }}
-      className="py-16"
-      data-animate
-    >
+    <section id="tech-stack" className="py-16">
       <div className="max-w-2xl mx-auto">
         <h2 className="font-playfair italic text-left mb-8 text-fluid-base lg:text-fluid-xl" style={{ fontWeight: '500' }}>
           Stack
         </h2>
       </div>
       <div className="max-w-4xl mx-auto">
-        <motion.div
-          className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-        >
-          {skillItems.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.6 + index * 0.1, duration: 0.3 }}
-            >
+        <div className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto">
+          {skillItems.map((skill) => (
+            <div key={skill.name} className="text-center">
               <span className="text-sm font-garamond-narrow text-gray-700 dark:text-gray-300 tracking-wider uppercase font-medium whitespace-nowrap">
                 {skill.name}
               </span>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 

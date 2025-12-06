@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono, Inter, EB_Garamond } from 'next/font/google'
+import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import './viewport.css'
 import Header from '@/components/Header'
@@ -13,27 +13,24 @@ import Script from 'next/script'
 // Optimized: Reduced to 2 primary fonts for better performance
 const jetbrainsMono = JetBrains_Mono({ 
   subsets: ['latin'],
-  weight: ['500', '700'],
+  weight: ['500'],
   variable: '--font-jetbrains-mono',
-  display: 'swap', // Don't block rendering
+  display: 'swap',
   preload: true,
-  adjustFontFallback: true, // Better font fallback
-  fallback: ['ui-monospace', 'monospace'], // Immediate fallback
+  fallback: ['ui-monospace', 'monospace'],
 })
 
-// Import PP Editorial New from local files or use a similar Google Font alternative
 // Using Playfair Display for elegant headings
 import { Playfair_Display } from 'next/font/google'
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  style: ['italic', 'normal'],
-  weight: ['400', '600'],
+  style: ['italic'],
+  weight: ['600'],
   variable: '--font-playfair',
-  display: 'swap', // Don't block rendering
-  preload: false, // Defer non-critical font
-  adjustFontFallback: true,
-  fallback: ['Georgia', 'serif'], // Immediate fallback
+  display: 'swap',
+  preload: true,
+  fallback: ['Georgia', 'serif'],
 })
 
 export const viewport = {

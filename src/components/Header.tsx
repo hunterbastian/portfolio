@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
 // Smooth scroll handler

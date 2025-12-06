@@ -50,13 +50,6 @@ const nextConfig: NextConfig = {
     } : false,
   },
   
-  // Enable modularizeImports for better tree-shaking
-  modularizeImports: {
-    '@react-three/drei': {
-      transform: '@react-three/drei/{{member}}',
-    },
-  },
-  
   // Output optimization
   output: 'standalone',
   

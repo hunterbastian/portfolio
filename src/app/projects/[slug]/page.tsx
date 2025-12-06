@@ -23,18 +23,44 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params
   const project = getProjectBySlug(slug)
+  const baseUrl = 'https://portfolio-hunterbastians-projects.vercel.app'
   
   if (!project) {
     return {}
   }
 
+  const { title, description, image, category, tags, date } = project.frontmatter
+
   return {
-    title: `${project.frontmatter.title} - Hunter Bastian`,
-    description: project.frontmatter.description,
+    title: `${title} | Hunter Bastian Portfolio`,
+    description: description,
+    keywords: [title, category, ...(tags || []), 'Hunter Bastian', 'portfolio', 'case study'],
     openGraph: {
-      title: project.frontmatter.title,
-      description: project.frontmatter.description,
-      images: [project.frontmatter.image],
+      type: 'article',
+      title: `${title} - Case Study`,
+      description: description,
+      url: `${baseUrl}/projects/${slug}`,
+      siteName: 'Hunter Bastian Portfolio',
+      images: [
+        {
+          url: image.startsWith('/') ? `${baseUrl}${image}` : image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      publishedTime: date,
+      authors: ['Hunter Bastian'],
+      tags: tags,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: [image.startsWith('/') ? `${baseUrl}${image}` : image],
+    },
+    alternates: {
+      canonical: `${baseUrl}/projects/${slug}`,
     },
   }
 }
@@ -50,8 +76,44 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
     const { frontmatter, content } = project
 
+    const baseUrl = 'https://portfolio-hunterbastians-projects.vercel.app'
+    const projectUrl = `${baseUrl}/projects/${slug}`
+    const imageUrl = frontmatter.image.startsWith('/') ? `${baseUrl}${frontmatter.image}` : frontmatter.image
+
+    // JSON-LD structured data for the project
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: frontmatter.title,
+      description: frontmatter.description,
+      image: imageUrl,
+      datePublished: frontmatter.date,
+      dateModified: frontmatter.date,
+      author: {
+        '@type': 'Person',
+        name: 'Hunter Bastian',
+        url: baseUrl,
+      },
+      publisher: {
+        '@type': 'Person',
+        name: 'Hunter Bastian',
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': projectUrl,
+      },
+      keywords: frontmatter.tags?.join(', '),
+      articleSection: frontmatter.category,
+    }
+
     return (
       <article className="container mx-auto max-w-4xl px-4 py-8">
+        {/* Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        
         {/* Header */}
         <div className="mb-8">
           <Link

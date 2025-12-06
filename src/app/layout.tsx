@@ -70,14 +70,27 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
+    url: 'https://portfolio-hunterbastians-projects.vercel.app',
     title: 'Hunter Bastian - Portfolio',
     description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
     siteName: 'Hunter Bastian Portfolio',
+    images: [
+      {
+        url: '/images/optimized/portfolio/IMG_2600.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Hunter Bastian - Designer & Developer Portfolio',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Hunter Bastian - Portfolio',
     description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
+    images: ['/images/optimized/portfolio/IMG_2600.webp'],
+  },
+  alternates: {
+    canonical: 'https://portfolio-hunterbastians-projects.vercel.app',
   },
 }
 
@@ -91,6 +104,28 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
+        
+        {/* Structured Data - Person Schema for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Hunter Bastian',
+              url: 'https://portfolio-hunterbastians-projects.vercel.app',
+              jobTitle: 'Full-Stack Developer & Designer',
+              description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
+              sameAs: [
+                // Add your social profiles here
+                // 'https://github.com/hunterbastian',
+                // 'https://linkedin.com/in/hunterbastian',
+                // 'https://twitter.com/hunterbastian',
+              ],
+              knowsAbout: ['React', 'Next.js', 'TypeScript', 'UI Design', 'UX Design', 'Web Development'],
+            }),
+          }}
+        />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="HB Portfolio" />

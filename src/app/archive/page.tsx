@@ -2,9 +2,22 @@ import { getArchivedProjects } from '@/lib/projects'
 import ProjectCard from '@/components/ProjectCard'
 import Link from 'next/link'
 
-export const metadata = {
-  title: 'Archive - Hunter Bastian',
-  description: 'Archived case studies and projects',
+import type { Metadata } from 'next'
+
+const baseUrl = 'https://portfolio-hunterbastians-projects.vercel.app'
+
+export const metadata: Metadata = {
+  title: 'Project Archive | Hunter Bastian Portfolio',
+  description: 'Browse archived case studies and design projects by Hunter Bastian. A collection of past work in UI/UX design, web development, and branding.',
+  openGraph: {
+    title: 'Project Archive - Hunter Bastian',
+    description: 'Browse archived case studies and design projects.',
+    url: `${baseUrl}/archive`,
+    type: 'website',
+  },
+  alternates: {
+    canonical: `${baseUrl}/archive`,
+  },
 }
 
 export default function ArchivePage() {

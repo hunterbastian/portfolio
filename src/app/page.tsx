@@ -13,9 +13,16 @@ interface HomePageProps {
 }
 
 export default async function HomePage({ searchParams }: HomePageProps) {
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/c48e2695-972e-4ac3-bdec-4b04dfb6b4bd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'src/app/page.tsx:HomePage:entry',message:'HomePage entry',data:{searchParamsType:typeof searchParams},timestamp:Date.now(),sessionId:'debug-session',runId:'pre-fix',hypothesisId:'H1'})}).catch(()=>{});
+  // #endregion
   const categories = getAllCategories()
   const projects = getAllProjects()
   const params = await searchParams
+
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/c48e2695-972e-4ac3-bdec-4b04dfb6b4bd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'src/app/page.tsx:HomePage:after-data',message:'HomePage after data',data:{categoriesCount:categories.length,projectsCount:projects.length,categoryParam:params?.category??null},timestamp:Date.now(),sessionId:'debug-session',runId:'pre-fix',hypothesisId:'H1'})}).catch(()=>{});
+  // #endregion
 
   return (
     <AnimatedHomePage>

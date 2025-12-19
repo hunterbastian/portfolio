@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 import ResumePreview from './ResumePreview'
 
@@ -236,12 +236,7 @@ function HeroSection() {
             style={{ lineHeight: '1.6', margin: 0, padding: 0 }}
           >
             Interaction Design student at UVU with experience designing and building digital products. I work in Figma and front-end code, and I&apos;m passionate about creating clean, meaningful user experiences, with an{' '}
-            <span 
-              className="font-bold" 
-              style={{ 
-                color: '#1e3a8a'
-              }}
-            >
+            <span className="font-bold text-emerald-900 dark:text-emerald-400">
               AI first mindset
             </span>
             .
@@ -520,7 +515,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumeModal, setShowResumeModal] = useState(false)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
 
+  useEffect(() => {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/c48e2695-972e-4ac3-bdec-4b04dfb6b4bd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'src/components/AnimatedHomePage.tsx:AnimatedHomePage:mount',message:'AnimatedHomePage mounted',data:{showResumePreview,showResumeModal,expandedJobsSize:expandedJobs.size},timestamp:Date.now(),sessionId:'debug-session',runId:'pre-fix',hypothesisId:'H2'})}).catch(()=>{});
+    // #endregion
+  }, [])
+
   const toggleJob = (index: number) => {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/c48e2695-972e-4ac3-bdec-4b04dfb6b4bd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'src/components/AnimatedHomePage.tsx:toggleJob:entry',message:'toggleJob',data:{index,expandedJobsSizeBefore:expandedJobs.size},timestamp:Date.now(),sessionId:'debug-session',runId:'pre-fix',hypothesisId:'H2'})}).catch(()=>{});
+    // #endregion
     setExpandedJobs(prev => {
       const next = new Set(prev)
       if (next.has(index)) {
@@ -538,9 +542,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <HeroContactSection
         links={contactLinks}
         showResumePreview={showResumePreview}
-        onResumeOpen={() => setShowResumeModal(true)}
-        onResumeHover={() => setShowResumePreview(true)}
-        onResumeLeave={() => setShowResumePreview(false)}
+        onResumeOpen={() => {
+          // #region agent log
+          fetch('http://127.0.0.1:7242/ingest/c48e2695-972e-4ac3-bdec-4b04dfb6b4bd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'src/components/AnimatedHomePage.tsx:onResumeOpen',message:'resume open clicked',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'pre-fix',hypothesisId:'H3'})}).catch(()=>{});
+          // #endregion
+          setShowResumeModal(true)
+        }}
+        onResumeHover={() => {
+          // #region agent log
+          fetch('http://127.0.0.1:7242/ingest/c48e2695-972e-4ac3-bdec-4b04dfb6b4bd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'src/components/AnimatedHomePage.tsx:onResumeHover',message:'resume hover',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'pre-fix',hypothesisId:'H3'})}).catch(()=>{});
+          // #endregion
+          setShowResumePreview(true)
+        }}
+        onResumeLeave={() => {
+          // #region agent log
+          fetch('http://127.0.0.1:7242/ingest/c48e2695-972e-4ac3-bdec-4b04dfb6b4bd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'src/components/AnimatedHomePage.tsx:onResumeLeave',message:'resume leave',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'pre-fix',hypothesisId:'H3'})}).catch(()=>{});
+          // #endregion
+          setShowResumePreview(false)
+        }}
       />
       <CaseStudiesSection>{children}</CaseStudiesSection>
       {/* Use inline sections for above-fold content, lazy load below-fold */}

@@ -99,13 +99,23 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // Favicon files - Long-term cache
+      // Favicon files - short cache to make icon updates visible quickly
       {
         source: '/favicon/:all*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=3600, must-revalidate',
+          },
+        ],
+      },
+      // Root favicon fallback for browsers that request /favicon.ico directly
+      {
+        source: '/favicon.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, must-revalidate',
           },
         ],
       },

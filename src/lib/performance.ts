@@ -26,30 +26,24 @@ export function preloadCriticalResources() {
 /**
  * Lazy load animation library components
  */
-export function setupLazyLoading(): () => void {
-  if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
-    return () => {}
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in')
-        }
-      })
-    },
-    { threshold: 0.1, rootMargin: '50px' }
-  )
-
-  const animatedElements = Array.from(document.querySelectorAll('[data-animate]'))
-  animatedElements.forEach(el => {
-    observer.observe(el)
-  })
-
-  return () => {
-    animatedElements.forEach(el => observer.unobserve(el))
-    observer.disconnect()
+export function setupLazyLoading() {
+  if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+    // Setup intersection observer for animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in')
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    )
+    
+    // Observe elements that should animate in
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      observer.observe(el)
+    })
   }
 }
 

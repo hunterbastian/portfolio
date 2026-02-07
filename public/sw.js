@@ -1,10 +1,12 @@
 // Service Worker for Portfolio - Assets only, fresh HTML always
-const CACHE_NAME = 'portfolio-assets-v3'
+const CACHE_NAME = 'portfolio-assets-v5'
 const STATIC_ASSETS = [
+  '/favicon.ico',
   '/favicon/favicon.ico',
   '/favicon/favicon-32x32.png', 
   '/favicon/apple-touch-icon.png',
-  '/images/portfolio/IMG_2600.jpg',
+  '/images/profilepicture.jpg',
+  '/images/social/profile-preview.jpg',
   '/images/projects/brand-identity-system.svg',
   '/images/projects/porscheapp.png',
   '/images/projects/wanderutah.png'

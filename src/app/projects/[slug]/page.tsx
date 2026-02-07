@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params
   const project = getProjectBySlug(slug)
-  const baseUrl = 'https://portfolio-hunterbastians-projects.vercel.app'
+  const baseUrl = 'https://hunterbastian.com'
   
   if (!project) {
     return {}
@@ -76,7 +76,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
     const { frontmatter, content } = project
 
-    const baseUrl = 'https://portfolio-hunterbastians-projects.vercel.app'
+    const baseUrl = 'https://hunterbastian.com'
     const projectUrl = `${baseUrl}/projects/${slug}`
     const imageUrl = frontmatter.image.startsWith('/') ? `${baseUrl}${frontmatter.image}` : frontmatter.image
 

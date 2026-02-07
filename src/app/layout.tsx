@@ -41,39 +41,40 @@ export const viewport = {
   viewportFit: 'cover'
 }
 
+const faviconVersion = '20260207'
+
 export const metadata: Metadata = {
   title: 'Hunter Bastian - Portfolio',
   description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
   keywords: ['Hunter Bastian', 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
   authors: [{ name: 'Hunter Bastian' }],
   creator: 'Hunter Bastian',
-  metadataBase: new URL('https://portfolio-hunterbastians-projects.vercel.app'),
+  metadataBase: new URL('https://hunterbastian.com'),
 
   icons: {
     icon: [
-      { url: '/favicon/Frame.svg', type: 'image/svg+xml' },
-      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon/favicon.ico', sizes: 'any' }
+      { url: `/favicon/favicon-16x16.png?v=${faviconVersion}`, sizes: '16x16', type: 'image/png' },
+      { url: `/favicon/favicon-32x32.png?v=${faviconVersion}`, sizes: '32x32', type: 'image/png' },
+      { url: `/favicon/favicon.ico?v=${faviconVersion}`, sizes: 'any' }
     ],
     apple: [
-      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+      { url: `/favicon/apple-touch-icon.png?v=${faviconVersion}`, sizes: '180x180', type: 'image/png' }
     ],
     other: [
-      { url: '/favicon/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/favicon/favicon-512x512.png', sizes: '512x512', type: 'image/png' }
+      { url: `/favicon/favicon-192x192.png?v=${faviconVersion}`, sizes: '192x192', type: 'image/png' },
+      { url: `/favicon/favicon-512x512.png?v=${faviconVersion}`, sizes: '512x512', type: 'image/png' }
     ]
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://portfolio-hunterbastians-projects.vercel.app',
+    url: 'https://hunterbastian.com',
     title: 'Hunter Bastian - Portfolio',
     description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
     siteName: 'Hunter Bastian Portfolio',
     images: [
       {
-        url: '/images/optimized/portfolio/IMG_2600.webp',
+        url: '/images/social/profile-preview.jpg',
         width: 1200,
         height: 630,
         alt: 'Hunter Bastian - Designer & Developer Portfolio',
@@ -84,10 +85,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Hunter Bastian - Portfolio',
     description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
-    images: ['/images/optimized/portfolio/IMG_2600.webp'],
+    images: ['/images/social/profile-preview.jpg'],
   },
   alternates: {
-    canonical: 'https://portfolio-hunterbastians-projects.vercel.app',
+    canonical: 'https://hunterbastian.com',
   },
 }
 
@@ -110,7 +111,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Person',
               name: 'Hunter Bastian',
-              url: 'https://portfolio-hunterbastians-projects.vercel.app',
+              url: 'https://hunterbastian.com',
               jobTitle: 'Full-Stack Developer & Designer',
               description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
               sameAs: [

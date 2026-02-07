@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import type { Metadata } from 'next'
 
-const baseUrl = 'https://portfolio-hunterbastians-projects.vercel.app'
+const baseUrl = 'https://hunterbastian.com'
 
 export const metadata: Metadata = {
   title: 'Project Archive | Hunter Bastian Portfolio',
@@ -61,4 +61,3 @@ export default function ArchivePage() {
     </div>
   )
 }
-

@@ -3,7 +3,7 @@ import { getAllProjects } from '@/lib/projects'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const projects = getAllProjects()
-  const baseUrl = 'https://portfolio-hunterbastians-projects.vercel.app'
+  const baseUrl = 'https://hunterbastian.com'
 
   const projectUrls = projects.map((project) => ({
     url: `${baseUrl}/projects/${project.slug}`,

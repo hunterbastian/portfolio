@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://portfolio-hunterbastians-projects.vercel.app/sitemap.xml',
+    sitemap: 'https://hunterbastian.com/sitemap.xml',
   }
 }

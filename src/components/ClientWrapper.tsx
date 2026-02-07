@@ -1,19 +1,29 @@
 'use client'
 
-import { type ReactNode, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { Suspense, useEffect } from 'react'
 import { setupLazyLoading } from '@/lib/performance'
+import CategoryFilter from './CategoryFilter'
 
 interface ClientWrapperProps {
-  children: ReactNode
+  categories: string[]
+  children: React.ReactNode
 }
 
-export default function ClientWrapper({ children }: ClientWrapperProps) {
-  useEffect(() => {
-    const cleanup = setupLazyLoading()
+function CategoryFilterWrapper({ categories }: { categories: string[] }) {
+  return <CategoryFilter categories={categories} />
+}
 
-    return () => {
-      cleanup()
-    }
+export default function ClientWrapper({ categories, children }: ClientWrapperProps) {
+  useEffect(() => {
+    setupLazyLoading()
   }, [])
-  return <>{children}</>
+  return (
+    <>
+      <Suspense fallback={<div>Loading filters...</div>}>
+        <CategoryFilterWrapper categories={categories} />
+      </Suspense>
+      {children}
+    </>
+  )
 }

@@ -45,7 +45,7 @@ const faviconVersion = '20260207'
 
 export const metadata: Metadata = {
   title: 'Hunter Bastian - Portfolio',
-  description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
+  description: 'Student Product Designer and Photographer',
   keywords: ['Hunter Bastian', 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
   authors: [{ name: 'Hunter Bastian' }],
   creator: 'Hunter Bastian',
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://hunterbastian.com',
     title: 'Hunter Bastian - Portfolio',
-    description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
+    description: 'Student Product Designer and Photographer',
     siteName: 'Hunter Bastian Portfolio',
     images: [
       {
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Hunter Bastian - Portfolio',
-    description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
+    description: 'Student Product Designer and Photographer',
     images: ['/images/social/profile-preview.jpg'],
   },
   alternates: {
@@ -113,7 +113,7 @@ export default function RootLayout({
               name: 'Hunter Bastian',
               url: 'https://hunterbastian.com',
               jobTitle: 'Full-Stack Developer & Designer',
-              description: 'Full-stack developer and designer passionate about creating exceptional digital experiences.',
+              description: 'Student Product Designer and Photographer',
               sameAs: [
                 // Add your social profiles here
                 // 'https://github.com/hunterbastian',

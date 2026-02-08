@@ -24,30 +24,6 @@ export function preloadCriticalResources() {
 }
 
 /**
- * Lazy load animation library components
- */
-export function setupLazyLoading() {
-  if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
-    // Setup intersection observer for animations
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in')
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '50px' }
-    )
-    
-    // Observe elements that should animate in
-    document.querySelectorAll('[data-animate]').forEach(el => {
-      observer.observe(el)
-    })
-  }
-}
-
-/**
  * Optimize iframe loading for gems
  */
 export function optimizeIframeLoading() {

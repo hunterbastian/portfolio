@@ -12,11 +12,10 @@ interface Project {
 }
 
 interface ProjectGridClientProps {
-  category?: string
   projects: Project[]
 }
 
-export default function ProjectGridClient({ category, projects }: ProjectGridClientProps) {
+export default function ProjectGridClient({ projects }: ProjectGridClientProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const router = useRouter()
   
@@ -33,10 +32,6 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
     }
   }, [projects, router])
   
-  const filteredProjects = category && category !== 'all' 
-    ? projects.filter(project => project.frontmatter.category === category)
-    : projects
-
   const handleMouseEnter = (index: number) => {
     setHoveredIndex(index)
   }
@@ -46,8 +41,8 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
   }
 
   // Split projects into rows: first 3 on top row, rest on bottom row
-  const topRowProjects = filteredProjects.slice(0, 3)
-  const bottomRowProjects = filteredProjects.slice(3)
+  const topRowProjects = projects.slice(0, 3)
+  const bottomRowProjects = projects.slice(3)
 
   const renderProjectRow = (projects: Project[], rowIndex: number) => {
     return (
@@ -121,7 +116,7 @@ export default function ProjectGridClient({ category, projects }: ProjectGridCli
       {/* Mobile/Tablet Layout - Simple grid */}
       <div className="lg:hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-6">
-          {filteredProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <div 
               key={project.slug} 
               className="w-full transition-opacity duration-300 ease-out"

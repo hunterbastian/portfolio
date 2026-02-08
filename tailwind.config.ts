@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
+        'code': ['var(--font-source-code-pro)', 'Source Code Pro', 'ui-monospace', 'monospace'],
         'mono': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
         'sans': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
         'inter': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
@@ -51,24 +52,24 @@ const config: Config = {
           foreground: 'var(--foreground)',
         },
         primary: {
-          DEFAULT: '#171717',
-          foreground: '#ffffff',
+          DEFAULT: '#2E3440',
+          foreground: '#ECEFF4',
         },
         secondary: {
-          DEFAULT: '#f5f5f5',
-          foreground: '#171717',
+          DEFAULT: '#E5E9F0',
+          foreground: '#2E3440',
         },
         muted: {
-          DEFAULT: '#f5f5f5',
-          foreground: '#737373',
+          DEFAULT: '#E5E9F0',
+          foreground: '#4C566A',
         },
         accent: {
-          DEFAULT: '#f5f5f5',
-          foreground: '#171717',
+          DEFAULT: '#D8DEE9',
+          foreground: '#2E3440',
         },
-        border: '#e5e5e5',
-        input: '#e5e5e5',
-        ring: '#171717',
+        border: '#D8DEE9',
+        input: '#D8DEE9',
+        ring: '#5E81AC',
       },
     },
   },

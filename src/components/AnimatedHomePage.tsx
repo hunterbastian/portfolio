@@ -127,7 +127,7 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       rel="noopener noreferrer"
       className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
     >
-      <span className="font-light tracking-wide relative z-10">{link.label}</span>
+      <span className="font-code font-light tracking-wide relative z-10">{link.label}</span>
     </a>
   )
 }
@@ -170,7 +170,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 Hunter Bastian
               </h1>
               <div
-                className="text-gray-600 dark:text-gray-400 font-garamond-narrow mt-2 flex items-center gap-3"
+                className="font-code text-gray-600 dark:text-gray-400 mt-2 flex items-center gap-3"
                 style={{ fontSize: '14px', letterSpacing: '0.5px' }}
               >
                 <span>Interaction designer</span>
@@ -207,13 +207,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <button
                 onClick={() => setShowResumeModal(true)}
                 className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900 hover:-translate-y-0.5"
-                style={{ borderColor: '#1e3a8a', color: '#1e3a8a' }}
+                style={{ borderColor: '#5e81ac', color: '#5e81ac' }}
                 onMouseEnter={() => setShowResumePreview(true)}
                 onMouseLeave={() => setShowResumePreview(false)}
                 onFocus={() => setShowResumePreview(true)}
                 onBlur={() => setShowResumePreview(false)}
               >
-                <span className="font-light tracking-wide">RESUME</span>
+                <span className="font-code font-light tracking-wide">RESUME</span>
               </button>
               <ResumePreview isVisible={showResumePreview} />
             </div>

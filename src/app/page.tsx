@@ -1,6 +1,5 @@
-import { getAllProjects, getAllCategories } from '@/lib/projects'
+import { getAllProjects } from '@/lib/projects'
 import LoadingScreen from '@/components/LoadingScreen'
-import ClientWrapper from '@/components/ClientWrapper'
 import AnimatedHomePage from '@/components/AnimatedHomePage'
 import ProjectGridClient from '@/components/ProjectGridClient'
 import { ProjectLoader } from '@/components/Loader'
@@ -9,23 +8,15 @@ import { Suspense } from 'react'
 // Revalidate every 1 minute in production
 export const revalidate = 60
 
-interface HomePageProps {
-  searchParams: Promise<{ category?: string }>
-}
-
-export default async function HomePage({ searchParams }: HomePageProps) {
-  const categories = getAllCategories()
+export default function HomePage() {
   const projects = getAllProjects()
-  const params = await searchParams
 
   return (
     <LoadingScreen duration={1000}>
       <AnimatedHomePage>
-        <ClientWrapper categories={categories}>
-          <Suspense fallback={<ProjectLoader />}>
-            <ProjectGridClient category={params.category} projects={projects} />
-          </Suspense>
-        </ClientWrapper>
+        <Suspense fallback={<ProjectLoader />}>
+          <ProjectGridClient projects={projects} />
+        </Suspense>
 
         {projects.length === 0 && (
           <div className="text-center py-16">

@@ -5,6 +5,7 @@
 
 :root {
   --font-jetbrains-mono: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  --font-source-code-pro: 'Source Code Pro', 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
   /* Consolidated: Using Playfair Display for all serif needs */
   --font-playfair: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-garamond: var(--font-playfair); /* Alias for compatibility */
@@ -18,6 +19,10 @@
 
 .font-inter {
   font-family: var(--font-inter);
+}
+
+.font-code {
+  font-family: var(--font-source-code-pro);
 }
 
 .font-garamond {

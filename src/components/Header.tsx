@@ -57,20 +57,20 @@ export default function Header() {
     <header 
       className="sticky top-0 z-50 w-full py-4 px-6" 
       style={{ 
-        backgroundColor: 'rgba(15, 23, 42, 0.75)',
-        backdropFilter: 'blur(12px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(12px) saturate(180%)'
+        backgroundColor: 'rgba(236, 239, 244, 0.9)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)'
       }}
     >
       <div className="container mx-auto max-w-6xl">
         <div 
           className="flex h-14 items-center justify-between px-8 border-b"
-          style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}
+          style={{ borderColor: 'rgba(129, 161, 193, 0.35)' }}
         >
           {/* Logo */}
           <Link 
             href="/" 
-            className="font-medium text-sm text-gray-100 hover:text-gray-300 transition-colors"
+            className="font-code font-medium text-sm text-[#2E3440] hover:text-[#4C566A] transition-colors"
           >
             HB
           </Link>
@@ -82,10 +82,10 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className={`text-xs font-light tracking-wide transition-colors cursor-pointer ${
+                className={`font-code text-xs font-light tracking-wide transition-colors cursor-pointer ${
                   activeSection === item.href 
-                    ? 'text-gray-100' 
-                    : 'text-gray-400 hover:text-gray-200'
+                    ? 'text-[#2E3440]' 
+                    : 'text-[#4C566A] hover:text-[#2E3440]'
                 }`}
                 aria-current={activeSection === item.href ? 'page' : undefined}
               >
@@ -97,7 +97,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="md:hidden p-2 text-gray-100 hover:text-gray-300 transition-colors"
+            className="md:hidden p-2 text-[#2E3440] hover:text-[#4C566A] transition-colors"
           >
             <svg
               className="w-5 h-5"
@@ -121,13 +121,13 @@ export default function Header() {
         <div 
           className="md:hidden px-6 pb-4 mt-4" 
           style={{ 
-            backgroundColor: 'rgba(15, 23, 42, 0.85)',
-            backdropFilter: 'blur(12px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(12px) saturate(180%)'
+            backgroundColor: 'rgba(229, 233, 240, 0.95)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)'
           }}
         >
           <div className="container mx-auto max-w-6xl">
-            <div className="border-t pt-4 space-y-2" style={{ borderColor: 'rgba(148, 163, 184, 0.2)' }}>
+            <div className="border-t pt-4 space-y-2" style={{ borderColor: 'rgba(129, 161, 193, 0.35)' }}>
               {navigation.map((item) => (
                 <a
                   key={item.href}
@@ -136,10 +136,10 @@ export default function Header() {
                     handleSmoothScroll(e, item.href)
                     setShowMobileMenu(false)
                   }}
-                  className={`block py-3 px-3 text-sm transition-colors cursor-pointer ${
+                  className={`font-code block py-3 px-3 text-sm transition-colors cursor-pointer ${
                     activeSection === item.href
-                      ? 'text-gray-100'
-                      : 'text-gray-400 hover:text-gray-200'
+                      ? 'text-[#2E3440]'
+                      : 'text-[#4C566A] hover:text-[#2E3440]'
                   }`}
                 >
                   {item.name}

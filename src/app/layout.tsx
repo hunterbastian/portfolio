@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono } from 'next/font/google'
+import { JetBrains_Mono, Playfair_Display, Source_Code_Pro } from 'next/font/google'
 import './globals.css'
 import './viewport.css'
 import Header from '@/components/Header'
@@ -9,8 +9,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 
-
-// Optimized: Reduced to 2 primary fonts for better performance
+// Primary body font
 const jetbrainsMono = JetBrains_Mono({ 
   subsets: ['latin'],
   weight: ['500'],
@@ -20,9 +19,7 @@ const jetbrainsMono = JetBrains_Mono({
   fallback: ['ui-monospace', 'monospace'],
 })
 
-// Using Playfair Display for elegant headings
-import { Playfair_Display } from 'next/font/google'
-
+// Display serif
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
   style: ['italic'],
@@ -31,6 +28,16 @@ const playfairDisplay = Playfair_Display({
   display: 'swap',
   preload: true,
   fallback: ['Georgia', 'serif'],
+})
+
+// UI labels (minimal code aesthetic)
+const sourceCodePro = Source_Code_Pro({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-source-code-pro',
+  display: 'swap',
+  preload: true,
+  fallback: ['ui-monospace', 'monospace'],
 })
 
 export const viewport = {
@@ -101,7 +108,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#2e3440" />
         
         {/* Structured Data - Person Schema for SEO */}
         <script
@@ -112,7 +119,7 @@ export default function RootLayout({
               '@type': 'Person',
               name: 'Hunter Bastian',
               url: 'https://hunterbastian.com',
-              jobTitle: 'Full-Stack Developer & Designer',
+              jobTitle: 'Student Product Designer and Photographer',
               description: 'Student Product Designer and Photographer',
               sameAs: [
                 // Add your social profiles here
@@ -149,21 +156,21 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             ::selection {
-              background-color: rgba(0, 255, 255, 0.3) !important;
+              background-color: rgba(94, 129, 172, 0.35) !important;
               color: inherit !important;
             }
             ::-moz-selection {
-              background-color: rgba(0, 255, 255, 0.3) !important;
+              background-color: rgba(94, 129, 172, 0.35) !important;
               color: inherit !important;
             }
             ::-webkit-selection {
-              background-color: rgba(0, 255, 255, 0.3) !important;
+              background-color: rgba(94, 129, 172, 0.35) !important;
               color: inherit !important;
             }
           `
         }} />
       </head>
-                   <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
+                   <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} safe-area-padding bg-background text-foreground`}>
                        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                        <div className="min-h-screen flex flex-col">
                  <Header />

@@ -3,35 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --background: #eceff4;
-  --foreground: #2e3440;
-  --background-rgb: 236, 239, 244;
+  --background: #f6f2ea;
+  --foreground: #1f1c17;
+  --background-rgb: 246, 242, 234;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #2e3440;
-    --foreground: #e5e9f0;
-    --background-rgb: 46, 52, 64;
+    --background: #14110f;
+    --foreground: #f3ece0;
+    --background-rgb: 20, 17, 15;
   }
   
   .card {
-    background: #3b4252;
+    background: #1f1a16;
   }
   
   .primary {
-    background: #5e81ac;
-    color: #eceff4;
+    background: #c8a96b;
+    color: #14110f;
   }
   
   .secondary {
-    background: #434c5e;
-    color: #e5e9f0;
+    background: #2a231e;
+    color: #f3ece0;
   }
   
   .muted {
-    background: #434c5e;
-    color: #d8dee9;
+    background: #2a231e;
+    color: #d8cbb6;
   }
 }
 
@@ -44,6 +44,7 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
+  background-image: radial-gradient(circle at top, rgba(200, 169, 107, 0.08), transparent 40%);
   font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
   position: relative;
   min-height: 100vh;
@@ -99,14 +100,14 @@ button:active {
 }
 
 .social-button:hover {
-  background-color: rgba(216, 222, 233, 0.55);
-  border-color: rgba(129, 161, 193, 0.6);
+  background-color: rgba(200, 169, 107, 0.14);
+  border-color: rgba(200, 169, 107, 0.55);
 }
 
 @media (prefers-color-scheme: dark) {
   .social-button:hover {
-    background-color: rgba(67, 76, 94, 0.9);
-    border-color: rgba(129, 161, 193, 0.55);
+    background-color: rgba(200, 169, 107, 0.14);
+    border-color: rgba(200, 169, 107, 0.65);
   }
 }
 
@@ -202,40 +203,40 @@ button:active {
 }
 
 ::-webkit-scrollbar-track {
-  background: #d8dee9;
+  background: #e8dfd2;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #81a1c1;
+  background: #b4915a;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5e81ac;
+  background: #8f6a35;
 }
 
 @media (prefers-color-scheme: dark) {
   ::-webkit-scrollbar-track {
-    background: #3b4252;
+    background: #2a231e;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #81a1c1;
+    background: #a8864f;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #88c0d0;
+    background: #c8a96b;
   }
 }
 
 /* Text selection highlight - Navy */
 ::selection {
-  background: rgba(94, 129, 172, 0.35) !important;
+  background: rgba(200, 169, 107, 0.35) !important;
   color: inherit;
 }
 
 ::-moz-selection {
-  background: rgba(94, 129, 172, 0.35) !important;
+  background: rgba(200, 169, 107, 0.35) !important;
   color: inherit;
 }
 
@@ -243,4 +244,3 @@ button:active {
   background: rgba(94, 129, 172, 0.35) !important;
   color: inherit;
 }
-

@@ -125,9 +125,9 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       href={link.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+      className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-[#3A2E1E] border border-[#C8A96B]/45 bg-[#F8F4EC]/65 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md hover:bg-[#F2E8D8]"
     >
-      <span className="font-code font-light tracking-wide relative z-10">{link.label}</span>
+      <span className="font-code font-light tracking-[0.08em] relative z-10">{link.label}</span>
     </a>
   )
 }
@@ -170,7 +170,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 Hunter Bastian
               </h1>
               <div
-                className="font-code text-gray-600 dark:text-gray-400 mt-2 flex items-center gap-3"
+                className="font-code text-[#6F624F] mt-2 flex items-center gap-3"
                 style={{ fontSize: '14px', letterSpacing: '0.5px' }}
               >
                 <span>Interaction designer</span>
@@ -206,14 +206,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             <div className="relative overflow-visible">
               <button
                 onClick={() => setShowResumeModal(true)}
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-900 hover:-translate-y-0.5"
-                style={{ borderColor: '#5e81ac', color: '#5e81ac' }}
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs border rounded-sm transition-all duration-300 hover:-translate-y-0.5"
+                style={{ borderColor: '#c8a96b', color: '#8f6a35', backgroundColor: 'rgba(248, 244, 236, 0.65)' }}
                 onMouseEnter={() => setShowResumePreview(true)}
                 onMouseLeave={() => setShowResumePreview(false)}
                 onFocus={() => setShowResumePreview(true)}
                 onBlur={() => setShowResumePreview(false)}
               >
-                <span className="font-code font-light tracking-wide">RESUME</span>
+                <span className="font-code font-light tracking-[0.08em]">RESUME</span>
               </button>
               <ResumePreview isVisible={showResumePreview} />
             </div>
@@ -237,9 +237,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <div className="flex justify-start mt-12">
             <a
               href="/archive"
-              className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+              className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-[#3A2E1E] border border-[#C8A96B]/45 bg-[#F8F4EC]/65 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md hover:bg-[#F2E8D8]"
             >
-              <span className="font-light tracking-wide relative z-10">Other</span>
+              <span className="font-code font-light tracking-[0.08em] relative z-10">Other</span>
             </a>
           </div>
         </div>

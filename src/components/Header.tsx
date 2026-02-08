@@ -57,20 +57,20 @@ export default function Header() {
     <header 
       className="sticky top-0 z-50 w-full py-4 px-6" 
       style={{ 
-        backgroundColor: 'rgba(236, 239, 244, 0.9)',
-        backdropFilter: 'blur(6px)',
-        WebkitBackdropFilter: 'blur(6px)'
+        backgroundColor: 'rgba(21, 18, 16, 0.88)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
       }}
     >
       <div className="container mx-auto max-w-6xl">
         <div 
           className="flex h-14 items-center justify-between px-8 border-b"
-          style={{ borderColor: 'rgba(129, 161, 193, 0.35)' }}
+          style={{ borderColor: 'rgba(200, 169, 107, 0.35)' }}
         >
           {/* Logo */}
           <Link 
             href="/" 
-            className="font-code font-medium text-sm text-[#2E3440] hover:text-[#4C566A] transition-colors"
+            className="font-code font-medium text-sm tracking-[0.08em] text-[#F3ECE0] hover:text-[#C8A96B] transition-colors"
           >
             HB
           </Link>
@@ -82,10 +82,10 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className={`font-code text-xs font-light tracking-wide transition-colors cursor-pointer ${
+                className={`font-code text-xs font-light tracking-[0.08em] transition-colors cursor-pointer ${
                   activeSection === item.href 
-                    ? 'text-[#2E3440]' 
-                    : 'text-[#4C566A] hover:text-[#2E3440]'
+                    ? 'text-[#C8A96B]' 
+                    : 'text-[#C9B69A] hover:text-[#F3ECE0]'
                 }`}
                 aria-current={activeSection === item.href ? 'page' : undefined}
               >
@@ -97,7 +97,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="md:hidden p-2 text-[#2E3440] hover:text-[#4C566A] transition-colors"
+            className="md:hidden p-2 text-[#F3ECE0] hover:text-[#C8A96B] transition-colors"
           >
             <svg
               className="w-5 h-5"
@@ -121,13 +121,13 @@ export default function Header() {
         <div 
           className="md:hidden px-6 pb-4 mt-4" 
           style={{ 
-            backgroundColor: 'rgba(229, 233, 240, 0.95)',
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)'
+            backgroundColor: 'rgba(21, 18, 16, 0.96)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
           }}
         >
           <div className="container mx-auto max-w-6xl">
-            <div className="border-t pt-4 space-y-2" style={{ borderColor: 'rgba(129, 161, 193, 0.35)' }}>
+            <div className="border-t pt-4 space-y-2" style={{ borderColor: 'rgba(200, 169, 107, 0.35)' }}>
               {navigation.map((item) => (
                 <a
                   key={item.href}
@@ -136,10 +136,10 @@ export default function Header() {
                     handleSmoothScroll(e, item.href)
                     setShowMobileMenu(false)
                   }}
-                  className={`font-code block py-3 px-3 text-sm transition-colors cursor-pointer ${
+                  className={`font-code block py-3 px-3 text-sm tracking-[0.08em] transition-colors cursor-pointer ${
                     activeSection === item.href
-                      ? 'text-[#2E3440]'
-                      : 'text-[#4C566A] hover:text-[#2E3440]'
+                      ? 'text-[#C8A96B]'
+                      : 'text-[#C9B69A] hover:text-[#F3ECE0]'
                   }`}
                 >
                   {item.name}

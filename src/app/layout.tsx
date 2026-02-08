@@ -108,7 +108,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#2e3440" />
+        <meta name="theme-color" content="#14110f" />
         
         {/* Structured Data - Person Schema for SEO */}
         <script
@@ -156,15 +156,15 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             ::selection {
-              background-color: rgba(94, 129, 172, 0.35) !important;
+              background-color: rgba(200, 169, 107, 0.35) !important;
               color: inherit !important;
             }
             ::-moz-selection {
-              background-color: rgba(94, 129, 172, 0.35) !important;
+              background-color: rgba(200, 169, 107, 0.35) !important;
               color: inherit !important;
             }
             ::-webkit-selection {
-              background-color: rgba(94, 129, 172, 0.35) !important;
+              background-color: rgba(200, 169, 107, 0.35) !important;
               color: inherit !important;
             }
           `

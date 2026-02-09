@@ -1,5 +1,5 @@
 // Service Worker for Portfolio - Assets only, fresh HTML always
-const CACHE_NAME = 'portfolio-assets-v5'
+const CACHE_NAME = 'portfolio-assets-v6'
 const STATIC_ASSETS = [
   '/favicon.ico',
   '/favicon/favicon.ico',
@@ -50,17 +50,32 @@ self.addEventListener('fetch', event => {
   // Skip API routes
   if (event.request.url.includes('/api/')) return
   
-  // Determine if this is a static asset
-  const isStaticAsset = event.request.url.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|avif|woff|woff2)$/) ||
-                        event.request.url.includes('/_next/static/')
-  
-  if (isStaticAsset) {
-    // Cache first for static assets
+  // Determine asset types
+  const isNextStatic = event.request.url.includes('/_next/static/')
+  const isCodeAsset = event.request.url.match(/\.(js|css)$/)
+  const isStaticAsset = event.request.url.match(/\.(png|jpg|jpeg|gif|svg|ico|webp|avif|woff|woff2)$/)
+
+  if (isNextStatic || isCodeAsset) {
+    // Network first for JS/CSS chunks to avoid stale UI after deploys
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          if (response && response.status === 200) {
+            const responseToCache = response.clone()
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(event.request, responseToCache))
+          }
+          return response
+        })
+        .catch(() => caches.match(event.request))
+    )
+  } else if (isStaticAsset) {
+    // Cache first for static media/fonts
     event.respondWith(
       caches.match(event.request)
         .then(response => {
           if (response) return response
-          
+
           return fetch(event.request)
             .then(response => {
               if (response && response.status === 200) {

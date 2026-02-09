@@ -12,7 +12,7 @@ export default function HomePage() {
   const projects = getAllProjects()
 
   return (
-    <LoadingScreen duration={1000}>
+    <LoadingScreen duration={2300}>
       <AnimatedHomePage>
         <Suspense fallback={<ProjectLoader />}>
           <ProjectGridClient projects={projects} />

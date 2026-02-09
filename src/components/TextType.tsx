@@ -11,6 +11,8 @@ interface TextTypeProps {
   loop?: boolean
   showCursor?: boolean
   cursorCharacter?: string
+  cinematic?: boolean
+  completionBlinks?: number
 }
 
 export default function TextType({
@@ -22,6 +24,8 @@ export default function TextType({
   loop = true,
   showCursor = true,
   cursorCharacter = '|',
+  cinematic = false,
+  completionBlinks = 2,
 }: TextTypeProps) {
   const texts = useMemo(() => (Array.isArray(text) ? text : [text]), [text])
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
@@ -55,7 +59,43 @@ export default function TextType({
       cursorTimerRef.current = null
     }
 
-    if (!showCursor || reduceMotion || isComplete) {
+    if (!showCursor) {
+      setCursorVisible(false)
+      return
+    }
+
+    if (isComplete) {
+      if (reduceMotion || completionBlinks <= 0) {
+        setCursorVisible(false)
+        return
+      }
+
+      let stepCount = 0
+      const maxSteps = completionBlinks * 2
+      setCursorVisible(true)
+
+      cursorTimerRef.current = window.setInterval(() => {
+        stepCount += 1
+        if (stepCount >= maxSteps) {
+          if (cursorTimerRef.current !== null) {
+            window.clearInterval(cursorTimerRef.current)
+            cursorTimerRef.current = null
+          }
+          setCursorVisible(false)
+          return
+        }
+        setCursorVisible((prev) => !prev)
+      }, 220)
+
+      return () => {
+        if (cursorTimerRef.current !== null) {
+          window.clearInterval(cursorTimerRef.current)
+          cursorTimerRef.current = null
+        }
+      }
+    }
+
+    if (reduceMotion) {
       setCursorVisible(true)
       return
     }
@@ -70,7 +110,7 @@ export default function TextType({
         cursorTimerRef.current = null
       }
     }
-  }, [isComplete, reduceMotion, showCursor])
+  }, [completionBlinks, isComplete, reduceMotion, showCursor])
 
   useEffect(() => {
     if (!texts.length) {
@@ -100,11 +140,33 @@ export default function TextType({
 
     const nextLength = isDeleting ? displayText.length - 1 : displayText.length + 1
     const nextText = currentText.slice(0, nextLength)
-    const speed = isDeleting ? deletingSpeed : typingSpeed
+    let speed = isDeleting ? deletingSpeed : typingSpeed
+
+    if (cinematic && !isDeleting) {
+      const nextChar = currentText[nextLength - 1] ?? ''
+      const progress = currentText.length ? nextLength / currentText.length : 1
+      const progressMultiplier = 1.08 - Math.min(progress, 0.9) * 0.24
+      speed = Math.max(22, Math.round(speed * progressMultiplier))
+
+      if (/[,.!?;:]/.test(nextChar)) {
+        speed += 90
+      }
+
+      if (nextChar === '\n') {
+        speed += 240
+      }
+
+      if (displayText.length === 0 && currentTextIndex === 0) {
+        speed += 180
+      }
+
+      speed += Math.floor(Math.random() * 18) - 9
+    }
 
     const typeTimer = window.setTimeout(() => setDisplayText(nextText), speed)
     return () => window.clearTimeout(typeTimer)
   }, [
+    cinematic,
     currentTextIndex,
     deletingSpeed,
     displayText,
@@ -117,10 +179,17 @@ export default function TextType({
   ])
 
   return (
-    <span className={className} aria-label={texts[currentTextIndex] ?? ''}>
+    <span
+      className={`${className ?? ''}${cinematic ? ' text-type-cinematic' : ''}`}
+      aria-label={texts[currentTextIndex] ?? ''}
+    >
       {displayText}
       {showCursor ? (
-        <span aria-hidden="true" className="inline-block ml-1" style={{ opacity: cursorVisible ? 1 : 0 }}>
+        <span
+          aria-hidden="true"
+          className={`inline-block ml-1${cinematic ? ' text-type-cinematic-cursor' : ''}`}
+          style={{ opacity: cursorVisible ? 1 : 0 }}
+        >
           {cursorCharacter}
         </span>
       ) : null}

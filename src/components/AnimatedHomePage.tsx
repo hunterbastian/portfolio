@@ -152,14 +152,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               priority
             />
             <div>
-              <h1 className="text-foreground font-garamond-narrow font-semibold text-fluid-xl lg:text-fluid-2xl leading-tight">
+              <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(1.35rem,4.2vw,2.25rem)] leading-tight">
                 <TextType
-                  text={'Hunter Bastian // \nStudio Alpine'}
-                  className="block whitespace-pre-line"
-                  typingSpeed={58}
+                  text="Hunter Bastian // Studio Alpine"
+                  className="block whitespace-nowrap"
+                  typingSpeed={46}
                   deletingSpeed={35}
                   pauseDuration={2200}
                   loop={false}
+                  cinematic
                 />
               </h1>
               <div className="font-code text-muted-foreground mt-2 flex items-center gap-3 text-xs tracking-[0.12em]">

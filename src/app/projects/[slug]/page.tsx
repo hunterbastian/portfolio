@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const { slug } = await params
   const project = getProjectBySlug(slug)
   const baseUrl = 'https://hunterbastian.com'
+  const brandName = 'Hunter Bastian // Studio Alpine'
   
   if (!project) {
     return {}
@@ -32,15 +33,15 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const { title, description, image, category, tags, date } = project.frontmatter
 
   return {
-    title: `${title} | Hunter Bastian Portfolio`,
+    title: `${title} | ${brandName} Portfolio`,
     description: description,
-    keywords: [title, category, ...(tags || []), 'Hunter Bastian', 'portfolio', 'case study'],
+    keywords: [title, category, ...(tags || []), brandName, 'portfolio', 'case study'],
     openGraph: {
       type: 'article',
       title: `${title} - Case Study`,
       description: description,
       url: `${baseUrl}/projects/${slug}`,
-      siteName: 'Hunter Bastian Portfolio',
+      siteName: `${brandName} Portfolio`,
       images: [
         {
           url: image.startsWith('/') ? `${baseUrl}${image}` : image,
@@ -50,7 +51,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
         },
       ],
       publishedTime: date,
-      authors: ['Hunter Bastian'],
+      authors: [brandName],
       tags: tags,
     },
     twitter: {
@@ -77,6 +78,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     const { frontmatter, content } = project
 
     const baseUrl = 'https://hunterbastian.com'
+    const brandName = 'Hunter Bastian // Studio Alpine'
     const projectUrl = `${baseUrl}/projects/${slug}`
     const imageUrl = frontmatter.image.startsWith('/') ? `${baseUrl}${frontmatter.image}` : frontmatter.image
 
@@ -91,12 +93,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       dateModified: frontmatter.date,
       author: {
         '@type': 'Person',
-        name: 'Hunter Bastian',
+        name: brandName,
         url: baseUrl,
       },
       publisher: {
         '@type': 'Person',
-        name: 'Hunter Bastian',
+        name: brandName,
       },
       mainEntityOfPage: {
         '@type': 'WebPage',

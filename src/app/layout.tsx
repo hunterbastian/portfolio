@@ -49,13 +49,14 @@ export const viewport = {
 }
 
 const faviconVersion = '20260207'
+const brandName = 'Hunter Bastian // Studio Alpine'
 
 export const metadata: Metadata = {
-  title: 'Hunter Bastian - Portfolio',
+  title: `${brandName} - Portfolio`,
   description: 'Student Product Designer and Photographer',
-  keywords: ['Hunter Bastian', 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
-  authors: [{ name: 'Hunter Bastian' }],
-  creator: 'Hunter Bastian',
+  keywords: [brandName, 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
+  authors: [{ name: brandName }],
+  creator: brandName,
   metadataBase: new URL('https://hunterbastian.com'),
 
   icons: {
@@ -76,21 +77,21 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://hunterbastian.com',
-    title: 'Hunter Bastian - Portfolio',
+    title: `${brandName} - Portfolio`,
     description: 'Student Product Designer and Photographer',
-    siteName: 'Hunter Bastian Portfolio',
+    siteName: `${brandName} Portfolio`,
     images: [
       {
         url: '/images/social/profile-preview.jpg',
         width: 1200,
         height: 630,
-        alt: 'Hunter Bastian - Designer & Developer Portfolio',
+        alt: `${brandName} - Designer & Developer Portfolio`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Hunter Bastian - Portfolio',
+    title: `${brandName} - Portfolio`,
     description: 'Student Product Designer and Photographer',
     images: ['/images/social/profile-preview.jpg'],
   },
@@ -108,7 +109,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#14110f" />
+        <meta name="theme-color" content="#2e3440" />
         
         {/* Structured Data - Person Schema for SEO */}
         <script
@@ -117,7 +118,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Person',
-              name: 'Hunter Bastian',
+              name: brandName,
               url: 'https://hunterbastian.com',
               jobTitle: 'Student Product Designer and Photographer',
               description: 'Student Product Designer and Photographer',
@@ -140,14 +141,13 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
         <link rel="dns-prefetch" href="//analytics.vercel.com" />
-        <link rel="dns-prefetch" href="//app.endlesstools.io" />
         
         {/* Critical CSS - Inline for faster FCP */}
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Critical above-the-fold styles */
             body { margin: 0; font-family: ui-monospace, monospace; }
-            .hero-section { min-height: 60vh; }
+            .hero-section { min-height: 0; }
             h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.2; }
           `
         }} />
@@ -156,15 +156,15 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             ::selection {
-              background-color: rgba(200, 169, 107, 0.35) !important;
+              background-color: rgba(94, 129, 172, 0.28) !important;
               color: inherit !important;
             }
             ::-moz-selection {
-              background-color: rgba(200, 169, 107, 0.35) !important;
+              background-color: rgba(94, 129, 172, 0.28) !important;
               color: inherit !important;
             }
             ::-webkit-selection {
-              background-color: rgba(200, 169, 107, 0.35) !important;
+              background-color: rgba(94, 129, 172, 0.28) !important;
               color: inherit !important;
             }
           `

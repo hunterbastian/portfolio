@@ -5,12 +5,13 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 const baseUrl = 'https://hunterbastian.com'
+const brandName = 'Hunter Bastian // Studio Alpine'
 
 export const metadata: Metadata = {
-  title: 'Project Archive | Hunter Bastian Portfolio',
-  description: 'Browse archived case studies and design projects by Hunter Bastian. A collection of past work in UI/UX design, web development, and branding.',
+  title: `Project Archive | ${brandName} Portfolio`,
+  description: `Browse archived case studies and design projects by ${brandName}. A collection of past work in UI/UX design, web development, and branding.`,
   openGraph: {
-    title: 'Project Archive - Hunter Bastian',
+    title: `Project Archive - ${brandName}`,
     description: 'Browse archived case studies and design projects.',
     url: `${baseUrl}/archive`,
     type: 'website',

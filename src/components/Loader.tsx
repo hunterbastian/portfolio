@@ -2,6 +2,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import ArcSigilLoader from './ArcSigilLoader'
 
 // LDRS loader types
 type LoaderType = 
@@ -137,13 +138,7 @@ export default function Loader({
 export function PortfolioLoader({ className = '' }: { className?: string }) {
   return (
     <div className={`min-h-screen flex items-center justify-center bg-background ${className}`}>
-      <Loader 
-        type="zoomies" 
-        size="50" 
-        speed="1.4" 
-        text="Loading..." 
-        className="text-center"
-      />
+      <ArcSigilLoader />
     </div>
   )
 }

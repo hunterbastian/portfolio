@@ -7,6 +7,10 @@ import { useState } from 'react'
 import ResumePreview from './ResumePreview'
 
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
+const LazyDinosaur = dynamic(() => import('./LazyDinosaur'), {
+  ssr: false,
+  loading: () => null,
+})
 
 interface AnimatedHomePageProps {
   children: ReactNode
@@ -31,9 +35,6 @@ interface ContactLinkItem {
   label: string
   href: string
 }
-
-const socialLinkClassName =
-  'inline-flex h-12 items-center justify-center rounded-md border px-6 text-[13px] font-code font-medium tracking-[0.12em] text-foreground/90 bg-[color:color-mix(in_srgb,var(--background)_85%,white)] border-[color:color-mix(in_srgb,var(--border)_85%,white)] shadow-sm transition-colors hover:bg-[color:color-mix(in_srgb,var(--background)_70%,white)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const experience: ExperienceItem[] = [
   {
@@ -82,6 +83,11 @@ const education: EducationItem[] = [
   },
 ]
 
+const creatingProjects = [
+  { name: 'Project on Instagram', description: 'COMING SOON' },
+  { name: 'Digital Studio', description: 'in the works' },
+]
+
 const everydayTech = [
   'iPhone 15 Pro Natural Titanium',
   'MacBook Air 15" M2 Starlight',
@@ -89,14 +95,24 @@ const everydayTech = [
   'AirPods Pro 2',
   'IKEA Desk',
   'Apple Watch',
+  'Lego Flowers',
   'Wishlist: Apple Studio Display',
   'Wishlist: Keychron K3',
 ]
 
-const skills = ['Figma', 'Framer', 'UX Design', 'UI Design', 'HTML', 'JavaScript', 'CSS', 'ChatGPT']
+const skills = [
+  'Figma',
+  'Framer',
+  'UX Design',
+  'UI Design',
+  'HTML',
+  'JavaScript',
+  'CSS',
+  'ChatGPT',
+  'AI Models',
+]
 
 const contactLinks: ContactLinkItem[] = [
-  { label: 'Instagram', href: 'https://instagram.com/studio.alpine' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian' },
   { label: 'GitHub', href: 'https://github.com/hunterbastian' },
   { label: 'Medium', href: 'https://medium.com/@hunterbastian' },
@@ -109,15 +125,11 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       href={link.href}
       target="_blank"
       rel="noopener noreferrer"
-      className={socialLinkClassName}
+      className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-[#3A2E1E] border border-[#C8A96B]/45 bg-[#F8F4EC]/65 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md hover:bg-[#F2E8D8]"
     >
-      <span>{link.label}</span>
+      <span className="font-code font-light tracking-[0.08em] relative z-10">{link.label}</span>
     </a>
   )
-}
-
-function SectionHeading({ children }: { children: ReactNode }) {
-  return <h2 className="section-heading font-code text-sm mb-6 sm:mb-8">{children}</h2>
 }
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
@@ -138,59 +150,70 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 py-8">
-      <section className="pt-12 pb-0 relative animate-fade-in">
+    <div className="container mx-auto max-w-8xl px-4 py-8">
+      <section className="pt-16 pb-0 relative animate-fade-in">
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-center gap-4">
             <Image
               src="/images/profilepicture.jpg"
-              alt="Hunter Bastian // Studio Alpine"
+              alt="Hunter Bastian"
               width={72}
               height={72}
-              className="h-[72px] w-[72px] rounded-full object-cover border border-border shadow-sm"
+              className="h-[72px] w-[72px] rounded-full object-cover border border-gray-300 dark:border-gray-700 shadow-sm"
               priority
             />
             <div>
-              <h1 className="text-foreground font-garamond-narrow font-semibold text-fluid-xl lg:text-fluid-2xl leading-tight">
-                <span className="block">Hunter Bastian //</span>
-                <span className="block">Studio Alpine</span>
+              <h1
+                className="text-black dark:text-white font-playfair italic font-semibold text-fluid-3xl lg:text-fluid-4xl"
+                style={{ lineHeight: '1.2' }}
+              >
+                Hunter Bastian
               </h1>
-              <div className="font-code text-muted-foreground mt-2 flex items-center gap-3 text-xs tracking-[0.12em]">
+              <div
+                className="font-code text-[#6F624F] mt-2 flex items-center gap-3"
+                style={{ fontSize: '14px', letterSpacing: '0.5px' }}
+              >
                 <span>Interaction designer</span>
-                <span className="opacity-50">|</span>
+                <span className="text-gray-400 dark:text-gray-500">|</span>
                 <span>Lehi, UT</span>
               </div>
             </div>
           </div>
 
-          <div>
-            <p className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0">
-              Interaction Design student at UVU with experience designing and building digital products.
-              I work in Figma and front-end code at <span className="font-semibold text-primary">Studio Alpine</span>, and
-              I&apos;m focused on clear, meaningful interfaces with an AI-first mindset.
+          <div className="mb-0">
+            <p
+              className="text-gray-600 dark:text-gray-300 text-sm font-garamond-narrow mb-0"
+              style={{ lineHeight: '1.6', margin: 0, padding: 0 }}
+            >
+              Interaction Design student at UVU with experience designing and building digital
+              products. I work in Figma and front-end code, and I&apos;m passionate about creating
+              clean, meaningful user experiences, with an{' '}
+              <span className="font-bold text-emerald-900 dark:text-emerald-400">AI first mindset</span>.
             </p>
           </div>
-
         </div>
       </section>
 
-      <section id="contact" className="pt-4 pb-10 px-4 sm:px-6 lg:px-0 relative z-20 animate-fade-in">
+      <section id="contact" className="pt-8 pb-8 px-4 sm:px-6 lg:px-0 relative z-20 animate-fade-in">
         <div className="max-w-2xl mx-auto">
-          <div className="flex flex-wrap gap-3 items-stretch sm:items-center">
-            {contactLinks.map((link) => (
-              <ContactLink key={link.label} link={link} />
-            ))}
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+              {contactLinks.map((link) => (
+                <ContactLink key={link.label} link={link} />
+              ))}
+            </div>
 
             <div className="relative overflow-visible">
               <button
                 onClick={() => setShowResumeModal(true)}
-                className={socialLinkClassName}
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs border rounded-sm transition-all duration-300 hover:-translate-y-0.5"
+                style={{ borderColor: '#c8a96b', color: '#8f6a35', backgroundColor: 'rgba(248, 244, 236, 0.65)' }}
                 onMouseEnter={() => setShowResumePreview(true)}
                 onMouseLeave={() => setShowResumePreview(false)}
                 onFocus={() => setShowResumePreview(true)}
                 onBlur={() => setShowResumePreview(false)}
               >
-                <span>Resume</span>
+                <span className="font-code font-light tracking-[0.08em]">RESUME</span>
               </button>
               <ResumePreview isVisible={showResumePreview} />
             </div>
@@ -198,7 +221,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="case-studies" className="pt-[4.5rem] pb-16 px-4 sm:px-6 lg:px-0 relative z-10">
+      <section id="case-studies" className="py-16 px-4 sm:px-6 lg:px-0 relative z-10">
         <div className="max-w-2xl mx-auto">
           <h2
             className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl"
@@ -214,9 +237,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <div className="flex justify-start mt-12">
             <a
               href="/archive"
-              className={socialLinkClassName}
+              className="social-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs text-[#3A2E1E] border border-[#C8A96B]/45 bg-[#F8F4EC]/65 rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md hover:bg-[#F2E8D8]"
             >
-              <span>Other</span>
+              <span className="font-code font-light tracking-[0.08em] relative z-10">Other</span>
             </a>
           </div>
         </div>
@@ -224,40 +247,57 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <section id="experience" className="py-16">
         <div className="max-w-2xl mx-auto">
-          <SectionHeading>Experience</SectionHeading>
+          <h2
+            className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl"
+            style={{ fontWeight: '500' }}
+          >
+            Experience
+          </h2>
 
-          <div className="nord-panel rounded-lg p-4 sm:p-6 space-y-2">
+          <div className="rounded-lg p-6 space-y-6" style={{ backgroundColor: 'rgba(222, 220, 219, 0.7)' }}>
             {experience.map((job, index) => {
               const isExpanded = expandedJobs.has(index)
 
               return (
-                <div key={job.company} className="border-b border-border last:border-b-0">
+                <div key={job.company} className="border-b border-gray-200 dark:border-gray-700 last:border-b-0">
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between py-4 px-2 text-left"
+                    className="flex w-full items-center justify-between py-4 px-3 text-left"
                     onClick={() => toggleJob(index)}
                   >
-                    <div className="flex items-center space-x-6">
-                      <span className="text-muted-foreground text-xs font-code w-16">{job.year}</span>
+                    <div className="flex items-center space-x-8">
+                      <span className="text-muted-foreground text-sm font-mono w-12 font-garamond-narrow">
+                        {job.year}
+                      </span>
                       <span className="font-medium font-garamond-narrow">{job.company}</span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <span className="text-muted-foreground text-sm font-garamond-narrow hidden sm:block">{job.title}</span>
+                      <span className="text-muted-foreground text-sm font-garamond-narrow">{job.title}</span>
                       <div
-                        className="w-5 h-5 flex items-center justify-center transition-transform duration-200 text-muted-foreground"
+                        className="w-5 h-5 flex items-center justify-center transition-transform duration-200"
                         style={{ transform: isExpanded ? 'rotate(45deg)' : 'rotate(0deg)' }}
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        <svg
+                          className="w-4 h-4 text-muted-foreground"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2.5}
+                            d="M12 4v16m8-8H4"
+                          />
                         </svg>
                       </div>
                     </div>
                   </button>
                   <div
                     className="overflow-hidden transition-all duration-300"
-                    style={{ maxHeight: isExpanded ? '460px' : '0px', opacity: isExpanded ? 1 : 0 }}
+                    style={{ maxHeight: isExpanded ? '500px' : '0px', opacity: isExpanded ? 1 : 0 }}
                   >
-                    <div className="pb-4 pl-2 sm:pl-[5.5rem] pr-2">
+                    <div className="pb-4 pl-20 pr-4">
                       <p className="text-muted-foreground text-sm leading-relaxed">{job.description}</p>
                     </div>
                   </div>
@@ -270,19 +310,31 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <section id="education" className="py-16">
         <div className="max-w-2xl mx-auto">
-          <SectionHeading>Education</SectionHeading>
+          <h2
+            className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl"
+            style={{ fontWeight: '500' }}
+          >
+            Education
+          </h2>
 
-          <div className="nord-panel rounded-lg p-6 space-y-6">
+          <div className="rounded-lg p-6 space-y-6" style={{ backgroundColor: 'rgba(222, 220, 219, 0.7)' }}>
             {education.map((edu) => (
-              <div key={edu.institution} className="border-b border-border last:border-b-0 pb-6 last:pb-0">
+              <div key={edu.institution} className="border-b border-gray-200 dark:border-gray-700 last:border-b-0 pb-6 last:pb-0">
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="text-muted-foreground text-xs font-code min-w-[100px]">{edu.year}</div>
+                  <div className="text-gray-500 dark:text-gray-400 text-sm font-medium min-w-[100px] font-garamond-narrow">
+                    {edu.year}
+                  </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground text-base mb-1 font-garamond-narrow">{edu.institution}</h3>
-                    <p className="text-foreground text-sm mb-1 font-garamond-narrow">{edu.degree}</p>
-                    <p className="text-muted-foreground text-sm font-garamond-narrow">{edu.level}</p>
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base mb-1 font-garamond-narrow">
+                      {edu.institution}
+                    </h3>
+                    <p className="text-gray-800 dark:text-gray-200 text-sm mb-1 font-garamond-narrow">{edu.degree}</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm font-garamond-narrow">{edu.level}</p>
                     {edu.note && (
-                      <p className="text-muted-foreground text-xs mt-1 font-code tracking-[0.08em]" style={{ opacity: 0.7 }}>
+                      <p
+                        className="text-gray-500 dark:text-gray-500 text-xs mt-1 font-medium font-garamond-narrow"
+                        style={{ opacity: 0.6 }}
+                      >
                         {edu.note}
                       </p>
                     )}
@@ -296,31 +348,41 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <section id="creating" className="py-16 px-4 sm:px-6 lg:px-0 relative z-10">
         <div className="max-w-2xl mx-auto">
-          <SectionHeading>Creating</SectionHeading>
-          <div className="text-left">
-            <a
-              href="https://instagram.com/studio.alpine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-code tracking-[0.08em] uppercase font-medium text-muted-foreground hover:text-primary underline underline-offset-4"
-            >
-              Photography Studio: Studio Alpine
-            </a>
+          <h2
+            className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl"
+            style={{ fontWeight: '500' }}
+          >
+            Creating
+          </h2>
+
+          <div className="flex flex-wrap justify-start gap-x-8 gap-y-4">
+            {creatingProjects.map((project) => (
+              <div key={project.name} className="text-left">
+                <span className="text-sm font-garamond-narrow tracking-wider uppercase font-medium text-gray-700 dark:text-gray-300">
+                  {project.name}: {project.description}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       <section id="everyday-tech" className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0">
         <div className="max-w-2xl mx-auto">
-          <SectionHeading>Everyday Tech</SectionHeading>
+          <h2
+            className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl"
+            style={{ fontWeight: '500' }}
+          >
+            Everyday tech
+          </h2>
         </div>
         <div className="max-w-2xl mx-auto">
           <div className="flex flex-wrap justify-start gap-x-8 gap-y-4">
             {everydayTech.map((item) => (
               <div key={item} className="text-left">
                 <span
-                  className={`text-sm font-code tracking-[0.08em] uppercase font-medium ${
-                    item.startsWith('Wishlist:') ? 'text-primary' : 'text-muted-foreground'
+                  className={`text-sm font-garamond-narrow tracking-wider uppercase font-medium ${
+                    item.startsWith('Wishlist:') ? 'text-blue-500 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'
                   }`}
                 >
                   {item}
@@ -333,13 +395,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <section id="tech-stack" className="py-16">
         <div className="max-w-2xl mx-auto">
-          <SectionHeading>Stack</SectionHeading>
+          <h2
+            className="font-playfair italic text-left mb-8 text-fluid-base lg:text-fluid-xl"
+            style={{ fontWeight: '500' }}
+          >
+            Stack
+          </h2>
         </div>
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto">
             {skills.map((skill) => (
               <div key={skill} className="text-center">
-                <span className="text-sm font-code text-muted-foreground tracking-[0.08em] uppercase font-medium whitespace-nowrap">
+                <span className="text-sm font-garamond-narrow text-gray-700 dark:text-gray-300 tracking-wider uppercase font-medium whitespace-nowrap">
                   {skill}
                 </span>
               </div>
@@ -348,6 +415,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
+      <LazyDinosaur />
       <ResumeModal isOpen={showResumeModal} onClose={() => setShowResumeModal(false)} />
     </div>
   )

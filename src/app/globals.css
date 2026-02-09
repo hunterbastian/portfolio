@@ -42,19 +42,8 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -165,12 +154,7 @@ button:active {
 .nord-panel {
   border: 1px solid color-mix(in srgb, var(--border) 90%, white);
   background: color-mix(in srgb, var(--card) 92%, white);
-  contain: layout paint;
-}
-
-.deferred-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 760px;
+  backdrop-filter: blur(6px);
 }
 
 .nord-button {

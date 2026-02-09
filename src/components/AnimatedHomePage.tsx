@@ -5,6 +5,7 @@ import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import ResumePreview from './ResumePreview'
+import TextType from './TextType'
 
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 
@@ -151,8 +152,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               priority
             />
             <div>
-              <h1 className="text-foreground font-jetbrains-mono font-semibold text-[clamp(1.35rem,4.2vw,2.25rem)] leading-tight">
-                <span className="block whitespace-nowrap">Hunter Bastian // Studio Alpine</span>
+              <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(1.35rem,4.2vw,2.25rem)] leading-tight">
+                <TextType
+                  text="Hunter Bastian // Studio Alpine"
+                  className="block whitespace-nowrap"
+                  typingSpeed={46}
+                  deletingSpeed={35}
+                  pauseDuration={2200}
+                  loop={false}
+                  cinematic
+                />
               </h1>
               <div className="font-code text-muted-foreground mt-2 flex items-center gap-3 text-xs tracking-[0.12em]">
                 <span>Interaction designer</span>
@@ -197,7 +206,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="creating" className="deferred-section py-16 px-4 sm:px-6 lg:px-0 relative z-10">
+      <section id="creating" className="py-16 px-4 sm:px-6 lg:px-0 relative z-10">
         <div className="max-w-2xl mx-auto">
           <SectionHeading>Creating</SectionHeading>
           <div className="text-left">
@@ -213,7 +222,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="case-studies" className="deferred-section pt-[4.5rem] pb-16 px-4 sm:px-6 lg:px-0 relative z-10">
+      <section id="case-studies" className="pt-[4.5rem] pb-16 px-4 sm:px-6 lg:px-0 relative z-10">
         <div className="max-w-2xl mx-auto">
           <SectionHeading>Case Studies</SectionHeading>
         </div>
@@ -232,7 +241,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="experience" className="deferred-section py-16">
+      <section id="experience" className="py-16">
         <div className="max-w-2xl mx-auto">
           <SectionHeading>Experience</SectionHeading>
 
@@ -278,7 +287,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="education" className="deferred-section py-16">
+      <section id="education" className="py-16">
         <div className="max-w-2xl mx-auto">
           <SectionHeading>Education</SectionHeading>
 
@@ -304,7 +313,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="everyday-tech" className="deferred-section py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0">
+      <section id="everyday-tech" className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0">
         <div className="max-w-2xl mx-auto">
           <SectionHeading>Everyday Tech</SectionHeading>
         </div>
@@ -325,7 +334,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="tech-stack" className="deferred-section py-16">
+      <section id="tech-stack" className="py-16">
         <div className="max-w-2xl mx-auto">
           <SectionHeading>Stack</SectionHeading>
         </div>

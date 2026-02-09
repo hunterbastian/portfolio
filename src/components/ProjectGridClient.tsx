@@ -19,7 +19,6 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const router = useRouter()
   const prefetchedSlugsRef = useRef(new Set<string>())
-  const magnetNodesRef = useRef(new Map<number, HTMLDivElement>())
   const magnetEnabledRef = useRef(false)
   const MAGNET_STRENGTH = 0.24
   const MAGNET_MAX_OFFSET = 28
@@ -94,18 +93,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     }
   }, [])
 
-  const setMagnetNode = useCallback((index: number, node: HTMLDivElement | null) => {
-    if (node) {
-      magnetNodesRef.current.set(index, node)
-      node.style.transform = 'translate3d(0px, 0px, 0px)'
-      return
-    }
-
-    magnetNodesRef.current.delete(index)
-  }, [])
-
-  const applyMagnetOffset = useCallback((index: number, offsetX: number, offsetY: number, settle = false) => {
-    const node = magnetNodesRef.current.get(index)
+  const applyMagnetOffset = useCallback((node: HTMLDivElement | null, offsetX: number, offsetY: number, settle = false) => {
     if (!node) return
 
     node.style.transition = settle
@@ -114,16 +102,17 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     node.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0px)`
   }, [])
 
-  const handleMagnetMove = useCallback((index: number, event: React.MouseEvent<HTMLDivElement>) => {
+  const handleMagnetMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     if (!magnetEnabledRef.current) return
 
+    const magnetNode = event.currentTarget.firstElementChild as HTMLDivElement | null
     const rect = event.currentTarget.getBoundingClientRect()
     const pointerOffsetX = event.clientX - (rect.left + rect.width / 2)
     const pointerOffsetY = event.clientY - (rect.top + rect.height / 2)
     const magnetX = Math.max(-MAGNET_MAX_OFFSET, Math.min(MAGNET_MAX_OFFSET, pointerOffsetX * MAGNET_STRENGTH))
     const magnetY = Math.max(-MAGNET_MAX_OFFSET, Math.min(MAGNET_MAX_OFFSET, pointerOffsetY * MAGNET_STRENGTH))
 
-    applyMagnetOffset(index, magnetX, magnetY)
+    applyMagnetOffset(magnetNode, magnetX, magnetY)
   }, [MAGNET_MAX_OFFSET, MAGNET_STRENGTH, applyMagnetOffset])
   
   const handleMouseEnter = (index: number) => {
@@ -134,9 +123,10 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     }
   }
 
-  const handleMouseLeave = (index: number) => {
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     setHoveredIndex(null)
-    applyMagnetOffset(index, 0, 0, true)
+    const magnetNode = event.currentTarget.firstElementChild as HTMLDivElement | null
+    applyMagnetOffset(magnetNode, 0, 0, true)
   }
 
   // Split projects into rows: first 3 on top row, rest on bottom row
@@ -179,11 +169,10 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === actualIndex ? 1 : 0.7
               }}
               onMouseEnter={() => handleMouseEnter(actualIndex)}
-              onMouseMove={(event) => handleMagnetMove(actualIndex, event)}
-              onMouseLeave={() => handleMouseLeave(actualIndex)}
+              onMouseMove={handleMagnetMove}
+              onMouseLeave={handleMouseLeave}
             >
               <div
-                ref={(node) => setMagnetNode(actualIndex, node)}
                 className="will-change-transform"
               >
                 {project.frontmatter?.image ? (
@@ -229,11 +218,10 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.7
               }}
               onMouseEnter={() => handleMouseEnter(index)}
-              onMouseMove={(event) => handleMagnetMove(index, event)}
-              onMouseLeave={() => handleMouseLeave(index)}
+              onMouseMove={handleMagnetMove}
+              onMouseLeave={handleMouseLeave}
             >
               <div
-                ref={(node) => setMagnetNode(index, node)}
                 className="will-change-transform"
               >
                 <ProjectCard

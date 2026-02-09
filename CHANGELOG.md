@@ -2,6 +2,14 @@
 
 ## Version History
 
+### **v2.4.0** - Weekly Highlights *(February 2026)*
+- Refined the site's visual direction with luxury/minimal styling updates across global theme, layout, header, and footer.
+- Updated the hero intro to highlight Studio Alpine and improved the typewriter behavior (newline handling and cursor stopping at completion).
+- Applied broader UI and animation polish, including loader refinements and smoother page-level interactions.
+- Refreshed brand assets with a new profile photo and favicon set.
+- Simplified homepage structure by removing the category bar and related client/performance overhead.
+- Updated site description copy and refreshed the dependency lockfile.
+
 ### **v2.3.3** - Spacing Consistency *(August 2025)*
 - Improved section spacing consistency throughout portfolio
 

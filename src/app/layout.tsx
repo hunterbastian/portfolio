@@ -26,7 +26,7 @@ const playfairDisplay = Playfair_Display({
   weight: ['600'],
   variable: '--font-playfair',
   display: 'swap',
-  preload: true,
+  preload: false,
   fallback: ['Georgia', 'serif'],
 })
 
@@ -36,7 +36,7 @@ const sourceCodePro = Source_Code_Pro({
   weight: ['400', '500'],
   variable: '--font-source-code-pro',
   display: 'swap',
-  preload: true,
+  preload: false,
   fallback: ['ui-monospace', 'monospace'],
 })
 
@@ -137,8 +137,6 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="HB Portfolio" />
         
         {/* Resource Hints - Optimized for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
         <link rel="dns-prefetch" href="//analytics.vercel.com" />
         

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -18,26 +18,128 @@ interface ProjectGridClientProps {
 export default function ProjectGridClient({ projects }: ProjectGridClientProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const router = useRouter()
+  const prefetchedSlugsRef = useRef(new Set<string>())
+  const magnetNodesRef = useRef(new Map<number, HTMLDivElement>())
+  const magnetEnabledRef = useRef(false)
+
+  const prefetchProject = useCallback((slug: string) => {
+    if (prefetchedSlugsRef.current.has(slug)) {
+      return
+    }
+
+    prefetchedSlugsRef.current.add(slug)
+    router.prefetch(`/projects/${slug}`)
+  }, [router])
   
-  // Prefetch project pages on idle
+  // Keep startup prefetch light, then prefetch remaining projects based on user intent.
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const idleId = (window as any).requestIdleCallback?.(() => {
-      projects.slice(0, 6).forEach((p) => router.prefetch(`/projects/${p.slug}`))
-    })
+
+    const connection = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string }
+    }).connection
+    const hasConstrainedNetwork =
+      connection?.saveData === true || connection?.effectiveType === '2g' || connection?.effectiveType === 'slow-2g'
+
+    if (hasConstrainedNetwork) {
+      return
+    }
+
+    const initialProjects = projects.slice(0, 2)
+
+    const requestIdle = (window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
+    }).requestIdleCallback
+    const cancelIdle = (window as Window & { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback
+
+    let idleId: number | null = null
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+
+    const runPrefetch = () => {
+      initialProjects.forEach((project) => prefetchProject(project.slug))
+    }
+
+    if (requestIdle) {
+      idleId = requestIdle(runPrefetch, { timeout: 1500 })
+    } else {
+      timeoutId = setTimeout(runPrefetch, 600)
+    }
+
     return () => {
-      if ((window as any).cancelIdleCallback && idleId) {
-        (window as any).cancelIdleCallback(idleId)
+      if (cancelIdle && idleId !== null) {
+        cancelIdle(idleId)
+      }
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId)
       }
     }
-  }, [projects, router])
+  }, [prefetchProject, projects])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const allowsMotion = window.matchMedia('(prefers-reduced-motion: no-preference)')
+
+    const setMagnetSupport = () => {
+      magnetEnabledRef.current = supportsFinePointer.matches && allowsMotion.matches
+    }
+
+    setMagnetSupport()
+    supportsFinePointer.addEventListener('change', setMagnetSupport)
+    allowsMotion.addEventListener('change', setMagnetSupport)
+
+    return () => {
+      supportsFinePointer.removeEventListener('change', setMagnetSupport)
+      allowsMotion.removeEventListener('change', setMagnetSupport)
+    }
+  }, [])
+
+  const setMagnetNode = useCallback((index: number, node: HTMLDivElement | null) => {
+    if (node) {
+      magnetNodesRef.current.set(index, node)
+      node.style.transform = 'translate3d(0px, 0px, 0px)'
+      return
+    }
+
+    magnetNodesRef.current.delete(index)
+  }, [])
+
+  const applyMagnetOffset = useCallback((index: number, offsetX: number, offsetY: number, settle = false) => {
+    const node = magnetNodesRef.current.get(index)
+    if (!node) return
+
+    node.style.transition = settle
+      ? 'transform 260ms cubic-bezier(0.22, 1, 0.36, 1)'
+      : 'transform 120ms cubic-bezier(0.22, 1, 0.36, 1)'
+    node.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0px)`
+  }, [])
+
+  const handleMagnetMove = useCallback((index: number, event: React.MouseEvent<HTMLDivElement>) => {
+    if (!magnetEnabledRef.current) return
+
+    const rect = event.currentTarget.getBoundingClientRect()
+    const pointerOffsetX = event.clientX - (rect.left + rect.width / 2)
+    const pointerOffsetY = event.clientY - (rect.top + rect.height / 2)
+    const strength = 0.16
+    const maxOffset = 20
+    const magnetX = Math.max(-maxOffset, Math.min(maxOffset, pointerOffsetX * strength))
+    const magnetY = Math.max(-maxOffset, Math.min(maxOffset, pointerOffsetY * strength))
+
+    applyMagnetOffset(index, magnetX, magnetY)
+  }, [applyMagnetOffset])
   
   const handleMouseEnter = (index: number) => {
-    setHoveredIndex(index)
+    setHoveredIndex((previous) => (previous === index ? previous : index))
+    const hoveredProject = projects[index]
+    if (hoveredProject) {
+      prefetchProject(hoveredProject.slug)
+    }
   }
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (index: number) => {
     setHoveredIndex(null)
+    applyMagnetOffset(index, 0, 0, true)
   }
 
   // Split projects into rows: first 3 on top row, rest on bottom row
@@ -74,25 +176,31 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
           return (
             <div 
               key={project.slug}
-              className="flex-shrink-0 w-52 transition-all duration-500 ease-out"
+              className="flex-shrink-0 w-52 transition-transform transition-opacity duration-500 ease-out"
               style={{
                 transform: isHovered ? 'rotate(0deg) scale(1)' : `rotate(${rotation}deg) scale(0.80)`,
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === actualIndex ? 1 : 0.7
               }}
               onMouseEnter={() => handleMouseEnter(actualIndex)}
-              onMouseLeave={handleMouseLeave}
+              onMouseMove={(event) => handleMagnetMove(actualIndex, event)}
+              onMouseLeave={() => handleMouseLeave(actualIndex)}
             >
-              {project.frontmatter?.image ? (
-                <ProjectCard
-                  slug={project.slug}
-                  frontmatter={project.frontmatter}
-                  index={actualIndex}
-                />
-              ) : (
-                <div className="aspect-video w-full">
-                  <Skeleton className="h-full w-full rounded-xl" />
-                </div>
-              )}
+              <div
+                ref={(node) => setMagnetNode(actualIndex, node)}
+                className="will-change-transform"
+              >
+                {project.frontmatter?.image ? (
+                  <ProjectCard
+                    slug={project.slug}
+                    frontmatter={project.frontmatter}
+                    index={actualIndex}
+                  />
+                ) : (
+                  <div className="aspect-video w-full">
+                    <Skeleton className="h-full w-full rounded-xl" />
+                  </div>
+                )}
+              </div>
             </div>
           )
         })}
@@ -124,13 +232,19 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.7
               }}
               onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
+              onMouseMove={(event) => handleMagnetMove(index, event)}
+              onMouseLeave={() => handleMouseLeave(index)}
             >
-              <ProjectCard
-                slug={project.slug}
-                frontmatter={project.frontmatter}
-                index={index}
-              />
+              <div
+                ref={(node) => setMagnetNode(index, node)}
+                className="will-change-transform"
+              >
+                <ProjectCard
+                  slug={project.slug}
+                  frontmatter={project.frontmatter}
+                  index={index}
+                />
+              </div>
             </div>
           ))}
         </div>

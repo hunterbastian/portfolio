@@ -56,18 +56,21 @@ self.addEventListener('fetch', event => {
   const isStaticAsset = event.request.url.match(/\.(png|jpg|jpeg|gif|svg|ico|webp|avif|woff|woff2)$/)
 
   if (isNextStatic || isCodeAsset) {
-    // Network first for JS/CSS chunks to avoid stale UI after deploys
+    // Stale-while-revalidate for JS/CSS and Next chunks: instant cache hit + background refresh
     event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          if (response && response.status === 200) {
-            const responseToCache = response.clone()
-            caches.open(CACHE_NAME)
-              .then(cache => cache.put(event.request, responseToCache))
-          }
-          return response
-        })
-        .catch(() => caches.match(event.request))
+      caches.match(event.request).then((cachedResponse) => {
+        const networkFetch = fetch(event.request)
+          .then((response) => {
+            if (response && response.status === 200) {
+              const responseToCache = response.clone()
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache))
+            }
+            return response
+          })
+          .catch(() => cachedResponse)
+
+        return cachedResponse || networkFetch
+      })
     )
   } else if (isStaticAsset) {
     // Cache first for static media/fonts
@@ -99,7 +102,7 @@ self.addEventListener('fetch', event => {
               { headers: { 'Content-Type': 'text/html' } }
             )
           }
-          return null
+          return Response.error()
         })
     )
   }

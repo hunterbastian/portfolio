@@ -17,7 +17,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
   return (
     <Link href={`/projects/${slug}`} className="block">
       <div
-        className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.98] active:shadow-md touch-manipulation"
+        className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-transform transition-shadow duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.98] active:shadow-md touch-manipulation"
         style={{
           opacity: 1,
           animationDelay: `${index * 80}ms`,
@@ -31,8 +31,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
             fill
             className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-105"
             style={{ 
-              transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-              willChange: 'transform'
+              transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)'
             }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={index === 0} // Only priority load first image
@@ -47,7 +46,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
           {frontmatter.title === "Porsche App" && (
             <video
               src="/images/projects/porscheapp.mp4"
-              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out blur-sm group-hover:blur-none"
+              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
               autoPlay
               loop
               muted
@@ -60,7 +59,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
         </div>
         
         <div className="p-4">
-          <h3 className="font-medium tracking-wider group-hover:text-primary transition-all duration-500 ease-out font-garamond-narrow" style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          <h3 className="font-medium tracking-wider group-hover:text-primary transition-colors duration-500 ease-out font-garamond-narrow" style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
             {frontmatter.title}
           </h3>
         </div>

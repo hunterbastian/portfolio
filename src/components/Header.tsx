@@ -7,8 +7,9 @@ const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string
   e.preventDefault()
   const target = document.querySelector(href)
   if (target) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     target.scrollIntoView({
-      behavior: 'smooth',
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
       block: 'start',
     })
     window.history.pushState({}, '', href)
@@ -26,25 +27,55 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState('')
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navigation.map((item) => item.href.substring(1))
-      const scrollPosition = window.scrollY + 110
+    const sectionIds = navigation.map((item) => item.href.slice(1))
+    const sectionElements = sectionIds
+      .map((sectionId) => document.getElementById(sectionId))
+      .filter((element): element is HTMLElement => Boolean(element))
 
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(`#${sectionId}`)
-            break
-          }
-        }
-      }
+    if (sectionElements.length === 0) {
+      return
     }
 
-    window.addEventListener('scroll', handleScroll)
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+    const visibilityRatios = new Map<string, number>()
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visibilityRatios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0)
+        })
+
+        let nextSection = ''
+        let bestRatio = 0
+        visibilityRatios.forEach((ratio, sectionId) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio
+            nextSection = `#${sectionId}`
+          }
+        })
+
+        if (nextSection) {
+          setActiveSection((previous) => (previous === nextSection ? previous : nextSection))
+        }
+      },
+      {
+        root: null,
+        rootMargin: '-100px 0px -50% 0px',
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+      }
+    )
+
+    sectionElements.forEach((section) => {
+      visibilityRatios.set(section.id, 0)
+      observer.observe(section)
+    })
+
+    const currentHash = window.location.hash
+    if (currentHash && sectionIds.includes(currentHash.slice(1))) {
+      setActiveSection(currentHash)
+    } else {
+      setActiveSection(`#${sectionElements[0].id}`)
+    }
+
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -53,8 +84,6 @@ export default function Header() {
       style={{
         borderColor: 'var(--border)',
         backgroundColor: 'color-mix(in srgb, var(--background) 88%, transparent)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
       }}
     >
       <div className="container mx-auto max-w-6xl">

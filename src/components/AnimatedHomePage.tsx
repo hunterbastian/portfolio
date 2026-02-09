@@ -5,6 +5,7 @@ import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
 import ResumePreview from './ResumePreview'
+import TextType from './TextType'
 
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 
@@ -33,7 +34,7 @@ interface ContactLinkItem {
 }
 
 const socialLinkClassName =
-  'inline-flex h-12 items-center justify-center rounded-md border px-6 text-[13px] font-code font-medium tracking-[0.12em] text-foreground/90 bg-[color:color-mix(in_srgb,var(--background)_85%,white)] border-[color:color-mix(in_srgb,var(--border)_85%,white)] shadow-sm transition-colors hover:bg-[color:color-mix(in_srgb,var(--background)_70%,white)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-code font-medium tracking-[0.1em] uppercase text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const experience: ExperienceItem[] = [
   {
@@ -152,8 +153,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             />
             <div>
               <h1 className="text-foreground font-garamond-narrow font-semibold text-fluid-xl lg:text-fluid-2xl leading-tight">
-                <span className="block">Hunter Bastian //</span>
-                <span className="block">Studio Alpine</span>
+                <TextType
+                  text={'Hunter Bastian // \nStudio Alpine'}
+                  className="block whitespace-pre-line"
+                  typingSpeed={58}
+                  deletingSpeed={35}
+                  pauseDuration={2200}
+                  loop={false}
+                />
               </h1>
               <div className="font-code text-muted-foreground mt-2 flex items-center gap-3 text-xs tracking-[0.12em]">
                 <span>Interaction designer</span>
@@ -198,14 +205,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
+      <section id="creating" className="py-16 px-4 sm:px-6 lg:px-0 relative z-10">
+        <div className="max-w-2xl mx-auto">
+          <SectionHeading>Creating</SectionHeading>
+          <div className="text-left">
+            <a
+              href="https://instagram.com/studio.alpine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-code tracking-[0.08em] uppercase font-medium text-muted-foreground hover:text-primary underline underline-offset-4"
+            >
+              Photography Studio: Studio Alpine
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section id="case-studies" className="pt-[4.5rem] pb-16 px-4 sm:px-6 lg:px-0 relative z-10">
         <div className="max-w-2xl mx-auto">
-          <h2
-            className="font-playfair italic text-left mb-6 sm:mb-8 text-fluid-base lg:text-fluid-xl"
-            style={{ fontWeight: '500' }}
-          >
-            Case Studies
-          </h2>
+          <SectionHeading>Case Studies</SectionHeading>
         </div>
 
         {children}
@@ -214,9 +232,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <div className="flex justify-start mt-12">
             <a
               href="/archive"
-              className={socialLinkClassName}
+              className="social-button nord-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs rounded-sm transition-all duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
             >
-              <span>Other</span>
+              <span className="font-code font-light tracking-[0.08em] relative z-10">Other</span>
             </a>
           </div>
         </div>
@@ -290,22 +308,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="creating" className="py-16 px-4 sm:px-6 lg:px-0 relative z-10">
-        <div className="max-w-2xl mx-auto">
-          <SectionHeading>Creating</SectionHeading>
-          <div className="text-left">
-            <a
-              href="https://instagram.com/studio.alpine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-code tracking-[0.08em] uppercase font-medium text-muted-foreground hover:text-primary underline underline-offset-4"
-            >
-              Photography Studio: Studio Alpine
-            </a>
           </div>
         </div>
       </section>

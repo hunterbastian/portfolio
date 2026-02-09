@@ -21,6 +21,8 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   const prefetchedSlugsRef = useRef(new Set<string>())
   const magnetNodesRef = useRef(new Map<number, HTMLDivElement>())
   const magnetEnabledRef = useRef(false)
+  const MAGNET_STRENGTH = 0.24
+  const MAGNET_MAX_OFFSET = 28
 
   const prefetchProject = useCallback((slug: string) => {
     if (prefetchedSlugsRef.current.has(slug)) {
@@ -79,19 +81,16 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     if (typeof window === 'undefined') return
 
     const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
-    const allowsMotion = window.matchMedia('(prefers-reduced-motion: no-preference)')
 
     const setMagnetSupport = () => {
-      magnetEnabledRef.current = supportsFinePointer.matches && allowsMotion.matches
+      magnetEnabledRef.current = supportsFinePointer.matches
     }
 
     setMagnetSupport()
     supportsFinePointer.addEventListener('change', setMagnetSupport)
-    allowsMotion.addEventListener('change', setMagnetSupport)
 
     return () => {
       supportsFinePointer.removeEventListener('change', setMagnetSupport)
-      allowsMotion.removeEventListener('change', setMagnetSupport)
     }
   }, [])
 
@@ -121,13 +120,11 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     const rect = event.currentTarget.getBoundingClientRect()
     const pointerOffsetX = event.clientX - (rect.left + rect.width / 2)
     const pointerOffsetY = event.clientY - (rect.top + rect.height / 2)
-    const strength = 0.16
-    const maxOffset = 20
-    const magnetX = Math.max(-maxOffset, Math.min(maxOffset, pointerOffsetX * strength))
-    const magnetY = Math.max(-maxOffset, Math.min(maxOffset, pointerOffsetY * strength))
+    const magnetX = Math.max(-MAGNET_MAX_OFFSET, Math.min(MAGNET_MAX_OFFSET, pointerOffsetX * MAGNET_STRENGTH))
+    const magnetY = Math.max(-MAGNET_MAX_OFFSET, Math.min(MAGNET_MAX_OFFSET, pointerOffsetY * MAGNET_STRENGTH))
 
     applyMagnetOffset(index, magnetX, magnetY)
-  }, [applyMagnetOffset])
+  }, [MAGNET_MAX_OFFSET, MAGNET_STRENGTH, applyMagnetOffset])
   
   const handleMouseEnter = (index: number) => {
     setHoveredIndex((previous) => (previous === index ? previous : index))

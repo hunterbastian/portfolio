@@ -11,7 +11,7 @@
     "build": "next build",
     "build:analyze": "ANALYZE=true npm run build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "performance": "npm run build && npm run build:analyze",
     "optimize-images": "node scripts/optimize-images.js",
     "lighthouse": "npx lighthouse http://localhost:3000 --output-path ./lighthouse-report.html --save-assets --view"

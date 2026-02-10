@@ -72,29 +72,6 @@ export default function ContactSection() {
             <span className="text-xs sm:hidden font-medium" style={{ fontSize: '10px' }}>GitHub</span>
           </motion.a>
 
-          {/* Medium */}
-          <motion.a
-            href="https://medium.com/@hunterbastian"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-xl w-full sm:w-8 h-10 sm:h-8 px-3 sm:px-0 gap-2 sm:gap-0 font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-white relative overflow-hidden touch-manipulation"
-            style={{
-              background: `linear-gradient(180deg, rgba(115, 115, 115, 0.9) 0%, rgba(51, 51, 51, 0.8) 50%, rgba(34, 34, 34, 0.9) 100%)`,
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: `1px solid rgba(115, 115, 115, 0.6)`,
-              boxShadow: `0 4px 16px rgba(34, 34, 34, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(34, 34, 34, 0.5)`
-            }}
-            whileHover={{ scale: 1.08, rotate: -1, y: -1 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
-            </svg>
-            <span className="text-xs sm:hidden font-medium" style={{ fontSize: '10px' }}>Medium</span>
-          </motion.a>
-
           {/* Dribbble */}
           <motion.a
             href="https://dribbble.com/hunterbastian"

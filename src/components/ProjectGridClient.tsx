@@ -20,8 +20,8 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   const router = useRouter()
   const prefetchedSlugsRef = useRef(new Set<string>())
   const magnetEnabledRef = useRef(false)
-  const MAGNET_STRENGTH = 0.24
-  const MAGNET_MAX_OFFSET = 28
+  const MAGNET_STRENGTH = 0.14
+  const MAGNET_MAX_OFFSET = 18
 
   const prefetchProject = useCallback((slug: string) => {
     if (prefetchedSlugsRef.current.has(slug)) {

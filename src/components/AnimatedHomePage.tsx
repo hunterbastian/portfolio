@@ -107,7 +107,6 @@ const contactLinks: ContactLinkItem[] = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconUrl: centralIcon('linkedin'), fallback: 'IN' },
   { label: 'X', href: 'https://x.com/thestudioalpine', iconUrl: centralIcon('x'), fallback: 'X' },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconUrl: centralIcon('github'), fallback: 'GH' },
-  { label: 'Medium', href: 'https://medium.com/@hunterbastian', iconUrl: centralIcon('medium'), fallback: 'ME' },
   { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconUrl: centralIcon('dribbble'), fallback: 'DB' },
 ]
 const resumeIconUrl = centralIcon('file-text')

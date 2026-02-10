@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
+import LazyDinosaur from './LazyDinosaur'
 
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 
@@ -370,6 +371,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             ))}
           </div>
         </div>
+      </section>
+
+      <section id="dinosaur" className="pb-8 sm:pb-12">
+        <LazyDinosaur />
       </section>
 
       <ResumeModal isOpen={showResumeModal} onClose={() => setShowResumeModal(false)} />

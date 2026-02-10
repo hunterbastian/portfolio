@@ -37,7 +37,7 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.6 }}
             className="fixed inset-0 z-50 bg-background"
           >
             <PortfolioLoader />
@@ -47,7 +47,7 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
             key="content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.9, delay: 0.16 }}
           >
             {children}
           </motion.div>

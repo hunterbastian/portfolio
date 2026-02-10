@@ -20,8 +20,8 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   const router = useRouter()
   const prefetchedSlugsRef = useRef(new Set<string>())
   const magnetEnabledRef = useRef(false)
-  const MAGNET_STRENGTH = 0.14
-  const MAGNET_MAX_OFFSET = 18
+  const MAGNET_STRENGTH = 0.26
+  const MAGNET_MAX_OFFSET = 30
 
   const prefetchProject = useCallback((slug: string) => {
     if (prefetchedSlugsRef.current.has(slug)) {
@@ -97,8 +97,8 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     if (!node) return
 
     node.style.transition = settle
-      ? 'transform 260ms cubic-bezier(0.22, 1, 0.36, 1)'
-      : 'transform 120ms cubic-bezier(0.22, 1, 0.36, 1)'
+      ? 'transform 560ms cubic-bezier(0.22, 1, 0.36, 1)'
+      : 'transform 260ms cubic-bezier(0.22, 1, 0.36, 1)'
     node.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0px)`
   }, [])
 
@@ -163,7 +163,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
           return (
             <div 
               key={project.slug}
-              className="flex-shrink-0 w-52 transition-transform transition-opacity duration-500 ease-out"
+              className="flex-shrink-0 w-52 transition-transform transition-opacity duration-[850ms] ease-out"
               style={{
                 transform: isHovered ? 'rotate(0deg) scale(1)' : `rotate(${rotation}deg) scale(0.80)`,
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === actualIndex ? 1 : 0.7
@@ -213,7 +213,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
           {projects.map((project, index) => (
             <div 
               key={project.slug} 
-              className="w-full transition-opacity duration-300 ease-out"
+              className="w-full transition-opacity duration-[650ms] ease-out"
               style={{
                 opacity: hoveredIndex === null ? 1 : hoveredIndex === index ? 1 : 0.7
               }}

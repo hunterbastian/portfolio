@@ -7,7 +7,7 @@ interface ResumePreviewProps {
 export default function ResumePreview({ isVisible }: ResumePreviewProps) {
   return (
     <div
-      className={`absolute left-0 bottom-full mb-3 z-50 pointer-events-none transition-transform transition-opacity duration-200 ease-out ${
+      className={`absolute left-0 bottom-full mb-3 z-50 pointer-events-none transition-transform transition-opacity duration-[420ms] ease-out ${
         isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95'
       }`}
       aria-hidden={!isVisible}

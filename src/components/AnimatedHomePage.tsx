@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
+import { CentralIcon, type CentralIconName } from '@/icons'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
 
@@ -31,16 +32,11 @@ interface EducationItem {
 interface ContactLinkItem {
   label: string
   href: string
-  iconUrl: string
-  fallback: string
+  iconName: CentralIconName
 }
 
 const socialLinkClassName =
-  'inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
-
-const centralIconsPackage = 'square-outlined-radius-0-stroke-1.5'
-const centralIcon = (name: string) =>
-  `https://v2.centralicons.com/icon/${name}?package=${centralIconsPackage}&format=svg`
+  'inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-all duration-[420ms] hover:-translate-y-0.5 hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const experience: ExperienceItem[] = [
   {
@@ -103,39 +99,21 @@ const everydayTech = [
 const skills = ['Figma', 'Framer', 'UX Design', 'UI Design', 'HTML', 'JavaScript', 'CSS', 'ChatGPT']
 
 const contactLinks: ContactLinkItem[] = [
-  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconUrl: centralIcon('instagram'), fallback: 'IG' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconUrl: centralIcon('linkedin'), fallback: 'IN' },
-  { label: 'X', href: 'https://x.com/thestudioalpine', iconUrl: centralIcon('x'), fallback: 'X' },
-  { label: 'GitHub', href: 'https://github.com/hunterbastian', iconUrl: centralIcon('github'), fallback: 'GH' },
-  { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconUrl: centralIcon('dribbble'), fallback: 'DB' },
+  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconName: 'IconInstagram' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconName: 'IconLinkedin' },
+  { label: 'X', href: 'https://x.com/thestudioalpine', iconName: 'IconX' },
+  { label: 'GitHub', href: 'https://github.com/hunterbastian', iconName: 'IconGithub' },
+  { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconName: 'IconDribbble' },
 ]
-const resumeIconUrl = centralIcon('file-text')
+const resumeIconName: CentralIconName = 'IconFileText'
 
-function ContactIcon({ src, fallback, label }: { src: string; fallback: string; label: string }) {
-  const [hasError, setHasError] = useState(false)
-
-  if (hasError) {
-    return (
-      <span
-        className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current/35 text-[9px] font-code font-semibold tracking-[0.04em]"
-        aria-hidden="true"
-      >
-        {fallback}
-      </span>
-    )
-  }
-
+function ContactIcon({ iconName, label }: { iconName: CentralIconName; label: string }) {
   return (
-    <Image
-      src={src}
-      alt=""
-      aria-hidden="true"
-      width={18}
-      height={18}
-      unoptimized
+    <CentralIcon
+      name={iconName}
+      size={20}
       className="h-5 w-5"
-      onError={() => setHasError(true)}
-      title={label}
+      aria-label={label}
     />
   )
 }
@@ -150,7 +128,7 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       aria-label={link.label}
       title={link.label}
     >
-      <ContactIcon src={link.iconUrl} fallback={link.fallback} label={link.label} />
+      <ContactIcon iconName={link.iconName} label={link.label} />
       <span className="sr-only">{link.label}</span>
     </a>
   )
@@ -195,9 +173,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <TextType
                   text="Hunter Bastian // Studio Alpine"
                   className="block whitespace-nowrap"
-                  typingSpeed={46}
-                  deletingSpeed={35}
-                  pauseDuration={2200}
+                  typingSpeed={62}
+                  deletingSpeed={44}
+                  pauseDuration={2800}
                   loop={false}
                   cinematic
                 />
@@ -239,7 +217,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 aria-label="Resume"
                 title="Resume"
               >
-                <ContactIcon src={resumeIconUrl} fallback="CV" label="Resume" />
+                <ContactIcon iconName={resumeIconName} label="Resume" />
                 <span className="sr-only">Resume</span>
               </button>
               <ResumePreview isVisible={showResumePreview} />
@@ -256,9 +234,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               href="https://instagram.com/studio.alpine"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-code tracking-[0.08em] uppercase font-medium text-muted-foreground hover:text-primary underline underline-offset-4"
+              className="inline-flex items-center gap-1.5 text-sm font-code tracking-[0.08em] uppercase font-medium text-muted-foreground hover:text-primary underline underline-offset-4"
             >
-              Photography Studio: Studio Alpine
+              <CentralIcon name="IconCamera1" size={14} aria-hidden className="h-3.5 w-3.5 shrink-0" />
+              <span>Photography Studio: Studio Alpine</span>
             </a>
           </div>
         </div>
@@ -275,7 +254,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <div className="flex justify-start mt-12">
             <a
               href="/archive"
-              className="social-button nord-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs rounded-sm transition-transform transition-shadow duration-300 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+              className="social-button nord-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs rounded-sm transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
             >
               <span className="font-code font-light tracking-[0.08em] relative z-10">Other</span>
             </a>
@@ -305,7 +284,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     <div className="flex items-center space-x-3">
                       <span className="text-muted-foreground text-sm font-garamond-narrow hidden sm:block">{job.title}</span>
                       <div
-                        className="w-5 h-5 flex items-center justify-center transition-transform duration-200 text-muted-foreground"
+                        className="w-5 h-5 flex items-center justify-center transition-transform duration-[400ms] text-muted-foreground"
                         style={{ transform: isExpanded ? 'rotate(45deg)' : 'rotate(0deg)' }}
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -315,7 +294,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     </div>
                   </button>
                   <div
-                    className="overflow-hidden transition-[max-height,opacity] duration-300"
+                    className="overflow-hidden transition-[max-height,opacity] duration-500"
                     style={{ maxHeight: isExpanded ? '460px' : '0px', opacity: isExpanded ? 1 : 0 }}
                   >
                     <div className="pb-4 pl-2 sm:pl-[5.5rem] pr-2">

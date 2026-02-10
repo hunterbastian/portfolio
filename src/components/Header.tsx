@@ -90,7 +90,7 @@ export default function Header() {
         <div className="flex h-12 items-center justify-between">
           <Link
             href="/"
-            className="font-code font-medium text-sm tracking-[0.14em] text-foreground hover:text-primary transition-colors"
+            className="font-code font-medium text-sm tracking-[0.14em] text-foreground hover:text-primary transition-colors duration-300"
           >
             HB
           </Link>
@@ -101,7 +101,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className={`font-code text-[11px] font-medium tracking-[0.14em] transition-colors cursor-pointer ${
+                className={`font-code text-[11px] font-medium tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
                   activeSection === item.href ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                 }`}
                 aria-current={activeSection === item.href ? 'page' : undefined}
@@ -113,7 +113,7 @@ export default function Header() {
 
           <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            className="md:hidden p-2 text-foreground hover:text-primary transition-colors duration-300"
             aria-label="Toggle navigation menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
@@ -134,7 +134,7 @@ export default function Header() {
                   handleSmoothScroll(e, item.href)
                   setShowMobileMenu(false)
                 }}
-                className={`font-code block py-3 text-xs tracking-[0.14em] transition-colors cursor-pointer ${
+                className={`font-code block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
                   activeSection === item.href ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >

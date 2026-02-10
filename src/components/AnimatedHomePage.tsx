@@ -200,7 +200,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="contact" className="pt-6 pb-10 px-4 sm:px-6 lg:px-0 relative z-20 animate-fade-in">
+      <section id="contact" className="pt-10 pb-10 px-4 sm:px-6 lg:px-0 relative z-20 animate-fade-in">
         <div className="max-w-2xl mx-auto">
           <div className="flex flex-wrap gap-4 items-stretch sm:items-center">
             {contactLinks.map((link) => (

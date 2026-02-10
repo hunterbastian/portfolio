@@ -31,10 +31,15 @@ interface EducationItem {
 interface ContactLinkItem {
   label: string
   href: string
+  iconUrl: string
 }
 
 const socialLinkClassName =
-  'inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-code font-medium tracking-[0.1em] uppercase text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+
+const centralIconsPackage = 'square-outlined-radius-0-stroke-1.5'
+const centralIcon = (name: string) =>
+  `https://v2.centralicons.com/icon/${name}?package=${centralIconsPackage}&format=svg`
 
 const experience: ExperienceItem[] = [
   {
@@ -97,12 +102,13 @@ const everydayTech = [
 const skills = ['Figma', 'Framer', 'UX Design', 'UI Design', 'HTML', 'JavaScript', 'CSS', 'ChatGPT']
 
 const contactLinks: ContactLinkItem[] = [
-  { label: 'Instagram', href: 'https://instagram.com/studio.alpine' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian' },
-  { label: 'GitHub', href: 'https://github.com/hunterbastian' },
-  { label: 'Medium', href: 'https://medium.com/@hunterbastian' },
-  { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian' },
+  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconUrl: centralIcon('instagram') },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconUrl: centralIcon('linkedin') },
+  { label: 'GitHub', href: 'https://github.com/hunterbastian', iconUrl: centralIcon('github') },
+  { label: 'Medium', href: 'https://medium.com/@hunterbastian', iconUrl: centralIcon('medium') },
+  { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconUrl: centralIcon('dribbble') },
 ]
+const resumeIconUrl = centralIcon('file-text')
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
   return (
@@ -111,8 +117,11 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       target="_blank"
       rel="noopener noreferrer"
       className={socialLinkClassName}
+      aria-label={link.label}
+      title={link.label}
     >
-      <span>{link.label}</span>
+      <Image src={link.iconUrl} alt="" aria-hidden="true" width={18} height={18} className="h-[18px] w-[18px]" />
+      <span className="sr-only">{link.label}</span>
     </a>
   )
 }
@@ -197,8 +206,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 onMouseLeave={() => setShowResumePreview(false)}
                 onFocus={() => setShowResumePreview(true)}
                 onBlur={() => setShowResumePreview(false)}
+                aria-label="Resume"
+                title="Resume"
               >
-                <span>Resume</span>
+                <Image src={resumeIconUrl} alt="" aria-hidden="true" width={18} height={18} className="h-[18px] w-[18px]" />
+                <span className="sr-only">Resume</span>
               </button>
               <ResumePreview isVisible={showResumePreview} />
             </div>

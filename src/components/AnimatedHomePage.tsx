@@ -152,7 +152,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               priority
             />
             <div>
-              <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(1.35rem,4.2vw,2.25rem)] leading-tight">
+              <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(1.1rem,3.95vw,2rem)] leading-tight">
                 <TextType
                   text="Hunter Bastian // Studio Alpine"
                   className="block whitespace-nowrap"

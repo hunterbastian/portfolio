@@ -1,23 +1,13 @@
 # Resume Folder
 
-Place your resume PDF file here named `resume.pdf`.
+The live resume PDF is now protected behind `/api/resume/*` routes and is no longer served directly from `public/`.
 
-## Expected File
+## Where the protected file lives
 
-- `resume.pdf` - Your main resume file that will be displayed in the modal
+- `private/resume/Hunter Bastian Resume.pdf`
 
-## Usage
+## Required environment variable
 
-The resume will be displayed in a modal popup when users click the "VIEW RESUME" button in the Contact section. The modal includes:
+- `RESUME_PASSWORD=your-password`
 
-- PDF preview viewer
-- Download functionality
-- Responsive design
-- Keyboard shortcuts (ESC to close)
-
-## File Requirements
-
-- **Format**: PDF
-- **Name**: Must be named exactly `resume.pdf`
-- **Size**: Recommended under 5MB for fast loading
-- **Accessibility**: Ensure the PDF is text-selectable and screen reader friendly
+Without `RESUME_PASSWORD`, the resume modal will show as unavailable.

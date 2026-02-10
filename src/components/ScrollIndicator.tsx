@@ -36,21 +36,22 @@ export default function ScrollIndicator() {
     }
   }, [])
 
-  const size = 28
-  const strokeWidth = 3.2
+  const size = 24
+  const strokeWidth = 2.8
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const dashOffset = circumference * (1 - scrollProgress)
-  const fillOpacity = 0.12 + scrollProgress * 0.18
+  const fillOpacity = 0.1 + scrollProgress * 0.14
 
   return (
-    <span className="relative inline-flex h-[28px] w-[28px] items-center justify-center" aria-hidden="true">
+    <span className="relative inline-flex h-[24px] w-[24px] items-center justify-center" aria-hidden="true">
       <span
-        className="absolute inset-[5px] rounded-full transition-opacity duration-150"
+        className="absolute inset-[4px] rounded-full transition-opacity duration-150"
         style={{
-          backgroundColor: 'color-mix(in srgb, var(--background) 70%, white 30%)',
+          backgroundColor: 'color-mix(in srgb, var(--background) 76%, white 24%)',
           opacity: fillOpacity,
-          boxShadow: 'inset 0 0 0 1px color-mix(in srgb, var(--foreground) 14%, transparent)',
+          boxShadow:
+            'inset 0 0 0 1px color-mix(in srgb, var(--foreground) 18%, transparent), 0 0.5px 0 color-mix(in srgb, white 60%, transparent)',
         }}
       />
       <svg className="h-full w-full -rotate-90" viewBox={`0 0 ${size} ${size}`}>
@@ -60,7 +61,7 @@ export default function ScrollIndicator() {
           r={radius}
           fill="none"
           strokeWidth={strokeWidth}
-          stroke="color-mix(in srgb, var(--foreground) 12%, white 88%)"
+          stroke="color-mix(in srgb, var(--foreground) 24%, white 76%)"
         />
         <circle
           cx={size / 2}
@@ -68,7 +69,7 @@ export default function ScrollIndicator() {
           r={radius}
           fill="none"
           strokeWidth={strokeWidth}
-          stroke="color-mix(in srgb, var(--foreground) 32%, white 68%)"
+          stroke="color-mix(in srgb, #d27c3b 64%, var(--foreground) 36%)"
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={dashOffset}

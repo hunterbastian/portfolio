@@ -32,6 +32,7 @@ interface ContactLinkItem {
   label: string
   href: string
   iconUrl: string
+  fallback: string
 }
 
 const socialLinkClassName =
@@ -102,13 +103,42 @@ const everydayTech = [
 const skills = ['Figma', 'Framer', 'UX Design', 'UI Design', 'HTML', 'JavaScript', 'CSS', 'ChatGPT']
 
 const contactLinks: ContactLinkItem[] = [
-  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconUrl: centralIcon('instagram') },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconUrl: centralIcon('linkedin') },
-  { label: 'GitHub', href: 'https://github.com/hunterbastian', iconUrl: centralIcon('github') },
-  { label: 'Medium', href: 'https://medium.com/@hunterbastian', iconUrl: centralIcon('medium') },
-  { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconUrl: centralIcon('dribbble') },
+  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconUrl: centralIcon('instagram'), fallback: 'IG' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconUrl: centralIcon('linkedin'), fallback: 'IN' },
+  { label: 'GitHub', href: 'https://github.com/hunterbastian', iconUrl: centralIcon('github'), fallback: 'GH' },
+  { label: 'Medium', href: 'https://medium.com/@hunterbastian', iconUrl: centralIcon('medium'), fallback: 'ME' },
+  { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconUrl: centralIcon('dribbble'), fallback: 'DB' },
 ]
 const resumeIconUrl = centralIcon('file-text')
+
+function ContactIcon({ src, fallback, label }: { src: string; fallback: string; label: string }) {
+  const [hasError, setHasError] = useState(false)
+
+  if (hasError) {
+    return (
+      <span
+        className="inline-flex h-[18px] w-[18px] items-center justify-center rounded-[2px] border border-current/35 text-[8px] font-code font-semibold tracking-[0.04em]"
+        aria-hidden="true"
+      >
+        {fallback}
+      </span>
+    )
+  }
+
+  return (
+    <Image
+      src={src}
+      alt=""
+      aria-hidden="true"
+      width={18}
+      height={18}
+      unoptimized
+      className="h-[18px] w-[18px]"
+      onError={() => setHasError(true)}
+      title={label}
+    />
+  )
+}
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
   return (
@@ -120,7 +150,7 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
       aria-label={link.label}
       title={link.label}
     >
-      <Image src={link.iconUrl} alt="" aria-hidden="true" width={18} height={18} className="h-[18px] w-[18px]" />
+      <ContactIcon src={link.iconUrl} fallback={link.fallback} label={link.label} />
       <span className="sr-only">{link.label}</span>
     </a>
   )
@@ -209,7 +239,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 aria-label="Resume"
                 title="Resume"
               >
-                <Image src={resumeIconUrl} alt="" aria-hidden="true" width={18} height={18} className="h-[18px] w-[18px]" />
+                <ContactIcon src={resumeIconUrl} fallback="CV" label="Resume" />
                 <span className="sr-only">Resume</span>
               </button>
               <ResumePreview isVisible={showResumePreview} />

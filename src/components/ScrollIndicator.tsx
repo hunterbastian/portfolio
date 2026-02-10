@@ -41,17 +41,16 @@ export default function ScrollIndicator() {
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const dashOffset = circumference * (1 - scrollProgress)
-  const fillOpacity = 0.1 + scrollProgress * 0.14
+  const fillOpacity = 0.08 + scrollProgress * 0.1
 
   return (
     <span className="relative inline-flex h-[24px] w-[24px] items-center justify-center" aria-hidden="true">
       <span
         className="absolute inset-[4px] rounded-full transition-opacity duration-150"
         style={{
-          backgroundColor: 'color-mix(in srgb, var(--background) 76%, white 24%)',
+          backgroundColor: 'color-mix(in srgb, var(--foreground) 6%, var(--background) 94%)',
           opacity: fillOpacity,
-          boxShadow:
-            'inset 0 0 0 1px color-mix(in srgb, var(--foreground) 18%, transparent), 0 0.5px 0 color-mix(in srgb, white 60%, transparent)',
+          boxShadow: 'inset 0 0 0 1px color-mix(in srgb, var(--foreground) 20%, transparent)',
         }}
       />
       <svg className="h-full w-full -rotate-90" viewBox={`0 0 ${size} ${size}`}>
@@ -61,7 +60,7 @@ export default function ScrollIndicator() {
           r={radius}
           fill="none"
           strokeWidth={strokeWidth}
-          stroke="color-mix(in srgb, var(--foreground) 24%, white 76%)"
+          stroke="color-mix(in srgb, var(--foreground) 30%, white 70%)"
         />
         <circle
           cx={size / 2}
@@ -69,7 +68,7 @@ export default function ScrollIndicator() {
           r={radius}
           fill="none"
           strokeWidth={strokeWidth}
-          stroke="color-mix(in srgb, #d27c3b 64%, var(--foreground) 36%)"
+          stroke="color-mix(in srgb, var(--foreground) 48%, white 52%)"
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={dashOffset}

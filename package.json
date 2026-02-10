@@ -17,7 +17,6 @@
     "lighthouse": "npx lighthouse http://localhost:3000 --output-path ./lighthouse-report.html --save-assets --view"
   },
   "dependencies": {
-    "@central-icons-react/all": "^1.1.122",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^16.1.0",

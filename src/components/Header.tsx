@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import ScrollIndicator from './ScrollIndicator'
 
 const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
   e.preventDefault()
@@ -90,8 +91,9 @@ export default function Header() {
         <div className="flex h-12 items-center justify-between">
           <Link
             href="/"
-            className="font-code font-medium text-sm tracking-[0.14em] text-foreground hover:text-primary transition-colors duration-300"
+            className="inline-flex items-center gap-2 font-code font-medium text-sm tracking-[0.14em] text-foreground hover:text-primary transition-colors duration-300"
           >
+            <ScrollIndicator />
             HB
           </Link>
 

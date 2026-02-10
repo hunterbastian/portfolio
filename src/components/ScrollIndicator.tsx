@@ -1,85 +1,82 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 
 export default function ScrollIndicator() {
-  const [scrollProgress, setScrollProgress] = useState(0.08) // Start with minimum value
-  const [isMounted, setIsMounted] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0.08)
 
   useEffect(() => {
-    setIsMounted(true)
-    
+    let frameId = 0
+
     const updateScrollProgress = () => {
-      if (typeof window === 'undefined') return
-      
+      frameId = 0
       const scrollTop = window.scrollY
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0
-      
-      // Add a minimum progress of 8% so it always shows a little bit
+      const scrollPercent = docHeight <= 0 ? 0 : scrollTop / docHeight
       const adjustedProgress = Math.min(Math.max(scrollPercent * 0.92 + 0.08, 0.08), 1)
       setScrollProgress(adjustedProgress)
     }
 
-    // Set initial scroll progress
+    const onScroll = () => {
+      if (frameId) return
+      frameId = window.requestAnimationFrame(updateScrollProgress)
+    }
+
     updateScrollProgress()
 
-    window.addEventListener('scroll', updateScrollProgress, { passive: true })
-    window.addEventListener('resize', updateScrollProgress, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
 
     return () => {
-      window.removeEventListener('scroll', updateScrollProgress)
-      window.removeEventListener('resize', updateScrollProgress)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frameId) {
+        window.cancelAnimationFrame(frameId)
+      }
     }
   }, [])
 
-  // Consistent structure for SSR and client-side to prevent hydration issues
-  const circleStructure = (
-    <div className="relative w-3 h-3 ml-2 flex-shrink-0">
-      {/* Background circle - always visible */}
-      <div className="absolute inset-0 rounded-full border border-gray-300 dark:border-gray-600" />
-      
-      {/* Progress circle */}
-      <svg
-        className="absolute inset-0 w-3 h-3 -rotate-90"
-        viewBox="0 0 12 12"
-      >
+  const size = 30
+  const strokeWidth = 4
+  const radius = (size - strokeWidth) / 2
+  const circumference = 2 * Math.PI * radius
+  const dashOffset = circumference * (1 - scrollProgress)
+  const fillOpacity = 0.18 + scrollProgress * 0.48
+
+  return (
+    <span className="relative inline-flex h-[30px] w-[30px] items-center justify-center" aria-hidden="true">
+      <span
+        className="absolute inset-[5px] rounded-full transition-opacity duration-150"
+        style={{
+          backgroundColor: 'color-mix(in srgb, var(--primary) 92%, white 8%)',
+          opacity: fillOpacity,
+          boxShadow: 'inset 0 0 0 1px color-mix(in srgb, var(--foreground) 16%, transparent)',
+        }}
+      />
+      <svg className="h-full w-full -rotate-90" viewBox={`0 0 ${size} ${size}`}>
         <circle
-          cx="6"
-          cy="6"
-          r="4.5"
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
           fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth={strokeWidth}
+          stroke="color-mix(in srgb, var(--foreground) 20%, transparent)"
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          strokeWidth={strokeWidth}
+          stroke="color-mix(in srgb, var(--primary) 90%, white 10%)"
           strokeLinecap="round"
-          className="text-gray-600 dark:text-gray-400"
-          strokeDasharray={`${2 * Math.PI * 4.5}`}
-          strokeDashoffset={`${2 * Math.PI * 4.5 * (1 - scrollProgress)}`}
+          strokeDasharray={circumference}
+          strokeDashoffset={dashOffset}
           style={{
-            transition: isMounted ? 'stroke-dashoffset 0.1s ease-out' : 'none'
+            transition: 'stroke-dashoffset 120ms linear',
           }}
         />
       </svg>
-      
-
-    </div>
-  )
-
-  // If not mounted (SSR), return static version
-  if (!isMounted) {
-    return circleStructure
-  }
-
-  // When mounted, wrap with motion for smooth animations
-  return (
-    <motion.div
-      initial={{ opacity: 0.8 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="contents" // Use contents to avoid extra wrapper
-    >
-      {circleStructure}
-    </motion.div>
+    </span>
   )
 }

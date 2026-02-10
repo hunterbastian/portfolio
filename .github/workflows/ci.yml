@@ -9,6 +9,8 @@ on:
 jobs:
   lint-type-lighthouse:
     runs-on: ubuntu-latest
+    env:
+      CENTRAL_LICENSE_KEY: ${{ secrets.CENTRAL_LICENSE_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,5 +39,4 @@ jobs:
         with:
           name: lighthouse-report
           path: lhci.json
-
 

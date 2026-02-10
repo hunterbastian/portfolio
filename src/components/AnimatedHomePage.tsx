@@ -36,7 +36,7 @@ interface ContactLinkItem {
 }
 
 const socialLinkClassName =
-  'inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-background text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const centralIconsPackage = 'square-outlined-radius-0-stroke-1.5'
 const centralIcon = (name: string) =>
@@ -105,6 +105,7 @@ const skills = ['Figma', 'Framer', 'UX Design', 'UI Design', 'HTML', 'JavaScript
 const contactLinks: ContactLinkItem[] = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconUrl: centralIcon('instagram'), fallback: 'IG' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconUrl: centralIcon('linkedin'), fallback: 'IN' },
+  { label: 'X', href: 'https://x.com/thestudioalpine', iconUrl: centralIcon('x'), fallback: 'X' },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconUrl: centralIcon('github'), fallback: 'GH' },
   { label: 'Medium', href: 'https://medium.com/@hunterbastian', iconUrl: centralIcon('medium'), fallback: 'ME' },
   { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconUrl: centralIcon('dribbble'), fallback: 'DB' },
@@ -117,7 +118,7 @@ function ContactIcon({ src, fallback, label }: { src: string; fallback: string; 
   if (hasError) {
     return (
       <span
-        className="inline-flex h-[18px] w-[18px] items-center justify-center rounded-[2px] border border-current/35 text-[8px] font-code font-semibold tracking-[0.04em]"
+        className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current/35 text-[9px] font-code font-semibold tracking-[0.04em]"
         aria-hidden="true"
       >
         {fallback}
@@ -133,7 +134,7 @@ function ContactIcon({ src, fallback, label }: { src: string; fallback: string; 
       width={18}
       height={18}
       unoptimized
-      className="h-[18px] w-[18px]"
+      className="h-5 w-5"
       onError={() => setHasError(true)}
       title={label}
     />
@@ -191,7 +192,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               priority
             />
             <div>
-              <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(1.1rem,3.95vw,2rem)] leading-tight">
+              <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(0.78rem,3.35vw,1.53rem)] leading-tight">
                 <TextType
                   text="Hunter Bastian // Studio Alpine"
                   className="block whitespace-nowrap"
@@ -221,9 +222,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="contact" className="pt-4 pb-10 px-4 sm:px-6 lg:px-0 relative z-20 animate-fade-in">
+      <section id="contact" className="pt-6 pb-10 px-4 sm:px-6 lg:px-0 relative z-20 animate-fade-in">
         <div className="max-w-2xl mx-auto">
-          <div className="flex flex-wrap gap-3 items-stretch sm:items-center">
+          <div className="flex flex-wrap gap-4 items-stretch sm:items-center">
             {contactLinks.map((link) => (
               <ContactLink key={link.label} link={link} />
             ))}

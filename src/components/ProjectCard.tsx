@@ -15,25 +15,28 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
 
   return (
-    <Link href={`/projects/${slug}`} className="block">
+    <Link href={`/projects/${slug}`} className="group block">
       <div
-        className="group relative overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm transition-transform transition-shadow duration-[700ms] hover:shadow-2xl hover:scale-[1.01] active:scale-[0.98] active:shadow-md touch-manipulation"
+        className="relative isolate overflow-hidden rounded-[20px] border text-card-foreground shadow-[0_10px_30px_rgba(46,52,64,0.08)] transition-transform transition-shadow duration-[650ms] hover:-translate-y-0.5 hover:shadow-[0_20px_36px_rgba(46,52,64,0.14)] active:scale-[0.99] touch-manipulation"
         style={{
           opacity: 1,
           animationDelay: `${index * 80}ms`,
+          borderColor: 'color-mix(in srgb, var(--border) 82%, white)',
+          background:
+            'linear-gradient(165deg, color-mix(in srgb, var(--card) 86%, white 14%) 0%, color-mix(in srgb, var(--card) 92%, transparent) 100%)',
         }}
       >
-        <div className="aspect-video relative overflow-hidden">
+        <div className="aspect-[4/3] relative overflow-hidden">
           {/* Static Image - shown by default */}
           <Image
             src={imgSrc}
             alt={frontmatter.title}
             fill
-            className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+            className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
             style={{ 
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)'
             }}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 48vw, 312px"
             priority={index === 0} // Only priority load first image
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkrHB0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyuw=="
@@ -55,13 +58,22 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
             />
           )}
           
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-[900ms] ease-out" />
-        </div>
-        
-        <div className="p-4">
-          <h3 className="font-medium tracking-wider group-hover:text-primary transition-colors duration-[900ms] ease-out font-garamond-narrow" style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            {frontmatter.title}
-          </h3>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/22 opacity-70 transition-opacity duration-[900ms] ease-out group-hover:opacity-85" />
+
+          <div
+            className="absolute inset-x-0 bottom-0 px-5 pb-4 pt-7 backdrop-blur-[10px] supports-[backdrop-filter]:backdrop-saturate-150"
+            style={{
+              background:
+                'linear-gradient(180deg, color-mix(in srgb, var(--card) 2%, transparent) 0%, color-mix(in srgb, var(--card) 82%, white 18%) 56%, color-mix(in srgb, var(--card) 90%, white 10%) 100%)',
+            }}
+          >
+            <h3
+              className="font-medium text-foreground transition-colors duration-[700ms] ease-out group-hover:text-primary font-garamond-narrow"
+              style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}
+            >
+              {frontmatter.title}
+            </h3>
+          </div>
         </div>
       </div>
     </Link>

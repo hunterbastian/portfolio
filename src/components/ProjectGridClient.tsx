@@ -93,13 +93,16 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
       {projects.map((project, index) => {
         const isHovered = hoveredIndex === index
         const baseRotation = rotations[index % rotations.length]
+        const cardOpacity = hoveredIndex === null || isHovered ? 1 : 0.9
 
         return (
           <div
             key={project.slug}
-            className="w-full max-w-[19.5rem] transition-transform duration-[700ms] ease-out"
+            className="w-full max-w-[19.5rem] transition-[transform,opacity,filter] duration-[560ms] ease-out"
             style={{
               transform: isHovered ? 'translateY(-3px) rotate(0deg)' : `translateY(0px) rotate(${baseRotation}deg)`,
+              opacity: cardOpacity,
+              filter: hoveredIndex === null || isHovered ? 'none' : 'saturate(0.92)',
             }}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}

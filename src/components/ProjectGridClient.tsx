@@ -20,6 +20,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const router = useRouter()
   const prefetchedSlugsRef = useRef(new Set<string>())
+  const hoverClearTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const prefetchProject = useCallback((slug: string) => {
     if (prefetchedSlugsRef.current.has(slug)) {
@@ -74,7 +75,23 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     }
   }, [prefetchProject, projects])
 
+  useEffect(() => {
+    return () => {
+      if (hoverClearTimeoutRef.current !== null) {
+        window.clearTimeout(hoverClearTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const cancelHoverClear = () => {
+    if (hoverClearTimeoutRef.current !== null) {
+      window.clearTimeout(hoverClearTimeoutRef.current)
+      hoverClearTimeoutRef.current = null
+    }
+  }
+
   const handleMouseEnter = (index: number) => {
+    cancelHoverClear()
     setHoveredIndex((previous) => (previous === index ? previous : index))
     const hoveredProject = projects[index]
     if (hoveredProject) {
@@ -83,7 +100,13 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   }
 
   const handleMouseLeave = () => {
-    setHoveredIndex(null)
+    cancelHoverClear()
+
+    // Small delay avoids a visual snap when moving between cards across grid gaps.
+    hoverClearTimeoutRef.current = window.setTimeout(() => {
+      setHoveredIndex(null)
+      hoverClearTimeoutRef.current = null
+    }, 80)
   }
 
   const rotations = [-1.8, 0.9, 1.6, -1.2, 0.7, 1.3]
@@ -98,11 +121,13 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
         return (
           <div
             key={project.slug}
-            className="w-full max-w-[19.5rem] transition-[transform,opacity,filter] duration-[560ms] ease-out"
+            className="w-full max-w-[19.5rem] transition-[transform,opacity,filter]"
             style={{
               transform: isHovered ? 'translateY(-3px) rotate(0deg)' : `translateY(0px) rotate(${baseRotation}deg)`,
               opacity: cardOpacity,
-              filter: hoveredIndex === null || isHovered ? 'none' : 'saturate(0.92)',
+              filter: hoveredIndex === null || isHovered ? 'saturate(1)' : 'saturate(0.92)',
+              transitionDuration: '360ms',
+              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
             }}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}

@@ -1,10 +1,10 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
@@ -112,9 +112,9 @@ const resumeIconName: CentralIconName = 'IconFileText'
 /* ─────────────────────────────────────────────────────────
  * EXPERIENCE LIST STORYBOARD
  *
- * Read top-to-bottom. Each `at` value is ms after mount.
+ * Read top-to-bottom. Each `at` value is ms after section enters view.
  *
- *    0ms   waiting for page mount
+ *    0ms   waiting for experience section to enter view
  *  120ms   experience panel fades in, y 14 → 0
  *  280ms   timeline rows slide in (staggered 90ms)
  *   tap    row expands details + icon rotates 45°
@@ -181,8 +181,17 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumeModal, setShowResumeModal] = useState(false)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [experienceStage, setExperienceStage] = useState(0)
+  const experienceSectionRef = useRef<HTMLElement>(null)
+  const isExperienceInView = useInView(experienceSectionRef, {
+    once: true,
+    margin: '-120px 0px -120px 0px',
+  })
 
   useEffect(() => {
+    if (!isExperienceInView) {
+      return
+    }
+
     setExperienceStage(0)
     const timers: Array<ReturnType<typeof setTimeout>> = []
 
@@ -190,7 +199,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     timers.push(setTimeout(() => setExperienceStage(2), EXPERIENCE_TIMING.rowsAppear))
 
     return () => timers.forEach(clearTimeout)
-  }, [])
+  }, [isExperienceInView])
 
   const toggleJob = (index: number) => {
     setExpandedJobs((prev) => {
@@ -311,7 +320,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </section>
 
-      <section id="experience" className="py-16">
+      <section id="experience" ref={experienceSectionRef} className="py-16">
         <div className="max-w-2xl mx-auto">
           <SectionHeading>Experience</SectionHeading>
 

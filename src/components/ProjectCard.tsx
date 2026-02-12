@@ -10,14 +10,32 @@ interface ProjectCardProps {
   frontmatter: ProjectFrontmatter
   index: number
   isFeatured?: boolean
+  onOpenCaseStudy?: (slug: string) => void
 }
 
-export default function ProjectCard({ slug, frontmatter, index, isFeatured = false }: ProjectCardProps) {
+export default function ProjectCard({
+  slug,
+  frontmatter,
+  index,
+  isFeatured = false,
+  onOpenCaseStudy,
+}: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const displayTitle = slug === 'brand-identity-system' ? 'Middle Earth Journey' : frontmatter.title
 
   return (
-    <Link href={`/projects/${slug}`} className="group block h-full w-full">
+    <Link
+      href={`/projects/${slug}`}
+      className="group block h-full w-full"
+      onClick={(event) => {
+        if (!onOpenCaseStudy) {
+          return
+        }
+
+        event.preventDefault()
+        onOpenCaseStudy(slug)
+      }}
+    >
       <div
         className={`relative isolate overflow-hidden rounded-[14px] border text-card-foreground transition-transform transition-shadow duration-[550ms] active:scale-[0.995] touch-manipulation ${
           isFeatured

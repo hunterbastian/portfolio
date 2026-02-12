@@ -42,9 +42,9 @@ const CARD_STAGGER_ITEM = {
 }
 
 const CARD_ANGLE = {
-  layout: [-2.4, 0.5, 3.1, -1.9, 0.4, 1.7], // keeps the "pinned board" angled rhythm
+  layout: [-2.8, -0.4, 4.2, -2.6, 0.2, 2.4], // closer to the original "angled board" composition
   hoverLiftY: -4, // hover lift in px
-  hoverRotationFactor: 0.24, // retain a hint of card angle on hover
+  hoverRotationFactor: 0.2, // retain a hint of card angle on hover
 }
 
 export default function ProjectGridClient({ projects }: ProjectGridClientProps) {

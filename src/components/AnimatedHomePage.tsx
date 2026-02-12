@@ -70,11 +70,8 @@ const INITIAL_SECTION_LOAD_DELAY = {
   caseStudies: 440,
 } as const
 
-const contactGlassActionBaseClassName =
-  'group inline-flex h-9 items-center justify-center gap-1.5 rounded-[12px] border border-white/55 bg-[linear-gradient(155deg,rgba(255,255,255,0.74),rgba(255,255,255,0.38))] px-3 text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,color,box-shadow] duration-[420ms] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/75 sm:h-10 sm:px-3.5'
-
-const contactGlassActionHoverClassName =
-  'hover:scale-[1.12] hover:border-white/95 hover:bg-[linear-gradient(155deg,rgba(255,255,255,0.98),rgba(255,255,255,0.84))] hover:text-black hover:shadow-[0_0_0_1px_rgba(255,255,255,0.75),0_18px_40px_rgba(255,255,255,0.62)] active:scale-[0.98]'
+const contactInlineActionClassName =
+  'group inline-flex items-center gap-1.5 text-muted-foreground/85 no-underline transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const contactIconGlyphClassName = 'h-[13px] w-[13px] sm:h-[14px] sm:w-[14px]'
 
@@ -255,7 +252,7 @@ function ContactLink({ link, actionClassName }: { link: ContactLinkItem; actionC
       title={link.label}
     >
       <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} />
-      <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[5px] decoration-[1px]">
+      <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/45">
         {link.label}
       </span>
     </a>
@@ -285,7 +282,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
   const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
-  const contactGlassActionClassName = `${contactGlassActionBaseClassName} ${contactGlassActionHoverClassName}`
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -449,7 +445,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </motion.div>
 
           <motion.div
-            className="mt-4 flex flex-wrap items-center gap-2.5 sm:mt-5 sm:gap-3"
+            className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2.5 sm:mt-5 sm:gap-x-6"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(1.4px)' }}
             animate={{ opacity: STAGGER_PANEL.finalOpacity, y: STAGGER_PANEL.finalY, filter: 'blur(0px)' }}
             transition={{
@@ -472,7 +468,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   ease: STAGGER_PANEL.ease,
                 }}
               >
-                <ContactLink link={link} actionClassName={contactGlassActionClassName} />
+                <ContactLink link={link} actionClassName={contactInlineActionClassName} />
               </motion.div>
             ))}
 
@@ -493,7 +489,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ref={resumeButtonRef}
                 type="button"
                 onClick={() => setShowResumeModal(true)}
-                className={contactGlassActionClassName}
+                className={contactInlineActionClassName}
                 onMouseEnter={() => setShowResumePreview(true)}
                 onMouseLeave={() => setShowResumePreview(false)}
                 onFocus={() => setShowResumePreview(true)}
@@ -502,7 +498,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 title="Resume"
               >
                 <ContactIcon iconName={resumeIconName} label="Resume" className={contactIconGlyphClassName} />
-                <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[5px] decoration-[1px]">
+                <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/45">
                   Resume
                 </span>
               </button>

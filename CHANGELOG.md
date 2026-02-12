@@ -2,6 +2,13 @@
 
 ## Version History
 
+### **v2.5.0** - Live Typography & Motion Iteration *(February 12, 2026)*
+- Added a detailed private day-log at `private/updates/2026-02-12-portfolio-updates.md` with one-sentence entries for each change made during this iteration.
+- Restored terminal-style typography selectively (section labels and metadata) while keeping long-form case-study and experience body copy in Inter for readability.
+- Corrected section toggle positioning to stay on the left, strengthened section label stagger sequencing, and refined first-load animation choreography.
+- Added a subtle blur fade layer to section and case-study entrances/exits for softer motion without overdoing effects.
+- Added the 2021 Google IT Support Professional Certificate in Education and corrected naming/casing adjustments to match intended title case.
+
 ### **v2.4.0** - Weekly Highlights *(February 2026)*
 - Refined the site's visual direction with luxury/minimal styling updates across global theme, layout, header, and footer.
 - Updated the hero intro to highlight Studio Alpine and improved the typewriter behavior (newline handling and cursor stopping at completion).

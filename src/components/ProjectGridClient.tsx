@@ -16,6 +16,7 @@ interface Project {
 
 interface ProjectGridClientProps {
   projects: Project[]
+  initialLoadDelayMs?: number
 }
 
 const CARD_STAGGER_TIMING = {
@@ -47,13 +48,14 @@ const CARD_ANGLE = {
   hoverRotationFactor: 0.2, // retain a hint of card angle on hover
 }
 
-export default function ProjectGridClient({ projects }: ProjectGridClientProps) {
+export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [stage, setStage] = useState(0)
   const [supportsHover, setSupportsHover] = useState(false)
   const router = useRouter()
   const prefersReducedMotion = useReducedMotion() ?? false
   const gridRef = useRef<HTMLDivElement>(null)
+  const hasPlayedEntranceRef = useRef(false)
   const isGridInView = useInView(gridRef, { once: true, amount: 0.16 })
   const prefetchedSlugsRef = useRef(new Set<string>())
   const hoverClearTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -141,16 +143,23 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
 
     if (prefersReducedMotion) {
       setStage(2)
+      hasPlayedEntranceRef.current = true
       return
     }
 
+    const initialDelay = hasPlayedEntranceRef.current ? 0 : initialLoadDelayMs
     setStage(0)
     const timers: Array<ReturnType<typeof setTimeout>> = []
-    timers.push(setTimeout(() => setStage(1), CARD_STAGGER_TIMING.panelAppear))
-    timers.push(setTimeout(() => setStage(2), CARD_STAGGER_TIMING.cardsAppear))
+    timers.push(setTimeout(() => setStage(1), initialDelay + CARD_STAGGER_TIMING.panelAppear))
+    timers.push(
+      setTimeout(() => {
+        setStage(2)
+        hasPlayedEntranceRef.current = true
+      }, initialDelay + CARD_STAGGER_TIMING.cardsAppear)
+    )
 
     return () => timers.forEach(clearTimeout)
-  }, [isGridInView, prefersReducedMotion])
+  }, [initialLoadDelayMs, isGridInView, prefersReducedMotion])
 
   const cancelHoverClear = () => {
     if (hoverClearTimeoutRef.current !== null) {

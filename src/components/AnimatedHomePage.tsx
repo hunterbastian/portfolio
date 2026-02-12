@@ -68,6 +68,12 @@ const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
   '#tech-stack': 'techStack',
 }
 
+const INITIAL_SECTION_LOAD_DELAY = {
+  contact: 0,
+  creating: 220,
+  caseStudies: 440,
+} as const
+
 const desktopContactActionClassName =
   'hidden md:inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-all duration-[420ms] hover:-translate-y-0.5 hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
@@ -392,6 +398,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Contact"
         isOpen={sectionOpen.contact}
         onToggle={() => toggleSection('contact')}
+        initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.contact}
         className="px-4 sm:px-6 lg:px-0 relative z-20"
         openClassName="pt-8 pb-8"
         closedClassName="pt-5 pb-5"
@@ -478,6 +485,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Creating"
         isOpen={sectionOpen.creating}
         onToggle={() => toggleSection('creating')}
+        initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
         closedClassName="py-5"
@@ -501,6 +509,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Case Studies"
         isOpen={sectionOpen.caseStudies}
         onToggle={() => toggleSection('caseStudies')}
+        initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="pt-12 pb-12"
         closedClassName="pt-5 pb-5"

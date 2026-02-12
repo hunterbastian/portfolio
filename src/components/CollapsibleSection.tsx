@@ -14,6 +14,7 @@ interface CollapsibleSectionProps {
   openClassName?: string
   closedClassName?: string
   contentClassName?: string
+  initialLoadDelayMs?: number
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -94,11 +95,14 @@ export default function CollapsibleSection({
   openClassName,
   closedClassName,
   contentClassName,
+  initialLoadDelayMs = 0,
 }: CollapsibleSectionProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
   const buttonControls = useAnimationControls()
   const contentRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
+  const hasPlayedSectionEntranceRef = useRef(false)
+  const hasPlayedTitleEntranceRef = useRef(false)
   const isInView = useInView(contentRef, { once: true, amount: 0.18 })
   const isTitleInView = useInView(titleRef, { once: true, amount: 0.7 })
   const [stage, setStage] = useState(0)
@@ -131,17 +135,24 @@ export default function CollapsibleSection({
 
     if (prefersReducedMotion) {
       setStage(2)
+      hasPlayedSectionEntranceRef.current = true
       return
     }
 
+    const initialDelay = hasPlayedSectionEntranceRef.current ? 0 : initialLoadDelayMs
     setStage(0)
     const timers: Array<ReturnType<typeof setTimeout>> = []
 
-    timers.push(setTimeout(() => setStage(1), SECTION_TIMING.panelAppear))
-    timers.push(setTimeout(() => setStage(2), SECTION_TIMING.rowsAppear))
+    timers.push(setTimeout(() => setStage(1), initialDelay + SECTION_TIMING.panelAppear))
+    timers.push(
+      setTimeout(() => {
+        setStage(2)
+        hasPlayedSectionEntranceRef.current = true
+      }, initialDelay + SECTION_TIMING.rowsAppear)
+    )
 
     return () => timers.forEach(clearTimeout)
-  }, [isOpen, isInView, prefersReducedMotion])
+  }, [initialLoadDelayMs, isOpen, isInView, prefersReducedMotion])
 
   useEffect(() => {
     buttonControls.set({
@@ -159,13 +170,18 @@ export default function CollapsibleSection({
 
     if (prefersReducedMotion) {
       setTitleStage(1)
+      hasPlayedTitleEntranceRef.current = true
       return
     }
 
+    const initialDelay = hasPlayedTitleEntranceRef.current ? 0 : initialLoadDelayMs
     setTitleStage(0)
-    const timer = setTimeout(() => setTitleStage(1), LABEL_TIMING.start)
+    const timer = setTimeout(() => {
+      setTitleStage(1)
+      hasPlayedTitleEntranceRef.current = true
+    }, initialDelay + LABEL_TIMING.start)
     return () => clearTimeout(timer)
-  }, [isTitleInView, prefersReducedMotion, title])
+  }, [initialLoadDelayMs, isTitleInView, prefersReducedMotion, title])
 
   const handleToggle = () => {
     onToggle()

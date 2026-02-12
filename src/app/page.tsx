@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <AnimatedHomePage>
       <Suspense fallback={<ProjectLoader />}>
-        <ProjectGridClient projects={projects} />
+        <ProjectGridClient projects={projects} initialLoadDelayMs={720} />
       </Suspense>
 
       {projects.length === 0 && (

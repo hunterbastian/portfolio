@@ -241,11 +241,11 @@ const EXPERIENCE_LABEL_DIAL_DEFAULTS = {
 
 const SOCIAL_ICON_DIAL_DEFAULTS = {
   labelLook: 'underline' as SocialLabelLook,
-  baseColor: '#596377',
-  hoverColor: '#1d2430',
-  accentColor: '#9ec8e8',
-  glowColor: '#c6ddf0',
-  baseOpacity: 0.66,
+  baseColor: '#1a1a1a',
+  hoverColor: '#465d72',
+  accentColor: '#74b4be',
+  glowColor: '#2b82ca',
+  baseOpacity: 0.95,
   hoverOpacity: 1,
   iconBaseOpacity: 0.64,
   iconHoverOpacity: 1,
@@ -254,9 +254,9 @@ const SOCIAL_ICON_DIAL_DEFAULTS = {
   underlineBaseOpacity: 0.3,
   underlineHoverOpacity: 0.92,
   accentAlpha: 0.28,
-  hoverScale: 1.04,
+  hoverScale: 1.07,
   iconHoverScale: 1.12,
-  fadeMs: 420,
+  fadeMs: 506,
 } as const
 
 function hexToRgba(hexColor: string, alpha: number): string {
@@ -792,6 +792,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     })
   }
 
+  const isHeroCopyVisible = heroTextStage >= 2
+  const socialRevealDelay = Math.max(0, HERO_ENTRANCE.contactIconsDelay - HERO_ENTRANCE.textItemsDelay)
+
   return (
     <div className="container mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
@@ -882,24 +885,31 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <motion.div
             className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2.5 sm:mt-5 sm:gap-x-6"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(1.4px)' }}
-            animate={{ opacity: STAGGER_PANEL.finalOpacity, y: STAGGER_PANEL.finalY, filter: 'blur(0px)' }}
+            animate={{
+              opacity: isHeroCopyVisible ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
+              y: isHeroCopyVisible ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
+              filter: isHeroCopyVisible ? 'blur(0px)' : 'blur(1.4px)',
+            }}
             transition={{
               duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
-              delay: motionDelayMs(HERO_ENTRANCE.contactIconsDelay, prefersReducedMotion),
+              delay: isHeroCopyVisible ? motionDelayMs(socialRevealDelay, prefersReducedMotion) : 0,
               ease: STAGGER_PANEL.ease,
             }}
+            style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
           >
             {contactLinks.map((link, index) => (
               <motion.div
                 key={link.label}
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY }}
+                animate={{
+                  opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                  y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                }}
                 transition={{
                   duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                  delay: motionDelayMs(
-                    HERO_ENTRANCE.contactIconsDelay + index * STAGGER_TIMING.itemStagger,
-                    prefersReducedMotion
-                  ),
+                  delay: isHeroCopyVisible
+                    ? motionDelayMs(socialRevealDelay + index * STAGGER_TIMING.itemStagger, prefersReducedMotion)
+                    : 0,
                   ease: STAGGER_PANEL.ease,
                 }}
               >
@@ -918,13 +928,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             <motion.div
               className="relative overflow-visible"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-              animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY }}
+              animate={{
+                opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+              }}
               transition={{
                 duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                delay: motionDelayMs(
-                  HERO_ENTRANCE.contactIconsDelay + contactLinks.length * STAGGER_TIMING.itemStagger,
-                  prefersReducedMotion
-                ),
+                delay: isHeroCopyVisible
+                  ? motionDelayMs(socialRevealDelay + contactLinks.length * STAGGER_TIMING.itemStagger, prefersReducedMotion)
+                  : 0,
                 ease: STAGGER_PANEL.ease,
               }}
             >

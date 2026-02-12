@@ -61,16 +61,16 @@ interface CardLayoutAngle {
 
 const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
 const CASE_STUDY_DIAL_DEFAULTS = {
-  compactSpreadFactor: -0.32,
-  compactScale: 0.96,
-  compactGapX: 0,
-  compactGapY: 2,
-  expandedGapX: 24,
-  expandedGapY: 28,
-  expandedScale: 0.9,
-  expandMs: 170,
-  collapseMs: 220,
-  inactiveOpacity: 0.9,
+  compactSpreadFactor: -0.64,
+  compactScale: 0.95,
+  compactGapX: 8,
+  compactGapY: 9,
+  expandedGapX: 30,
+  expandedGapY: 32,
+  expandedScale: 0.89,
+  expandMs: 201,
+  collapseMs: 219,
+  inactiveOpacity: 0.88,
   stackPriority: 'default',
 } as const
 
@@ -139,7 +139,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
 
   const caseStudyDial = useDialKit('Case Study Stack', {
     pile: {
-      compactSpreadFactor: [CASE_STUDY_DIAL_DEFAULTS.compactSpreadFactor, -0.75, 0.35],
+      compactSpreadFactor: [CASE_STUDY_DIAL_DEFAULTS.compactSpreadFactor, -1.2, 0.35],
       compactScale: [CASE_STUDY_DIAL_DEFAULTS.compactScale, 0.82, 1.02],
       compactGapX: [CASE_STUDY_DIAL_DEFAULTS.compactGapX, -24, 18],
       compactGapY: [CASE_STUDY_DIAL_DEFAULTS.compactGapY, -16, 20],

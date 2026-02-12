@@ -8,7 +8,6 @@ import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
 import DialKitRoot from '@/components/DialKitRoot'
-import ThemeSurfaceDial from '@/components/ThemeSurfaceDial'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
@@ -168,15 +167,15 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             ::selection {
-              background-color: rgba(94, 129, 172, var(--theme-selection-opacity)) !important;
+              background-color: rgba(94, 129, 172, 0.28) !important;
               color: inherit !important;
             }
             ::-moz-selection {
-              background-color: rgba(94, 129, 172, var(--theme-selection-opacity)) !important;
+              background-color: rgba(94, 129, 172, 0.28) !important;
               color: inherit !important;
             }
             ::-webkit-selection {
-              background-color: rgba(94, 129, 172, var(--theme-selection-opacity)) !important;
+              background-color: rgba(94, 129, 172, 0.28) !important;
               color: inherit !important;
             }
           `
@@ -197,8 +196,7 @@ export default function RootLayout({
                 <Analytics 
                   mode={process.env.NODE_ENV === 'production' ? 'production' : 'development'}
                 />
-                <DialKitRoot />
-                <ThemeSurfaceDial />
+                {process.env.NODE_ENV === 'development' && <DialKitRoot />}
                 {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                 
                 {/* Service Worker Registration - Deferred for better performance */}

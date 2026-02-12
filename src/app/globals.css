@@ -3,117 +3,42 @@
 @tailwind utilities;
 
 :root {
-  --theme-ambient-aqua: 0.11;
-  --theme-ambient-blue: 0.08;
-  --theme-grid-opacity: 0.34;
-  --theme-grid-line-alpha: 0.1;
-  --theme-grid-size: 44px;
-  --theme-card-lift: 10%;
-  --theme-card-base: 90%;
-  --theme-button-base: 86%;
-  --theme-selection-opacity: 0.28;
-
-  --background: #dce2eb;
+  --background: #e5e9f0;
   --foreground: #2e3440;
-  --background-rgb: 220, 226, 235;
-  --card: #e4eaf2;
+  --background-rgb: 229, 233, 240;
+  --card: #eceff4;
   --card-foreground: #2e3440;
-  --primary: #6689b2;
-  --primary-foreground: #edf2f7;
-  --secondary: #ccd5e2;
+  --primary: #5e81ac;
+  --primary-foreground: #eceff4;
+  --secondary: #d8dee9;
   --secondary-foreground: #2e3440;
-  --muted: #c5cfdd;
+  --muted: #d8dee9;
   --muted-foreground: #4c566a;
-  --accent: #8aaacc;
+  --accent: #81a1c1;
   --accent-foreground: #2e3440;
-  --border: #b4c0d0;
-  --input: #b4c0d0;
-  --ring: #6689b2;
-}
-
-:root[data-theme-tone='dusk'] {
-  --theme-ambient-aqua: 0.17;
-  --theme-ambient-blue: 0.13;
-  --theme-grid-opacity: 0.42;
-  --theme-grid-line-alpha: 0.16;
-  --theme-grid-size: 44px;
-  --theme-card-lift: 4%;
-  --theme-card-base: 96%;
-  --theme-button-base: 94%;
-
-  --background: #3a4455;
-  --foreground: #e6edf7;
-  --background-rgb: 58, 68, 85;
-  --card: #475365;
-  --card-foreground: #edf2fa;
-  --primary: #95bfd8;
-  --primary-foreground: #2a3240;
-  --secondary: #536074;
-  --secondary-foreground: #e6edf7;
-  --muted: #516075;
-  --muted-foreground: #ced7e5;
-  --accent: #88accb;
-  --accent-foreground: #e6edf7;
-  --border: #647185;
-  --input: #647185;
-  --ring: #95bfd8;
-}
-
-:root[data-theme-tone='night'] {
-  --theme-ambient-aqua: 0.2;
-  --theme-ambient-blue: 0.15;
-  --theme-grid-opacity: 0.46;
-  --theme-grid-line-alpha: 0.2;
-  --theme-grid-size: 44px;
-  --theme-card-lift: 3%;
-  --theme-card-base: 97%;
-  --theme-button-base: 95%;
-
-  --background: #2a3140;
-  --foreground: #e5e9f0;
-  --background-rgb: 42, 49, 64;
-  --card: #343d4f;
-  --card-foreground: #eaf0f8;
-  --primary: #8dc2d2;
-  --primary-foreground: #263041;
-  --secondary: #40495c;
-  --secondary-foreground: #e5e9f0;
-  --muted: #3d4659;
-  --muted-foreground: #d3dbe8;
-  --accent: #84a8c7;
-  --accent-foreground: #e5e9f0;
-  --border: #4f5a6e;
-  --input: #4f5a6e;
-  --ring: #8dc2d2;
+  --border: #c7d0dc;
+  --input: #c7d0dc;
+  --ring: #5e81ac;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme-tone]) {
-    --theme-ambient-aqua: 0.2;
-    --theme-ambient-blue: 0.15;
-    --theme-grid-opacity: 0.46;
-    --theme-grid-line-alpha: 0.2;
-    --theme-grid-size: 44px;
-    --theme-card-lift: 3%;
-    --theme-card-base: 97%;
-    --theme-button-base: 95%;
-
-    --background: #2a3140;
+  :root {
+    --background: #2e3440;
     --foreground: #e5e9f0;
-    --background-rgb: 42, 49, 64;
-    --card: #343d4f;
-    --card-foreground: #eaf0f8;
-    --primary: #8dc2d2;
-    --primary-foreground: #263041;
-    --secondary: #40495c;
+    --background-rgb: 46, 52, 64;
+    --card: #3b4252;
+    --card-foreground: #e5e9f0;
+    --primary: #88c0d0;
+    --primary-foreground: #2e3440;
+    --secondary: #434c5e;
     --secondary-foreground: #e5e9f0;
-    --muted: #3d4659;
-    --muted-foreground: #d3dbe8;
-    --accent: #84a8c7;
+    --muted: #434c5e;
+    --muted-foreground: #d8dee9;
+    --accent: #81a1c1;
     --accent-foreground: #e5e9f0;
-    --border: #4f5a6e;
-    --input: #4f5a6e;
-    --ring: #8dc2d2;
+    --border: #4c566a;
+    --input: #4c566a;
+    --ring: #88c0d0;
   }
 }
 
@@ -124,8 +49,8 @@ html {
 
 body {
   color: var(--foreground);
-  background: radial-gradient(circle at 14% 0%, rgba(129, 161, 193, var(--theme-ambient-aqua)), transparent 44%),
-    radial-gradient(circle at 84% 12%, rgba(94, 129, 172, var(--theme-ambient-blue)), transparent 36%), var(--background);
+  background: radial-gradient(circle at 14% 0%, rgba(129, 161, 193, 0.14), transparent 44%),
+    radial-gradient(circle at 84% 12%, rgba(94, 129, 172, 0.1), transparent 36%), var(--background);
   font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono',
     Menlo, monospace;
   position: relative;
@@ -140,10 +65,10 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  opacity: var(--theme-grid-opacity);
-  background-image: linear-gradient(rgba(76, 86, 106, var(--theme-grid-line-alpha)) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(76, 86, 106, var(--theme-grid-line-alpha)) 1px, transparent 1px);
-  background-size: var(--theme-grid-size) var(--theme-grid-size);
+  opacity: 0.28;
+  background-image: linear-gradient(rgba(76, 86, 106, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76, 86, 106, 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
 }
 
 @keyframes fade-in {
@@ -375,13 +300,13 @@ button:active {
 
 .nord-panel {
   border: 1px solid color-mix(in srgb, var(--border) 90%, white);
-  background: color-mix(in srgb, var(--card) var(--theme-card-base), white var(--theme-card-lift));
+  background: color-mix(in srgb, var(--card) 92%, white);
   backdrop-filter: blur(6px);
 }
 
 .nord-button {
   border: 1px solid color-mix(in srgb, var(--border) 90%, white);
-  background: color-mix(in srgb, var(--card) var(--theme-button-base), transparent);
+  background: color-mix(in srgb, var(--card) 88%, transparent);
   color: var(--foreground);
 }
 
@@ -392,21 +317,22 @@ button:active {
 }
 
 .section-heading {
-  color: var(--foreground);
+  color: #000000;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
 }
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--secondary) 82%, var(--background)) 25%,
-    color-mix(in srgb, var(--card) 88%, white) 50%,
-    color-mix(in srgb, var(--secondary) 82%, var(--background)) 75%
-  );
+  background: linear-gradient(90deg, #d8dee9 25%, #eceff4 50%, #d8dee9 75%);
   background-size: 200% 100%;
   animation: loading 1.4s infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    background: linear-gradient(90deg, #434c5e 25%, #4c566a 50%, #434c5e 75%);
+  }
 }
 
 @keyframes loading {
@@ -453,16 +379,16 @@ button:active {
 }
 
 ::selection {
-  background: rgba(94, 129, 172, var(--theme-selection-opacity)) !important;
+  background: rgba(94, 129, 172, 0.28) !important;
   color: inherit;
 }
 
 ::-moz-selection {
-  background: rgba(94, 129, 172, var(--theme-selection-opacity)) !important;
+  background: rgba(94, 129, 172, 0.28) !important;
   color: inherit;
 }
 
 ::-webkit-selection {
-  background: rgba(94, 129, 172, var(--theme-selection-opacity)) !important;
+  background: rgba(94, 129, 172, 0.28) !important;
   color: inherit;
 }

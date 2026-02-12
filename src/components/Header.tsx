@@ -8,11 +8,20 @@ const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string
   e.preventDefault()
   const target = document.querySelector(href)
   if (target) {
+    window.dispatchEvent(new CustomEvent('hb:section-navigate', { detail: { href } }))
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    target.scrollIntoView({
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-      block: 'start',
-    })
+    const scrollToTarget = () =>
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start',
+      })
+
+    if (prefersReducedMotion) {
+      scrollToTarget()
+    } else {
+      requestAnimationFrame(scrollToTarget)
+    }
+
     window.history.pushState({}, '', href)
   }
 }

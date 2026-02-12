@@ -112,7 +112,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   const rotations = [-1.8, 0.9, 1.6, -1.2, 0.7, 1.3]
 
   return (
-    <div className="mx-auto grid max-w-[1120px] grid-cols-1 justify-items-center gap-x-7 gap-y-10 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-0">
+    <div className="mx-auto grid max-w-[1040px] grid-cols-1 justify-items-center gap-x-7 gap-y-10 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-0">
       {projects.map((project, index) => {
         const isHovered = hoveredIndex === index
         const baseRotation = rotations[index % rotations.length]
@@ -121,7 +121,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
         return (
           <div
             key={project.slug}
-            className="w-full max-w-[19.5rem] transition-[transform,opacity,filter]"
+            className="w-full max-w-[17.5rem] transition-[transform,opacity,filter]"
             style={{
               transform: isHovered ? 'translateY(-3px) rotate(0deg)' : `translateY(0px) rotate(${baseRotation}deg)`,
               opacity: cardOpacity,

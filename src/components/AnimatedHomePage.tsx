@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
-import LazyDinosaur from './LazyDinosaur'
+import CollapsibleSection from './CollapsibleSection'
 
 const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 
@@ -35,6 +35,36 @@ interface ContactLinkItem {
   label: string
   href: string
   iconName: CentralIconName
+}
+
+type SectionKey = 'contact' | 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
+type SectionOpenState = Record<SectionKey, boolean>
+
+interface SectionNavigateDetail {
+  href: string
+}
+
+const SECTION_STORAGE_KEY = 'hb.sectionOpen.v1'
+const SECTION_NAV_EVENT = 'hb:section-navigate'
+
+const DEFAULT_SECTION_OPEN_STATE: SectionOpenState = {
+  contact: false,
+  creating: false,
+  caseStudies: true,
+  experience: true,
+  education: false,
+  everydayTech: false,
+  techStack: false,
+}
+
+const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
+  '#contact': 'contact',
+  '#creating': 'creating',
+  '#case-studies': 'caseStudies',
+  '#experience': 'experience',
+  '#education': 'education',
+  '#everyday-tech': 'everydayTech',
+  '#tech-stack': 'techStack',
 }
 
 const socialLinkClassName =
@@ -107,6 +137,7 @@ const contactLinks: ContactLinkItem[] = [
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconName: 'IconGithub' },
   { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconName: 'IconDribbble' },
 ]
+
 const resumeIconName: CentralIconName = 'IconFileText'
 
 /* ─────────────────────────────────────────────────────────
@@ -121,39 +152,49 @@ const resumeIconName: CentralIconName = 'IconFileText'
  * ───────────────────────────────────────────────────────── */
 
 const EXPERIENCE_TIMING = {
-  panelAppear:    120, // panel starts appearing
-  rowsAppear:     280, // rows begin staggered reveal
-  panelDuration:  380, // panel transition duration
-  rowDuration:    420, // each row transition duration
-  rowStagger:      90, // stagger gap between rows
+  panelAppear: 120, // panel starts appearing
+  rowsAppear: 280, // rows begin staggered reveal
+  panelDuration: 380, // panel transition duration
+  rowDuration: 420, // each row transition duration
+  rowStagger: 90, // stagger gap between rows
   expandDuration: 320, // row detail expand/collapse duration
-  iconRotate:     240, // plus icon rotate duration
+  iconRotate: 240, // plus icon rotate duration
 }
 
 const EXPERIENCE_PANEL = {
   initialOpacity: 0, // hidden before stage 1
-  finalOpacity:   1, // visible at rest
-  initialY:      14, // panel vertical offset before reveal
-  finalY:         0, // resting panel position
+  finalOpacity: 1, // visible at rest
+  initialY: 14, // panel vertical offset before reveal
+  finalY: 0, // resting panel position
   ease: [0.22, 1, 0.36, 1] as const,
 }
 
 const EXPERIENCE_ROW = {
   initialOpacity: 0, // hidden row before stage 2
-  finalOpacity:   1, // visible row at rest
-  initialY:      16, // row vertical offset before reveal
-  finalY:         0, // resting row position
+  finalOpacity: 1, // visible row at rest
+  initialY: 16, // row vertical offset before reveal
+  finalY: 0, // resting row position
+}
+
+function mergeStoredSectionState(value: unknown): SectionOpenState {
+  const merged: SectionOpenState = { ...DEFAULT_SECTION_OPEN_STATE }
+
+  if (!value || typeof value !== 'object') {
+    return merged
+  }
+
+  const candidate = value as Partial<Record<SectionKey, unknown>>
+  ;(Object.keys(DEFAULT_SECTION_OPEN_STATE) as SectionKey[]).forEach((key) => {
+    if (typeof candidate[key] === 'boolean') {
+      merged[key] = candidate[key]
+    }
+  })
+
+  return merged
 }
 
 function ContactIcon({ iconName, label }: { iconName: CentralIconName; label: string }) {
-  return (
-    <CentralIcon
-      name={iconName}
-      size={20}
-      className="h-5 w-5"
-      aria-label={label}
-    />
-  )
+  return <CentralIcon name={iconName} size={20} className="h-5 w-5" aria-label={label} />
 }
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
@@ -172,23 +213,96 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
   )
 }
 
-function SectionHeading({ children }: { children: ReactNode }) {
-  return <h2 className="section-heading font-code text-sm mb-6 sm:mb-8">{children}</h2>
-}
-
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [experienceStage, setExperienceStage] = useState(0)
-  const experienceSectionRef = useRef<HTMLElement>(null)
-  const isExperienceInView = useInView(experienceSectionRef, {
+  const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
+  const [hasHydratedSections, setHasHydratedSections] = useState(false)
+
+  const experiencePanelRef = useRef<HTMLDivElement>(null)
+  const isExperienceInView = useInView(experiencePanelRef, {
     once: true,
     margin: '-120px 0px -120px 0px',
   })
 
   useEffect(() => {
-    if (!isExperienceInView) {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    try {
+      const stored = window.localStorage.getItem(SECTION_STORAGE_KEY)
+      if (stored) {
+        const parsed = JSON.parse(stored)
+        setSectionOpen(mergeStoredSectionState(parsed))
+      }
+    } catch {
+      setSectionOpen({ ...DEFAULT_SECTION_OPEN_STATE })
+    } finally {
+      setHasHydratedSections(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!hasHydratedSections || typeof window === 'undefined') {
+      return
+    }
+
+    try {
+      window.localStorage.setItem(SECTION_STORAGE_KEY, JSON.stringify(sectionOpen))
+    } catch {
+      // Ignore storage write failures.
+    }
+  }, [hasHydratedSections, sectionOpen])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const openSectionForHref = (href: string) => {
+      const sectionKey = HREF_TO_SECTION_KEY[href]
+      if (!sectionKey) {
+        return
+      }
+
+      setSectionOpen((prev) => {
+        if (prev[sectionKey]) {
+          return prev
+        }
+
+        return { ...prev, [sectionKey]: true }
+      })
+    }
+
+    const handleSectionNavigate = (event: Event) => {
+      const detail = (event as CustomEvent<SectionNavigateDetail>).detail
+      if (detail?.href) {
+        openSectionForHref(detail.href)
+      }
+    }
+
+    const handleHashChange = () => {
+      if (window.location.hash) {
+        openSectionForHref(window.location.hash)
+      }
+    }
+
+    window.addEventListener(SECTION_NAV_EVENT, handleSectionNavigate as EventListener)
+    window.addEventListener('hashchange', handleHashChange)
+
+    handleHashChange()
+
+    return () => {
+      window.removeEventListener(SECTION_NAV_EVENT, handleSectionNavigate as EventListener)
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!sectionOpen.experience || !isExperienceInView) {
       return
     }
 
@@ -199,7 +313,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     timers.push(setTimeout(() => setExperienceStage(2), EXPERIENCE_TIMING.rowsAppear))
 
     return () => timers.forEach(clearTimeout)
-  }, [isExperienceInView])
+  }, [isExperienceInView, sectionOpen.experience])
+
+  const toggleSection = (section: SectionKey) => {
+    setSectionOpen((prev) => ({ ...prev, [section]: !prev[section] }))
+  }
 
   const toggleJob = (index: number) => {
     setExpandedJobs((prev) => {
@@ -248,16 +366,22 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
           <div>
             <p className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0">
-              Interaction Design student at UVU with experience designing and building digital products.
-              I work in Figma and front-end code at <span className="font-semibold text-primary">Studio Alpine</span>, and
-              I&apos;m focused on clear, meaningful interfaces with an AI-first mindset.
+              Interaction Design student at UVU with experience designing and building digital products. I work in Figma and
+              front-end code at <span className="font-semibold text-primary">Studio Alpine</span>, and I&apos;m focused on clear,
+              meaningful interfaces with an AI-first mindset.
             </p>
           </div>
-
         </div>
       </section>
 
-      <section id="contact" className="pt-10 pb-10 px-4 sm:px-6 lg:px-0 relative z-20 animate-fade-in">
+      <CollapsibleSection
+        id="contact"
+        title="Contact"
+        isOpen={sectionOpen.contact}
+        onToggle={() => toggleSection('contact')}
+        className="pt-8 pb-8 px-4 sm:px-6 lg:px-0 relative z-20"
+        contentClassName="mt-4"
+      >
         <div className="max-w-2xl mx-auto">
           <div className="flex flex-wrap gap-4 items-stretch sm:items-center">
             {contactLinks.map((link) => (
@@ -282,34 +406,41 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </div>
           </div>
         </div>
-      </section>
+      </CollapsibleSection>
 
-      <section id="creating" className="py-16 px-4 sm:px-6 lg:px-0 relative z-10">
-        <div className="max-w-2xl mx-auto">
-          <SectionHeading>Creating</SectionHeading>
-          <div className="text-left">
-            <a
-              href="https://instagram.com/studio.alpine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-code tracking-[0.08em] uppercase font-medium text-muted-foreground hover:text-primary underline underline-offset-4"
-            >
-              <CentralIcon name="IconCamera1" size={14} aria-hidden className="h-3.5 w-3.5 shrink-0" />
-              <span>Photography Studio: Studio Alpine</span>
-            </a>
-          </div>
+      <CollapsibleSection
+        id="creating"
+        title="Creating"
+        isOpen={sectionOpen.creating}
+        onToggle={() => toggleSection('creating')}
+        className="py-12 px-4 sm:px-6 lg:px-0 relative z-10"
+        contentClassName="mt-4"
+      >
+        <div className="max-w-2xl mx-auto text-left">
+          <a
+            href="https://instagram.com/studio.alpine"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-code tracking-[0.08em] uppercase font-medium text-muted-foreground hover:text-primary underline underline-offset-4"
+          >
+            <CentralIcon name="IconCamera1" size={14} aria-hidden className="h-3.5 w-3.5 shrink-0" />
+            <span>Photography Studio: Studio Alpine</span>
+          </a>
         </div>
-      </section>
+      </CollapsibleSection>
 
-      <section id="case-studies" className="pt-[4.5rem] pb-16 px-4 sm:px-6 lg:px-0 relative z-10">
-        <div className="max-w-2xl mx-auto">
-          <SectionHeading>Case Studies</SectionHeading>
-        </div>
-
+      <CollapsibleSection
+        id="case-studies"
+        title="Case Studies"
+        isOpen={sectionOpen.caseStudies}
+        onToggle={() => toggleSection('caseStudies')}
+        className="pt-12 pb-12 px-4 sm:px-6 lg:px-0 relative z-10"
+        contentClassName="mt-4 space-y-10"
+      >
         {children}
 
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
-          <div className="flex justify-start mt-12">
+          <div className="flex justify-start mt-9">
             <a
               href="/archive"
               className="social-button nord-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs rounded-sm transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
@@ -318,14 +449,20 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </a>
           </div>
         </div>
-      </section>
+      </CollapsibleSection>
 
-      <section id="experience" ref={experienceSectionRef} className="py-16">
+      <CollapsibleSection
+        id="experience"
+        title="Experience"
+        isOpen={sectionOpen.experience}
+        onToggle={() => toggleSection('experience')}
+        className="py-12 px-4 sm:px-6 lg:px-0"
+        contentClassName="mt-4"
+      >
         <div className="max-w-2xl mx-auto">
-          <SectionHeading>Experience</SectionHeading>
-
           <motion.div
-            className="nord-panel rounded-lg p-4 sm:p-6 space-y-2"
+            ref={experiencePanelRef}
+            className="nord-panel rounded-lg p-4 sm:p-5 space-y-2"
             initial={{
               opacity: EXPERIENCE_PANEL.initialOpacity,
               y: EXPERIENCE_PANEL.initialY,
@@ -362,7 +499,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between py-4 px-2 text-left"
+                    className="flex w-full items-center justify-between py-3.5 px-2 text-left"
                     onClick={() => toggleJob(index)}
                   >
                     <div className="flex items-center space-x-6">
@@ -408,15 +545,20 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             })}
           </motion.div>
         </div>
-      </section>
+      </CollapsibleSection>
 
-      <section id="education" className="py-16">
+      <CollapsibleSection
+        id="education"
+        title="Education"
+        isOpen={sectionOpen.education}
+        onToggle={() => toggleSection('education')}
+        className="py-12 px-4 sm:px-6 lg:px-0"
+        contentClassName="mt-4"
+      >
         <div className="max-w-2xl mx-auto">
-          <SectionHeading>Education</SectionHeading>
-
-          <div className="nord-panel rounded-lg p-6 space-y-6">
+          <div className="nord-panel rounded-lg p-5 space-y-5">
             {education.map((edu) => (
-              <div key={edu.institution} className="border-b border-border last:border-b-0 pb-6 last:pb-0">
+              <div key={edu.institution} className="border-b border-border last:border-b-0 pb-5 last:pb-0">
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                   <div className="text-muted-foreground text-xs font-code min-w-[100px]">{edu.year}</div>
                   <div className="flex-1">
@@ -434,12 +576,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             ))}
           </div>
         </div>
-      </section>
+      </CollapsibleSection>
 
-      <section id="everyday-tech" className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-0">
-        <div className="max-w-2xl mx-auto">
-          <SectionHeading>Everyday Tech</SectionHeading>
-        </div>
+      <CollapsibleSection
+        id="everyday-tech"
+        title="Everyday Tech"
+        isOpen={sectionOpen.everydayTech}
+        onToggle={() => toggleSection('everydayTech')}
+        className="py-10 px-4 sm:px-6 lg:px-0"
+        contentClassName="mt-4"
+      >
         <div className="max-w-2xl mx-auto">
           <div className="flex flex-wrap justify-start gap-x-8 gap-y-4">
             {everydayTech.map((item) => (
@@ -455,12 +601,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             ))}
           </div>
         </div>
-      </section>
+      </CollapsibleSection>
 
-      <section id="tech-stack" className="py-16">
-        <div className="max-w-2xl mx-auto">
-          <SectionHeading>Stack</SectionHeading>
-        </div>
+      <CollapsibleSection
+        id="tech-stack"
+        title="Stack"
+        isOpen={sectionOpen.techStack}
+        onToggle={() => toggleSection('techStack')}
+        className="py-12 px-4 sm:px-6 lg:px-0"
+        contentClassName="mt-4"
+      >
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto">
             {skills.map((skill) => (
@@ -472,11 +622,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             ))}
           </div>
         </div>
-      </section>
-
-      <section id="dinosaur" className="pb-8 sm:pb-12">
-        <LazyDinosaur />
-      </section>
+      </CollapsibleSection>
 
       <ResumeModal isOpen={showResumeModal} onClose={() => setShowResumeModal(false)} />
     </div>

@@ -53,10 +53,21 @@ const CARD_STAGGER_ITEM = {
   finalY: 0,
 }
 
-const CARD_ANGLE = {
-  layout: [-2.2, 0.1, 2.2, -1.6, 0, 1.6],
-  hoverLiftY: -5,
-  hoverRotationFactor: 0.35,
+interface CardLayoutAngle {
+  rotate: number
+  x: number
+}
+
+const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
+const CARD_SCALE = 0.9
+
+const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
+  'brand-identity-system': { rotate: -6.2, x: -14 }, // Middle Earth Journey - left tilt
+  'aol-redesign': { rotate: -5.4, x: -11 }, // AOL Redesign - left tilt
+  'porsche-app': { rotate: 6.2, x: 14 }, // Porsche App - right tilt
+  'wander-utah': { rotate: 5.1, x: 10 }, // UXCross/Wander card - right tilt
+  'grand-teton-wallet': { rotate: 3.2, x: 7 },
+  nutricost: { rotate: -2.8, x: -5 },
 }
 
 export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
@@ -154,19 +165,16 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     >
       {orderedProjects.map((project, index) => {
         const isFeaturedCard = project.slug === 'porsche-app'
-        const baseRotation = CARD_ANGLE.layout[index % CARD_ANGLE.layout.length]
+        const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
         const isHovered = hoveredIndex === index
         const hasHoverTarget = hoveredIndex !== null
-        const rotation = isHovered ? baseRotation * CARD_ANGLE.hoverRotationFactor : baseRotation
-        const translateY = isHovered ? CARD_ANGLE.hoverLiftY : 0
+        const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : 0.9
 
         return (
           <motion.div
             key={project.slug}
-            className={`w-full transition-[transform,opacity,filter] duration-[430ms] ${isFeaturedCard ? 'md:-translate-y-1 md:scale-[1.03]' : ''}`}
+            className="w-full transition-[transform,opacity,filter] duration-[430ms]"
             style={{
-              transform: `translateY(${translateY}px) rotate(${rotation}deg)`,
-              opacity: !supportsHover || !hasHoverTarget || isHovered ? 1 : 0.9,
               filter: !supportsHover || !hasHoverTarget || isHovered ? 'saturate(1)' : 'saturate(0.92)',
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
             }}
@@ -181,10 +189,19 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                 setHoveredIndex(null)
               }
             }}
-            initial={{ opacity: CARD_STAGGER_ITEM.initialOpacity, y: CARD_STAGGER_ITEM.initialY }}
+            initial={{
+              opacity: CARD_STAGGER_ITEM.initialOpacity,
+              y: CARD_STAGGER_ITEM.initialY,
+              x: baseAngle.x,
+              rotate: baseAngle.rotate,
+              scale: CARD_SCALE,
+            }}
             animate={{
-              opacity: stage >= 2 ? CARD_STAGGER_ITEM.finalOpacity : CARD_STAGGER_ITEM.initialOpacity,
+              opacity: stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity,
               y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
+              x: baseAngle.x,
+              rotate: baseAngle.rotate,
+              scale: CARD_SCALE,
             }}
             transition={{
               duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),

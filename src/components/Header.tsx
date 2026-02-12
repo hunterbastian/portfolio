@@ -100,29 +100,19 @@ export default function Header() {
         <div className="flex h-12 items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-foreground no-underline hover:text-primary transition-colors duration-300"
+            className="inline-flex items-center gap-2 font-code font-medium text-sm tracking-[0.14em] text-foreground hover:text-primary transition-colors duration-300"
           >
             <ScrollIndicator />
-            <span className="font-code font-medium text-sm tracking-[0.14em] sm:hidden">HB</span>
-            <span className="hidden sm:flex flex-col leading-tight">
-              <span className="font-code text-[11px] font-medium tracking-[0.12em] text-foreground">
-                HUNTER BASTIAN // STUDIO ALPINE
-              </span>
-              <span className="font-code text-[10px] tracking-[0.11em] text-muted-foreground">
-                INTERACTION DESIGNER - LEHI, UTAH
-              </span>
-            </span>
+            HB
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Primary">
+          <nav className="header-nav-vertical hidden md:flex" role="navigation" aria-label="Primary">
             {navigation.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className={`font-code text-[11px] font-medium tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
-                  activeSection === item.href ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-                }`}
+                className={`header-nav-link font-code cursor-pointer ${activeSection === item.href ? 'is-active' : ''}`}
                 aria-current={activeSection === item.href ? 'page' : undefined}
               >
                 {item.name}

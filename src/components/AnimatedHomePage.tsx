@@ -34,12 +34,11 @@ interface EducationItem {
 
 interface ContactLinkItem {
   label: string
-  mobileLabel?: string
   href: string
   iconName: CentralIconName
 }
 
-type SectionKey = 'contact' | 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
+type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
 type SectionOpenState = Record<SectionKey, boolean>
 
 interface SectionNavigateDetail {
@@ -49,7 +48,6 @@ interface SectionNavigateDetail {
 const SECTION_NAV_EVENT = 'hb:section-navigate'
 
 const DEFAULT_SECTION_OPEN_STATE: SectionOpenState = {
-  contact: true,
   creating: true,
   caseStudies: true,
   experience: true,
@@ -59,7 +57,6 @@ const DEFAULT_SECTION_OPEN_STATE: SectionOpenState = {
 }
 
 const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
-  '#contact': 'contact',
   '#creating': 'creating',
   '#case-studies': 'caseStudies',
   '#experience': 'experience',
@@ -69,25 +66,14 @@ const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
 }
 
 const INITIAL_SECTION_LOAD_DELAY = {
-  contact: 0,
   creating: 220,
   caseStudies: 440,
 } as const
 
-const desktopContactActionClassName =
-  'group hidden md:inline-flex h-12 w-12 items-center justify-center rounded-[14px] no-underline transition-transform duration-[360ms] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/15 focus-visible:ring-offset-2 focus-visible:ring-offset-background'
+const contactGlassActionClassName =
+  'group inline-flex h-9 w-9 items-center justify-center rounded-[12px] border border-white/40 bg-[linear-gradient(155deg,rgba(255,255,255,0.56),rgba(186,230,253,0.3))] text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,box-shadow] duration-[420ms] hover:scale-[1.12] hover:border-primary/45 hover:bg-[linear-gradient(155deg,rgba(255,255,255,0.7),rgba(186,230,253,0.4))] hover:shadow-[0_14px_28px_rgba(15,23,42,0.2)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-10 sm:w-10'
 
-const mobileContactActionClassName =
-  'group inline-flex md:hidden h-12 w-full items-center justify-start gap-3 rounded-[14px] border border-slate-700/55 bg-[linear-gradient(160deg,rgba(51,65,85,0.5),rgba(15,23,42,0.72))] px-3.5 text-slate-100 no-underline shadow-[0_8px_18px_rgba(15,23,42,0.28)] backdrop-blur-[6px] transition-all duration-[420ms] hover:border-primary/45 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
-
-const desktopContactIconBadgeClassName =
-  'inline-flex h-12 w-12 items-center justify-center rounded-[14px] border border-slate-700/70 bg-[linear-gradient(160deg,rgba(51,65,85,0.82),rgba(15,23,42,0.9))] text-slate-100 shadow-[0_10px_22px_rgba(15,23,42,0.3)] backdrop-blur-[8px] transition-[background,border-color,box-shadow,color,transform] duration-300 group-hover:-translate-y-[1px] group-hover:border-primary/55 group-hover:bg-[linear-gradient(160deg,rgba(71,85,105,0.9),rgba(30,41,59,0.96))] group-hover:text-white group-hover:shadow-[0_14px_28px_rgba(15,23,42,0.34)]'
-
-const mobileContactIconBadgeClassName =
-  'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] border border-slate-700/70 bg-[linear-gradient(160deg,rgba(51,65,85,0.82),rgba(15,23,42,0.9))] text-slate-100 shadow-[0_8px_18px_rgba(15,23,42,0.3)] backdrop-blur-[8px] transition-[background,border-color,box-shadow,color] duration-300 group-hover:border-primary/55 group-hover:bg-[linear-gradient(160deg,rgba(71,85,105,0.9),rgba(30,41,59,0.96))] group-hover:text-white group-hover:shadow-[0_10px_20px_rgba(15,23,42,0.34)]'
-
-const mobileContactLabelClassName =
-  'font-code text-[11px] tracking-[0.1em] uppercase text-slate-200/85 transition-colors duration-300 group-hover:text-white'
+const contactIconGlyphClassName = 'h-[14px] w-[14px] sm:h-[15px] sm:w-[15px]'
 
 const experience: ExperienceItem[] = [
   {
@@ -165,7 +151,7 @@ const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
 const contactLinks: ContactLinkItem[] = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconName: 'IconInstagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconName: 'IconLinkedin' },
-  { label: 'X', mobileLabel: 'Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconX' },
+  { label: 'X / Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconX' },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconName: 'IconGithub' },
   { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconName: 'IconDribbble' },
 ]
@@ -179,9 +165,9 @@ const HERO_TYPING = {
 }
 
 const HERO_ENTRANCE = {
-  profileDelay: 80, // profile circle appears first
-  subtitleDelay: 190, // subtitle appears after headline begins typing
-  bodyDelay: 250, // body copy appears after subtitle
+  initialDelay: 80, // first hero item starts after a brief pause
+  itemStagger: 96, // each hero item follows with a small gap
+  contactIconsDelay: 340, // icon row settles after intro copy
   duration: 420, // reveal transition duration
 }
 
@@ -254,36 +240,18 @@ function ContactIcon({ iconName, label, className = 'h-5 w-5' }: { iconName: Cen
 }
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
-  const mobileLabel = link.mobileLabel ?? link.label
-
   return (
-    <>
-      <a
-        href={link.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`group ${mobileContactActionClassName}`}
-        aria-label={mobileLabel}
-      >
-        <span className={mobileContactIconBadgeClassName}>
-          <ContactIcon iconName={link.iconName} label={mobileLabel} className="h-[18px] w-[18px] shrink-0" />
-        </span>
-        <span className={mobileContactLabelClassName}>{mobileLabel}</span>
-      </a>
-      <a
-        href={link.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={desktopContactActionClassName}
-        aria-label={link.label}
-        title={link.label}
-      >
-        <span className={desktopContactIconBadgeClassName}>
-          <ContactIcon iconName={link.iconName} label={link.label} />
-        </span>
-        <span className="sr-only">{link.label}</span>
-      </a>
-    </>
+    <a
+      href={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={contactGlassActionClassName}
+      aria-label={link.label}
+      title={link.label}
+    >
+      <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} />
+      <span className="sr-only">{link.label}</span>
+    </a>
   )
 }
 
@@ -294,24 +262,53 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const prefersReducedMotion = useReducedMotion() ?? false
 
-  const contactPanelRef = useRef<HTMLDivElement>(null)
   const resumeButtonRef = useRef<HTMLButtonElement>(null)
   const experiencePanelRef = useRef<HTMLDivElement>(null)
   const educationPanelRef = useRef<HTMLDivElement>(null)
   const everydayPanelRef = useRef<HTMLDivElement>(null)
   const stackPanelRef = useRef<HTMLDivElement>(null)
 
-  const isContactInView = useInView(contactPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
   const isExperienceInView = useInView(experiencePanelRef, { once: true, margin: '-120px 0px -120px 0px' })
   const isEducationInView = useInView(educationPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
   const isEverydayInView = useInView(everydayPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
   const isStackInView = useInView(stackPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
 
-  const contactStage = useSectionStage(sectionOpen.contact, isContactInView, prefersReducedMotion)
   const experienceStage = useSectionStage(sectionOpen.experience, isExperienceInView, prefersReducedMotion)
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
   const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
+  const heroStaggerDelay = motionDelayMs(HERO_ENTRANCE.initialDelay, prefersReducedMotion)
+  const heroItemStagger = motionDelayMs(HERO_ENTRANCE.itemStagger, prefersReducedMotion)
+  const heroItemDuration = motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion)
+
+  const heroStaggerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        delayChildren: heroStaggerDelay,
+        staggerChildren: heroItemStagger,
+      },
+    },
+  } as const
+
+  const heroItemVariants = {
+    hidden: {
+      opacity: STAGGER_ITEM.initialOpacity,
+      y: STAGGER_ITEM.initialY,
+      filter: 'blur(1.2px)',
+      scale: 0.97,
+    },
+    visible: {
+      opacity: STAGGER_ITEM.finalOpacity,
+      y: STAGGER_ITEM.finalY,
+      filter: 'blur(0px)',
+      scale: 1,
+      transition: {
+        duration: heroItemDuration,
+        ease: STAGGER_PANEL.ease,
+      },
+    },
+  } as const
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -376,16 +373,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   return (
     <div className="container mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
-        <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
+        <motion.div
+          className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0"
+          initial="hidden"
+          animate="visible"
+          variants={heroStaggerVariants}
+        >
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <motion.div
-              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94, filter: 'blur(1.2px)' }}
-              animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, scale: 1, filter: 'blur(0px)' }}
-              transition={{
-                duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
-                delay: motionDelayMs(HERO_ENTRANCE.profileDelay, prefersReducedMotion),
-                ease: STAGGER_PANEL.ease,
-              }}
+              variants={heroItemVariants}
             >
               <Image
                 src="/images/profilepicture.jpg"
@@ -410,13 +406,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               </h1>
               <motion.div
                 className="font-code text-muted-foreground mt-2 text-[11px] tracking-[0.12em] sm:text-xs"
-                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
-                animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, filter: 'blur(0px)' }}
-                transition={{
-                  duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
-                  delay: motionDelayMs(HERO_ENTRANCE.subtitleDelay, prefersReducedMotion),
-                  ease: STAGGER_PANEL.ease,
-                }}
+                variants={heroItemVariants}
               >
                 <span>{HERO_SUBTITLE_TEXT}</span>
               </motion.div>
@@ -424,13 +414,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <motion.div
-            initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
-            animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, filter: 'blur(0px)' }}
-            transition={{
-              duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
-              delay: motionDelayMs(HERO_ENTRANCE.bodyDelay, prefersReducedMotion),
-              ease: STAGGER_PANEL.ease,
-            }}
+            variants={heroItemVariants}
           >
             <p className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0">
               Interaction Design student at UVU with experience designing and building digital products. I work in front-end
@@ -438,46 +422,28 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <span className="font-semibold text-primary">Studio Alpine</span>.
             </p>
           </motion.div>
-        </div>
-      </section>
 
-      <CollapsibleSection
-        id="contact"
-        title="Contact"
-        isOpen={sectionOpen.contact}
-        onToggle={() => toggleSection('contact')}
-        initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.contact}
-        className="px-4 sm:px-6 lg:px-0 relative z-20"
-        openClassName="pt-8 pb-8"
-        closedClassName="pt-5 pb-5"
-        contentClassName="mt-4"
-      >
-        <div className="max-w-2xl mx-auto">
           <motion.div
-            ref={contactPanelRef}
-            className="flex flex-col gap-2.5 md:flex-row md:flex-wrap md:items-center md:gap-4"
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
-            animate={{
-              opacity: contactStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
-              y: contactStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-            }}
+            className="mt-4 flex flex-wrap items-center gap-2.5 sm:mt-5 sm:gap-3"
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(1.4px)' }}
+            animate={{ opacity: STAGGER_PANEL.finalOpacity, y: STAGGER_PANEL.finalY, filter: 'blur(0px)' }}
             transition={{
-              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
+              duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
+              delay: motionDelayMs(HERO_ENTRANCE.contactIconsDelay, prefersReducedMotion),
               ease: STAGGER_PANEL.ease,
             }}
           >
             {contactLinks.map((link, index) => (
               <motion.div
                 key={link.label}
-                className="w-full md:w-auto"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                animate={{
-                  opacity: contactStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                  y: contactStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                }}
+                animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY }}
                 transition={{
                   duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                  delay: contactStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                  delay: motionDelayMs(
+                    HERO_ENTRANCE.contactIconsDelay + index * STAGGER_TIMING.itemStagger,
+                    prefersReducedMotion
+                  ),
                   ease: STAGGER_PANEL.ease,
                 }}
               >
@@ -486,34 +452,23 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             ))}
 
             <motion.div
-              className="relative w-full overflow-visible md:w-auto"
+              className="relative overflow-visible"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-              animate={{
-                opacity: contactStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                y: contactStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-              }}
+              animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY }}
               transition={{
                 duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                delay: contactStage >= 2 ? motionDelayMs(contactLinks.length * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                delay: motionDelayMs(
+                  HERO_ENTRANCE.contactIconsDelay + contactLinks.length * STAGGER_TIMING.itemStagger,
+                  prefersReducedMotion
+                ),
                 ease: STAGGER_PANEL.ease,
               }}
             >
               <button
-                type="button"
-                onClick={() => setShowResumeModal(true)}
-                className={`group ${mobileContactActionClassName}`}
-                aria-label="Resume"
-              >
-                <span className={mobileContactIconBadgeClassName}>
-                  <ContactIcon iconName={resumeIconName} label="Resume" className="h-[18px] w-[18px] shrink-0" />
-                </span>
-                <span className={mobileContactLabelClassName}>Resume</span>
-              </button>
-              <button
                 ref={resumeButtonRef}
                 type="button"
                 onClick={() => setShowResumeModal(true)}
-                className={desktopContactActionClassName}
+                className={contactGlassActionClassName}
                 onMouseEnter={() => setShowResumePreview(true)}
                 onMouseLeave={() => setShowResumePreview(false)}
                 onFocus={() => setShowResumePreview(true)}
@@ -521,16 +476,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 aria-label="Resume"
                 title="Resume"
               >
-                <span className={desktopContactIconBadgeClassName}>
-                  <ContactIcon iconName={resumeIconName} label="Resume" />
-                </span>
+                <ContactIcon iconName={resumeIconName} label="Resume" className={contactIconGlyphClassName} />
                 <span className="sr-only">Resume</span>
               </button>
               <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
             </motion.div>
           </motion.div>
-        </div>
-      </CollapsibleSection>
+        </motion.div>
+      </section>
 
       <CollapsibleSection
         id="creating"

@@ -73,7 +73,7 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactGlassActionBaseClassName =
-  'group inline-flex h-9 w-9 items-center justify-center rounded-[12px] border border-white/55 bg-[linear-gradient(155deg,rgba(255,255,255,0.74),rgba(255,255,255,0.38))] text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,color,box-shadow] duration-[420ms] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/75 sm:h-10 sm:w-10'
+  'group inline-flex h-9 items-center justify-center gap-1.5 rounded-[12px] border border-white/55 bg-[linear-gradient(155deg,rgba(255,255,255,0.74),rgba(255,255,255,0.38))] px-3 text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,color,box-shadow] duration-[420ms] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/75 sm:h-10 sm:px-3.5'
 
 const contactGlassActionHoverClassNames: Record<ContactHoverStyle, string> = {
   dark: 'hover:scale-[1.12] hover:border-black/45 hover:bg-[linear-gradient(155deg,rgba(46,52,64,0.9),rgba(59,66,82,0.84))] hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.34)] active:scale-[0.98]',
@@ -81,7 +81,7 @@ const contactGlassActionHoverClassNames: Record<ContactHoverStyle, string> = {
     'hover:scale-[1.12] hover:border-white/95 hover:bg-[linear-gradient(155deg,rgba(255,255,255,0.98),rgba(255,255,255,0.84))] hover:text-black hover:shadow-[0_0_0_1px_rgba(255,255,255,0.75),0_18px_40px_rgba(255,255,255,0.62)] active:scale-[0.98]',
 }
 
-const contactIconGlyphClassName = 'h-[14px] w-[14px] sm:h-[15px] sm:w-[15px]'
+const contactIconGlyphClassName = 'h-[13px] w-[13px] sm:h-[14px] sm:w-[14px]'
 
 const experience: ExperienceItem[] = [
   {
@@ -159,9 +159,8 @@ const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
 const contactLinks: ContactLinkItem[] = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconName: 'IconInstagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconName: 'IconLinkedin' },
-  { label: 'X / Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconTwitter' },
+  { label: 'Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconTwitter' },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconName: 'IconGithub' },
-  { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconName: 'IconDribbble' },
 ]
 
 const resumeIconName: CentralIconName = 'IconFileText'
@@ -261,7 +260,9 @@ function ContactLink({ link, actionClassName }: { link: ContactLinkItem; actionC
       title={link.label}
     >
       <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} />
-      <span className="sr-only">{link.label}</span>
+      <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[5px] decoration-[1px]">
+        {link.label}
+      </span>
     </a>
   )
 }
@@ -537,7 +538,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 title="Resume"
               >
                 <ContactIcon iconName={resumeIconName} label="Resume" className={contactIconGlyphClassName} />
-                <span className="sr-only">Resume</span>
+                <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[5px] decoration-[1px]">
+                  Resume
+                </span>
               </button>
               <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
             </motion.div>

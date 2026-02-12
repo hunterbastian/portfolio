@@ -2,8 +2,9 @@
 
 import dynamic from 'next/dynamic'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
+import { useDialKit } from 'dialkit'
 import Image from 'next/image'
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
@@ -38,6 +39,11 @@ interface ContactLinkItem {
   iconName: CentralIconName
 }
 
+type ExperienceHighlightLook = 'softBox' | 'solidBox' | 'underline' | 'glow' | 'pill'
+type ExperienceHighlightTarget = 'triplet' | 'company' | 'year' | 'title'
+type ExperienceBoxPosition = 'top' | 'bottom'
+type ExperienceLabelKey = 'year' | 'company' | 'title'
+
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
 type SectionOpenState = Record<SectionKey, boolean>
 
@@ -71,13 +77,13 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex origin-center items-center gap-1.5 text-muted-foreground/80 no-underline transition-[color,opacity,transform,text-shadow] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.04] hover:text-foreground hover:[text-shadow:0_0_10px_rgba(46,52,64,0.16)] dark:hover:[text-shadow:0_0_10px_rgba(229,233,240,0.2)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'group inline-flex origin-center items-center gap-1.5 text-[color:color-mix(in_srgb,var(--foreground)_38%,var(--background))] no-underline opacity-[0.74] transition-[color,opacity,transform,text-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.04] hover:text-foreground hover:opacity-100 hover:[text-shadow:0_0_10px_rgba(46,52,64,0.2)] dark:hover:[text-shadow:0_0_10px_rgba(229,233,240,0.22)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const contactIconGlyphClassName =
-  'h-[13px] w-[13px] opacity-90 transition-[transform,opacity] duration-300 ease-out group-hover:scale-[1.12] group-hover:opacity-100 sm:h-[14px] sm:w-[14px]'
+  'h-[13px] w-[13px] opacity-[0.68] transition-[transform,opacity] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.12] group-hover:opacity-100 sm:h-[14px] sm:w-[14px]'
 
 const contactInlineLabelClassName =
-  'font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/40 opacity-[0.9] transition-[text-shadow,decoration-color,opacity] duration-300 ease-out group-hover:decoration-current/85 group-hover:opacity-100 group-hover:[text-shadow:0_0_8px_rgba(46,52,64,0.14)] dark:group-hover:[text-shadow:0_0_8px_rgba(229,233,240,0.16)]'
+  'font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/34 opacity-[0.72] transition-[text-shadow,decoration-color,opacity] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:decoration-current/90 group-hover:opacity-100 group-hover:[text-shadow:0_0_8px_rgba(46,52,64,0.2)] dark:group-hover:[text-shadow:0_0_8px_rgba(229,233,240,0.2)]'
 
 const experience: ExperienceItem[] = [
   {
@@ -171,7 +177,7 @@ const HERO_ENTRANCE = {
   profileDelay: 80, // profile appears first
   textPanelDelay: 120, // align with section panel reveal
   textItemsDelay: 280, // align with section item reveal
-  contactIconsDelay: 520, // icon row starts after subtitle + paragraph sequence
+  contactIconsDelay: 860, // icon row starts only after intro paragraph fully settles
   duration: 420, // reveal transition duration
 }
 
@@ -213,6 +219,179 @@ const STAGGER_ITEM = {
 const EXPERIENCE_TIMING = {
   expandDuration: 320, // row detail expand/collapse duration
   iconRotate: 240, // plus icon rotate duration
+}
+
+const EXPERIENCE_LABEL_DIAL_DEFAULTS = {
+  look: 'softBox' as ExperienceHighlightLook,
+  target: 'triplet' as ExperienceHighlightTarget,
+  boxPosition: 'bottom' as ExperienceBoxPosition,
+  highlightColor: '#9ec8e8',
+  glowColor: '#cfe6f7',
+  hoverTextColor: '#1f2733',
+  alpha: 0.34,
+  blurPx: 10,
+  radiusPx: 9,
+  padX: 7,
+  padY: 2,
+  underlineThickness: 2,
+  scale: 1.04,
+  fadeMs: 360,
+} as const
+
+function hexToRgba(hexColor: string, alpha: number): string {
+  const normalized = hexColor.replace('#', '').trim()
+  const valid =
+    normalized.length === 3
+      ? normalized
+          .split('')
+          .map((char) => `${char}${char}`)
+          .join('')
+      : normalized
+
+  if (!/^[\da-fA-F]{6}$/.test(valid)) {
+    return `rgba(158, 200, 232, ${alpha})`
+  }
+
+  const value = Number.parseInt(valid, 16)
+  const red = (value >> 16) & 255
+  const green = (value >> 8) & 255
+  const blue = value & 255
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
+}
+
+function shouldHighlightExperienceLabel(target: ExperienceHighlightTarget, labelKey: ExperienceLabelKey): boolean {
+  if (target === 'triplet') {
+    return true
+  }
+  return target === labelKey
+}
+
+function buildExperienceLabelStyle({
+  isActive,
+  labelKey,
+  look,
+  target,
+  boxPosition,
+  highlightColor,
+  glowColor,
+  hoverTextColor,
+  alpha,
+  blurPx,
+  radiusPx,
+  padX,
+  padY,
+  underlineThickness,
+  scale,
+  fadeMs,
+}: {
+  isActive: boolean
+  labelKey: ExperienceLabelKey
+  look: ExperienceHighlightLook
+  target: ExperienceHighlightTarget
+  boxPosition: ExperienceBoxPosition
+  highlightColor: string
+  glowColor: string
+  hoverTextColor: string
+  alpha: number
+  blurPx: number
+  radiusPx: number
+  padX: number
+  padY: number
+  underlineThickness: number
+  scale: number
+  fadeMs: number
+}): CSSProperties {
+  const easing = 'cubic-bezier(0.22, 1, 0.36, 1)'
+  const transition =
+    `color ${fadeMs}ms ${easing}, opacity ${fadeMs}ms ${easing}, transform ${fadeMs}ms ${easing}, ` +
+    `background-size ${fadeMs}ms ${easing}, background-color ${fadeMs}ms ${easing}, ` +
+    `box-shadow ${fadeMs}ms ${easing}, border-color ${fadeMs}ms ${easing}, text-shadow ${fadeMs}ms ${easing}`
+
+  const baseStyle: CSSProperties = {
+    transition,
+    boxDecorationBreak: 'clone',
+    WebkitBoxDecorationBreak: 'clone',
+  }
+
+  if (!shouldHighlightExperienceLabel(target, labelKey)) {
+    return baseStyle
+  }
+
+  const highlightFill = hexToRgba(highlightColor, alpha)
+  const borderColor = hexToRgba(highlightColor, Math.min(1, alpha + 0.18))
+  const glowFill = hexToRgba(glowColor, Math.min(1, alpha + 0.12))
+  const underlineColor = hexToRgba(highlightColor, Math.min(1, alpha + 0.35))
+  const overlayGradient =
+    boxPosition === 'top'
+      ? `linear-gradient(to bottom, ${highlightFill} 0 64%, transparent 64% 100%)`
+      : `linear-gradient(to top, ${highlightFill} 0 64%, transparent 64% 100%)`
+
+  if (!isActive) {
+    if (look === 'underline') {
+      return {
+        ...baseStyle,
+        backgroundImage: `linear-gradient(${underlineColor}, ${underlineColor})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: '0 100%',
+        backgroundSize: `0% ${underlineThickness}px`,
+      }
+    }
+
+    return baseStyle
+  }
+
+  const activeStyle: CSSProperties = {
+    ...baseStyle,
+    color: hoverTextColor,
+    transform: `scale(${scale})`,
+  }
+
+  if (look === 'softBox') {
+    return {
+      ...activeStyle,
+      padding: `${padY}px ${padX}px`,
+      borderRadius: `${radiusPx}px`,
+      backgroundImage: overlayGradient,
+      boxShadow: `0 0 ${blurPx}px ${glowFill}`,
+    }
+  }
+
+  if (look === 'solidBox') {
+    return {
+      ...activeStyle,
+      padding: `${padY}px ${padX}px`,
+      borderRadius: `${radiusPx}px`,
+      backgroundColor: highlightFill,
+      border: `1px solid ${borderColor}`,
+      boxShadow: `0 0 ${blurPx}px ${glowFill}`,
+    }
+  }
+
+  if (look === 'pill') {
+    return {
+      ...activeStyle,
+      padding: `${padY}px ${padX + 2}px`,
+      borderRadius: `${Math.max(radiusPx, 999)}px`,
+      backgroundColor: hexToRgba(highlightColor, Math.min(1, alpha + 0.08)),
+      border: `1px solid ${borderColor}`,
+      boxShadow: `0 0 ${Math.max(blurPx - 2, 2)}px ${glowFill}`,
+    }
+  }
+
+  if (look === 'glow') {
+    return {
+      ...activeStyle,
+      textShadow: `0 0 ${Math.max(blurPx - 2, 2)}px ${glowFill}`,
+    }
+  }
+
+  return {
+    ...activeStyle,
+    backgroundImage: `linear-gradient(${underlineColor}, ${underlineColor})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: '0 100%',
+    backgroundSize: `100% ${underlineThickness}px`,
+  }
 }
 
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
@@ -266,6 +445,7 @@ function ContactLink({ link, actionClassName }: { link: ContactLinkItem; actionC
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
+  const [hoveredExperienceIndex, setHoveredExperienceIndex] = useState<number | null>(null)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const [heroTextStage, setHeroTextStage] = useState(0)
@@ -287,6 +467,57 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
   const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
+
+  const experienceLabelDial = useDialKit('Experience Label Lab', {
+    mode: {
+      look: {
+        type: 'select',
+        options: [
+          { value: 'softBox', label: 'Soft Box' },
+          { value: 'solidBox', label: 'Solid Box' },
+          { value: 'pill', label: 'Pill' },
+          { value: 'underline', label: 'Underline' },
+          { value: 'glow', label: 'Glow' },
+        ],
+        default: EXPERIENCE_LABEL_DIAL_DEFAULTS.look,
+      },
+      target: {
+        type: 'select',
+        options: [
+          { value: 'triplet', label: 'Year + Company + Title' },
+          { value: 'company', label: 'Company Only' },
+          { value: 'title', label: 'Title Only' },
+          { value: 'year', label: 'Year Only' },
+        ],
+        default: EXPERIENCE_LABEL_DIAL_DEFAULTS.target,
+      },
+      boxPosition: {
+        type: 'select',
+        options: [
+          { value: 'bottom', label: 'Box Below' },
+          { value: 'top', label: 'Box Above' },
+        ],
+        default: EXPERIENCE_LABEL_DIAL_DEFAULTS.boxPosition,
+      },
+    },
+    color: {
+      highlightColor: EXPERIENCE_LABEL_DIAL_DEFAULTS.highlightColor,
+      glowColor: EXPERIENCE_LABEL_DIAL_DEFAULTS.glowColor,
+      hoverTextColor: EXPERIENCE_LABEL_DIAL_DEFAULTS.hoverTextColor,
+    },
+    style: {
+      alpha: [EXPERIENCE_LABEL_DIAL_DEFAULTS.alpha, 0.08, 0.9],
+      blurPx: [EXPERIENCE_LABEL_DIAL_DEFAULTS.blurPx, 0, 24],
+      radiusPx: [EXPERIENCE_LABEL_DIAL_DEFAULTS.radiusPx, 0, 22],
+      padX: [EXPERIENCE_LABEL_DIAL_DEFAULTS.padX, 0, 20],
+      padY: [EXPERIENCE_LABEL_DIAL_DEFAULTS.padY, 0, 12],
+      underlineThickness: [EXPERIENCE_LABEL_DIAL_DEFAULTS.underlineThickness, 1, 6],
+    },
+    motion: {
+      scale: [EXPERIENCE_LABEL_DIAL_DEFAULTS.scale, 1, 1.18],
+      fadeMs: [EXPERIENCE_LABEL_DIAL_DEFAULTS.fadeMs, 120, 700],
+    },
+  })
 
   const openResumePreview = useCallback(() => {
     if (resumePreviewHideTimeoutRef.current) {
@@ -625,6 +856,23 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           >
             {experience.map((job, index) => {
               const isExpanded = expandedJobs.has(index)
+              const isRowHighlighted = hoveredExperienceIndex === index
+              const labelStyleConfig = {
+                look: experienceLabelDial.mode.look as ExperienceHighlightLook,
+                target: experienceLabelDial.mode.target as ExperienceHighlightTarget,
+                boxPosition: experienceLabelDial.mode.boxPosition as ExperienceBoxPosition,
+                highlightColor: experienceLabelDial.color.highlightColor,
+                glowColor: experienceLabelDial.color.glowColor,
+                hoverTextColor: experienceLabelDial.color.hoverTextColor,
+                alpha: experienceLabelDial.style.alpha,
+                blurPx: experienceLabelDial.style.blurPx,
+                radiusPx: experienceLabelDial.style.radiusPx,
+                padX: experienceLabelDial.style.padX,
+                padY: experienceLabelDial.style.padY,
+                underlineThickness: experienceLabelDial.style.underlineThickness,
+                scale: experienceLabelDial.motion.scale,
+                fadeMs: experienceLabelDial.motion.fadeMs,
+              }
 
               return (
                 <motion.div
@@ -649,22 +897,49 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         : 'border-transparent hover:border-[color-mix(in_srgb,var(--accent)_45%,var(--border))] hover:bg-[color-mix(in_srgb,var(--accent)_14%,transparent)]'
                     }`}
                     onClick={() => toggleJob(index)}
+                    onMouseEnter={() => setHoveredExperienceIndex(index)}
+                    onMouseLeave={() => {
+                      setHoveredExperienceIndex((current) => (current === index ? null : current))
+                    }}
+                    onFocus={() => setHoveredExperienceIndex(index)}
+                    onBlur={() => {
+                      setHoveredExperienceIndex((current) => (current === index ? null : current))
+                    }}
                   >
                     <div className="flex items-center space-x-6">
                       <span
                         className={`text-xs font-code w-16 transition-colors duration-300 ${
                           isExpanded ? 'text-foreground/80' : 'text-muted-foreground group-hover:text-foreground/80'
                         }`}
+                        style={buildExperienceLabelStyle({
+                          isActive: isRowHighlighted,
+                          labelKey: 'year',
+                          ...labelStyleConfig,
+                        })}
                       >
                         {job.year}
                       </span>
-                      <span className="font-code font-medium tracking-[0.06em]">{job.company}</span>
+                      <span
+                        className="font-code font-medium tracking-[0.06em]"
+                        style={buildExperienceLabelStyle({
+                          isActive: isRowHighlighted,
+                          labelKey: 'company',
+                          ...labelStyleConfig,
+                        })}
+                      >
+                        {job.company}
+                      </span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <span
                         className={`text-sm font-code tracking-[0.06em] hidden sm:block transition-colors duration-300 ${
                           isExpanded ? 'text-foreground/80' : 'text-muted-foreground group-hover:text-foreground/80'
                         }`}
+                        style={buildExperienceLabelStyle({
+                          isActive: isRowHighlighted,
+                          labelKey: 'title',
+                          ...labelStyleConfig,
+                        })}
                       >
                         {job.title}
                       </span>

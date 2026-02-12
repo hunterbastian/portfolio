@@ -168,7 +168,7 @@ const HERO_ENTRANCE = {
   profileDelay: 80, // profile appears first
   textPanelDelay: 120, // align with section panel reveal
   textItemsDelay: 280, // align with section item reveal
-  contactIconsDelay: 360, // icon row settles after intro copy
+  contactIconsDelay: 520, // icon row starts after subtitle + paragraph sequence
   duration: 420, // reveal transition duration
 }
 

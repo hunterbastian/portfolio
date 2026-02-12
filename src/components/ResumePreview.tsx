@@ -7,15 +7,15 @@ interface ResumePreviewProps {
 export default function ResumePreview({ isVisible }: ResumePreviewProps) {
   return (
     <div
-      className={`absolute left-0 bottom-full mb-3 z-50 pointer-events-none transition-transform transition-opacity duration-[420ms] ease-out ${
-        isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95'
+      className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 z-50 pointer-events-none origin-top transition-transform transition-opacity duration-[420ms] ease-out ${
+        isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-1 scale-95'
       }`}
       aria-hidden={!isVisible}
       style={{ willChange: 'transform, opacity' }}
     >
       <div
         className="bg-white border border-gray-300 rounded-lg shadow-2xl overflow-hidden"
-        style={{ width: '200px', height: '260px' }}
+        style={{ width: '170px', height: '220px' }}
       >
         <div className="bg-gray-100 px-3 py-2 border-b border-gray-200">
           <div className="text-[8px] font-semibold text-gray-700">HUNTER BASTIAN</div>

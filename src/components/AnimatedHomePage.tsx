@@ -71,7 +71,7 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactGlassActionClassName =
-  'group inline-flex h-9 w-9 items-center justify-center rounded-[12px] border border-white/40 bg-[linear-gradient(155deg,rgba(255,255,255,0.56),rgba(186,230,253,0.3))] text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,box-shadow] duration-[420ms] hover:scale-[1.12] hover:border-primary/45 hover:bg-[linear-gradient(155deg,rgba(255,255,255,0.7),rgba(186,230,253,0.4))] hover:shadow-[0_14px_28px_rgba(15,23,42,0.2)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-10 sm:w-10'
+  'group inline-flex h-9 w-9 items-center justify-center rounded-[12px] border border-white/55 bg-[linear-gradient(155deg,rgba(255,255,255,0.74),rgba(255,255,255,0.38))] text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,color,box-shadow] duration-[420ms] hover:scale-[1.12] hover:border-black/45 hover:bg-[linear-gradient(155deg,rgba(46,52,64,0.9),rgba(59,66,82,0.84))] hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.34)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/75 sm:h-10 sm:w-10'
 
 const contactIconGlyphClassName = 'h-[14px] w-[14px] sm:h-[15px] sm:w-[15px]'
 

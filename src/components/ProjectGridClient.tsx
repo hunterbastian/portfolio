@@ -65,8 +65,8 @@ const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
   'brand-identity-system': { rotate: -6.2, x: -14 }, // Middle Earth Journey - left tilt
   'aol-redesign': { rotate: -5.4, x: -11 }, // AOL Redesign - left tilt
   'porsche-app': { rotate: 6.2, x: 14 }, // Porsche App - right tilt
-  'wander-utah': { rotate: 5.1, x: 10 }, // UXCross/Wander card - right tilt
-  'grand-teton-wallet': { rotate: 3.2, x: 7 },
+  'wander-utah': { rotate: 0, x: 0 }, // centered / no tilt
+  'grand-teton-wallet': { rotate: 0, x: 0 }, // centered / no tilt
   nutricost: { rotate: -2.8, x: -5 },
 }
 

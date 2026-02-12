@@ -80,10 +80,10 @@ const mobileContactLabelClassName =
 const experience: ExperienceItem[] = [
   {
     year: '2026 - Present',
-    company: 'Studio Space Alpine',
+    company: 'Studio Alpine',
     title: 'Founder',
     description:
-      "Founder of Studio Space Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future.",
+      "Founder of Studio Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future.",
   },
   {
     year: '2024 - Present',
@@ -508,7 +508,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               href="/archive"
               className="social-button nord-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs rounded-sm transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
             >
-              <span className="font-code font-light tracking-[0.08em] relative z-10">Other</span>
+              <span className="font-code font-light uppercase tracking-[0.08em] relative z-10">Other</span>
             </a>
           </div>
         </div>
@@ -563,10 +563,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   >
                     <div className="flex items-center space-x-6">
                       <span className="text-muted-foreground text-xs font-code w-16">{job.year}</span>
-                      <span className="font-medium font-garamond-narrow">{job.company}</span>
+                      <span className="font-code font-medium uppercase tracking-[0.06em]">{job.company}</span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <span className="text-muted-foreground text-sm font-garamond-narrow hidden sm:block">{job.title}</span>
+                      <span className="text-muted-foreground text-sm font-code uppercase tracking-[0.06em] hidden sm:block">{job.title}</span>
                       <motion.div
                         className="w-5 h-5 flex items-center justify-center transition-transform duration-[400ms] text-muted-foreground"
                         animate={{ rotate: isExpanded ? 45 : 0 }}
@@ -594,7 +594,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         className="overflow-hidden"
                       >
                         <div className="pb-4 pl-2 sm:pl-[5.5rem] pr-2">
-                          <p className="text-muted-foreground text-sm leading-relaxed">{job.description}</p>
+                          <p className="text-muted-foreground text-sm font-inter leading-relaxed">{job.description}</p>
                         </div>
                       </motion.div>
                     )}
@@ -648,9 +648,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                   <div className="text-muted-foreground text-xs font-code sm:min-w-[100px]">{edu.year}</div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground text-base mb-1 font-garamond-narrow">{edu.institution}</h3>
-                    <p className="text-foreground text-sm mb-1 font-garamond-narrow">{edu.degree}</p>
-                    <p className="text-muted-foreground text-sm font-garamond-narrow">{edu.level}</p>
+                    <h3 className="font-code font-semibold text-foreground text-base mb-1 uppercase tracking-[0.06em]">{edu.institution}</h3>
+                    <p className="text-foreground text-sm font-code mb-1 uppercase tracking-[0.06em]">{edu.degree}</p>
+                    <p className="text-muted-foreground text-sm font-code uppercase tracking-[0.06em]">{edu.level}</p>
                     {edu.note && (
                       <p className="text-muted-foreground text-xs mt-1 font-code tracking-[0.08em]" style={{ opacity: 0.7 }}>
                         {edu.note}

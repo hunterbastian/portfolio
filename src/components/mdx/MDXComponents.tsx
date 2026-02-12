@@ -5,6 +5,9 @@ import ComparisonSlider from './ComparisonSlider'
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>
 type ParagraphProps = React.HTMLAttributes<HTMLParagraphElement>
+type ListProps = React.HTMLAttributes<HTMLUListElement>
+type OrderedListProps = React.HTMLAttributes<HTMLOListElement>
+type ListItemProps = React.HTMLAttributes<HTMLLIElement>
 type AnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>
 type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   width?: number
@@ -24,7 +27,19 @@ export const H3: React.FC<HeadingProps> = ({ children, ...props }) => (
 )
 
 export const P: React.FC<ParagraphProps> = ({ children, ...props }) => (
-  <p className="mb-4 leading-relaxed" {...props}>{children}</p>
+  <p className="mb-4 font-inter leading-relaxed" {...props}>{children}</p>
+)
+
+export const UL: React.FC<ListProps> = ({ children, ...props }) => (
+  <ul className="mb-4 list-disc pl-6 font-inter leading-relaxed" {...props}>{children}</ul>
+)
+
+export const OL: React.FC<OrderedListProps> = ({ children, ...props }) => (
+  <ol className="mb-4 list-decimal pl-6 font-inter leading-relaxed" {...props}>{children}</ol>
+)
+
+export const LI: React.FC<ListItemProps> = ({ children, ...props }) => (
+  <li className="mb-1 font-inter" {...props}>{children}</li>
 )
 
 export const A: React.FC<AnchorProps> = ({ href = '', children, ...props }) => {
@@ -74,6 +89,9 @@ const mdxComponents = {
   h2: H2,
   h3: H3,
   p: P,
+  ul: UL,
+  ol: OL,
+  li: LI,
   a: A,
   img: Img,
   video: Video,
@@ -81,4 +99,3 @@ const mdxComponents = {
 }
 
 export default mdxComponents
-

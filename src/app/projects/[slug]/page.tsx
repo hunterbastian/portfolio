@@ -198,7 +198,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         )}
 
         {/* MDX Content */}
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-lg dark:prose-invert max-w-none [&_li]:font-inter [&_ol]:font-inter [&_p]:font-inter [&_ul]:font-inter">
           <MDXRemote source={content} components={mdxComponents} />
         </div>
       </article>

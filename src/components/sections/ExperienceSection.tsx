@@ -6,9 +6,9 @@ import { useState } from 'react'
 const experience = [
   {
     year: '2026 - Present',
-    company: 'Studio Space Alpine',
+    company: 'Studio Alpine',
     title: 'Founder',
-    description: "Founder of Studio Space Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future."
+    description: "Founder of Studio Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future."
   },
   {
     year: '2024 - Present',

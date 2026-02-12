@@ -67,17 +67,19 @@ const BUTTON_COLORS = {
  * ───────────────────────────────────────────────────────── */
 
 const LABEL_TIMING = {
-  start: 24, // heading label reveal starts
-  charDuration: 170, // each character transition duration
-  charStagger: 12, // stagger gap between characters
+  start: 72, // heading label reveal starts
+  charDuration: 260, // each character transition duration
+  charStagger: 24, // stagger gap between characters
 }
 
 const LABEL_CHAR = {
   initialOpacity: 0, // hidden character before reveal
   finalOpacity: 1, // visible character at rest
-  initialY: 2, // tiny vertical offset before reveal
+  initialY: 8, // vertical offset before reveal
   finalY: 0, // resting character position
-  initialBlur: 'blur(1px)', // softened character before reveal
+  initialScale: 0.96, // slight size dip before reveal
+  finalScale: 1, // resting size
+  initialBlur: 'blur(4px)', // softened character before reveal
   finalBlur: 'blur(0px)', // crisp character at rest
   ease: MOTION_EASE_STANDARD,
 }
@@ -111,7 +113,7 @@ export default function CollapsibleSection({
   const rowStagger = motionDelayMs(SECTION_TIMING.rowStagger, prefersReducedMotion)
   const contentPanelClassName = contentClassName ?? ''
   const contentItems = Children.toArray(children)
-  const titleChars = useMemo(() => Array.from(title), [title])
+  const titleChars = useMemo(() => Array.from(title.toUpperCase()), [title])
   const sectionClasses = [className, isOpen ? openClassName : closedClassName, 'transition-[padding] duration-300']
     .filter(Boolean)
     .join(' ')
@@ -186,8 +188,8 @@ export default function CollapsibleSection({
 
   return (
     <section id={id} className={sectionClasses}>
-      <div className="relative mx-auto flex min-h-6 w-full max-w-2xl items-center justify-between md:justify-start">
-        <h2 ref={titleRef} className="section-heading m-0 font-inter text-sm leading-none" aria-label={title}>
+      <div className="relative mx-auto flex min-h-6 w-full max-w-2xl items-center justify-start">
+        <h2 ref={titleRef} className="section-heading m-0 pl-9 font-code text-sm leading-none" aria-label={title}>
           <span className="sr-only">{title}</span>
           <span aria-hidden className="inline-flex items-center">
             {titleChars.map((char, index) => (
@@ -198,6 +200,7 @@ export default function CollapsibleSection({
                 animate={{
                   opacity: titleStage >= 1 ? LABEL_CHAR.finalOpacity : LABEL_CHAR.initialOpacity,
                   y: titleStage >= 1 ? LABEL_CHAR.finalY : LABEL_CHAR.initialY,
+                  scale: titleStage >= 1 ? LABEL_CHAR.finalScale : LABEL_CHAR.initialScale,
                   filter: titleStage >= 1 ? LABEL_CHAR.finalBlur : LABEL_CHAR.initialBlur,
                 }}
                 transition={{
@@ -219,7 +222,7 @@ export default function CollapsibleSection({
           aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
           initial={false}
           animate={buttonControls}
-          className="group inline-flex h-6 w-6 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:absolute md:left-0 md:top-1/2 md:-translate-x-7 md:-translate-y-1/2"
+          className="group absolute left-0 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           <motion.span
             initial={false}

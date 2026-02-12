@@ -43,6 +43,7 @@ type ExperienceHighlightLook = 'softBox' | 'solidBox' | 'underline' | 'glow' | '
 type ExperienceHighlightTarget = 'triplet' | 'company' | 'year' | 'title'
 type ExperienceBoxPosition = 'top' | 'bottom'
 type ExperienceLabelKey = 'year' | 'company' | 'title'
+type SocialLabelLook = 'minimal' | 'underline' | 'softBox' | 'solidBox'
 
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
 type SectionOpenState = Record<SectionKey, boolean>
@@ -77,13 +78,13 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex origin-center items-center gap-1.5 text-[color:color-mix(in_srgb,var(--foreground)_38%,var(--background))] no-underline opacity-[0.74] transition-[color,opacity,transform,text-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.04] hover:text-foreground hover:opacity-100 hover:[text-shadow:0_0_10px_rgba(46,52,64,0.2)] dark:hover:[text-shadow:0_0_10px_rgba(229,233,240,0.22)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'group inline-flex origin-center items-center gap-1.5 no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const contactIconGlyphClassName =
-  'h-[13px] w-[13px] opacity-[0.68] transition-[transform,opacity] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.12] group-hover:opacity-100 sm:h-[14px] sm:w-[14px]'
+  'h-[13px] w-[13px] sm:h-[14px] sm:w-[14px]'
 
 const contactInlineLabelClassName =
-  'font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/34 opacity-[0.72] transition-[text-shadow,decoration-color,opacity] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:decoration-current/90 group-hover:opacity-100 group-hover:[text-shadow:0_0_8px_rgba(46,52,64,0.2)] dark:group-hover:[text-shadow:0_0_8px_rgba(229,233,240,0.2)]'
+  'font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px]'
 
 const experience: ExperienceItem[] = [
   {
@@ -236,6 +237,26 @@ const EXPERIENCE_LABEL_DIAL_DEFAULTS = {
   underlineThickness: 2,
   scale: 1.04,
   fadeMs: 360,
+} as const
+
+const SOCIAL_ICON_DIAL_DEFAULTS = {
+  labelLook: 'underline' as SocialLabelLook,
+  baseColor: '#596377',
+  hoverColor: '#1d2430',
+  accentColor: '#9ec8e8',
+  glowColor: '#c6ddf0',
+  baseOpacity: 0.66,
+  hoverOpacity: 1,
+  iconBaseOpacity: 0.64,
+  iconHoverOpacity: 1,
+  labelBaseOpacity: 0.72,
+  labelHoverOpacity: 1,
+  underlineBaseOpacity: 0.3,
+  underlineHoverOpacity: 0.92,
+  accentAlpha: 0.28,
+  hoverScale: 1.04,
+  iconHoverScale: 1.12,
+  fadeMs: 420,
 } as const
 
 function hexToRgba(hexColor: string, alpha: number): string {
@@ -420,22 +441,53 @@ function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotio
   return stage
 }
 
-function ContactIcon({ iconName, label, className = 'h-5 w-5' }: { iconName: CentralIconName; label: string; className?: string }) {
-  return <CentralIcon name={iconName} size={20} className={className} aria-label={label} />
+function ContactIcon({
+  iconName,
+  label,
+  className = 'h-5 w-5',
+  style,
+}: {
+  iconName: CentralIconName
+  label: string
+  className?: string
+  style?: CSSProperties
+}) {
+  return <CentralIcon name={iconName} size={20} className={className} style={style} aria-label={label} />
 }
 
-function ContactLink({ link, actionClassName }: { link: ContactLinkItem; actionClassName: string }) {
+function ContactLink({
+  link,
+  actionClassName,
+  actionStyle,
+  iconStyle,
+  labelStyle,
+  onHoverStart,
+  onHoverEnd,
+}: {
+  link: ContactLinkItem
+  actionClassName: string
+  actionStyle: CSSProperties
+  iconStyle: CSSProperties
+  labelStyle: CSSProperties
+  onHoverStart: () => void
+  onHoverEnd: () => void
+}) {
   return (
     <a
       href={link.href}
       target="_blank"
       rel="noopener noreferrer"
       className={actionClassName}
+      style={actionStyle}
       aria-label={link.label}
       title={link.label}
+      onMouseEnter={onHoverStart}
+      onMouseLeave={onHoverEnd}
+      onFocus={onHoverStart}
+      onBlur={onHoverEnd}
     >
-      <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} />
-      <span className={contactInlineLabelClassName}>
+      <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} style={iconStyle} />
+      <span className={contactInlineLabelClassName} style={labelStyle}>
         {link.label}
       </span>
     </a>
@@ -446,6 +498,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
   const [hoveredExperienceIndex, setHoveredExperienceIndex] = useState<number | null>(null)
+  const [hoveredSocialAction, setHoveredSocialAction] = useState<string | null>(null)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const [heroTextStage, setHeroTextStage] = useState(0)
@@ -518,6 +571,120 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       fadeMs: [EXPERIENCE_LABEL_DIAL_DEFAULTS.fadeMs, 120, 700],
     },
   })
+
+  const socialIconDial = useDialKit('Social Icon Lab', {
+    mode: {
+      labelLook: {
+        type: 'select',
+        options: [
+          { value: 'underline', label: 'Underline (Recommended)' },
+          { value: 'minimal', label: 'Minimal' },
+          { value: 'softBox', label: 'Soft Box' },
+          { value: 'solidBox', label: 'Solid Box' },
+        ],
+        default: SOCIAL_ICON_DIAL_DEFAULTS.labelLook,
+      },
+    },
+    color: {
+      baseColor: SOCIAL_ICON_DIAL_DEFAULTS.baseColor,
+      hoverColor: SOCIAL_ICON_DIAL_DEFAULTS.hoverColor,
+      accentColor: SOCIAL_ICON_DIAL_DEFAULTS.accentColor,
+      glowColor: SOCIAL_ICON_DIAL_DEFAULTS.glowColor,
+    },
+    emphasis: {
+      baseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.baseOpacity, 0.25, 1],
+      hoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.hoverOpacity, 0.45, 1],
+      iconBaseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.iconBaseOpacity, 0.2, 1],
+      iconHoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.iconHoverOpacity, 0.4, 1],
+      labelBaseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.labelBaseOpacity, 0.25, 1],
+      labelHoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.labelHoverOpacity, 0.45, 1],
+      underlineBaseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.underlineBaseOpacity, 0.05, 0.9],
+      underlineHoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.underlineHoverOpacity, 0.2, 1],
+      accentAlpha: [SOCIAL_ICON_DIAL_DEFAULTS.accentAlpha, 0.05, 0.9],
+    },
+    motion: {
+      hoverScale: [SOCIAL_ICON_DIAL_DEFAULTS.hoverScale, 1, 1.16],
+      iconHoverScale: [SOCIAL_ICON_DIAL_DEFAULTS.iconHoverScale, 1, 1.24],
+      fadeMs: [SOCIAL_ICON_DIAL_DEFAULTS.fadeMs, 120, 800],
+    },
+  })
+
+  const socialTransitionMs = Math.max(120, Math.round(socialIconDial.motion.fadeMs))
+  const socialTransition = `all ${socialTransitionMs}ms cubic-bezier(0.22, 1, 0.36, 1)`
+  const socialLabelLook = socialIconDial.mode.labelLook as SocialLabelLook
+
+  const socialAccentAlpha = Math.min(1, Math.max(0.05, socialIconDial.emphasis.accentAlpha))
+  const socialUnderlineBaseOpacity = Math.min(1, Math.max(0, socialIconDial.emphasis.underlineBaseOpacity))
+  const socialUnderlineHoverOpacity = Math.min(1, Math.max(0, socialIconDial.emphasis.underlineHoverOpacity))
+  const socialAccentFill = hexToRgba(socialIconDial.color.accentColor, socialAccentAlpha)
+  const socialAccentBorder = hexToRgba(socialIconDial.color.accentColor, Math.min(1, socialAccentAlpha + 0.2))
+  const socialLineBase = hexToRgba(socialIconDial.color.accentColor, socialUnderlineBaseOpacity)
+  const socialLineHover = hexToRgba(socialIconDial.color.accentColor, socialUnderlineHoverOpacity)
+  const socialGlow = hexToRgba(socialIconDial.color.glowColor, Math.min(1, socialAccentAlpha + 0.16))
+
+  const getSocialActionStyle = (isHovered: boolean): CSSProperties => ({
+    transition: socialTransition,
+    color: isHovered ? socialIconDial.color.hoverColor : socialIconDial.color.baseColor,
+    opacity: isHovered ? socialIconDial.emphasis.hoverOpacity : socialIconDial.emphasis.baseOpacity,
+    transform: `scale(${isHovered ? socialIconDial.motion.hoverScale : 1})`,
+    textShadow: isHovered ? `0 0 10px ${socialGlow}` : 'none',
+  })
+
+  const getSocialIconStyle = (isHovered: boolean): CSSProperties => ({
+    transition: socialTransition,
+    opacity: isHovered ? socialIconDial.emphasis.iconHoverOpacity : socialIconDial.emphasis.iconBaseOpacity,
+    transform: `scale(${isHovered ? socialIconDial.motion.iconHoverScale : 1})`,
+  })
+
+  const getSocialLabelStyle = (isHovered: boolean): CSSProperties => {
+    const baseStyle: CSSProperties = {
+      transition: socialTransition,
+      opacity: isHovered ? socialIconDial.emphasis.labelHoverOpacity : socialIconDial.emphasis.labelBaseOpacity,
+      textDecorationColor: isHovered ? socialLineHover : socialLineBase,
+      boxDecorationBreak: 'clone',
+      WebkitBoxDecorationBreak: 'clone',
+    }
+
+    if (socialLabelLook === 'minimal') {
+      return baseStyle
+    }
+
+    if (socialLabelLook === 'softBox') {
+      return {
+        ...baseStyle,
+        padding: '1px 6px',
+        borderRadius: '8px',
+        background: isHovered ? socialAccentFill : 'transparent',
+      }
+    }
+
+    if (socialLabelLook === 'solidBox') {
+      return {
+        ...baseStyle,
+        padding: '1px 6px',
+        borderRadius: '8px',
+        background: isHovered ? socialAccentFill : 'transparent',
+        border: isHovered ? `1px solid ${socialAccentBorder}` : '1px solid transparent',
+      }
+    }
+
+    return {
+      ...baseStyle,
+      textDecorationColor: 'transparent',
+      backgroundImage: `linear-gradient(${isHovered ? socialLineHover : socialLineBase}, ${isHovered ? socialLineHover : socialLineBase})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: '0 100%',
+      backgroundSize: isHovered ? '100% 2px' : '0% 2px',
+    }
+  }
+
+  const handleSocialHoverStart = (label: string) => {
+    setHoveredSocialAction(label)
+  }
+
+  const handleSocialHoverEnd = (label: string) => {
+    setHoveredSocialAction((current) => (current === label ? null : current))
+  }
 
   const openResumePreview = useCallback(() => {
     if (resumePreviewHideTimeoutRef.current) {
@@ -736,7 +903,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   ease: STAGGER_PANEL.ease,
                 }}
               >
-                <ContactLink link={link} actionClassName={contactInlineActionClassName} />
+                <ContactLink
+                  link={link}
+                  actionClassName={contactInlineActionClassName}
+                  actionStyle={getSocialActionStyle(hoveredSocialAction === link.label)}
+                  iconStyle={getSocialIconStyle(hoveredSocialAction === link.label)}
+                  labelStyle={getSocialLabelStyle(hoveredSocialAction === link.label)}
+                  onHoverStart={() => handleSocialHoverStart(link.label)}
+                  onHoverEnd={() => handleSocialHoverEnd(link.label)}
+                />
               </motion.div>
             ))}
 
@@ -761,15 +936,33 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   setShowResumeModal(true)
                 }}
                 className={contactInlineActionClassName}
-                onMouseEnter={openResumePreview}
-                onMouseLeave={closeResumePreview}
-                onFocus={openResumePreview}
-                onBlur={closeResumePreview}
+                style={getSocialActionStyle(hoveredSocialAction === 'Resume')}
+                onMouseEnter={() => {
+                  handleSocialHoverStart('Resume')
+                  openResumePreview()
+                }}
+                onMouseLeave={() => {
+                  handleSocialHoverEnd('Resume')
+                  closeResumePreview()
+                }}
+                onFocus={() => {
+                  handleSocialHoverStart('Resume')
+                  openResumePreview()
+                }}
+                onBlur={() => {
+                  handleSocialHoverEnd('Resume')
+                  closeResumePreview()
+                }}
                 aria-label="Resume"
                 title="Resume"
               >
-                <ContactIcon iconName={resumeIconName} label="Resume" className={contactIconGlyphClassName} />
-                <span className={contactInlineLabelClassName}>
+                <ContactIcon
+                  iconName={resumeIconName}
+                  label="Resume"
+                  className={contactIconGlyphClassName}
+                  style={getSocialIconStyle(hoveredSocialAction === 'Resume')}
+                />
+                <span className={contactInlineLabelClassName} style={getSocialLabelStyle(hoveredSocialAction === 'Resume')}>
                   Resume
                 </span>
               </button>

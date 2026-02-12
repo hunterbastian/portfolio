@@ -34,6 +34,7 @@ interface EducationItem {
 
 interface ContactLinkItem {
   label: string
+  mobileLabel?: string
   href: string
   iconName: CentralIconName
 }
@@ -71,10 +72,10 @@ const desktopContactActionClassName =
   'hidden md:inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-all duration-[420ms] hover:-translate-y-0.5 hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const mobileContactActionClassName =
-  'inline-flex md:hidden h-11 w-full items-center justify-start gap-2.5 rounded-md border border-border bg-card/88 px-3 text-foreground shadow-sm transition-all duration-[420ms] hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'inline-flex md:hidden h-12 w-full items-center justify-start gap-3 rounded-lg border border-border bg-card/88 px-4 text-foreground shadow-sm transition-all duration-[420ms] hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const mobileContactLabelClassName =
-  'font-code text-[10px] tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-300 group-hover:text-foreground'
+  'font-code text-[11px] tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-300 group-hover:text-foreground'
 
 const experience: ExperienceItem[] = [
   {
@@ -139,7 +140,7 @@ const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
 const contactLinks: ContactLinkItem[] = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconName: 'IconInstagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconName: 'IconLinkedin' },
-  { label: 'X', href: 'https://x.com/thestudioalpine', iconName: 'IconX' },
+  { label: 'X', mobileLabel: 'Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconX' },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconName: 'IconGithub' },
   { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconName: 'IconDribbble' },
 ]
@@ -215,6 +216,8 @@ function ContactIcon({ iconName, label, className = 'h-5 w-5' }: { iconName: Cen
 }
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
+  const mobileLabel = link.mobileLabel ?? link.label
+
   return (
     <>
       <a
@@ -222,10 +225,10 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
         target="_blank"
         rel="noopener noreferrer"
         className={`group ${mobileContactActionClassName}`}
-        aria-label={`Social media icon ${link.label}`}
+        aria-label={mobileLabel}
       >
-        <ContactIcon iconName={link.iconName} label={link.label} className="h-4 w-4 shrink-0" />
-        <span className={mobileContactLabelClassName}>Social media icon {link.label}</span>
+        <ContactIcon iconName={link.iconName} label={mobileLabel} className="h-[18px] w-[18px] shrink-0" />
+        <span className={mobileContactLabelClassName}>{mobileLabel}</span>
       </a>
       <a
         href={link.href}
@@ -431,10 +434,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 type="button"
                 onClick={() => setShowResumeModal(true)}
                 className={`group ${mobileContactActionClassName}`}
-                aria-label="Social media icon Resume"
+                aria-label="Resume"
               >
-                <ContactIcon iconName={resumeIconName} label="Resume" className="h-4 w-4 shrink-0" />
-                <span className={mobileContactLabelClassName}>Social media icon Resume</span>
+                <ContactIcon iconName={resumeIconName} label="Resume" className="h-[18px] w-[18px] shrink-0" />
+                <span className={mobileContactLabelClassName}>Resume</span>
               </button>
               <button
                 ref={resumeButtonRef}

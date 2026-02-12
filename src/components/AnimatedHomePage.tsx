@@ -80,54 +80,60 @@ const mobileContactLabelClassName =
 const experience: ExperienceItem[] = [
   {
     year: '2026 - Present',
-    company: 'Studio Alpine',
+    company: 'studio alpine',
     title: 'Founder',
     description:
-      "Founder of Studio Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future.",
+      "Founder of studio alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future.",
   },
   {
     year: '2024 - Present',
-    company: 'Catapult',
+    company: 'catapult',
     title: 'Video Producer',
     description:
-      'Produce and edit marketing videos for Catapult products including banner stands, from planning and filming to post-production in Final Cut Pro. Deliver optimized content for YouTube to support marketing campaigns and ensure alignment with brand standards.',
+      'Produce and edit marketing videos for catapult products including banner stands, from planning and filming to post-production in Final Cut Pro. Deliver optimized content for YouTube to support marketing campaigns and ensure alignment with brand standards.',
   },
   {
     year: '2024 - Present',
-    company: 'Utah Valley University',
+    company: 'utah valley university',
     title: 'Department Representative',
     description:
       'Helped new students with internship opportunities, helping design students in the Web Design and Development program, working on ongoing topics and issues within our department. Responsibilities include finding internship opportunities for students and assisting at school sponsored events, as well as content creation for UVU CET social media and marketing.',
   },
   {
     year: '2023',
-    company: 'Nutricost',
+    company: 'nutricost',
     title: 'Graphic Design Intern',
     description:
-      'At Nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue. Assisted the marketing team with their design queue and helped with production. Edited product mockups in Photoshop and Illustrator for Nutricost online product images. Worked on and edited Amazon online product images.',
+      'At nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue. Assisted the marketing team with their design queue and helped with production. Edited product mockups in Photoshop and Illustrator for nutricost online product images. Worked on and edited Amazon online product images.',
   },
   {
     year: '2017',
-    company: 'Clutch.',
+    company: 'clutch.',
     title: 'Digital Design Intern',
     description:
-      'At Clutch, I helped with design branding and further improved my knowledge about the UX design process.',
+      'At clutch, I helped with design branding and further improved my knowledge about the UX design process.',
   },
 ]
 
 const education: EducationItem[] = [
   {
     year: '2023 - 2027',
-    institution: 'Utah Valley University',
+    institution: 'utah valley university',
     degree: 'Interaction Design',
     level: "Bachelor's Degree",
   },
   {
     year: '2021',
-    institution: 'Columbus State Community College',
+    institution: 'columbus state community college',
     degree: 'Graphic Design',
     level: "Associate's Degree",
     note: 'TRANSFERRED TO UVU',
+  },
+  {
+    year: '2021',
+    institution: 'google',
+    degree: 'it support professional certificate',
+    level: 'issued in 2021',
   },
 ]
 
@@ -563,10 +569,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   >
                     <div className="flex items-center space-x-6">
                       <span className="text-muted-foreground text-xs font-code w-16">{job.year}</span>
-                      <span className="font-code font-medium uppercase tracking-[0.06em]">{job.company}</span>
+                      <span className="font-code font-medium tracking-[0.06em]">{job.company}</span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <span className="text-muted-foreground text-sm font-code uppercase tracking-[0.06em] hidden sm:block">{job.title}</span>
+                      <span className="text-muted-foreground text-sm font-code tracking-[0.06em] hidden sm:block">{job.title}</span>
                       <motion.div
                         className="w-5 h-5 flex items-center justify-center transition-transform duration-[400ms] text-muted-foreground"
                         animate={{ rotate: isExpanded ? 45 : 0 }}
@@ -648,9 +654,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                   <div className="text-muted-foreground text-xs font-code sm:min-w-[100px]">{edu.year}</div>
                   <div className="flex-1">
-                    <h3 className="font-code font-semibold text-foreground text-base mb-1 uppercase tracking-[0.06em]">{edu.institution}</h3>
-                    <p className="text-foreground text-sm font-code mb-1 uppercase tracking-[0.06em]">{edu.degree}</p>
-                    <p className="text-muted-foreground text-sm font-code uppercase tracking-[0.06em]">{edu.level}</p>
+                    <h3 className="font-code font-semibold text-foreground text-base mb-1 tracking-[0.06em]">{edu.institution}</h3>
+                    <p className="text-foreground text-sm font-code mb-1 tracking-[0.06em]">{edu.degree}</p>
+                    <p className="text-muted-foreground text-sm font-code tracking-[0.06em]">{edu.level}</p>
                     {edu.note && (
                       <p className="text-muted-foreground text-xs mt-1 font-code tracking-[0.08em]" style={{ opacity: 0.7 }}>
                         {edu.note}

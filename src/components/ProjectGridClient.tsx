@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProjectFrontmatter } from '@/types/project'
 import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
+import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface Project {
   slug: string
@@ -16,9 +18,36 @@ interface ProjectGridClientProps {
   projects: Project[]
 }
 
+const CARD_STAGGER_TIMING = {
+  panelAppear: 120,
+  cardsAppear: 280,
+  panelDuration: 380,
+  cardDuration: 420,
+  cardStagger: 90,
+}
+
+const CARD_STAGGER_PANEL = {
+  initialOpacity: 0,
+  finalOpacity: 1,
+  initialY: 14,
+  finalY: 0,
+  ease: MOTION_EASE_STANDARD,
+}
+
+const CARD_STAGGER_ITEM = {
+  initialOpacity: 0,
+  finalOpacity: 1,
+  initialY: 16,
+  finalY: 0,
+}
+
 export default function ProjectGridClient({ projects }: ProjectGridClientProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [stage, setStage] = useState(0)
   const router = useRouter()
+  const prefersReducedMotion = useReducedMotion() ?? false
+  const gridRef = useRef<HTMLDivElement>(null)
+  const isGridInView = useInView(gridRef, { once: true, amount: 0.16 })
   const prefetchedSlugsRef = useRef(new Set<string>())
   const hoverClearTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -83,6 +112,25 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     }
   }, [])
 
+  useEffect(() => {
+    if (!isGridInView) {
+      setStage(0)
+      return
+    }
+
+    if (prefersReducedMotion) {
+      setStage(2)
+      return
+    }
+
+    setStage(0)
+    const timers: Array<ReturnType<typeof setTimeout>> = []
+    timers.push(setTimeout(() => setStage(1), CARD_STAGGER_TIMING.panelAppear))
+    timers.push(setTimeout(() => setStage(2), CARD_STAGGER_TIMING.cardsAppear))
+
+    return () => timers.forEach(clearTimeout)
+  }, [isGridInView, prefersReducedMotion])
+
   const cancelHoverClear = () => {
     if (hoverClearTimeoutRef.current !== null) {
       clearTimeout(hoverClearTimeoutRef.current)
@@ -112,16 +160,28 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   const rotations = [-1.8, 0.9, 1.6, -1.2, 0.7, 1.3]
 
   return (
-    <div className="mx-auto grid max-w-[1040px] grid-cols-1 justify-items-center gap-x-7 gap-y-10 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-0">
+    <motion.div
+      ref={gridRef}
+      className="mx-auto grid max-w-[760px] grid-cols-1 justify-items-center gap-x-6 gap-y-8 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-0"
+      initial={{ opacity: CARD_STAGGER_PANEL.initialOpacity, y: CARD_STAGGER_PANEL.initialY }}
+      animate={{
+        opacity: stage >= 1 ? CARD_STAGGER_PANEL.finalOpacity : CARD_STAGGER_PANEL.initialOpacity,
+        y: stage >= 1 ? CARD_STAGGER_PANEL.finalY : CARD_STAGGER_PANEL.initialY,
+      }}
+      transition={{
+        duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
+        ease: CARD_STAGGER_PANEL.ease,
+      }}
+    >
       {projects.map((project, index) => {
         const isHovered = hoveredIndex === index
         const baseRotation = rotations[index % rotations.length]
         const cardOpacity = hoveredIndex === null || isHovered ? 1 : 0.9
 
         return (
-          <div
+          <motion.div
             key={project.slug}
-            className="w-full max-w-[17.5rem] transition-[transform,opacity,filter]"
+            className="w-full max-w-[11.75rem] transition-[transform,opacity,filter]"
             style={{
               transform: isHovered ? 'translateY(-3px) rotate(0deg)' : `translateY(0px) rotate(${baseRotation}deg)`,
               opacity: cardOpacity,
@@ -131,6 +191,16 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
             }}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
+            initial={{ opacity: CARD_STAGGER_ITEM.initialOpacity, y: CARD_STAGGER_ITEM.initialY }}
+            animate={{
+              opacity: stage >= 2 ? CARD_STAGGER_ITEM.finalOpacity : CARD_STAGGER_ITEM.initialOpacity,
+              y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
+            }}
+            transition={{
+              duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
+              delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
+              ease: CARD_STAGGER_PANEL.ease,
+            }}
           >
             <Magnetic
               className="will-change-transform"
@@ -151,9 +221,9 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
                 </div>
               )}
             </Magnetic>
-          </div>
+          </motion.div>
         )
       })}
-    </div>
+    </motion.div>
   )
 }

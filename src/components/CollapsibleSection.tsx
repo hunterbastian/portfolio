@@ -105,8 +105,7 @@ export default function CollapsibleSection({
 
   return (
     <section id={id} className={sectionClasses}>
-      <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
-        <h2 className="section-heading font-inter text-sm">{title}</h2>
+      <div className="max-w-2xl mx-auto flex items-center justify-start gap-3">
         <button
           type="button"
           onClick={onToggle}
@@ -126,6 +125,7 @@ export default function CollapsibleSection({
             </svg>
           </motion.span>
         </button>
+        <h2 className="section-heading font-inter text-sm">{title}</h2>
       </div>
 
       <AnimatePresence initial={false}>

@@ -38,6 +38,8 @@ interface ContactLinkItem {
   iconName: CentralIconName
 }
 
+type ContactHoverStyle = 'dark' | 'light'
+
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
 type SectionOpenState = Record<SectionKey, boolean>
 
@@ -70,8 +72,14 @@ const INITIAL_SECTION_LOAD_DELAY = {
   caseStudies: 440,
 } as const
 
-const contactGlassActionClassName =
-  'group inline-flex h-9 w-9 items-center justify-center rounded-[12px] border border-white/55 bg-[linear-gradient(155deg,rgba(255,255,255,0.74),rgba(255,255,255,0.38))] text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,color,box-shadow] duration-[420ms] hover:scale-[1.12] hover:border-black/45 hover:bg-[linear-gradient(155deg,rgba(46,52,64,0.9),rgba(59,66,82,0.84))] hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.34)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/75 sm:h-10 sm:w-10'
+const contactGlassActionBaseClassName =
+  'group inline-flex h-9 w-9 items-center justify-center rounded-[12px] border border-white/55 bg-[linear-gradient(155deg,rgba(255,255,255,0.74),rgba(255,255,255,0.38))] text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,color,box-shadow] duration-[420ms] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/75 sm:h-10 sm:w-10'
+
+const contactGlassActionHoverClassNames: Record<ContactHoverStyle, string> = {
+  dark: 'hover:scale-[1.12] hover:border-black/45 hover:bg-[linear-gradient(155deg,rgba(46,52,64,0.9),rgba(59,66,82,0.84))] hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.34)] active:scale-[0.98]',
+  light:
+    'hover:scale-[1.12] hover:border-white/95 hover:bg-[linear-gradient(155deg,rgba(255,255,255,0.98),rgba(255,255,255,0.84))] hover:text-black hover:shadow-[0_0_0_1px_rgba(255,255,255,0.75),0_18px_40px_rgba(255,255,255,0.62)] active:scale-[0.98]',
+}
 
 const contactIconGlyphClassName = 'h-[14px] w-[14px] sm:h-[15px] sm:w-[15px]'
 
@@ -151,7 +159,7 @@ const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
 const contactLinks: ContactLinkItem[] = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconName: 'IconInstagram' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconName: 'IconLinkedin' },
-  { label: 'X / Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconX' },
+  { label: 'X / Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconTwitter' },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconName: 'IconGithub' },
   { label: 'Dribbble', href: 'https://dribbble.com/hunterbastian', iconName: 'IconDribbble' },
 ]
@@ -165,9 +173,10 @@ const HERO_TYPING = {
 }
 
 const HERO_ENTRANCE = {
-  initialDelay: 80, // first hero item starts after a brief pause
-  itemStagger: 96, // each hero item follows with a small gap
-  contactIconsDelay: 340, // icon row settles after intro copy
+  profileDelay: 80, // profile appears first
+  textPanelDelay: 120, // align with section panel reveal
+  textItemsDelay: 280, // align with section item reveal
+  contactIconsDelay: 360, // icon row settles after intro copy
   duration: 420, // reveal transition duration
 }
 
@@ -194,6 +203,8 @@ const STAGGER_PANEL = {
   finalOpacity: 1, // visible at rest
   initialY: 14, // panel vertical offset before reveal
   finalY: 0, // resting panel position
+  initialBlur: 'blur(1.8px)', // softened before reveal
+  finalBlur: 'blur(0px)', // crisp at rest
   ease: MOTION_EASE_STANDARD,
 }
 
@@ -239,13 +250,13 @@ function ContactIcon({ iconName, label, className = 'h-5 w-5' }: { iconName: Cen
   return <CentralIcon name={iconName} size={20} className={className} aria-label={label} />
 }
 
-function ContactLink({ link }: { link: ContactLinkItem }) {
+function ContactLink({ link, actionClassName }: { link: ContactLinkItem; actionClassName: string }) {
   return (
     <a
       href={link.href}
       target="_blank"
       rel="noopener noreferrer"
-      className={contactGlassActionClassName}
+      className={actionClassName}
       aria-label={link.label}
       title={link.label}
     >
@@ -258,8 +269,10 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
+  const [contactHoverStyle, setContactHoverStyle] = useState<ContactHoverStyle>('dark')
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
+  const [heroTextStage, setHeroTextStage] = useState(0)
   const prefersReducedMotion = useReducedMotion() ?? false
 
   const resumeButtonRef = useRef<HTMLButtonElement>(null)
@@ -277,38 +290,21 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
   const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
-  const heroStaggerDelay = motionDelayMs(HERO_ENTRANCE.initialDelay, prefersReducedMotion)
-  const heroItemStagger = motionDelayMs(HERO_ENTRANCE.itemStagger, prefersReducedMotion)
-  const heroItemDuration = motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion)
+  const contactGlassActionClassName = `${contactGlassActionBaseClassName} ${contactGlassActionHoverClassNames[contactHoverStyle]}`
 
-  const heroStaggerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        delayChildren: heroStaggerDelay,
-        staggerChildren: heroItemStagger,
-      },
-    },
-  } as const
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setHeroTextStage(2)
+      return
+    }
 
-  const heroItemVariants = {
-    hidden: {
-      opacity: STAGGER_ITEM.initialOpacity,
-      y: STAGGER_ITEM.initialY,
-      filter: 'blur(1.2px)',
-      scale: 0.97,
-    },
-    visible: {
-      opacity: STAGGER_ITEM.finalOpacity,
-      y: STAGGER_ITEM.finalY,
-      filter: 'blur(0px)',
-      scale: 1,
-      transition: {
-        duration: heroItemDuration,
-        ease: STAGGER_PANEL.ease,
-      },
-    },
-  } as const
+    setHeroTextStage(0)
+    const timers: Array<ReturnType<typeof setTimeout>> = []
+    timers.push(setTimeout(() => setHeroTextStage(1), HERO_ENTRANCE.textPanelDelay))
+    timers.push(setTimeout(() => setHeroTextStage(2), HERO_ENTRANCE.textItemsDelay))
+
+    return () => timers.forEach(clearTimeout)
+  }, [prefersReducedMotion])
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -372,16 +368,47 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-6 sm:py-8">
+      <div className="pointer-events-none fixed left-3 top-1/2 z-[80] -translate-y-1/2">
+        <div className="pointer-events-auto flex flex-col gap-1 rounded-xl border border-white/45 bg-[linear-gradient(155deg,rgba(255,255,255,0.72),rgba(255,255,255,0.38))] p-2 shadow-[0_10px_22px_rgba(15,23,42,0.2)] backdrop-blur-[14px]">
+          <span className="px-1 pb-0.5 font-code text-[9px] tracking-[0.14em] text-muted-foreground">ICON HOVER</span>
+          <button
+            type="button"
+            className={`rounded-md border px-2 py-1 font-code text-[10px] tracking-[0.12em] transition-colors ${
+              contactHoverStyle === 'dark'
+                ? 'border-black/30 bg-black/75 text-white'
+                : 'border-transparent bg-transparent text-muted-foreground hover:border-border/70 hover:text-foreground'
+            }`}
+            onClick={() => setContactHoverStyle('dark')}
+            aria-pressed={contactHoverStyle === 'dark'}
+          >
+            DARK
+          </button>
+          <button
+            type="button"
+            className={`rounded-md border px-2 py-1 font-code text-[10px] tracking-[0.12em] transition-colors ${
+              contactHoverStyle === 'light'
+                ? 'border-white/90 bg-white text-black'
+                : 'border-transparent bg-transparent text-muted-foreground hover:border-border/70 hover:text-foreground'
+            }`}
+            onClick={() => setContactHoverStyle('light')}
+            aria-pressed={contactHoverStyle === 'light'}
+          >
+            LIGHT
+          </button>
+        </div>
+      </div>
+
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
-        <motion.div
-          className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0"
-          initial="hidden"
-          animate="visible"
-          variants={heroStaggerVariants}
-        >
+        <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <motion.div
-              variants={heroItemVariants}
+              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94, filter: 'blur(1.2px)' }}
+              animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, scale: 1, filter: 'blur(0px)' }}
+              transition={{
+                duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
+                delay: motionDelayMs(HERO_ENTRANCE.profileDelay, prefersReducedMotion),
+                ease: STAGGER_PANEL.ease,
+              }}
             >
               <Image
                 src="/images/profilepicture.jpg"
@@ -406,7 +433,17 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               </h1>
               <motion.div
                 className="font-code text-muted-foreground mt-2 text-[11px] tracking-[0.12em] sm:text-xs"
-                variants={heroItemVariants}
+                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
+                animate={{
+                  opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                  y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                  filter: heroTextStage >= 2 ? 'blur(0px)' : 'blur(1.2px)',
+                }}
+                transition={{
+                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                  delay: heroTextStage >= 2 ? motionDelayMs(0, prefersReducedMotion) : 0,
+                  ease: STAGGER_PANEL.ease,
+                }}
               >
                 <span>{HERO_SUBTITLE_TEXT}</span>
               </motion.div>
@@ -414,13 +451,36 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <motion.div
-            variants={heroItemVariants}
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(1.8px)' }}
+            animate={{
+              opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
+              y: heroTextStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
+              filter: heroTextStage >= 1 ? STAGGER_PANEL.finalBlur : STAGGER_PANEL.initialBlur,
+            }}
+            transition={{
+              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
+              ease: STAGGER_PANEL.ease,
+            }}
+            style={{ willChange: 'opacity, transform, filter' }}
           >
-            <p className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0">
+            <motion.p
+              className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0"
+              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
+              animate={{
+                opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                filter: heroTextStage >= 2 ? 'blur(0px)' : 'blur(1.2px)',
+              }}
+              transition={{
+                duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                ease: STAGGER_PANEL.ease,
+              }}
+            >
               Interaction Design student at UVU with experience designing and building digital products. I work in front-end
               code, and I&apos;m focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at{' '}
               <span className="font-semibold text-primary">Studio Alpine</span>.
-            </p>
+            </motion.p>
           </motion.div>
 
           <motion.div
@@ -447,7 +507,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   ease: STAGGER_PANEL.ease,
                 }}
               >
-                <ContactLink link={link} />
+                <ContactLink link={link} actionClassName={contactGlassActionClassName} />
               </motion.div>
             ))}
 
@@ -482,7 +542,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
             </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       <CollapsibleSection

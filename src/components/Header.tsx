@@ -35,6 +35,7 @@ const navigation: Array<{ name: string; href: string }> = [
 export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [hoveredSection, setHoveredSection] = useState('')
 
   useEffect(() => {
     const sectionIds = navigation.map((item) => item.href.slice(1))
@@ -88,6 +89,8 @@ export default function Header() {
     return () => observer.disconnect()
   }, [])
 
+  const emphasizedSection = hoveredSection || activeSection || navigation[0]?.href || ''
+
   return (
     <header
       className="sticky top-0 z-50 w-full border-b px-4 py-3 sm:px-6 sm:py-4"
@@ -106,13 +109,23 @@ export default function Header() {
             HB
           </Link>
 
-          <nav className="header-nav-vertical hidden md:flex" role="navigation" aria-label="Primary">
+          <nav
+            className="header-nav-vertical hidden md:flex"
+            role="navigation"
+            aria-label="Primary"
+            onMouseLeave={() => setHoveredSection('')}
+          >
             {navigation.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                className={`header-nav-link font-code cursor-pointer ${activeSection === item.href ? 'is-active' : ''}`}
+                onMouseEnter={() => setHoveredSection(item.href)}
+                onFocus={() => setHoveredSection(item.href)}
+                onBlur={() => setHoveredSection('')}
+                className={`header-nav-link font-code cursor-pointer ${activeSection === item.href ? 'is-active' : ''} ${
+                  emphasizedSection === item.href ? 'is-emphasis' : 'is-subdued'
+                }`}
                 aria-current={activeSection === item.href ? 'page' : undefined}
               >
                 {item.name}

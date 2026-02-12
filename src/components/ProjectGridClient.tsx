@@ -60,6 +60,14 @@ interface CardLayoutAngle {
 
 const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
 const CARD_SCALE = 0.9
+const CARD_COMPACT_SPREAD_FACTOR = 0.58
+
+const CARD_GRID_GAP = {
+  compactX: 14,
+  compactY: 16,
+  expandedX: 24,
+  expandedY: 28,
+} as const
 
 const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
   'brand-identity-system': { rotate: -6.2, x: -14 }, // Middle Earth Journey - left tilt
@@ -73,7 +81,14 @@ const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
 export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
   const [stage, setStage] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [supportsHover, setSupportsHover] = useState(false)
+  const [isGridHovered, setIsGridHovered] = useState(false)
+  const [supportsHover, setSupportsHover] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false
+    }
+
+    return window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  })
   const router = useRouter()
   const prefersReducedMotion = useReducedMotion() ?? false
   const gridRef = useRef<HTMLDivElement>(null)
@@ -148,15 +163,33 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     return () => timers.forEach(clearTimeout)
   }, [initialLoadDelayMs, isGridInView, prefersReducedMotion])
 
+  const isExpandedLayout = !supportsHover || isGridHovered
+  const layoutSpreadFactor = isExpandedLayout ? 1 : CARD_COMPACT_SPREAD_FACTOR
+  const gridColumnGap = isExpandedLayout ? CARD_GRID_GAP.expandedX : CARD_GRID_GAP.compactX
+  const gridRowGap = isExpandedLayout ? CARD_GRID_GAP.expandedY : CARD_GRID_GAP.compactY
+
   return (
     <motion.div
       ref={gridRef}
-      className="mx-auto grid w-full max-w-[780px] grid-cols-1 gap-x-6 gap-y-7 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-3"
+      className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-3"
+      onMouseEnter={() => {
+        if (supportsHover) {
+          setIsGridHovered(true)
+        }
+      }}
+      onMouseLeave={() => {
+        if (supportsHover) {
+          setIsGridHovered(false)
+          setHoveredIndex(null)
+        }
+      }}
       initial={{ opacity: CARD_STAGGER_PANEL.initialOpacity, y: CARD_STAGGER_PANEL.initialY }}
       animate={{
         opacity: stage >= 1 ? CARD_STAGGER_PANEL.finalOpacity : CARD_STAGGER_PANEL.initialOpacity,
         y: stage >= 1 ? CARD_STAGGER_PANEL.finalY : CARD_STAGGER_PANEL.initialY,
         filter: stage >= 1 ? CARD_STAGGER_PANEL.finalBlur : CARD_STAGGER_PANEL.initialBlur,
+        columnGap: gridColumnGap,
+        rowGap: gridRowGap,
       }}
       transition={{
         duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
@@ -166,6 +199,10 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
       {orderedProjects.map((project, index) => {
         const isFeaturedCard = project.slug === 'porsche-app'
         const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
+        const compactX = baseAngle.x * CARD_COMPACT_SPREAD_FACTOR
+        const compactRotate = baseAngle.rotate * CARD_COMPACT_SPREAD_FACTOR
+        const targetX = baseAngle.x * layoutSpreadFactor
+        const targetRotate = baseAngle.rotate * layoutSpreadFactor
         const isHovered = hoveredIndex === index
         const hasHoverTarget = hoveredIndex !== null
         const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : 0.9
@@ -192,15 +229,15 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             initial={{
               opacity: CARD_STAGGER_ITEM.initialOpacity,
               y: CARD_STAGGER_ITEM.initialY,
-              x: baseAngle.x,
-              rotate: baseAngle.rotate,
+              x: compactX,
+              rotate: compactRotate,
               scale: CARD_SCALE,
             }}
             animate={{
               opacity: stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity,
               y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
-              x: baseAngle.x,
-              rotate: baseAngle.rotate,
+              x: targetX,
+              rotate: targetRotate,
               scale: CARD_SCALE,
             }}
             transition={{

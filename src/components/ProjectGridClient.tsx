@@ -59,12 +59,15 @@ interface CardLayoutAngle {
 }
 
 const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
-const CARD_SCALE = 0.9
-const CARD_COMPACT_SPREAD_FACTOR = 0.29
+const CARD_SCALE = {
+  compact: 0.96,
+  spread: 0.9,
+}
+const CARD_COMPACT_SPREAD_FACTOR = 0.12
 
 const CARD_GRID_GAP = {
-  compactX: 7,
-  compactY: 8,
+  compactX: 0,
+  compactY: 2,
   expandedX: 24,
   expandedY: 28,
 } as const
@@ -203,6 +206,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         const compactRotate = baseAngle.rotate * CARD_COMPACT_SPREAD_FACTOR
         const targetX = baseAngle.x * layoutSpreadFactor
         const targetRotate = baseAngle.rotate * layoutSpreadFactor
+        const targetScale = isExpandedLayout ? CARD_SCALE.spread : CARD_SCALE.compact
         const isHovered = hoveredIndex === index
         const hasHoverTarget = hoveredIndex !== null
         const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : 0.9
@@ -213,7 +217,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             className="w-full transition-[transform,opacity,filter] duration-[430ms]"
             style={{
               filter: !supportsHover || !hasHoverTarget || isHovered ? 'saturate(1)' : 'saturate(0.92)',
-              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
             }}
             onMouseEnter={() => {
               prefetchProject(project.slug)
@@ -231,19 +234,38 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               y: CARD_STAGGER_ITEM.initialY,
               x: compactX,
               rotate: compactRotate,
-              scale: CARD_SCALE,
+              scale: CARD_SCALE.compact,
             }}
             animate={{
               opacity: stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity,
               y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
               x: targetX,
               rotate: targetRotate,
-              scale: CARD_SCALE,
+              scale: targetScale,
             }}
             transition={{
-              duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
-              delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
-              ease: CARD_STAGGER_PANEL.ease,
+              opacity: {
+                duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
+                delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
+                ease: CARD_STAGGER_PANEL.ease,
+              },
+              y: {
+                duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
+                delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
+                ease: CARD_STAGGER_PANEL.ease,
+              },
+              x: {
+                duration: motionDurationMs(340, prefersReducedMotion),
+                ease: CARD_STAGGER_PANEL.ease,
+              },
+              rotate: {
+                duration: motionDurationMs(340, prefersReducedMotion),
+                ease: CARD_STAGGER_PANEL.ease,
+              },
+              scale: {
+                duration: motionDurationMs(340, prefersReducedMotion),
+                ease: CARD_STAGGER_PANEL.ease,
+              },
             }}
           >
             <Magnetic className="will-change-transform" strength={0.28} range={130} onlyOnHover disableOnTouch>

@@ -1,11 +1,12 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { AnimatePresence, motion, useInView } from 'framer-motion'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
+import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
 import CollapsibleSection from './CollapsibleSection'
@@ -166,7 +167,7 @@ const EXPERIENCE_PANEL = {
   finalOpacity: 1, // visible at rest
   initialY: 14, // panel vertical offset before reveal
   finalY: 0, // resting panel position
-  ease: [0.22, 1, 0.36, 1] as const,
+  ease: MOTION_EASE_STANDARD,
 }
 
 const EXPERIENCE_ROW = {
@@ -220,6 +221,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [experienceStage, setExperienceStage] = useState(0)
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const [hasHydratedSections, setHasHydratedSections] = useState(false)
+  const prefersReducedMotion = useReducedMotion() ?? false
 
   const experiencePanelRef = useRef<HTMLDivElement>(null)
   const isExperienceInView = useInView(experiencePanelRef, {
@@ -306,6 +308,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       return
     }
 
+    if (prefersReducedMotion) {
+      setExperienceStage(2)
+      return
+    }
+
     setExperienceStage(0)
     const timers: Array<ReturnType<typeof setTimeout>> = []
 
@@ -313,7 +320,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     timers.push(setTimeout(() => setExperienceStage(2), EXPERIENCE_TIMING.rowsAppear))
 
     return () => timers.forEach(clearTimeout)
-  }, [isExperienceInView, sectionOpen.experience])
+  }, [isExperienceInView, sectionOpen.experience, prefersReducedMotion])
 
   const toggleSection = (section: SectionKey) => {
     setSectionOpen((prev) => ({ ...prev, [section]: !prev[section] }))
@@ -472,7 +479,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               y: experienceStage >= 1 ? EXPERIENCE_PANEL.finalY : EXPERIENCE_PANEL.initialY,
             }}
             transition={{
-              duration: EXPERIENCE_TIMING.panelDuration / 1000,
+              duration: motionDurationMs(EXPERIENCE_TIMING.panelDuration, prefersReducedMotion),
               ease: EXPERIENCE_PANEL.ease,
             }}
           >
@@ -492,8 +499,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     y: experienceStage >= 2 ? EXPERIENCE_ROW.finalY : EXPERIENCE_ROW.initialY,
                   }}
                   transition={{
-                    duration: EXPERIENCE_TIMING.rowDuration / 1000,
-                    delay: experienceStage >= 2 ? (index * EXPERIENCE_TIMING.rowStagger) / 1000 : 0,
+                    duration: motionDurationMs(EXPERIENCE_TIMING.rowDuration, prefersReducedMotion),
+                    delay: experienceStage >= 2 ? motionDelayMs(index * EXPERIENCE_TIMING.rowStagger, prefersReducedMotion) : 0,
                     ease: EXPERIENCE_PANEL.ease,
                   }}
                 >
@@ -512,7 +519,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         className="w-5 h-5 flex items-center justify-center transition-transform duration-[400ms] text-muted-foreground"
                         animate={{ rotate: isExpanded ? 45 : 0 }}
                         transition={{
-                          duration: EXPERIENCE_TIMING.iconRotate / 1000,
+                          duration: motionDurationMs(EXPERIENCE_TIMING.iconRotate, prefersReducedMotion),
                           ease: EXPERIENCE_PANEL.ease,
                         }}
                       >
@@ -529,7 +536,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{
-                          duration: EXPERIENCE_TIMING.expandDuration / 1000,
+                          duration: motionDurationMs(EXPERIENCE_TIMING.expandDuration, prefersReducedMotion),
                           ease: EXPERIENCE_PANEL.ease,
                         }}
                         className="overflow-hidden"

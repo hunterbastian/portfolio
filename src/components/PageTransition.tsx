@@ -1,8 +1,9 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 /* ─────────────────────────────────────────────────────────
  * ANIMATION STORYBOARD
@@ -29,7 +30,6 @@ const PAGE = {
   initialOpacity: 0, // hidden state before enter
   finalOpacity: 1, // resting visibility
   exitOpacity: 0, // old page fades to transparent
-  ease: [0.22, 1, 0.36, 1] as const,
 }
 
 const CHILD = {
@@ -45,6 +45,7 @@ interface PageTransitionProps {
 
 interface RouteSceneProps {
   children: ReactNode
+  prefersReducedMotion: boolean
   timing: {
     newContentDelay: number
     newSlideDuration: number
@@ -58,11 +59,16 @@ interface RouteSceneProps {
   }
 }
 
-function RouteScene({ children, timing, offsets }: RouteSceneProps) {
+function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSceneProps) {
   const [stage, setStage] = useState(0)
   const routeChildren = useMemo(() => Children.toArray(children), [children])
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setStage(2)
+      return
+    }
+
     setStage(0)
     const timers: Array<ReturnType<typeof setTimeout>> = []
 
@@ -70,7 +76,7 @@ function RouteScene({ children, timing, offsets }: RouteSceneProps) {
     timers.push(setTimeout(() => setStage(2), timing.newContentDelay + timing.childStartDelay))
 
     return () => timers.forEach(clearTimeout)
-  }, [timing.childStartDelay, timing.newContentDelay])
+  }, [prefersReducedMotion, timing.childStartDelay, timing.newContentDelay])
 
   return (
     <motion.div
@@ -83,8 +89,8 @@ function RouteScene({ children, timing, offsets }: RouteSceneProps) {
         y: stage >= 1 ? PAGE.finalY : offsets.pageY,
       }}
       transition={{
-        duration: timing.newSlideDuration / 1000,
-        ease: PAGE.ease,
+        duration: motionDurationMs(timing.newSlideDuration, prefersReducedMotion),
+        ease: MOTION_EASE_STANDARD,
       }}
       className="will-change-transform"
     >
@@ -100,9 +106,9 @@ function RouteScene({ children, timing, offsets }: RouteSceneProps) {
             y: stage >= 2 ? CHILD.finalY : offsets.childY,
           }}
           transition={{
-            duration: timing.childDuration / 1000,
-            delay: stage >= 2 ? (index * timing.childStagger) / 1000 : 0,
-            ease: PAGE.ease,
+            duration: motionDurationMs(timing.childDuration, prefersReducedMotion),
+            delay: stage >= 2 ? motionDelayMs(index * timing.childStagger, prefersReducedMotion) : 0,
+            ease: MOTION_EASE_STANDARD,
           }}
           className="will-change-transform"
         >
@@ -115,6 +121,7 @@ function RouteScene({ children, timing, offsets }: RouteSceneProps) {
 
 export default function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname()
+  const prefersReducedMotion = useReducedMotion() ?? false
 
   return (
     <AnimatePresence mode="wait" initial={false}>
@@ -122,11 +129,12 @@ export default function PageTransition({ children }: PageTransitionProps) {
         key={pathname}
         exit={{ opacity: PAGE.exitOpacity }}
         transition={{
-          duration: TIMING.oldFadeDuration / 1000,
-          ease: PAGE.ease,
+          duration: motionDurationMs(TIMING.oldFadeDuration, prefersReducedMotion),
+          ease: MOTION_EASE_STANDARD,
         }}
       >
         <RouteScene
+          prefersReducedMotion={prefersReducedMotion}
           timing={{
             newContentDelay: TIMING.newContentDelay,
             newSlideDuration: TIMING.newSlideDuration,

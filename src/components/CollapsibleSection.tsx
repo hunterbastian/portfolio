@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Children, isValidElement, type ReactNode, useEffect, useState } from 'react'
+import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface CollapsibleSectionProps {
   id: string
@@ -12,8 +13,6 @@ interface CollapsibleSectionProps {
   className?: string
   contentClassName?: string
 }
-
-const CONTENT_EASE = [0.22, 1, 0.36, 1] as const
 
 /* ─────────────────────────────────────────────────────────
  * COLLAPSIBLE SECTION STORYBOARD
@@ -38,7 +37,7 @@ const SECTION_PANEL = {
   finalOpacity: 1, // visible at rest
   initialY: 14, // panel vertical offset before reveal
   finalY: 0, // resting panel position
-  ease: CONTENT_EASE,
+  ease: MOTION_EASE_STANDARD,
 }
 
 const SECTION_ROW = {
@@ -57,15 +56,16 @@ export default function CollapsibleSection({
   className,
   contentClassName,
 }: CollapsibleSectionProps) {
-  const prefersReducedMotion = useReducedMotion()
+  const prefersReducedMotion = useReducedMotion() ?? false
   const [stage, setStage] = useState(0)
 
   const contentId = `${id}-content`
-  const contentDuration = prefersReducedMotion ? 0.01 : 0.3
-  const iconDuration = prefersReducedMotion ? 0.01 : 0.24
-  const panelDuration = prefersReducedMotion ? 0.01 : SECTION_TIMING.panelDuration / 1000
-  const rowDuration = prefersReducedMotion ? 0.01 : SECTION_TIMING.rowDuration / 1000
-  const rowStagger = prefersReducedMotion ? 0 : SECTION_TIMING.rowStagger / 1000
+  const contentDuration = motionDurationMs(300, prefersReducedMotion)
+  const contentOpacityDuration = motionDurationMs(250, prefersReducedMotion)
+  const iconDuration = motionDurationMs(240, prefersReducedMotion)
+  const panelDuration = motionDurationMs(SECTION_TIMING.panelDuration, prefersReducedMotion)
+  const rowDuration = motionDurationMs(SECTION_TIMING.rowDuration, prefersReducedMotion)
+  const rowStagger = motionDelayMs(SECTION_TIMING.rowStagger, prefersReducedMotion)
   const contentPanelClassName = contentClassName ?? ''
   const contentItems = Children.toArray(children)
 
@@ -104,7 +104,7 @@ export default function CollapsibleSection({
           <motion.span
             initial={false}
             animate={{ rotate: isOpen ? 45 : 0 }}
-            transition={{ duration: iconDuration, ease: CONTENT_EASE }}
+            transition={{ duration: iconDuration, ease: MOTION_EASE_STANDARD }}
             className="flex items-center justify-center"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -122,8 +122,8 @@ export default function CollapsibleSection({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{
-              height: { duration: contentDuration, ease: CONTENT_EASE },
-              opacity: { duration: contentDuration * 0.82, ease: CONTENT_EASE },
+              height: { duration: contentDuration, ease: MOTION_EASE_STANDARD },
+              opacity: { duration: contentOpacityDuration, ease: MOTION_EASE_STANDARD },
             }}
             className="overflow-hidden"
           >

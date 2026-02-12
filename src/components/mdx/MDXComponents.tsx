@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import ComparisonSlider from './ComparisonSlider'
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>
 type ParagraphProps = React.HTMLAttributes<HTMLParagraphElement>
@@ -76,8 +77,8 @@ const mdxComponents = {
   a: A,
   img: Img,
   video: Video,
+  ComparisonSlider,
 }
 
 export default mdxComponents
-
 

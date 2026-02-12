@@ -60,11 +60,11 @@ interface CardLayoutAngle {
 
 const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
 const CARD_SCALE = 0.9
-const CARD_COMPACT_SPREAD_FACTOR = 0.58
+const CARD_COMPACT_SPREAD_FACTOR = 0.29
 
 const CARD_GRID_GAP = {
-  compactX: 14,
-  compactY: 16,
+  compactX: 7,
+  compactY: 8,
   expandedX: 24,
   expandedY: 28,
 } as const

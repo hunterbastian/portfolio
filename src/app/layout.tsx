@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono, Playfair_Display, Source_Code_Pro } from 'next/font/google'
 import './globals.css'
 import './viewport.css'
+import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -181,6 +182,7 @@ export default function RootLayout({
                    <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} ${inter.variable} safe-area-padding bg-background text-foreground`}>
                        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                        <div className="min-h-screen flex flex-col">
+                 <Header />
                  <main id="main-content" role="main" className="flex-1">
                    <PageTransition>{children}</PageTransition>
                  </main>

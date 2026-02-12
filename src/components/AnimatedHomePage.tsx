@@ -627,17 +627,35 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between py-3.5 px-2 text-left"
+                    className={`group flex w-full items-center justify-between rounded-md border px-2 py-3.5 text-left transition-[background-color,border-color,color] duration-300 ${
+                      isExpanded
+                        ? 'border-[color-mix(in_srgb,var(--accent)_45%,var(--border))] bg-[color-mix(in_srgb,var(--accent)_14%,transparent)]'
+                        : 'border-transparent hover:border-[color-mix(in_srgb,var(--accent)_45%,var(--border))] hover:bg-[color-mix(in_srgb,var(--accent)_14%,transparent)]'
+                    }`}
                     onClick={() => toggleJob(index)}
                   >
                     <div className="flex items-center space-x-6">
-                      <span className="text-muted-foreground text-xs font-code w-16">{job.year}</span>
+                      <span
+                        className={`text-xs font-code w-16 transition-colors duration-300 ${
+                          isExpanded ? 'text-foreground/80' : 'text-muted-foreground group-hover:text-foreground/80'
+                        }`}
+                      >
+                        {job.year}
+                      </span>
                       <span className="font-code font-medium tracking-[0.06em]">{job.company}</span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <span className="text-muted-foreground text-sm font-code tracking-[0.06em] hidden sm:block">{job.title}</span>
+                      <span
+                        className={`text-sm font-code tracking-[0.06em] hidden sm:block transition-colors duration-300 ${
+                          isExpanded ? 'text-foreground/80' : 'text-muted-foreground group-hover:text-foreground/80'
+                        }`}
+                      >
+                        {job.title}
+                      </span>
                       <motion.div
-                        className="w-5 h-5 flex items-center justify-center transition-transform duration-[400ms] text-muted-foreground"
+                        className={`w-5 h-5 flex items-center justify-center transition-[transform,color] duration-[400ms] ${
+                          isExpanded ? 'text-foreground/80' : 'text-muted-foreground group-hover:text-foreground/80'
+                        }`}
                         animate={{ rotate: isExpanded ? 45 : 0 }}
                         transition={{
                           duration: motionDurationMs(EXPERIENCE_TIMING.iconRotate, prefersReducedMotion),

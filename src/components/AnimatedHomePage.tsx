@@ -265,7 +265,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 />
               </h1>
               <div className="font-code text-muted-foreground mt-2 flex items-center gap-3 text-xs tracking-[0.12em]">
-                <span>Interaction designer</span>
+                <span>Interaction Designer</span>
                 <span className="opacity-50">|</span>
                 <span>Lehi, UT</span>
               </div>

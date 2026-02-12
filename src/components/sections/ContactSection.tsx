@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 
 const ResumePreview = dynamic(() => import('../ResumePreview'), { ssr: false })
@@ -10,6 +10,7 @@ const ResumeModal = dynamic(() => import('../ResumeModal'), { ssr: false })
 export default function ContactSection() {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
+  const resumeButtonRef = useRef<HTMLButtonElement>(null)
 
   return (
     <>
@@ -98,6 +99,7 @@ export default function ContactSection() {
           {/* Resume Button */}
           <div className="relative">
             <motion.button
+              ref={resumeButtonRef}
               onClick={() => setShowResumeModal(true)}
               className="inline-flex items-center justify-center rounded-xl px-3 py-2 font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring whitespace-nowrap relative overflow-hidden cursor-pointer text-white"
               style={{
@@ -116,7 +118,7 @@ export default function ContactSection() {
             >
               VIEW RESUME
             </motion.button>
-            <ResumePreview isVisible={showResumePreview} />
+            <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
           </div>
         </div>
       </div>

@@ -44,6 +44,7 @@ const CARD_STAGGER_ITEM = {
 export default function ProjectGridClient({ projects }: ProjectGridClientProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [stage, setStage] = useState(0)
+  const [supportsHover, setSupportsHover] = useState(false)
   const router = useRouter()
   const prefersReducedMotion = useReducedMotion() ?? false
   const gridRef = useRef<HTMLDivElement>(null)
@@ -113,6 +114,20 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   }, [])
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const updateSupportsHover = () => setSupportsHover(mediaQuery.matches)
+
+    updateSupportsHover()
+    mediaQuery.addEventListener('change', updateSupportsHover)
+
+    return () => mediaQuery.removeEventListener('change', updateSupportsHover)
+  }, [])
+
+  useEffect(() => {
     if (!isGridInView) {
       setStage(0)
       return
@@ -139,6 +154,10 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   }
 
   const handleMouseEnter = (index: number) => {
+    if (!supportsHover) {
+      return
+    }
+
     cancelHoverClear()
     setHoveredIndex((previous) => (previous === index ? previous : index))
     const hoveredProject = projects[index]
@@ -148,6 +167,10 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   }
 
   const handleMouseLeave = () => {
+    if (!supportsHover) {
+      return
+    }
+
     cancelHoverClear()
 
     // Small delay avoids a visual snap when moving between cards across grid gaps.
@@ -157,12 +180,12 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     }, 80)
   }
 
-  const rotations = [-1.8, 0.9, 1.6, -1.2, 0.7, 1.3]
+  const rotations = [-4.8, 2.6, 3.9, -3.4, 2.1, -2.8]
 
   return (
     <motion.div
       ref={gridRef}
-      className="mx-auto grid max-w-[760px] grid-cols-1 justify-items-center gap-x-6 gap-y-8 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:px-0"
+      className="mx-auto grid w-full max-w-[900px] grid-cols-1 gap-x-5 gap-y-7 px-2 sm:grid-cols-2 sm:px-4 lg:grid-cols-3 lg:px-0"
       initial={{ opacity: CARD_STAGGER_PANEL.initialOpacity, y: CARD_STAGGER_PANEL.initialY }}
       animate={{
         opacity: stage >= 1 ? CARD_STAGGER_PANEL.finalOpacity : CARD_STAGGER_PANEL.initialOpacity,
@@ -175,15 +198,17 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     >
       {projects.map((project, index) => {
         const isHovered = hoveredIndex === index
-        const baseRotation = rotations[index % rotations.length]
+        const baseRotation = supportsHover ? rotations[index % rotations.length] : 0
         const cardOpacity = hoveredIndex === null || isHovered ? 1 : 0.9
 
         return (
           <motion.div
             key={project.slug}
-            className="w-full max-w-[11.75rem] transition-[transform,opacity,filter]"
+            className="w-full transition-[transform,opacity,filter]"
             style={{
-              transform: isHovered ? 'translateY(-3px) rotate(0deg)' : `translateY(0px) rotate(${baseRotation}deg)`,
+              transform: isHovered
+                ? `translateY(-4px) rotate(${(baseRotation * 0.35).toFixed(2)}deg)`
+                : `translateY(0px) rotate(${baseRotation}deg)`,
               opacity: cardOpacity,
               filter: hoveredIndex === null || isHovered ? 'saturate(1)' : 'saturate(0.92)',
               transitionDuration: '360ms',

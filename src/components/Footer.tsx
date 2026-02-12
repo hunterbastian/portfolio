@@ -9,7 +9,7 @@ export default function Footer() {
         backgroundColor: 'color-mix(in srgb, var(--background) 92%, transparent)',
       }}
     >
-      <div className="container mx-auto max-w-6xl px-4 py-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="container mx-auto max-w-6xl px-4 py-6 text-center flex flex-col gap-2 md:flex-row md:items-center md:justify-between md:text-left">
         <span className="font-code text-[11px] tracking-[0.12em] text-muted-foreground">@ {currentYear}</span>
         <p className="font-code text-[11px] tracking-[0.12em] text-muted-foreground">CRAFTED BY HUNTER BASTIAN</p>
       </div>

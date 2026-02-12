@@ -232,6 +232,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
 
   const contactPanelRef = useRef<HTMLDivElement>(null)
+  const resumeButtonRef = useRef<HTMLButtonElement>(null)
   const experiencePanelRef = useRef<HTMLDivElement>(null)
   const educationPanelRef = useRef<HTMLDivElement>(null)
   const everydayPanelRef = useRef<HTMLDivElement>(null)
@@ -310,23 +311,23 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 py-8">
-      <section className="pt-12 pb-0 relative animate-fade-in">
+    <div className="container mx-auto max-w-7xl px-4 py-6 sm:py-8">
+      <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
-          <div className="mb-6 flex items-center gap-4">
+          <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <Image
               src="/images/profilepicture.jpg"
               alt="Hunter Bastian // Studio Alpine"
               width={72}
               height={72}
-              className="h-[72px] w-[72px] shrink-0 rounded-full object-cover border border-border shadow-sm"
+              className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
               priority
             />
             <div>
-              <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(0.78rem,3.35vw,1.53rem)] leading-tight">
+              <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(0.95rem,4vw,1.53rem)] leading-tight">
                 <TextType
                   text="Hunter Bastian // Studio Alpine"
-                  className="block whitespace-nowrap"
+                  className="block"
                   typingSpeed={62}
                   deletingSpeed={44}
                   pauseDuration={2800}
@@ -334,9 +335,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   cinematic
                 />
               </h1>
-              <div className="font-code text-muted-foreground mt-2 flex items-center gap-3 text-xs tracking-[0.12em]">
+              <div className="font-code text-muted-foreground mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] tracking-[0.12em] sm:text-xs">
                 <span>Interaction Designer</span>
-                <span className="opacity-50">|</span>
+                <span className="hidden opacity-50 sm:inline">|</span>
                 <span>Lehi, UT</span>
               </div>
             </div>
@@ -365,7 +366,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="max-w-2xl mx-auto">
           <motion.div
             ref={contactPanelRef}
-            className="flex flex-wrap gap-4 items-stretch sm:items-center"
+            className="flex flex-wrap items-stretch gap-3 sm:items-center sm:gap-4"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: contactStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -408,6 +409,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               }}
             >
               <button
+                ref={resumeButtonRef}
                 onClick={() => setShowResumeModal(true)}
                 className={socialLinkClassName}
                 onMouseEnter={() => setShowResumePreview(true)}
@@ -420,7 +422,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <ContactIcon iconName={resumeIconName} label="Resume" />
                 <span className="sr-only">Resume</span>
               </button>
-              <ResumePreview isVisible={showResumePreview} />
+              <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
             </motion.div>
           </motion.div>
         </div>
@@ -441,7 +443,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             href="https://instagram.com/studio.alpine"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-code tracking-[0.08em] uppercase font-medium text-muted-foreground hover:text-primary underline underline-offset-4"
+            className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground underline underline-offset-4 hover:text-primary"
           >
             <CentralIcon name="IconCamera1" size={14} aria-hidden className="h-3.5 w-3.5 shrink-0" />
             <span>Photography Studio: Studio Alpine</span>
@@ -605,7 +607,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="text-muted-foreground text-xs font-code min-w-[100px]">{edu.year}</div>
+                  <div className="text-muted-foreground text-xs font-code sm:min-w-[100px]">{edu.year}</div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-foreground text-base mb-1 font-garamond-narrow">{edu.institution}</h3>
                     <p className="text-foreground text-sm mb-1 font-garamond-narrow">{edu.degree}</p>
@@ -714,7 +716,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   ease: STAGGER_PANEL.ease,
                 }}
               >
-                <span className="text-sm font-code text-muted-foreground tracking-[0.08em] uppercase font-medium whitespace-nowrap">
+                <span className="text-sm font-code text-muted-foreground tracking-[0.08em] uppercase font-medium">
                   {skill}
                 </span>
               </motion.div>

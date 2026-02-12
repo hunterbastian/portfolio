@@ -25,7 +25,7 @@ export default function ArchivePage() {
   const archivedProjects = getArchivedProjects()
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-16">
+    <div className="container mx-auto max-w-6xl px-4 py-12 sm:py-16">
       <div className="mb-8">
         <Link 
           href="/" 
@@ -39,7 +39,7 @@ export default function ArchivePage() {
       </div>
 
       <div className="mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Archive</h1>
+        <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">Archive</h1>
         <p className="text-gray-600 dark:text-gray-400">Past projects and case studies</p>
       </div>
 

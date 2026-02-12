@@ -90,7 +90,7 @@ export default function Header() {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full py-4 px-6 border-b"
+      className="sticky top-0 z-50 w-full border-b px-4 py-3 sm:px-6 sm:py-4"
       style={{
         borderColor: 'var(--border)',
         backgroundColor: 'color-mix(in srgb, var(--background) 88%, transparent)',
@@ -136,7 +136,7 @@ export default function Header() {
 
       {showMobileMenu && (
         <div className="md:hidden mt-4 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-          <div className="container mx-auto max-w-6xl space-y-1">
+          <div className="container mx-auto max-w-6xl space-y-1 px-1">
             {navigation.map((item) => (
               <a
                 key={item.href}

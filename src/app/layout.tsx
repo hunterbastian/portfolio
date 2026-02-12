@@ -157,7 +157,7 @@ export default function RootLayout({
             /* Critical above-the-fold styles */
             body { margin: 0; font-family: ui-monospace, monospace; }
             .hero-section { min-height: 0; }
-            h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.2; }
+            .hero-section h1 { line-height: 1.2; }
           `
         }} />
         

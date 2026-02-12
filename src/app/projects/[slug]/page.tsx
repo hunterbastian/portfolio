@@ -109,7 +109,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     }
 
     return (
-      <article className="container mx-auto max-w-4xl px-4 py-8">
+      <article className="container mx-auto max-w-4xl px-4 py-8 sm:px-6">
         {/* Structured Data for SEO */}
         <script
           type="application/ld+json"
@@ -128,7 +128,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             Back to case studies
           </Link>
           
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">{frontmatter.title}</h1>
+          <h1 className="mb-8 text-3xl font-bold sm:text-4xl md:text-5xl">{frontmatter.title}</h1>
         </div>
 
         {/* Hero Image */}
@@ -152,9 +152,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </span>
           </div>
           {frontmatter.tags && frontmatter.tags.length > 0 && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
               <span className="font-medium">Tags:</span>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {frontmatter.tags.map((tag) => (
                   <span key={tag} className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full">
                     {tag}
@@ -167,7 +167,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         {/* Project Links */}
         {(frontmatter.github || frontmatter.demo) && (
-          <div className="mb-12 flex gap-4">
+          <div className="mb-12 flex flex-wrap gap-4">
             {frontmatter.github && (
               <a
                 href={frontmatter.github}

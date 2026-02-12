@@ -45,10 +45,10 @@ const PREVIEW_MOTION = {
 }
 
 const PREVIEW_TRANSITION = {
-  y: { type: 'spring' as const, stiffness: 430, damping: 31, mass: 0.78 },
-  scale: { type: 'spring' as const, stiffness: 500, damping: 34, mass: 0.8 },
-  opacity: { duration: 0.16, ease: [0.22, 1, 0.36, 1] as const },
-  filter: { duration: 0.2, ease: [0.22, 1, 0.36, 1] as const },
+  y: { type: 'spring' as const, stiffness: 320, damping: 28, mass: 0.9 },
+  scale: { type: 'spring' as const, stiffness: 360, damping: 30, mass: 0.9 },
+  opacity: { duration: 0.22, ease: [0.22, 1, 0.36, 1] as const },
+  filter: { duration: 0.24, ease: [0.22, 1, 0.36, 1] as const },
 }
 
 export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewProps) {
@@ -164,7 +164,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
 
   if (mounted && anchorRef?.current) {
     return createPortal(
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isVisible ? (
           <motion.div
             className="fixed -translate-x-1/2 z-[80] pointer-events-none origin-top"
@@ -184,7 +184,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
   }
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {isVisible ? (
         <motion.div
           className="absolute left-1/2 top-full mt-2 -translate-x-1/2 z-50 pointer-events-none origin-top"

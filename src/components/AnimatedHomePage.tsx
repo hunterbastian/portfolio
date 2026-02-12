@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import ResumePreview from './ResumePreview'
@@ -71,10 +71,13 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex items-center gap-1.5 text-muted-foreground/80 no-underline transition-[color,transform,text-shadow] duration-250 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[1px] hover:text-foreground hover:[text-shadow:0_0_10px_rgba(46,52,64,0.16)] dark:hover:[text-shadow:0_0_10px_rgba(229,233,240,0.2)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'group inline-flex origin-center items-center gap-1.5 text-muted-foreground/80 no-underline transition-[color,opacity,transform,text-shadow] duration-300 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.04] hover:text-foreground hover:[text-shadow:0_0_10px_rgba(46,52,64,0.16)] dark:hover:[text-shadow:0_0_10px_rgba(229,233,240,0.2)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const contactIconGlyphClassName =
-  'h-[13px] w-[13px] transition-transform duration-250 ease-out group-hover:scale-[1.1] sm:h-[14px] sm:w-[14px]'
+  'h-[13px] w-[13px] opacity-90 transition-[transform,opacity] duration-300 ease-out group-hover:scale-[1.12] group-hover:opacity-100 sm:h-[14px] sm:w-[14px]'
+
+const contactInlineLabelClassName =
+  'font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/40 opacity-[0.9] transition-[text-shadow,decoration-color,opacity] duration-300 ease-out group-hover:decoration-current/85 group-hover:opacity-100 group-hover:[text-shadow:0_0_8px_rgba(46,52,64,0.14)] dark:group-hover:[text-shadow:0_0_8px_rgba(229,233,240,0.16)]'
 
 const experience: ExperienceItem[] = [
   {
@@ -253,7 +256,7 @@ function ContactLink({ link, actionClassName }: { link: ContactLinkItem; actionC
       title={link.label}
     >
       <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} />
-      <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/40 transition-[text-shadow,decoration-color,opacity] duration-250 ease-out group-hover:decoration-current/85 group-hover:opacity-100 group-hover:[text-shadow:0_0_8px_rgba(46,52,64,0.14)] dark:group-hover:[text-shadow:0_0_8px_rgba(229,233,240,0.16)]">
+      <span className={contactInlineLabelClassName}>
         {link.label}
       </span>
     </a>
@@ -269,6 +272,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
 
   const resumeButtonRef = useRef<HTMLButtonElement>(null)
+  const resumePreviewHideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const experiencePanelRef = useRef<HTMLDivElement>(null)
   const educationPanelRef = useRef<HTMLDivElement>(null)
   const everydayPanelRef = useRef<HTMLDivElement>(null)
@@ -283,6 +287,30 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
   const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
+
+  const openResumePreview = useCallback(() => {
+    if (resumePreviewHideTimeoutRef.current) {
+      clearTimeout(resumePreviewHideTimeoutRef.current)
+      resumePreviewHideTimeoutRef.current = null
+    }
+    setShowResumePreview(true)
+  }, [])
+
+  const closeResumePreview = useCallback(() => {
+    if (resumePreviewHideTimeoutRef.current) {
+      clearTimeout(resumePreviewHideTimeoutRef.current)
+    }
+
+    if (prefersReducedMotion) {
+      setShowResumePreview(false)
+      return
+    }
+
+    resumePreviewHideTimeoutRef.current = setTimeout(() => {
+      setShowResumePreview(false)
+      resumePreviewHideTimeoutRef.current = null
+    }, 120)
+  }, [prefersReducedMotion])
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -339,6 +367,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     return () => {
       window.removeEventListener(SECTION_NAV_EVENT, handleSectionNavigate as EventListener)
       window.removeEventListener('hashchange', handleHashChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (resumePreviewHideTimeoutRef.current) {
+        clearTimeout(resumePreviewHideTimeoutRef.current)
+      }
     }
   }, [])
 
@@ -489,17 +525,20 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <button
                 ref={resumeButtonRef}
                 type="button"
-                onClick={() => setShowResumeModal(true)}
+                onClick={() => {
+                  setShowResumePreview(false)
+                  setShowResumeModal(true)
+                }}
                 className={contactInlineActionClassName}
-                onMouseEnter={() => setShowResumePreview(true)}
-                onMouseLeave={() => setShowResumePreview(false)}
-                onFocus={() => setShowResumePreview(true)}
-                onBlur={() => setShowResumePreview(false)}
+                onMouseEnter={openResumePreview}
+                onMouseLeave={closeResumePreview}
+                onFocus={openResumePreview}
+                onBlur={closeResumePreview}
                 aria-label="Resume"
                 title="Resume"
               >
                 <ContactIcon iconName={resumeIconName} label="Resume" className={contactIconGlyphClassName} />
-                <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/40 transition-[text-shadow,decoration-color,opacity] duration-250 ease-out group-hover:decoration-current/85 group-hover:opacity-100 group-hover:[text-shadow:0_0_8px_rgba(46,52,64,0.14)] dark:group-hover:[text-shadow:0_0_8px_rgba(229,233,240,0.16)]">
+                <span className={contactInlineLabelClassName}>
                   Resume
                 </span>
               </button>
@@ -525,7 +564,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             href="https://instagram.com/studio.alpine"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground underline underline-offset-4 hover:text-primary"
+            className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground no-underline hover:text-primary"
           >
             <CentralIcon name="IconCamera1" size={14} aria-hidden className="h-3.5 w-3.5 shrink-0" />
             <span>Photography Studio: Studio Alpine</span>

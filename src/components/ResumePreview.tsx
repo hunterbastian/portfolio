@@ -28,7 +28,7 @@ const PREVIEW_MOTION = {
     opacity: 0,
     y: -7,
     scale: 0.96,
-    filter: 'blur(1.8px)',
+    filter: 'blur(3.4px)',
   },
   animate: {
     opacity: 1,
@@ -40,7 +40,7 @@ const PREVIEW_MOTION = {
     opacity: 0,
     y: -5,
     scale: 0.98,
-    filter: 'blur(1px)',
+    filter: 'blur(2.2px)',
   },
 }
 

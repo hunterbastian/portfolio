@@ -67,8 +67,14 @@ const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
   '#tech-stack': 'techStack',
 }
 
-const socialLinkClassName =
-  'inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-all duration-[420ms] hover:-translate-y-0.5 hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+const desktopContactActionClassName =
+  'hidden md:inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-all duration-[420ms] hover:-translate-y-0.5 hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+
+const mobileContactActionClassName =
+  'inline-flex md:hidden h-11 w-full items-center justify-start gap-2.5 rounded-md border border-border bg-card/88 px-3 text-foreground shadow-sm transition-all duration-[420ms] hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+
+const mobileContactLabelClassName =
+  'font-code text-[10px] tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-300 group-hover:text-foreground'
 
 const experience: ExperienceItem[] = [
   {
@@ -204,23 +210,35 @@ function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotio
   return stage
 }
 
-function ContactIcon({ iconName, label }: { iconName: CentralIconName; label: string }) {
-  return <CentralIcon name={iconName} size={20} className="h-5 w-5" aria-label={label} />
+function ContactIcon({ iconName, label, className = 'h-5 w-5' }: { iconName: CentralIconName; label: string; className?: string }) {
+  return <CentralIcon name={iconName} size={20} className={className} aria-label={label} />
 }
 
 function ContactLink({ link }: { link: ContactLinkItem }) {
   return (
-    <a
-      href={link.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={socialLinkClassName}
-      aria-label={link.label}
-      title={link.label}
-    >
-      <ContactIcon iconName={link.iconName} label={link.label} />
-      <span className="sr-only">{link.label}</span>
-    </a>
+    <>
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`group ${mobileContactActionClassName}`}
+        aria-label={`Social media icon ${link.label}`}
+      >
+        <ContactIcon iconName={link.iconName} label={link.label} className="h-4 w-4 shrink-0" />
+        <span className={mobileContactLabelClassName}>Social media icon {link.label}</span>
+      </a>
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={desktopContactActionClassName}
+        aria-label={link.label}
+        title={link.label}
+      >
+        <ContactIcon iconName={link.iconName} label={link.label} />
+        <span className="sr-only">{link.label}</span>
+      </a>
+    </>
   )
 }
 
@@ -366,7 +384,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="max-w-2xl mx-auto">
           <motion.div
             ref={contactPanelRef}
-            className="flex flex-wrap items-stretch gap-3 sm:items-center sm:gap-4"
+            className="flex flex-col gap-2.5 md:flex-row md:flex-wrap md:items-center md:gap-4"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: contactStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -380,6 +398,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             {contactLinks.map((link, index) => (
               <motion.div
                 key={link.label}
+                className="w-full md:w-auto"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: contactStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -396,7 +415,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             ))}
 
             <motion.div
-              className="relative overflow-visible"
+              className="relative w-full overflow-visible md:w-auto"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
               animate={{
                 opacity: contactStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -409,9 +428,19 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               }}
             >
               <button
-                ref={resumeButtonRef}
+                type="button"
                 onClick={() => setShowResumeModal(true)}
-                className={socialLinkClassName}
+                className={`group ${mobileContactActionClassName}`}
+                aria-label="Social media icon Resume"
+              >
+                <ContactIcon iconName={resumeIconName} label="Resume" className="h-4 w-4 shrink-0" />
+                <span className={mobileContactLabelClassName}>Social media icon Resume</span>
+              </button>
+              <button
+                ref={resumeButtonRef}
+                type="button"
+                onClick={() => setShowResumeModal(true)}
+                className={desktopContactActionClassName}
                 onMouseEnter={() => setShowResumePreview(true)}
                 onMouseLeave={() => setShowResumePreview(false)}
                 onFocus={() => setShowResumePreview(true)}

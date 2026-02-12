@@ -91,6 +91,11 @@ export default function TextType({
       return
     }
 
+    if (!hasStarted) {
+      setCursorVisible(false)
+      return
+    }
+
     if (isComplete) {
       if (reduceMotion || completionBlinks <= 0) {
         setCursorVisible(false)
@@ -216,7 +221,7 @@ export default function TextType({
       aria-label={texts[currentTextIndex] ?? ''}
     >
       {renderText ? renderText(displayText) : displayText}
-      {showCursor ? (
+      {showCursor && hasStarted ? (
         <span
           aria-hidden="true"
           className={`inline-block ml-1${cinematic ? ' text-type-cinematic-cursor' : ''}`}

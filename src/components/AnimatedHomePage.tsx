@@ -75,19 +75,19 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const desktopContactActionClassName =
-  'group hidden md:inline-flex h-12 w-12 items-center justify-center rounded-[14px] transition-transform duration-[360ms] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/15 focus-visible:ring-offset-2 focus-visible:ring-offset-background'
+  'group hidden md:inline-flex h-12 w-12 items-center justify-center rounded-[14px] no-underline transition-transform duration-[360ms] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/15 focus-visible:ring-offset-2 focus-visible:ring-offset-background'
 
 const mobileContactActionClassName =
-  'group inline-flex md:hidden h-12 w-full items-center justify-start gap-3 rounded-[14px] border border-border/65 bg-card/90 px-3.5 text-foreground shadow-sm transition-all duration-[420ms] hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'group inline-flex md:hidden h-12 w-full items-center justify-start gap-3 rounded-[14px] border border-slate-700/55 bg-[linear-gradient(160deg,rgba(51,65,85,0.5),rgba(15,23,42,0.72))] px-3.5 text-slate-100 no-underline shadow-[0_8px_18px_rgba(15,23,42,0.28)] backdrop-blur-[6px] transition-all duration-[420ms] hover:border-primary/45 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
 const desktopContactIconBadgeClassName =
-  'inline-flex h-12 w-12 items-center justify-center rounded-[14px] border border-black/10 bg-[#f3f3f3] text-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_5px_12px_rgba(15,23,42,0.12)] transition-[background-color,box-shadow] duration-300 group-hover:bg-[#ededed] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.94),0_8px_16px_rgba(15,23,42,0.16)]'
+  'inline-flex h-12 w-12 items-center justify-center rounded-[14px] border border-slate-700/70 bg-[linear-gradient(160deg,rgba(51,65,85,0.82),rgba(15,23,42,0.9))] text-slate-100 shadow-[0_10px_22px_rgba(15,23,42,0.3)] backdrop-blur-[8px] transition-[background,border-color,box-shadow,color,transform] duration-300 group-hover:-translate-y-[1px] group-hover:border-primary/55 group-hover:bg-[linear-gradient(160deg,rgba(71,85,105,0.9),rgba(30,41,59,0.96))] group-hover:text-white group-hover:shadow-[0_14px_28px_rgba(15,23,42,0.34)]'
 
 const mobileContactIconBadgeClassName =
-  'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] border border-black/10 bg-[#f3f3f3] text-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_4px_10px_rgba(15,23,42,0.12)] transition-[background-color,box-shadow] duration-300 group-hover:bg-[#ededed] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.94),0_6px_14px_rgba(15,23,42,0.15)]'
+  'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] border border-slate-700/70 bg-[linear-gradient(160deg,rgba(51,65,85,0.82),rgba(15,23,42,0.9))] text-slate-100 shadow-[0_8px_18px_rgba(15,23,42,0.3)] backdrop-blur-[8px] transition-[background,border-color,box-shadow,color] duration-300 group-hover:border-primary/55 group-hover:bg-[linear-gradient(160deg,rgba(71,85,105,0.9),rgba(30,41,59,0.96))] group-hover:text-white group-hover:shadow-[0_10px_20px_rgba(15,23,42,0.34)]'
 
 const mobileContactLabelClassName =
-  'font-code text-[11px] tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-300 group-hover:text-foreground'
+  'font-code text-[11px] tracking-[0.1em] uppercase text-slate-200/85 transition-colors duration-300 group-hover:text-white'
 
 const experience: ExperienceItem[] = [
   {
@@ -173,48 +173,16 @@ const contactLinks: ContactLinkItem[] = [
 const resumeIconName: CentralIconName = 'IconFileText'
 const HERO_HEADLINE_TEXT = 'Hunter Bastian // Studio Alpine'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
-const HERO_BODY_TEXT =
-  "Interaction Design student at UVU with experience designing and building digital products. I work in front-end code, and I'm focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at Studio Alpine."
-const HERO_BODY_HIGHLIGHT_TEXT = 'Studio Alpine'
-const HERO_BODY_HIGHLIGHT_START = HERO_BODY_TEXT.indexOf(HERO_BODY_HIGHLIGHT_TEXT)
 
 const HERO_TYPING = {
   headline: 62, // keep current speed
-  subtitle: 56, // slightly faster than headline
-  body: 54, // slightly faster than headline
-  subtitleDelay: 180, // starts shortly after headline
-  bodyDelay: 260, // starts shortly after subtitle
 }
 
 const HERO_ENTRANCE = {
   profileDelay: 80, // profile circle appears first
-  bodyDelay: 140, // body copy appears right after heading block
+  subtitleDelay: 190, // subtitle appears after headline begins typing
+  bodyDelay: 250, // body copy appears after subtitle
   duration: 420, // reveal transition duration
-}
-
-function renderTypedHeroBody(displayText: string): ReactNode {
-  if (HERO_BODY_HIGHLIGHT_START === -1 || displayText.length <= HERO_BODY_HIGHLIGHT_START) {
-    return displayText
-  }
-
-  const visibleHighlightLength = Math.min(
-    displayText.length - HERO_BODY_HIGHLIGHT_START,
-    HERO_BODY_HIGHLIGHT_TEXT.length
-  )
-  const beforeHighlight = displayText.slice(0, HERO_BODY_HIGHLIGHT_START)
-  const highlightedText = displayText.slice(
-    HERO_BODY_HIGHLIGHT_START,
-    HERO_BODY_HIGHLIGHT_START + visibleHighlightLength
-  )
-  const afterHighlight = displayText.slice(HERO_BODY_HIGHLIGHT_START + visibleHighlightLength)
-
-  return (
-    <>
-      {beforeHighlight}
-      <span className="font-semibold text-primary">{highlightedText}</span>
-      {afterHighlight}
-    </>
-  )
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -440,18 +408,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   cinematic
                 />
               </h1>
-              <div className="font-code text-muted-foreground mt-2 text-[11px] tracking-[0.12em] sm:text-xs">
-                <TextType
-                  text={HERO_SUBTITLE_TEXT}
-                  className="block"
-                  typingSpeed={HERO_TYPING.subtitle}
-                  deletingSpeed={40}
-                  pauseDuration={2800}
-                  startDelay={HERO_TYPING.subtitleDelay}
-                  loop={false}
-                  cinematic
-                />
-              </div>
+              <motion.div
+                className="font-code text-muted-foreground mt-2 text-[11px] tracking-[0.12em] sm:text-xs"
+                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
+                animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, filter: 'blur(0px)' }}
+                transition={{
+                  duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
+                  delay: motionDelayMs(HERO_ENTRANCE.subtitleDelay, prefersReducedMotion),
+                  ease: STAGGER_PANEL.ease,
+                }}
+              >
+                <span>{HERO_SUBTITLE_TEXT}</span>
+              </motion.div>
             </div>
           </div>
 
@@ -465,17 +433,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
           >
             <p className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0">
-              <TextType
-                text={HERO_BODY_TEXT}
-                className="block"
-                typingSpeed={HERO_TYPING.body}
-                deletingSpeed={38}
-                pauseDuration={2800}
-                startDelay={HERO_TYPING.bodyDelay}
-                loop={false}
-                cinematic
-                renderText={renderTypedHeroBody}
-              />
+              Interaction Design student at UVU with experience designing and building digital products. I work in front-end
+              code, and I&apos;m focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at{' '}
+              <span className="font-semibold text-primary">Studio Alpine</span>.
             </p>
           </motion.div>
         </div>

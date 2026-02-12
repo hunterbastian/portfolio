@@ -70,7 +70,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
         cancelIdle(idleId)
       }
       if (timeoutId !== null) {
-        window.clearTimeout(timeoutId)
+        clearTimeout(timeoutId)
       }
     }
   }, [prefetchProject, projects])
@@ -78,14 +78,14 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
   useEffect(() => {
     return () => {
       if (hoverClearTimeoutRef.current !== null) {
-        window.clearTimeout(hoverClearTimeoutRef.current)
+        clearTimeout(hoverClearTimeoutRef.current)
       }
     }
   }, [])
 
   const cancelHoverClear = () => {
     if (hoverClearTimeoutRef.current !== null) {
-      window.clearTimeout(hoverClearTimeoutRef.current)
+      clearTimeout(hoverClearTimeoutRef.current)
       hoverClearTimeoutRef.current = null
     }
   }
@@ -103,7 +103,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     cancelHoverClear()
 
     // Small delay avoids a visual snap when moving between cards across grid gaps.
-    hoverClearTimeoutRef.current = window.setTimeout(() => {
+    hoverClearTimeoutRef.current = setTimeout(() => {
       setHoveredIndex(null)
       hoverClearTimeoutRef.current = null
     }, 80)

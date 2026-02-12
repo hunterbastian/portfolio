@@ -9,7 +9,7 @@ const DEFAULT_SPRING: SpringOptions = {
   mass: 0.5,
 }
 
-export interface MagneticProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MagneticProps extends React.ComponentPropsWithoutRef<typeof motion.div> {
   asChild?: boolean
   strength?: number
   range?: number
@@ -106,4 +106,3 @@ export function Magnetic({
     </motion.div>
   )
 }
-

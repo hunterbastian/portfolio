@@ -186,7 +186,7 @@ export default function CollapsibleSection({
 
   return (
     <section id={id} className={sectionClasses}>
-      <div className="max-w-2xl mx-auto flex items-center justify-start gap-3">
+      <div className="relative max-w-2xl mx-auto">
         <motion.button
           type="button"
           onClick={handleToggle}
@@ -195,7 +195,7 @@ export default function CollapsibleSection({
           aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
           initial={false}
           animate={buttonControls}
-          className="group inline-flex h-6 w-6 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="group absolute left-0 top-1/2 inline-flex h-6 w-6 -translate-x-6 -translate-y-1/2 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:-translate-x-7"
         >
           <motion.span
             initial={false}

@@ -63,7 +63,11 @@ const CARD_SCALE = {
   compact: 0.96,
   spread: 0.9,
 }
-const CARD_COMPACT_SPREAD_FACTOR = 0.12
+const CARD_COMPACT_SPREAD_FACTOR = -0.32
+const CARD_LAYOUT_TRANSITION = {
+  expand: 180,
+  collapse: 220,
+} as const
 
 const CARD_GRID_GAP = {
   compactX: 0,
@@ -167,6 +171,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   }, [initialLoadDelayMs, isGridInView, prefersReducedMotion])
 
   const isExpandedLayout = !supportsHover || isGridHovered
+  const layoutTransitionDuration = isExpandedLayout ? CARD_LAYOUT_TRANSITION.expand : CARD_LAYOUT_TRANSITION.collapse
   const layoutSpreadFactor = isExpandedLayout ? 1 : CARD_COMPACT_SPREAD_FACTOR
   const gridColumnGap = isExpandedLayout ? CARD_GRID_GAP.expandedX : CARD_GRID_GAP.compactX
   const gridRowGap = isExpandedLayout ? CARD_GRID_GAP.expandedY : CARD_GRID_GAP.compactY
@@ -195,8 +200,26 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         rowGap: gridRowGap,
       }}
       transition={{
-        duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
-        ease: CARD_STAGGER_PANEL.ease,
+        opacity: {
+          duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
+        y: {
+          duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
+        filter: {
+          duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
+        columnGap: {
+          duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
+        rowGap: {
+          duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
       }}
     >
       {orderedProjects.map((project, index) => {
@@ -255,15 +278,15 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                 ease: CARD_STAGGER_PANEL.ease,
               },
               x: {
-                duration: motionDurationMs(340, prefersReducedMotion),
+                duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
                 ease: CARD_STAGGER_PANEL.ease,
               },
               rotate: {
-                duration: motionDurationMs(340, prefersReducedMotion),
+                duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
                 ease: CARD_STAGGER_PANEL.ease,
               },
               scale: {
-                duration: motionDurationMs(340, prefersReducedMotion),
+                duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
                 ease: CARD_STAGGER_PANEL.ease,
               },
             }}

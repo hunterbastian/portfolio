@@ -1,12 +1,12 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
-import { MOTION_EASE_STANDARD, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
 import CollapsibleSection from './CollapsibleSection'
@@ -141,15 +141,67 @@ const contactLinks: ContactLinkItem[] = [
 const resumeIconName: CentralIconName = 'IconFileText'
 
 /* ─────────────────────────────────────────────────────────
- * EXPERIENCE ROW STORYBOARD
+ * SECTION STAGGER STORYBOARD
  *
- *    tap   row detail expands/collapses
- *    tap   plus icon rotates 45° ↔ 0°
+ * Read top-to-bottom. Each `at` value is ms after section enters view.
+ *
+ *    0ms   waiting for section in-view + open
+ *  120ms   panel fades in, y 14 → 0
+ *  280ms   rows/items reveal (staggered 90ms)
  * ───────────────────────────────────────────────────────── */
+
+const STAGGER_TIMING = {
+  panelAppear: 120, // panel starts appearing
+  itemsAppear: 280, // items begin staggered reveal
+  panelDuration: 380, // panel transition duration
+  itemDuration: 420, // each item transition duration
+  itemStagger: 90, // stagger gap between items
+}
+
+const STAGGER_PANEL = {
+  initialOpacity: 0, // hidden before stage 1
+  finalOpacity: 1, // visible at rest
+  initialY: 14, // panel vertical offset before reveal
+  finalY: 0, // resting panel position
+  ease: MOTION_EASE_STANDARD,
+}
+
+const STAGGER_ITEM = {
+  initialOpacity: 0, // hidden item before stage 2
+  finalOpacity: 1, // visible item at rest
+  initialY: 16, // item vertical offset before reveal
+  finalY: 0, // resting item position
+}
 
 const EXPERIENCE_TIMING = {
   expandDuration: 320, // row detail expand/collapse duration
   iconRotate: 240, // plus icon rotate duration
+}
+
+function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
+  const [stage, setStage] = useState(0)
+
+  useEffect(() => {
+    if (!isOpen || !isInView) {
+      setStage(0)
+      return
+    }
+
+    if (prefersReducedMotion) {
+      setStage(2)
+      return
+    }
+
+    setStage(0)
+    const timers: Array<ReturnType<typeof setTimeout>> = []
+
+    timers.push(setTimeout(() => setStage(1), STAGGER_TIMING.panelAppear))
+    timers.push(setTimeout(() => setStage(2), STAGGER_TIMING.itemsAppear))
+
+    return () => timers.forEach(clearTimeout)
+  }, [isOpen, isInView, prefersReducedMotion])
+
+  return stage
 }
 
 function ContactIcon({ iconName, label }: { iconName: CentralIconName; label: string }) {
@@ -178,6 +230,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const prefersReducedMotion = useReducedMotion() ?? false
+
+  const contactPanelRef = useRef<HTMLDivElement>(null)
+  const experiencePanelRef = useRef<HTMLDivElement>(null)
+  const educationPanelRef = useRef<HTMLDivElement>(null)
+  const everydayPanelRef = useRef<HTMLDivElement>(null)
+  const stackPanelRef = useRef<HTMLDivElement>(null)
+
+  const isContactInView = useInView(contactPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
+  const isExperienceInView = useInView(experiencePanelRef, { once: true, margin: '-120px 0px -120px 0px' })
+  const isEducationInView = useInView(educationPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
+  const isEverydayInView = useInView(everydayPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
+  const isStackInView = useInView(stackPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
+
+  const contactStage = useSectionStage(sectionOpen.contact, isContactInView, prefersReducedMotion)
+  const experienceStage = useSectionStage(sectionOpen.experience, isExperienceInView, prefersReducedMotion)
+  const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
+  const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
+  const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -293,12 +363,50 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
-          <div className="flex flex-wrap gap-4 items-stretch sm:items-center">
-            {contactLinks.map((link) => (
-              <ContactLink key={link.label} link={link} />
+          <motion.div
+            ref={contactPanelRef}
+            className="flex flex-wrap gap-4 items-stretch sm:items-center"
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
+            animate={{
+              opacity: contactStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
+              y: contactStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
+            }}
+            transition={{
+              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
+              ease: STAGGER_PANEL.ease,
+            }}
+          >
+            {contactLinks.map((link, index) => (
+              <motion.div
+                key={link.label}
+                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                animate={{
+                  opacity: contactStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                  y: contactStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                }}
+                transition={{
+                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                  delay: contactStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                  ease: STAGGER_PANEL.ease,
+                }}
+              >
+                <ContactLink link={link} />
+              </motion.div>
             ))}
 
-            <div className="relative overflow-visible">
+            <motion.div
+              className="relative overflow-visible"
+              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+              animate={{
+                opacity: contactStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                y: contactStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+              }}
+              transition={{
+                duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                delay: contactStage >= 2 ? motionDelayMs(contactLinks.length * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                ease: STAGGER_PANEL.ease,
+              }}
+            >
               <button
                 onClick={() => setShowResumeModal(true)}
                 className={socialLinkClassName}
@@ -313,8 +421,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <span className="sr-only">Resume</span>
               </button>
               <ResumePreview isVisible={showResumePreview} />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </CollapsibleSection>
 
@@ -376,12 +484,37 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
-          <div className="nord-panel rounded-lg p-4 sm:p-5 space-y-2">
+          <motion.div
+            ref={experiencePanelRef}
+            className="nord-panel rounded-lg p-4 sm:p-5 space-y-2"
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
+            animate={{
+              opacity: experienceStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
+              y: experienceStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
+            }}
+            transition={{
+              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
+              ease: STAGGER_PANEL.ease,
+            }}
+          >
             {experience.map((job, index) => {
               const isExpanded = expandedJobs.has(index)
 
               return (
-                <div key={job.company} className="border-b border-border last:border-b-0">
+                <motion.div
+                  key={job.company}
+                  className="border-b border-border last:border-b-0"
+                  initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                  animate={{
+                    opacity: experienceStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                    y: experienceStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                  }}
+                  transition={{
+                    duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                    delay: experienceStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                    ease: STAGGER_PANEL.ease,
+                  }}
+                >
                   <button
                     type="button"
                     className="flex w-full items-center justify-between py-3.5 px-2 text-left"
@@ -425,10 +558,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               )
             })}
-          </div>
+          </motion.div>
         </div>
       </CollapsibleSection>
 
@@ -443,9 +576,34 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
-          <div className="nord-panel rounded-lg p-5 space-y-5">
-            {education.map((edu) => (
-              <div key={edu.institution} className="border-b border-border last:border-b-0 pb-5 last:pb-0">
+          <motion.div
+            ref={educationPanelRef}
+            className="nord-panel rounded-lg p-5 space-y-5"
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
+            animate={{
+              opacity: educationStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
+              y: educationStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
+            }}
+            transition={{
+              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
+              ease: STAGGER_PANEL.ease,
+            }}
+          >
+            {education.map((edu, index) => (
+              <motion.div
+                key={edu.institution}
+                className="border-b border-border last:border-b-0 pb-5 last:pb-0"
+                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                animate={{
+                  opacity: educationStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                  y: educationStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                }}
+                transition={{
+                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                  delay: educationStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                  ease: STAGGER_PANEL.ease,
+                }}
+              >
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                   <div className="text-muted-foreground text-xs font-code min-w-[100px]">{edu.year}</div>
                   <div className="flex-1">
@@ -459,9 +617,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     )}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </CollapsibleSection>
 
@@ -476,9 +634,34 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
-          <div className="flex flex-wrap justify-start gap-x-8 gap-y-4">
-            {everydayTech.map((item) => (
-              <div key={item} className="text-left">
+          <motion.div
+            ref={everydayPanelRef}
+            className="flex flex-wrap justify-start gap-x-8 gap-y-4"
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
+            animate={{
+              opacity: everydayStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
+              y: everydayStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
+            }}
+            transition={{
+              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
+              ease: STAGGER_PANEL.ease,
+            }}
+          >
+            {everydayTech.map((item, index) => (
+              <motion.div
+                key={item}
+                className="text-left"
+                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                animate={{
+                  opacity: everydayStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                  y: everydayStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                }}
+                transition={{
+                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                  delay: everydayStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                  ease: STAGGER_PANEL.ease,
+                }}
+              >
                 <span
                   className={`text-sm font-code tracking-[0.08em] uppercase font-medium ${
                     item.startsWith('Wishlist:') ? 'text-primary' : 'text-muted-foreground'
@@ -486,9 +669,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   {item}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </CollapsibleSection>
 
@@ -503,15 +686,40 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-4xl mx-auto">
-          <div className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto">
-            {skills.map((skill) => (
-              <div key={skill} className="text-center">
+          <motion.div
+            ref={stackPanelRef}
+            className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto"
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
+            animate={{
+              opacity: stackStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
+              y: stackStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
+            }}
+            transition={{
+              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
+              ease: STAGGER_PANEL.ease,
+            }}
+          >
+            {skills.map((skill, index) => (
+              <motion.div
+                key={skill}
+                className="text-center"
+                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                animate={{
+                  opacity: stackStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                  y: stackStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                }}
+                transition={{
+                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                  delay: stackStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                  ease: STAGGER_PANEL.ease,
+                }}
+              >
                 <span className="text-sm font-code text-muted-foreground tracking-[0.08em] uppercase font-medium whitespace-nowrap">
                   {skill}
                 </span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </CollapsibleSection>
 

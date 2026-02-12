@@ -195,7 +195,7 @@ export default function CollapsibleSection({
           aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
           initial={false}
           animate={buttonControls}
-          className="group absolute right-0 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:left-0 md:right-auto md:-translate-x-7"
+          className="group absolute right-0 top-[46%] inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:left-0 md:right-auto md:top-1/2 md:-translate-x-7"
         >
           <motion.span
             initial={false}

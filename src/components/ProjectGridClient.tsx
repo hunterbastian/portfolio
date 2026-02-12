@@ -41,6 +41,12 @@ const CARD_STAGGER_ITEM = {
   finalY: 0,
 }
 
+const CARD_ANGLE = {
+  layout: [-2.4, 0.5, 3.1, -1.9, 0.4, 1.7], // keeps the "pinned board" angled rhythm
+  hoverLiftY: -4, // hover lift in px
+  hoverRotationFactor: 0.24, // retain a hint of card angle on hover
+}
+
 export default function ProjectGridClient({ projects }: ProjectGridClientProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [stage, setStage] = useState(0)
@@ -180,8 +186,6 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     }, 80)
   }
 
-  const rotations = [-4.8, 2.6, 3.9, -3.4, 2.1, -2.8]
-
   return (
     <motion.div
       ref={gridRef}
@@ -198,7 +202,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
     >
       {projects.map((project, index) => {
         const isHovered = hoveredIndex === index
-        const baseRotation = supportsHover ? rotations[index % rotations.length] : 0
+        const baseRotation = CARD_ANGLE.layout[index % CARD_ANGLE.layout.length]
         const cardOpacity = hoveredIndex === null || isHovered ? 1 : 0.9
 
         return (
@@ -207,7 +211,7 @@ export default function ProjectGridClient({ projects }: ProjectGridClientProps) 
             className="w-full transition-[transform,opacity,filter]"
             style={{
               transform: isHovered
-                ? `translateY(-4px) rotate(${(baseRotation * 0.35).toFixed(2)}deg)`
+                ? `translateY(${CARD_ANGLE.hoverLiftY}px) rotate(${(baseRotation * CARD_ANGLE.hoverRotationFactor).toFixed(2)}deg)`
                 : `translateY(0px) rotate(${baseRotation}deg)`,
               opacity: cardOpacity,
               filter: hoveredIndex === null || isHovered ? 'saturate(1)' : 'saturate(0.92)',

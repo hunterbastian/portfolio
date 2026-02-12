@@ -186,29 +186,8 @@ export default function CollapsibleSection({
 
   return (
     <section id={id} className={sectionClasses}>
-      <div className="relative mx-auto flex min-h-6 max-w-2xl items-center">
-        <motion.button
-          type="button"
-          onClick={handleToggle}
-          aria-expanded={isOpen}
-          aria-controls={contentId}
-          aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
-          initial={false}
-          animate={buttonControls}
-          className="group absolute right-0 top-[46%] inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:left-0 md:right-auto md:top-1/2 md:-translate-x-7"
-        >
-          <motion.span
-            initial={false}
-            animate={{ rotate: isOpen ? 45 : 0 }}
-            transition={{ duration: iconDuration, ease: MOTION_EASE_STANDARD }}
-            className="flex h-4 w-4 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground/70 shadow-inner transition-colors duration-300 group-hover:text-foreground"
-          >
-            <svg className="h-[9px] w-[9px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
-            </svg>
-          </motion.span>
-        </motion.button>
-        <h2 ref={titleRef} className="section-heading m-0 pr-8 font-inter text-sm leading-none md:pr-0" aria-label={title}>
+      <div className="relative mx-auto flex min-h-6 w-full max-w-2xl items-center justify-between md:justify-start">
+        <h2 ref={titleRef} className="section-heading m-0 font-inter text-sm leading-none" aria-label={title}>
           <span className="sr-only">{title}</span>
           <span aria-hidden className="inline-flex items-center">
             {titleChars.map((char, index) => (
@@ -232,6 +211,27 @@ export default function CollapsibleSection({
             ))}
           </span>
         </h2>
+        <motion.button
+          type="button"
+          onClick={handleToggle}
+          aria-expanded={isOpen}
+          aria-controls={contentId}
+          aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
+          initial={false}
+          animate={buttonControls}
+          className="group inline-flex h-6 w-6 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:absolute md:left-0 md:top-1/2 md:-translate-x-7 md:-translate-y-1/2"
+        >
+          <motion.span
+            initial={false}
+            animate={{ rotate: isOpen ? 45 : 0 }}
+            transition={{ duration: iconDuration, ease: MOTION_EASE_STANDARD }}
+            className="flex h-4 w-4 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground/70 shadow-inner transition-colors duration-300 group-hover:text-foreground"
+          >
+            <svg className="h-[9px] w-[9px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
+            </svg>
+          </motion.span>
+        </motion.button>
       </div>
 
       <AnimatePresence initial={false}>

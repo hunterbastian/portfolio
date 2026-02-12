@@ -513,15 +513,17 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="pt-12 pb-12"
         closedClassName="pt-5 pb-5"
-        contentClassName="mt-4 space-y-10"
+        contentClassName="mt-4 space-y-8"
       >
-        {children}
+        <div className="mx-auto max-w-4xl rounded-[22px] border border-border/45 bg-card/30 px-3 py-5 sm:px-5 sm:py-6">
+          {children}
+        </div>
 
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
-          <div className="flex justify-start mt-9">
+          <div className="flex justify-start mt-8">
             <a
               href="/archive"
-              className="social-button nord-button inline-flex items-center justify-center gap-1.5 px-4 py-2 font-medium text-xs rounded-sm transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+              className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
             >
               <span className="font-code font-light uppercase tracking-[0.08em] relative z-10">Other</span>
             </a>

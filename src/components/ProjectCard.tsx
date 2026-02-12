@@ -9,31 +9,36 @@ interface ProjectCardProps {
   slug: string
   frontmatter: ProjectFrontmatter
   index: number
+  isFeatured?: boolean
 }
 
-export default function ProjectCard({ slug, frontmatter, index }: ProjectCardProps) {
+export default function ProjectCard({ slug, frontmatter, index, isFeatured = false }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
 
   return (
     <Link href={`/projects/${slug}`} className="group block h-full w-full">
       <div
-        className="relative isolate overflow-hidden rounded-[20px] border text-card-foreground shadow-[0_10px_30px_rgba(46,52,64,0.08)] transition-transform transition-shadow duration-[650ms] hover:-translate-y-0.5 hover:shadow-[0_20px_36px_rgba(46,52,64,0.14)] active:scale-[0.99] touch-manipulation"
+        className={`relative isolate overflow-hidden rounded-[14px] border text-card-foreground transition-transform transition-shadow duration-[550ms] active:scale-[0.995] touch-manipulation ${
+          isFeatured
+            ? 'shadow-[0_22px_40px_rgba(46,52,64,0.22)] hover:-translate-y-1 hover:shadow-[0_28px_48px_rgba(46,52,64,0.26)]'
+            : 'shadow-[0_8px_20px_rgba(46,52,64,0.08)] hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(46,52,64,0.15)]'
+        }`}
         style={{
           opacity: 1,
           animationDelay: `${index * 80}ms`,
-          borderColor: 'color-mix(in srgb, var(--border) 82%, white)',
+          borderColor: 'color-mix(in srgb, var(--border) 78%, white)',
           background:
-            'linear-gradient(165deg, color-mix(in srgb, var(--card) 86%, white 14%) 0%, color-mix(in srgb, var(--card) 92%, transparent) 100%)',
+            'linear-gradient(180deg, color-mix(in srgb, var(--card) 84%, white 16%) 0%, color-mix(in srgb, var(--card) 96%, transparent) 100%)',
         }}
       >
-        <div className="aspect-[16/10] relative overflow-hidden">
+        <div className="aspect-[16/9] relative overflow-hidden">
           {/* Static Image - shown by default */}
           <Image
             src={imgSrc}
             alt={frontmatter.title}
             fill
-            className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
-            style={{ 
+            className="object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-[1.035]"
+            style={{
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)'
             }}
             sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 280px"
@@ -49,7 +54,7 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
           {frontmatter.title === "Porsche App" && (
             <video
               src="/images/projects/porscheapp.mp4"
-              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-[900ms] ease-out"
+              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-[800ms] ease-out"
               autoPlay
               loop
               muted
@@ -57,14 +62,14 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
               preload="none"
             />
           )}
-          
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/18 opacity-55 transition-opacity duration-[900ms] ease-out group-hover:opacity-70" />
+
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/16 opacity-55 transition-opacity duration-[850ms] ease-out group-hover:opacity-68" />
         </div>
 
-        <div className="px-3.5 pb-2.5 pt-2 border-t border-border/30 bg-card/82">
+        <div className="border-t border-border/30 bg-card/96 px-3.5 pb-3 pt-2.5">
           <h3
             className="font-code font-medium text-foreground transition-colors duration-[700ms] ease-out group-hover:text-primary leading-tight"
-            style={{ fontSize: '9.5px', letterSpacing: '0.085em', textTransform: 'uppercase' }}
+            style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase' }}
           >
             {frontmatter.title}
           </h3>

@@ -198,7 +198,7 @@ export default function RootLayout({
                   mode={process.env.NODE_ENV === 'production' ? 'production' : 'development'}
                 />
                 <DialKitRoot />
-                {process.env.NODE_ENV === 'development' && <ThemeSurfaceDial />}
+                <ThemeSurfaceDial />
                 {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                 
                 {/* Service Worker Registration - Deferred for better performance */}

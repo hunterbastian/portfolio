@@ -38,8 +38,6 @@ interface ContactLinkItem {
   iconName: CentralIconName
 }
 
-type ContactHoverStyle = 'dark' | 'light'
-
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
 type SectionOpenState = Record<SectionKey, boolean>
 
@@ -75,11 +73,8 @@ const INITIAL_SECTION_LOAD_DELAY = {
 const contactGlassActionBaseClassName =
   'group inline-flex h-9 items-center justify-center gap-1.5 rounded-[12px] border border-white/55 bg-[linear-gradient(155deg,rgba(255,255,255,0.74),rgba(255,255,255,0.38))] px-3 text-foreground no-underline shadow-[0_10px_22px_rgba(15,23,42,0.14)] backdrop-blur-[14px] transition-[transform,background,border-color,color,box-shadow] duration-[420ms] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/75 sm:h-10 sm:px-3.5'
 
-const contactGlassActionHoverClassNames: Record<ContactHoverStyle, string> = {
-  dark: 'hover:scale-[1.12] hover:border-black/45 hover:bg-[linear-gradient(155deg,rgba(46,52,64,0.9),rgba(59,66,82,0.84))] hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.34)] active:scale-[0.98]',
-  light:
-    'hover:scale-[1.12] hover:border-white/95 hover:bg-[linear-gradient(155deg,rgba(255,255,255,0.98),rgba(255,255,255,0.84))] hover:text-black hover:shadow-[0_0_0_1px_rgba(255,255,255,0.75),0_18px_40px_rgba(255,255,255,0.62)] active:scale-[0.98]',
-}
+const contactGlassActionHoverClassName =
+  'hover:scale-[1.12] hover:border-white/95 hover:bg-[linear-gradient(155deg,rgba(255,255,255,0.98),rgba(255,255,255,0.84))] hover:text-black hover:shadow-[0_0_0_1px_rgba(255,255,255,0.75),0_18px_40px_rgba(255,255,255,0.62)] active:scale-[0.98]'
 
 const contactIconGlyphClassName = 'h-[13px] w-[13px] sm:h-[14px] sm:w-[14px]'
 
@@ -270,7 +265,6 @@ function ContactLink({ link, actionClassName }: { link: ContactLinkItem; actionC
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
-  const [contactHoverStyle, setContactHoverStyle] = useState<ContactHoverStyle>('dark')
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const [heroTextStage, setHeroTextStage] = useState(0)
@@ -291,7 +285,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
   const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
-  const contactGlassActionClassName = `${contactGlassActionBaseClassName} ${contactGlassActionHoverClassNames[contactHoverStyle]}`
+  const contactGlassActionClassName = `${contactGlassActionBaseClassName} ${contactGlassActionHoverClassName}`
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -369,36 +363,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-6 sm:py-8">
-      <div className="pointer-events-none fixed left-3 top-1/2 z-[80] -translate-y-1/2">
-        <div className="pointer-events-auto flex flex-col gap-1 rounded-xl border border-white/45 bg-[linear-gradient(155deg,rgba(255,255,255,0.72),rgba(255,255,255,0.38))] p-2 shadow-[0_10px_22px_rgba(15,23,42,0.2)] backdrop-blur-[14px]">
-          <span className="px-1 pb-0.5 font-code text-[9px] tracking-[0.14em] text-muted-foreground">ICON HOVER</span>
-          <button
-            type="button"
-            className={`rounded-md border px-2 py-1 font-code text-[10px] tracking-[0.12em] transition-colors ${
-              contactHoverStyle === 'dark'
-                ? 'border-black/30 bg-black/75 text-white'
-                : 'border-transparent bg-transparent text-muted-foreground hover:border-border/70 hover:text-foreground'
-            }`}
-            onClick={() => setContactHoverStyle('dark')}
-            aria-pressed={contactHoverStyle === 'dark'}
-          >
-            DARK
-          </button>
-          <button
-            type="button"
-            className={`rounded-md border px-2 py-1 font-code text-[10px] tracking-[0.12em] transition-colors ${
-              contactHoverStyle === 'light'
-                ? 'border-white/90 bg-white text-black'
-                : 'border-transparent bg-transparent text-muted-foreground hover:border-border/70 hover:text-foreground'
-            }`}
-            onClick={() => setContactHoverStyle('light')}
-            aria-pressed={contactHoverStyle === 'light'}
-          >
-            LIGHT
-          </button>
-        </div>
-      </div>
-
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
@@ -480,7 +444,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             >
               Interaction Design student at UVU with experience designing and building digital products. I work in front-end
               code, and I&apos;m focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at{' '}
-              <span className="font-semibold text-primary">Studio Alpine</span>.
+              <span className="ambient-word-glow font-semibold text-primary">Studio Alpine</span>.
             </motion.p>
           </motion.div>
 

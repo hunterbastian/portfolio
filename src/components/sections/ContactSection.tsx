@@ -115,6 +115,8 @@ export default function ContactSection() {
               transition={{ duration: 0.3, ease: "easeOut" }}
               onMouseEnter={() => setShowResumePreview(true)}
               onMouseLeave={() => setShowResumePreview(false)}
+              onFocus={() => setShowResumePreview(true)}
+              onBlur={() => setShowResumePreview(false)}
             >
               VIEW RESUME
             </motion.button>

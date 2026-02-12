@@ -191,6 +191,11 @@ function mergeStoredSectionState(value: unknown): SectionOpenState {
     }
   })
 
+  const hasAnySectionOpen = (Object.keys(merged) as SectionKey[]).some((key) => merged[key])
+  if (!hasAnySectionOpen) {
+    return { ...DEFAULT_SECTION_OPEN_STATE }
+  }
+
   return merged
 }
 

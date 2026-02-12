@@ -71,9 +71,10 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex items-center gap-1.5 text-muted-foreground/85 no-underline transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'group inline-flex items-center gap-1.5 text-muted-foreground/80 no-underline transition-[color,transform,text-shadow] duration-250 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[1px] hover:text-foreground hover:[text-shadow:0_0_10px_rgba(46,52,64,0.16)] dark:hover:[text-shadow:0_0_10px_rgba(229,233,240,0.2)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
 
-const contactIconGlyphClassName = 'h-[13px] w-[13px] sm:h-[14px] sm:w-[14px]'
+const contactIconGlyphClassName =
+  'h-[13px] w-[13px] transition-transform duration-250 ease-out group-hover:scale-[1.1] sm:h-[14px] sm:w-[14px]'
 
 const experience: ExperienceItem[] = [
   {
@@ -252,7 +253,7 @@ function ContactLink({ link, actionClassName }: { link: ContactLinkItem; actionC
       title={link.label}
     >
       <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} />
-      <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/45">
+      <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/40 transition-[text-shadow,decoration-color,opacity] duration-250 ease-out group-hover:decoration-current/85 group-hover:opacity-100 group-hover:[text-shadow:0_0_8px_rgba(46,52,64,0.14)] dark:group-hover:[text-shadow:0_0_8px_rgba(229,233,240,0.16)]">
         {link.label}
       </span>
     </a>
@@ -440,7 +441,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             >
               Interaction Design student at UVU with experience designing and building digital products. I work in front-end
               code, and I&apos;m focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at{' '}
-              <span className="ambient-word-glow font-semibold text-primary">Studio Alpine</span>.
+              <span className="ambient-word-glow font-semibold text-primary" data-glow="Studio Alpine">Studio Alpine</span>.
             </motion.p>
           </motion.div>
 
@@ -498,7 +499,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 title="Resume"
               >
                 <ContactIcon iconName={resumeIconName} label="Resume" className={contactIconGlyphClassName} />
-                <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/45">
+                <span className="font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px] decoration-current/40 transition-[text-shadow,decoration-color,opacity] duration-250 ease-out group-hover:decoration-current/85 group-hover:opacity-100 group-hover:[text-shadow:0_0_8px_rgba(46,52,64,0.14)] dark:group-hover:[text-shadow:0_0_8px_rgba(229,233,240,0.16)]">
                   Resume
                 </span>
               </button>

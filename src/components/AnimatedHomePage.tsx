@@ -75,10 +75,16 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const desktopContactActionClassName =
-  'hidden md:inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-all duration-[420ms] hover:-translate-y-0.5 hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'group hidden md:inline-flex h-12 w-12 items-center justify-center rounded-[14px] transition-transform duration-[360ms] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/15 focus-visible:ring-offset-2 focus-visible:ring-offset-background'
 
 const mobileContactActionClassName =
-  'inline-flex md:hidden h-12 w-full items-center justify-start gap-3 rounded-lg border border-border bg-card/88 px-4 text-foreground shadow-sm transition-all duration-[420ms] hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'group inline-flex md:hidden h-12 w-full items-center justify-start gap-3 rounded-[14px] border border-border/65 bg-card/90 px-3.5 text-foreground shadow-sm transition-all duration-[420ms] hover:border-primary/45 hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+
+const desktopContactIconBadgeClassName =
+  'inline-flex h-12 w-12 items-center justify-center rounded-[14px] border border-black/10 bg-[#f3f3f3] text-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_5px_12px_rgba(15,23,42,0.12)] transition-[background-color,box-shadow] duration-300 group-hover:bg-[#ededed] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.94),0_8px_16px_rgba(15,23,42,0.16)]'
+
+const mobileContactIconBadgeClassName =
+  'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] border border-black/10 bg-[#f3f3f3] text-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.86),0_4px_10px_rgba(15,23,42,0.12)] transition-[background-color,box-shadow] duration-300 group-hover:bg-[#ededed] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.94),0_6px_14px_rgba(15,23,42,0.15)]'
 
 const mobileContactLabelClassName =
   'font-code text-[11px] tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-300 group-hover:text-foreground'
@@ -165,6 +171,51 @@ const contactLinks: ContactLinkItem[] = [
 ]
 
 const resumeIconName: CentralIconName = 'IconFileText'
+const HERO_HEADLINE_TEXT = 'Hunter Bastian // Studio Alpine'
+const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
+const HERO_BODY_TEXT =
+  "Interaction Design student at UVU with experience designing and building digital products. I work in front-end code, and I'm focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at Studio Alpine."
+const HERO_BODY_HIGHLIGHT_TEXT = 'Studio Alpine'
+const HERO_BODY_HIGHLIGHT_START = HERO_BODY_TEXT.indexOf(HERO_BODY_HIGHLIGHT_TEXT)
+
+const HERO_TYPING = {
+  headline: 62, // keep current speed
+  subtitle: 56, // slightly faster than headline
+  body: 54, // slightly faster than headline
+  subtitleDelay: 180, // starts shortly after headline
+  bodyDelay: 260, // starts shortly after subtitle
+}
+
+const HERO_ENTRANCE = {
+  profileDelay: 80, // profile circle appears first
+  bodyDelay: 140, // body copy appears right after heading block
+  duration: 420, // reveal transition duration
+}
+
+function renderTypedHeroBody(displayText: string): ReactNode {
+  if (HERO_BODY_HIGHLIGHT_START === -1 || displayText.length <= HERO_BODY_HIGHLIGHT_START) {
+    return displayText
+  }
+
+  const visibleHighlightLength = Math.min(
+    displayText.length - HERO_BODY_HIGHLIGHT_START,
+    HERO_BODY_HIGHLIGHT_TEXT.length
+  )
+  const beforeHighlight = displayText.slice(0, HERO_BODY_HIGHLIGHT_START)
+  const highlightedText = displayText.slice(
+    HERO_BODY_HIGHLIGHT_START,
+    HERO_BODY_HIGHLIGHT_START + visibleHighlightLength
+  )
+  const afterHighlight = displayText.slice(HERO_BODY_HIGHLIGHT_START + visibleHighlightLength)
+
+  return (
+    <>
+      {beforeHighlight}
+      <span className="font-semibold text-primary">{highlightedText}</span>
+      {afterHighlight}
+    </>
+  )
+}
 
 /* ─────────────────────────────────────────────────────────
  * SECTION STAGGER STORYBOARD
@@ -246,7 +297,9 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
         className={`group ${mobileContactActionClassName}`}
         aria-label={mobileLabel}
       >
-        <ContactIcon iconName={link.iconName} label={mobileLabel} className="h-[18px] w-[18px] shrink-0" />
+        <span className={mobileContactIconBadgeClassName}>
+          <ContactIcon iconName={link.iconName} label={mobileLabel} className="h-[18px] w-[18px] shrink-0" />
+        </span>
         <span className={mobileContactLabelClassName}>{mobileLabel}</span>
       </a>
       <a
@@ -257,7 +310,9 @@ function ContactLink({ link }: { link: ContactLinkItem }) {
         aria-label={link.label}
         title={link.label}
       >
-        <ContactIcon iconName={link.iconName} label={link.label} />
+        <span className={desktopContactIconBadgeClassName}>
+          <ContactIcon iconName={link.iconName} label={link.label} />
+        </span>
         <span className="sr-only">{link.label}</span>
       </a>
     </>
@@ -355,41 +410,74 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
-            <Image
-              src="/images/profilepicture.jpg"
-              alt="Hunter Bastian // Studio Alpine"
-              width={72}
-              height={72}
-              className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
-              priority
-            />
-            <div>
+            <motion.div
+              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94, filter: 'blur(1.2px)' }}
+              animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, scale: 1, filter: 'blur(0px)' }}
+              transition={{
+                duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
+                delay: motionDelayMs(HERO_ENTRANCE.profileDelay, prefersReducedMotion),
+                ease: STAGGER_PANEL.ease,
+              }}
+            >
+              <Image
+                src="/images/profilepicture.jpg"
+                alt="Hunter Bastian // Studio Alpine"
+                width={72}
+                height={72}
+                className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
+                priority
+              />
+            </motion.div>
+            <div className="min-w-0">
               <h1 className="text-foreground font-garamond-narrow font-semibold text-[clamp(0.95rem,4vw,1.53rem)] leading-tight">
                 <TextType
-                  text="Hunter Bastian // Studio Alpine"
+                  text={HERO_HEADLINE_TEXT}
                   className="block"
-                  typingSpeed={62}
+                  typingSpeed={HERO_TYPING.headline}
                   deletingSpeed={44}
                   pauseDuration={2800}
                   loop={false}
                   cinematic
                 />
               </h1>
-              <div className="font-code text-muted-foreground mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] tracking-[0.12em] sm:text-xs">
-                <span>Interaction Designer</span>
-                <span className="hidden opacity-50 sm:inline">|</span>
-                <span>Lehi, UT</span>
+              <div className="font-code text-muted-foreground mt-2 text-[11px] tracking-[0.12em] sm:text-xs">
+                <TextType
+                  text={HERO_SUBTITLE_TEXT}
+                  className="block"
+                  typingSpeed={HERO_TYPING.subtitle}
+                  deletingSpeed={40}
+                  pauseDuration={2800}
+                  startDelay={HERO_TYPING.subtitleDelay}
+                  loop={false}
+                  cinematic
+                />
               </div>
             </div>
           </div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
+            animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, filter: 'blur(0px)' }}
+            transition={{
+              duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
+              delay: motionDelayMs(HERO_ENTRANCE.bodyDelay, prefersReducedMotion),
+              ease: STAGGER_PANEL.ease,
+            }}
+          >
             <p className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0">
-              Interaction Design student at UVU with experience designing and building digital products. I work in front-end
-              code, and I&apos;m focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at{' '}
-              <span className="font-semibold text-primary">Studio Alpine</span>.
+              <TextType
+                text={HERO_BODY_TEXT}
+                className="block"
+                typingSpeed={HERO_TYPING.body}
+                deletingSpeed={38}
+                pauseDuration={2800}
+                startDelay={HERO_TYPING.bodyDelay}
+                loop={false}
+                cinematic
+                renderText={renderTypedHeroBody}
+              />
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -456,7 +544,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 className={`group ${mobileContactActionClassName}`}
                 aria-label="Resume"
               >
-                <ContactIcon iconName={resumeIconName} label="Resume" className="h-[18px] w-[18px] shrink-0" />
+                <span className={mobileContactIconBadgeClassName}>
+                  <ContactIcon iconName={resumeIconName} label="Resume" className="h-[18px] w-[18px] shrink-0" />
+                </span>
                 <span className={mobileContactLabelClassName}>Resume</span>
               </button>
               <button
@@ -471,7 +561,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 aria-label="Resume"
                 title="Resume"
               >
-                <ContactIcon iconName={resumeIconName} label="Resume" />
+                <span className={desktopContactIconBadgeClassName}>
+                  <ContactIcon iconName={resumeIconName} label="Resume" />
+                </span>
                 <span className="sr-only">Resume</span>
               </button>
               <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />

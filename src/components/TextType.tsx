@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 
 interface TextTypeProps {
   text: string | string[]
@@ -13,6 +13,8 @@ interface TextTypeProps {
   cursorCharacter?: string
   cinematic?: boolean
   completionBlinks?: number
+  startDelay?: number
+  renderText?: (displayText: string) => ReactNode
 }
 
 export default function TextType({
@@ -26,12 +28,15 @@ export default function TextType({
   cursorCharacter = '|',
   cinematic = false,
   completionBlinks = 2,
+  startDelay = 0,
+  renderText,
 }: TextTypeProps) {
   const texts = useMemo(() => (Array.isArray(text) ? text : [text]), [text])
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [displayText, setDisplayText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
   const [reduceMotion, setReduceMotion] = useState(false)
+  const [hasStarted, setHasStarted] = useState(startDelay <= 0)
   const [cursorVisible, setCursorVisible] = useState(true)
   const cursorTimerRef = useRef<number | null>(null)
   const isComplete =
@@ -52,6 +57,28 @@ export default function TextType({
 
     return () => media.removeEventListener('change', updateReduceMotion)
   }, [])
+
+  useEffect(() => {
+    if (reduceMotion || startDelay <= 0) {
+      setHasStarted(true)
+      return
+    }
+
+    setHasStarted(false)
+    const startTimer = window.setTimeout(() => {
+      setHasStarted(true)
+    }, startDelay)
+
+    return () => window.clearTimeout(startTimer)
+  }, [reduceMotion, startDelay, texts])
+
+  useEffect(() => {
+    if (!hasStarted) {
+      setCurrentTextIndex(0)
+      setDisplayText('')
+      setIsDeleting(false)
+    }
+  }, [hasStarted])
 
   useEffect(() => {
     if (cursorTimerRef.current !== null) {
@@ -110,10 +137,14 @@ export default function TextType({
         cursorTimerRef.current = null
       }
     }
-  }, [completionBlinks, isComplete, reduceMotion, showCursor])
+  }, [completionBlinks, hasStarted, isComplete, reduceMotion, showCursor])
 
   useEffect(() => {
     if (!texts.length) {
+      return
+    }
+
+    if (!hasStarted) {
       return
     }
 
@@ -174,6 +205,7 @@ export default function TextType({
     loop,
     pauseDuration,
     reduceMotion,
+    hasStarted,
     texts,
     typingSpeed,
   ])
@@ -183,7 +215,7 @@ export default function TextType({
       className={`${className ?? ''}${cinematic ? ' text-type-cinematic' : ''}`}
       aria-label={texts[currentTextIndex] ?? ''}
     >
-      {displayText}
+      {renderText ? renderText(displayText) : displayText}
       {showCursor ? (
         <span
           aria-hidden="true"

@@ -477,7 +477,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             >
               Interaction Design student at UVU with experience designing and building digital products. I work in front-end
               code, and I&apos;m focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at{' '}
-              <span className="ambient-word-glow font-semibold text-primary" data-glow="Studio Alpine">Studio Alpine</span>.
+              <span className="ambient-word-glow font-semibold" data-glow="Studio Alpine">Studio Alpine</span>.
             </motion.p>
           </motion.div>
 

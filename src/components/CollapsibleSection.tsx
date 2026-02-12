@@ -1,7 +1,7 @@
 'use client'
 
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
-import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { Children, isValidElement, type ReactNode, useEffect, useState } from 'react'
 
 interface CollapsibleSectionProps {
   id: string
@@ -14,14 +14,13 @@ interface CollapsibleSectionProps {
 }
 
 const CONTENT_EASE = [0.22, 1, 0.36, 1] as const
-const VIEWPORT_MARGIN = '-120px 0px -120px 0px'
 
 /* ─────────────────────────────────────────────────────────
  * COLLAPSIBLE SECTION STORYBOARD
  *
- * Read top-to-bottom. Each `at` value is ms after section opens in view.
+ * Read top-to-bottom. Each `at` value is ms after section opens.
  *
- *    0ms   waiting for section open + in-view trigger
+ *    0ms   waiting for section open trigger
  *  120ms   panel fades in, y 14 → 0
  *  280ms   content rows slide in (staggered 90ms)
  * ───────────────────────────────────────────────────────── */
@@ -59,11 +58,6 @@ export default function CollapsibleSection({
   contentClassName,
 }: CollapsibleSectionProps) {
   const prefersReducedMotion = useReducedMotion()
-  const contentRef = useRef<HTMLDivElement>(null)
-  const isContentInView = useInView(contentRef, {
-    once: true,
-    margin: VIEWPORT_MARGIN,
-  })
   const [stage, setStage] = useState(0)
 
   const contentId = `${id}-content`
@@ -76,7 +70,8 @@ export default function CollapsibleSection({
   const contentItems = Children.toArray(children)
 
   useEffect(() => {
-    if (!isOpen || !isContentInView) {
+    if (!isOpen) {
+      setStage(0)
       return
     }
 
@@ -92,7 +87,7 @@ export default function CollapsibleSection({
     timers.push(setTimeout(() => setStage(2), SECTION_TIMING.rowsAppear))
 
     return () => timers.forEach(clearTimeout)
-  }, [isOpen, isContentInView, prefersReducedMotion])
+  }, [isOpen, prefersReducedMotion])
 
   return (
     <section id={id} className={className}>
@@ -133,7 +128,6 @@ export default function CollapsibleSection({
             className="overflow-hidden"
           >
             <motion.div
-              ref={contentRef}
               className={contentPanelClassName}
               initial={false}
               animate={{

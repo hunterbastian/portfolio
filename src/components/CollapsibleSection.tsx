@@ -186,7 +186,7 @@ export default function CollapsibleSection({
 
   return (
     <section id={id} className={sectionClasses}>
-      <div className="relative max-w-2xl mx-auto">
+      <div className="relative mx-auto flex min-h-6 max-w-2xl items-center">
         <motion.button
           type="button"
           onClick={handleToggle}
@@ -208,9 +208,9 @@ export default function CollapsibleSection({
             </svg>
           </motion.span>
         </motion.button>
-        <h2 ref={titleRef} className="section-heading font-inter text-sm" aria-label={title}>
+        <h2 ref={titleRef} className="section-heading m-0 font-inter text-sm leading-none" aria-label={title}>
           <span className="sr-only">{title}</span>
-          <span aria-hidden className="inline-flex">
+          <span aria-hidden className="inline-flex items-center">
             {titleChars.map((char, index) => (
               <motion.span
                 key={`${id}-label-char-${index}`}

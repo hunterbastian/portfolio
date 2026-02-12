@@ -1,7 +1,7 @@
 'use client'
 
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { Children, isValidElement, type ReactNode, useEffect, useState } from 'react'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
+import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface CollapsibleSectionProps {
@@ -61,6 +61,8 @@ export default function CollapsibleSection({
   contentClassName,
 }: CollapsibleSectionProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
+  const contentRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(contentRef, { once: true, amount: 0.18 })
   const [stage, setStage] = useState(0)
 
   const contentId = `${id}-content`
@@ -82,6 +84,11 @@ export default function CollapsibleSection({
       return
     }
 
+    if (!isInView) {
+      setStage(0)
+      return
+    }
+
     if (prefersReducedMotion) {
       setStage(2)
       return
@@ -94,7 +101,7 @@ export default function CollapsibleSection({
     timers.push(setTimeout(() => setStage(2), SECTION_TIMING.rowsAppear))
 
     return () => timers.forEach(clearTimeout)
-  }, [isOpen, prefersReducedMotion])
+  }, [isOpen, isInView, prefersReducedMotion])
 
   return (
     <section id={id} className={sectionClasses}>
@@ -106,15 +113,15 @@ export default function CollapsibleSection({
           aria-expanded={isOpen}
           aria-controls={contentId}
           aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
-          className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="group inline-flex h-6 w-6 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           <motion.span
             initial={false}
             animate={{ rotate: isOpen ? 45 : 0 }}
             transition={{ duration: iconDuration, ease: MOTION_EASE_STANDARD }}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground/70 shadow-inner transition-colors duration-300 group-hover:text-foreground"
+            className="flex h-4 w-4 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground/70 shadow-inner transition-colors duration-300 group-hover:text-foreground"
           >
-            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+            <svg className="h-[9px] w-[9px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
             </svg>
           </motion.span>
@@ -135,6 +142,7 @@ export default function CollapsibleSection({
             className="overflow-hidden"
           >
             <motion.div
+              ref={contentRef}
               className={contentPanelClassName}
               initial={false}
               animate={{

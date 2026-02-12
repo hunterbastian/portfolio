@@ -1,12 +1,12 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
-import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_STANDARD, motionDurationMs } from '@/lib/motion'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
 import CollapsibleSection from './CollapsibleSection'
@@ -45,17 +45,16 @@ interface SectionNavigateDetail {
   href: string
 }
 
-const SECTION_STORAGE_KEY = 'hb.sectionOpen.v1'
 const SECTION_NAV_EVENT = 'hb:section-navigate'
 
 const DEFAULT_SECTION_OPEN_STATE: SectionOpenState = {
-  contact: false,
-  creating: false,
+  contact: true,
+  creating: true,
   caseStudies: true,
   experience: true,
-  education: false,
-  everydayTech: false,
-  techStack: false,
+  education: true,
+  everydayTech: true,
+  techStack: true,
 }
 
 const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
@@ -142,61 +141,15 @@ const contactLinks: ContactLinkItem[] = [
 const resumeIconName: CentralIconName = 'IconFileText'
 
 /* ─────────────────────────────────────────────────────────
- * EXPERIENCE LIST STORYBOARD
+ * EXPERIENCE ROW STORYBOARD
  *
- * Read top-to-bottom. Each `at` value is ms after section enters view.
- *
- *    0ms   waiting for experience section to enter view
- *  120ms   experience panel fades in, y 14 → 0
- *  280ms   timeline rows slide in (staggered 90ms)
- *   tap    row expands details + icon rotates 45°
+ *    tap   row detail expands/collapses
+ *    tap   plus icon rotates 45° ↔ 0°
  * ───────────────────────────────────────────────────────── */
 
 const EXPERIENCE_TIMING = {
-  panelAppear: 120, // panel starts appearing
-  rowsAppear: 280, // rows begin staggered reveal
-  panelDuration: 380, // panel transition duration
-  rowDuration: 420, // each row transition duration
-  rowStagger: 90, // stagger gap between rows
   expandDuration: 320, // row detail expand/collapse duration
   iconRotate: 240, // plus icon rotate duration
-}
-
-const EXPERIENCE_PANEL = {
-  initialOpacity: 0, // hidden before stage 1
-  finalOpacity: 1, // visible at rest
-  initialY: 14, // panel vertical offset before reveal
-  finalY: 0, // resting panel position
-  ease: MOTION_EASE_STANDARD,
-}
-
-const EXPERIENCE_ROW = {
-  initialOpacity: 0, // hidden row before stage 2
-  finalOpacity: 1, // visible row at rest
-  initialY: 16, // row vertical offset before reveal
-  finalY: 0, // resting row position
-}
-
-function mergeStoredSectionState(value: unknown): SectionOpenState {
-  const merged: SectionOpenState = { ...DEFAULT_SECTION_OPEN_STATE }
-
-  if (!value || typeof value !== 'object') {
-    return merged
-  }
-
-  const candidate = value as Partial<Record<SectionKey, unknown>>
-  ;(Object.keys(DEFAULT_SECTION_OPEN_STATE) as SectionKey[]).forEach((key) => {
-    if (typeof candidate[key] === 'boolean') {
-      merged[key] = candidate[key]
-    }
-  })
-
-  const hasAnySectionOpen = (Object.keys(merged) as SectionKey[]).some((key) => merged[key])
-  if (!hasAnySectionOpen) {
-    return { ...DEFAULT_SECTION_OPEN_STATE }
-  }
-
-  return merged
 }
 
 function ContactIcon({ iconName, label }: { iconName: CentralIconName; label: string }) {
@@ -223,46 +176,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
-  const [experienceStage, setExperienceStage] = useState(0)
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
-  const [hasHydratedSections, setHasHydratedSections] = useState(false)
   const prefersReducedMotion = useReducedMotion() ?? false
-
-  const experiencePanelRef = useRef<HTMLDivElement>(null)
-  const isExperienceInView = useInView(experiencePanelRef, {
-    once: true,
-    margin: '-120px 0px -120px 0px',
-  })
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    try {
-      const stored = window.localStorage.getItem(SECTION_STORAGE_KEY)
-      if (stored) {
-        const parsed = JSON.parse(stored)
-        setSectionOpen(mergeStoredSectionState(parsed))
-      }
-    } catch {
-      setSectionOpen({ ...DEFAULT_SECTION_OPEN_STATE })
-    } finally {
-      setHasHydratedSections(true)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!hasHydratedSections || typeof window === 'undefined') {
-      return
-    }
-
-    try {
-      window.localStorage.setItem(SECTION_STORAGE_KEY, JSON.stringify(sectionOpen))
-    } catch {
-      // Ignore storage write failures.
-    }
-  }, [hasHydratedSections, sectionOpen])
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -307,25 +222,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       window.removeEventListener('hashchange', handleHashChange)
     }
   }, [])
-
-  useEffect(() => {
-    if (!sectionOpen.experience || !isExperienceInView) {
-      return
-    }
-
-    if (prefersReducedMotion) {
-      setExperienceStage(2)
-      return
-    }
-
-    setExperienceStage(0)
-    const timers: Array<ReturnType<typeof setTimeout>> = []
-
-    timers.push(setTimeout(() => setExperienceStage(1), EXPERIENCE_TIMING.panelAppear))
-    timers.push(setTimeout(() => setExperienceStage(2), EXPERIENCE_TIMING.rowsAppear))
-
-    return () => timers.forEach(clearTimeout)
-  }, [isExperienceInView, sectionOpen.experience, prefersReducedMotion])
 
   const toggleSection = (section: SectionKey) => {
     setSectionOpen((prev) => ({ ...prev, [section]: !prev[section] }))
@@ -480,43 +376,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
-          <motion.div
-            ref={experiencePanelRef}
-            className="nord-panel rounded-lg p-4 sm:p-5 space-y-2"
-            initial={{
-              opacity: EXPERIENCE_PANEL.initialOpacity,
-              y: EXPERIENCE_PANEL.initialY,
-            }}
-            animate={{
-              opacity: experienceStage >= 1 ? EXPERIENCE_PANEL.finalOpacity : EXPERIENCE_PANEL.initialOpacity,
-              y: experienceStage >= 1 ? EXPERIENCE_PANEL.finalY : EXPERIENCE_PANEL.initialY,
-            }}
-            transition={{
-              duration: motionDurationMs(EXPERIENCE_TIMING.panelDuration, prefersReducedMotion),
-              ease: EXPERIENCE_PANEL.ease,
-            }}
-          >
+          <div className="nord-panel rounded-lg p-4 sm:p-5 space-y-2">
             {experience.map((job, index) => {
               const isExpanded = expandedJobs.has(index)
 
               return (
-                <motion.div
-                  key={job.company}
-                  className="border-b border-border last:border-b-0"
-                  initial={{
-                    opacity: EXPERIENCE_ROW.initialOpacity,
-                    y: EXPERIENCE_ROW.initialY,
-                  }}
-                  animate={{
-                    opacity: experienceStage >= 2 ? EXPERIENCE_ROW.finalOpacity : EXPERIENCE_ROW.initialOpacity,
-                    y: experienceStage >= 2 ? EXPERIENCE_ROW.finalY : EXPERIENCE_ROW.initialY,
-                  }}
-                  transition={{
-                    duration: motionDurationMs(EXPERIENCE_TIMING.rowDuration, prefersReducedMotion),
-                    delay: experienceStage >= 2 ? motionDelayMs(index * EXPERIENCE_TIMING.rowStagger, prefersReducedMotion) : 0,
-                    ease: EXPERIENCE_PANEL.ease,
-                  }}
-                >
+                <div key={job.company} className="border-b border-border last:border-b-0">
                   <button
                     type="button"
                     className="flex w-full items-center justify-between py-3.5 px-2 text-left"
@@ -533,7 +398,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         animate={{ rotate: isExpanded ? 45 : 0 }}
                         transition={{
                           duration: motionDurationMs(EXPERIENCE_TIMING.iconRotate, prefersReducedMotion),
-                          ease: EXPERIENCE_PANEL.ease,
+                          ease: MOTION_EASE_STANDARD,
                         }}
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -550,7 +415,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         exit={{ opacity: 0, height: 0 }}
                         transition={{
                           duration: motionDurationMs(EXPERIENCE_TIMING.expandDuration, prefersReducedMotion),
-                          ease: EXPERIENCE_PANEL.ease,
+                          ease: MOTION_EASE_STANDARD,
                         }}
                         className="overflow-hidden"
                       >
@@ -560,10 +425,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+                </div>
               )
             })}
-          </motion.div>
+          </div>
         </div>
       </CollapsibleSection>
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { type RefObject, useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
 interface ResumePreviewProps {
@@ -10,6 +11,45 @@ interface ResumePreviewProps {
 
 const PREVIEW_WIDTH = 170
 const PREVIEW_HEIGHT = 220
+
+/* ─────────────────────────────────────────────────────────
+ * RESUME PREVIEW ANIMATION STORYBOARD
+ *
+ * Read top-to-bottom. Each `at` value is ms after hover/focus trigger.
+ *
+ *    0ms   preview mounts in portal under the resume button
+ *  120ms   fade + rise + scale to full size
+ *  190ms   blur settles to crisp
+ *  240ms   exit completes when hover/focus leaves
+ * ───────────────────────────────────────────────────────── */
+
+const PREVIEW_MOTION = {
+  initial: {
+    opacity: 0,
+    y: -7,
+    scale: 0.96,
+    filter: 'blur(1.8px)',
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: 'blur(0px)',
+  },
+  exit: {
+    opacity: 0,
+    y: -5,
+    scale: 0.98,
+    filter: 'blur(1px)',
+  },
+}
+
+const PREVIEW_TRANSITION = {
+  y: { type: 'spring' as const, stiffness: 430, damping: 31, mass: 0.78 },
+  scale: { type: 'spring' as const, stiffness: 500, damping: 34, mass: 0.8 },
+  opacity: { duration: 0.16, ease: [0.22, 1, 0.36, 1] as const },
+  filter: { duration: 0.2, ease: [0.22, 1, 0.36, 1] as const },
+}
 
 export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewProps) {
   const [mounted, setMounted] = useState(false)
@@ -105,30 +145,59 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
     </div>
   )
 
-  const motionClasses = `pointer-events-none origin-top transition-transform transition-opacity duration-[420ms] ease-out ${
-    isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-1 scale-95'
-  }`
+  const anchorPosition = anchorRef?.current
+    ? (() => {
+        const rect = anchorRef.current.getBoundingClientRect()
+        const viewportPadding = 12
+        const centeredLeft = rect.left + rect.width / 2
+        const minLeft = viewportPadding + PREVIEW_WIDTH / 2
+        const maxLeft = window.innerWidth - viewportPadding - PREVIEW_WIDTH / 2
+
+        return {
+          left: Math.min(maxLeft, Math.max(minLeft, centeredLeft)),
+          top: rect.bottom + 8,
+        }
+      })()
+    : null
+
+  const activePosition = anchorPosition ?? position
 
   if (mounted && anchorRef?.current) {
     return createPortal(
-      <div
-        className={`fixed -translate-x-1/2 z-[80] ${motionClasses}`}
-        aria-hidden={!isVisible}
-        style={{ left: `${position.left}px`, top: `${position.top}px`, willChange: 'transform, opacity' }}
-      >
-        {previewBody}
-      </div>,
+      <AnimatePresence>
+        {isVisible ? (
+          <motion.div
+            className="fixed -translate-x-1/2 z-[80] pointer-events-none origin-top"
+            aria-hidden
+            style={{ left: `${activePosition.left}px`, top: `${activePosition.top}px`, willChange: 'transform, opacity, filter' }}
+            initial={PREVIEW_MOTION.initial}
+            animate={PREVIEW_MOTION.animate}
+            exit={PREVIEW_MOTION.exit}
+            transition={PREVIEW_TRANSITION}
+          >
+            {previewBody}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>,
       document.body
     )
   }
 
   return (
-    <div
-      className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 z-50 ${motionClasses}`}
-      aria-hidden={!isVisible}
-      style={{ willChange: 'transform, opacity' }}
-    >
-      {previewBody}
-    </div>
+    <AnimatePresence>
+      {isVisible ? (
+        <motion.div
+          className="absolute left-1/2 top-full mt-2 -translate-x-1/2 z-50 pointer-events-none origin-top"
+          aria-hidden
+          style={{ willChange: 'transform, opacity, filter' }}
+          initial={PREVIEW_MOTION.initial}
+          animate={PREVIEW_MOTION.animate}
+          exit={PREVIEW_MOTION.exit}
+          transition={PREVIEW_TRANSITION}
+        >
+          {previewBody}
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion, useAnimationControls, useInView, useReducedMotion } from 'framer-motion'
-import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
+import { Children, isValidElement, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface CollapsibleSectionProps {
@@ -56,6 +56,32 @@ const BUTTON_COLORS = {
   borderPressed: 'color-mix(in srgb, var(--foreground) 28%, var(--border) 72%)',
 }
 
+/* ─────────────────────────────────────────────────────────
+ * LABEL RHYTHM STORYBOARD
+ *
+ * Read top-to-bottom. Each `at` value is ms after label enters view.
+ *
+ *    0ms   waiting for heading in-view
+ *   60ms   first character appears
+ *  200ms   remaining characters reveal (staggered 22ms)
+ * ───────────────────────────────────────────────────────── */
+
+const LABEL_TIMING = {
+  start: 24, // heading label reveal starts
+  charDuration: 170, // each character transition duration
+  charStagger: 12, // stagger gap between characters
+}
+
+const LABEL_CHAR = {
+  initialOpacity: 0, // hidden character before reveal
+  finalOpacity: 1, // visible character at rest
+  initialY: 2, // tiny vertical offset before reveal
+  finalY: 0, // resting character position
+  initialBlur: 'blur(1px)', // softened character before reveal
+  finalBlur: 'blur(0px)', // crisp character at rest
+  ease: MOTION_EASE_STANDARD,
+}
+
 export default function CollapsibleSection({
   id,
   title,
@@ -70,8 +96,11 @@ export default function CollapsibleSection({
   const prefersReducedMotion = useReducedMotion() ?? false
   const buttonControls = useAnimationControls()
   const contentRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
   const isInView = useInView(contentRef, { once: true, amount: 0.18 })
+  const isTitleInView = useInView(titleRef, { once: true, amount: 0.7 })
   const [stage, setStage] = useState(0)
+  const [titleStage, setTitleStage] = useState(0)
 
   const contentId = `${id}-content`
   const contentDuration = motionDurationMs(300, prefersReducedMotion)
@@ -82,6 +111,7 @@ export default function CollapsibleSection({
   const rowStagger = motionDelayMs(SECTION_TIMING.rowStagger, prefersReducedMotion)
   const contentPanelClassName = contentClassName ?? ''
   const contentItems = Children.toArray(children)
+  const titleChars = useMemo(() => Array.from(title), [title])
   const sectionClasses = [className, isOpen ? openClassName : closedClassName, 'transition-[padding] duration-300']
     .filter(Boolean)
     .join(' ')
@@ -118,6 +148,22 @@ export default function CollapsibleSection({
       scale: 1,
     })
   }, [buttonControls])
+
+  useEffect(() => {
+    if (!isTitleInView) {
+      setTitleStage(0)
+      return
+    }
+
+    if (prefersReducedMotion) {
+      setTitleStage(1)
+      return
+    }
+
+    setTitleStage(0)
+    const timer = setTimeout(() => setTitleStage(1), LABEL_TIMING.start)
+    return () => clearTimeout(timer)
+  }, [isTitleInView, prefersReducedMotion, title])
 
   const handleToggle = () => {
     onToggle()
@@ -162,7 +208,30 @@ export default function CollapsibleSection({
             </svg>
           </motion.span>
         </motion.button>
-        <h2 className="section-heading font-inter text-sm">{title}</h2>
+        <h2 ref={titleRef} className="section-heading font-inter text-sm" aria-label={title}>
+          <span className="sr-only">{title}</span>
+          <span aria-hidden className="inline-flex">
+            {titleChars.map((char, index) => (
+              <motion.span
+                key={`${id}-label-char-${index}`}
+                className="inline-block whitespace-pre"
+                initial={false}
+                animate={{
+                  opacity: titleStage >= 1 ? LABEL_CHAR.finalOpacity : LABEL_CHAR.initialOpacity,
+                  y: titleStage >= 1 ? LABEL_CHAR.finalY : LABEL_CHAR.initialY,
+                  filter: titleStage >= 1 ? LABEL_CHAR.finalBlur : LABEL_CHAR.initialBlur,
+                }}
+                transition={{
+                  duration: motionDurationMs(LABEL_TIMING.charDuration, prefersReducedMotion),
+                  delay: titleStage >= 1 ? motionDelayMs(index * LABEL_TIMING.charStagger, prefersReducedMotion) : 0,
+                  ease: LABEL_CHAR.ease,
+                }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </span>
+        </h2>
       </div>
 
       <AnimatePresence initial={false}>

@@ -1,9 +1,10 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CentralIcon, type CentralIconName } from '@/icons'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
@@ -108,6 +109,42 @@ const contactLinks: ContactLinkItem[] = [
 ]
 const resumeIconName: CentralIconName = 'IconFileText'
 
+/* ─────────────────────────────────────────────────────────
+ * EXPERIENCE LIST STORYBOARD
+ *
+ * Read top-to-bottom. Each `at` value is ms after mount.
+ *
+ *    0ms   waiting for page mount
+ *  120ms   experience panel fades in, y 14 → 0
+ *  280ms   timeline rows slide in (staggered 90ms)
+ *   tap    row expands details + icon rotates 45°
+ * ───────────────────────────────────────────────────────── */
+
+const EXPERIENCE_TIMING = {
+  panelAppear:    120, // panel starts appearing
+  rowsAppear:     280, // rows begin staggered reveal
+  panelDuration:  380, // panel transition duration
+  rowDuration:    420, // each row transition duration
+  rowStagger:      90, // stagger gap between rows
+  expandDuration: 320, // row detail expand/collapse duration
+  iconRotate:     240, // plus icon rotate duration
+}
+
+const EXPERIENCE_PANEL = {
+  initialOpacity: 0, // hidden before stage 1
+  finalOpacity:   1, // visible at rest
+  initialY:      14, // panel vertical offset before reveal
+  finalY:         0, // resting panel position
+  ease: [0.22, 1, 0.36, 1] as const,
+}
+
+const EXPERIENCE_ROW = {
+  initialOpacity: 0, // hidden row before stage 2
+  finalOpacity:   1, // visible row at rest
+  initialY:      16, // row vertical offset before reveal
+  finalY:         0, // resting row position
+}
+
 function ContactIcon({ iconName, label }: { iconName: CentralIconName; label: string }) {
   return (
     <CentralIcon
@@ -143,6 +180,17 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
+  const [experienceStage, setExperienceStage] = useState(0)
+
+  useEffect(() => {
+    setExperienceStage(0)
+    const timers: Array<ReturnType<typeof setTimeout>> = []
+
+    timers.push(setTimeout(() => setExperienceStage(1), EXPERIENCE_TIMING.panelAppear))
+    timers.push(setTimeout(() => setExperienceStage(2), EXPERIENCE_TIMING.rowsAppear))
+
+    return () => timers.forEach(clearTimeout)
+  }, [])
 
   const toggleJob = (index: number) => {
     setExpandedJobs((prev) => {
@@ -267,12 +315,42 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="max-w-2xl mx-auto">
           <SectionHeading>Experience</SectionHeading>
 
-          <div className="nord-panel rounded-lg p-4 sm:p-6 space-y-2">
+          <motion.div
+            className="nord-panel rounded-lg p-4 sm:p-6 space-y-2"
+            initial={{
+              opacity: EXPERIENCE_PANEL.initialOpacity,
+              y: EXPERIENCE_PANEL.initialY,
+            }}
+            animate={{
+              opacity: experienceStage >= 1 ? EXPERIENCE_PANEL.finalOpacity : EXPERIENCE_PANEL.initialOpacity,
+              y: experienceStage >= 1 ? EXPERIENCE_PANEL.finalY : EXPERIENCE_PANEL.initialY,
+            }}
+            transition={{
+              duration: EXPERIENCE_TIMING.panelDuration / 1000,
+              ease: EXPERIENCE_PANEL.ease,
+            }}
+          >
             {experience.map((job, index) => {
               const isExpanded = expandedJobs.has(index)
 
               return (
-                <div key={job.company} className="border-b border-border last:border-b-0">
+                <motion.div
+                  key={job.company}
+                  className="border-b border-border last:border-b-0"
+                  initial={{
+                    opacity: EXPERIENCE_ROW.initialOpacity,
+                    y: EXPERIENCE_ROW.initialY,
+                  }}
+                  animate={{
+                    opacity: experienceStage >= 2 ? EXPERIENCE_ROW.finalOpacity : EXPERIENCE_ROW.initialOpacity,
+                    y: experienceStage >= 2 ? EXPERIENCE_ROW.finalY : EXPERIENCE_ROW.initialY,
+                  }}
+                  transition={{
+                    duration: EXPERIENCE_TIMING.rowDuration / 1000,
+                    delay: experienceStage >= 2 ? (index * EXPERIENCE_TIMING.rowStagger) / 1000 : 0,
+                    ease: EXPERIENCE_PANEL.ease,
+                  }}
+                >
                   <button
                     type="button"
                     className="flex w-full items-center justify-between py-4 px-2 text-left"
@@ -284,28 +362,42 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     </div>
                     <div className="flex items-center space-x-3">
                       <span className="text-muted-foreground text-sm font-garamond-narrow hidden sm:block">{job.title}</span>
-                      <div
+                      <motion.div
                         className="w-5 h-5 flex items-center justify-center transition-transform duration-[400ms] text-muted-foreground"
-                        style={{ transform: isExpanded ? 'rotate(45deg)' : 'rotate(0deg)' }}
+                        animate={{ rotate: isExpanded ? 45 : 0 }}
+                        transition={{
+                          duration: EXPERIENCE_TIMING.iconRotate / 1000,
+                          ease: EXPERIENCE_PANEL.ease,
+                        }}
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
-                      </div>
+                      </motion.div>
                     </div>
                   </button>
-                  <div
-                    className="overflow-hidden transition-[max-height,opacity] duration-500"
-                    style={{ maxHeight: isExpanded ? '460px' : '0px', opacity: isExpanded ? 1 : 0 }}
-                  >
-                    <div className="pb-4 pl-2 sm:pl-[5.5rem] pr-2">
-                      <p className="text-muted-foreground text-sm leading-relaxed">{job.description}</p>
-                    </div>
-                  </div>
-                </div>
+                  <AnimatePresence initial={false}>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{
+                          duration: EXPERIENCE_TIMING.expandDuration / 1000,
+                          ease: EXPERIENCE_PANEL.ease,
+                        }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-4 pl-2 sm:pl-[5.5rem] pr-2">
+                          <p className="text-muted-foreground text-sm leading-relaxed">{job.description}</p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
               )
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 

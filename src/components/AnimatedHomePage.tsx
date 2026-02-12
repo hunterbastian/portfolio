@@ -129,7 +129,7 @@ const everydayTech = [
   'Wishlist: Keychron K3',
 ]
 
-const skills = ['Figma', 'Framer', 'UX Design', 'UI Design', 'HTML', 'JavaScript', 'CSS', 'ChatGPT']
+const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
 
 const contactLinks: ContactLinkItem[] = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconName: 'IconInstagram' },
@@ -386,7 +386,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Contact"
         isOpen={sectionOpen.contact}
         onToggle={() => toggleSection('contact')}
-        className="pt-8 pb-8 px-4 sm:px-6 lg:px-0 relative z-20"
+        className="px-4 sm:px-6 lg:px-0 relative z-20"
+        openClassName="pt-8 pb-8"
+        closedClassName="pt-5 pb-5"
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
@@ -420,7 +422,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Creating"
         isOpen={sectionOpen.creating}
         onToggle={() => toggleSection('creating')}
-        className="py-12 px-4 sm:px-6 lg:px-0 relative z-10"
+        className="px-4 sm:px-6 lg:px-0 relative z-10"
+        openClassName="py-12"
+        closedClassName="py-5"
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto text-left">
@@ -441,7 +445,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Case Studies"
         isOpen={sectionOpen.caseStudies}
         onToggle={() => toggleSection('caseStudies')}
-        className="pt-12 pb-12 px-4 sm:px-6 lg:px-0 relative z-10"
+        className="px-4 sm:px-6 lg:px-0 relative z-10"
+        openClassName="pt-12 pb-12"
+        closedClassName="pt-5 pb-5"
         contentClassName="mt-4 space-y-10"
       >
         {children}
@@ -463,7 +469,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Experience"
         isOpen={sectionOpen.experience}
         onToggle={() => toggleSection('experience')}
-        className="py-12 px-4 sm:px-6 lg:px-0"
+        className="px-4 sm:px-6 lg:px-0"
+        openClassName="py-12"
+        closedClassName="py-5"
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
@@ -559,7 +567,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Education"
         isOpen={sectionOpen.education}
         onToggle={() => toggleSection('education')}
-        className="py-12 px-4 sm:px-6 lg:px-0"
+        className="px-4 sm:px-6 lg:px-0"
+        openClassName="py-12"
+        closedClassName="py-5"
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
@@ -590,7 +600,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Everyday Tech"
         isOpen={sectionOpen.everydayTech}
         onToggle={() => toggleSection('everydayTech')}
-        className="py-10 px-4 sm:px-6 lg:px-0"
+        className="px-4 sm:px-6 lg:px-0"
+        openClassName="py-10"
+        closedClassName="py-5"
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto">
@@ -615,7 +627,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="Stack"
         isOpen={sectionOpen.techStack}
         onToggle={() => toggleSection('techStack')}
-        className="py-12 px-4 sm:px-6 lg:px-0"
+        className="px-4 sm:px-6 lg:px-0"
+        openClassName="py-12"
+        closedClassName="py-5"
         contentClassName="mt-4"
       >
         <div className="max-w-4xl mx-auto">

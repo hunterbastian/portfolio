@@ -11,6 +11,8 @@ interface CollapsibleSectionProps {
   onToggle: () => void
   children: ReactNode
   className?: string
+  openClassName?: string
+  closedClassName?: string
   contentClassName?: string
 }
 
@@ -54,6 +56,8 @@ export default function CollapsibleSection({
   onToggle,
   children,
   className,
+  openClassName,
+  closedClassName,
   contentClassName,
 }: CollapsibleSectionProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -68,6 +72,9 @@ export default function CollapsibleSection({
   const rowStagger = motionDelayMs(SECTION_TIMING.rowStagger, prefersReducedMotion)
   const contentPanelClassName = contentClassName ?? ''
   const contentItems = Children.toArray(children)
+  const sectionClasses = [className, isOpen ? openClassName : closedClassName, 'transition-[padding] duration-300']
+    .filter(Boolean)
+    .join(' ')
 
   useEffect(() => {
     if (!isOpen) {
@@ -90,7 +97,7 @@ export default function CollapsibleSection({
   }, [isOpen, prefersReducedMotion])
 
   return (
-    <section id={id} className={className}>
+    <section id={id} className={sectionClasses}>
       <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
         <h2 className="section-heading font-inter text-sm">{title}</h2>
         <button
@@ -99,7 +106,7 @@ export default function CollapsibleSection({
           aria-expanded={isOpen}
           aria-controls={contentId}
           aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
-          className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors duration-300 hover:text-foreground hover:border-primary/45 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors duration-300 hover:text-foreground hover:border-primary/45 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           <motion.span
             initial={false}
@@ -107,8 +114,8 @@ export default function CollapsibleSection({
             transition={{ duration: iconDuration, ease: MOTION_EASE_STANDARD }}
             className="flex items-center justify-center"
           >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
             </svg>
           </motion.span>
         </button>

@@ -89,6 +89,18 @@ const LABEL_CHAR = {
   ease: MOTION_EASE_STANDARD,
 }
 
+const TOGGLE_BUTTON_ENTRANCE = {
+  delay: 56, // follows the first label characters
+  duration: 320, // button entrance duration
+  initialOpacity: 0, // hidden before heading reveal
+  finalOpacity: 1, // visible at rest
+  initialScale: 0.9, // slight downscale before reveal
+  finalScale: 1, // resting size
+  initialBlur: 'blur(3px)', // softened before reveal
+  finalBlur: 'blur(0px)', // crisp at rest
+  ease: MOTION_EASE_STANDARD,
+}
+
 export default function CollapsibleSection({
   id,
   title,
@@ -234,27 +246,43 @@ export default function CollapsibleSection({
             ))}
           </span>
         </h2>
-        <motion.button
-          type="button"
-          onClick={handleToggle}
-          aria-expanded={isOpen}
-          aria-controls={contentId}
-          aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
+        <motion.div
+          className="absolute left-0 top-1/2"
           initial={false}
-          animate={buttonControls}
-          className="group absolute left-0 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          animate={{
+            opacity: titleStage >= 1 ? TOGGLE_BUTTON_ENTRANCE.finalOpacity : TOGGLE_BUTTON_ENTRANCE.initialOpacity,
+            scale: titleStage >= 1 ? TOGGLE_BUTTON_ENTRANCE.finalScale : TOGGLE_BUTTON_ENTRANCE.initialScale,
+            filter: titleStage >= 1 ? TOGGLE_BUTTON_ENTRANCE.finalBlur : TOGGLE_BUTTON_ENTRANCE.initialBlur,
+          }}
+          transition={{
+            duration: motionDurationMs(TOGGLE_BUTTON_ENTRANCE.duration, prefersReducedMotion),
+            delay: titleStage >= 1 ? motionDelayMs(TOGGLE_BUTTON_ENTRANCE.delay, prefersReducedMotion) : 0,
+            ease: TOGGLE_BUTTON_ENTRANCE.ease,
+          }}
+          style={{ pointerEvents: titleStage >= 1 ? 'auto' : 'none' }}
         >
-          <motion.span
+          <motion.button
+            type="button"
+            onClick={handleToggle}
+            aria-expanded={isOpen}
+            aria-controls={contentId}
+            aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
             initial={false}
-            animate={{ rotate: isOpen ? 45 : 0 }}
-            transition={{ duration: iconDuration, ease: MOTION_EASE_STANDARD }}
-            className="flex h-4 w-4 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground/70 shadow-inner transition-colors duration-300 group-hover:text-foreground"
+            animate={buttonControls}
+            className="group inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
-            <svg className="h-[9px] w-[9px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
-            </svg>
-          </motion.span>
-        </motion.button>
+            <motion.span
+              initial={false}
+              animate={{ rotate: isOpen ? 45 : 0 }}
+              transition={{ duration: iconDuration, ease: MOTION_EASE_STANDARD }}
+              className="flex h-4 w-4 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground/70 shadow-inner transition-colors duration-300 group-hover:text-foreground"
+            >
+              <svg className="h-[9px] w-[9px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
+              </svg>
+            </motion.span>
+          </motion.button>
+        </motion.div>
       </div>
 
       <AnimatePresence initial={false}>

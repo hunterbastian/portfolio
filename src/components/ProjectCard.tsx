@@ -14,6 +14,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ slug, frontmatter, index, isFeatured = false }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
+  const displayTitle = slug === 'brand-identity-system' ? 'Middle Earth Journey' : frontmatter.title
 
   return (
     <Link href={`/projects/${slug}`} className="group block h-full w-full">
@@ -68,10 +69,11 @@ export default function ProjectCard({ slug, frontmatter, index, isFeatured = fal
 
         <div className="border-t border-border/30 bg-card/96 px-3.5 pb-3 pt-2.5">
           <h3
-            className="font-code font-medium text-foreground transition-colors duration-[700ms] ease-out group-hover:text-primary leading-tight"
-            style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase' }}
+            className="font-code block w-full truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-[700ms] ease-out group-hover:text-primary"
+            style={{ fontSize: '9.5px', letterSpacing: '0.12em', textTransform: 'uppercase' }}
+            title={displayTitle}
           >
-            {frontmatter.title}
+            {displayTitle}
           </h3>
         </div>
       </div>

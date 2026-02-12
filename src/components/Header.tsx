@@ -1,8 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import ScrollIndicator from './ScrollIndicator'
+import { CentralIcon } from '@/icons'
 
 const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
   e.preventDefault()
@@ -36,6 +35,12 @@ export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [hoveredSection, setHoveredSection] = useState('')
+
+  const handleRefreshToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+    const { pathname, search } = window.location
+    window.location.assign(`${pathname}${search}`)
+  }
 
   useEffect(() => {
     const sectionIds = navigation.map((item) => item.href.slice(1))
@@ -101,13 +106,20 @@ export default function Header() {
     >
       <div className="container mx-auto max-w-6xl">
         <div className="flex h-12 items-center justify-between">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 font-code font-medium text-sm tracking-[0.14em] text-foreground hover:text-primary transition-colors duration-300"
+          <button
+            type="button"
+            onClick={handleRefreshToTop}
+            className="group inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+            aria-label="Refresh and return to top"
+            title="Refresh and return to top"
           >
-            <ScrollIndicator />
-            HB
-          </Link>
+            <CentralIcon
+              name="IconArrowRotateClockwise"
+              size={16}
+              className="h-4 w-4 transition-transform duration-500 group-hover:rotate-180"
+              aria-hidden
+            />
+          </button>
 
           <nav
             className="header-nav-vertical hidden md:flex"

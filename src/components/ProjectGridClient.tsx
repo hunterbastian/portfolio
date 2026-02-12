@@ -32,6 +32,8 @@ const CARD_STAGGER_PANEL = {
   finalOpacity: 1,
   initialY: 14,
   finalY: 0,
+  initialBlur: 'blur(1.8px)',
+  finalBlur: 'blur(0px)',
   ease: MOTION_EASE_STANDARD,
 }
 
@@ -203,6 +205,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
       animate={{
         opacity: stage >= 1 ? CARD_STAGGER_PANEL.finalOpacity : CARD_STAGGER_PANEL.initialOpacity,
         y: stage >= 1 ? CARD_STAGGER_PANEL.finalY : CARD_STAGGER_PANEL.initialY,
+        filter: stage >= 1 ? CARD_STAGGER_PANEL.finalBlur : CARD_STAGGER_PANEL.initialBlur,
       }}
       transition={{
         duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),

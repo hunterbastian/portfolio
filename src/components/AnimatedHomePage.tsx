@@ -344,9 +344,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
           <div>
             <p className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0">
-              Interaction Design student at UVU with experience designing and building digital products. I work in Figma and
-              front-end code at <span className="font-semibold text-primary">Studio Alpine</span>, and I&apos;m focused on clear,
-              meaningful interfaces with an AI-first mindset.
+              Interaction Design student at UVU with experience designing and building digital products. I work in front-end
+              code, and I&apos;m focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at{' '}
+              <span className="font-semibold text-primary">Studio Alpine</span>.
             </p>
           </div>
         </div>

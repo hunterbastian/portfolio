@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { JetBrains_Mono, Playfair_Display, Source_Code_Pro } from 'next/font/google'
+import { Inter, JetBrains_Mono, Playfair_Display, Source_Code_Pro } from 'next/font/google'
 import './globals.css'
 import './viewport.css'
 import Header from '@/components/Header'
@@ -39,6 +39,16 @@ const sourceCodePro = Source_Code_Pro({
   display: 'swap',
   preload: false,
   fallback: ['ui-monospace', 'monospace'],
+})
+
+// Section headings and UI sans
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-inter',
+  display: 'swap',
+  preload: false,
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 export const viewport = {
@@ -169,7 +179,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-                   <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} safe-area-padding bg-background text-foreground`}>
+                   <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} ${inter.variable} safe-area-padding bg-background text-foreground`}>
                        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                        <div className="min-h-screen flex flex-col">
                  <Header />

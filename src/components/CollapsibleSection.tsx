@@ -92,7 +92,7 @@ export default function CollapsibleSection({
   return (
     <section id={id} className={className}>
       <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
-        <h2 className="section-heading font-code text-sm">{title}</h2>
+        <h2 className="section-heading font-inter text-sm">{title}</h2>
         <button
           type="button"
           onClick={onToggle}

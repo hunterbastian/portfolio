@@ -1,6 +1,5 @@
 'use client'
 
-import { useDialKit } from 'dialkit'
 import { AnimatePresence, motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react'
@@ -116,20 +115,6 @@ function RouteScene({ children, timing, offsets }: RouteSceneProps) {
 
 export default function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname()
-  const controls = useDialKit('Page Transition', {
-    timing: {
-      oldFadeDuration: [TIMING.oldFadeDuration, 80, 1200],
-      newContentDelay: [TIMING.newContentDelay, 0, 900],
-      newSlideDuration: [TIMING.newSlideDuration, 120, 1800],
-      childStartDelay: [TIMING.childStartDelay, 0, 900],
-      childStagger: [TIMING.childStagger, 0, 400],
-      childDuration: [TIMING.childDuration, 100, 1400],
-    },
-    offsets: {
-      pageY: [PAGE.initialY, 0, 140],
-      childY: [CHILD.initialY, 0, 120],
-    },
-  })
 
   return (
     <AnimatePresence mode="wait" initial={false}>
@@ -137,21 +122,21 @@ export default function PageTransition({ children }: PageTransitionProps) {
         key={pathname}
         exit={{ opacity: PAGE.exitOpacity }}
         transition={{
-          duration: controls.timing.oldFadeDuration / 1000,
+          duration: TIMING.oldFadeDuration / 1000,
           ease: PAGE.ease,
         }}
       >
         <RouteScene
           timing={{
-            newContentDelay: controls.timing.newContentDelay,
-            newSlideDuration: controls.timing.newSlideDuration,
-            childStartDelay: controls.timing.childStartDelay,
-            childStagger: controls.timing.childStagger,
-            childDuration: controls.timing.childDuration,
+            newContentDelay: TIMING.newContentDelay,
+            newSlideDuration: TIMING.newSlideDuration,
+            childStartDelay: TIMING.childStartDelay,
+            childStagger: TIMING.childStagger,
+            childDuration: TIMING.childDuration,
           }}
           offsets={{
-            pageY: controls.offsets.pageY,
-            childY: controls.offsets.childY,
+            pageY: PAGE.initialY,
+            childY: CHILD.initialY,
           }}
         >
           {children}

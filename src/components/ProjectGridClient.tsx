@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { useDialKit } from 'dialkit'
 import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProjectFrontmatter } from '@/types/project'
@@ -59,22 +60,36 @@ interface CardLayoutAngle {
 }
 
 const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
-const CARD_SCALE = {
-  compact: 0.96,
-  spread: 0.9,
-}
-const CARD_COMPACT_SPREAD_FACTOR = -0.32
-const CARD_LAYOUT_TRANSITION = {
-  expand: 180,
-  collapse: 220,
+const CASE_STUDY_DIAL_DEFAULTS = {
+  compactSpreadFactor: -0.32,
+  compactScale: 0.96,
+  compactGapX: 0,
+  compactGapY: 2,
+  expandedGapX: 24,
+  expandedGapY: 28,
+  expandedScale: 0.9,
+  expandMs: 170,
+  collapseMs: 220,
+  inactiveOpacity: 0.9,
+  stackPriority: 'default',
 } as const
 
-const CARD_GRID_GAP = {
-  compactX: 0,
-  compactY: 2,
-  expandedX: 24,
-  expandedY: 28,
-} as const
+function getStackPriorityZIndex(index: number, total: number, stackPriority: string): number {
+  if (stackPriority === 'center') {
+    const center = (total - 1) / 2
+    return Math.round(total - Math.abs(index - center) * 2)
+  }
+
+  if (stackPriority === 'left') {
+    return total - index
+  }
+
+  if (stackPriority === 'right') {
+    return index + 1
+  }
+
+  return index + 1
+}
 
 const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
   'brand-identity-system': { rotate: -6.2, x: -14 }, // Middle Earth Journey - left tilt
@@ -121,6 +136,37 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
       return 0
     })
   }, [projects])
+
+  const caseStudyDial = useDialKit('Case Study Stack', {
+    pile: {
+      compactSpreadFactor: [CASE_STUDY_DIAL_DEFAULTS.compactSpreadFactor, -0.75, 0.35],
+      compactScale: [CASE_STUDY_DIAL_DEFAULTS.compactScale, 0.82, 1.02],
+      compactGapX: [CASE_STUDY_DIAL_DEFAULTS.compactGapX, -24, 18],
+      compactGapY: [CASE_STUDY_DIAL_DEFAULTS.compactGapY, -16, 20],
+      stackPriority: {
+        type: 'select',
+        options: [
+          { value: 'default', label: 'Current Layering' },
+          { value: 'center', label: 'Center Cards On Top' },
+          { value: 'left', label: 'Left Cards On Top' },
+          { value: 'right', label: 'Right Cards On Top' },
+        ],
+        default: CASE_STUDY_DIAL_DEFAULTS.stackPriority,
+      },
+    },
+    expanded: {
+      gapX: [CASE_STUDY_DIAL_DEFAULTS.expandedGapX, 8, 52],
+      gapY: [CASE_STUDY_DIAL_DEFAULTS.expandedGapY, 10, 54],
+      scale: [CASE_STUDY_DIAL_DEFAULTS.expandedScale, 0.82, 1],
+    },
+    motion: {
+      expandMs: [CASE_STUDY_DIAL_DEFAULTS.expandMs, 80, 420],
+      collapseMs: [CASE_STUDY_DIAL_DEFAULTS.collapseMs, 90, 520],
+    },
+    hover: {
+      inactiveOpacity: [CASE_STUDY_DIAL_DEFAULTS.inactiveOpacity, 0.65, 1],
+    },
+  })
 
   const prefetchProject = useCallback((slug: string) => {
     if (prefetchedSlugsRef.current.has(slug)) {
@@ -171,10 +217,10 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   }, [initialLoadDelayMs, isGridInView, prefersReducedMotion])
 
   const isExpandedLayout = !supportsHover || isGridHovered
-  const layoutTransitionDuration = isExpandedLayout ? CARD_LAYOUT_TRANSITION.expand : CARD_LAYOUT_TRANSITION.collapse
-  const layoutSpreadFactor = isExpandedLayout ? 1 : CARD_COMPACT_SPREAD_FACTOR
-  const gridColumnGap = isExpandedLayout ? CARD_GRID_GAP.expandedX : CARD_GRID_GAP.compactX
-  const gridRowGap = isExpandedLayout ? CARD_GRID_GAP.expandedY : CARD_GRID_GAP.compactY
+  const layoutTransitionDuration = isExpandedLayout ? caseStudyDial.motion.expandMs : caseStudyDial.motion.collapseMs
+  const layoutSpreadFactor = isExpandedLayout ? 1 : caseStudyDial.pile.compactSpreadFactor
+  const gridColumnGap = isExpandedLayout ? caseStudyDial.expanded.gapX : caseStudyDial.pile.compactGapX
+  const gridRowGap = isExpandedLayout ? caseStudyDial.expanded.gapY : caseStudyDial.pile.compactGapY
 
   return (
     <motion.div
@@ -225,20 +271,22 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
       {orderedProjects.map((project, index) => {
         const isFeaturedCard = project.slug === 'porsche-app'
         const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
-        const compactX = baseAngle.x * CARD_COMPACT_SPREAD_FACTOR
-        const compactRotate = baseAngle.rotate * CARD_COMPACT_SPREAD_FACTOR
+        const compactX = baseAngle.x * caseStudyDial.pile.compactSpreadFactor
+        const compactRotate = baseAngle.rotate * caseStudyDial.pile.compactSpreadFactor
         const targetX = baseAngle.x * layoutSpreadFactor
         const targetRotate = baseAngle.rotate * layoutSpreadFactor
-        const targetScale = isExpandedLayout ? CARD_SCALE.spread : CARD_SCALE.compact
+        const targetScale = isExpandedLayout ? caseStudyDial.expanded.scale : caseStudyDial.pile.compactScale
         const isHovered = hoveredIndex === index
         const hasHoverTarget = hoveredIndex !== null
-        const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : 0.9
+        const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : caseStudyDial.hover.inactiveOpacity
+        const stackZIndex = getStackPriorityZIndex(index, orderedProjects.length, caseStudyDial.pile.stackPriority)
 
         return (
           <motion.div
             key={project.slug}
             className="w-full transition-[transform,opacity,filter] duration-[430ms]"
             style={{
+              zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
               filter: !supportsHover || !hasHoverTarget || isHovered ? 'saturate(1)' : 'saturate(0.92)',
             }}
             onMouseEnter={() => {
@@ -257,7 +305,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               y: CARD_STAGGER_ITEM.initialY,
               x: compactX,
               rotate: compactRotate,
-              scale: CARD_SCALE.compact,
+              scale: caseStudyDial.pile.compactScale,
             }}
             animate={{
               opacity: stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity,

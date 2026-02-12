@@ -2,10 +2,12 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono, Playfair_Display, Source_Code_Pro } from 'next/font/google'
 import './globals.css'
 import './viewport.css'
+import 'dialkit/styles.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
+import DialKitRoot from '@/components/DialKitRoot'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
@@ -194,6 +196,7 @@ export default function RootLayout({
                 <Analytics 
                   mode={process.env.NODE_ENV === 'production' ? 'production' : 'development'}
                 />
+                {process.env.NODE_ENV === 'development' && <DialKitRoot />}
                 {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                 
                 {/* Service Worker Registration - Deferred for better performance */}

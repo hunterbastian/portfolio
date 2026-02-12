@@ -6,33 +6,33 @@ import { useState } from 'react'
 const experience = [
   {
     year: '2026 - Present',
-    company: 'studio alpine',
+    company: 'Studio Alpine',
     title: 'Founder',
-    description: "Founder of studio alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future."
+    description: "Founder of Studio Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future."
   },
   {
     year: '2024 - Present',
-    company: 'catapult',
+    company: 'Catapult',
     title: 'Video Producer',
-    description: 'Produce and edit marketing videos for catapult products including banner stands, from planning and filming to post-production in Final Cut Pro. Deliver optimized content for YouTube to support marketing campaigns and ensure alignment with brand standards.'
+    description: 'Produce and edit marketing videos for Catapult products including banner stands, from planning and filming to post-production in Final Cut Pro. Deliver optimized content for YouTube to support marketing campaigns and ensure alignment with brand standards.'
   },
   {
     year: '2024 - Present',
-    company: 'utah valley university',
+    company: 'Utah Valley University',
     title: 'Department Representative',
     description: 'Helped new students with internship opportunities, helping design students in the Web Design and Development program, working on ongoing topics and issues within our department. Responsibilities include finding internship opportunities for students and assisting at school sponsored events, as well as content creation for UVU CET social media and marketing.'
   },
   {
     year: '2023',
-    company: 'nutricost',
+    company: 'Nutricost',
     title: 'Graphic Design Intern',
-    description: 'At nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue. Assisted the marketing team with their design queue and helped with production. Edited product mockups in Photoshop and Illustrator, for nutricost online product images. Worked on and edited Amazon online product images.'
+    description: 'At Nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue. Assisted the marketing team with their design queue and helped with production. Edited product mockups in Photoshop and Illustrator, for Nutricost online product images. Worked on and edited Amazon online product images.'
   },
   {
     year: '2017',
-    company: 'clutch.',
+    company: 'Clutch.',
     title: 'Digital Design Intern',
-    description: 'At clutch, I helped with design branding and further improved my knowledge about the UX design process.'
+    description: 'At Clutch, I helped with design branding and further improved my knowledge about the UX design process.'
   }
 ]
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion, useAnimationControls, useInView, useReducedMotion } from 'framer-motion'
 import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
@@ -49,6 +49,13 @@ const SECTION_ROW = {
   finalY: 0, // resting row position
 }
 
+const BUTTON_COLORS = {
+  backgroundBase: 'color-mix(in srgb, var(--background) 65%, transparent)',
+  backgroundPressed: 'color-mix(in srgb, var(--foreground) 12%, var(--background) 88%)',
+  borderBase: 'color-mix(in srgb, var(--border) 90%, transparent)',
+  borderPressed: 'color-mix(in srgb, var(--foreground) 28%, var(--border) 72%)',
+}
+
 export default function CollapsibleSection({
   id,
   title,
@@ -61,6 +68,7 @@ export default function CollapsibleSection({
   contentClassName,
 }: CollapsibleSectionProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
+  const buttonControls = useAnimationControls()
   const contentRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(contentRef, { once: true, amount: 0.18 })
   const [stage, setStage] = useState(0)
@@ -103,15 +111,44 @@ export default function CollapsibleSection({
     return () => timers.forEach(clearTimeout)
   }, [isOpen, isInView, prefersReducedMotion])
 
+  useEffect(() => {
+    buttonControls.set({
+      backgroundColor: BUTTON_COLORS.backgroundBase,
+      borderColor: BUTTON_COLORS.borderBase,
+      scale: 1,
+    })
+  }, [buttonControls])
+
+  const handleToggle = () => {
+    onToggle()
+
+    if (prefersReducedMotion) {
+      return
+    }
+
+    buttonControls.start({
+      backgroundColor: [BUTTON_COLORS.backgroundBase, BUTTON_COLORS.backgroundPressed, BUTTON_COLORS.backgroundBase],
+      borderColor: [BUTTON_COLORS.borderBase, BUTTON_COLORS.borderPressed, BUTTON_COLORS.borderBase],
+      scale: [1, 0.94, 1],
+      transition: {
+        duration: 0.52,
+        ease: MOTION_EASE_STANDARD,
+        times: [0, 0.32, 1],
+      },
+    })
+  }
+
   return (
     <section id={id} className={sectionClasses}>
       <div className="max-w-2xl mx-auto flex items-center justify-start gap-3">
-        <button
+        <motion.button
           type="button"
-          onClick={onToggle}
+          onClick={handleToggle}
           aria-expanded={isOpen}
           aria-controls={contentId}
           aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${title}`}
+          initial={false}
+          animate={buttonControls}
           className="group inline-flex h-6 w-6 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px] transition-all duration-300 hover:border-primary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           <motion.span
@@ -124,7 +161,7 @@ export default function CollapsibleSection({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
             </svg>
           </motion.span>
-        </button>
+        </motion.button>
         <h2 className="section-heading font-inter text-sm">{title}</h2>
       </div>
 

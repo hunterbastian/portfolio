@@ -214,14 +214,14 @@ const EXPERIENCE_TIMING = {
 }
 
 const SOCIAL_ICON_DIAL_DEFAULTS = {
-  baseColor: '#7a7f87',
-  hoverColor: '#f5f7fa',
-  glowColor: '#ffffff',
+  baseColor: '#5f6975',
+  hoverColor: '#0f1720',
+  glowColor: '#1f2937',
   baseOpacity: 0.9,
   hoverOpacity: 1,
   iconBaseOpacity: 0.8,
   iconHoverOpacity: 1,
-  glowAlpha: 0.56,
+  glowAlpha: 0.36,
   hoverScale: 1.08,
   iconHoverScale: 1.12,
   fadeMs: 420,
@@ -608,14 +608,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
             style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
           >
-            <div className="relative inline-flex rounded-[30px] border border-[#2a2f35] bg-black/85 px-5 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.55)] sm:px-6 sm:py-3.5">
+            <div className="relative inline-flex rounded-[30px] border border-[#d7dee8] bg-white/92 px-5 py-3 shadow-[0_10px_24px_rgba(15,23,42,0.16)] sm:px-6 sm:py-3.5">
               <span
                 aria-hidden
-                className="pointer-events-none absolute left-6 top-0 h-px w-16 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#8e97a4]/35 to-transparent"
+                className="pointer-events-none absolute left-6 top-0 h-px w-16 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#7c8796]/35 to-transparent"
               />
               <span
                 aria-hidden
-                className="pointer-events-none absolute right-6 top-0 h-px w-16 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#8e97a4]/35 to-transparent"
+                className="pointer-events-none absolute right-6 top-0 h-px w-16 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#7c8796]/35 to-transparent"
               />
               <div className="flex items-center gap-3.5 sm:gap-4">
                 {contactLinks.map((link, index) => (

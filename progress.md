@@ -35,3 +35,13 @@ Notes:
 - Exposed `window.render_game_to_text` and `window.advanceTime(ms)` for deterministic external stepping/inspection.
 - Integrated component into `src/components/Footer.tsx` between year and crafted-by text.
 - Added core logic tests at `src/lib/snake.test.mts` using Node's built-in test runner.
+
+## Update 3
+- Validation:
+  - `npm run test:snake` passes (7/7 tests).
+  - `npm run lint` passes with pre-existing warnings unrelated to snake changes.
+  - `npm run build` succeeds.
+- Playwright skill loop executed via combined dev+automation command; screenshots and state artifacts captured in:
+  - `output/web-game/*`
+  - `output/web-game-controls/*`
+- Observed existing, unrelated hydration warning on `/archive` route in captured console errors (`output/web-game/errors-0.json`).

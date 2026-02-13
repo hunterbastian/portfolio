@@ -287,19 +287,22 @@ a {
 
 .status-pill {
   position: relative;
-  border: 1px solid color-mix(in srgb, var(--border) 76%, white);
-  outline: 1px solid rgba(255, 255, 255, 0.72);
+  isolation: isolate;
+  border: 1px solid color-mix(in srgb, var(--border) 84%, white);
+  outline: 1px solid rgba(255, 255, 255, 0.64);
   outline-offset: -2px;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--card) 97%, white) 0%,
-    color-mix(in srgb, var(--card) 92%, var(--background)) 52%,
-    color-mix(in srgb, var(--card) 88%, var(--background)) 100%
+    color-mix(in srgb, var(--background) 66%, white) 0%,
+    color-mix(in srgb, var(--card) 94%, var(--background)) 54%,
+    color-mix(in srgb, var(--card) 90%, var(--background)) 100%
   );
+  backdrop-filter: blur(1.4px) saturate(1.02);
+  opacity: 0.93;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.82) inset,
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
     0 -1px 0 rgba(76, 86, 106, 0.12) inset,
-    0 4px 10px rgba(15, 23, 42, 0.08);
+    0 4px 10px rgba(15, 23, 42, 0.06);
 }
 
 .status-pill::before {
@@ -310,21 +313,28 @@ a {
   top: 1px;
   height: 38%;
   border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0));
   pointer-events: none;
+}
+
+.status-pill-label {
+  opacity: 0.82;
 }
 
 .status-radar-dot {
   position: relative;
   display: inline-block;
-  border: 1px solid rgba(11, 111, 51, 0.54);
-  background: radial-gradient(circle at 32% 28%, #befdd5 0%, #6eeba0 26%, #22c55e 58%, #138746 100%);
+  border: 1px solid rgba(10, 107, 48, 0.5);
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.3) 27%, rgba(255, 255, 255, 0) 44%),
+    radial-gradient(circle at 34% 30%, #d1ffe3 0%, #89f2b7 34%, #2bc565 60%, #137f41 100%);
+  filter: saturate(1.05);
   box-shadow:
-    0 0 0 1px rgba(34, 197, 94, 0.2),
-    inset 0 1px 1px rgba(255, 255, 255, 0.7),
-    inset 0 -1px 1px rgba(10, 95, 44, 0.45),
-    0 1px 2px rgba(15, 23, 42, 0.18);
-  animation: status-dot-core-glow 3s ease-in-out infinite;
+    0 0 0 1px rgba(34, 197, 94, 0.23),
+    inset 0 1px 1px rgba(255, 255, 255, 0.82),
+    inset 0 -1px 1px rgba(8, 74, 33, 0.45),
+    0 1px 2px rgba(15, 23, 42, 0.2);
+  animation: status-dot-core-glow 3.2s ease-in-out infinite;
 }
 
 .status-radar-dot::before,
@@ -336,11 +346,11 @@ a {
   border: 1px solid rgba(34, 197, 94, 0.42);
   opacity: 0;
   transform: scale(0.75);
-  animation: status-dot-radar 3s ease-out infinite;
+  animation: status-dot-radar 3.2s ease-out infinite;
 }
 
 .status-radar-dot::after {
-  animation-delay: 1.15s;
+  animation-delay: 1.2s;
 }
 
 @keyframes status-dot-radar {
@@ -362,19 +372,19 @@ a {
   0%,
   100% {
     box-shadow:
-      0 0 0 1px rgba(34, 197, 94, 0.2),
-      inset 0 1px 1px rgba(255, 255, 255, 0.7),
+      0 0 0 1px rgba(34, 197, 94, 0.22),
+      inset 0 1px 1px rgba(255, 255, 255, 0.82),
       inset 0 -1px 1px rgba(10, 95, 44, 0.45),
-      0 1px 2px rgba(15, 23, 42, 0.18),
-      0 0 6px rgba(34, 197, 94, 0.28);
+      0 1px 2px rgba(15, 23, 42, 0.2),
+      0 0 7px rgba(34, 197, 94, 0.24);
   }
   45% {
     box-shadow:
-      0 0 0 1px rgba(34, 197, 94, 0.25),
-      inset 0 1px 1px rgba(255, 255, 255, 0.76),
+      0 0 0 1px rgba(34, 197, 94, 0.28),
+      inset 0 1px 1px rgba(255, 255, 255, 0.86),
       inset 0 -1px 1px rgba(10, 95, 44, 0.5),
-      0 1px 2px rgba(15, 23, 42, 0.2),
-      0 0 10px rgba(34, 197, 94, 0.36);
+      0 1px 2px rgba(15, 23, 42, 0.22),
+      0 0 11px rgba(34, 197, 94, 0.31);
   }
 }
 

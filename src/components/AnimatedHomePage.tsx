@@ -573,12 +573,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <div className="status-pill inline-flex items-center gap-2.5 rounded-full px-4 py-1.5">
+            <div className="status-pill inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5">
               <span
                 aria-hidden
                 className="status-radar-dot h-[11px] w-[11px] rounded-full"
               />
-              <span className="font-code text-[10px] leading-none tracking-[0.05em] text-muted-foreground sm:text-[11px]">
+              <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground sm:text-[11px]">
                 {HERO_UPDATE_NOTE}
               </span>
             </div>

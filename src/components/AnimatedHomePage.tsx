@@ -160,7 +160,7 @@ const contactLinks: ContactLinkItem[] = [
 const resumeIconName: CentralIconName = 'IconFileText'
 const HERO_HEADLINE_TEXT = 'Hunter Bastian // Studio Alpine'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
-const HERO_UPDATE_NOTE = 'Updated every Sunday'
+const HERO_UPDATE_NOTE = 'Accepting new clients'
 
 const HERO_TYPING = {
   headline: 62, // keep current speed
@@ -222,7 +222,6 @@ const SOCIAL_ICON_DIAL_DEFAULTS = {
   hoverOpacity: 1,
   iconBaseOpacity: 0.92,
   iconHoverOpacity: 1,
-  glowAlpha: 0,
   hoverScale: 1.04,
   iconHoverScale: 1.05,
   fadeMs: 220,
@@ -360,7 +359,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       hoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.hoverOpacity, 0.45, 1],
       iconBaseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.iconBaseOpacity, 0.2, 1],
       iconHoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.iconHoverOpacity, 0.4, 1],
-      glowAlpha: [SOCIAL_ICON_DIAL_DEFAULTS.glowAlpha, 0.25, 1],
     },
     motion: {
       hoverScale: [SOCIAL_ICON_DIAL_DEFAULTS.hoverScale, 1, 1.16],
@@ -371,9 +369,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
   const socialTransitionMs = Math.max(120, Math.round(socialIconDial.motion.fadeMs))
   const socialTransition = `all ${socialTransitionMs}ms cubic-bezier(0.22, 1, 0.36, 1)`
-  const socialGlowAlpha = Math.min(1, Math.max(0.2, socialIconDial.emphasis.glowAlpha))
-  const socialGlow = hexToRgba(socialIconDial.color.glowColor, socialGlowAlpha)
-  const socialSoftGlow = hexToRgba(socialIconDial.color.glowColor, Math.max(0.14, socialGlowAlpha * 0.4))
 
   const getSocialActionStyle = (isHovered: boolean): CSSProperties => ({
     transition: socialTransition,
@@ -578,12 +573,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <div className="inline-flex items-center gap-3 rounded-full border border-[color:color-mix(in_srgb,var(--border)_82%,white)] bg-[color:color-mix(in_srgb,var(--card)_94%,white)] px-5 py-2.5 shadow-[0_4px_14px_rgba(15,23,42,0.08)]">
+            <div className="status-pill inline-flex items-center gap-2.5 rounded-full px-4 py-1.5">
               <span
                 aria-hidden
-                className="h-3.5 w-3.5 rounded-full bg-[#22c55e] shadow-[0_0_0_3px_rgba(34,197,94,0.2)]"
+                className="status-radar-dot h-[11px] w-[11px] rounded-full"
               />
-              <span className="font-code text-[clamp(0.95rem,2.1vw,1.8rem)] leading-none tracking-[0.01em] text-muted-foreground">
+              <span className="font-code text-[10px] leading-none tracking-[0.05em] text-muted-foreground sm:text-[11px]">
                 {HERO_UPDATE_NOTE}
               </span>
             </div>

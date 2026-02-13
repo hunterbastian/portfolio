@@ -72,10 +72,10 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex h-8 w-8 origin-center items-center justify-center rounded-full no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-9 sm:w-9'
+  'group inline-flex h-9 w-9 origin-center items-center justify-center rounded-full no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-10 sm:w-10'
 
 const contactIconGlyphClassName =
-  'h-[16px] w-[16px] sm:h-[18px] sm:w-[18px]'
+  'h-[17px] w-[17px] sm:h-[19px] sm:w-[19px]'
 
 const experience: ExperienceItem[] = [
   {
@@ -379,7 +379,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     color: isHovered ? socialIconDial.color.hoverColor : socialIconDial.color.baseColor,
     opacity: isHovered ? socialIconDial.emphasis.hoverOpacity : socialIconDial.emphasis.baseOpacity,
     transform: `scale(${isHovered ? socialIconDial.motion.hoverScale : 1})`,
-    textShadow: isHovered ? `0 0 10px ${socialSoftGlow}, 0 0 20px ${socialSoftGlow}` : 'none',
+    filter: isHovered ? `drop-shadow(0 0 7px ${socialSoftGlow})` : 'none',
   })
 
   const getSocialIconStyle = (isHovered: boolean): CSSProperties => ({

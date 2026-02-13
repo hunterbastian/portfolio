@@ -221,12 +221,19 @@ export default function FooterSnakeEasterEgg() {
                 const isSnake = occupiedCells.has(key)
                 const isFood = game.food?.x === x && game.food?.y === y
 
+                const foodStyle = isFood
+                  ? {
+                      backgroundImage:
+                        'linear-gradient(45deg, #000 25%, #fff 25%, #fff 50%, #000 50%, #000 75%, #fff 75%, #fff 100%)',
+                      backgroundSize: '4px 4px',
+                    }
+                  : undefined
+
                 return (
                   <span
                     key={key}
-                    className={`aspect-square border border-black/5 ${
-                      isSnake ? 'bg-black' : isFood ? 'bg-neutral-500' : 'bg-white'
-                    }`}
+                    className={`aspect-square border border-black/5 ${isSnake ? 'bg-black' : 'bg-white'}`}
+                    style={foodStyle}
                     aria-hidden="true"
                   />
                 )

@@ -247,7 +247,7 @@ export default function CollapsibleSection({
           </span>
         </h2>
         <motion.div
-          className="absolute -left-1 top-1/2"
+          className="absolute -left-2 top-1/2 sm:-left-3"
           initial={false}
           animate={{
             opacity: titleStage >= 1 ? TOGGLE_BUTTON_ENTRANCE.finalOpacity : TOGGLE_BUTTON_ENTRANCE.initialOpacity,

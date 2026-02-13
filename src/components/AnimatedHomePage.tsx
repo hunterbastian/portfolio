@@ -801,10 +801,22 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between rounded-md border border-transparent px-2 py-3.5 text-left"
+                    className="flex w-full items-center gap-3 rounded-md border border-transparent px-2 py-3.5 text-left"
                     onClick={() => toggleJob(index)}
                   >
-                    <div className="flex items-center space-x-6">
+                    <motion.div
+                      className="flex h-5 w-5 shrink-0 items-center justify-center text-muted-foreground transition-transform duration-[400ms]"
+                      animate={{ rotate: isExpanded ? 45 : 0 }}
+                      transition={{
+                        duration: motionDurationMs(EXPERIENCE_TIMING.iconRotate, prefersReducedMotion),
+                        ease: MOTION_EASE_STANDARD,
+                      }}
+                    >
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </motion.div>
+                    <div className="flex min-w-0 flex-1 items-center space-x-6">
                       <span className="w-16 text-xs font-code text-muted-foreground">
                         {job.year}
                       </span>
@@ -812,23 +824,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         {job.company}
                       </span>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="hidden text-sm font-code tracking-[0.06em] text-muted-foreground sm:block">
-                        {job.title}
-                      </span>
-                      <motion.div
-                        className="flex h-5 w-5 items-center justify-center text-muted-foreground transition-transform duration-[400ms]"
-                        animate={{ rotate: isExpanded ? 45 : 0 }}
-                        transition={{
-                          duration: motionDurationMs(EXPERIENCE_TIMING.iconRotate, prefersReducedMotion),
-                          ease: MOTION_EASE_STANDARD,
-                        }}
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
-                      </motion.div>
-                    </div>
+                    <span className="hidden shrink-0 text-sm font-code tracking-[0.06em] text-muted-foreground sm:block">
+                      {job.title}
+                    </span>
                   </button>
                   <AnimatePresence initial={false}>
                     {isExpanded && (

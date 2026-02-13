@@ -39,12 +39,6 @@ interface ContactLinkItem {
   iconName: CentralIconName
 }
 
-type ExperienceHighlightLook = 'softBox' | 'solidBox' | 'underline' | 'glow' | 'pill'
-type ExperienceHighlightTarget = 'triplet' | 'company' | 'year' | 'title'
-type ExperienceBoxPosition = 'top' | 'bottom'
-type ExperienceLabelKey = 'year' | 'company' | 'title'
-type SocialLabelLook = 'minimal' | 'underline' | 'softBox' | 'solidBox'
-
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
 type SectionOpenState = Record<SectionKey, boolean>
 
@@ -78,13 +72,10 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex origin-center items-center gap-1.5 no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
+  'group inline-flex h-8 w-8 origin-center items-center justify-center rounded-full no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-9 sm:w-9'
 
 const contactIconGlyphClassName =
-  'h-[13px] w-[13px] sm:h-[14px] sm:w-[14px]'
-
-const contactInlineLabelClassName =
-  'font-code text-[11px] tracking-[0.08em] underline underline-offset-[6px] decoration-[1px]'
+  'h-[16px] w-[16px] sm:h-[18px] sm:w-[18px]'
 
 const experience: ExperienceItem[] = [
   {
@@ -222,41 +213,18 @@ const EXPERIENCE_TIMING = {
   iconRotate: 240, // plus icon rotate duration
 }
 
-const EXPERIENCE_LABEL_DIAL_DEFAULTS = {
-  look: 'softBox' as ExperienceHighlightLook,
-  target: 'triplet' as ExperienceHighlightTarget,
-  boxPosition: 'bottom' as ExperienceBoxPosition,
-  highlightColor: '#9ec8e8',
-  glowColor: '#cfe6f7',
-  hoverTextColor: '#1f2733',
-  alpha: 0.34,
-  blurPx: 10,
-  radiusPx: 9,
-  padX: 7,
-  padY: 2,
-  underlineThickness: 2,
-  scale: 1.04,
-  fadeMs: 360,
-} as const
-
 const SOCIAL_ICON_DIAL_DEFAULTS = {
-  labelLook: 'underline' as SocialLabelLook,
-  baseColor: '#1a1a1a',
-  hoverColor: '#465d72',
-  accentColor: '#74b4be',
-  glowColor: '#2b82ca',
-  baseOpacity: 0.95,
+  baseColor: '#7f8b98',
+  hoverColor: '#ffffff',
+  glowColor: '#ffffff',
+  baseOpacity: 0.82,
   hoverOpacity: 1,
-  iconBaseOpacity: 0.64,
+  iconBaseOpacity: 0.74,
   iconHoverOpacity: 1,
-  labelBaseOpacity: 0.72,
-  labelHoverOpacity: 1,
-  underlineBaseOpacity: 0.3,
-  underlineHoverOpacity: 0.92,
-  accentAlpha: 0.28,
-  hoverScale: 1.07,
-  iconHoverScale: 1.12,
-  fadeMs: 506,
+  glowAlpha: 0.76,
+  hoverScale: 1.1,
+  iconHoverScale: 1.16,
+  fadeMs: 420,
 } as const
 
 function hexToRgba(hexColor: string, alpha: number): string {
@@ -278,141 +246,6 @@ function hexToRgba(hexColor: string, alpha: number): string {
   const green = (value >> 8) & 255
   const blue = value & 255
   return `rgba(${red}, ${green}, ${blue}, ${alpha})`
-}
-
-function shouldHighlightExperienceLabel(target: ExperienceHighlightTarget, labelKey: ExperienceLabelKey): boolean {
-  if (target === 'triplet') {
-    return true
-  }
-  return target === labelKey
-}
-
-function buildExperienceLabelStyle({
-  isActive,
-  labelKey,
-  look,
-  target,
-  boxPosition,
-  highlightColor,
-  glowColor,
-  hoverTextColor,
-  alpha,
-  blurPx,
-  radiusPx,
-  padX,
-  padY,
-  underlineThickness,
-  scale,
-  fadeMs,
-}: {
-  isActive: boolean
-  labelKey: ExperienceLabelKey
-  look: ExperienceHighlightLook
-  target: ExperienceHighlightTarget
-  boxPosition: ExperienceBoxPosition
-  highlightColor: string
-  glowColor: string
-  hoverTextColor: string
-  alpha: number
-  blurPx: number
-  radiusPx: number
-  padX: number
-  padY: number
-  underlineThickness: number
-  scale: number
-  fadeMs: number
-}): CSSProperties {
-  const easing = 'cubic-bezier(0.22, 1, 0.36, 1)'
-  const transition =
-    `color ${fadeMs}ms ${easing}, opacity ${fadeMs}ms ${easing}, transform ${fadeMs}ms ${easing}, ` +
-    `background-size ${fadeMs}ms ${easing}, background-color ${fadeMs}ms ${easing}, ` +
-    `box-shadow ${fadeMs}ms ${easing}, border-color ${fadeMs}ms ${easing}, text-shadow ${fadeMs}ms ${easing}`
-
-  const baseStyle: CSSProperties = {
-    transition,
-    boxDecorationBreak: 'clone',
-    WebkitBoxDecorationBreak: 'clone',
-  }
-
-  if (!shouldHighlightExperienceLabel(target, labelKey)) {
-    return baseStyle
-  }
-
-  const highlightFill = hexToRgba(highlightColor, alpha)
-  const borderColor = hexToRgba(highlightColor, Math.min(1, alpha + 0.18))
-  const glowFill = hexToRgba(glowColor, Math.min(1, alpha + 0.12))
-  const underlineColor = hexToRgba(highlightColor, Math.min(1, alpha + 0.35))
-  const overlayGradient =
-    boxPosition === 'top'
-      ? `linear-gradient(to bottom, ${highlightFill} 0 64%, transparent 64% 100%)`
-      : `linear-gradient(to top, ${highlightFill} 0 64%, transparent 64% 100%)`
-
-  if (!isActive) {
-    if (look === 'underline') {
-      return {
-        ...baseStyle,
-        backgroundImage: `linear-gradient(${underlineColor}, ${underlineColor})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: '0 100%',
-        backgroundSize: `0% ${underlineThickness}px`,
-      }
-    }
-
-    return baseStyle
-  }
-
-  const activeStyle: CSSProperties = {
-    ...baseStyle,
-    color: hoverTextColor,
-    transform: `scale(${scale})`,
-  }
-
-  if (look === 'softBox') {
-    return {
-      ...activeStyle,
-      padding: `${padY}px ${padX}px`,
-      borderRadius: `${radiusPx}px`,
-      backgroundImage: overlayGradient,
-      boxShadow: `0 0 ${blurPx}px ${glowFill}`,
-    }
-  }
-
-  if (look === 'solidBox') {
-    return {
-      ...activeStyle,
-      padding: `${padY}px ${padX}px`,
-      borderRadius: `${radiusPx}px`,
-      backgroundColor: highlightFill,
-      border: `1px solid ${borderColor}`,
-      boxShadow: `0 0 ${blurPx}px ${glowFill}`,
-    }
-  }
-
-  if (look === 'pill') {
-    return {
-      ...activeStyle,
-      padding: `${padY}px ${padX + 2}px`,
-      borderRadius: `${Math.max(radiusPx, 999)}px`,
-      backgroundColor: hexToRgba(highlightColor, Math.min(1, alpha + 0.08)),
-      border: `1px solid ${borderColor}`,
-      boxShadow: `0 0 ${Math.max(blurPx - 2, 2)}px ${glowFill}`,
-    }
-  }
-
-  if (look === 'glow') {
-    return {
-      ...activeStyle,
-      textShadow: `0 0 ${Math.max(blurPx - 2, 2)}px ${glowFill}`,
-    }
-  }
-
-  return {
-    ...activeStyle,
-    backgroundImage: `linear-gradient(${underlineColor}, ${underlineColor})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: '0 100%',
-    backgroundSize: `100% ${underlineThickness}px`,
-  }
 }
 
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
@@ -460,7 +293,6 @@ function ContactLink({
   actionClassName,
   actionStyle,
   iconStyle,
-  labelStyle,
   onHoverStart,
   onHoverEnd,
 }: {
@@ -468,7 +300,6 @@ function ContactLink({
   actionClassName: string
   actionStyle: CSSProperties
   iconStyle: CSSProperties
-  labelStyle: CSSProperties
   onHoverStart: () => void
   onHoverEnd: () => void
 }) {
@@ -487,9 +318,6 @@ function ContactLink({
       onBlur={onHoverEnd}
     >
       <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} style={iconStyle} />
-      <span className={contactInlineLabelClassName} style={labelStyle}>
-        {link.label}
-      </span>
     </a>
   )
 }
@@ -497,7 +325,6 @@ function ContactLink({
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
-  const [hoveredExperienceIndex, setHoveredExperienceIndex] = useState<number | null>(null)
   const [hoveredSocialAction, setHoveredSocialAction] = useState<string | null>(null)
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
@@ -521,74 +348,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
 
-  const experienceLabelDial = useDialKit('Experience Label Lab', {
-    mode: {
-      look: {
-        type: 'select',
-        options: [
-          { value: 'softBox', label: 'Soft Box' },
-          { value: 'solidBox', label: 'Solid Box' },
-          { value: 'pill', label: 'Pill' },
-          { value: 'underline', label: 'Underline' },
-          { value: 'glow', label: 'Glow' },
-        ],
-        default: EXPERIENCE_LABEL_DIAL_DEFAULTS.look,
-      },
-      target: {
-        type: 'select',
-        options: [
-          { value: 'triplet', label: 'Year + Company + Title' },
-          { value: 'company', label: 'Company Only' },
-          { value: 'title', label: 'Title Only' },
-          { value: 'year', label: 'Year Only' },
-        ],
-        default: EXPERIENCE_LABEL_DIAL_DEFAULTS.target,
-      },
-      boxPosition: {
-        type: 'select',
-        options: [
-          { value: 'bottom', label: 'Box Below' },
-          { value: 'top', label: 'Box Above' },
-        ],
-        default: EXPERIENCE_LABEL_DIAL_DEFAULTS.boxPosition,
-      },
-    },
-    color: {
-      highlightColor: EXPERIENCE_LABEL_DIAL_DEFAULTS.highlightColor,
-      glowColor: EXPERIENCE_LABEL_DIAL_DEFAULTS.glowColor,
-      hoverTextColor: EXPERIENCE_LABEL_DIAL_DEFAULTS.hoverTextColor,
-    },
-    style: {
-      alpha: [EXPERIENCE_LABEL_DIAL_DEFAULTS.alpha, 0.08, 0.9],
-      blurPx: [EXPERIENCE_LABEL_DIAL_DEFAULTS.blurPx, 0, 24],
-      radiusPx: [EXPERIENCE_LABEL_DIAL_DEFAULTS.radiusPx, 0, 22],
-      padX: [EXPERIENCE_LABEL_DIAL_DEFAULTS.padX, 0, 20],
-      padY: [EXPERIENCE_LABEL_DIAL_DEFAULTS.padY, 0, 12],
-      underlineThickness: [EXPERIENCE_LABEL_DIAL_DEFAULTS.underlineThickness, 1, 6],
-    },
-    motion: {
-      scale: [EXPERIENCE_LABEL_DIAL_DEFAULTS.scale, 1, 1.18],
-      fadeMs: [EXPERIENCE_LABEL_DIAL_DEFAULTS.fadeMs, 120, 700],
-    },
-  })
-
   const socialIconDial = useDialKit('Social Icon Lab', {
-    mode: {
-      labelLook: {
-        type: 'select',
-        options: [
-          { value: 'underline', label: 'Underline (Recommended)' },
-          { value: 'minimal', label: 'Minimal' },
-          { value: 'softBox', label: 'Soft Box' },
-          { value: 'solidBox', label: 'Solid Box' },
-        ],
-        default: SOCIAL_ICON_DIAL_DEFAULTS.labelLook,
-      },
-    },
     color: {
       baseColor: SOCIAL_ICON_DIAL_DEFAULTS.baseColor,
       hoverColor: SOCIAL_ICON_DIAL_DEFAULTS.hoverColor,
-      accentColor: SOCIAL_ICON_DIAL_DEFAULTS.accentColor,
       glowColor: SOCIAL_ICON_DIAL_DEFAULTS.glowColor,
     },
     emphasis: {
@@ -596,11 +359,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       hoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.hoverOpacity, 0.45, 1],
       iconBaseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.iconBaseOpacity, 0.2, 1],
       iconHoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.iconHoverOpacity, 0.4, 1],
-      labelBaseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.labelBaseOpacity, 0.25, 1],
-      labelHoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.labelHoverOpacity, 0.45, 1],
-      underlineBaseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.underlineBaseOpacity, 0.05, 0.9],
-      underlineHoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.underlineHoverOpacity, 0.2, 1],
-      accentAlpha: [SOCIAL_ICON_DIAL_DEFAULTS.accentAlpha, 0.05, 0.9],
+      glowAlpha: [SOCIAL_ICON_DIAL_DEFAULTS.glowAlpha, 0.25, 1],
     },
     motion: {
       hoverScale: [SOCIAL_ICON_DIAL_DEFAULTS.hoverScale, 1, 1.16],
@@ -611,72 +370,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
   const socialTransitionMs = Math.max(120, Math.round(socialIconDial.motion.fadeMs))
   const socialTransition = `all ${socialTransitionMs}ms cubic-bezier(0.22, 1, 0.36, 1)`
-  const socialLabelLook = socialIconDial.mode.labelLook as SocialLabelLook
-
-  const socialAccentAlpha = Math.min(1, Math.max(0.05, socialIconDial.emphasis.accentAlpha))
-  const socialUnderlineBaseOpacity = Math.min(1, Math.max(0, socialIconDial.emphasis.underlineBaseOpacity))
-  const socialUnderlineHoverOpacity = Math.min(1, Math.max(0, socialIconDial.emphasis.underlineHoverOpacity))
-  const socialAccentFill = hexToRgba(socialIconDial.color.accentColor, socialAccentAlpha)
-  const socialAccentBorder = hexToRgba(socialIconDial.color.accentColor, Math.min(1, socialAccentAlpha + 0.2))
-  const socialLineBase = hexToRgba(socialIconDial.color.accentColor, socialUnderlineBaseOpacity)
-  const socialLineHover = hexToRgba(socialIconDial.color.accentColor, socialUnderlineHoverOpacity)
-  const socialGlow = hexToRgba(socialIconDial.color.glowColor, Math.min(1, socialAccentAlpha + 0.16))
+  const socialGlowAlpha = Math.min(1, Math.max(0.25, socialIconDial.emphasis.glowAlpha))
+  const socialGlow = hexToRgba(socialIconDial.color.glowColor, socialGlowAlpha)
+  const socialSoftGlow = hexToRgba(socialIconDial.color.glowColor, Math.max(0.2, socialGlowAlpha * 0.45))
 
   const getSocialActionStyle = (isHovered: boolean): CSSProperties => ({
     transition: socialTransition,
     color: isHovered ? socialIconDial.color.hoverColor : socialIconDial.color.baseColor,
     opacity: isHovered ? socialIconDial.emphasis.hoverOpacity : socialIconDial.emphasis.baseOpacity,
     transform: `scale(${isHovered ? socialIconDial.motion.hoverScale : 1})`,
-    textShadow: isHovered ? `0 0 10px ${socialGlow}` : 'none',
+    textShadow: isHovered ? `0 0 10px ${socialSoftGlow}, 0 0 20px ${socialSoftGlow}` : 'none',
   })
 
   const getSocialIconStyle = (isHovered: boolean): CSSProperties => ({
     transition: socialTransition,
     opacity: isHovered ? socialIconDial.emphasis.iconHoverOpacity : socialIconDial.emphasis.iconBaseOpacity,
     transform: `scale(${isHovered ? socialIconDial.motion.iconHoverScale : 1})`,
+    filter: isHovered ? `drop-shadow(0 0 7px ${socialGlow}) drop-shadow(0 0 14px ${socialSoftGlow})` : 'none',
   })
-
-  const getSocialLabelStyle = (isHovered: boolean): CSSProperties => {
-    const baseStyle: CSSProperties = {
-      transition: socialTransition,
-      opacity: isHovered ? socialIconDial.emphasis.labelHoverOpacity : socialIconDial.emphasis.labelBaseOpacity,
-      textDecorationColor: isHovered ? socialLineHover : socialLineBase,
-      boxDecorationBreak: 'clone',
-      WebkitBoxDecorationBreak: 'clone',
-    }
-
-    if (socialLabelLook === 'minimal') {
-      return baseStyle
-    }
-
-    if (socialLabelLook === 'softBox') {
-      return {
-        ...baseStyle,
-        padding: '1px 6px',
-        borderRadius: '8px',
-        background: isHovered ? socialAccentFill : 'transparent',
-      }
-    }
-
-    if (socialLabelLook === 'solidBox') {
-      return {
-        ...baseStyle,
-        padding: '1px 6px',
-        borderRadius: '8px',
-        background: isHovered ? socialAccentFill : 'transparent',
-        border: isHovered ? `1px solid ${socialAccentBorder}` : '1px solid transparent',
-      }
-    }
-
-    return {
-      ...baseStyle,
-      textDecorationColor: 'transparent',
-      backgroundImage: `linear-gradient(${isHovered ? socialLineHover : socialLineBase}, ${isHovered ? socialLineHover : socialLineBase})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: '0 100%',
-      backgroundSize: isHovered ? '100% 2px' : '0% 2px',
-    }
-  }
 
   const handleSocialHoverStart = (label: string) => {
     setHoveredSocialAction(label)
@@ -918,7 +629,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   actionClassName={contactInlineActionClassName}
                   actionStyle={getSocialActionStyle(hoveredSocialAction === link.label)}
                   iconStyle={getSocialIconStyle(hoveredSocialAction === link.label)}
-                  labelStyle={getSocialLabelStyle(hoveredSocialAction === link.label)}
                   onHoverStart={() => handleSocialHoverStart(link.label)}
                   onHoverEnd={() => handleSocialHoverEnd(link.label)}
                 />
@@ -974,9 +684,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   className={contactIconGlyphClassName}
                   style={getSocialIconStyle(hoveredSocialAction === 'Resume')}
                 />
-                <span className={contactInlineLabelClassName} style={getSocialLabelStyle(hoveredSocialAction === 'Resume')}>
-                  Resume
-                </span>
               </button>
               <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
             </motion.div>
@@ -1061,23 +768,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           >
             {experience.map((job, index) => {
               const isExpanded = expandedJobs.has(index)
-              const isRowHighlighted = hoveredExperienceIndex === index
-              const labelStyleConfig = {
-                look: experienceLabelDial.mode.look as ExperienceHighlightLook,
-                target: experienceLabelDial.mode.target as ExperienceHighlightTarget,
-                boxPosition: experienceLabelDial.mode.boxPosition as ExperienceBoxPosition,
-                highlightColor: experienceLabelDial.color.highlightColor,
-                glowColor: experienceLabelDial.color.glowColor,
-                hoverTextColor: experienceLabelDial.color.hoverTextColor,
-                alpha: experienceLabelDial.style.alpha,
-                blurPx: experienceLabelDial.style.blurPx,
-                radiusPx: experienceLabelDial.style.radiusPx,
-                padX: experienceLabelDial.style.padX,
-                padY: experienceLabelDial.style.padY,
-                underlineThickness: experienceLabelDial.style.underlineThickness,
-                scale: experienceLabelDial.motion.scale,
-                fadeMs: experienceLabelDial.motion.fadeMs,
-              }
 
               return (
                 <motion.div
@@ -1096,62 +786,23 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <button
                     type="button"
-                    className={`group flex w-full items-center justify-between rounded-md border px-2 py-3.5 text-left transition-[background-color,border-color,color] duration-300 ${
-                      isExpanded
-                        ? 'border-[color-mix(in_srgb,var(--accent)_45%,var(--border))] bg-[color-mix(in_srgb,var(--accent)_14%,transparent)]'
-                        : 'border-transparent hover:border-[color-mix(in_srgb,var(--accent)_45%,var(--border))] hover:bg-[color-mix(in_srgb,var(--accent)_14%,transparent)]'
-                    }`}
+                    className="flex w-full items-center justify-between rounded-md border border-transparent px-2 py-3.5 text-left"
                     onClick={() => toggleJob(index)}
-                    onMouseEnter={() => setHoveredExperienceIndex(index)}
-                    onMouseLeave={() => {
-                      setHoveredExperienceIndex((current) => (current === index ? null : current))
-                    }}
-                    onFocus={() => setHoveredExperienceIndex(index)}
-                    onBlur={() => {
-                      setHoveredExperienceIndex((current) => (current === index ? null : current))
-                    }}
                   >
                     <div className="flex items-center space-x-6">
-                      <span
-                        className={`text-xs font-code w-16 transition-colors duration-300 ${
-                          isExpanded ? 'text-foreground/80' : 'text-muted-foreground group-hover:text-foreground/80'
-                        }`}
-                        style={buildExperienceLabelStyle({
-                          isActive: isRowHighlighted,
-                          labelKey: 'year',
-                          ...labelStyleConfig,
-                        })}
-                      >
+                      <span className="w-16 text-xs font-code text-muted-foreground">
                         {job.year}
                       </span>
-                      <span
-                        className="font-code font-medium tracking-[0.06em]"
-                        style={buildExperienceLabelStyle({
-                          isActive: isRowHighlighted,
-                          labelKey: 'company',
-                          ...labelStyleConfig,
-                        })}
-                      >
+                      <span className="font-code font-medium tracking-[0.06em]">
                         {job.company}
                       </span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <span
-                        className={`text-sm font-code tracking-[0.06em] hidden sm:block transition-colors duration-300 ${
-                          isExpanded ? 'text-foreground/80' : 'text-muted-foreground group-hover:text-foreground/80'
-                        }`}
-                        style={buildExperienceLabelStyle({
-                          isActive: isRowHighlighted,
-                          labelKey: 'title',
-                          ...labelStyleConfig,
-                        })}
-                      >
+                      <span className="hidden text-sm font-code tracking-[0.06em] text-muted-foreground sm:block">
                         {job.title}
                       </span>
                       <motion.div
-                        className={`w-5 h-5 flex items-center justify-center transition-[transform,color] duration-[400ms] ${
-                          isExpanded ? 'text-foreground/80' : 'text-muted-foreground group-hover:text-foreground/80'
-                        }`}
+                        className="flex h-5 w-5 items-center justify-center text-muted-foreground transition-transform duration-[400ms]"
                         animate={{ rotate: isExpanded ? 45 : 0 }}
                         transition={{
                           duration: motionDurationMs(EXPERIENCE_TIMING.iconRotate, prefersReducedMotion),

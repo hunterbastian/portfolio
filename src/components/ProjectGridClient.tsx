@@ -61,10 +61,10 @@ interface CardLayoutAngle {
 
 const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
 const CASE_STUDY_DIAL_DEFAULTS = {
-  compactSpreadFactor: -0.64,
-  compactScale: 0.95,
-  compactGapX: 8,
-  compactGapY: 9,
+  compactSpreadFactor: -0.12,
+  compactScale: 0.82,
+  compactGapX: -8,
+  compactGapY: -2,
   expandedGapX: 30,
   expandedGapY: 32,
   expandedScale: 0.89,

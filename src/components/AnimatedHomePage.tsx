@@ -214,16 +214,16 @@ const EXPERIENCE_TIMING = {
 }
 
 const SOCIAL_ICON_DIAL_DEFAULTS = {
-  baseColor: '#7f8b98',
-  hoverColor: '#ffffff',
+  baseColor: '#7a7f87',
+  hoverColor: '#f5f7fa',
   glowColor: '#ffffff',
-  baseOpacity: 0.82,
+  baseOpacity: 0.9,
   hoverOpacity: 1,
-  iconBaseOpacity: 0.74,
+  iconBaseOpacity: 0.8,
   iconHoverOpacity: 1,
-  glowAlpha: 0.76,
-  hoverScale: 1.1,
-  iconHoverScale: 1.16,
+  glowAlpha: 0.56,
+  hoverScale: 1.08,
+  iconHoverScale: 1.12,
   fadeMs: 420,
 } as const
 
@@ -370,23 +370,23 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
   const socialTransitionMs = Math.max(120, Math.round(socialIconDial.motion.fadeMs))
   const socialTransition = `all ${socialTransitionMs}ms cubic-bezier(0.22, 1, 0.36, 1)`
-  const socialGlowAlpha = Math.min(1, Math.max(0.25, socialIconDial.emphasis.glowAlpha))
+  const socialGlowAlpha = Math.min(1, Math.max(0.2, socialIconDial.emphasis.glowAlpha))
   const socialGlow = hexToRgba(socialIconDial.color.glowColor, socialGlowAlpha)
-  const socialSoftGlow = hexToRgba(socialIconDial.color.glowColor, Math.max(0.2, socialGlowAlpha * 0.45))
+  const socialSoftGlow = hexToRgba(socialIconDial.color.glowColor, Math.max(0.14, socialGlowAlpha * 0.4))
 
   const getSocialActionStyle = (isHovered: boolean): CSSProperties => ({
     transition: socialTransition,
     color: isHovered ? socialIconDial.color.hoverColor : socialIconDial.color.baseColor,
     opacity: isHovered ? socialIconDial.emphasis.hoverOpacity : socialIconDial.emphasis.baseOpacity,
     transform: `scale(${isHovered ? socialIconDial.motion.hoverScale : 1})`,
-    filter: isHovered ? `drop-shadow(0 0 7px ${socialSoftGlow})` : 'none',
+    filter: isHovered ? `drop-shadow(0 0 6px ${socialSoftGlow}) drop-shadow(0 0 14px ${socialSoftGlow})` : 'none',
   })
 
   const getSocialIconStyle = (isHovered: boolean): CSSProperties => ({
     transition: socialTransition,
     opacity: isHovered ? socialIconDial.emphasis.iconHoverOpacity : socialIconDial.emphasis.iconBaseOpacity,
     transform: `scale(${isHovered ? socialIconDial.motion.iconHoverScale : 1})`,
-    filter: isHovered ? `drop-shadow(0 0 7px ${socialGlow}) drop-shadow(0 0 14px ${socialSoftGlow})` : 'none',
+    filter: isHovered ? `drop-shadow(0 0 5px ${socialGlow}) drop-shadow(0 0 12px ${socialSoftGlow})` : 'none',
   })
 
   const handleSocialHoverStart = (label: string) => {
@@ -594,7 +594,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </motion.div>
 
           <motion.div
-            className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2.5 sm:mt-5 sm:gap-x-6"
+            className="mt-4 sm:mt-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(1.4px)' }}
             animate={{
               opacity: isHeroCopyVisible ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -608,85 +608,100 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
             style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
           >
-            {contactLinks.map((link, index) => (
-              <motion.div
-                key={link.label}
-                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                animate={{
-                  opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                  y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                }}
-                transition={{
-                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                  delay: isHeroCopyVisible
-                    ? motionDelayMs(socialRevealDelay + index * STAGGER_TIMING.itemStagger, prefersReducedMotion)
-                    : 0,
-                  ease: STAGGER_PANEL.ease,
-                }}
-              >
-                <ContactLink
-                  link={link}
-                  actionClassName={contactInlineActionClassName}
-                  actionStyle={getSocialActionStyle(hoveredSocialAction === link.label)}
-                  iconStyle={getSocialIconStyle(hoveredSocialAction === link.label)}
-                  onHoverStart={() => handleSocialHoverStart(link.label)}
-                  onHoverEnd={() => handleSocialHoverEnd(link.label)}
-                />
-              </motion.div>
-            ))}
+            <div className="relative inline-flex rounded-[30px] border border-[#2a2f35] bg-black/85 px-5 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.55)] sm:px-6 sm:py-3.5">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute left-6 top-0 h-px w-16 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#8e97a4]/35 to-transparent"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute right-6 top-0 h-px w-16 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#8e97a4]/35 to-transparent"
+              />
+              <div className="flex items-center gap-3.5 sm:gap-4">
+                {contactLinks.map((link, index) => (
+                  <motion.div
+                    key={link.label}
+                    initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                    animate={{
+                      opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                      y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                    }}
+                    transition={{
+                      duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                      delay: isHeroCopyVisible
+                        ? motionDelayMs(socialRevealDelay + index * STAGGER_TIMING.itemStagger, prefersReducedMotion)
+                        : 0,
+                      ease: STAGGER_PANEL.ease,
+                    }}
+                  >
+                    <ContactLink
+                      link={link}
+                      actionClassName={contactInlineActionClassName}
+                      actionStyle={getSocialActionStyle(hoveredSocialAction === link.label)}
+                      iconStyle={getSocialIconStyle(hoveredSocialAction === link.label)}
+                      onHoverStart={() => handleSocialHoverStart(link.label)}
+                      onHoverEnd={() => handleSocialHoverEnd(link.label)}
+                    />
+                  </motion.div>
+                ))}
 
-            <motion.div
-              className="relative overflow-visible"
-              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-              animate={{
-                opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-              }}
-              transition={{
-                duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                delay: isHeroCopyVisible
-                  ? motionDelayMs(socialRevealDelay + contactLinks.length * STAGGER_TIMING.itemStagger, prefersReducedMotion)
-                  : 0,
-                ease: STAGGER_PANEL.ease,
-              }}
-            >
-              <button
-                ref={resumeButtonRef}
-                type="button"
-                onClick={() => {
-                  setShowResumePreview(false)
-                  setShowResumeModal(true)
-                }}
-                className={contactInlineActionClassName}
-                style={getSocialActionStyle(hoveredSocialAction === 'Resume')}
-                onMouseEnter={() => {
-                  handleSocialHoverStart('Resume')
-                  openResumePreview()
-                }}
-                onMouseLeave={() => {
-                  handleSocialHoverEnd('Resume')
-                  closeResumePreview()
-                }}
-                onFocus={() => {
-                  handleSocialHoverStart('Resume')
-                  openResumePreview()
-                }}
-                onBlur={() => {
-                  handleSocialHoverEnd('Resume')
-                  closeResumePreview()
-                }}
-                aria-label="Resume"
-                title="Resume"
-              >
-                <ContactIcon
-                  iconName={resumeIconName}
-                  label="Resume"
-                  className={contactIconGlyphClassName}
-                  style={getSocialIconStyle(hoveredSocialAction === 'Resume')}
-                />
-              </button>
-              <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
-            </motion.div>
+                <motion.div
+                  className="relative overflow-visible"
+                  initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                  animate={{
+                    opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                    y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                  }}
+                  transition={{
+                    duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                    delay: isHeroCopyVisible
+                      ? motionDelayMs(
+                          socialRevealDelay + contactLinks.length * STAGGER_TIMING.itemStagger,
+                          prefersReducedMotion,
+                        )
+                      : 0,
+                    ease: STAGGER_PANEL.ease,
+                  }}
+                >
+                  <button
+                    ref={resumeButtonRef}
+                    type="button"
+                    onClick={() => {
+                      setShowResumePreview(false)
+                      setShowResumeModal(true)
+                    }}
+                    className={contactInlineActionClassName}
+                    style={getSocialActionStyle(hoveredSocialAction === 'Resume')}
+                    onMouseEnter={() => {
+                      handleSocialHoverStart('Resume')
+                      openResumePreview()
+                    }}
+                    onMouseLeave={() => {
+                      handleSocialHoverEnd('Resume')
+                      closeResumePreview()
+                    }}
+                    onFocus={() => {
+                      handleSocialHoverStart('Resume')
+                      openResumePreview()
+                    }}
+                    onBlur={() => {
+                      handleSocialHoverEnd('Resume')
+                      closeResumePreview()
+                    }}
+                    aria-label="Resume"
+                    title="Resume"
+                  >
+                    <ContactIcon
+                      iconName={resumeIconName}
+                      label="Resume"
+                      className={contactIconGlyphClassName}
+                      style={getSocialIconStyle(hoveredSocialAction === 'Resume')}
+                    />
+                  </button>
+                  <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
+                </motion.div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>

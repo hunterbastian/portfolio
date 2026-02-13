@@ -27,3 +27,11 @@ Notes:
 - Added deterministic core logic module at `src/lib/snake.ts`.
 - Implemented pure functions: init, step, direction updates, collision checks, food placement, restart, and key-to-direction mapping.
 - Food placement is deterministic with injected RNG for testability.
+
+## Update 2
+- Added `src/components/FooterSnakeEasterEgg.tsx` as a client component.
+- Implemented footer trigger icon (pixel style) with hover scale + click/open color change.
+- Implemented minimal black/white Snake popup with score, game-over, restart, pause, keyboard controls (Arrow/WASD), and mobile touch controls.
+- Exposed `window.render_game_to_text` and `window.advanceTime(ms)` for deterministic external stepping/inspection.
+- Integrated component into `src/components/Footer.tsx` between year and crafted-by text.
+- Added core logic tests at `src/lib/snake.test.mts` using Node's built-in test runner.

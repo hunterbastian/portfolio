@@ -72,7 +72,7 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex h-9 w-9 origin-center items-center justify-center rounded-full no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-10 sm:w-10'
+  'group inline-flex h-9 w-9 origin-center items-center justify-center rounded-md border border-[#d6dde7] bg-white/80 no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-10 sm:w-10'
 
 const contactIconGlyphClassName =
   'h-[17px] w-[17px] sm:h-[19px] sm:w-[19px]'
@@ -160,6 +160,7 @@ const contactLinks: ContactLinkItem[] = [
 const resumeIconName: CentralIconName = 'IconFileText'
 const HERO_HEADLINE_TEXT = 'Hunter Bastian // Studio Alpine'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
+const HERO_UPDATE_NOTE = 'Updated every Sunday'
 
 const HERO_TYPING = {
   headline: 62, // keep current speed
@@ -217,14 +218,14 @@ const SOCIAL_ICON_DIAL_DEFAULTS = {
   baseColor: '#5f6975',
   hoverColor: '#0f1720',
   glowColor: '#1f2937',
-  baseOpacity: 0.9,
+  baseOpacity: 1,
   hoverOpacity: 1,
-  iconBaseOpacity: 0.8,
+  iconBaseOpacity: 0.92,
   iconHoverOpacity: 1,
-  glowAlpha: 0.36,
-  hoverScale: 1.08,
-  iconHoverScale: 1.12,
-  fadeMs: 420,
+  glowAlpha: 0,
+  hoverScale: 1.04,
+  iconHoverScale: 1.05,
+  fadeMs: 220,
 } as const
 
 function hexToRgba(hexColor: string, alpha: number): string {
@@ -379,14 +380,17 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     color: isHovered ? socialIconDial.color.hoverColor : socialIconDial.color.baseColor,
     opacity: isHovered ? socialIconDial.emphasis.hoverOpacity : socialIconDial.emphasis.baseOpacity,
     transform: `scale(${isHovered ? socialIconDial.motion.hoverScale : 1})`,
-    filter: isHovered ? `drop-shadow(0 0 6px ${socialSoftGlow}) drop-shadow(0 0 14px ${socialSoftGlow})` : 'none',
+    boxShadow: isHovered
+      ? `0 6px 14px ${hexToRgba(socialIconDial.color.glowColor, 0.12)}`
+      : `0 1px 3px ${hexToRgba(socialIconDial.color.glowColor, 0.08)}`,
+    borderColor: isHovered ? '#c5cedb' : '#d6dde7',
   })
 
   const getSocialIconStyle = (isHovered: boolean): CSSProperties => ({
     transition: socialTransition,
     opacity: isHovered ? socialIconDial.emphasis.iconHoverOpacity : socialIconDial.emphasis.iconBaseOpacity,
     transform: `scale(${isHovered ? socialIconDial.motion.iconHoverScale : 1})`,
-    filter: isHovered ? `drop-shadow(0 0 5px ${socialGlow}) drop-shadow(0 0 12px ${socialSoftGlow})` : 'none',
+    filter: 'none',
   })
 
   const handleSocialHoverStart = (label: string) => {
@@ -561,6 +565,31 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <motion.div
+            className="mb-4"
+            initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
+            animate={{
+              opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+              y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+              filter: heroTextStage >= 2 ? 'blur(0px)' : 'blur(1.2px)',
+            }}
+            transition={{
+              duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+              delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+              ease: STAGGER_PANEL.ease,
+            }}
+          >
+            <div className="inline-flex items-center gap-3 rounded-full border border-[color:color-mix(in_srgb,var(--border)_82%,white)] bg-[color:color-mix(in_srgb,var(--card)_94%,white)] px-5 py-2.5 shadow-[0_4px_14px_rgba(15,23,42,0.08)]">
+              <span
+                aria-hidden
+                className="h-3.5 w-3.5 rounded-full bg-[#22c55e] shadow-[0_0_0_3px_rgba(34,197,94,0.2)]"
+              />
+              <span className="font-code text-[clamp(0.95rem,2.1vw,1.8rem)] leading-none tracking-[0.01em] text-muted-foreground">
+                {HERO_UPDATE_NOTE}
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(1.8px)' }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -608,15 +637,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
             style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
           >
-            <div className="relative inline-flex rounded-[30px] border border-[#d7dee8] bg-white/92 px-5 py-3 shadow-[0_10px_24px_rgba(15,23,42,0.16)] sm:px-6 sm:py-3.5">
-              <span
-                aria-hidden
-                className="pointer-events-none absolute left-6 top-0 h-px w-16 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#7c8796]/35 to-transparent"
-              />
-              <span
-                aria-hidden
-                className="pointer-events-none absolute right-6 top-0 h-px w-16 -translate-y-1/2 bg-gradient-to-r from-transparent via-[#7c8796]/35 to-transparent"
-              />
+            <div className="inline-flex items-center rounded-xl bg-transparent px-0 py-0">
               <div className="flex items-center gap-3.5 sm:gap-4">
                 {contactLinks.map((link, index) => (
                   <motion.div

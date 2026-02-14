@@ -434,6 +434,14 @@ button:active {
   font-weight: 700;
 }
 
+@supports (content-visibility: auto) {
+  .performance-section {
+    content-visibility: auto;
+    contain: layout paint;
+    contain-intrinsic-size: 640px;
+  }
+}
+
 .skeleton {
   background: linear-gradient(90deg, #d8dee9 25%, #eceff4 50%, #d8dee9 75%);
   background-size: 200% 100%;

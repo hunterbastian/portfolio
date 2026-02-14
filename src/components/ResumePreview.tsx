@@ -28,19 +28,16 @@ const PREVIEW_MOTION = {
     opacity: 0,
     y: -7,
     scale: 0.96,
-    filter: 'blur(3.4px)',
   },
   animate: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: 'blur(0px)',
   },
   exit: {
     opacity: 0,
     y: -5,
     scale: 0.98,
-    filter: 'blur(2.2px)',
   },
 }
 
@@ -48,7 +45,6 @@ const PREVIEW_TRANSITION = {
   y: { type: 'spring' as const, stiffness: 320, damping: 28, mass: 0.9 },
   scale: { type: 'spring' as const, stiffness: 360, damping: 30, mass: 0.9 },
   opacity: { duration: 0.22, ease: [0.22, 1, 0.36, 1] as const },
-  filter: { duration: 0.24, ease: [0.22, 1, 0.36, 1] as const },
 }
 
 export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewProps) {
@@ -84,11 +80,11 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
 
     updatePosition()
     window.addEventListener('resize', updatePosition)
-    window.addEventListener('scroll', updatePosition, true)
+    window.addEventListener('scroll', updatePosition, { capture: true, passive: true })
 
     return () => {
       window.removeEventListener('resize', updatePosition)
-      window.removeEventListener('scroll', updatePosition, true)
+      window.removeEventListener('scroll', updatePosition, { capture: true })
     }
   }, [isVisible, anchorRef])
 
@@ -169,7 +165,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
           <motion.div
             className="fixed -translate-x-1/2 z-[80] pointer-events-none origin-top"
             aria-hidden
-            style={{ left: `${activePosition.left}px`, top: `${activePosition.top}px`, willChange: 'transform, opacity, filter' }}
+            style={{ left: `${activePosition.left}px`, top: `${activePosition.top}px`, willChange: 'transform, opacity' }}
             initial={PREVIEW_MOTION.initial}
             animate={PREVIEW_MOTION.animate}
             exit={PREVIEW_MOTION.exit}
@@ -189,7 +185,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
         <motion.div
           className="absolute left-1/2 top-full mt-2 -translate-x-1/2 z-50 pointer-events-none origin-top"
           aria-hidden
-          style={{ willChange: 'transform, opacity, filter' }}
+          style={{ willChange: 'transform, opacity' }}
           initial={PREVIEW_MOTION.initial}
           animate={PREVIEW_MOTION.animate}
           exit={PREVIEW_MOTION.exit}

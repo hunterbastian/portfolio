@@ -40,8 +40,6 @@ const SECTION_PANEL = {
   finalOpacity: 1, // visible at rest
   initialY: 14, // panel vertical offset before reveal
   finalY: 0, // resting panel position
-  initialBlur: 'blur(1.8px)', // slight softness before reveal
-  finalBlur: 'blur(0px)', // crisp at rest
   ease: MOTION_EASE_STANDARD,
 }
 
@@ -50,8 +48,6 @@ const SECTION_ROW = {
   finalOpacity: 1, // visible row at rest
   initialY: 16, // row vertical offset before reveal
   finalY: 0, // resting row position
-  initialBlur: 'blur(1.4px)', // slight softness before reveal
-  finalBlur: 'blur(0px)', // crisp at rest
 }
 
 const BUTTON_COLORS = {
@@ -84,8 +80,6 @@ const LABEL_CHAR = {
   finalY: 0, // resting character position
   initialScale: 0.96, // slight size dip before reveal
   finalScale: 1, // resting size
-  initialBlur: 'blur(4px)', // softened character before reveal
-  finalBlur: 'blur(0px)', // crisp character at rest
   ease: MOTION_EASE_STANDARD,
 }
 
@@ -96,8 +90,6 @@ const TOGGLE_BUTTON_ENTRANCE = {
   finalOpacity: 1, // visible at rest
   initialScale: 0.9, // slight downscale before reveal
   finalScale: 1, // resting size
-  initialBlur: 'blur(3px)', // softened before reveal
-  finalBlur: 'blur(0px)', // crisp at rest
   ease: MOTION_EASE_STANDARD,
 }
 
@@ -134,7 +126,7 @@ export default function CollapsibleSection({
   const contentPanelClassName = contentClassName ?? ''
   const contentItems = Children.toArray(children)
   const titleChars = useMemo(() => Array.from(title.toUpperCase()), [title])
-  const sectionClasses = [className, isOpen ? openClassName : closedClassName, 'transition-[padding] duration-300']
+  const sectionClasses = [className, isOpen ? openClassName : closedClassName, 'performance-section transition-[padding] duration-300']
     .filter(Boolean)
     .join(' ')
 
@@ -233,7 +225,6 @@ export default function CollapsibleSection({
                   opacity: titleStage >= 1 ? LABEL_CHAR.finalOpacity : LABEL_CHAR.initialOpacity,
                   y: titleStage >= 1 ? LABEL_CHAR.finalY : LABEL_CHAR.initialY,
                   scale: titleStage >= 1 ? LABEL_CHAR.finalScale : LABEL_CHAR.initialScale,
-                  filter: titleStage >= 1 ? LABEL_CHAR.finalBlur : LABEL_CHAR.initialBlur,
                 }}
                 transition={{
                   duration: motionDurationMs(LABEL_TIMING.charDuration, prefersReducedMotion),
@@ -252,7 +243,6 @@ export default function CollapsibleSection({
           animate={{
             opacity: titleStage >= 1 ? TOGGLE_BUTTON_ENTRANCE.finalOpacity : TOGGLE_BUTTON_ENTRANCE.initialOpacity,
             scale: titleStage >= 1 ? TOGGLE_BUTTON_ENTRANCE.finalScale : TOGGLE_BUTTON_ENTRANCE.initialScale,
-            filter: titleStage >= 1 ? TOGGLE_BUTTON_ENTRANCE.finalBlur : TOGGLE_BUTTON_ENTRANCE.initialBlur,
           }}
           transition={{
             duration: motionDurationMs(TOGGLE_BUTTON_ENTRANCE.duration, prefersReducedMotion),
@@ -289,13 +279,12 @@ export default function CollapsibleSection({
         {isOpen && (
           <motion.div
             id={contentId}
-            initial={{ height: 0, opacity: 0, filter: 'blur(1.8px)' }}
-            animate={{ height: 'auto', opacity: 1, filter: 'blur(0px)' }}
-            exit={{ height: 0, opacity: 0, filter: 'blur(1.8px)' }}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
             transition={{
               height: { duration: contentDuration, ease: MOTION_EASE_STANDARD },
               opacity: { duration: contentOpacityDuration, ease: MOTION_EASE_STANDARD },
-              filter: { duration: contentOpacityDuration, ease: MOTION_EASE_STANDARD },
             }}
             className="overflow-hidden"
           >
@@ -306,7 +295,6 @@ export default function CollapsibleSection({
               animate={{
                 opacity: stage >= 1 ? SECTION_PANEL.finalOpacity : SECTION_PANEL.initialOpacity,
                 y: stage >= 1 ? SECTION_PANEL.finalY : SECTION_PANEL.initialY,
-                filter: stage >= 1 ? SECTION_PANEL.finalBlur : SECTION_PANEL.initialBlur,
               }}
               transition={{
                 duration: panelDuration,
@@ -320,7 +308,6 @@ export default function CollapsibleSection({
                   animate={{
                     opacity: stage >= 2 ? SECTION_ROW.finalOpacity : SECTION_ROW.initialOpacity,
                     y: stage >= 2 ? SECTION_ROW.finalY : SECTION_ROW.initialY,
-                    filter: stage >= 2 ? SECTION_ROW.finalBlur : SECTION_ROW.initialBlur,
                   }}
                   transition={{
                     duration: rowDuration,

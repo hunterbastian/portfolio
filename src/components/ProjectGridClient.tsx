@@ -42,8 +42,6 @@ const CARD_STAGGER_PANEL = {
   finalOpacity: 1,
   initialY: 14,
   finalY: 0,
-  initialBlur: 'blur(1.8px)',
-  finalBlur: 'blur(0px)',
   ease: MOTION_EASE_STANDARD,
 }
 
@@ -281,7 +279,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         animate={{
           opacity: stage >= 1 ? CARD_STAGGER_PANEL.finalOpacity : CARD_STAGGER_PANEL.initialOpacity,
           y: stage >= 1 ? CARD_STAGGER_PANEL.finalY : CARD_STAGGER_PANEL.initialY,
-          filter: stage >= 1 ? CARD_STAGGER_PANEL.finalBlur : CARD_STAGGER_PANEL.initialBlur,
           columnGap: gridColumnGap,
           rowGap: gridRowGap,
         }}
@@ -291,10 +288,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             ease: CARD_STAGGER_PANEL.ease,
           },
           y: {
-            duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
-            ease: CARD_STAGGER_PANEL.ease,
-          },
-          filter: {
             duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
             ease: CARD_STAGGER_PANEL.ease,
           },
@@ -324,10 +317,9 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         return (
           <motion.div
             key={project.slug}
-            className="w-full transition-[transform,opacity,filter] duration-[430ms]"
+            className="w-full transition-[transform,opacity] duration-[430ms]"
             style={{
               zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
-              filter: !supportsHover || !hasHoverTarget || isHovered ? 'saturate(1)' : 'saturate(0.92)',
             }}
             onMouseEnter={() => {
               prefetchProject(project.slug)

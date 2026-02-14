@@ -66,13 +66,13 @@ const nextConfig: NextConfig = {
   // Headers for optimal caching strategy
   async headers() {
     return [
-      // HTML routes - No cache for fresh content
+      // HTML routes - edge cache with short TTL + SWR for faster repeat visits
       {
         source: '/((?!api|_next/static|images|favicon).*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'no-store',
+            value: 'public, max-age=0, s-maxage=60, stale-while-revalidate=600',
           },
         ],
       },

@@ -197,8 +197,6 @@ const STAGGER_PANEL = {
   finalOpacity: 1, // visible at rest
   initialY: 14, // panel vertical offset before reveal
   finalY: 0, // resting panel position
-  initialBlur: 'blur(1.8px)', // softened before reveal
-  finalBlur: 'blur(0px)', // crisp at rest
   ease: MOTION_EASE_STANDARD,
 }
 
@@ -511,8 +509,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <motion.div
-              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94, filter: 'blur(1.2px)' }}
-              animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, scale: 1, filter: 'blur(0px)' }}
+              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94 }}
+              animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, scale: 1 }}
               transition={{
                 duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
                 delay: motionDelayMs(HERO_ENTRANCE.profileDelay, prefersReducedMotion),
@@ -542,11 +540,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               </h1>
               <motion.div
                 className="font-code text-muted-foreground mt-2 text-[11px] tracking-[0.12em] sm:text-xs"
-                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
+                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
                   y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                  filter: heroTextStage >= 2 ? 'blur(0px)' : 'blur(1.2px)',
                 }}
                 transition={{
                   duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
@@ -561,11 +558,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
           <motion.div
             className="mb-4"
-            initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
+            initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
             animate={{
               opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
               y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-              filter: heroTextStage >= 2 ? 'blur(0px)' : 'blur(1.2px)',
             }}
             transition={{
               duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
@@ -585,25 +581,23 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(1.8px)' }}
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
               y: heroTextStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-              filter: heroTextStage >= 1 ? STAGGER_PANEL.finalBlur : STAGGER_PANEL.initialBlur,
             }}
             transition={{
               duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
               ease: STAGGER_PANEL.ease,
             }}
-            style={{ willChange: 'opacity, transform, filter' }}
+            style={{ willChange: 'opacity, transform' }}
           >
             <motion.p
               className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0"
-              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, filter: 'blur(1.2px)' }}
+              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
               animate={{
                 opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
                 y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                filter: heroTextStage >= 2 ? 'blur(0px)' : 'blur(1.2px)',
               }}
               transition={{
                 duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
@@ -619,11 +613,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
           <motion.div
             className="mt-4 sm:mt-5"
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(1.4px)' }}
+            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: isHeroCopyVisible ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
               y: isHeroCopyVisible ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-              filter: isHeroCopyVisible ? 'blur(0px)' : 'blur(1.4px)',
             }}
             transition={{
               duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),

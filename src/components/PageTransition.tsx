@@ -92,7 +92,9 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
         duration: motionDurationMs(timing.newSlideDuration, prefersReducedMotion),
         ease: MOTION_EASE_STANDARD,
       }}
-      className="will-change-transform"
+      style={{
+        willChange: stage < 2 ? 'transform, opacity' : 'auto',
+      }}
     >
       {routeChildren.map((child, index) => (
         <motion.div
@@ -110,7 +112,9 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
             delay: stage >= 2 ? motionDelayMs(index * timing.childStagger, prefersReducedMotion) : 0,
             ease: MOTION_EASE_STANDARD,
           }}
-          className="will-change-transform"
+          style={{
+            willChange: stage < 2 ? 'transform, opacity' : 'auto',
+          }}
         >
           {child}
         </motion.div>

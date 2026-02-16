@@ -74,6 +74,28 @@ const CASE_STUDY_DIAL_DEFAULTS = {
   stackPriority: 'default',
 } as const
 
+const DIALOG_FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
+function getFocusableElements(container: HTMLElement | null): HTMLElement[] {
+  if (!container) {
+    return []
+  }
+
+  return Array.from(container.querySelectorAll<HTMLElement>(DIALOG_FOCUSABLE_SELECTOR)).filter((element) => {
+    if (element.getAttribute('aria-hidden') === 'true') {
+      return false
+    }
+    if (element.tabIndex < 0) {
+      return false
+    }
+    if ('disabled' in element && (element as HTMLButtonElement).disabled) {
+      return false
+    }
+    return true
+  })
+}
+
 function getStackPriorityZIndex(index: number, total: number, stackPriority: string): number {
   if (stackPriority === 'center') {
     const center = (total - 1) / 2
@@ -115,6 +137,9 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   const router = useRouter()
   const prefersReducedMotion = useReducedMotion() ?? false
   const gridRef = useRef<HTMLDivElement>(null)
+  const dialogRef = useRef<HTMLElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const lastFocusedElementRef = useRef<HTMLElement | null>(null)
   const hasPlayedEntranceRef = useRef(false)
   const isGridInView = useInView(gridRef, { once: true, amount: 0.16 })
   const prefetchedSlugsRef = useRef(new Set<string>())
@@ -187,6 +212,11 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   }, [router])
 
   const openCaseStudyOverlay = useCallback((slug: string) => {
+    if (typeof document !== 'undefined') {
+      const activeElement = document.activeElement
+      lastFocusedElementRef.current = activeElement instanceof HTMLElement ? activeElement : null
+    }
+
     prefetchProject(slug)
     setActiveCaseStudySlug(slug)
   }, [prefetchProject])
@@ -240,18 +270,60 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     }
 
     const previousOverflow = document.body.style.overflow
-    const handleEscape = (event: KeyboardEvent) => {
+    const focusDialog = () => {
+      const initialFocusTarget = closeButtonRef.current ?? getFocusableElements(dialogRef.current)[0] ?? dialogRef.current
+      initialFocusTarget?.focus()
+    }
+
+    const handleKeyboard = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        event.preventDefault()
         closeCaseStudyOverlay()
+        return
+      }
+
+      if (event.key !== 'Tab') {
+        return
+      }
+
+      const focusableElements = getFocusableElements(dialogRef.current)
+      if (focusableElements.length === 0) {
+        event.preventDefault()
+        dialogRef.current?.focus()
+        return
+      }
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+      const activeElement = document.activeElement
+
+      if (event.shiftKey) {
+        if (activeElement === firstElement || activeElement === dialogRef.current) {
+          event.preventDefault()
+          lastElement.focus()
+        }
+        return
+      }
+
+      if (activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
       }
     }
 
     document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', handleEscape)
+    requestAnimationFrame(focusDialog)
+    document.addEventListener('keydown', handleKeyboard)
 
     return () => {
       document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleEscape)
+      document.removeEventListener('keydown', handleKeyboard)
+      const elementToRestore = lastFocusedElementRef.current
+      if (elementToRestore) {
+        requestAnimationFrame(() => {
+          elementToRestore.focus()
+        })
+      }
     }
   }, [activeCaseStudySlug, closeCaseStudyOverlay])
 
@@ -284,6 +356,9 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
           filter: stage >= 1 ? CARD_STAGGER_PANEL.finalBlur : CARD_STAGGER_PANEL.initialBlur,
           columnGap: gridColumnGap,
           rowGap: gridRowGap,
+        }}
+        style={{
+          willChange: stage < 2 ? 'transform, opacity, filter' : 'auto',
         }}
         transition={{
           opacity: {
@@ -328,6 +403,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             style={{
               zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
               filter: !supportsHover || !hasHoverTarget || isHovered ? 'saturate(1)' : 'saturate(0.92)',
+              willChange: stage < 2 || isHovered ? 'transform, opacity, filter' : 'auto',
             }}
             onMouseEnter={() => {
               prefetchProject(project.slug)
@@ -379,7 +455,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               },
             }}
           >
-            <Magnetic className="will-change-transform" strength={0.28} range={130} onlyOnHover disableOnTouch>
+            <Magnetic strength={0.28} range={130} onlyOnHover disableOnTouch>
               {project.frontmatter?.image ? (
                 <ProjectCard
                   slug={project.slug}
@@ -417,9 +493,11 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             />
 
             <motion.section
+              ref={dialogRef}
               role="dialog"
               aria-modal="true"
-              aria-label={`${activeCaseStudy.frontmatter.title} case study`}
+              tabIndex={-1}
+              aria-labelledby={`case-study-dialog-title-${activeCaseStudy.slug}`}
               className="relative z-10 flex h-[min(88vh,960px)] w-full max-w-6xl flex-col overflow-hidden rounded-[28px] border border-[color:color-mix(in_srgb,var(--border)_72%,white)] bg-[color:color-mix(in_srgb,var(--card)_92%,white)] shadow-[0_36px_110px_rgba(12,18,28,0.34)]"
               initial={{ opacity: 0, y: 22, scale: 0.985 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -432,9 +510,15 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                   <p className="truncate font-code text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
                     Case Study
                   </p>
-                  <h2 className="truncate text-sm font-semibold text-foreground sm:text-base">{activeCaseStudy.frontmatter.title}</h2>
+                  <h2
+                    id={`case-study-dialog-title-${activeCaseStudy.slug}`}
+                    className="truncate text-sm font-semibold text-foreground sm:text-base"
+                  >
+                    {activeCaseStudy.frontmatter.title}
+                  </h2>
                 </div>
                 <button
+                  ref={closeButtonRef}
                   type="button"
                   onClick={closeCaseStudyOverlay}
                   className="nord-button inline-flex h-8 w-8 items-center justify-center rounded-full text-foreground/80 transition-colors hover:text-foreground"

@@ -34,7 +34,6 @@ const navigation: Array<{ name: string; href: string }> = [
 export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [activeSection, setActiveSection] = useState('')
-  const [hoveredSection, setHoveredSection] = useState('')
 
   const handleRefreshToTop = () => {
     window.scrollTo({ top: 0, behavior: 'auto' })
@@ -94,22 +93,21 @@ export default function Header() {
     return () => observer.disconnect()
   }, [])
 
-  const emphasizedSection = hoveredSection || activeSection || navigation[0]?.href || ''
-
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b px-4 py-3 sm:px-6 sm:py-4"
+      className="sticky top-0 z-50 w-full px-3 py-2 sm:px-5 sm:py-2"
       style={{
-        borderColor: 'var(--border)',
-        backgroundColor: 'color-mix(in srgb, var(--background) 88%, transparent)',
+        borderBottom: '1px solid color-mix(in srgb, var(--border) 62%, transparent)',
+        backgroundColor: 'color-mix(in srgb, var(--background) 78%, transparent)',
+        backdropFilter: 'blur(8px)',
       }}
     >
       <div className="container mx-auto max-w-6xl">
-        <div className="flex h-12 items-center justify-between">
+        <div className="flex h-10 items-center justify-between">
           <button
             type="button"
             onClick={handleRefreshToTop}
-            className="group inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+            className="group inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
             aria-label="Refresh and return to top"
             title="Refresh and return to top"
           >
@@ -125,19 +123,13 @@ export default function Header() {
             className="header-nav-vertical hidden md:flex"
             role="navigation"
             aria-label="Primary"
-            onMouseLeave={() => setHoveredSection('')}
           >
             {navigation.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
-                onMouseEnter={() => setHoveredSection(item.href)}
-                onFocus={() => setHoveredSection(item.href)}
-                onBlur={() => setHoveredSection('')}
-                className={`header-nav-link font-code cursor-pointer ${activeSection === item.href ? 'is-active' : ''} ${
-                  emphasizedSection === item.href ? 'is-emphasis' : 'is-subdued'
-                }`}
+                className={`header-nav-link font-code cursor-pointer ${activeSection === item.href ? 'is-active' : ''}`}
                 aria-current={activeSection === item.href ? 'page' : undefined}
               >
                 {item.name}
@@ -147,7 +139,7 @@ export default function Header() {
 
           <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors duration-300"
+            className="md:hidden inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors duration-200 hover:text-foreground"
             aria-label="Toggle navigation menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
@@ -158,8 +150,8 @@ export default function Header() {
       </div>
 
       {showMobileMenu && (
-        <div className="md:hidden mt-4 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-          <div className="container mx-auto max-w-6xl space-y-1 px-1">
+        <div className="md:hidden mt-2 border-t pt-2" style={{ borderColor: 'color-mix(in srgb, var(--border) 66%, transparent)' }}>
+          <div className="container mx-auto max-w-6xl space-y-0.5 px-0.5">
             {navigation.map((item) => (
               <a
                 key={item.href}
@@ -168,8 +160,8 @@ export default function Header() {
                   handleSmoothScroll(e, item.href)
                   setShowMobileMenu(false)
                 }}
-                className={`font-code block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
-                  activeSection === item.href ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                className={`font-code block py-2 text-[11px] tracking-[0.1em] transition-colors duration-200 cursor-pointer ${
+                  activeSection === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {item.name}

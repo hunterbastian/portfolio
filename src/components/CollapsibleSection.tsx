@@ -221,7 +221,7 @@ export default function CollapsibleSection({
   return (
     <section id={id} className={sectionClasses}>
       <div className="relative mx-auto flex min-h-6 w-full max-w-2xl items-center justify-start">
-        <h2 ref={titleRef} className="section-heading m-0 pl-8 font-code text-sm leading-none" aria-label={title}>
+        <h2 ref={titleRef} className="section-heading m-0 font-code text-sm leading-none" aria-label={title}>
           <span className="sr-only">{title}</span>
           <span aria-hidden className="inline-flex items-center">
             {titleChars.map((char, index) => (
@@ -247,7 +247,7 @@ export default function CollapsibleSection({
           </span>
         </h2>
         <motion.div
-          className="absolute -left-2 top-1/2 sm:-left-3"
+          className="absolute -left-8 top-1/2 sm:-left-9"
           initial={false}
           animate={{
             opacity: titleStage >= 1 ? TOGGLE_BUTTON_ENTRANCE.finalOpacity : TOGGLE_BUTTON_ENTRANCE.initialOpacity,

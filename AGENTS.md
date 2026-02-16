@@ -30,7 +30,8 @@ npm run lighthouse
 
 - Node.js >= 18.17.0 (see `package.json`).
 - `npm run lighthouse` expects a server at `http://localhost:3000`.
+- `npm run dev:turbo` is incompatible with JetBrains Mono; use `npm run dev` if that font is enabled.
 
 ## TODO
 
-- Confirm any known limitations for `npm run dev:turbo` (if any).
+- None.

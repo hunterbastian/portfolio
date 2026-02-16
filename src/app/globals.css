@@ -321,6 +321,28 @@ a {
   opacity: 0.82;
 }
 
+.status-pill-action {
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease,
+    opacity 0.24s ease;
+}
+
+.status-pill-action:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--primary) 36%, var(--border));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.84) inset,
+    0 -1px 0 rgba(76, 86, 106, 0.14) inset,
+    0 10px 18px rgba(15, 23, 42, 0.12);
+}
+
+.status-pill-action:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--primary) 68%, white);
+  outline-offset: 2px;
+}
+
 .status-radar-dot {
   position: relative;
   display: inline-block;

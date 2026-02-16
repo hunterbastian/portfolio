@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Offline | Hunter Bastian // Studio Alpine</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        background:
+          radial-gradient(circle at 12% 18%, rgba(94, 129, 172, 0.2), transparent 42%),
+          radial-gradient(circle at 88% 8%, rgba(67, 76, 94, 0.16), transparent 36%),
+          #f4f7fb;
+        color: #0f1720;
+      }
+
+      .card {
+        width: min(560px, 100%);
+        border: 1px solid rgba(15, 23, 32, 0.2);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 14px 42px rgba(15, 23, 32, 0.14);
+        padding: 28px 24px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        letter-spacing: 0.16em;
+        font-size: 11px;
+        color: #516072;
+      }
+
+      h1 {
+        margin: 10px 0 10px;
+        font-size: clamp(22px, 4vw, 30px);
+        line-height: 1.2;
+      }
+
+      p {
+        margin: 0 0 16px;
+        line-height: 1.6;
+        font-size: 14px;
+        color: #344255;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .button {
+        appearance: none;
+        border: 1px solid #0f1720;
+        background: #0f1720;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 9px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .button.secondary {
+        background: transparent;
+        color: #0f1720;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <p class="eyebrow">STUDIO ALPINE</p>
+      <h1>You are offline</h1>
+      <p>The portfolio needs a network connection for fresh pages. Reconnect and refresh, or return to the homepage.</p>
+      <div class="actions">
+        <a class="button" href="/" rel="noreferrer">Go Home</a>
+        <a class="button secondary" href="." rel="noreferrer">Try Again</a>
+      </div>
+    </main>
+  </body>
+</html>

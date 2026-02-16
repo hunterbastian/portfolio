@@ -161,6 +161,7 @@ const resumeIconName: CentralIconName = 'IconFileText'
 const HERO_HEADLINE_TEXT = 'Hunter Bastian // Studio Alpine'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
 const HERO_UPDATE_NOTE = 'Accepting new clients'
+const HERO_UPDATE_NOTE_HREF = 'mailto:hunterbastianwork@gmail.com?subject=Project%20Inquiry'
 
 const HERO_TYPING = {
   headline: 62, // keep current speed
@@ -484,10 +485,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     }
   }, [])
 
-  const toggleSection = (section: SectionKey) => {
-    setSectionOpen((prev) => ({ ...prev, [section]: !prev[section] }))
-  }
-
   const toggleJob = (index: number) => {
     setExpandedJobs((prev) => {
       const next = new Set(prev)
@@ -569,7 +566,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <div className="status-pill inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5">
+            <a
+              href={HERO_UPDATE_NOTE_HREF}
+              className="status-pill status-pill-action inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5 no-underline"
+              aria-label="Contact Hunter by email"
+              title="Contact Hunter by email"
+            >
               <span
                 aria-hidden
                 className="status-radar-dot h-[11px] w-[11px] rounded-full"
@@ -577,7 +579,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground sm:text-[11px]">
                 {HERO_UPDATE_NOTE}
               </span>
-            </div>
+            </a>
           </motion.div>
 
           <motion.div
@@ -719,7 +721,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="creating"
         title="Creating"
         isOpen={sectionOpen.creating}
-        onToggle={() => toggleSection('creating')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
@@ -743,7 +744,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="case-studies"
         title="Case Studies"
         isOpen={sectionOpen.caseStudies}
-        onToggle={() => toggleSection('caseStudies')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="pt-12 pb-12"
@@ -770,7 +770,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="experience"
         title="Experience"
         isOpen={sectionOpen.experience}
-        onToggle={() => toggleSection('experience')}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-12"
         closedClassName="py-5"
@@ -810,20 +809,22 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <button
                     type="button"
-                    className="flex w-full items-center gap-3 rounded-md border border-transparent px-2 py-3.5 text-left"
+                    className="flex w-full items-center gap-4 rounded-md border border-transparent px-2 py-3.5 text-left"
                     onClick={() => toggleJob(index)}
                   >
                     <motion.div
-                      className="flex h-5 w-5 shrink-0 items-center justify-center text-muted-foreground transition-transform duration-[400ms]"
+                      className="group inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px]"
                       animate={{ rotate: isExpanded ? 45 : 0 }}
                       transition={{
                         duration: motionDurationMs(EXPERIENCE_TIMING.iconRotate, prefersReducedMotion),
                         ease: MOTION_EASE_STANDARD,
                       }}
                     >
-                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                      </svg>
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground/70 shadow-inner transition-colors duration-300 group-hover:text-foreground">
+                        <svg className="h-[11px] w-[11px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
+                        </svg>
+                      </span>
                     </motion.div>
                     <div className="flex min-w-0 flex-1 items-center space-x-6">
                       <span className="w-16 text-xs font-code text-muted-foreground">
@@ -866,7 +867,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="education"
         title="Education"
         isOpen={sectionOpen.education}
-        onToggle={() => toggleSection('education')}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-12"
         closedClassName="py-5"
@@ -924,7 +924,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="everyday-tech"
         title="Everyday Tech"
         isOpen={sectionOpen.everydayTech}
-        onToggle={() => toggleSection('everydayTech')}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-10"
         closedClassName="py-5"
@@ -976,7 +975,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="tech-stack"
         title="Stack"
         isOpen={sectionOpen.techStack}
-        onToggle={() => toggleSection('techStack')}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-12"
         closedClassName="py-5"

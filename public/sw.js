@@ -1,9 +1,10 @@
 // Service Worker for Portfolio - Assets only, fresh HTML always
-const CACHE_NAME = 'portfolio-assets-v6'
+const CACHE_NAME = 'portfolio-assets-v7'
 const STATIC_ASSETS = [
+  '/offline.html',
   '/favicon.ico',
   '/favicon/favicon.ico',
-  '/favicon/favicon-32x32.png', 
+  '/favicon/favicon-32x32.png',
   '/favicon/apple-touch-icon.png',
   '/images/profilepicture.jpg',
   '/images/social/profile-preview.jpg',
@@ -93,17 +94,17 @@ self.addEventListener('fetch', event => {
   } else {
     // Network first for HTML pages - ALWAYS FRESH
     event.respondWith(
-      fetch(event.request)
-        .catch(() => {
+      fetch(event.request).catch(async () => {
           // Only fallback to cache for navigation requests when truly offline
           if (event.request.mode === 'navigate') {
-            return new Response(
-              '<html><body><h1>Offline</h1><p>Please check your connection</p></body></html>',
-              { headers: { 'Content-Type': 'text/html' } }
-            )
+            const offlinePage = await caches.match('/offline.html')
+            if (offlinePage) return offlinePage
+            return new Response('<html><body><h1>Offline</h1><p>Please check your connection</p></body></html>', {
+              headers: { 'Content-Type': 'text/html' },
+            })
           }
           return Response.error()
-        })
+      })
     )
   }
 })

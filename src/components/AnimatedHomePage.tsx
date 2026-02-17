@@ -74,7 +74,7 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex h-9 w-9 origin-center items-center justify-center rounded-md border border-[#d6dde7] bg-white/80 no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:h-10 sm:w-10'
+  'group status-pill status-pill-action status-pill-icon inline-flex h-9 w-9 origin-center items-center justify-center rounded-full no-underline sm:h-10 sm:w-10'
 
 const contactIconGlyphClassName =
   'h-[17px] w-[17px] sm:h-[19px] sm:w-[19px]'
@@ -377,10 +377,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     color: isHovered ? socialIconDial.color.hoverColor : socialIconDial.color.baseColor,
     opacity: isHovered ? socialIconDial.emphasis.hoverOpacity : socialIconDial.emphasis.baseOpacity,
     transform: `scale(${isHovered ? socialIconDial.motion.hoverScale : 1})`,
-    boxShadow: isHovered
-      ? `0 6px 14px ${hexToRgba(socialIconDial.color.glowColor, 0.12)}`
-      : `0 1px 3px ${hexToRgba(socialIconDial.color.glowColor, 0.08)}`,
-    borderColor: isHovered ? '#c5cedb' : '#d6dde7',
   })
 
   const getSocialIconStyle = (isHovered: boolean): CSSProperties => ({
@@ -754,7 +750,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               rel="noopener noreferrer"
               className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground no-underline hover:text-primary"
             >
-              <span aria-hidden className="text-sm leading-none">📷</span>
               <span>Studio Alpine</span>
             </a>
             <a

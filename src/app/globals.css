@@ -317,6 +317,17 @@ a {
   pointer-events: none;
 }
 
+.status-pill-icon {
+  backdrop-filter: blur(1.8px) saturate(1.04);
+}
+
+.status-pill-icon::before {
+  left: 7px;
+  right: 7px;
+  top: 2px;
+  height: 44%;
+}
+
 .status-pill-label {
   opacity: 0.82;
 }

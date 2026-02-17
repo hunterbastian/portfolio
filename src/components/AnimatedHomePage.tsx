@@ -146,8 +146,6 @@ const everydayTech = [
   'AirPods Pro 2',
   'IKEA Desk',
   'Apple Watch',
-  'Wishlist: Apple Studio Display',
-  'Wishlist: Keychron K3',
 ]
 
 const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']

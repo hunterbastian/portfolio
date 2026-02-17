@@ -477,22 +477,22 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const socialRevealDelay = Math.max(0, HERO_ENTRANCE.contactIconsDelay - HERO_ENTRANCE.textItemsDelay)
 
   return (
-    <div className="container relative isolate mx-auto max-w-7xl overflow-hidden px-4 py-6 sm:py-8">
+    <div className="relative isolate overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-[-16%] bottom-[-14rem] z-0 h-[30rem] sm:bottom-[-16rem] sm:h-[38rem]"
+        className="pointer-events-none absolute inset-x-0 bottom-[-14rem] z-0 h-[30rem] sm:bottom-[-16rem] sm:h-[38rem]"
       >
         <Image
           src="/images/projects/mountain.png"
           alt=""
           fill
           sizes="100vw"
-          className="scale-[1.18] object-cover object-bottom opacity-70 blur-[68px] saturate-[0.88]"
+          className="scale-[1.12] object-cover object-bottom opacity-70 blur-[42px] saturate-[0.9]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/35 to-transparent" />
       </div>
 
-      <div className="relative z-10">
+      <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
@@ -721,7 +721,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       >
         <div className="max-w-2xl mx-auto text-left">
           <div className="rounded-md border border-border/55 bg-card/30 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-[1px]">
-            <p className="mb-2 font-code text-[10px] uppercase tracking-[0.14em] text-muted-foreground/80">ventures.md</p>
             <ul className="space-y-1.5">
               <li>
                 <a

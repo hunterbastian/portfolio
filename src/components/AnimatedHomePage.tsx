@@ -229,27 +229,6 @@ const SOCIAL_ICON_DIAL_DEFAULTS = {
   fadeMs: 220,
 } as const
 
-function hexToRgba(hexColor: string, alpha: number): string {
-  const normalized = hexColor.replace('#', '').trim()
-  const valid =
-    normalized.length === 3
-      ? normalized
-          .split('')
-          .map((char) => `${char}${char}`)
-          .join('')
-      : normalized
-
-  if (!/^[\da-fA-F]{6}$/.test(valid)) {
-    return `rgba(158, 200, 232, ${alpha})`
-  }
-
-  const value = Number.parseInt(valid, 16)
-  const red = (value >> 16) & 255
-  const green = (value >> 8) & 255
-  const blue = value & 255
-  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
-}
-
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
   const [stage, setStage] = useState(0)
 
@@ -743,23 +722,34 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <div className="inline-flex flex-col items-start gap-2">
-            <a
-              href="https://instagram.com/studio.alpine"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground no-underline hover:text-primary"
-            >
-              <span>Studio Alpine</span>
-            </a>
-            <a
-              href={CONTACT_EMAIL_HREF}
-              className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground no-underline hover:text-primary"
-              aria-label="Email Hunter about design services"
-              title="Email Hunter about design services"
-            >
-              <span>Design Services</span>
-            </a>
+          <div className="rounded-md border border-border/55 bg-card/30 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-[1px]">
+            <p className="mb-2 font-code text-[10px] uppercase tracking-[0.14em] text-muted-foreground/80">ventures.md</p>
+            <ul className="space-y-1.5">
+              <li>
+                <a
+                  href="https://instagram.com/studio.alpine"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                  aria-label="Photography Studio Studio Alpine"
+                  title="Photography Studio Studio Alpine"
+                >
+                  <span aria-hidden className="text-muted-foreground/70">-</span>
+                  <span>Photography Studio: Studio Alpine</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={CONTACT_EMAIL_HREF}
+                  className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                  aria-label="Design Services Open to projects"
+                  title="Design Services Open to projects"
+                >
+                  <span aria-hidden className="text-muted-foreground/70">-</span>
+                  <span>Design Services: Open to projects</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </CollapsibleSection>

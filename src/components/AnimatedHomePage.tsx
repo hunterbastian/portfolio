@@ -39,7 +39,7 @@ interface ContactLinkItem {
   iconName: CentralIconName
 }
 
-type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack'
+type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack' | 'contact'
 type SectionOpenState = Record<SectionKey, boolean>
 
 interface SectionNavigateDetail {
@@ -55,6 +55,7 @@ const DEFAULT_SECTION_OPEN_STATE: SectionOpenState = {
   education: true,
   everydayTech: true,
   techStack: true,
+  contact: true,
 }
 
 const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
@@ -64,6 +65,7 @@ const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
   '#education': 'education',
   '#everyday-tech': 'everydayTech',
   '#tech-stack': 'techStack',
+  '#contact': 'contact',
 }
 
 const INITIAL_SECTION_LOAD_DELAY = {
@@ -161,7 +163,8 @@ const resumeIconName: CentralIconName = 'IconFileText'
 const HERO_HEADLINE_TEXT = 'Hunter Bastian // Studio Alpine'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
 const HERO_UPDATE_NOTE = 'Accepting new clients'
-const HERO_UPDATE_NOTE_HREF = 'mailto:hunterbastianwork@gmail.com?subject=Project%20Inquiry'
+const CONTACT_EMAIL_HREF = 'mailto:hunterbastianwork@gmail.com?subject=Project%20Inquiry'
+const HERO_UPDATE_NOTE_HREF = CONTACT_EMAIL_HREF
 
 const HERO_TYPING = {
   headline: 62, // keep current speed
@@ -554,35 +557,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <motion.div
-            className="mb-4"
-            initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-            animate={{
-              opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-              y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-            }}
-            transition={{
-              duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-              delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
-              ease: STAGGER_PANEL.ease,
-            }}
-          >
-            <a
-              href={HERO_UPDATE_NOTE_HREF}
-              className="status-pill status-pill-action inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5 no-underline"
-              aria-label="Contact Hunter by email"
-              title="Contact Hunter by email"
-            >
-              <span
-                aria-hidden
-                className="status-radar-dot h-[11px] w-[11px] rounded-full"
-              />
-              <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground sm:text-[11px]">
-                {HERO_UPDATE_NOTE}
-              </span>
-            </a>
-          </motion.div>
-
-          <motion.div
+            className="mb-4 rounded-[24px] border border-border/70 bg-card/55 px-4 py-4 shadow-[0_10px_26px_rgba(15,23,42,0.08)] backdrop-blur-md sm:px-5 sm:py-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -594,6 +569,35 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
             style={{ willChange: 'opacity, transform' }}
           >
+            <motion.div
+              className="mb-3 sm:mb-3.5"
+              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+              animate={{
+                opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+              }}
+              transition={{
+                duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
+                ease: STAGGER_PANEL.ease,
+              }}
+            >
+              <a
+                href={HERO_UPDATE_NOTE_HREF}
+                className="status-pill status-pill-action inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5 no-underline"
+                aria-label="Contact Hunter by email"
+                title="Contact Hunter by email"
+              >
+                <span
+                  aria-hidden
+                  className="status-radar-dot h-[11px] w-[11px] rounded-full"
+                />
+                <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground sm:text-[11px]">
+                  {HERO_UPDATE_NOTE}
+                </span>
+              </a>
+            </motion.div>
+
             <motion.p
               className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
@@ -607,8 +611,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              Interaction Design student at UVU with experience designing and building digital products. I work in front-end
-              code, and I&apos;m focused on clear, meaningful interfaces with an AI-first mindset. I am also a founder at{' '}
+              Interaction Design student at UVU with experience designing and building digital products. I focus on clear,
+              meaningful interfaces with an AI-first mindset while growing{' '}
               <span className="ambient-word-glow font-semibold" data-glow="Studio Alpine">Studio Alpine</span>.
             </motion.p>
           </motion.div>
@@ -728,15 +732,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <a
-            href="https://instagram.com/studio.alpine"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground no-underline hover:text-primary"
-          >
-            <CentralIcon name="IconCamera1" size={14} aria-hidden className="h-3.5 w-3.5 shrink-0" />
-            <span>Photography Studio: Studio Alpine</span>
-          </a>
+          <div className="inline-flex flex-col items-start gap-2">
+            <a
+              href="https://instagram.com/studio.alpine"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground no-underline hover:text-primary"
+            >
+              <span aria-hidden className="text-sm leading-none">📷</span>
+              <span>Studio Alpine</span>
+            </a>
+            <a
+              href={CONTACT_EMAIL_HREF}
+              className="inline-flex flex-wrap items-center gap-1.5 text-sm font-code font-medium uppercase tracking-[0.08em] text-muted-foreground no-underline hover:text-primary"
+              aria-label="Email Hunter about design services"
+              title="Email Hunter about design services"
+            >
+              <span>Design Services</span>
+            </a>
+          </div>
         </div>
       </CollapsibleSection>
 
@@ -1015,6 +1029,27 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection
+        id="contact"
+        title="Contact"
+        isOpen={sectionOpen.contact}
+        className="px-4 sm:px-6 lg:px-0"
+        openClassName="py-12"
+        closedClassName="py-5"
+        contentClassName="mt-4"
+      >
+        <div className="max-w-2xl mx-auto">
+          <a
+            href={CONTACT_EMAIL_HREF}
+            className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+            aria-label="Email Hunter"
+            title="Email Hunter"
+          >
+            <span className="font-code font-light uppercase tracking-[0.08em] relative z-10">Email me</span>
+          </a>
         </div>
       </CollapsibleSection>
 

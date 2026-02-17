@@ -33,13 +33,19 @@ npm run lighthouse
 
 ## Environment
 
-Add this optional value to `.env.local` to lock resume access:
+Add these optional values to `.env.local`:
 
 ```bash
 RESUME_PASSWORD=your-password
+NEXT_PUBLIC_GTM_ID=GTM-5XJBDKM9
+NEXT_PUBLIC_ENABLE_GTM=true
+NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS=true
+NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS=true
 ```
 
-The resume file is served through `/api/resume/file` only after unlock.
+- `RESUME_PASSWORD` locks the resume file endpoint (`/api/resume/file`) until unlocked.
+- `NEXT_PUBLIC_GTM_ID` overrides the GTM container ID used in production.
+- `NEXT_PUBLIC_ENABLE_GTM`, `NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS`, and `NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS` can be set to `true`/`false` to control telemetry loading in production.
 
 ## Project Layout
 

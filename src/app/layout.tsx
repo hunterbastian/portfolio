@@ -11,6 +11,7 @@ import DialKitRoot from '@/components/DialKitRoot'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
+import { telemetryConfig } from '@/lib/telemetry'
 
 // Primary body font
 const jetbrainsMono = JetBrains_Mono({ 
@@ -63,7 +64,11 @@ export const viewport = {
 
 const faviconVersion = '20260207'
 const brandName = 'Hunter Bastian // Studio Alpine'
-const gtmContainerId = 'GTM-5XJBDKM9'
+const gtmBootstrapScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${telemetryConfig.gtmId}');`
 
 export const metadata: Metadata = {
   title: `${brandName} - Portfolio`,
@@ -125,16 +130,16 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2e3440" />
 
-        {/* Google Tag Manager */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${gtmContainerId}');`,
-          }}
-        />
+        {telemetryConfig.enableGtm && (
+          <>
+            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: gtmBootstrapScript,
+              }}
+            />
+          </>
+        )}
         
         {/* Structured Data - Person Schema for SEO */}
         <script
@@ -162,8 +167,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <meta name="apple-mobile-web-app-title" content="HB Portfolio" />
         
         {/* Resource Hints - Optimized for performance */}
-        <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
-        <link rel="dns-prefetch" href="//analytics.vercel.com" />
+        {telemetryConfig.enableSpeedInsights && (
+          <link rel="dns-prefetch" href="//vitals.vercel-analytics.com" />
+        )}
+        {telemetryConfig.enableVercelAnalytics && (
+          <link rel="dns-prefetch" href="//analytics.vercel.com" />
+        )}
         
         {/* Critical CSS - Inline for faster FCP */}
         <style dangerouslySetInnerHTML={{
@@ -194,14 +203,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }} />
       </head>
                    <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} ${inter.variable} safe-area-padding bg-background text-foreground`}>
-                       <noscript>
-                         <iframe
-                           src={`https://www.googletagmanager.com/ns.html?id=${gtmContainerId}`}
-                           height="0"
-                           width="0"
-                           style={{ display: 'none', visibility: 'hidden' }}
-                         />
-                       </noscript>
+                       {telemetryConfig.enableGtm && (
+                         <noscript>
+                           <iframe
+                             src={`https://www.googletagmanager.com/ns.html?id=${telemetryConfig.gtmId}`}
+                             height="0"
+                             width="0"
+                             style={{ display: 'none', visibility: 'hidden' }}
+                           />
+                         </noscript>
+                       )}
                        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                        <div className="min-h-screen flex flex-col">
                  <Header />
@@ -210,12 +221,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                  </main>
                  <Footer />
                                </div>
-                <SpeedInsights 
-                  sampleRate={1}
-                />
-                <Analytics 
-                  mode={process.env.NODE_ENV === 'production' ? 'production' : 'development'}
-                />
+                {telemetryConfig.enableSpeedInsights && (
+                  <SpeedInsights 
+                    sampleRate={1}
+                  />
+                )}
+                {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
                 {process.env.NODE_ENV === 'development' && <DialKitRoot />}
                 {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                 

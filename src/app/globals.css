@@ -513,23 +513,6 @@ button:active {
   transform: translateY(0);
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: color-mix(in srgb, var(--secondary) 80%, white);
-}
-
-::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--accent) 70%, var(--muted-foreground));
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
-
 ::selection {
   background: rgba(94, 129, 172, 0.28) !important;
   color: inherit;

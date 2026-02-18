@@ -477,7 +477,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const socialRevealDelay = Math.max(0, HERO_ENTRANCE.contactIconsDelay - HERO_ENTRANCE.textItemsDelay)
 
   return (
-    <div className="relative isolate left-1/2 w-screen -translate-x-1/2 overflow-hidden">
+    <div className="relative isolate overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-[-14rem] z-0 h-[30rem] sm:bottom-[-16rem] sm:h-[38rem]"

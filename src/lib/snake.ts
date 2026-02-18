@@ -50,10 +50,13 @@ export function isOppositeDirection(current: SnakeDirection, next: SnakeDirectio
 }
 
 function normalizeConfig(config?: Partial<SnakeConfig>): SnakeConfig {
+  const width = Math.max(4, Math.floor(config?.width ?? DEFAULT_CONFIG.width))
+  const height = Math.max(4, Math.floor(config?.height ?? DEFAULT_CONFIG.height))
+
   return {
-    width: Math.max(4, Math.floor(config?.width ?? DEFAULT_CONFIG.width)),
-    height: Math.max(4, Math.floor(config?.height ?? DEFAULT_CONFIG.height)),
-    initialLength: Math.max(2, Math.floor(config?.initialLength ?? DEFAULT_CONFIG.initialLength)),
+    width,
+    height,
+    initialLength: Math.min(width, Math.max(2, Math.floor(config?.initialLength ?? DEFAULT_CONFIG.initialLength))),
   }
 }
 

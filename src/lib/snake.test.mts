@@ -21,6 +21,21 @@ test('createInitialSnakeGame creates a valid initial state', () => {
   assert.equal(state.snake.some((segment) => arePointsEqual(segment, state.food!)), false)
 })
 
+test('createInitialSnakeGame keeps all initial segments in bounds for oversized lengths', () => {
+  const state = createInitialSnakeGame(() => 0, { width: 4, height: 6, initialLength: 10 })
+
+  assert.equal(
+    state.snake.every(
+      (segment) =>
+        segment.x >= 0 &&
+        segment.y >= 0 &&
+        segment.x < state.config.width &&
+        segment.y < state.config.height,
+    ),
+    true,
+  )
+})
+
 test('setSnakeDirection ignores opposite turns', () => {
   const state = createInitialSnakeGame(() => 0, { width: 8, height: 8, initialLength: 3 })
   const attemptedReverse = setSnakeDirection(state, 'left')

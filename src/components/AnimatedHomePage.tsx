@@ -477,7 +477,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const socialRevealDelay = Math.max(0, HERO_ENTRANCE.contactIconsDelay - HERO_ENTRANCE.textItemsDelay)
 
   return (
-    <div className="relative isolate overflow-hidden">
+    <div className="relative isolate left-1/2 w-screen -translate-x-1/2 overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-[-14rem] z-0 h-[30rem] sm:bottom-[-16rem] sm:h-[38rem]"
@@ -545,7 +545,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <motion.div
-            className="mb-4 rounded-[24px] border border-border/70 bg-card/55 px-4 py-4 shadow-[0_10px_26px_rgba(15,23,42,0.08)] backdrop-blur-md sm:px-5 sm:py-5"
+            className="mb-4 rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -720,7 +720,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <div className="rounded-md border border-border/55 bg-card/30 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-[1px]">
+          <div className="rounded-md border border-[color:color-mix(in_srgb,var(--border)_74%,white)] bg-[linear-gradient(145deg,rgba(162,171,184,0.4),rgba(186,194,206,0.26))] px-4 py-3 shadow-[0_10px_26px_rgba(30,38,54,0.1),inset_0_1px_0_rgba(255,255,255,0.34)] backdrop-blur-[10px] saturate-[1.03]">
             <ul className="space-y-1.5">
               <li>
                 <a

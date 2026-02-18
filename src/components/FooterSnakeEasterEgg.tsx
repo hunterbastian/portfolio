@@ -174,7 +174,7 @@ export default function FooterSnakeEasterEgg() {
           restartGame()
         }}
         className={`group inline-flex h-7 w-7 items-center justify-center border border-current transition-transform duration-150 hover:scale-110 active:scale-95 ${
-          isOpen ? 'bg-black text-white' : 'bg-white text-black'
+          isOpen ? 'bg-[#e8f2fb] text-[#0f1a28]' : 'bg-[#0f1a28] text-[#e8f2fb]'
         }`}
       >
         <span className="grid grid-cols-5 gap-[1px]">

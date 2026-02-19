@@ -514,7 +514,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 alt="Hunter Bastian // Studio Alpine"
                 width={72}
                 height={72}
-                className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
+                className="h-8 w-8 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-9 sm:w-9"
                 priority
               />
             </motion.div>

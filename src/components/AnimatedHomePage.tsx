@@ -306,6 +306,89 @@ function ContactLink({
   )
 }
 
+type Breakpoint = 'mobile' | 'tablet' | 'desktop'
+
+function getBreakpoint(width: number): Breakpoint {
+  if (width >= 1024) return 'desktop'
+  if (width >= 640) return 'tablet'
+  return 'mobile'
+}
+
+function useBreakpointChange() {
+  const [flash, setFlash] = useState(false)
+  const bpRef = useRef<Breakpoint | null>(null)
+
+  useEffect(() => {
+    const initial = getBreakpoint(window.innerWidth)
+    bpRef.current = initial
+
+    const observer = new ResizeObserver(([entry]) => {
+      const next = getBreakpoint(entry.contentRect.width)
+      if (bpRef.current !== null && next !== bpRef.current) {
+        bpRef.current = next
+        setFlash(true)
+        setTimeout(() => setFlash(false), 900)
+      } else {
+        bpRef.current = next
+      }
+    })
+
+    observer.observe(document.documentElement)
+    return () => observer.disconnect()
+  }, [])
+
+  return flash
+}
+
+function CreatingLoader() {
+  const flash = useBreakpointChange()
+  const prefersReducedMotion = useReducedMotion() ?? false
+
+  if (prefersReducedMotion) return null
+
+  return (
+    <AnimatePresence>
+      {flash && (
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-[24px]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          style={{ backdropFilter: 'blur(4px)', background: 'rgba(163,172,186,0.18)' }}
+        >
+          <motion.svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            initial={{ rotate: 0, opacity: 0, scale: 0.7 }}
+            animate={{ rotate: 360, opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.7 }}
+            transition={{
+              rotate: { duration: 0.8, ease: 'linear', repeat: Infinity },
+              opacity: { duration: 0.18 },
+              scale: { duration: 0.22, ease: 'easeOut' },
+            }}
+          >
+            <circle
+              cx="16"
+              cy="16"
+              r="12"
+              stroke="var(--primary)"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeDasharray="56"
+              strokeDashoffset="40"
+              opacity="0.7"
+            />
+          </motion.svg>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 function PomodoroEntry() {
   const [hovered, setHovered] = useState(false)
   return (
@@ -751,7 +834,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4 pb-14"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <div className="rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
+          <div className="relative rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
+            <CreatingLoader />
             <ul className="space-y-2">
               <li className="grid grid-cols-[1fr_auto] items-center gap-3">
                 <a

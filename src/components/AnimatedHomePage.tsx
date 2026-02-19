@@ -324,7 +324,7 @@ function PomodoroEntry() {
         href="https://github.com/hunterbastian/mini-pomodoro"
         target="_blank"
         rel="noopener noreferrer"
-        className="status-pill status-pill-action relative inline-flex h-[26px] min-w-[112px] items-center justify-center overflow-hidden rounded-full px-3 py-1 no-underline"
+        className="status-pill status-pill-action relative inline-flex items-center gap-2 overflow-hidden rounded-full px-3 py-1 no-underline"
         aria-label="View Pomodoro Timer on GitHub"
         title="View on GitHub"
         onMouseEnter={() => setHovered(true)}
@@ -334,7 +334,7 @@ function PomodoroEntry() {
           {hovered ? (
             <motion.span
               key="hover"
-              className="status-pill-label absolute font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
+              className="status-pill-label whitespace-nowrap font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
@@ -345,7 +345,7 @@ function PomodoroEntry() {
           ) : (
             <motion.span
               key="default"
-              className="status-pill-label absolute font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
+              className="status-pill-label whitespace-nowrap font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}

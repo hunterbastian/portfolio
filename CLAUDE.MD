@@ -40,7 +40,7 @@ src/
 │   ├── Footer.tsx
 │   ├── FooterSnakeEasterEgg.tsx
 │   ├── Header.tsx
-│   └── sections/             # Homepage sections
+│   └── ScrollToTop.tsx       # Floating back-to-top button
 ├── lib/
 │   ├── projects.ts           # MDX project loading utilities
 │   ├── motion.ts             # Framer Motion variants
@@ -60,13 +60,15 @@ Create `content/projects/your-project.mdx` with this frontmatter:
 ```mdx
 ---
 title: "Project Title"
+displayTitle: "Override label on card"   # optional
 description: "Short description."
 category: "Mobile Design"
 tags: ["UI Design", "Mobile Design"]
 image: "/images/optimized/projects/your-image.webp"
+video: "/images/projects/hover.mp4"      # optional hover video
 demo: ""
 github: ""
-featured: false
+featured: false                          # true = large card in grid
 date: "2025-01-01"
 ---
 ```
@@ -90,9 +92,17 @@ Fluid sizing via `clamp()` in `tailwind.config.ts`.
 - **MDX errors**: Verify frontmatter fields and component imports; check `src/lib/projects.ts` for loading logic
 - **Performance budget**: `.lighthousebudgets.json` — run `npm run build:analyze` after significant changes
 
+## Color System
+
+Nord dark palette (dark-by-default, no media query needed):
+- `--background: #2e3440` — base canvas
+- `--card: #3b4252` — elevated panels
+- `--primary: #88c0d0` — frost blue accent
+- Light mode via `prefers-color-scheme: light` in `globals.css`
+
 ## Deployment
 
-Vercel, auto-deploys from `master` branch. No required environment variables currently.
+Vercel, auto-deploys from `master` branch. Set `RESUME_PASSWORD` and `NEXT_PUBLIC_GTM_ID` in Vercel environment variables.
 
 ## Git
 

@@ -561,35 +561,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
             style={{ willChange: 'opacity, transform' }}
           >
-            <motion.div
-              className="mb-3 sm:mb-3.5"
-              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-              animate={{
-                opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-              }}
-              transition={{
-                duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
-                ease: STAGGER_PANEL.ease,
-              }}
-            >
-              <a
-                href={HERO_UPDATE_NOTE_HREF}
-                className="status-pill status-pill-action inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5 no-underline"
-                aria-label="Contact Hunter by email"
-                title="Contact Hunter by email"
-              >
-                <span
-                  aria-hidden
-                  className="status-radar-dot h-[11px] w-[11px] rounded-full"
-                />
-                <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground sm:text-[11px]">
-                  {HERO_UPDATE_NOTE}
-                </span>
-              </a>
-            </motion.div>
-
             <motion.p
               className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
@@ -740,15 +711,28 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 </a>
               </li>
               <li>
-                <a
-                  href={CONTACT_EMAIL_HREF}
-                  className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
-                  aria-label="Design Services Open to projects"
-                  title="Design Services Open to projects"
-                >
-                  <span aria-hidden className="text-muted-foreground/70">-</span>
-                  <span>Design Services: Open to projects</span>
-                </a>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={CONTACT_EMAIL_HREF}
+                    className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                    aria-label="Design Services Open to projects"
+                    title="Design Services Open to projects"
+                  >
+                    <span aria-hidden className="text-muted-foreground/70">-</span>
+                    <span>Design Services: Open to projects</span>
+                  </a>
+                  <a
+                    href={HERO_UPDATE_NOTE_HREF}
+                    className="status-pill status-pill-action inline-flex items-center gap-2 rounded-full px-3 py-1 no-underline"
+                    aria-label="Contact Hunter by email"
+                    title="Contact Hunter by email"
+                  >
+                    <span aria-hidden className="status-radar-dot h-[9px] w-[9px] rounded-full" />
+                    <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
+                      {HERO_UPDATE_NOTE}
+                    </span>
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

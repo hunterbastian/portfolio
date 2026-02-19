@@ -302,7 +302,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         }}
       >
         {orderedProjects.map((project, index) => {
-        const isFeaturedCard = project.slug === 'porsche-app'
+        const isFeaturedCard = project.frontmatter.featured ?? false
         const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
         const compactX = baseAngle.x * caseStudyDial.pile.compactSpreadFactor
         const compactRotate = baseAngle.rotate * caseStudyDial.pile.compactSpreadFactor

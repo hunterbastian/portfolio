@@ -5,6 +5,7 @@ import './viewport.css'
 import 'dialkit/styles.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ScrollToTop from '@/components/ScrollToTop'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
 import DialKitRoot from '@/components/DialKitRoot'
@@ -128,7 +129,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#2e3440" />
+        <meta name="theme-color" content="#181c22" />
 
         {telemetryConfig.enableGtm && (
           <>
@@ -188,15 +189,15 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             ::selection {
-              background-color: rgba(94, 129, 172, 0.28) !important;
+              background-color: rgba(232, 168, 74, 0.22) !important;
               color: inherit !important;
             }
             ::-moz-selection {
-              background-color: rgba(94, 129, 172, 0.28) !important;
+              background-color: rgba(232, 168, 74, 0.22) !important;
               color: inherit !important;
             }
             ::-webkit-selection {
-              background-color: rgba(94, 129, 172, 0.28) !important;
+              background-color: rgba(232, 168, 74, 0.22) !important;
               color: inherit !important;
             }
           `
@@ -220,6 +221,7 @@ export default function RootLayout({
                    <PageTransition>{children}</PageTransition>
                  </main>
                  <Footer />
+                 <ScrollToTop />
                                </div>
                 {telemetryConfig.enableSpeedInsights && (
                   <SpeedInsights 

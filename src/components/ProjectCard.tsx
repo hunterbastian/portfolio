@@ -21,7 +21,7 @@ export default function ProjectCard({
   onOpenCaseStudy,
 }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
-  const displayTitle = slug === 'brand-identity-system' ? 'Middle Earth Journey' : frontmatter.title
+  const displayTitle = frontmatter.displayTitle ?? frontmatter.title
 
   return (
     <Link
@@ -69,10 +69,10 @@ export default function ProjectCard({
             onError={() => setImgSrc('/images/placeholder.svg')}
           />
           
-          {/* Video overlay - shown on hover for Porsche App only - Lazy loaded */}
-          {frontmatter.title === "Porsche App" && (
+          {/* Video overlay - shown on hover if project has a video - Lazy loaded */}
+          {frontmatter.video && (
             <video
-              src="/images/projects/porscheapp.mp4"
+              src={frontmatter.video}
               className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-[800ms] ease-out"
               autoPlay
               loop

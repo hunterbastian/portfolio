@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CentralIcon } from '@/icons'
 
 const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
   e.preventDefault()
@@ -109,16 +108,22 @@ export default function Header() {
           <button
             type="button"
             onClick={handleRefreshToTop}
-            className="group inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground transition-colors duration-300 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-            aria-label="Refresh and return to top"
-            title="Refresh and return to top"
+            className="group flex items-baseline gap-1.5 focus-visible:outline-none"
+            aria-label="Return to top"
+            title="Return to top"
           >
-            <CentralIcon
-              name="IconArrowRotateClockwise"
-              size={16}
-              className="h-4 w-4 transition-transform duration-500 group-hover:rotate-180"
-              aria-hidden
-            />
+            <span
+              className="font-code text-[11px] font-medium tracking-[0.14em] uppercase transition-opacity duration-300 group-hover:opacity-100"
+              style={{ color: 'var(--foreground)', opacity: 0.9 }}
+            >
+              HB
+            </span>
+            <span
+              className="font-code text-[9px] tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
+              style={{ color: 'var(--primary)', opacity: 0.72 }}
+            >
+              // Studio Alpine
+            </span>
           </button>
 
           <nav

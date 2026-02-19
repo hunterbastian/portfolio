@@ -9,10 +9,10 @@ interface ArcSigilLoaderProps {
 }
 
 const EXPORT_COLORS = {
-  stroke: '#2e3440',
-  accent: '#5e81ac',
-  background: '#e5e9f0',
-  panel: '#eceff4',
+  stroke: '#d4d8e1',
+  accent: '#e8a84a',
+  background: '#181c22',
+  panel: '#1f2430',
 }
 
 function getSigilGroupMarkup(stroke: string, accent: string) {

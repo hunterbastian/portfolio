@@ -318,7 +318,7 @@ function PomodoroEntry() {
         title="Pomodoro Timer"
       >
         <span aria-hidden className="text-muted-foreground/70">•</span>
-        <span>Pomodoro Timer</span>
+        <span>Pomodoro</span>
       </a>
       <a
         href="https://github.com/hunterbastian/mini-pomodoro"
@@ -351,7 +351,7 @@ function PomodoroEntry() {
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
             >
-              ✦ Pomodoro Timer
+              ⏱ Pomodoro
             </motion.span>
           )}
         </AnimatePresence>
@@ -763,7 +763,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     title="Photography Studio Studio Alpine"
                   >
                     <span aria-hidden className="text-muted-foreground/70">•</span>
-                    <span>Photography Studio — Studio Alpine</span>
+                    <span>Studio Alpine</span>
                   </a>
                   <a
                     href="https://instagram.com/studio.alpine"
@@ -774,7 +774,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     title="Follow Studio Alpine on Instagram"
                   >
                     <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
-                      Follow along
+                      📷 Follow along
                     </span>
                   </a>
                 </div>

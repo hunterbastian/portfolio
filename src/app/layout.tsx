@@ -26,11 +26,11 @@ const jetbrainsMono = JetBrains_Mono({
 // Display serif
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  style: ['italic'],
-  weight: ['600'],
+  style: ['normal', 'italic'],
+  weight: ['400', '600', '700'],
   variable: '--font-playfair',
   display: 'swap',
-  preload: false,
+  preload: true,
   fallback: ['Georgia', 'serif'],
 })
 

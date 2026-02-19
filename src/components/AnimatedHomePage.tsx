@@ -156,6 +156,7 @@ const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
 
 const contactLinks: ContactLinkItem[] = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconName: 'IconInstagram' },
+  { label: 'Threads', href: 'https://threads.net/@studio.alpine', iconName: 'IconThreads' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconName: 'IconLinkedin' },
   { label: 'Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconTwitter' },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconName: 'IconGithub' },
@@ -310,7 +311,7 @@ function PomodoroEntry() {
   return (
     <>
       <a
-        href="https://github.com/hunterbastian/mini-pomodoro"
+        href="https://mini-pomodoro.vercel.app"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
@@ -321,7 +322,7 @@ function PomodoroEntry() {
         <span>Pomodoro</span>
       </a>
       <a
-        href="https://github.com/hunterbastian/mini-pomodoro"
+        href="https://mini-pomodoro.vercel.app"
         target="_blank"
         rel="noopener noreferrer"
         className="status-pill status-pill-action relative inline-flex items-center gap-2 overflow-hidden rounded-full px-3 py-1 no-underline"

@@ -708,7 +708,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     title="Photography Studio Studio Alpine"
                   >
                     <span aria-hidden className="text-muted-foreground/70">-</span>
-                    <span>Photography Studio: Studio Alpine</span>
+                    <span>Photography Studio — Studio Alpine</span>
                   </a>
                   <a
                     href="https://instagram.com/studio.alpine"
@@ -733,7 +733,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     title="Design Services Open to projects"
                   >
                     <span aria-hidden className="text-muted-foreground/70">-</span>
-                    <span>Design Services: Open to projects</span>
+                    <span>Design Services — Open to projects</span>
                   </a>
                   <a
                     href={HERO_UPDATE_NOTE_HREF}
@@ -744,6 +744,36 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     <span aria-hidden className="status-radar-dot h-[9px] w-[9px] rounded-full" />
                     <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
                       {HERO_UPDATE_NOTE}
+                    </span>
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href="https://github.com/hunterbastian/mini-pomodoro"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                    aria-label="Pomodoro Timer Open source project"
+                    title="Pomodoro Timer"
+                  >
+                    <span aria-hidden className="text-muted-foreground/70">-</span>
+                    <span>Pomodoro Timer — Open source</span>
+                  </a>
+                  <a
+                    href="https://github.com/hunterbastian/mini-pomodoro"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="status-pill status-pill-action group/pill inline-flex items-center gap-2 rounded-full px-3 py-1 no-underline"
+                    aria-label="View Pomodoro Timer on GitHub"
+                    title="View on GitHub"
+                  >
+                    <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground group-hover/pill:hidden">
+                      ✦ Pomodoro Timer
+                    </span>
+                    <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground hidden group-hover/pill:inline">
+                      ▶ Play now
                     </span>
                   </a>
                 </div>

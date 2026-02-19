@@ -519,7 +519,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               />
             </motion.div>
             <div className="min-w-0">
-              <h1 className="text-foreground font-playfair font-semibold text-[clamp(1.6rem,6vw,2.6rem)] leading-tight">
+              <h1 className="text-foreground font-playfair font-semibold text-[clamp(1.2rem,3.8vw,1.85rem)] leading-tight whitespace-nowrap">
                 <TextType
                   text={HERO_HEADLINE_TEXT}
                   className="block"
@@ -692,7 +692,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
         closedClassName="pt-5 pb-10"
-        contentClassName="mt-4"
+        contentClassName="mt-4 pb-6"
       >
         <div className="max-w-2xl mx-auto text-left">
           <div className="rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">

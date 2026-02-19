@@ -700,6 +700,33 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <li>
                 <div className="flex flex-wrap items-center gap-3">
                   <a
+                    href="https://instagram.com/studio.alpine"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                    aria-label="Photography Studio Studio Alpine"
+                    title="Photography Studio Studio Alpine"
+                  >
+                    <span aria-hidden className="text-muted-foreground/70">-</span>
+                    <span>Photography Studio: Studio Alpine</span>
+                  </a>
+                  <a
+                    href="https://instagram.com/studio.alpine"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="status-pill status-pill-action inline-flex items-center gap-2 rounded-full px-3 py-1 no-underline"
+                    aria-label="Follow Studio Alpine on Instagram"
+                    title="Follow Studio Alpine on Instagram"
+                  >
+                    <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
+                      Follow along
+                    </span>
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
                     href={CONTACT_EMAIL_HREF}
                     className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
                     aria-label="Design Services Open to projects"

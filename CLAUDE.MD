@@ -91,6 +91,10 @@ Fluid sizing via `clamp()` in `tailwind.config.ts`.
 - **Three.js SSR**: Always use `HeroCanvasWrapper` (not `HeroCanvas` directly) for SSR safety
 - **MDX errors**: Verify frontmatter fields and component imports; check `src/lib/projects.ts` for loading logic
 - **Performance budget**: `.lighthousebudgets.json` — run `npm run build:analyze` after significant changes
+- **`overflow-hidden` clips box shadows**: Framer Motion height-animation wrappers use `overflow-hidden`. Add padding (`pb-6`) to `contentClassName` to create space *inside* the clip boundary so child shadows render.
+- **`CollapsibleSection` shadow clipping**: Use `contentClassName="mt-4 pb-6"` (not outer section padding) to prevent box shadows being clipped by the animation wrapper's `overflow-hidden`.
+- **Hero headline one-line**: Add `whitespace-nowrap` to the `<h1>` in `AnimatedHomePage.tsx:522` to prevent "Hunter Bastian // Studio Alpine" from wrapping.
+- **Profile picture**: `public/images/profilepicture.webp` — 200×200 WebP, 13KB. Regenerate with `sharp` if updating; keep dimensions ≤200px.
 
 ## Color System
 

@@ -785,7 +785,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   title="Design Services Open to projects"
                 >
                   <span aria-hidden className="text-muted-foreground/70">•</span>
-                  <span>Design Services — Open to projects</span>
+                  <span>Design Services</span>
                 </a>
                 <a
                   href={HERO_UPDATE_NOTE_HREF}

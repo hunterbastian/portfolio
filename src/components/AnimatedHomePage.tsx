@@ -350,12 +350,12 @@ function CreatingLoader() {
     <AnimatePresence>
       {flash && (
         <motion.div
-          className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-[24px]"
+          className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
-          style={{ backdropFilter: 'blur(4px)', background: 'rgba(163,172,186,0.18)' }}
+          style={{ backdropFilter: 'blur(6px)', background: 'rgba(233,236,241,0.55)' }}
         >
           <motion.svg
             width="32"
@@ -636,6 +636,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </div>
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
+      <div className="relative">
+      <CreatingLoader />
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
         <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
@@ -834,8 +836,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4 pb-14"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <div className="relative rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
-            <CreatingLoader />
+          <div className="rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
             <ul className="space-y-2">
               <li className="grid grid-cols-[1fr_auto] items-center gap-3">
                 <a
@@ -891,6 +892,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
         </div>
       </CollapsibleSection>
+      </div>
 
       <CollapsibleSection
         id="case-studies"

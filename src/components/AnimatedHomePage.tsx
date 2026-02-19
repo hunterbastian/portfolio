@@ -305,6 +305,61 @@ function ContactLink({
   )
 }
 
+function PomodoroEntry() {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <a
+        href="https://github.com/hunterbastian/mini-pomodoro"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+        aria-label="Pomodoro Timer project"
+        title="Pomodoro Timer"
+      >
+        <span aria-hidden className="text-muted-foreground/70">-</span>
+        <span>Pomodoro Timer</span>
+      </a>
+      <a
+        href="https://github.com/hunterbastian/mini-pomodoro"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="status-pill status-pill-action relative inline-flex h-[26px] min-w-[112px] items-center justify-center overflow-hidden rounded-full px-3 py-1 no-underline"
+        aria-label="View Pomodoro Timer on GitHub"
+        title="View on GitHub"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          {hovered ? (
+            <motion.span
+              key="hover"
+              className="status-pill-label absolute font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+            >
+              ▶ Play now
+            </motion.span>
+          ) : (
+            <motion.span
+              key="default"
+              className="status-pill-label absolute font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+            >
+              ✦ Pomodoro Timer
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </a>
+    </div>
+  )
+}
+
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [showResumePreview, setShowResumePreview] = useState(false)
   const [showResumeModal, setShowResumeModal] = useState(false)
@@ -749,34 +804,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 </div>
               </li>
               <li>
-                <div className="flex flex-wrap items-center gap-3">
-                  <a
-                    href="https://github.com/hunterbastian/mini-pomodoro"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
-                    aria-label="Pomodoro Timer Open source project"
-                    title="Pomodoro Timer"
-                  >
-                    <span aria-hidden className="text-muted-foreground/70">-</span>
-                    <span>Pomodoro Timer — Open source</span>
-                  </a>
-                  <a
-                    href="https://github.com/hunterbastian/mini-pomodoro"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="status-pill status-pill-action group/pill inline-flex items-center gap-2 rounded-full px-3 py-1 no-underline"
-                    aria-label="View Pomodoro Timer on GitHub"
-                    title="View on GitHub"
-                  >
-                    <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground group-hover/pill:hidden">
-                      ✦ Pomodoro Timer
-                    </span>
-                    <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground hidden group-hover/pill:inline">
-                      ▶ Play now
-                    </span>
-                  </a>
-                </div>
+                <PomodoroEntry />
               </li>
             </ul>
           </div>

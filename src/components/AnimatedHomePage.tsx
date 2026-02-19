@@ -692,38 +692,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
         closedClassName="pt-5 pb-10"
-        contentClassName="mt-4 pb-6"
+        contentClassName="mt-4 pb-14"
       >
         <div className="max-w-2xl mx-auto text-left">
           <div className="rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
             <ul className="space-y-1.5">
-              <li>
-                <div className="flex flex-wrap items-center gap-3">
-                  <a
-                    href="https://instagram.com/studio.alpine"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex flex-wrap items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
-                    aria-label="Photography Studio Studio Alpine"
-                    title="Photography Studio Studio Alpine"
-                  >
-                    <span aria-hidden className="text-muted-foreground/70">-</span>
-                    <span>Photography Studio: Studio Alpine</span>
-                  </a>
-                  <a
-                    href="https://instagram.com/studio.alpine"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="status-pill status-pill-action inline-flex items-center gap-2 rounded-full px-3 py-1 no-underline"
-                    aria-label="Follow Studio Alpine on Instagram"
-                    title="Follow Studio Alpine on Instagram"
-                  >
-                    <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
-                      Follow along
-                    </span>
-                  </a>
-                </div>
-              </li>
               <li>
                 <div className="flex flex-wrap items-center gap-3">
                   <a

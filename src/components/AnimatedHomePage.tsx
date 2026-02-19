@@ -724,7 +724,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <div className="rounded-md border border-[color:color-mix(in_srgb,var(--border)_74%,white)] bg-[linear-gradient(145deg,rgba(162,171,184,0.4),rgba(186,194,206,0.26))] px-4 py-3 shadow-[0_10px_26px_rgba(30,38,54,0.1),inset_0_1px_0_rgba(255,255,255,0.34)] backdrop-blur-[10px] saturate-[1.03]">
+          <div className="rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
             <ul className="space-y-1.5">
               <li>
                 <a
@@ -757,7 +757,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="case-studies"
-        title="Case Studies"
+        title="Projects"
         isOpen={sectionOpen.caseStudies}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         className="px-4 sm:px-6 lg:px-0 relative z-10"

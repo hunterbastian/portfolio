@@ -129,7 +129,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#181c22" />
+        <meta name="theme-color" content="#2e3440" />
 
         {telemetryConfig.enableGtm && (
           <>
@@ -185,19 +185,19 @@ export default function RootLayout({
           `
         }} />
         
-        {/* Text selection highlight - Aqua */}
+        {/* Text selection highlight - Nord frost */}
         <style dangerouslySetInnerHTML={{
           __html: `
             ::selection {
-              background-color: rgba(232, 168, 74, 0.22) !important;
+              background-color: rgba(136, 192, 208, 0.28) !important;
               color: inherit !important;
             }
             ::-moz-selection {
-              background-color: rgba(232, 168, 74, 0.22) !important;
+              background-color: rgba(136, 192, 208, 0.28) !important;
               color: inherit !important;
             }
             ::-webkit-selection {
-              background-color: rgba(232, 168, 74, 0.22) !important;
+              background-color: rgba(136, 192, 208, 0.28) !important;
               color: inherit !important;
             }
           `

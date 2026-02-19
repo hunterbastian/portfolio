@@ -3,55 +3,56 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────────────────
- * COLOR SYSTEM — Dark by default, Nord-derived
+ * COLOR SYSTEM — Nord dark, intentionally designed
  *
  * Surface hierarchy (darkest → lightest):
- *   background  #181c22  base canvas
- *   card        #1f2430  elevated panels
- *   card+       #252b38  top-level cards
- *   border      #2e3646  dividers
+ *   background  #2e3440  base canvas  (Nord Polar Night 0)
+ *   card        #3b4252  elevated panels  (Nord Polar Night 1)
+ *   card+       #434c5e  top-level cards  (Nord Polar Night 2)
+ *   border      #4c566a  dividers  (Nord Polar Night 3)
  *
- * Accent: amber #e8a84a — the one warm pop
+ * Primary: #88c0d0 frost blue — the cool anchor
+ * Amber #e8a84a kept for glow effects only
  * ───────────────────────────────────────── */
 
 :root {
-  --background: #181c22;
-  --background-rgb: 24, 28, 34;
-  --card: #1f2430;
-  --card-foreground: #d4d8e1;
-  --foreground: #d4d8e1;
-  --primary: #e8a84a;
-  --primary-foreground: #181c22;
-  --secondary: #252b38;
-  --secondary-foreground: #d4d8e1;
-  --muted: #2e3646;
-  --muted-foreground: #7a8494;
-  --accent: #e8a84a;
-  --accent-foreground: #181c22;
-  --border: #2e3646;
-  --input: #2e3646;
-  --ring: #e8a84a;
+  --background: #2e3440;
+  --background-rgb: 46, 52, 64;
+  --card: #3b4252;
+  --card-foreground: #e5e9f0;
+  --foreground: #e5e9f0;
+  --primary: #88c0d0;
+  --primary-foreground: #2e3440;
+  --secondary: #434c5e;
+  --secondary-foreground: #e5e9f0;
+  --muted: #4c566a;
+  --muted-foreground: #7b88a1;
+  --accent: #88c0d0;
+  --accent-foreground: #2e3440;
+  --border: #4c566a;
+  --input: #4c566a;
+  --ring: #88c0d0;
 }
 
 /* Light mode — intentional, not default */
 @media (prefers-color-scheme: light) {
   :root {
-    --background: #f2f0ec;
-    --background-rgb: 242, 240, 236;
-    --card: #e8e5df;
-    --card-foreground: #1e2128;
-    --foreground: #1e2128;
-    --primary: #c07a20;
-    --primary-foreground: #f2f0ec;
-    --secondary: #dbd8d1;
-    --secondary-foreground: #1e2128;
-    --muted: #dbd8d1;
-    --muted-foreground: #5a5f6b;
-    --accent: #c07a20;
-    --accent-foreground: #f2f0ec;
-    --border: #ccc9c1;
-    --input: #ccc9c1;
-    --ring: #c07a20;
+    --background: #eceff4;
+    --background-rgb: 236, 239, 244;
+    --card: #e5e9f0;
+    --card-foreground: #2e3440;
+    --foreground: #2e3440;
+    --primary: #5e81ac;
+    --primary-foreground: #eceff4;
+    --secondary: #d8dee9;
+    --secondary-foreground: #2e3440;
+    --muted: #d8dee9;
+    --muted-foreground: #4c566a;
+    --accent: #5e81ac;
+    --accent-foreground: #eceff4;
+    --border: #d8dee9;
+    --input: #d8dee9;
+    --ring: #5e81ac;
   }
 }
 
@@ -63,8 +64,8 @@ html {
 body {
   color: var(--foreground);
   background:
-    radial-gradient(circle at 12% 0%, rgba(232, 168, 74, 0.055), transparent 42%),
-    radial-gradient(circle at 86% 10%, rgba(136, 192, 208, 0.045), transparent 38%),
+    radial-gradient(circle at 12% 0%, rgba(136, 192, 208, 0.07), transparent 42%),
+    radial-gradient(circle at 86% 10%, rgba(94, 129, 172, 0.055), transparent 38%),
     var(--background);
   font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono',
     Menlo, monospace;
@@ -103,13 +104,13 @@ body::before {
 
 .text-type-cinematic {
   color: color-mix(in srgb, var(--foreground) 95%, white);
-  text-shadow: 0 0 1px rgba(232, 168, 74, 0.3), 0 0 24px rgba(232, 168, 74, 0.08);
+  text-shadow: 0 0 1px rgba(136, 192, 208, 0.3), 0 0 24px rgba(136, 192, 208, 0.08);
   animation: hud-flicker-in 1300ms ease-out both;
 }
 
 .text-type-cinematic-cursor {
   color: color-mix(in srgb, var(--primary) 88%, white);
-  text-shadow: 0 0 10px rgba(232, 168, 74, 0.5);
+  text-shadow: 0 0 10px rgba(136, 192, 208, 0.5);
 }
 
 @keyframes hud-flicker-in {
@@ -150,9 +151,9 @@ body::before {
   transform: translateY(-50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(232, 168, 74, 0.38) 0%,
-    rgba(232, 168, 74, 0.12) 54%,
-    rgba(232, 168, 74, 0) 84%
+    rgba(136, 192, 208, 0.32) 0%,
+    rgba(136, 192, 208, 0.10) 54%,
+    rgba(136, 192, 208, 0) 84%
   );
   filter: blur(7px);
   opacity: 0.6;
@@ -168,15 +169,15 @@ body::before {
   color: transparent;
   background-image: linear-gradient(
     112deg,
-    rgba(232, 168, 74, 0.12) 6%,
-    rgba(255, 210, 130, 0.72) 45%,
-    rgba(232, 168, 74, 0.16) 84%
+    rgba(136, 192, 208, 0.14) 6%,
+    rgba(197, 228, 236, 0.80) 45%,
+    rgba(136, 192, 208, 0.18) 84%
   );
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   opacity: 0.78;
-  text-shadow: 0 0 10px rgba(232, 168, 74, 0.22);
+  text-shadow: 0 0 10px rgba(136, 192, 208, 0.22);
   transform: translateZ(0);
   animation:
     ambient-word-glow-sheen 5.2s cubic-bezier(0.22, 1, 0.36, 1) infinite,
@@ -270,7 +271,7 @@ body::before {
     0 1px 0 rgba(255, 255, 255, 0.08) inset,
     0 -1px 0 rgba(0, 0, 0, 0.22) inset,
     0 8px 20px rgba(0, 0, 0, 0.28),
-    0 0 0 1px rgba(232, 168, 74, 0.12);
+    0 0 0 1px rgba(136, 192, 208, 0.14);
 }
 
 .status-pill-action:focus-visible {

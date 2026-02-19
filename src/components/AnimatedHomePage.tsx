@@ -23,6 +23,7 @@ interface ExperienceItem {
   company: string
   title: string
   description: string
+  active?: boolean
 }
 
 interface EducationItem {
@@ -84,6 +85,7 @@ const experience: ExperienceItem[] = [
     year: '2026 - Present',
     company: 'Studio Alpine',
     title: 'Founder',
+    active: true,
     description:
       "Founder of Studio Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future.",
   },
@@ -91,6 +93,7 @@ const experience: ExperienceItem[] = [
     year: '2024 - Present',
     company: 'Catapult',
     title: 'Video Producer',
+    active: true,
     description:
       'Produce and edit marketing videos for Catapult products including banner stands, from planning and filming to post-production in Final Cut Pro. Deliver optimized content for YouTube to support marketing campaigns and ensure alignment with brand standards.',
   },
@@ -98,6 +101,7 @@ const experience: ExperienceItem[] = [
     year: '2024 - Present',
     company: 'Utah Valley University',
     title: 'Department Representative',
+    active: true,
     description:
       'Helped new students with internship opportunities, helping design students in the Web Design and Development program, working on ongoing topics and issues within our department. Responsibilities include finding internship opportunities for students and assisting at school sponsored events, as well as content creation for UVU CET social media and marketing.',
   },
@@ -841,7 +845,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                       <span className="w-16 text-xs font-code text-muted-foreground">
                         {job.year}
                       </span>
-                      <span className="font-code font-medium tracking-[0.06em]">
+                      <span className="flex items-center gap-2 font-code font-medium tracking-[0.06em]">
+                        {job.active && (
+                          <span className="relative flex h-2 w-2 shrink-0" aria-label="Currently active">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#a3be8c] opacity-60" />
+                            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#a3be8c]" />
+                          </span>
+                        )}
                         {job.company}
                       </span>
                     </div>

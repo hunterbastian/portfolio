@@ -691,7 +691,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
-        closedClassName="py-5"
+        closedClassName="pt-5 pb-10"
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto text-left">

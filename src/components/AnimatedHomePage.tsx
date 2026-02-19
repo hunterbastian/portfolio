@@ -519,7 +519,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               />
             </motion.div>
             <div className="min-w-0">
-              <h1 className="text-foreground font-playfair font-semibold text-[clamp(0.95rem,4vw,1.53rem)] leading-tight">
+              <h1 className="text-foreground font-playfair font-semibold text-[clamp(1.25rem,5vw,2rem)] leading-tight">
                 <TextType
                   text={HERO_HEADLINE_TEXT}
                   className="block"

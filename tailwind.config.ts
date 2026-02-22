@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
+        'pixel': ['var(--font-press-start)', 'Press Start 2P', 'ui-monospace', 'monospace'],
         'code': ['var(--font-source-code-pro)', 'Source Code Pro', 'ui-monospace', 'monospace'],
         'mono': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
         'sans': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],

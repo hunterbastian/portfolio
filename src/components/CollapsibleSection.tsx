@@ -165,7 +165,7 @@ export default function CollapsibleSection({
   return (
     <section id={id} className={sectionClasses}>
       <div className="relative mx-auto flex min-h-6 w-full max-w-2xl items-center justify-start">
-        <h2 ref={titleRef} className="section-heading m-0 font-code text-sm leading-none" aria-label={title}>
+        <h2 ref={titleRef} className="section-heading m-0 font-pixel text-[9px] leading-none tracking-wider" aria-label={title}>
           <span className="sr-only">{title}</span>
           <span aria-hidden className="inline-flex items-center">
             {titleChars.map((char, index) => (

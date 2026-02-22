@@ -401,14 +401,14 @@ function PomodoroEntry() {
         aria-label="Pomodoro Timer project"
         title="Pomodoro Timer"
       >
-        <span aria-hidden className="text-muted-foreground/70">•</span>
+        <span aria-hidden className="text-muted-foreground/70">▸</span>
         <span>Pomodoro</span>
       </a>
       <a
         href="https://mini-pomodoro.vercel.app"
         target="_blank"
         rel="noopener noreferrer"
-        className="status-pill status-pill-action relative inline-flex items-center gap-2 overflow-hidden rounded-full px-3 py-1 no-underline"
+        className="status-pill status-pill-action relative inline-flex items-center gap-2 overflow-hidden rounded-[6px] px-3 py-1 no-underline"
         aria-label="View Pomodoro Timer on GitHub"
         title="View on GitHub"
         onMouseEnter={() => setHovered(true)}
@@ -655,7 +655,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 alt="Hunter Bastian // Studio Alpine"
                 width={72}
                 height={72}
-                className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
+                className="h-16 w-16 shrink-0 rounded-full border-2 border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
+                style={{ imageRendering: 'pixelated' }}
                 priority
               />
             </motion.div>
@@ -690,7 +691,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <motion.div
-            className="mb-4 rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5"
+            className="mb-4 rounded-[10px] border-2 border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[4px_4px_0px_rgba(30,38,54,0.18),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -836,7 +837,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4 pb-14"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <div className="rounded-[24px] border border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[0_16px_40px_rgba(30,38,54,0.14),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
+          <div className="rounded-[10px] border-2 border-[color:color-mix(in_srgb,var(--border)_90%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[4px_4px_0px_rgba(30,38,54,0.18),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
             <ul className="space-y-2">
               <li className="grid grid-cols-[1fr_auto] items-center gap-3">
                 <a
@@ -847,14 +848,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   aria-label="Photography Studio Studio Alpine"
                   title="Photography Studio Studio Alpine"
                 >
-                  <span aria-hidden className="text-muted-foreground/70">•</span>
+                  <span aria-hidden className="text-muted-foreground/70">▸</span>
                   <span>Studio Alpine</span>
                 </a>
                 <a
                   href="https://instagram.com/studio.alpine"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="status-pill status-pill-action inline-flex items-center gap-2 rounded-full px-3 py-1 no-underline"
+                  className="status-pill status-pill-action inline-flex items-center gap-2 rounded-[6px] px-3 py-1 no-underline"
                   aria-label="Follow Studio Alpine on Instagram"
                   title="Follow Studio Alpine on Instagram"
                 >
@@ -870,12 +871,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   aria-label="Design Services Open to projects"
                   title="Design Services Open to projects"
                 >
-                  <span aria-hidden className="text-muted-foreground/70">•</span>
+                  <span aria-hidden className="text-muted-foreground/70">▸</span>
                   <span>Design Services</span>
                 </a>
                 <a
                   href={HERO_UPDATE_NOTE_HREF}
-                  className="status-pill status-pill-action inline-flex items-center gap-2 rounded-full px-3 py-1 no-underline"
+                  className="status-pill status-pill-action inline-flex items-center gap-2 rounded-[6px] px-3 py-1 no-underline"
                   aria-label="Contact Hunter by email"
                   title="Contact Hunter by email"
                 >

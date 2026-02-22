@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Playfair_Display, Source_Code_Pro } from 'next/font/google'
+import { Inter, JetBrains_Mono, Playfair_Display, Press_Start_2P, Source_Code_Pro } from 'next/font/google'
 import './globals.css'
 import './viewport.css'
 import 'dialkit/styles.css'
@@ -40,6 +40,16 @@ const sourceCodePro = Source_Code_Pro({
   subsets: ['latin'],
   weight: ['400', '500'],
   variable: '--font-source-code-pro',
+  display: 'swap',
+  preload: false,
+  fallback: ['ui-monospace', 'monospace'],
+})
+
+// 32-bit pixel font for section labels
+const pressStart2P = Press_Start_2P({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-press-start',
   display: 'swap',
   preload: false,
   fallback: ['ui-monospace', 'monospace'],
@@ -203,7 +213,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-                   <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} ${inter.variable} safe-area-padding bg-background text-foreground`}>
+                   <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} ${inter.variable} ${pressStart2P.variable} safe-area-padding bg-background text-foreground`}>
                        {telemetryConfig.enableGtm && (
                          <noscript>
                            <iframe

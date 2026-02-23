@@ -151,7 +151,18 @@ export default function RootLayout({
             />
           </>
         )}
-        
+
+        {telemetryConfig.enableGa && telemetryConfig.gaId && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${telemetryConfig.gaId}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${telemetryConfig.gaId}');`,
+              }}
+            />
+          </>
+        )}
+
         {/* Structured Data - Person Schema for SEO */}
         <script
           type="application/ld+json"

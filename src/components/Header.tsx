@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { getLenisInstance } from '@/lib/lenis'
 
 const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
   e.preventDefault()
@@ -8,11 +9,18 @@ const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string
   if (target) {
     window.dispatchEvent(new CustomEvent('hb:section-navigate', { detail: { href } }))
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const scrollToTarget = () =>
+    const lenis = getLenisInstance()
+    const scrollToTarget = () => {
+      if (!prefersReducedMotion && lenis) {
+        lenis.scrollTo(target as HTMLElement)
+        return
+      }
+
       target.scrollIntoView({
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
         block: 'start',
       })
+    }
 
     if (prefersReducedMotion) {
       scrollToTarget()

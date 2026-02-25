@@ -9,6 +9,7 @@ import ScrollToTop from '@/components/ScrollToTop'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
 import DialKitRoot from '@/components/DialKitRoot'
+import SmoothScroll from '@/components/SmoothScroll'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
@@ -175,45 +176,47 @@ export default function RootLayout({
         }} />
       </head>
                    <body className={`${inter.className} ${jetbrainsMono.variable} safe-area-padding bg-background text-foreground`}>
-                       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
-                       <div className="min-h-screen flex flex-col">
-                 <Header />
-                 <main id="main-content" role="main" className="flex-1">
-                   <PageTransition>{children}</PageTransition>
-                 </main>
-                 <Footer />
-                 <ScrollToTop />
-                               </div>
-                {telemetryConfig.enableSpeedInsights && (
-                  <SpeedInsights 
-                    sampleRate={1}
-                  />
-                )}
-                {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
-                {process.env.NODE_ENV === 'development' && <DialKitRoot />}
-                {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
-                
-                {/* Service Worker Registration - Deferred for better performance */}
-                {process.env.NODE_ENV === 'production' && (
-                  <Script 
-                    id="sw-registration" 
-                    strategy="lazyOnload"
-                  >
-                    {`
-                      if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
-                        requestIdleCallback(function() {
-                          navigator.serviceWorker.register('/sw.js')
-                            .then(function(registration) {
-                              console.log('SW registered: ', registration);
-                            })
-                            .catch(function(registrationError) {
-                              console.log('SW registration failed: ', registrationError);
-                            });
-                        }, { timeout: 5000 });
-                      }
-                    `}
-                  </Script>
-                )}
+                <SmoothScroll>
+                  <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
+                  <div className="min-h-screen flex flex-col">
+                    <Header />
+                    <main id="main-content" role="main" className="flex-1">
+                      <PageTransition>{children}</PageTransition>
+                    </main>
+                    <Footer />
+                    <ScrollToTop />
+                  </div>
+                  {telemetryConfig.enableSpeedInsights && (
+                    <SpeedInsights 
+                      sampleRate={1}
+                    />
+                  )}
+                  {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
+                  {process.env.NODE_ENV === 'development' && <DialKitRoot />}
+                  {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
+                  
+                  {/* Service Worker Registration - Deferred for better performance */}
+                  {process.env.NODE_ENV === 'production' && (
+                    <Script 
+                      id="sw-registration" 
+                      strategy="lazyOnload"
+                    >
+                      {`
+                        if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
+                          requestIdleCallback(function() {
+                            navigator.serviceWorker.register('/sw.js')
+                              .then(function(registration) {
+                                console.log('SW registered: ', registration);
+                              })
+                              .catch(function(registrationError) {
+                                console.log('SW registration failed: ', registrationError);
+                              });
+                          }, { timeout: 5000 });
+                        }
+                      `}
+                    </Script>
+                  )}
+                </SmoothScroll>
               </body>
             </html>
           )

@@ -390,7 +390,6 @@ function PomodoroEntry() {
         aria-label="Pomodoro Timer project"
         title="Pomodoro Timer"
       >
-        <span aria-hidden className="text-muted-foreground/70">▸</span>
         <span>Pomodoro</span>
       </a>
       <a
@@ -838,7 +837,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   aria-label="Photography Studio Studio Alpine"
                   title="Photography Studio Studio Alpine"
                 >
-                  <span aria-hidden className="text-muted-foreground/70">▸</span>
                   <span>Studio Alpine</span>
                 </a>
                 <a
@@ -861,7 +859,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   aria-label="Design Services Open to projects"
                   title="Design Services Open to projects"
                 >
-                  <span aria-hidden className="text-muted-foreground/70">▸</span>
                   <span>Design Services</span>
                 </a>
                 <a

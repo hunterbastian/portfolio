@@ -822,8 +822,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
-        closedClassName="pt-5 pb-10"
-        contentClassName="mt-4 pb-14"
+        closedClassName="py-5"
+        contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto text-left">
           <div className="rounded-md border border-border bg-card px-4 py-4 sm:px-5 sm:py-5">
@@ -889,8 +889,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         onToggle={() => toggleSection('caseStudies')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="pt-12 pb-12"
-        closedClassName="pt-5 pb-5"
+        openClassName="py-12"
+        closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
         <div className="mx-auto max-w-4xl rounded-[22px] border border-border/45 bg-card/30 px-3 py-5 sm:px-5 sm:py-6">

@@ -402,7 +402,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             onClick={closeCaseStudyOverlay}
           >
             <motion.div
-              className="absolute inset-0 bg-[rgba(15,20,30,0.52)]"
+              className="absolute inset-0 bg-[rgba(15,15,15,0.6)] backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -412,33 +412,28 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               role="dialog"
               aria-modal="true"
               aria-label={`${activeCaseStudy.frontmatter.title} case study`}
-              className="relative z-10 flex h-[min(88vh,960px)] w-full max-w-6xl flex-col overflow-hidden rounded-md border border-[var(--border)] bg-[var(--card)] shadow-[0_36px_110px_rgba(12,18,28,0.34)]"
+              className="relative z-10 flex h-[min(92vh,1080px)] w-full max-w-4xl flex-col overflow-hidden rounded-md border border-[var(--border)] bg-[var(--background)] shadow-xl"
               initial={{ opacity: 0, y: 22, scale: 0.985 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.99 }}
               transition={{ duration: 0.28, ease: CARD_STAGGER_PANEL.ease }}
               onClick={(event) => event.stopPropagation()}
             >
-              <header className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3 sm:px-5">
-                <div className="min-w-0">
-                  <p className="truncate font-sans text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-                    Case Study
-                  </p>
-                  <h2 className="truncate text-sm font-semibold text-foreground sm:text-base">{activeCaseStudy.frontmatter.title}</h2>
-                </div>
+              <header className="flex items-center justify-between border-b border-border/50 px-4 py-3 sm:px-5">
+                <h2 className="truncate font-sans text-sm font-medium text-foreground">{activeCaseStudy.frontmatter.title}</h2>
                 <button
                   type="button"
                   onClick={closeCaseStudyOverlay}
-                  className="nord-button inline-flex h-8 w-8 items-center justify-center rounded-full text-foreground/80 transition-colors hover:text-foreground"
-                  aria-label="Close case study"
+                  className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  aria-label="Close"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </header>
 
-              <div className="h-full w-full bg-background/70">
+              <div className="h-full w-full bg-[var(--background)]">
                 <iframe
                   src={`/projects/${activeCaseStudy.slug}#main-content`}
                   className="h-full w-full border-0"

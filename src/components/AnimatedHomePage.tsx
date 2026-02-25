@@ -4,8 +4,15 @@ import dynamic from 'next/dynamic'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
 import { useDialKit } from 'dialkit'
 import Image from 'next/image'
-import type { CSSProperties, ReactNode } from 'react'
+import type { ComponentType, CSSProperties, ReactNode } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  IconGithub,
+  IconInstagram,
+  IconLinkedin,
+  IconThreads,
+  type IconProps as NucleoIconProps,
+} from 'nucleo-social-media'
 import { CentralIcon, type CentralIconName } from '@/icons'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import ResumePreview from './ResumePreview'
@@ -37,7 +44,8 @@ interface EducationItem {
 interface ContactLinkItem {
   label: string
   href: string
-  iconName: CentralIconName
+  iconComponent?: ComponentType<NucleoIconProps>
+  iconName?: CentralIconName
 }
 
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'techStack' | 'contact'
@@ -144,11 +152,11 @@ const education: EducationItem[] = [
 const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
 
 const contactLinks: ContactLinkItem[] = [
-  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconName: 'IconInstagram' },
-  { label: 'Threads', href: 'https://threads.net/@studio.alpine', iconName: 'IconThreads' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconName: 'IconLinkedin' },
+  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconComponent: IconInstagram },
+  { label: 'Threads', href: 'https://threads.net/@studio.alpine', iconComponent: IconThreads },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconComponent: IconLinkedin },
   { label: 'Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconTwitter' },
-  { label: 'GitHub', href: 'https://github.com/hunterbastian', iconName: 'IconGithub' },
+  { label: 'GitHub', href: 'https://github.com/hunterbastian', iconComponent: IconGithub },
 ]
 
 const resumeIconName: CentralIconName = 'IconFileText'
@@ -214,7 +222,7 @@ const SOCIAL_ICON_DIAL_DEFAULTS = {
   glowColor: 'transparent',
   baseOpacity: 1,
   hoverOpacity: 1,
-  iconBaseOpacity: 0.92,
+  iconBaseOpacity: 1,
   iconHoverOpacity: 1,
   hoverScale: 1.04,
   iconHoverScale: 1.05,
@@ -248,17 +256,23 @@ function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotio
 }
 
 function ContactIcon({
+  iconComponent: IconComponent,
   iconName,
   label,
   className = 'h-5 w-5',
   style,
 }: {
-  iconName: CentralIconName
+  iconComponent?: ComponentType<NucleoIconProps>
+  iconName?: CentralIconName
   label: string
   className?: string
   style?: CSSProperties
 }) {
-  return <CentralIcon name={iconName} size={20} className={className} style={style} aria-label={label} />
+  if (IconComponent) {
+    return <IconComponent size={20} className={className} style={style} aria-label={label} />
+  }
+
+  return <CentralIcon name={iconName ?? resumeIconName} size={20} className={className} style={style} aria-label={label} />
 }
 
 function ContactLink({
@@ -290,7 +304,13 @@ function ContactLink({
       onFocus={onHoverStart}
       onBlur={onHoverEnd}
     >
-      <ContactIcon iconName={link.iconName} label={link.label} className={contactIconGlyphClassName} style={iconStyle} />
+      <ContactIcon
+        iconComponent={link.iconComponent}
+        iconName={link.iconName}
+        label={link.label}
+        className={contactIconGlyphClassName}
+        style={iconStyle}
+      />
     </a>
   )
 }
@@ -832,6 +852,27 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             <ul className="space-y-2">
               <li className="grid grid-cols-[1fr_auto] items-center gap-3">
                 <a
+                  href={CONTACT_EMAIL_HREF}
+                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                  aria-label="Sometimes open for a Design Project"
+                  title="Sometimes open for a Design Project"
+                >
+                  <span>Sometimes open for a Design Project</span>
+                </a>
+                <a
+                  href={HERO_UPDATE_NOTE_HREF}
+                  className="status-pill status-pill-action inline-flex items-center gap-2 rounded-[6px] px-3 py-1 no-underline"
+                  aria-label="Contact Hunter by email"
+                  title="Contact Hunter by email"
+                >
+                  <span aria-hidden className="status-radar-dot h-[9px] w-[9px] rounded-full" />
+                  <span className="status-pill-label font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
+                    {HERO_UPDATE_NOTE}
+                  </span>
+                </a>
+              </li>
+              <li className="grid grid-cols-[1fr_auto] items-center gap-3">
+                <a
                   href="https://instagram.com/studio.alpine"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -853,30 +894,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     📷 Follow along
                   </span>
                 </a>
-              </li>
-              <li className="grid grid-cols-[1fr_auto] items-center gap-3">
-                <a
-                  href={CONTACT_EMAIL_HREF}
-                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
-                  aria-label="Design Services Open to projects"
-                  title="Design Services Open to projects"
-                >
-                  <span>Design Services</span>
-                </a>
-                <a
-                  href={HERO_UPDATE_NOTE_HREF}
-                  className="status-pill status-pill-action inline-flex items-center gap-2 rounded-[6px] px-3 py-1 no-underline"
-                  aria-label="Contact Hunter by email"
-                  title="Contact Hunter by email"
-                >
-                  <span aria-hidden className="status-radar-dot h-[9px] w-[9px] rounded-full" />
-                  <span className="status-pill-label font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
-                    {HERO_UPDATE_NOTE}
-                  </span>
-                </a>
-              </li>
-              <li className="grid grid-cols-[1fr_auto] items-center gap-3">
-                <PomodoroEntry />
               </li>
             </ul>
           </div>

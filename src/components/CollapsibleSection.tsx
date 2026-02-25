@@ -1,13 +1,14 @@
 'use client'
 
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
-import { Children, isValidElement, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface CollapsibleSectionProps {
   id: string
   title: string
   isOpen: boolean
+  onToggle?: () => void
   children: ReactNode
   className?: string
   openClassName?: string
@@ -50,35 +51,25 @@ const SECTION_ROW = {
 }
 
 /* ─────────────────────────────────────────────────────────
- * LABEL RHYTHM STORYBOARD
- *
- * Read top-to-bottom. Each `at` value is ms after label enters view.
- *
- *    0ms   waiting for heading in-view
- *   60ms   first character appears
- *  200ms   remaining characters reveal (staggered 22ms)
+ * LABEL ENTRANCE — simple fade-in (Notion-style)
  * ───────────────────────────────────────────────────────── */
 
 const LABEL_TIMING = {
   start: 72, // heading label reveal starts
-  charDuration: 260, // each character transition duration
-  charStagger: 24, // stagger gap between characters
+  duration: 320, // fade-in duration
 }
 
-const LABEL_CHAR = {
-  initialOpacity: 0, // hidden character before reveal
-  finalOpacity: 1, // visible character at rest
-  initialY: 8, // vertical offset before reveal
-  finalY: 0, // resting character position
-  initialScale: 0.96, // slight size dip before reveal
-  finalScale: 1, // resting size
-  ease: MOTION_EASE_STANDARD,
+const TOGGLE_ARROW = {
+  closedRotate: 0, // ▸ pointing right
+  openRotate: 90, // ▾ pointing down
+  duration: 200, // rotate transition ms
 }
 
 export default function CollapsibleSection({
   id,
   title,
   isOpen,
+  onToggle,
   children,
   className,
   openClassName,
@@ -104,7 +95,6 @@ export default function CollapsibleSection({
   const rowStagger = motionDelayMs(SECTION_TIMING.rowStagger, prefersReducedMotion)
   const contentPanelClassName = contentClassName ?? ''
   const contentItems = Children.toArray(children)
-  const titleChars = useMemo(() => Array.from(title.toUpperCase()), [title])
   const sectionClasses = [className, isOpen ? openClassName : closedClassName, 'performance-section transition-[padding] duration-300']
     .filter(Boolean)
     .join(' ')
@@ -153,42 +143,61 @@ export default function CollapsibleSection({
       return
     }
 
-    const initialDelay = hasPlayedTitleEntranceRef.current ? 0 : initialLoadDelayMs
+    if (hasPlayedTitleEntranceRef.current) {
+      setTitleStage(1)
+      return
+    }
+
     setTitleStage(0)
     const timer = setTimeout(() => {
       setTitleStage(1)
       hasPlayedTitleEntranceRef.current = true
-    }, initialDelay + LABEL_TIMING.start)
+    }, initialLoadDelayMs + LABEL_TIMING.start)
     return () => clearTimeout(timer)
   }, [initialLoadDelayMs, isTitleInView, prefersReducedMotion, title])
 
   return (
     <section id={id} className={sectionClasses}>
       <div className="relative mx-auto flex min-h-6 w-full max-w-2xl items-center justify-start">
-        <h2 ref={titleRef} className="section-heading m-0 font-pixel text-[9px] leading-none tracking-wider" aria-label={title}>
-          <span className="sr-only">{title}</span>
-          <span aria-hidden className="inline-flex items-center">
-            {titleChars.map((char, index) => (
+        <motion.h2
+          ref={titleRef}
+          className="section-heading m-0 font-inter text-[13px] leading-none tracking-[0.08em]"
+          initial={false}
+          animate={{
+            opacity: titleStage >= 1 ? 1 : 0,
+            y: titleStage >= 1 ? 0 : 6,
+          }}
+          transition={{
+            duration: motionDurationMs(LABEL_TIMING.duration, prefersReducedMotion),
+            ease: MOTION_EASE_STANDARD,
+          }}
+        >
+          {onToggle ? (
+            <button
+              type="button"
+              onClick={onToggle}
+              className="inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-none p-0 m-0 font-inter text-[13px] tracking-[0.08em] uppercase hover:opacity-80 transition-opacity duration-200"
+              aria-expanded={isOpen}
+              aria-controls={contentId}
+            >
               <motion.span
-                key={`${id}-label-char-${index}`}
-                className="inline-block whitespace-pre"
-                initial={false}
-                animate={{
-                  opacity: titleStage >= 1 ? LABEL_CHAR.finalOpacity : LABEL_CHAR.initialOpacity,
-                  y: titleStage >= 1 ? LABEL_CHAR.finalY : LABEL_CHAR.initialY,
-                  scale: titleStage >= 1 ? LABEL_CHAR.finalScale : LABEL_CHAR.initialScale,
-                }}
+                aria-hidden
+                className="inline-block text-[11px] leading-none"
+                animate={{ rotate: isOpen ? TOGGLE_ARROW.openRotate : TOGGLE_ARROW.closedRotate }}
                 transition={{
-                  duration: motionDurationMs(LABEL_TIMING.charDuration, prefersReducedMotion),
-                  delay: titleStage >= 1 ? motionDelayMs(index * LABEL_TIMING.charStagger, prefersReducedMotion) : 0,
-                  ease: LABEL_CHAR.ease,
+                  duration: motionDurationMs(TOGGLE_ARROW.duration, prefersReducedMotion),
+                  ease: MOTION_EASE_STANDARD,
                 }}
+                style={{ originX: '50%', originY: '50%' }}
               >
-                {char}
+                ▸
               </motion.span>
-            ))}
-          </span>
-        </h2>
+              {title}
+            </button>
+          ) : (
+            title
+          )}
+        </motion.h2>
       </div>
 
       <AnimatePresence initial={false}>

@@ -75,11 +75,6 @@ export const viewport = {
 
 const faviconVersion = '20260207'
 const brandName = 'Hunter Bastian // Studio Alpine'
-const gtmBootstrapScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${telemetryConfig.gtmId}');`
 
 export const metadata: Metadata = {
   title: `${brandName} - Portfolio`,
@@ -141,19 +136,9 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2e3440" />
 
-        {telemetryConfig.enableGtm && (
-          <>
-            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: gtmBootstrapScript,
-              }}
-            />
-          </>
-        )}
-
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <>
+            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${telemetryConfig.gaId}`} />
             <script
               dangerouslySetInnerHTML={{
@@ -225,16 +210,6 @@ export default function RootLayout({
         }} />
       </head>
                    <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} ${inter.variable} ${pressStart2P.variable} safe-area-padding bg-background text-foreground`}>
-                       {telemetryConfig.enableGtm && (
-                         <noscript>
-                           <iframe
-                             src={`https://www.googletagmanager.com/ns.html?id=${telemetryConfig.gtmId}`}
-                             height="0"
-                             width="0"
-                             style={{ display: 'none', visibility: 'hidden' }}
-                           />
-                         </noscript>
-                       )}
                        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                        <div className="min-h-screen flex flex-col">
                  <Header />

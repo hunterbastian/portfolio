@@ -22,9 +22,7 @@ const parseBooleanEnv = (value: string | undefined, defaultValue: boolean): bool
 const isProduction = process.env.NODE_ENV === 'production'
 
 export const telemetryConfig = {
-  gtmId: process.env.NEXT_PUBLIC_GTM_ID?.trim() || '',
   gaId: process.env.NEXT_PUBLIC_GA_ID?.trim() || '',
-  enableGtm: isProduction && parseBooleanEnv(process.env.NEXT_PUBLIC_ENABLE_GTM, true),
   enableGa: isProduction && parseBooleanEnv(process.env.NEXT_PUBLIC_ENABLE_GA, true),
   enableVercelAnalytics: isProduction && parseBooleanEnv(process.env.NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS, true),
   enableSpeedInsights: isProduction && parseBooleanEnv(process.env.NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS, true),

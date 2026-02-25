@@ -98,6 +98,8 @@ const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
   nutricost: { rotate: -2.8, x: -5 },
 }
 
+const MOBILE_TILT_FACTOR = 0.48
+
 export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
   const [stage, setStage] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
@@ -306,8 +308,9 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
         const compactX = baseAngle.x * caseStudyDial.pile.compactSpreadFactor
         const compactRotate = baseAngle.rotate * caseStudyDial.pile.compactSpreadFactor
-        const targetX = baseAngle.x * layoutSpreadFactor
-        const targetRotate = baseAngle.rotate * layoutSpreadFactor
+        const mobileDampen = supportsHover ? 1 : MOBILE_TILT_FACTOR
+        const targetX = baseAngle.x * layoutSpreadFactor * mobileDampen
+        const targetRotate = baseAngle.rotate * layoutSpreadFactor * mobileDampen
         const targetScale = isExpandedLayout ? caseStudyDial.expanded.scale : caseStudyDial.pile.compactScale
         const isHovered = hoveredIndex === index
         const hasHoverTarget = hoveredIndex !== null

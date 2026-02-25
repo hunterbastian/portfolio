@@ -152,7 +152,7 @@ const contactLinks: ContactLinkItem[] = [
 ]
 
 const resumeIconName: CentralIconName = 'IconFileText'
-const HERO_HEADLINE_TEXT = 'Hunter Bastian // Studio Alpine'
+const HERO_HEADLINE_TEXT = 'Hunter Bastian | Studio Alpine'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
 const HERO_UPDATE_NOTE = 'Accepting new clients'
 const CONTACT_EMAIL_HREF = 'mailto:hunterbastianwork@gmail.com?subject=Project%20Inquiry'
@@ -641,7 +641,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             >
               <Image
                 src="/images/profilepicture.jpg"
-                alt="Hunter Bastian // Studio Alpine"
+                alt="Hunter Bastian | Studio Alpine"
                 width={72}
                 height={72}
                 className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
@@ -704,7 +704,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              Interaction Design student at UVU with experience designing and building digital products. I focus on clear,
+              Interaction Design student and{' '}
+              <span className="ambient-word-glow font-semibold" data-glow="Department Representative">Department Representative</span>{' '}
+              at UVU with experience designing and building digital products. I focus on clear,
               meaningful interfaces with an AI-first mindset while growing{' '}
               <span className="ambient-word-glow font-semibold" data-glow="Studio Alpine">Studio Alpine</span>.
             </motion.p>

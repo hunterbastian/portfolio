@@ -265,7 +265,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     <>
       <motion.div
         ref={gridRef}
-        className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-3"
+        className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-6"
         onMouseEnter={() => {
           if (supportsHover) {
             setIsGridHovered(true)
@@ -306,6 +306,11 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         {orderedProjects.map((project, index) => {
         const isFeaturedCard = project.frontmatter.featured ?? false
         const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
+        const itemsInLastRow = orderedProjects.length % 3 || 3
+        const lastRowStartIndex = orderedProjects.length - itemsInLastRow
+        const mdColStart = index === lastRowStartIndex && itemsInLastRow < 3
+          ? (3 - itemsInLastRow) + 1
+          : undefined
         const compactX = baseAngle.x * caseStudyDial.pile.compactSpreadFactor
         const compactRotate = baseAngle.rotate * caseStudyDial.pile.compactSpreadFactor
         const mobileDampen = supportsHover ? 1 : MOBILE_TILT_FACTOR
@@ -320,7 +325,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         return (
           <motion.div
             key={project.slug}
-            className="w-full transition-[transform,opacity] duration-[430ms]"
+            className={`w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]${mdColStart === 2 ? ' md:col-start-2' : mdColStart === 3 ? ' md:col-start-3' : ''}`}
             style={{
               zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
             }}

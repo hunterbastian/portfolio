@@ -40,7 +40,7 @@ interface ContactLinkItem {
   iconName: CentralIconName
 }
 
-type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'everydayTech' | 'techStack' | 'contact'
+type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'techStack' | 'contact'
 type SectionOpenState = Record<SectionKey, boolean>
 
 interface SectionNavigateDetail {
@@ -54,7 +54,6 @@ const DEFAULT_SECTION_OPEN_STATE: SectionOpenState = {
   caseStudies: true,
   experience: true,
   education: true,
-  everydayTech: true,
   techStack: true,
   contact: true,
 }
@@ -64,7 +63,6 @@ const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
   '#case-studies': 'caseStudies',
   '#experience': 'experience',
   '#education': 'education',
-  '#everyday-tech': 'everydayTech',
   '#tech-stack': 'techStack',
   '#contact': 'contact',
 }
@@ -141,15 +139,6 @@ const education: EducationItem[] = [
     degree: 'IT Support Professional Certificate',
     level: 'Issued in 2021',
   },
-]
-
-const everydayTech = [
-  'iPhone 15 Pro Natural Titanium',
-  'MacBook Air 15" M2 Starlight',
-  'Apple Trackpad & Logitech G502',
-  'AirPods Pro 2',
-  'IKEA Desk',
-  'Apple Watch',
 ]
 
 const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
@@ -457,17 +446,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const resumePreviewHideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const experiencePanelRef = useRef<HTMLDivElement>(null)
   const educationPanelRef = useRef<HTMLDivElement>(null)
-  const everydayPanelRef = useRef<HTMLDivElement>(null)
   const stackPanelRef = useRef<HTMLDivElement>(null)
 
   const isExperienceInView = useInView(experiencePanelRef, { once: true, margin: '-120px 0px -120px 0px' })
   const isEducationInView = useInView(educationPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
-  const isEverydayInView = useInView(everydayPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
   const isStackInView = useInView(stackPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
 
   const experienceStage = useSectionStage(sectionOpen.experience, isExperienceInView, prefersReducedMotion)
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
-  const everydayStage = useSectionStage(sectionOpen.everydayTech, isEverydayInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
 
   const socialIconDial = useDialKit('Social Icon Lab', {
@@ -1082,58 +1068,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     )}
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </CollapsibleSection>
-
-      <CollapsibleSection
-        id="everyday-tech"
-        title="Everyday Tech"
-        isOpen={sectionOpen.everydayTech}
-        onToggle={() => toggleSection('everydayTech')}
-        className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-10"
-        closedClassName="py-5"
-        contentClassName="mt-4"
-      >
-        <div className="max-w-2xl mx-auto">
-          <motion.div
-            ref={everydayPanelRef}
-            className="flex flex-wrap justify-start gap-x-8 gap-y-4"
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
-            animate={{
-              opacity: everydayStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
-              y: everydayStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-            }}
-            transition={{
-              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
-              ease: STAGGER_PANEL.ease,
-            }}
-          >
-            {everydayTech.map((item, index) => (
-              <motion.div
-                key={item}
-                className="text-left"
-                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                animate={{
-                  opacity: everydayStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                  y: everydayStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                }}
-                transition={{
-                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                  delay: everydayStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
-                  ease: STAGGER_PANEL.ease,
-                }}
-              >
-                <span
-                  className={`text-sm font-sans tracking-[0.08em] uppercase font-medium ${
-                    item.startsWith('Wishlist:') ? 'text-primary' : 'text-muted-foreground'
-                  }`}
-                >
-                  {item}
-                </span>
               </motion.div>
             ))}
           </motion.div>

@@ -37,17 +37,12 @@ export default function ProjectCard({
       }}
     >
       <div
-        className={`relative isolate overflow-hidden rounded-[14px] border text-card-foreground transition-transform transition-shadow duration-[550ms] active:scale-[0.995] touch-manipulation ${
-          isFeatured
-            ? 'shadow-[0_22px_40px_rgba(46,52,64,0.22)] hover:-translate-y-1 hover:shadow-[0_28px_48px_rgba(46,52,64,0.26)]'
-            : 'shadow-[0_8px_20px_rgba(46,52,64,0.08)] hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(46,52,64,0.15)]'
-        }`}
+        className={`relative isolate overflow-hidden rounded-md border text-card-foreground transition-all duration-300 active:scale-[0.998] touch-manipulation shadow-sm hover:-translate-y-0.5 hover:shadow-md`}
         style={{
           opacity: 1,
           animationDelay: `${index * 80}ms`,
-          borderColor: 'color-mix(in srgb, var(--border) 78%, white)',
-          background:
-            'linear-gradient(180deg, color-mix(in srgb, var(--card) 84%, white 16%) 0%, color-mix(in srgb, var(--card) 96%, transparent) 100%)',
+          borderColor: 'var(--border)',
+          background: 'var(--card)',
         }}
       >
         <div className="aspect-[16/9] relative overflow-hidden">
@@ -56,7 +51,7 @@ export default function ProjectCard({
             src={imgSrc}
             alt={frontmatter.title}
             fill
-            className="object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-[1.035]"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
             style={{
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)'
             }}
@@ -87,8 +82,8 @@ export default function ProjectCard({
 
         <div className="border-t border-border/30 bg-card/96 px-3.5 pb-3 pt-2.5">
           <h3
-            className="font-code block w-full truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-[700ms] ease-out group-hover:text-primary"
-            style={{ fontSize: '9.5px', letterSpacing: '0.12em', textTransform: 'uppercase' }}
+            className="font-sans block w-full truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-300 group-hover:text-foreground/80"
+            style={{ fontSize: '13px' }}
             title={displayTitle}
           >
             {displayTitle}

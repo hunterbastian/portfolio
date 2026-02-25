@@ -32,16 +32,15 @@ export default function ScrollToTop() {
           className="fixed bottom-8 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full focus-visible:outline-none sm:bottom-10 sm:right-8"
           style={{
             border: '1px solid var(--border)',
-            background: 'color-mix(in srgb, var(--card) 92%, transparent)',
-            backdropFilter: 'blur(8px)',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.32), 0 0 0 1px rgba(255,255,255,0.04) inset',
-            color: 'var(--primary)',
+            background: 'var(--card)',
+            color: 'var(--foreground)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
           }}
           initial={{ opacity: 0, y: 12, scale: 0.88 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.92 }}
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={{ y: -2, boxShadow: '0 8px 28px rgba(0,0,0,0.38), 0 0 0 1px rgba(232,168,74,0.18) inset' }}
+          whileHover={{ y: -1 }}
           whileTap={{ scale: 0.94 }}
         >
           <svg

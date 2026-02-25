@@ -100,7 +100,7 @@ export default function Header() {
       className="sticky top-0 z-50 w-full border-b px-4 py-3 sm:px-6 sm:py-4"
       style={{
         borderColor: 'var(--border)',
-        backgroundColor: 'color-mix(in srgb, var(--background) 88%, transparent)',
+        backgroundColor: 'var(--background)',
       }}
     >
       <div className="container mx-auto max-w-6xl">
@@ -113,14 +113,14 @@ export default function Header() {
             title="Return to top"
           >
             <span
-              className="font-code text-[11px] font-medium tracking-[0.14em] uppercase transition-opacity duration-300 group-hover:opacity-100"
+              className="font-sans text-[11px] font-medium tracking-[0.14em] uppercase transition-opacity duration-300 group-hover:opacity-100"
               style={{ color: 'var(--foreground)', opacity: 0.9 }}
             >
               HB
             </span>
             <span
-              className="font-code text-[9px] tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
-              style={{ color: 'var(--primary)', opacity: 0.72 }}
+              className="font-sans text-[9px] tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
+              style={{ color: 'var(--muted-foreground)', opacity: 0.72 }}
             >
               // Studio Alpine
             </span>
@@ -140,7 +140,7 @@ export default function Header() {
                 onMouseEnter={() => setHoveredSection(item.href)}
                 onFocus={() => setHoveredSection(item.href)}
                 onBlur={() => setHoveredSection('')}
-                className={`header-nav-link font-code cursor-pointer ${activeSection === item.href ? 'is-active' : ''} ${
+                className={`header-nav-link font-sans cursor-pointer ${activeSection === item.href ? 'is-active' : ''} ${
                   emphasizedSection === item.href ? 'is-emphasis' : 'is-subdued'
                 }`}
                 aria-current={activeSection === item.href ? 'page' : undefined}
@@ -173,7 +173,7 @@ export default function Header() {
                   handleSmoothScroll(e, item.href)
                   setShowMobileMenu(false)
                 }}
-                className={`font-code block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
+                className={`font-sans block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
                   activeSection === item.href ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >

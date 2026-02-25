@@ -28,17 +28,17 @@ interface CollapsibleSectionProps {
  * ───────────────────────────────────────────────────────── */
 
 const SECTION_TIMING = {
-  panelAppear: 120, // panel starts appearing
-  rowsAppear: 280, // child rows begin staggered reveal
-  panelDuration: 380, // panel transition duration
-  rowDuration: 420, // each child row transition duration
-  rowStagger: 90, // stagger gap between child rows
+  panelAppear: 60, // panel starts appearing
+  rowsAppear: 140, // child rows begin staggered reveal
+  panelDuration: 240, // panel transition duration
+  rowDuration: 280, // each child row transition duration
+  rowStagger: 50, // stagger gap between child rows
 }
 
 const SECTION_PANEL = {
   initialOpacity: 0, // hidden before stage 1
   finalOpacity: 1, // visible at rest
-  initialY: 14, // panel vertical offset before reveal
+  initialY: 8, // panel vertical offset before reveal
   finalY: 0, // resting panel position
   ease: MOTION_EASE_STANDARD,
 }
@@ -46,7 +46,7 @@ const SECTION_PANEL = {
 const SECTION_ROW = {
   initialOpacity: 0, // hidden row before stage 2
   finalOpacity: 1, // visible row at rest
-  initialY: 16, // row vertical offset before reveal
+  initialY: 8, // row vertical offset before reveal
   finalY: 0, // resting row position
 }
 
@@ -161,7 +161,7 @@ export default function CollapsibleSection({
       <div className="relative mx-auto flex min-h-6 w-full max-w-2xl items-center justify-start">
         <motion.h2
           ref={titleRef}
-          className="section-heading m-0 font-inter text-[13px] leading-none tracking-[0.08em]"
+          className="section-heading m-0 font-inter text-[13px] leading-none tracking-[0.04em]"
           initial={false}
           animate={{
             opacity: titleStage >= 1 ? 1 : 0,
@@ -176,7 +176,7 @@ export default function CollapsibleSection({
             <button
               type="button"
               onClick={onToggle}
-              className="inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-none p-0 m-0 font-inter text-[13px] tracking-[0.08em] uppercase hover:opacity-80 transition-opacity duration-200"
+              className="inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-none p-0 m-0 font-inter text-[13px] tracking-[0.04em] uppercase hover:opacity-80 transition-opacity duration-200"
               aria-expanded={isOpen}
               aria-controls={contentId}
             >

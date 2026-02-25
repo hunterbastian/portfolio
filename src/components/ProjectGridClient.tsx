@@ -30,17 +30,17 @@ const CASE_STUDY_ORDER = [
 ] as const
 
 const CARD_STAGGER_TIMING = {
-  panelAppear: 120,
-  cardsAppear: 280,
-  panelDuration: 380,
-  cardDuration: 420,
-  cardStagger: 90,
+  panelAppear: 72,
+  cardsAppear: 168,
+  panelDuration: 228,
+  cardDuration: 252,
+  cardStagger: 54,
 }
 
 const CARD_STAGGER_PANEL = {
   initialOpacity: 0,
   finalOpacity: 1,
-  initialY: 14,
+  initialY: 8,
   finalY: 0,
   ease: MOTION_EASE_STANDARD,
 }
@@ -48,7 +48,7 @@ const CARD_STAGGER_PANEL = {
 const CARD_STAGGER_ITEM = {
   initialOpacity: 0,
   finalOpacity: 1,
-  initialY: 16,
+  initialY: 8,
   finalY: 0,
 }
 
@@ -381,8 +381,8 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                   onOpenCaseStudy={openCaseStudyOverlay}
                 />
               ) : (
-                <div className="aspect-[16/9] w-full rounded-[14px]">
-                  <Skeleton className="h-full w-full rounded-[14px]" />
+                <div className="aspect-[16/9] w-full rounded-md">
+                  <Skeleton className="h-full w-full rounded-md" />
                 </div>
               )}
             </Magnetic>
@@ -402,7 +402,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             onClick={closeCaseStudyOverlay}
           >
             <motion.div
-              className="absolute inset-0 bg-[rgba(15,20,30,0.36)] backdrop-blur-[5px]"
+              className="absolute inset-0 bg-[rgba(15,20,30,0.52)]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -412,16 +412,16 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               role="dialog"
               aria-modal="true"
               aria-label={`${activeCaseStudy.frontmatter.title} case study`}
-              className="relative z-10 flex h-[min(88vh,960px)] w-full max-w-6xl flex-col overflow-hidden rounded-[28px] border border-[color:color-mix(in_srgb,var(--border)_72%,white)] bg-[color:color-mix(in_srgb,var(--card)_92%,white)] shadow-[0_36px_110px_rgba(12,18,28,0.34)]"
+              className="relative z-10 flex h-[min(88vh,960px)] w-full max-w-6xl flex-col overflow-hidden rounded-md border border-[var(--border)] bg-[var(--card)] shadow-[0_36px_110px_rgba(12,18,28,0.34)]"
               initial={{ opacity: 0, y: 22, scale: 0.985 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.99 }}
               transition={{ duration: 0.28, ease: CARD_STAGGER_PANEL.ease }}
               onClick={(event) => event.stopPropagation()}
             >
-              <header className="flex items-center justify-between border-b border-[color:color-mix(in_srgb,var(--border)_68%,white)] px-4 py-3 sm:px-5">
+              <header className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3 sm:px-5">
                 <div className="min-w-0">
-                  <p className="truncate font-code text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                  <p className="truncate font-sans text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
                     Case Study
                   </p>
                   <h2 className="truncate text-sm font-semibold text-foreground sm:text-base">{activeCaseStudy.frontmatter.title}</h2>

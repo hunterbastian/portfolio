@@ -95,23 +95,23 @@
 
 /* Focus management for keyboard navigation */
 .focus-visible:focus-visible {
-  outline: 2px solid #88c0d0;
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
 /* Text selection optimization */
 ::selection {
-  background: rgba(136, 192, 208, 0.28);
+  background: rgba(35, 131, 226, 0.15);
   color: inherit;
 }
 
 ::-moz-selection {
-  background: rgba(136, 192, 208, 0.28);
+  background: rgba(35, 131, 226, 0.15);
   color: inherit;
 }
 
 ::-webkit-selection {
-  background: rgba(136, 192, 208, 0.28);
+  background: rgba(35, 131, 226, 0.15);
   color: inherit;
 }
 

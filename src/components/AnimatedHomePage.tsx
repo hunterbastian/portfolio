@@ -75,7 +75,7 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group status-pill status-pill-action status-pill-icon inline-flex h-9 w-9 origin-center items-center justify-center rounded-full no-underline sm:h-10 sm:w-10'
+  'group inline-flex h-9 w-9 origin-center items-center justify-center rounded-md border border-border bg-transparent no-underline transition-colors duration-150 hover:bg-secondary sm:h-10 sm:w-10'
 
 const contactIconGlyphClassName =
   'h-[17px] w-[17px] sm:h-[19px] sm:w-[19px]'
@@ -174,11 +174,11 @@ const HERO_TYPING = {
 }
 
 const HERO_ENTRANCE = {
-  profileDelay: 80, // profile appears first
-  textPanelDelay: 120, // align with section panel reveal
-  textItemsDelay: 280, // align with section item reveal
-  contactIconsDelay: 860, // icon row starts only after intro paragraph fully settles
-  duration: 420, // reveal transition duration
+  profileDelay: 40, // profile appears first
+  textPanelDelay: 60, // align with section panel reveal
+  textItemsDelay: 140, // align with section item reveal
+  contactIconsDelay: 420, // icon row starts only after intro paragraph fully settles
+  duration: 260, // reveal transition duration
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -192,17 +192,17 @@ const HERO_ENTRANCE = {
  * ───────────────────────────────────────────────────────── */
 
 const STAGGER_TIMING = {
-  panelAppear: 120, // panel starts appearing
-  itemsAppear: 280, // items begin staggered reveal
-  panelDuration: 380, // panel transition duration
-  itemDuration: 420, // each item transition duration
-  itemStagger: 90, // stagger gap between items
+  panelAppear: 60, // panel starts appearing
+  itemsAppear: 140, // items begin staggered reveal
+  panelDuration: 240, // panel transition duration
+  itemDuration: 280, // each item transition duration
+  itemStagger: 50, // stagger gap between items
 }
 
 const STAGGER_PANEL = {
   initialOpacity: 0, // hidden before stage 1
   finalOpacity: 1, // visible at rest
-  initialY: 14, // panel vertical offset before reveal
+  initialY: 8, // panel vertical offset before reveal
   finalY: 0, // resting panel position
   ease: MOTION_EASE_STANDARD,
 }
@@ -210,7 +210,7 @@ const STAGGER_PANEL = {
 const STAGGER_ITEM = {
   initialOpacity: 0, // hidden item before stage 2
   finalOpacity: 1, // visible item at rest
-  initialY: 16, // item vertical offset before reveal
+  initialY: 8, // item vertical offset before reveal
   finalY: 0, // resting item position
 }
 
@@ -220,9 +220,9 @@ const EXPERIENCE_TIMING = {
 }
 
 const SOCIAL_ICON_DIAL_DEFAULTS = {
-  baseColor: '#5f6975',
-  hoverColor: '#0f1720',
-  glowColor: '#1f2937',
+  baseColor: 'var(--muted-foreground)',
+  hoverColor: 'var(--foreground)',
+  glowColor: 'transparent',
   baseOpacity: 1,
   hoverOpacity: 1,
   iconBaseOpacity: 0.92,
@@ -355,7 +355,7 @@ function CreatingLoader() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
-          style={{ backdropFilter: 'blur(6px)', background: 'rgba(233,236,241,0.55)' }}
+          style={{ background: 'rgba(25,25,25,0.6)' }}
         >
           <motion.svg
             width="32"
@@ -397,7 +397,7 @@ function PomodoroEntry() {
         href="https://mini-pomodoro.vercel.app"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+        className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
         aria-label="Pomodoro Timer project"
         title="Pomodoro Timer"
       >
@@ -418,7 +418,7 @@ function PomodoroEntry() {
           {hovered ? (
             <motion.span
               key="hover"
-              className="status-pill-label whitespace-nowrap font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
+              className="status-pill-label whitespace-nowrap font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
@@ -429,7 +429,7 @@ function PomodoroEntry() {
           ) : (
             <motion.span
               key="default"
-              className="status-pill-label whitespace-nowrap font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
+              className="status-pill-label whitespace-nowrap font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
@@ -627,7 +627,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     <div className="relative isolate overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-[-14rem] z-0 h-[30rem] sm:bottom-[-16rem] sm:h-[38rem]"
+        className="pointer-events-none absolute inset-x-0 bottom-[-14rem] z-0 h-[30rem] sm:bottom-[-16rem] sm:h-[38rem] hidden"
       >
         <Image
           src="/images/projects/mountain.png"
@@ -659,13 +659,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 alt="Hunter Bastian // Studio Alpine"
                 width={72}
                 height={72}
-                className="h-16 w-16 shrink-0 rounded-full border-2 border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
-                style={{ imageRendering: 'pixelated' }}
+                className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
                 priority
               />
             </motion.div>
             <div className="min-w-0">
-              <h1 className="text-foreground font-playfair font-semibold text-[clamp(1.2rem,3.8vw,1.85rem)] leading-tight whitespace-nowrap">
+              <h1 className="text-foreground font-sans font-semibold text-[clamp(1.2rem,3.8vw,1.85rem)] leading-tight whitespace-nowrap">
                 <TextType
                   text={HERO_HEADLINE_TEXT}
                   className="block"
@@ -677,7 +676,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 />
               </h1>
               <motion.div
-                className="font-code text-muted-foreground mt-2 text-[11px] tracking-[0.12em] sm:text-xs"
+                className="font-sans text-muted-foreground mt-2 text-[11px] tracking-[0.02em] sm:text-xs"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -695,7 +694,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <motion.div
-            className="mb-4 rounded-[10px] border-2 border-[color:color-mix(in_srgb,var(--border)_78%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[4px_4px_0px_rgba(30,38,54,0.18),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5"
+            className="mb-4 rounded-md border border-border bg-card px-4 py-4 sm:px-5 sm:py-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -708,7 +707,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             style={{ willChange: 'opacity, transform' }}
           >
             <motion.p
-              className="text-muted-foreground text-sm font-garamond-narrow leading-relaxed m-0"
+              className="text-muted-foreground text-sm font-sans leading-relaxed m-0"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
               animate={{
                 opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -842,14 +841,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4 pb-14"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <div className="rounded-[10px] border-2 border-[color:color-mix(in_srgb,var(--border)_90%,white)] bg-[linear-gradient(135deg,rgba(163,172,186,0.42),rgba(190,198,210,0.28))] px-4 py-4 shadow-[4px_4px_0px_rgba(30,38,54,0.18),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-[12px] saturate-[1.05] sm:px-5 sm:py-5">
+          <div className="rounded-md border border-border bg-card px-4 py-4 sm:px-5 sm:py-5">
             <ul className="space-y-2">
               <li className="grid grid-cols-[1fr_auto] items-center gap-3">
                 <a
                   href="https://instagram.com/studio.alpine"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
                   aria-label="Photography Studio Studio Alpine"
                   title="Photography Studio Studio Alpine"
                 >
@@ -864,7 +863,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   aria-label="Follow Studio Alpine on Instagram"
                   title="Follow Studio Alpine on Instagram"
                 >
-                  <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
+                  <span className="status-pill-label font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
                     📷 Follow along
                   </span>
                 </a>
@@ -872,7 +871,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <li className="grid grid-cols-[1fr_auto] items-center gap-3">
                 <a
                   href={CONTACT_EMAIL_HREF}
-                  className="inline-flex items-center gap-2 text-sm font-code tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
                   aria-label="Design Services Open to projects"
                   title="Design Services Open to projects"
                 >
@@ -886,7 +885,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   title="Contact Hunter by email"
                 >
                   <span aria-hidden className="status-radar-dot h-[9px] w-[9px] rounded-full" />
-                  <span className="status-pill-label font-code text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
+                  <span className="status-pill-label font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
                     {HERO_UPDATE_NOTE}
                   </span>
                 </a>
@@ -921,7 +920,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               href="/archive"
               className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
             >
-              <span className="font-code font-light uppercase tracking-[0.08em] relative z-10">Other</span>
+              <span className="font-sans font-light uppercase tracking-[0.08em] relative z-10">Other</span>
             </a>
           </div>
         </div>
@@ -989,10 +988,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                       </span>
                     </motion.div>
                     <div className="flex min-w-0 flex-1 items-center space-x-6">
-                      <span className="w-16 text-xs font-code text-muted-foreground">
+                      <span className="w-16 text-xs font-sans text-muted-foreground">
                         {job.year}
                       </span>
-                      <span className="flex items-center gap-2 font-code font-medium tracking-[0.06em]">
+                      <span className="flex items-center gap-2 font-sans font-medium tracking-[0.06em]">
                         {job.active && (
                           <span className="relative flex h-2 w-2 shrink-0" aria-label="Currently active">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#a3be8c] opacity-60" />
@@ -1002,7 +1001,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         {job.company}
                       </span>
                     </div>
-                    <span className="hidden shrink-0 text-sm font-code tracking-[0.06em] text-muted-foreground sm:block">
+                    <span className="hidden shrink-0 text-sm font-sans tracking-[0.06em] text-muted-foreground sm:block">
                       {job.title}
                     </span>
                   </button>
@@ -1071,13 +1070,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="text-muted-foreground text-xs font-code sm:min-w-[100px]">{edu.year}</div>
+                  <div className="text-muted-foreground text-xs font-sans sm:min-w-[100px]">{edu.year}</div>
                   <div className="flex-1">
-                    <h3 className="font-code font-semibold text-foreground text-base mb-1 tracking-[0.06em]">{edu.institution}</h3>
-                    <p className="text-foreground text-sm font-code mb-1 tracking-[0.06em]">{edu.degree}</p>
-                    <p className="text-muted-foreground text-sm font-code tracking-[0.06em]">{edu.level}</p>
+                    <h3 className="font-sans font-semibold text-foreground text-base mb-1 tracking-[0.06em]">{edu.institution}</h3>
+                    <p className="text-foreground text-sm font-sans mb-1 tracking-[0.06em]">{edu.degree}</p>
+                    <p className="text-muted-foreground text-sm font-sans tracking-[0.06em]">{edu.level}</p>
                     {edu.note && (
-                      <p className="text-muted-foreground text-xs mt-1 font-code tracking-[0.08em]" style={{ opacity: 0.7 }}>
+                      <p className="text-muted-foreground text-xs mt-1 font-sans tracking-[0.08em]" style={{ opacity: 0.7 }}>
                         {edu.note}
                       </p>
                     )}
@@ -1129,7 +1128,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
               >
                 <span
-                  className={`text-sm font-code tracking-[0.08em] uppercase font-medium ${
+                  className={`text-sm font-sans tracking-[0.08em] uppercase font-medium ${
                     item.startsWith('Wishlist:') ? 'text-primary' : 'text-muted-foreground'
                   }`}
                 >
@@ -1180,7 +1179,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   ease: STAGGER_PANEL.ease,
                 }}
               >
-                <span className="text-sm font-code text-muted-foreground tracking-[0.08em] uppercase font-medium">
+                <span className="text-sm font-sans text-muted-foreground tracking-[0.08em] uppercase font-medium">
                   {skill}
                 </span>
               </motion.div>
@@ -1206,7 +1205,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             aria-label="Email Hunter"
             title="Email Hunter"
           >
-            <span className="font-code font-light uppercase tracking-[0.08em] relative z-10">Email me</span>
+            <span className="font-sans font-light uppercase tracking-[0.08em] relative z-10">Email me</span>
           </a>
         </div>
       </CollapsibleSection>

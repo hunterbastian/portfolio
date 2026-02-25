@@ -9,14 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'pixel': ['var(--font-press-start)', 'Press Start 2P', 'ui-monospace', 'monospace'],
-        'code': ['var(--font-source-code-pro)', 'Source Code Pro', 'ui-monospace', 'monospace'],
-        'mono': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
-        'sans': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
+        'mono': ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'sans': ['var(--font-inter)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
         'inter': ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        'playfair': ['var(--font-playfair)', 'Playfair Display', 'serif'],
-        'garamond': ['var(--font-garamond)', 'EB Garamond', 'serif'],
-        'garamond-narrow': ['var(--font-garamond-narrow)', 'Source Serif 4', 'Crimson Text', 'EB Garamond', 'serif'],
       },
       screens: {
         'xs': '375px',      // Extra small phones

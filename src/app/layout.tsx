@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Playfair_Display, Press_Start_2P, Source_Code_Pro } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import './viewport.css'
 import 'dialkit/styles.css'
@@ -15,54 +15,23 @@ import Script from 'next/script'
 import { telemetryConfig } from '@/lib/telemetry'
 
 // Primary body font
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ['latin'],
-  weight: ['500'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-  preload: true,
-  fallback: ['ui-monospace', 'monospace'],
-})
-
-// Display serif
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  style: ['normal', 'italic'],
-  weight: ['400', '600', '700'],
-  variable: '--font-playfair',
-  display: 'swap',
-  preload: true,
-  fallback: ['Georgia', 'serif'],
-})
-
-// UI labels (minimal code aesthetic)
-const sourceCodePro = Source_Code_Pro({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-source-code-pro',
-  display: 'swap',
-  preload: false,
-  fallback: ['ui-monospace', 'monospace'],
-})
-
-// 32-bit pixel font for section labels
-const pressStart2P = Press_Start_2P({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-press-start',
-  display: 'swap',
-  preload: false,
-  fallback: ['ui-monospace', 'monospace'],
-})
-
-// Section headings and UI sans
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-inter',
   display: 'swap',
-  preload: false,
+  preload: true,
   fallback: ['system-ui', 'sans-serif'],
+})
+
+// Code blocks only
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+  preload: false,
+  fallback: ['ui-monospace', 'monospace'],
 })
 
 export const viewport = {
@@ -134,7 +103,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#2e3440" />
+        <meta name="theme-color" content="#191919" />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <>
@@ -185,31 +154,27 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Critical above-the-fold styles */
-            body { margin: 0; font-family: ui-monospace, monospace; }
+            body { margin: 0; font-family: 'Inter', system-ui, sans-serif; }
             .hero-section { min-height: 0; }
             .hero-section h1 { line-height: 1.2; }
           `
         }} />
         
-        {/* Text selection highlight - Nord frost */}
+        {/* Text selection highlight - Notion blue */}
         <style dangerouslySetInnerHTML={{
           __html: `
             ::selection {
-              background-color: rgba(136, 192, 208, 0.28) !important;
+              background-color: rgba(35, 131, 226, 0.15) !important;
               color: inherit !important;
             }
             ::-moz-selection {
-              background-color: rgba(136, 192, 208, 0.28) !important;
-              color: inherit !important;
-            }
-            ::-webkit-selection {
-              background-color: rgba(136, 192, 208, 0.28) !important;
+              background-color: rgba(35, 131, 226, 0.15) !important;
               color: inherit !important;
             }
           `
         }} />
       </head>
-                   <body className={`${jetbrainsMono.className} ${playfairDisplay.variable} ${sourceCodePro.variable} ${inter.variable} ${pressStart2P.variable} safe-area-padding bg-background text-foreground`}>
+                   <body className={`${inter.className} ${jetbrainsMono.variable} safe-area-padding bg-background text-foreground`}>
                        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                        <div className="min-h-screen flex flex-col">
                  <Header />

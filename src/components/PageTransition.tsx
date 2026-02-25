@@ -16,16 +16,16 @@ import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/mot
  * ───────────────────────────────────────────────────────── */
 
 const TIMING = {
-  oldFadeDuration: 260, // previous page fade-out duration
-  newContentDelay: 60, // wait before new container starts
-  newSlideDuration: 520, // new container slide/fade duration
-  childStartDelay: 120, // wait before child stagger starts
-  childStagger: 90, // gap between each child animation
-  childDuration: 360, // each child slide/fade duration
+  oldFadeDuration: 160, // previous page fade-out duration
+  newContentDelay: 30, // wait before new container starts
+  newSlideDuration: 320, // new container slide/fade duration
+  childStartDelay: 60, // wait before child stagger starts
+  childStagger: 50, // gap between each child animation
+  childDuration: 220, // each child slide/fade duration
 }
 
 const PAGE = {
-  initialY: 28, // px offset before page slides up
+  initialY: 12, // px offset before page slides up
   finalY: 0, // resting position
   initialOpacity: 0, // hidden state before enter
   finalOpacity: 1, // resting visibility
@@ -33,7 +33,7 @@ const PAGE = {
 }
 
 const CHILD = {
-  initialY: 20, // px offset before each child slides up
+  initialY: 8, // px offset before each child slides up
   finalY: 0, // resting child position
   initialOpacity: 0, // hidden child state
   finalOpacity: 1, // resting child visibility

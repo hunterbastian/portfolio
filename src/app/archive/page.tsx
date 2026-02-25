@@ -8,11 +8,11 @@ const baseUrl = 'https://hunterbastian.com'
 const brandName = 'Hunter Bastian // Studio Alpine'
 
 export const metadata: Metadata = {
-  title: `Project Archive | ${brandName} Portfolio`,
-  description: `Browse archived case studies and design projects by ${brandName}. A collection of past work in UI/UX design, web development, and branding.`,
+  title: `Playground | ${brandName} Portfolio`,
+  description: `Browse side projects and experiments by ${brandName}. A collection of explorations in UI/UX design, web development, and branding.`,
   openGraph: {
-    title: `Project Archive - ${brandName}`,
-    description: 'Browse archived case studies and design projects.',
+    title: `Playground - ${brandName}`,
+    description: 'Browse side projects and experiments.',
     url: `${baseUrl}/archive`,
     type: 'website',
   },
@@ -39,8 +39,7 @@ export default function ArchivePage() {
       </div>
 
       <div className="mb-12">
-        <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">Archive</h1>
-        <p className="text-gray-600 dark:text-gray-400">Past projects and case studies</p>
+        <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">Playground</h1>
       </div>
 
       {archivedProjects.length === 0 ? (

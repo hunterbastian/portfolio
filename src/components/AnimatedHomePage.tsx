@@ -903,7 +903,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               href="/archive"
               className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
             >
-              <span className="font-sans font-light uppercase tracking-[0.08em] relative z-10">Other</span>
+              <span className="font-sans font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
             </a>
           </div>
         </div>

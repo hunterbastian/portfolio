@@ -725,7 +725,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
             style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
           >
-            <div className="inline-flex items-center rounded-xl bg-transparent px-0 py-0">
+            <div className="flex items-center justify-center rounded-xl bg-transparent px-0 py-0">
               <div className="flex items-center gap-3.5 sm:gap-4">
                 {contactLinks.map((link, index) => (
                   <motion.div
@@ -1087,7 +1087,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="max-w-4xl mx-auto">
           <motion.div
             ref={stackPanelRef}
-            className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto"
+            className="flex flex-wrap justify-center gap-x-6 gap-y-3 max-w-2xl mx-auto"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: stackStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -1132,7 +1132,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto text-center">
           <a
             href={CONTACT_EMAIL_HREF}
             className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"

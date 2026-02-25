@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* ─────────────────────────────────────────────────────────
  * COLOR SYSTEM — Notion-inspired, clean & minimal
  *

@@ -121,16 +121,10 @@ export default function Header() {
             title="Return to top"
           >
             <span
-              className="font-sans text-[11px] font-medium tracking-[0.14em] uppercase transition-opacity duration-300 group-hover:opacity-100"
+              className="font-sans text-[11px] font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
               style={{ color: 'var(--foreground)', opacity: 0.9 }}
             >
-              HB
-            </span>
-            <span
-              className="font-sans text-[9px] tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
-              style={{ color: 'var(--muted-foreground)', opacity: 0.72 }}
-            >
-              // Studio Alpine
+              Hunter Bastian
             </span>
           </button>
 

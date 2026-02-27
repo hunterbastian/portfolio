@@ -13,7 +13,6 @@ import {
   IconThreads,
   type IconProps as NucleoIconProps,
 } from 'nucleo-social-media'
-import { CentralIcon, type CentralIconName } from '@/icons'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import ResumePreview from './ResumePreview'
 import TextType from './TextType'
@@ -44,9 +43,10 @@ interface EducationItem {
 interface ContactLinkItem {
   label: string
   href: string
-  iconComponent?: ComponentType<NucleoIconProps>
-  iconName?: CentralIconName
+  iconComponent: ComponentType<NucleoIconProps>
 }
+
+type CSSVarStyle = CSSProperties & Record<`--${string}`, string | number>
 
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'techStack' | 'contact'
 type SectionOpenState = Record<SectionKey, boolean>
@@ -85,6 +85,58 @@ const contactInlineActionClassName =
 
 const contactIconGlyphClassName =
   'h-[17px] w-[17px] sm:h-[19px] sm:w-[19px]'
+
+function IconTwitterBird({ size = 20, title, style, ...props }: NucleoIconProps) {
+  const twitterStyle: CSSProperties = {
+    ...(style ?? {}),
+    transform:
+      typeof style?.transform === 'string'
+        ? `${style.transform} scale(1.08)`
+        : 'scale(1.08)',
+    transformOrigin: 'center',
+  }
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="currentColor"
+      role={title ? 'img' : undefined}
+      aria-hidden={title ? undefined : true}
+      style={twitterStyle}
+      {...props}
+    >
+      {title ? <title>{title}</title> : null}
+      <path d="M22 5.9c-.7.3-1.4.5-2.1.6.8-.5 1.3-1.1 1.6-2-.7.4-1.5.7-2.4.9-.7-.7-1.6-1.1-2.7-1.1-2 0-3.6 1.6-3.6 3.6 0 .3 0 .6.1.8-3-.1-5.7-1.6-7.5-3.8-.3.5-.5 1.1-.5 1.8 0 1.2.6 2.3 1.6 3-.6 0-1.2-.2-1.7-.5 0 0 0 .1 0 .1 0 1.8 1.3 3.2 2.9 3.6-.3.1-.7.1-1 .1-.3 0-.5 0-.7-.1.5 1.4 1.8 2.5 3.4 2.5-1.3 1-2.8 1.6-4.5 1.6-.3 0-.6 0-.9-.1 1.6 1 3.5 1.6 5.5 1.6 6.6 0 10.2-5.5 10.2-10.2 0-.2 0-.3 0-.5.7-.5 1.3-1.1 1.8-1.8z" />
+    </svg>
+  )
+}
+
+function IconFileText({ size = 20, title, ...props }: NucleoIconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      role={title ? 'img' : undefined}
+      aria-hidden={title ? undefined : true}
+      {...props}
+    >
+      {title ? <title>{title}</title> : null}
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <path d="M14 2v6h6" />
+      <path d="M16 13H8" />
+      <path d="M16 17H8" />
+      <path d="M10 9H8" />
+    </svg>
+  )
+}
 
 const experience: ExperienceItem[] = [
   {
@@ -155,12 +207,10 @@ const contactLinks: ContactLinkItem[] = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconComponent: IconInstagram },
   { label: 'Threads', href: 'https://threads.net/@studio.alpine', iconComponent: IconThreads },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconComponent: IconLinkedin },
-  { label: 'Twitter', href: 'https://x.com/thestudioalpine', iconName: 'IconTwitter' },
+  { label: 'Twitter', href: 'https://x.com/thestudioalpine', iconComponent: IconTwitterBird },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconComponent: IconGithub },
 ]
-
-const resumeIconName: CentralIconName = 'IconFileText'
-const HERO_HEADLINE_TEXT = 'Hunter Bastian | Studio Alpine'
+const HERO_HEADLINE_TEXT = 'Hunter Bastian'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
 const HERO_UPDATE_NOTE = 'Accepting new clients'
 const CONTACT_EMAIL_HREF = 'mailto:hunterbastianwork@gmail.com?subject=Project%20Inquiry'
@@ -229,6 +279,15 @@ const SOCIAL_ICON_DIAL_DEFAULTS = {
   fadeMs: 220,
 } as const
 
+const MOUNTAIN_DIAL_DEFAULTS = {
+  opacity: 0.92,
+  edgeBlur: 12,
+  fogBlur: 16,
+  pixelSize: 12,
+  yOffset: -8,
+  saturation: 1.06,
+} as const
+
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
   const [stage, setStage] = useState(0)
 
@@ -257,22 +316,16 @@ function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotio
 
 function ContactIcon({
   iconComponent: IconComponent,
-  iconName,
   label,
   className = 'h-5 w-5',
   style,
 }: {
-  iconComponent?: ComponentType<NucleoIconProps>
-  iconName?: CentralIconName
+  iconComponent: ComponentType<NucleoIconProps>
   label: string
   className?: string
   style?: CSSProperties
 }) {
-  if (IconComponent) {
-    return <IconComponent size={20} className={className} style={style} aria-label={label} />
-  }
-
-  return <CentralIcon name={iconName ?? resumeIconName} size={20} className={className} style={style} aria-label={label} />
+  return <IconComponent size={20} className={className} style={style} aria-label={label} />
 }
 
 function ContactLink({
@@ -306,7 +359,6 @@ function ContactLink({
     >
       <ContactIcon
         iconComponent={link.iconComponent}
-        iconName={link.iconName}
         label={link.label}
         className={contactIconGlyphClassName}
         style={iconStyle}
@@ -494,6 +546,30 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     },
   })
 
+  const mountainDial = useDialKit('Pixel Mountain Lab', {
+    atmosphere: {
+      opacity: [MOUNTAIN_DIAL_DEFAULTS.opacity, 0.45, 1],
+      edgeBlur: [MOUNTAIN_DIAL_DEFAULTS.edgeBlur, 0, 28],
+      fogBlur: [MOUNTAIN_DIAL_DEFAULTS.fogBlur, 0, 36],
+    },
+    pixel: {
+      blockSize: [MOUNTAIN_DIAL_DEFAULTS.pixelSize, 6, 22],
+      yOffset: [MOUNTAIN_DIAL_DEFAULTS.yOffset, -20, 20],
+    },
+    color: {
+      saturation: [MOUNTAIN_DIAL_DEFAULTS.saturation, 0.7, 1.4],
+    },
+  })
+
+  const mountainSceneStyle: CSSVarStyle = {
+    '--mountain-opacity': mountainDial.atmosphere.opacity,
+    '--mountain-edge-blur': `${Math.round(mountainDial.atmosphere.edgeBlur)}px`,
+    '--mountain-fog-blur': `${Math.round(mountainDial.atmosphere.fogBlur)}px`,
+    '--mountain-pixel-size': `${Math.round(mountainDial.pixel.blockSize)}px`,
+    '--mountain-y-offset': `${Math.round(mountainDial.pixel.yOffset)}px`,
+    '--mountain-saturation': mountainDial.color.saturation,
+  }
+
   const socialTransitionMs = Math.max(120, Math.round(socialIconDial.motion.fadeMs))
   const socialTransition = `all ${socialTransitionMs}ms cubic-bezier(0.22, 1, 0.36, 1)`
 
@@ -632,16 +708,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     <div className="relative isolate overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-[-14rem] z-0 h-[30rem] sm:bottom-[-16rem] sm:h-[38rem] hidden"
+        style={mountainSceneStyle}
+        className="hero-pixel-mountains pointer-events-none absolute inset-x-0 top-0 z-0 h-[23rem] sm:h-[30rem]"
       >
-        <Image
-          src="/images/projects/mountain.png"
-          alt=""
-          fill
-          sizes="100vw"
-          className="scale-[1.12] object-cover object-bottom opacity-70 blur-[42px] saturate-[0.9]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/35 to-transparent" />
+        <div className="hero-pixel-mountains__sky" />
+        <div className="hero-pixel-mountains__layer hero-pixel-mountains__layer--back" />
+        <div className="hero-pixel-mountains__layer hero-pixel-mountains__layer--mid" />
+        <div className="hero-pixel-mountains__layer hero-pixel-mountains__layer--front" />
+        <div className="hero-pixel-mountains__fog" />
       </div>
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
@@ -661,7 +735,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             >
               <Image
                 src="/images/profilepicture.jpg"
-                alt="Hunter Bastian | Studio Alpine"
+                alt="Hunter Bastian"
                 width={72}
                 height={72}
                 className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
@@ -669,7 +743,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               />
             </motion.div>
             <div className="min-w-0">
-              <h1 className="text-foreground font-sans font-semibold text-[clamp(1.2rem,3.8vw,1.85rem)] leading-tight whitespace-nowrap">
+              <h1 className="text-foreground font-sans font-semibold text-[clamp(1.65rem,6.6vw,3.25rem)] leading-tight whitespace-nowrap">
                 <TextType
                   text={HERO_HEADLINE_TEXT}
                   className="block"
@@ -822,7 +896,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     title="Resume"
                   >
                     <ContactIcon
-                      iconName={resumeIconName}
+                      iconComponent={IconFileText}
                       label="Resume"
                       className={contactIconGlyphClassName}
                       style={getSocialIconStyle(hoveredSocialAction === 'Resume')}
@@ -854,10 +928,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <a
                   href={CONTACT_EMAIL_HREF}
                   className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
-                  aria-label="Sometimes open for a Design Project"
-                  title="Sometimes open for a Design Project"
+                  aria-label="Open for Design Projects"
+                  title="Open for Design Projects"
                 >
-                  <span>Sometimes open for a Design Project</span>
+                  <span>Open for Design Projects</span>
                 </a>
                 <a
                   href={HERO_UPDATE_NOTE_HREF}

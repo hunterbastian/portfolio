@@ -105,10 +105,9 @@ export default function Header() {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b px-4 py-3 sm:px-6 sm:py-4"
+      className="sticky top-0 z-50 w-full border-b border-white/[0.06] px-4 py-3 backdrop-blur-md sm:px-6 sm:py-4"
       style={{
-        borderColor: 'var(--border)',
-        backgroundColor: 'var(--background)',
+        backgroundColor: 'rgba(var(--background-rgb), 0.82)',
       }}
     >
       <div className="container mx-auto max-w-6xl">

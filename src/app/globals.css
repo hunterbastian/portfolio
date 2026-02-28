@@ -35,8 +35,9 @@ html {
   --border: #2f2f2f;
   --input: #2f2f2f;
   --ring: #2383e2;
-  --mountain-sky-top: rgba(112, 145, 220, 0.28);
-  --mountain-sky-mid: rgba(221, 157, 191, 0.2);
+  --sky-top: rgba(94, 129, 172, 0.34);
+  --sky-mid: rgba(180, 142, 173, 0.22);
+  --sky-warm: rgba(208, 135, 112, 0.08);
 }
 
 /* Light mode */
@@ -58,8 +59,9 @@ html {
     --border: #e3e2de;
     --input: #e3e2de;
     --ring: #2383e2;
-    --mountain-sky-top: rgba(104, 146, 219, 0.22);
-    --mountain-sky-mid: rgba(220, 165, 194, 0.14);
+    --sky-top: rgba(94, 129, 172, 0.22);
+    --sky-mid: rgba(180, 142, 173, 0.14);
+    --sky-warm: rgba(208, 135, 112, 0.06);
   }
 }
 
@@ -103,13 +105,14 @@ body {
   min-height: 0;
 }
 
-.hero-pixel-mountains__sky {
+.hero-sky {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, var(--mountain-sky-top) 0%, var(--mountain-sky-mid) 54%, transparent 100%),
-    radial-gradient(45% 36% at 18% 22%, rgba(255, 255, 255, 0.1), transparent 100%),
-    radial-gradient(45% 35% at 82% 18%, rgba(255, 210, 220, 0.08), transparent 100%);
+    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 48%, var(--sky-warm) 76%, transparent 100%),
+    radial-gradient(50% 40% at 72% 18%, rgba(180, 142, 173, 0.1), transparent 100%),
+    radial-gradient(40% 35% at 24% 26%, rgba(136, 192, 208, 0.07), transparent 100%),
+    radial-gradient(55% 30% at 50% 70%, rgba(208, 135, 112, 0.05), transparent 100%);
 }
 
 /* ─────────────────────────────────────────────────────────

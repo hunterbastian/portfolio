@@ -676,7 +676,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[23rem] sm:h-[30rem]"
       >
-        <div className="hero-pixel-mountains__sky" />
+        <div className="hero-sky" />
       </div>
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">

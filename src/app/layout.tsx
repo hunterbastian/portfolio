@@ -13,6 +13,7 @@ import SmoothScroll from '@/components/SmoothScroll'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
+import CursorFollower from '@/components/CursorFollower'
 import { telemetryConfig } from '@/lib/telemetry'
 
 // Primary body font
@@ -176,6 +177,7 @@ export default function RootLayout({
         }} />
       </head>
                    <body className={`${inter.className} ${jetbrainsMono.variable} safe-area-padding bg-background text-foreground`}>
+                <CursorFollower />
                 <SmoothScroll>
                   <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                   <div className="min-h-screen flex flex-col">

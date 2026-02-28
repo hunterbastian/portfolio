@@ -1,7 +1,7 @@
 const truthyValues = new Set(['1', 'true', 'yes', 'on'])
 const falsyValues = new Set(['0', 'false', 'no', 'off'])
 
-const parseBooleanEnv = (value: string | undefined, defaultValue: boolean): boolean => {
+function parseBooleanEnv(value: string | undefined, defaultValue: boolean): boolean {
   if (value === undefined) {
     return defaultValue
   }

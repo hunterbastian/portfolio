@@ -19,7 +19,7 @@ interface GlareHoverProps {
   style?: React.CSSProperties
 }
 
-const GlareHover = ({
+export default function GlareHover({
   width = '500px',
   height = '500px',
   background = '#000',
@@ -33,8 +33,8 @@ const GlareHover = ({
   transitionDuration = 650,
   playOnce = false,
   className = '',
-  style = {}
-}: GlareHoverProps) => {
+  style = {},
+}: GlareHoverProps) {
   const hex = glareColor.replace('#', '')
   let rgba = glareColor
   if (/^[0-9A-Fa-f]{6}$/.test(hex)) {
@@ -70,6 +70,3 @@ const GlareHover = ({
     </div>
   )
 }
-
-export default GlareHover
-

@@ -1,70 +1,63 @@
-// Performance utilities for optimizing the portfolio
+export function preloadCriticalResources(): void {
+  if (typeof window === 'undefined') {
+    return
+  }
 
-/**
- * Preload critical resources
- */
-export function preloadCriticalResources() {
-  if (typeof window !== 'undefined') {
-    // Preload hero image
-    const heroImage = new Image()
-    heroImage.src = '/favicon/Frame.svg'
-    
-    // Preload project images (first 3 for above-the-fold)
-    const projectImages = [
-      '/images/projects/brand-identity-system.svg',
-      '/images/projects/porscheapp.png',
-      '/images/projects/wanderutah.png'
-    ]
-    
-    projectImages.forEach(src => {
-      const img = new Image()
-      img.src = src
-    })
+  const heroImage = new Image()
+  heroImage.src = '/favicon/Frame.svg'
+
+  const aboveFoldImages = [
+    '/images/projects/brand-identity-system.svg',
+    '/images/projects/porscheapp.png',
+    '/images/projects/wanderutah.png',
+  ]
+
+  for (const src of aboveFoldImages) {
+    const img = new Image()
+    img.src = src
   }
 }
 
-/**
- * Optimize iframe loading for gems
- */
-export function optimizeIframeLoading() {
-  if (typeof window !== 'undefined') {
-    // Lazy load iframes when they come into view
-    const iframes = document.querySelectorAll('iframe[data-src]')
-    
-    if ('IntersectionObserver' in window) {
-      const iframeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const iframe = entry.target as HTMLIFrameElement
-            if (iframe.dataset.src) {
-              iframe.src = iframe.dataset.src
-              iframe.removeAttribute('data-src')
-              iframeObserver.unobserve(iframe)
-            }
+export function optimizeIframeLoading(): void {
+  if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+    return
+  }
+
+  const iframes = document.querySelectorAll('iframe[data-src]')
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          const iframe = entry.target as HTMLIFrameElement
+          if (iframe.dataset.src) {
+            iframe.src = iframe.dataset.src
+            iframe.removeAttribute('data-src')
+            observer.unobserve(iframe)
           }
-        })
-      }, { threshold: 0.1 })
-      
-      iframes.forEach(iframe => iframeObserver.observe(iframe))
-    }
-  }
+        }
+      }
+    },
+    { threshold: 0.1 }
+  )
+
+  iframes.forEach((iframe) => observer.observe(iframe))
 }
 
-/**
- * Performance monitoring
- */
-export function measurePerformance() {
-  if (typeof window !== 'undefined' && 'performance' in window) {
-    // Measure Core Web Vitals
-    import('web-vitals').then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
+export function measurePerformance(): void {
+  if (typeof window === 'undefined' || !('performance' in window)) {
+    return
+  }
+
+  import('web-vitals')
+    .then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
       onCLS(console.log)
       onINP(console.log)
       onFCP(console.log)
       onLCP(console.log)
       onTTFB(console.log)
-    }).catch(() => {
-      // Fallback if web-vitals is not available
+    })
+    .catch(() => {
       console.log('Web Vitals not available')
     })
-  }
 }

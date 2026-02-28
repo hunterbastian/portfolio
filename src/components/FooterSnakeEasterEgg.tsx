@@ -128,7 +128,12 @@ export default function FooterSnakeEasterEgg() {
   useEffect(() => {
     window.render_game_to_text = () =>
       JSON.stringify({
-        mode: !isOpen ? 'closed' : game.gameOver ? 'game_over' : isPaused ? 'paused' : 'playing',
+        mode: (() => {
+          if (!isOpen) return 'closed'
+          if (game.gameOver) return 'game_over'
+          if (isPaused) return 'paused'
+          return 'playing'
+        })(),
         coordinateSystem: { origin: 'top-left', xAxis: 'right', yAxis: 'down' },
         board: { width: game.config.width, height: game.config.height },
         snake: game.snake,

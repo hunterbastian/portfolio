@@ -37,16 +37,14 @@ export default function ProjectCard({
       }}
     >
       <div
-        className={`relative isolate overflow-hidden rounded-md border text-card-foreground transition-all duration-300 active:scale-[0.998] touch-manipulation shadow-sm hover:-translate-y-0.5 hover:shadow-md`}
+        className="relative isolate overflow-hidden rounded-md border text-card-foreground transition-all duration-300 active:scale-[0.998] touch-manipulation shadow-sm hover:-translate-y-0.5 hover:shadow-md"
         style={{
-          opacity: 1,
           animationDelay: `${index * 80}ms`,
           borderColor: 'var(--border)',
           background: 'var(--card)',
         }}
       >
         <div className="aspect-[16/9] relative overflow-hidden">
-          {/* Static Image - shown by default */}
           <Image
             src={imgSrc}
             alt={frontmatter.title}
@@ -56,7 +54,7 @@ export default function ProjectCard({
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)'
             }}
             sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 280px"
-            priority={index === 0} // Only priority load first image
+            priority={index === 0}
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkrHB0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyuw=="
             loading={index === 0 ? "eager" : "lazy"}
@@ -64,7 +62,6 @@ export default function ProjectCard({
             onError={() => setImgSrc('/images/placeholder.svg')}
           />
           
-          {/* Video overlay - shown on hover if project has a video - Lazy loaded */}
           {frontmatter.video && (
             <video
               src={frontmatter.video}

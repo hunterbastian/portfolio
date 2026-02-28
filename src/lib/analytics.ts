@@ -2,10 +2,6 @@
 
 import { track } from '@vercel/analytics/react'
 
-/**
- * Enhanced analytics tracking utilities
- */
-
 type AnalyticsValue = string | number | boolean
 type AnalyticsPayload = Record<string, AnalyticsValue | undefined>
 
@@ -15,13 +11,13 @@ declare global {
   }
 }
 
-const sanitizePayload = (payload: AnalyticsPayload): Record<string, AnalyticsValue> => {
+function sanitizePayload(payload: AnalyticsPayload): Record<string, AnalyticsValue> {
   return Object.fromEntries(
     Object.entries(payload).filter(([, value]) => value !== undefined)
   ) as Record<string, AnalyticsValue>
 }
 
-const trackEvent = (eventName: string, payload: AnalyticsPayload = {}) => {
+function trackEvent(eventName: string, payload: AnalyticsPayload = {}): void {
   const cleanPayload = sanitizePayload(payload)
 
   track(eventName, cleanPayload)

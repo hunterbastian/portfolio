@@ -5,89 +5,61 @@ import { Project, ProjectFrontmatter } from '@/types/project'
 
 const projectsDirectory = path.join(process.cwd(), 'content/projects')
 
-export function getAllProjects(): Project[] {
+function parseProjectFile(fileName: string): Project {
+  const fullPath = path.join(projectsDirectory, fileName)
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
+  const { data, content } = matter(fileContents)
+
+  return {
+    slug: fileName.replace(/\.mdx$/, ''),
+    frontmatter: data as ProjectFrontmatter,
+    content,
+  }
+}
+
+function sortByDateDescending(a: Project, b: Project): number {
+  return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+}
+
+function loadAllProjectFiles(): Project[] {
   if (!fs.existsSync(projectsDirectory)) {
     return []
   }
 
-  const fileNames = fs.readdirSync(projectsDirectory)
-  const projects = fileNames
+  return fs
+    .readdirSync(projectsDirectory)
     .filter((name) => name.endsWith('.mdx'))
-    .map((name) => {
-      const fullPath = path.join(projectsDirectory, name)
-      const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const { data, content } = matter(fileContents)
+    .map(parseProjectFile)
+}
 
-      return {
-        slug: name.replace(/\.mdx$/, ''),
-        frontmatter: data as ProjectFrontmatter,
-        content,
-      }
-    })
-    .filter((project) => !project.frontmatter.archived) // Filter out archived projects
-    .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
-
-  return projects
+export function getAllProjects(): Project[] {
+  return loadAllProjectFiles()
+    .filter((project) => !project.frontmatter.archived)
+    .sort(sortByDateDescending)
 }
 
 export function getArchivedProjects(): Project[] {
-  if (!fs.existsSync(projectsDirectory)) {
-    return []
-  }
-
-  const fileNames = fs.readdirSync(projectsDirectory)
-  const projects = fileNames
-    .filter((name) => name.endsWith('.mdx'))
-    .map((name) => {
-      const fullPath = path.join(projectsDirectory, name)
-      const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const { data, content } = matter(fileContents)
-
-      return {
-        slug: name.replace(/\.mdx$/, ''),
-        frontmatter: data as ProjectFrontmatter,
-        content,
-      }
-    })
-    .filter((project) => project.frontmatter.archived === true) // Only archived projects
-    .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
-
-  return projects
+  return loadAllProjectFiles()
+    .filter((project) => project.frontmatter.archived === true)
+    .sort(sortByDateDescending)
 }
 
 export function getProjectBySlug(slug: string): Project | null {
-  try {
-    const fullPath = path.join(projectsDirectory, `${slug}.mdx`)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { data, content } = matter(fileContents)
+  const fullPath = path.join(projectsDirectory, `${slug}.mdx`)
 
-    return {
-      slug,
-      frontmatter: data as ProjectFrontmatter,
-      content,
-    }
+  if (!fs.existsSync(fullPath)) {
+    return null
+  }
+
+  try {
+    return parseProjectFile(`${slug}.mdx`)
   } catch (error) {
-    // Log the error for debugging purposes
-    if (error && typeof error === 'object') {
-      console.error(`Error loading project ${slug}:`, error)
-      
-      // In production, you might want to send this to an error tracking service
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Full error details:', {
-          slug,
-          path: path.join(projectsDirectory, `${slug}.mdx`),
-          error: error instanceof Error ? error.message : String(error),
-          stack: error instanceof Error && error.stack ? error.stack : 'No stack trace'
-        })
-      }
-    }
-    
+    console.error(`Error loading project ${slug}:`, error)
     return null
   }
 }
 
 export function getAllCategories(): string[] {
-  const projects = getAllProjects()
-  const categories = projects.map((project) => project.frontmatter.category)
+  const categories = getAllProjects().map((project) => project.frontmatter.category)
   return [...new Set(categories)]
 }

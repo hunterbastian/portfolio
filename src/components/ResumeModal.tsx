@@ -16,7 +16,6 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   const [isSubmittingPassword, setIsSubmittingPassword] = useState(false)
   const [accessError, setAccessError] = useState('')
 
-  // Close modal on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -148,6 +147,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               {/* Header - matches project page header */}
               <div className="mb-8">
                 <button
+                  type="button"
                   onClick={onClose}
                   className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
                 >

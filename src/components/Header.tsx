@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { getLenisInstance } from '@/lib/lenis'
 
-const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+function handleSmoothScroll(e: React.MouseEvent<HTMLAnchorElement>, href: string): void {
   e.preventDefault()
   const target = document.querySelector(href)
   if (target) {
@@ -32,11 +32,11 @@ const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string
   }
 }
 
-const navigation: Array<{ name: string; href: string }> = [
+const navigation = [
   { name: 'PROJECTS', href: '#case-studies' },
   { name: 'EXPERIENCE', href: '#experience' },
   { name: 'EDUCATION', href: '#education' },
-]
+] as const
 
 export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)

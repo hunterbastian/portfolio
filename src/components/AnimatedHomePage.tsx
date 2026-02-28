@@ -46,8 +46,6 @@ interface ContactLinkItem {
   iconComponent: ComponentType<NucleoIconProps>
 }
 
-type CSSVarStyle = CSSProperties & Record<`--${string}`, string | number>
-
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'techStack' | 'contact'
 type SectionOpenState = Record<SectionKey, boolean>
 
@@ -277,15 +275,6 @@ const SOCIAL_ICON_DIAL_DEFAULTS = {
   hoverScale: 1.04,
   iconHoverScale: 1.05,
   fadeMs: 220,
-} as const
-
-const MOUNTAIN_DIAL_DEFAULTS = {
-  opacity: 0.92,
-  edgeBlur: 12,
-  fogBlur: 16,
-  pixelSize: 12,
-  yOffset: -8,
-  saturation: 1.06,
 } as const
 
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
@@ -546,29 +535,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     },
   })
 
-  const mountainDial = useDialKit('Pixel Mountain Lab', {
-    atmosphere: {
-      opacity: [MOUNTAIN_DIAL_DEFAULTS.opacity, 0.45, 1],
-      edgeBlur: [MOUNTAIN_DIAL_DEFAULTS.edgeBlur, 0, 28],
-      fogBlur: [MOUNTAIN_DIAL_DEFAULTS.fogBlur, 0, 36],
-    },
-    pixel: {
-      blockSize: [MOUNTAIN_DIAL_DEFAULTS.pixelSize, 6, 22],
-      yOffset: [MOUNTAIN_DIAL_DEFAULTS.yOffset, -20, 20],
-    },
-    color: {
-      saturation: [MOUNTAIN_DIAL_DEFAULTS.saturation, 0.7, 1.4],
-    },
-  })
-
-  const mountainSceneStyle: CSSVarStyle = {
-    '--mountain-opacity': mountainDial.atmosphere.opacity,
-    '--mountain-edge-blur': `${Math.round(mountainDial.atmosphere.edgeBlur)}px`,
-    '--mountain-fog-blur': `${Math.round(mountainDial.atmosphere.fogBlur)}px`,
-    '--mountain-pixel-size': `${Math.round(mountainDial.pixel.blockSize)}px`,
-    '--mountain-y-offset': `${Math.round(mountainDial.pixel.yOffset)}px`,
-    '--mountain-saturation': mountainDial.color.saturation,
-  }
 
   const socialTransitionMs = Math.max(120, Math.round(socialIconDial.motion.fadeMs))
   const socialTransition = `all ${socialTransitionMs}ms cubic-bezier(0.22, 1, 0.36, 1)`
@@ -708,14 +674,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     <div className="relative isolate overflow-hidden">
       <div
         aria-hidden
-        style={mountainSceneStyle}
-        className="hero-pixel-mountains pointer-events-none absolute inset-x-0 top-0 z-0 h-[23rem] sm:h-[30rem]"
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[23rem] sm:h-[30rem]"
       >
         <div className="hero-pixel-mountains__sky" />
-        <div className="hero-pixel-mountains__layer hero-pixel-mountains__layer--back" />
-        <div className="hero-pixel-mountains__layer hero-pixel-mountains__layer--mid" />
-        <div className="hero-pixel-mountains__layer hero-pixel-mountains__layer--front" />
-        <div className="hero-pixel-mountains__fog" />
       </div>
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">

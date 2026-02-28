@@ -759,7 +759,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <span className="font-semibold">Interaction Design student</span> and{' '}
+              <span className="ambient-word-glow font-semibold" data-glow="Interaction Design student">Interaction Design student</span> and{' '}
               <span className="ambient-word-glow font-semibold" data-glow="Department Representative">Department Representative</span>{' '}
               at UVU with experience designing and building digital products. I focus on clear,
               meaningful interfaces with an AI-first mindset while growing{' '}

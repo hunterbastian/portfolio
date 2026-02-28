@@ -79,7 +79,7 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const contactInlineActionClassName =
-  'group inline-flex h-9 w-9 origin-center items-center justify-center rounded-md border border-border bg-transparent no-underline transition-colors duration-150 hover:bg-secondary sm:h-10 sm:w-10'
+  'group inline-flex h-9 w-9 origin-center items-center justify-center rounded-md border border-white/10 bg-white/[0.04] backdrop-blur-sm no-underline transition-all duration-150 hover:bg-white/[0.08] hover:border-white/20 sm:h-10 sm:w-10'
 
 const contactIconGlyphClassName =
   'h-[17px] w-[17px] sm:h-[19px] sm:w-[19px]'
@@ -265,7 +265,7 @@ const EXPERIENCE_TIMING = {
 }
 
 const SOCIAL_ICON_DIAL_DEFAULTS = {
-  baseColor: 'var(--muted-foreground)',
+  baseColor: 'color-mix(in srgb, var(--foreground) 55%, transparent)',
   hoverColor: 'var(--foreground)',
   glowColor: 'transparent',
   baseOpacity: 1,

@@ -15,10 +15,12 @@ interface TiltCardProps {
   children: ReactNode
   className?: string
   style?: React.CSSProperties
-  /** Framer Motion animation props — forwarded to the inner motion.div */
-  initial?: Record<string, unknown>
-  animate?: Record<string, unknown>
-  transition?: Record<string, unknown>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initial?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  animate?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transition?: any
 }
 
 export default function TiltCard({

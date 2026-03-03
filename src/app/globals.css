@@ -36,37 +36,41 @@ html {
   --sky-top: rgba(131, 154, 140, 0.24);
   --sky-mid: rgba(117, 139, 125, 0.14);
   --sky-cool: rgba(175, 188, 181, 0.07);
+  --sky-spot-a: rgba(144, 167, 153, 0.14);
+  --sky-spot-b: rgba(191, 203, 196, 0.08);
   --box-radius: 10px;
 }
 
-/* Light mode — warm neutral palette (base: #ebe8e3) */
+/* Light mode — clean neutral palette (base: #eceae5) */
 @media (prefers-color-scheme: light) {
   :root {
-    --background: #ebe8e3;
-    --background-rgb: 235, 232, 227;
-    --card: #f2f0eb;
+    --background: #eceae5;
+    --background-rgb: 236, 234, 229;
+    --card: #f1efeb;
     --card-foreground: #302c28;
     --foreground: #302c28;
     --primary: #302c28;
-    --primary-foreground: #f2f0eb;
-    --secondary: #e2dfd9;
+    --primary-foreground: #f1efeb;
+    --secondary: #e4e2dd;
     --secondary-foreground: #302c28;
-    --muted: #d8d4cd;
+    --muted: #dad8d3;
     --muted-foreground: #78736b;
     --accent: #7a8978;
     --accent-foreground: #f5f3ef;
-    --border: #cac5bc;
-    --input: #cac5bc;
+    --border: #d5d2cc;
+    --input: #d5d2cc;
     --ring: #8a9a84;
-    --surface-warm-rgb: 172, 165, 155;
-    --surface-paper-rgb: 152, 146, 136;
-    --grain-rgb: 92, 87, 80;
-    --header-frost-opacity: 0.58;
-    --header-frost-highlight: 0.17;
+    --surface-warm-rgb: 210, 207, 200;
+    --surface-paper-rgb: 200, 197, 190;
+    --grain-rgb: 160, 157, 150;
+    --header-frost-opacity: 0.62;
+    --header-frost-highlight: 0.12;
     --header-frost-blur: 20px;
-    --sky-top: rgba(178, 172, 162, 0.2);
-    --sky-mid: rgba(160, 154, 144, 0.12);
-    --sky-cool: rgba(198, 193, 185, 0.06);
+    --sky-top: rgba(220, 217, 210, 0.08);
+    --sky-mid: rgba(210, 207, 200, 0.04);
+    --sky-cool: rgba(225, 222, 216, 0.02);
+    --sky-spot-a: rgba(220, 217, 210, 0.03);
+    --sky-spot-b: rgba(225, 222, 216, 0.02);
     --box-radius: 10px;
   }
 }
@@ -121,8 +125,8 @@ body {
   inset: 0;
   background:
     linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 50%, var(--sky-cool) 78%, transparent 100%),
-    radial-gradient(65% 50% at 68% 12%, rgba(144, 167, 153, 0.14), transparent 100%),
-    radial-gradient(50% 45% at 28% 20%, rgba(191, 203, 196, 0.08), transparent 100%);
+    radial-gradient(65% 50% at 68% 12%, var(--sky-spot-a), transparent 100%),
+    radial-gradient(50% 45% at 28% 20%, var(--sky-spot-b), transparent 100%);
 }
 
 /* ─────────────────────────────────────────────────────────

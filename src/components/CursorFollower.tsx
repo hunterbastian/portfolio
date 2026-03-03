@@ -8,17 +8,13 @@ import {
   useReducedMotion,
 } from 'framer-motion'
 
-const INTERACTIVE =
-  'a, button, [role="button"], input, select, textarea, label, [data-cursor="pointer"]'
-
 const SPRING = { stiffness: 120, damping: 28, mass: 0.8 }
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function CursorFollower() {
   const prefersReduced = useReducedMotion()
-  const [isTouch, setIsTouch] = useState(true) // true by default avoids flash
+  const [isTouch, setIsTouch] = useState(true)
   const [visible, setVisible] = useState(false)
-  const [hovering, setHovering] = useState(false)
   const entered = useRef(false)
 
   // Cursor position — updates directly, no React re-renders
@@ -44,13 +40,6 @@ export default function CursorFollower() {
       }
     }
 
-    const onOver = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest(INTERACTIVE)) setHovering(true)
-    }
-    const onOut = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest(INTERACTIVE)) setHovering(false)
-    }
-
     const onLeave = () => {
       entered.current = false
       setVisible(false)
@@ -61,15 +50,11 @@ export default function CursorFollower() {
     }
 
     window.addEventListener('mousemove', onMove, { passive: true })
-    document.addEventListener('mouseover', onOver, { passive: true })
-    document.addEventListener('mouseout', onOut, { passive: true })
     document.documentElement.addEventListener('mouseleave', onLeave)
     document.documentElement.addEventListener('mouseenter', onEnter)
 
     return () => {
       window.removeEventListener('mousemove', onMove)
-      document.removeEventListener('mouseover', onOver)
-      document.removeEventListener('mouseout', onOut)
       document.documentElement.removeEventListener('mouseleave', onLeave)
       document.documentElement.removeEventListener('mouseenter', onEnter)
     }
@@ -103,8 +88,7 @@ export default function CursorFollower() {
             mixBlendMode: 'exclusion',
           }}
           animate={{
-            scale: hovering ? 1.4 : 1,
-            opacity: visible ? (hovering ? 0.5 : 0.25) : 0,
+            opacity: visible ? 0.25 : 0,
           }}
           transition={{ duration: 0.35, ease: EASE }}
         />

@@ -34,13 +34,7 @@ export default function CursorFollower() {
     if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return
     setIsTouch(false)
 
-    // Inject cursor-hide stylesheet
-    const style = document.createElement('style')
-    style.id = 'cursor-follower-hide'
-    style.textContent = `
-      *, *::before, *::after { cursor: none !important; }
-    `
-    document.head.appendChild(style)
+    // No cursor hiding — keep default cursor visible alongside the follower
 
     const onMove = (e: MouseEvent) => {
       cx.set(e.clientX)
@@ -79,7 +73,6 @@ export default function CursorFollower() {
     document.documentElement.addEventListener('mouseenter', onEnter)
 
     return () => {
-      style.remove()
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mousedown', onDown)
       window.removeEventListener('mouseup', onUp)

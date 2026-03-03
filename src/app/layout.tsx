@@ -194,7 +194,7 @@ export default function RootLayout({
                     />
                   )}
                   {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
-                  {process.env.NODE_ENV === 'development' && <DialKitRoot />}
+                  {/* {process.env.NODE_ENV === 'development' && <DialKitRoot />} */}
                   {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
                   
                   {/* Service Worker Registration - Deferred for better performance */}

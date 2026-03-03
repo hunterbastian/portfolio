@@ -78,7 +78,7 @@
 /* Container queries for responsive design */
 @container (max-width: 640px) {
   .container-responsive {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
   }
 }
 

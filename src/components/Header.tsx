@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { getLenisInstance } from '@/lib/lenis'
 
 function handleSmoothScroll(e: React.MouseEvent<HTMLAnchorElement>, href: string): void {
@@ -32,25 +33,50 @@ function handleSmoothScroll(e: React.MouseEvent<HTMLAnchorElement>, href: string
   }
 }
 
-const navigation = [
+const HOME_SECTION_NAV = [
+  { name: 'CREATING', href: '#creating' },
   { name: 'PROJECTS', href: '#case-studies' },
   { name: 'EXPERIENCE', href: '#experience' },
   { name: 'EDUCATION', href: '#education' },
+  { name: 'STACK', href: '#tech-stack' },
+  { name: 'CONTACT', href: '#contact' },
+] as const
+
+const PROJECT_PAGE_NAV = [
+  { name: 'HOME', href: '/' },
+  { name: 'PROJECTS', href: '/#case-studies' },
+  { name: 'CONTACT', href: '/#contact' },
 ] as const
 
 export default function Header() {
+  const pathname = usePathname()
+  const isHomeRoute = pathname === '/'
+  const navigation = useMemo(
+    () => (isHomeRoute ? HOME_SECTION_NAV : PROJECT_PAGE_NAV),
+    [isHomeRoute],
+  )
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [hoveredSection, setHoveredSection] = useState('')
 
-  const handleRefreshToTop = () => {
+  const handleBrandAction = () => {
+    if (!isHomeRoute) {
+      window.location.assign('/')
+      return
+    }
+
     window.scrollTo({ top: 0, behavior: 'auto' })
     const { pathname, search } = window.location
     window.location.assign(`${pathname}${search}`)
   }
 
   useEffect(() => {
-    const sectionIds = navigation.map((item) => item.href.slice(1))
+    if (!isHomeRoute) {
+      setActiveSection('')
+      return
+    }
+
+    const sectionIds = HOME_SECTION_NAV.map((item) => item.href.slice(1))
     const sectionElements = sectionIds
       .map((sectionId) => document.getElementById(sectionId))
       .filter((element): element is HTMLElement => Boolean(element))
@@ -99,23 +125,22 @@ export default function Header() {
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [isHomeRoute])
 
   const emphasizedSection = hoveredSection || activeSection || navigation[0]?.href || ''
 
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b px-4 py-3 sm:px-6 sm:py-4"
+      className="site-header-frosted sticky top-0 z-50 w-full border-b px-4 py-3 sm:px-6 sm:py-4"
       style={{
         borderColor: 'var(--border)',
-        backgroundColor: 'var(--background)',
       }}
     >
       <div className="container mx-auto max-w-6xl">
-        <div className="flex h-12 items-center justify-between">
+        <div className="flex h-14 items-center justify-between">
           <button
             type="button"
-            onClick={handleRefreshToTop}
+            onClick={handleBrandAction}
             className="group flex items-baseline gap-1.5 focus-visible:outline-none"
             aria-label="Return to top"
             title="Return to top"
@@ -134,22 +159,31 @@ export default function Header() {
             aria-label="Primary"
             onMouseLeave={() => setHoveredSection('')}
           >
-            {navigation.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => handleSmoothScroll(e, item.href)}
-                onMouseEnter={() => setHoveredSection(item.href)}
-                onFocus={() => setHoveredSection(item.href)}
-                onBlur={() => setHoveredSection('')}
-                className={`header-nav-link font-sans cursor-pointer ${activeSection === item.href ? 'is-active' : ''} ${
-                  emphasizedSection === item.href ? 'is-emphasis' : 'is-subdued'
-                }`}
-                aria-current={activeSection === item.href ? 'page' : undefined}
-              >
-                {item.name}
-              </a>
-            ))}
+            {navigation.map((item) => {
+              const isSectionLink = isHomeRoute && item.href.startsWith('#')
+              const isActive = isHomeRoute && activeSection === item.href
+
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => {
+                    if (isSectionLink) {
+                      handleSmoothScroll(e, item.href)
+                    }
+                  }}
+                  onMouseEnter={() => setHoveredSection(item.href)}
+                  onFocus={() => setHoveredSection(item.href)}
+                  onBlur={() => setHoveredSection('')}
+                  className={`header-nav-link font-sans cursor-pointer ${isActive ? 'is-active' : ''} ${
+                    emphasizedSection === item.href ? 'is-emphasis' : 'is-subdued'
+                  }`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {item.name}
+                </a>
+              )
+            })}
           </nav>
 
           <button
@@ -167,21 +201,28 @@ export default function Header() {
       {showMobileMenu && (
         <div className="md:hidden mt-4 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
           <div className="container mx-auto max-w-6xl space-y-1 px-1">
-            {navigation.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => {
-                  handleSmoothScroll(e, item.href)
-                  setShowMobileMenu(false)
-                }}
-                className={`font-sans block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
-                  activeSection === item.href ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                {item.name}
-              </a>
-            ))}
+            {navigation.map((item) => {
+              const isSectionLink = isHomeRoute && item.href.startsWith('#')
+              const isActive = isHomeRoute && activeSection === item.href
+
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => {
+                    if (isSectionLink) {
+                      handleSmoothScroll(e, item.href)
+                    }
+                    setShowMobileMenu(false)
+                  }}
+                  className={`font-sans block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
+                    isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {item.name}
+                </a>
+              )
+            })}
           </div>
         </div>
       )}

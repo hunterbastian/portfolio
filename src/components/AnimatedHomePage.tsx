@@ -210,7 +210,7 @@ const contactLinks: ContactLinkItem[] = [
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconComponent: IconGithub },
 ]
 const HERO_HEADLINE_TEXT = 'Hunter Bastian'
-const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
+const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah : 40.7608° N / 111.8910° W'
 const HERO_UPDATE_NOTE = 'Accepting new clients'
 const CONTACT_EMAIL_HREF = 'mailto:hunterbastianwork@gmail.com?subject=Project%20Inquiry'
 const HERO_UPDATE_NOTE_HREF = CONTACT_EMAIL_HREF
@@ -458,7 +458,7 @@ function PomodoroEntry() {
         href="https://mini-pomodoro.vercel.app"
         target="_blank"
         rel="noopener noreferrer"
-        className="status-pill status-pill-action relative inline-flex items-center gap-2 overflow-hidden rounded-[6px] px-3 py-1 no-underline"
+        className="status-pill status-pill-action relative inline-flex items-center gap-2 overflow-hidden rounded-md px-3 py-1 no-underline"
         aria-label="View Pomodoro Timer on GitHub"
         title="View on GitHub"
         onMouseEnter={() => setHovered(true)}
@@ -705,7 +705,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               />
             </motion.div>
             <div className="min-w-0">
-              <h1 className="text-foreground font-sans font-semibold text-[clamp(1.5rem,4.8vw,2.25rem)] leading-tight whitespace-nowrap">
+              <h1
+                className="text-foreground font-bold text-[clamp(2rem,6.4vw,3.2rem)] leading-[0.96] whitespace-nowrap pl-[0.03em]"
+                style={{ fontFamily: 'var(--font-playfair-display), "Playfair Display", Georgia, serif' }}
+              >
                 <TextType
                   text={HERO_HEADLINE_TEXT}
                   className="block"
@@ -717,7 +720,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 />
               </h1>
               <motion.div
-                className="font-sans text-muted-foreground mt-2 text-[11px] tracking-[0.02em] sm:text-xs"
+                className="font-mono text-muted-foreground mt-2 text-[11px] tracking-[0.06em] sm:text-xs"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -735,7 +738,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <TiltCard
-            className="mb-4 rounded-md border border-border bg-card px-4 py-4 sm:px-5 sm:py-5"
+            className="mt-4 mb-4 rounded-md border border-border bg-card px-4 py-4 sm:mt-5 sm:px-5 sm:py-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -885,49 +888,26 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="max-w-2xl mx-auto text-left">
           <div className="rounded-md border border-border bg-card px-4 py-4 sm:px-5 sm:py-5">
             <ul className="space-y-2">
-              <li className="grid grid-cols-[1fr_auto] items-center gap-3">
+              <li>
                 <a
                   href={CONTACT_EMAIL_HREF}
-                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
                   aria-label="Open for Design Projects"
                   title="Open for Design Projects"
                 >
                   <span>Open for Design Projects</span>
                 </a>
-                <a
-                  href={HERO_UPDATE_NOTE_HREF}
-                  className="status-pill status-pill-action inline-flex items-center gap-2 rounded-[6px] px-3 py-1 no-underline"
-                  aria-label="Contact Hunter by email"
-                  title="Contact Hunter by email"
-                >
-                  <span aria-hidden className="status-radar-dot h-[9px] w-[9px] rounded-full" />
-                  <span className="status-pill-label font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
-                    {HERO_UPDATE_NOTE}
-                  </span>
-                </a>
               </li>
-              <li className="grid grid-cols-[1fr_auto] items-center gap-3">
+              <li>
                 <a
                   href="https://instagram.com/studio.alpine"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
                   aria-label="Photography Studio Studio Alpine"
                   title="Photography Studio Studio Alpine"
                 >
                   <span>Studio Alpine</span>
-                </a>
-                <a
-                  href="https://instagram.com/studio.alpine"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="status-pill status-pill-action inline-flex items-center gap-2 rounded-[6px] px-3 py-1 no-underline"
-                  aria-label="Follow Studio Alpine on Instagram"
-                  title="Follow Studio Alpine on Instagram"
-                >
-                  <span className="status-pill-label font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground">
-                    📷 Follow along
-                  </span>
                 </a>
               </li>
             </ul>
@@ -947,7 +927,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
-        <div className="mx-auto max-w-4xl rounded-[22px] border border-border/45 bg-card/30 px-3 py-5 sm:px-5 sm:py-6">
+        <div className="mx-auto max-w-4xl rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
           {children}
         </div>
 
@@ -1179,7 +1159,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         isOpen={sectionOpen.contact}
         onToggle={() => toggleSection('contact')}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-12"
+        openClassName="pt-12 pb-20"
         closedClassName="py-5"
         contentClassName="mt-4"
       >

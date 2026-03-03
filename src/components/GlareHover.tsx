@@ -23,7 +23,7 @@ export default function GlareHover({
   width = '500px',
   height = '500px',
   background = '#000',
-  borderRadius = '10px',
+  borderRadius = 'var(--box-radius)',
   borderColor = '#333',
   children,
   glareColor = '#ffffff',

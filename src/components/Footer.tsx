@@ -1,30 +1,20 @@
 'use client'
 
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { getLenisInstance } from '@/lib/lenis'
 import FooterSnakeEasterEgg from './FooterSnakeEasterEgg'
 
+const FOOTER_REVEAL_EPSILON_PX = 6
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [visible, setVisible] = useState(false)
-  const lastScrollY = useRef(0)
   const prefersReducedMotion = useReducedMotion()
 
-  const handleScroll = useCallback((scrollY: number, limit: number) => {
-    const threshold = 4
-    const delta = scrollY - lastScrollY.current
-    const nearBottom = scrollY >= limit - 80
-
-    if (nearBottom) {
-      setVisible(true)
-    } else if (delta > threshold) {
-      setVisible(true)
-    } else if (delta < -threshold) {
-      setVisible(false)
-    }
-
-    lastScrollY.current = scrollY
+  const syncFooterVisibility = useCallback((scrollY: number, limit: number) => {
+    const atBottom = limit <= 0 || scrollY >= Math.max(0, limit - FOOTER_REVEAL_EPSILON_PX)
+    setVisible(atBottom)
   }, [])
 
   useEffect(() => {
@@ -36,7 +26,7 @@ export default function Footer() {
       const lenis = getLenisInstance()
       if (lenis) {
         const onScroll = ({ scroll, limit }: { scroll: number; limit: number }) => {
-          handleScroll(scroll, limit)
+          syncFooterVisibility(scroll, limit)
         }
         lenis.on('scroll', onScroll)
         cleanup = () => lenis.off('scroll', onScroll)
@@ -56,9 +46,10 @@ export default function Footer() {
       if (!getLenisInstance()) {
         const scrollY = window.scrollY
         const limit = document.documentElement.scrollHeight - window.innerHeight
-        handleScroll(scrollY, limit)
+        syncFooterVisibility(scrollY, limit)
       }
     }
+    onNativeScroll()
     window.addEventListener('scroll', onNativeScroll, { passive: true })
 
     return () => {
@@ -66,7 +57,7 @@ export default function Footer() {
       cleanup?.()
       window.removeEventListener('scroll', onNativeScroll)
     }
-  }, [handleScroll])
+  }, [syncFooterVisibility])
 
   return (
     <motion.footer

@@ -7,61 +7,67 @@ html {
 }
 
 /* ─────────────────────────────────────────────────────────
- * COLOR SYSTEM — Notion-inspired, clean & minimal
- *
- * Surface hierarchy (darkest → lightest):
- *   background  #191919  base canvas
- *   card        #202020  elevated panels
- *   secondary   #252525  grouped surfaces
- *   border      #2f2f2f  dividers
- *
- * Accent: #2383e2 Notion blue — used sparingly
+ * COLOR SYSTEM — Japandi x Patagonia (muted, minimal)
  * ───────────────────────────────────────── */
 
 :root {
-  --background: #191919;
-  --background-rgb: 25, 25, 25;
-  --card: #202020;
-  --card-foreground: #ebebeb;
-  --foreground: #ebebeb;
-  --primary: #ebebeb;
-  --primary-foreground: #191919;
-  --secondary: #252525;
-  --secondary-foreground: #ebebeb;
-  --muted: #2f2f2f;
-  --muted-foreground: #999999;
-  --accent: #2383e2;
-  --accent-foreground: #ffffff;
-  --border: #2f2f2f;
-  --input: #2f2f2f;
-  --ring: #2383e2;
-  --sky-top: rgba(94, 129, 172, 0.5);
-  --sky-mid: rgba(143, 130, 175, 0.25);
-  --sky-cool: rgba(136, 192, 208, 0.08);
+  --background: #1b1f1d;
+  --background-rgb: 27, 31, 29;
+  --card: #242b27;
+  --card-foreground: #e8ede7;
+  --foreground: #e8ede7;
+  --primary: #e8ede7;
+  --primary-foreground: #1b1f1d;
+  --secondary: #2b332f;
+  --secondary-foreground: #e8ede7;
+  --muted: #333b37;
+  --muted-foreground: #97a49a;
+  --accent: #6f8f7c;
+  --accent-foreground: #f4f7f4;
+  --border: #3b4540;
+  --input: #3b4540;
+  --ring: #89a794;
+  --surface-warm-rgb: 114, 135, 122;
+  --surface-paper-rgb: 92, 108, 98;
+  --grain-rgb: 208, 217, 210;
+  --header-frost-opacity: 0.54;
+  --header-frost-highlight: 0.11;
+  --header-frost-blur: 24px;
+  --sky-top: rgba(131, 154, 140, 0.24);
+  --sky-mid: rgba(117, 139, 125, 0.14);
+  --sky-cool: rgba(175, 188, 181, 0.07);
+  --box-radius: 10px;
 }
 
-/* Light mode */
+/* Light mode — warm neutral palette (base: #ebe8e3) */
 @media (prefers-color-scheme: light) {
   :root {
-    --background: #ffffff;
-    --background-rgb: 255, 255, 255;
-    --card: #ffffff;
-    --card-foreground: #37352f;
-    --foreground: #37352f;
-    --primary: #37352f;
-    --primary-foreground: #ffffff;
-    --secondary: #f7f6f3;
-    --secondary-foreground: #37352f;
-    --muted: #e3e2de;
-    --muted-foreground: #787774;
-    --accent: #2383e2;
-    --accent-foreground: #ffffff;
-    --border: #e3e2de;
-    --input: #e3e2de;
-    --ring: #2383e2;
-    --sky-top: rgba(94, 129, 172, 0.3);
-    --sky-mid: rgba(143, 130, 175, 0.16);
-    --sky-cool: rgba(136, 192, 208, 0.05);
+    --background: #ebe8e3;
+    --background-rgb: 235, 232, 227;
+    --card: #f2f0eb;
+    --card-foreground: #302c28;
+    --foreground: #302c28;
+    --primary: #302c28;
+    --primary-foreground: #f2f0eb;
+    --secondary: #e2dfd9;
+    --secondary-foreground: #302c28;
+    --muted: #d8d4cd;
+    --muted-foreground: #78736b;
+    --accent: #7a8978;
+    --accent-foreground: #f5f3ef;
+    --border: #cac5bc;
+    --input: #cac5bc;
+    --ring: #8a9a84;
+    --surface-warm-rgb: 172, 165, 155;
+    --surface-paper-rgb: 152, 146, 136;
+    --grain-rgb: 92, 87, 80;
+    --header-frost-opacity: 0.58;
+    --header-frost-highlight: 0.17;
+    --header-frost-blur: 20px;
+    --sky-top: rgba(178, 172, 162, 0.2);
+    --sky-mid: rgba(160, 154, 144, 0.12);
+    --sky-cool: rgba(198, 193, 185, 0.06);
+    --box-radius: 10px;
   }
 }
 
@@ -72,7 +78,12 @@ html {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background);
+  background-image:
+    radial-gradient(110% 70% at 50% -8%, rgba(var(--surface-warm-rgb), 0.12), transparent 62%),
+    linear-gradient(180deg, rgba(var(--surface-paper-rgb), 0.04) 0%, rgba(var(--surface-paper-rgb), 0) 48%),
+    radial-gradient(circle at 1px 1px, rgba(var(--grain-rgb), 0.03) 0.6px, transparent 0.85px);
+  background-size: 100% 100%, 100% 100%, 4px 4px;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   position: relative;
   min-height: 100vh;
@@ -110,8 +121,8 @@ body {
   inset: 0;
   background:
     linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 50%, var(--sky-cool) 78%, transparent 100%),
-    radial-gradient(65% 50% at 68% 12%, rgba(129, 161, 193, 0.12), transparent 100%),
-    radial-gradient(50% 45% at 28% 20%, rgba(136, 192, 208, 0.07), transparent 100%);
+    radial-gradient(65% 50% at 68% 12%, rgba(144, 167, 153, 0.14), transparent 100%),
+    radial-gradient(50% 45% at 28% 20%, rgba(191, 203, 196, 0.08), transparent 100%);
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -136,7 +147,7 @@ body {
   position: relative;
   border: 1px solid var(--border);
   background: var(--card);
-  border-radius: 4px;
+  border-radius: var(--box-radius);
 }
 
 .status-pill::before {
@@ -204,14 +215,14 @@ body {
 .nord-panel {
   border: 1px solid var(--border);
   background: var(--card);
-  border-radius: 6px;
+  border-radius: var(--box-radius);
 }
 
 .nord-button {
   border: 1px solid var(--border);
   background: var(--card);
   color: var(--foreground);
-  border-radius: 4px;
+  border-radius: var(--box-radius);
 }
 
 .nord-button:hover {
@@ -231,7 +242,7 @@ body {
   align-items: flex-end;
   justify-content: center;
   gap: 1px;
-  height: 34px;
+  height: 56px;
   overflow: hidden;
   line-height: 1;
 }
@@ -277,6 +288,12 @@ body {
 
 .header-nav-link:focus-visible {
   outline: none;
+}
+
+.site-header-frosted {
+  background-color: rgba(var(--background-rgb), var(--header-frost-opacity));
+  -webkit-backdrop-filter: saturate(118%) blur(var(--header-frost-blur));
+  backdrop-filter: saturate(118%) blur(var(--header-frost-blur));
 }
 
 /* ─────────────────────────────────────────────────────────

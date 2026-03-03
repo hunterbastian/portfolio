@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, type ReactNode } from 'react'
+import { useRef, type CSSProperties, type ReactNode } from 'react'
 import {
   motion,
   useMotionValue,
@@ -8,13 +8,15 @@ import {
   useReducedMotion,
 } from 'framer-motion'
 
-const TILT_SPRING = { stiffness: 300, damping: 30 }
-const MAX_TILT = 6 // degrees
+const TILT_SPRING = { stiffness: 240, damping: 30 }
+const DEFAULT_MAX_TILT = 2.8 // degrees
 
 interface TiltCardProps {
   children: ReactNode
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
+  maxTilt?: number
+  perspective?: number
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initial?: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,6 +29,8 @@ export default function TiltCard({
   children,
   className,
   style,
+  maxTilt = DEFAULT_MAX_TILT,
+  perspective = 900,
   initial,
   animate,
   transition,
@@ -51,9 +55,9 @@ export default function TiltCard({
     const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2
 
     // rotateX tilts around horizontal axis (mouse Y controls it, inverted)
-    rotateX.set(-ny * MAX_TILT)
+    rotateX.set(-ny * maxTilt)
     // rotateY tilts around vertical axis (mouse X controls it)
-    rotateY.set(nx * MAX_TILT)
+    rotateY.set(nx * maxTilt)
   }
 
   const handleMouseLeave = () => {
@@ -64,10 +68,8 @@ export default function TiltCard({
   return (
     <motion.div
       ref={ref}
-      className={className}
       style={{
-        ...style,
-        perspective: 800,
+        perspective,
         willChange: 'transform',
       }}
       initial={initial}
@@ -77,10 +79,13 @@ export default function TiltCard({
       onMouseLeave={handleMouseLeave}
     >
       <motion.div
+        className={className}
         style={{
+          ...style,
           rotateX: springX,
           rotateY: springY,
           transformStyle: 'preserve-3d',
+          willChange: 'transform',
         }}
       >
         {children}

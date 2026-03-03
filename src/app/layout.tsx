@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { Inter, JetBrains_Mono, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import './viewport.css'
 import 'dialkit/styles.css'
@@ -36,6 +36,15 @@ const jetbrainsMono = JetBrains_Mono({
   fallback: ['ui-monospace', 'monospace'],
 })
 
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-playfair-display',
+  display: 'swap',
+  preload: true,
+  fallback: ['Georgia', 'Times New Roman', 'serif'],
+})
+
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -46,9 +55,10 @@ export const viewport = {
 
 const faviconVersion = '20260207'
 const brandName = 'Hunter Bastian // Studio Alpine'
+const sitePreviewTitle = 'Hunter Bastian - Portfolio'
 
 export const metadata: Metadata = {
-  title: `${brandName} - Portfolio`,
+  title: sitePreviewTitle,
   description: 'Student Product Designer and Photographer',
   keywords: [brandName, 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
   authors: [{ name: brandName }],
@@ -73,7 +83,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://hunterbastian.com',
-    title: `${brandName} - Portfolio`,
+    title: sitePreviewTitle,
     description: 'Student Product Designer and Photographer',
     siteName: `${brandName} Portfolio`,
     images: [
@@ -87,7 +97,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${brandName} - Portfolio`,
+    title: sitePreviewTitle,
     description: 'Student Product Designer and Photographer',
     images: ['/images/social/profile-preview.jpg'],
   },
@@ -176,7 +186,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-                   <body className={`${inter.className} ${jetbrainsMono.variable} safe-area-padding bg-background text-foreground`}>
+                   <body className={`${inter.className} ${jetbrainsMono.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
                 <CursorFollower />
                 <SmoothScroll>
                   <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>

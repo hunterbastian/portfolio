@@ -26,6 +26,7 @@ const config: Config = {
         'portrait': { 'raw': '(orientation: portrait)' },
       },
       fontSize: {
+        'sm': ['0.8125rem', { lineHeight: '1.25rem' }],
         'fluid-sm': 'clamp(0.875rem, 0.8rem + 0.375vw, 1rem)',
         'fluid-base': 'clamp(1rem, 0.9rem + 0.5vw, 1.125rem)',
         'fluid-lg': 'clamp(1.125rem, 1rem + 0.625vw, 1.25rem)',
@@ -39,6 +40,15 @@ const config: Config = {
         'safe-bottom': 'env(safe-area-inset-bottom)',
         'safe-left': 'env(safe-area-inset-left)',
         'safe-right': 'env(safe-area-inset-right)',
+      },
+      borderRadius: {
+        sm: 'var(--box-radius)',
+        DEFAULT: 'var(--box-radius)',
+        md: 'var(--box-radius)',
+        lg: 'var(--box-radius)',
+        xl: 'var(--box-radius)',
+        '2xl': 'var(--box-radius)',
+        '3xl': 'var(--box-radius)',
       },
       colors: {
         background: 'var(--background)',

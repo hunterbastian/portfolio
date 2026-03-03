@@ -19,7 +19,6 @@ export default function CursorFollower() {
   const [isTouch, setIsTouch] = useState(true) // true by default avoids flash
   const [visible, setVisible] = useState(false)
   const [hovering, setHovering] = useState(false)
-  const [clicking, setClicking] = useState(false)
   const entered = useRef(false)
 
   // Cursor position — updates directly, no React re-renders
@@ -45,9 +44,6 @@ export default function CursorFollower() {
       }
     }
 
-    const onDown = () => setClicking(true)
-    const onUp = () => setClicking(false)
-
     const onOver = (e: MouseEvent) => {
       if ((e.target as HTMLElement).closest(INTERACTIVE)) setHovering(true)
     }
@@ -65,8 +61,6 @@ export default function CursorFollower() {
     }
 
     window.addEventListener('mousemove', onMove, { passive: true })
-    window.addEventListener('mousedown', onDown)
-    window.addEventListener('mouseup', onUp)
     document.addEventListener('mouseover', onOver, { passive: true })
     document.addEventListener('mouseout', onOut, { passive: true })
     document.documentElement.addEventListener('mouseleave', onLeave)
@@ -74,8 +68,6 @@ export default function CursorFollower() {
 
     return () => {
       window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mousedown', onDown)
-      window.removeEventListener('mouseup', onUp)
       document.removeEventListener('mouseover', onOver)
       document.removeEventListener('mouseout', onOut)
       document.documentElement.removeEventListener('mouseleave', onLeave)
@@ -111,7 +103,7 @@ export default function CursorFollower() {
             mixBlendMode: 'exclusion',
           }}
           animate={{
-            scale: clicking ? 0.9 : hovering ? 1.4 : 1,
+            scale: hovering ? 1.4 : 1,
             opacity: visible ? (hovering ? 0.5 : 0.25) : 0,
           }}
           transition={{ duration: 0.35, ease: EASE }}

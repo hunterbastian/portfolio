@@ -15,6 +15,7 @@ import {
 } from 'nucleo-social-media'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import ResumePreview from './ResumePreview'
+import TiltCard from './TiltCard'
 import TextType from './TextType'
 import CollapsibleSection from './CollapsibleSection'
 
@@ -733,7 +734,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </div>
           </div>
 
-          <motion.div
+          <TiltCard
             className="mb-4 rounded-md border border-border bg-card px-4 py-4 sm:px-5 sm:py-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
@@ -744,7 +745,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
               ease: STAGGER_PANEL.ease,
             }}
-            style={{ willChange: 'opacity, transform' }}
           >
             <motion.p
               className="text-muted-foreground text-sm font-sans leading-relaxed m-0"
@@ -765,7 +765,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               meaningful interfaces with an AI-first mindset while growing{' '}
               <span className="ambient-word-glow font-semibold" data-glow="Studio Alpine">Studio Alpine</span>.
             </motion.p>
-          </motion.div>
+          </TiltCard>
 
           <motion.div
             className="mt-4 sm:mt-5"

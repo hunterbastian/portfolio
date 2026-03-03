@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
+import { getLenisInstance } from '@/lib/lenis'
 import FooterSnakeEasterEgg from './FooterSnakeEasterEgg'
 
 export default function Footer() {
@@ -10,33 +11,62 @@ export default function Footer() {
   const lastScrollY = useRef(0)
   const prefersReducedMotion = useReducedMotion()
 
-  useEffect(() => {
-    const threshold = 4 // minimum px delta to count as intentional scroll
+  const handleScroll = useCallback((scrollY: number, limit: number) => {
+    const threshold = 4
+    const delta = scrollY - lastScrollY.current
+    const nearBottom = scrollY >= limit - 80
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      const delta = currentScrollY - lastScrollY.current
-
-      // Near the very bottom of the page — always show
-      const nearBottom =
-        window.innerHeight + currentScrollY >= document.documentElement.scrollHeight - 80
-
-      if (nearBottom) {
-        setVisible(true)
-      } else if (delta > threshold) {
-        // Scrolling down → show the shelf
-        setVisible(true)
-      } else if (delta < -threshold) {
-        // Scrolling up → hide the shelf
-        setVisible(false)
-      }
-
-      lastScrollY.current = currentScrollY
+    if (nearBottom) {
+      setVisible(true)
+    } else if (delta > threshold) {
+      setVisible(true)
+    } else if (delta < -threshold) {
+      setVisible(false)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    lastScrollY.current = scrollY
   }, [])
+
+  useEffect(() => {
+    // Poll for Lenis instance (it initializes async in SmoothScroll)
+    let intervalId: ReturnType<typeof setInterval> | null = null
+    let cleanup: (() => void) | null = null
+
+    const attach = () => {
+      const lenis = getLenisInstance()
+      if (lenis) {
+        const onScroll = ({ scroll, limit }: { scroll: number; limit: number }) => {
+          handleScroll(scroll, limit)
+        }
+        lenis.on('scroll', onScroll)
+        cleanup = () => lenis.off('scroll', onScroll)
+        if (intervalId) clearInterval(intervalId)
+        return true
+      }
+      return false
+    }
+
+    // Try immediately, then poll every 100ms
+    if (!attach()) {
+      intervalId = setInterval(() => { attach() }, 100)
+    }
+
+    // Fallback: also listen to native scroll for non-Lenis environments
+    const onNativeScroll = () => {
+      if (!getLenisInstance()) {
+        const scrollY = window.scrollY
+        const limit = document.documentElement.scrollHeight - window.innerHeight
+        handleScroll(scrollY, limit)
+      }
+    }
+    window.addEventListener('scroll', onNativeScroll, { passive: true })
+
+    return () => {
+      if (intervalId) clearInterval(intervalId)
+      cleanup?.()
+      window.removeEventListener('scroll', onNativeScroll)
+    }
+  }, [handleScroll])
 
   return (
     <motion.footer

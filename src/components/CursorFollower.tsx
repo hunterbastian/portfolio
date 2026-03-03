@@ -11,7 +11,7 @@ import {
 const INTERACTIVE =
   'a, button, [role="button"], input, select, textarea, label, [data-cursor="pointer"]'
 
-const SPRING = { stiffness: 200, damping: 25, mass: 0.5 }
+const SPRING = { stiffness: 120, damping: 28, mass: 0.8 }
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function CursorFollower() {
@@ -95,26 +95,6 @@ export default function CursorFollower() {
         pointerEvents: 'none',
       }}
     >
-      {/* Dot — precise cursor replacement */}
-      <motion.div
-        style={{
-          position: 'fixed',
-          left: cx,
-          top: cy,
-          x: '-50%',
-          y: '-50%',
-          width: 6,
-          height: 6,
-          borderRadius: '50%',
-          backgroundColor: 'var(--foreground)',
-        }}
-        animate={{
-          scale: clicking ? 0.5 : 1,
-          opacity: visible ? 1 : 0,
-        }}
-        transition={{ duration: 0.15, ease: EASE }}
-      />
-
       {/* Ring — spring-lagged with blend mode */}
       {!prefersReduced && (
         <motion.div
@@ -124,17 +104,17 @@ export default function CursorFollower() {
             top: ry,
             x: '-50%',
             y: '-50%',
-            width: 36,
-            height: 36,
+            width: 40,
+            height: 40,
             borderRadius: '50%',
-            border: '1.5px solid var(--foreground)',
+            border: '1px solid var(--foreground)',
             mixBlendMode: 'exclusion',
           }}
           animate={{
-            scale: clicking ? 0.85 : hovering ? 1.5 : 1,
-            opacity: visible ? (hovering ? 0.8 : 0.4) : 0,
+            scale: clicking ? 0.9 : hovering ? 1.4 : 1,
+            opacity: visible ? (hovering ? 0.5 : 0.25) : 0,
           }}
-          transition={{ duration: 0.25, ease: EASE }}
+          transition={{ duration: 0.35, ease: EASE }}
         />
       )}
     </div>

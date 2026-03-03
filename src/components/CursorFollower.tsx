@@ -8,7 +8,7 @@ import {
   useReducedMotion,
 } from 'framer-motion'
 
-const SPRING = { stiffness: 120, damping: 28, mass: 0.8 }
+const SPRING = { stiffness: 70, damping: 20, mass: 1.2 }
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function CursorFollower() {

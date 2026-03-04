@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { createElement, useEffect } from 'react'
 import ArcSigilLoader from './ArcSigilLoader'
 
 // LDRS loader types
@@ -95,27 +95,27 @@ export default function Loader({
 
     switch (type) {
       case 'zoomies':
-        return <l-zoomies {...commonProps} />
+        return createElement('l-zoomies', commonProps)
       case 'bouncy':
-        return <l-bouncy {...commonProps} />
+        return createElement('l-bouncy', commonProps)
       case 'ring':
-        return <l-ring {...commonProps} />
+        return createElement('l-ring', commonProps)
       case 'spiral':
-        return <l-spiral {...commonProps} />
+        return createElement('l-spiral', commonProps)
       case 'dots-pulse':
-        return <l-dots-pulse {...commonProps} />
+        return createElement('l-dots-pulse', commonProps)
       case 'quantum':
-        return <l-quantum {...commonProps} />
+        return createElement('l-quantum', commonProps)
       case 'tailspin':
-        return <l-tailspin {...commonProps} />
+        return createElement('l-tailspin', commonProps)
       case 'lineSpinner':
-        return <l-line-spinner {...commonProps} />
+        return createElement('l-line-spinner', commonProps)
       case 'dotStream':
-        return <l-dot-stream {...commonProps} />
+        return createElement('l-dot-stream', commonProps)
       case 'infinity':
-        return <l-infinity {...commonProps} />
+        return createElement('l-infinity', commonProps)
       default:
-        return <l-zoomies {...commonProps} />
+        return createElement('l-zoomies', commonProps)
     }
   }
 

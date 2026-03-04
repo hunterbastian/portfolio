@@ -13,6 +13,22 @@ function resolveImageUrl(image: string): string {
   return image.startsWith('/') ? `${BASE_URL}${image}` : image
 }
 
+function formatProjectDate(dateValue?: string): string {
+  if (!dateValue) {
+    return ''
+  }
+
+  const parsedDate = new Date(dateValue)
+  if (Number.isNaN(parsedDate.getTime())) {
+    return dateValue
+  }
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    year: 'numeric',
+  }).format(parsedDate)
+}
+
 // Revalidate every 5 minutes for individual project pages
 export const revalidate = 300
 
@@ -83,6 +99,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const { frontmatter, content } = project
   const projectUrl = `${BASE_URL}/projects/${slug}`
   const imageUrl = resolveImageUrl(frontmatter.image)
+  const displayTitle = frontmatter.displayTitle ?? frontmatter.title
+  const formattedDate = formatProjectDate(frontmatter.date)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -110,27 +128,30 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <article className="container mx-auto max-w-4xl px-4 py-8 sm:px-6">
+    <article className="container mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mb-8">
+      <div className="mb-16">
         <Link
           href="/#case-studies"
-          className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
         >
           <span aria-hidden className="text-base leading-none">↩</span>
           <span className="text-foreground">Home</span>
           <span aria-hidden className="text-muted-foreground/70">/</span>
           <span>Projects</span>
         </Link>
-
-        <h1 className="mb-8 text-3xl font-bold sm:text-4xl md:text-5xl">{frontmatter.title}</h1>
       </div>
 
-      <div className="aspect-video relative rounded-xl overflow-hidden mb-12">
+      <header className="mx-auto mb-8 flex max-w-2xl flex-col items-center text-center">
+        <h1 className="text-xl font-medium tracking-[0.01em] text-foreground sm:text-2xl">{displayTitle}</h1>
+        {formattedDate && <p className="mt-1 text-lg text-muted-foreground">{formattedDate}</p>}
+      </header>
+
+      <div className="relative mx-auto mb-12 aspect-[4/3] w-full max-w-3xl overflow-hidden rounded-sm">
         <Image
           src={frontmatter.image}
           alt={frontmatter.title}
@@ -140,6 +161,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
         />
       </div>
+
+      <p className="mx-auto mb-14 max-w-3xl px-2 text-center text-lg leading-relaxed text-muted-foreground">
+        {frontmatter.description}
+      </p>
 
       <div className="mb-12 flex flex-wrap gap-4">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">

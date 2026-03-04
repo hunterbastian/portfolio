@@ -9,7 +9,10 @@ type ListProps = React.HTMLAttributes<HTMLUListElement>
 type OrderedListProps = React.HTMLAttributes<HTMLOListElement>
 type ListItemProps = React.HTMLAttributes<HTMLLIElement>
 type AnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>
-type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+type InternalLinkProps = Omit<React.ComponentProps<typeof Link>, 'href' | 'children'>
+type ImageProps = Omit<React.ComponentProps<typeof Image>, 'src' | 'alt' | 'width' | 'height'> & {
+  src?: string
+  alt?: string
   width?: number
   height?: number
 }
@@ -51,8 +54,9 @@ export const A: React.FC<AnchorProps> = ({ href = '', children, ...props }) => {
       </a>
     )
   }
+  const linkProps = props as InternalLinkProps
   return (
-    <Link href={href} className="text-primary underline underline-offset-4" {...(props as any)}>
+    <Link href={href} className="text-primary underline underline-offset-4" {...linkProps}>
       {children}
     </Link>
   )
@@ -68,7 +72,7 @@ export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, he
       className="w-full rounded-lg shadow-lg"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
       priority={false}
-      {...props as any}
+      {...props}
     />
   </div>
 )

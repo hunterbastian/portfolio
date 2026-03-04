@@ -212,9 +212,7 @@ const contactLinks: ContactLinkItem[] = [
 ]
 const HERO_HEADLINE_TEXT = 'Hunter Bastian'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
-const HERO_UPDATE_NOTE = 'Accepting new clients'
 const CONTACT_EMAIL_HREF = 'mailto:hello@hunterbastian.com?subject=Project%20Inquiry'
-const HERO_UPDATE_NOTE_HREF = CONTACT_EMAIL_HREF
 
 const HERO_TYPING = {
   headline: 62, // keep current speed
@@ -438,60 +436,6 @@ function CreatingLoader() {
         </motion.div>
       )}
     </AnimatePresence>
-  )
-}
-
-function PomodoroEntry() {
-  const [hovered, setHovered] = useState(false)
-  return (
-    <>
-      <a
-        href="https://mini-pomodoro.vercel.app"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
-        aria-label="Pomodoro Timer project"
-        title="Pomodoro Timer"
-      >
-        <span>Pomodoro</span>
-      </a>
-      <a
-        href="https://mini-pomodoro.vercel.app"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="status-pill status-pill-action relative inline-flex items-center gap-2 overflow-hidden rounded-md px-3 py-1 no-underline"
-        aria-label="View Pomodoro Timer on GitHub"
-        title="View on GitHub"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          {hovered ? (
-            <motion.span
-              key="hover"
-              className="status-pill-label whitespace-nowrap text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
-            >
-              ▶ Play now
-            </motion.span>
-          ) : (
-            <motion.span
-              key="default"
-              className="status-pill-label whitespace-nowrap text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
-            >
-              ⏱ Pomodoro
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </a>
-    </>
   )
 }
 

@@ -46,7 +46,9 @@ export default function UnicornOrb({
           setTimeout(removeWatermark, 300)
           setTimeout(removeWatermark, 1000)
         }
-      } catch {}
+      } catch {
+        return
+      }
     }
 
     const anyWindow = window as unknown as { UnicornStudio?: { init: () => void; isInitialized?: boolean }; __usScriptLoading?: boolean }

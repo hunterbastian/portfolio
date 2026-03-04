@@ -143,7 +143,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             className="min-h-screen"
           >
             {/* Project page container styling */}
-            <article className="container mx-auto max-w-[540px] px-4 py-8 min-h-screen">
+            <article className="container mx-auto max-w-[560px] px-4 py-8 min-h-screen">
               {/* Header - matches project page header */}
               <div className="mb-8">
                 <button

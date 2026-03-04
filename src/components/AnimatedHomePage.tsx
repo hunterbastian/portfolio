@@ -28,7 +28,7 @@ interface EducationItem {
   note?: string
 }
 
-type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'techStack' | 'contact'
+type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'contact'
 type SectionOpenState = Record<SectionKey, boolean>
 
 interface SectionNavigateDetail {
@@ -42,7 +42,6 @@ const DEFAULT_SECTION_OPEN_STATE: SectionOpenState = {
   caseStudies: true,
   experience: true,
   education: true,
-  techStack: true,
   contact: true,
 }
 
@@ -51,7 +50,6 @@ const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
   '#case-studies': 'caseStudies',
   '#experience': 'experience',
   '#education': 'education',
-  '#tech-stack': 'techStack',
   '#contact': 'contact',
 }
 
@@ -66,31 +64,28 @@ const experience: ExperienceItem[] = [
     company: 'Studio Alpine',
     title: 'Founder',
     active: true,
-    description:
-      "Founder of Studio Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future.",
+    description: 'Founder of Studio Alpine, a photography and design project.',
   },
   {
     year: '2024 - Present',
     company: 'Catapult',
     title: 'Video Producer',
     active: true,
-    description:
-      'Produce and edit marketing videos for Catapult products including banner stands, from planning and filming to post-production in Final Cut Pro. Deliver optimized content for YouTube to support marketing campaigns and ensure alignment with brand standards.',
+    description: 'Produced and edit marketing and product videos for Catapult.',
   },
   {
     year: '2024 - Present',
     company: 'Utah Valley University',
     title: 'Department Representative',
     active: true,
-    description:
-      'Helped new students with internship opportunities, helping design students in the Web Design and Development program, working on ongoing topics and issues within our department. Responsibilities include finding internship opportunities for students and assisting at school sponsored events, as well as content creation for UVU CET social media and marketing.',
+    description: 'Helped new students with internship opportunities in the Web Design and Development program.',
   },
   {
     year: '2023',
     company: 'Nutricost',
     title: 'Graphic Design Intern',
     description:
-      'At Nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue. Assisted the marketing team with their design queue and helped with production. Edited product mockups in Photoshop and Illustrator for Nutricost online product images. Worked on and edited Amazon online product images.',
+      'At Nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue.',
   },
   {
     year: '2017',
@@ -123,14 +118,15 @@ const education: EducationItem[] = [
   },
 ]
 
-const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
 const HERO_HEADLINE_TEXT = 'Hunter Bastian'
-const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
+const HERO_SUBTITLE_TEXT = 'Interaction Designer'
 const CONTACT_EMAIL_HREF = 'mailto:hello@hunterbastian.com?subject=Project%20Inquiry'
-const HERO_TEXT_LINKS = [
-  { label: 'Email', href: CONTACT_EMAIL_HREF },
-  { label: 'X', href: 'https://x.com/thestudioalpine' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian' },
+const CONTACT_SOCIAL_LINKS = [
+  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
+  { label: 'Threads', href: 'https://threads.net/@studio.alpine', external: true },
+  { label: 'X', href: 'https://x.com/thestudioalpine', external: true },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
+  { label: 'GitHub', href: 'https://github.com/hunterbastian', external: true },
 ] as const
 
 const HERO_ENTRANCE = {
@@ -290,15 +286,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
   const experiencePanelRef = useRef<HTMLDivElement>(null)
   const educationPanelRef = useRef<HTMLDivElement>(null)
-  const stackPanelRef = useRef<HTMLDivElement>(null)
 
   const isExperienceInView = useInView(experiencePanelRef, { once: true, margin: '-120px 0px -120px 0px' })
   const isEducationInView = useInView(educationPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
-  const isStackInView = useInView(stackPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
 
   const experienceStage = useSectionStage(sectionOpen.experience, isExperienceInView, prefersReducedMotion)
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
-  const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -376,24 +369,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
-      <motion.p
-        className="pointer-events-none fixed right-4 top-4 z-50 select-none text-right font-mono text-[10px] font-normal tracking-[0.12em] text-foreground sm:right-6 sm:top-6 sm:text-[11px]"
-        initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-        animate={{
-          opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-          y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-        }}
-        transition={{
-          duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-          delay: heroTextStage >= 2 ? motionDelayMs(0, prefersReducedMotion) : 0,
-          ease: STAGGER_PANEL.ease,
-        }}
-      >
-        {HERO_SUBTITLE_TEXT}
-      </motion.p>
       <CreatingLoader />
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
-        <div className="mx-auto max-w-[540px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
+        <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <motion.div
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94 }}
@@ -419,6 +397,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               >
                 {HERO_HEADLINE_TEXT}
               </h1>
+              <p className="mt-1 font-mono text-[11px] font-normal tracking-[0.06em] text-foreground opacity-75 sm:text-xs">
+                {HERO_SUBTITLE_TEXT}
+              </p>
             </div>
           </div>
 
@@ -468,60 +449,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
           >
             <div className="flex items-center justify-start rounded-xl bg-transparent px-0 py-0">
-              <div className="flex flex-col items-start gap-3 sm:gap-4">
-                <div className="flex flex-wrap items-center gap-x-8 gap-y-2 font-mono text-[clamp(1.15rem,2.5vw,2rem)] font-normal tracking-[0.01em]">
-                  {HERO_TEXT_LINKS.map((link, index) => (
-                    <motion.a
-                      key={link.label}
-                      href={link.href}
-                      target={link.label === 'Email' ? undefined : '_blank'}
-                      rel={link.label === 'Email' ? undefined : 'noopener noreferrer'}
-                      className="text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
-                      aria-label={link.label}
-                      title={link.label}
-                      initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                      animate={{
-                        opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                        y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                      }}
-                      transition={{
-                        duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                        delay: isHeroCopyVisible
-                          ? motionDelayMs(socialRevealDelay + index * STAGGER_TIMING.itemStagger, prefersReducedMotion)
-                          : 0,
-                        ease: STAGGER_PANEL.ease,
-                      }}
-                    >
-                      {link.label}
-                    </motion.a>
-                  ))}
-                </div>
-
-                <motion.div
-                  initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                  animate={{
-                    opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                    y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                  }}
-                  transition={{
-                    duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                    delay: isHeroCopyVisible
-                      ? motionDelayMs(
-                          socialRevealDelay + HERO_TEXT_LINKS.length * STAGGER_TIMING.itemStagger,
-                          prefersReducedMotion,
-                        )
-                      : 0,
-                    ease: STAGGER_PANEL.ease,
-                  }}
+              <motion.div
+                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                animate={{
+                  opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                  y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                }}
+                transition={{
+                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                  delay: isHeroCopyVisible ? motionDelayMs(socialRevealDelay, prefersReducedMotion) : 0,
+                  ease: STAGGER_PANEL.ease,
+                }}
+              >
+                <a
+                  href="/archive"
+                  className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
                 >
-                  <a
-                    href="/archive"
-                    className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
-                  </a>
-                </motion.div>
-              </div>
+                  <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
+                </a>
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -538,7 +484,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="mx-auto max-w-[540px] text-left">
+        <div className="mx-auto max-w-[560px] text-left">
           <ul className="space-y-2">
             <li>
               <a
@@ -562,6 +508,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <span>Studio Alpine</span>
               </a>
             </li>
+            <li>
+              <a
+                href="https://github.com/hunterbastian/mini-lands"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
+                aria-label="mini-lands on GitHub"
+                title="mini-lands on GitHub"
+              >
+                <span>mini-lands (GitHub)</span>
+              </a>
+            </li>
           </ul>
         </div>
       </CollapsibleSection>
@@ -578,7 +536,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
-        <div className="mx-auto max-w-[540px] rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
+        <div className="mx-auto max-w-[560px] rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
           {children}
         </div>
       </CollapsibleSection>
@@ -593,7 +551,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="mx-auto max-w-[540px]">
+        <div className="mx-auto max-w-[560px]">
           <motion.div
             ref={experiencePanelRef}
             className="nord-panel rounded-lg p-4 sm:p-5 space-y-2"
@@ -664,7 +622,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="mx-auto max-w-[540px]">
+        <div className="mx-auto max-w-[560px]">
           <motion.div
             ref={educationPanelRef}
             className="nord-panel rounded-lg p-5 space-y-5"
@@ -724,56 +682,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </CollapsibleSection>
 
       <CollapsibleSection
-        id="tech-stack"
-        title="05 STACK"
-        isOpen={sectionOpen.techStack}
-        onToggle={() => toggleSection('techStack')}
-        className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-12"
-        closedClassName="py-5"
-        contentClassName="mt-4"
-      >
-        <div className="mx-auto max-w-[540px]">
-          <motion.div
-            ref={stackPanelRef}
-            className="mx-auto flex max-w-[540px] flex-wrap justify-start gap-x-6 gap-y-3"
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
-            animate={{
-              opacity: stackStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
-              y: stackStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-            }}
-            transition={{
-              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
-              ease: STAGGER_PANEL.ease,
-            }}
-          >
-            {skills.map((skill, index) => (
-              <motion.div
-                key={skill}
-                className="text-center"
-                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                animate={{
-                  opacity: stackStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                  y: stackStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                }}
-                transition={{
-                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                  delay: stackStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
-                  ease: STAGGER_PANEL.ease,
-                }}
-              >
-                <span className="text-sm text-muted-foreground tracking-[0.08em] uppercase font-medium">
-                  {skill}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </CollapsibleSection>
-
-      <CollapsibleSection
         id="contact"
-        title="06 CONTACT"
+        title="05 CONTACT"
         isOpen={sectionOpen.contact}
         onToggle={() => toggleSection('contact')}
         className="px-4 sm:px-6 lg:px-0"
@@ -781,7 +691,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="mx-auto max-w-[540px]">
+        <div className="mx-auto max-w-[560px]">
           <a
             href={CONTACT_EMAIL_HREF}
             className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
@@ -790,6 +700,21 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           >
             <span className="font-light uppercase tracking-[0.08em] relative z-10">Email me</span>
           </a>
+          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[14px] font-normal tracking-[0.02em] sm:text-[15px]">
+            {CONTACT_SOCIAL_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+                className="text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
+                aria-label={link.label}
+                title={link.label}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
       </CollapsibleSection>
 

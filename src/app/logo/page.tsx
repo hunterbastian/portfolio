@@ -2,8 +2,8 @@ import ArcSigilLoader from '@/components/ArcSigilLoader'
 
 export default function LogoPage() {
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-[540px] flex-col items-center justify-center px-6 py-12">
-      <div className="nord-panel w-full max-w-[540px] rounded-xl p-8 text-center">
+    <main className="mx-auto flex min-h-screen w-full max-w-[560px] flex-col items-center justify-center px-6 py-12">
+      <div className="nord-panel w-full max-w-[560px] rounded-xl p-8 text-center">
         <p className="font-code text-xs uppercase tracking-[0.14em] text-muted-foreground">Studio Alpine</p>
         <h1 className="mt-3 font-garamond-narrow text-3xl font-semibold text-foreground sm:text-4xl">
           Loader Logo Export

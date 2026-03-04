@@ -25,7 +25,7 @@ export default function ArchivePage() {
   const archivedProjects = getArchivedProjects()
 
   return (
-    <div className="container mx-auto max-w-[540px] px-4 py-12 sm:py-16">
+    <div className="container mx-auto max-w-[560px] px-4 py-12 sm:py-16">
       <div className="mb-8">
         <Link 
           href="/" 

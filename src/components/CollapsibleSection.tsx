@@ -152,7 +152,7 @@ export default function CollapsibleSection({
 
   return (
     <section id={id} className={sectionClasses}>
-      <div className="relative mx-auto flex min-h-6 w-full max-w-[540px] items-center justify-start">
+      <div className="relative mx-auto flex min-h-6 w-full max-w-[560px] items-center justify-start">
         <motion.h2
           ref={titleRef}
           className="section-heading m-0 font-mono text-[12px] leading-none tracking-[0.06em]"

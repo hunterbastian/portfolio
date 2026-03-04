@@ -128,7 +128,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <article className="container mx-auto max-w-[540px] px-4 pb-16 pt-8 sm:px-6">
+    <article className="container mx-auto max-w-[560px] px-4 pb-16 pt-8 sm:px-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -146,12 +146,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Link>
       </div>
 
-      <header className="mx-auto mb-8 flex max-w-[540px] flex-col items-center text-center">
+      <header className="mx-auto mb-8 flex max-w-[560px] flex-col items-center text-center">
         <h1 className="text-xl font-medium tracking-[0.01em] text-foreground sm:text-2xl">{displayTitle}</h1>
         {formattedDate && <p className="mt-1 text-lg text-muted-foreground">{formattedDate}</p>}
       </header>
 
-      <div className="relative mx-auto mb-12 aspect-[4/3] w-full max-w-[540px] overflow-hidden rounded-sm">
+      <div className="relative mx-auto mb-12 aspect-[4/3] w-full max-w-[560px] overflow-hidden rounded-sm">
         <Image
           src={frontmatter.image}
           alt={frontmatter.title}
@@ -162,7 +162,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         />
       </div>
 
-      <p className="mx-auto mb-14 max-w-[540px] px-2 text-center text-lg leading-relaxed text-muted-foreground">
+      <p className="mx-auto mb-14 max-w-[560px] px-2 text-center text-lg leading-relaxed text-muted-foreground">
         {frontmatter.description}
       </p>
 

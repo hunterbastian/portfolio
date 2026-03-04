@@ -181,7 +181,7 @@ export default function RootLayout({
                    <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
                 <CursorFollower />
                 <p
-                  className="pointer-events-none fixed left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-muted-foreground sm:left-6 sm:top-6 sm:text-[11px]"
+                  className="pointer-events-none fixed left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-75 sm:left-6 sm:top-6 sm:text-[11px]"
                   aria-label={`Coordinates ${siteCoordinates}`}
                 >
                   {siteCoordinates}

@@ -38,7 +38,6 @@ const HOME_SECTION_NAV = [
   { name: 'PROJECTS', href: '#case-studies' },
   { name: 'EXPERIENCE', href: '#experience' },
   { name: 'EDUCATION', href: '#education' },
-  { name: 'STACK', href: '#tech-stack' },
   { name: 'CONTACT', href: '#contact' },
 ] as const
 

@@ -33,7 +33,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
   render() {
     if (this.state.hasError) {
       return (
-        <div className="container mx-auto max-w-[540px] px-4 py-16 text-center">
+        <div className="container mx-auto max-w-[560px] px-4 py-16 text-center">
           <h2 className="text-2xl font-semibold mb-3">Something went wrong</h2>
           <p className="text-muted-foreground mb-6">Please try again. If the issue persists, contact me.</p>
           <div className="flex items-center justify-center gap-3">

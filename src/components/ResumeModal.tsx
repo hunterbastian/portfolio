@@ -157,7 +157,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   Back to portfolio
                 </button>
                 
-                <h1 className="text-[2.08rem] md:text-[2.83rem] font-bold mb-8">Hunter Bastian // Studio Alpine</h1>
+                <h1 className="text-[2.08rem] md:text-[2.83rem] font-bold mb-8">Hunter Bastian // hunterbastian.com</h1>
               </div>
 
               {/* Resume Details - matches project details */}
@@ -198,7 +198,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     <iframe
                       src="/api/resume/file"
                       className="w-full h-screen border-0 rounded-xl"
-                      title="Hunter Bastian // Studio Alpine Resume"
+                      title="Hunter Bastian // hunterbastian.com Resume"
                     />
                   </div>
                 </>

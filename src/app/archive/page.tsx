@@ -5,7 +5,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 const baseUrl = 'https://hunterbastian.com'
-const brandName = 'Hunter Bastian // Studio Alpine'
+const brandName = 'Hunter Bastian // hunterbastian.com'
 
 export const metadata: Metadata = {
   title: `Playground | ${brandName} Portfolio`,

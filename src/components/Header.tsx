@@ -146,7 +146,7 @@ export default function Header() {
             title="Return to top"
           >
             <span
-              className="font-sans text-[11px] font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
+              className="text-[11px] font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
               style={{ color: 'var(--foreground)', opacity: 0.9 }}
             >
               Hunter Bastian
@@ -175,7 +175,7 @@ export default function Header() {
                   onMouseEnter={() => setHoveredSection(item.href)}
                   onFocus={() => setHoveredSection(item.href)}
                   onBlur={() => setHoveredSection('')}
-                  className={`header-nav-link font-sans cursor-pointer ${isActive ? 'is-active' : ''} ${
+                  className={`header-nav-link cursor-pointer ${isActive ? 'is-active' : ''} ${
                     emphasizedSection === item.href ? 'is-emphasis' : 'is-subdued'
                   }`}
                   aria-current={isActive ? 'page' : undefined}
@@ -215,7 +215,7 @@ export default function Header() {
                     }
                     setShowMobileMenu(false)
                   }}
-                  className={`font-sans block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
+                  className={`block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
                     isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { useDialKit } from 'dialkit'
 import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -90,11 +90,11 @@ function getStackPriorityZIndex(index: number, total: number, stackPriority: str
 }
 
 const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
-  'brand-identity-system': { rotate: -6.2, x: -14 }, // Middle Earth Journey - left tilt
-  'aol-redesign': { rotate: -5.4, x: -11 }, // AOL Redesign - left tilt
-  'porsche-app': { rotate: 6.2, x: 14 }, // Porsche App - right tilt
-  'wander-utah': { rotate: 0, x: 0 }, // centered / no tilt
-  'grand-teton-wallet': { rotate: 0, x: 0 }, // centered / no tilt
+  'brand-identity-system': { rotate: -6.2, x: -14 },
+  'aol-redesign': { rotate: -5.4, x: -11 },
+  'porsche-app': { rotate: 6.2, x: 14 },
+  'wander-utah': { rotate: 0, x: 0 },
+  'grand-teton-wallet': { rotate: 0, x: 0 },
   nutricost: { rotate: -2.8, x: -5 },
 }
 
@@ -104,7 +104,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   const [stage, setStage] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isGridHovered, setIsGridHovered] = useState(false)
-  const [activeCaseStudySlug, setActiveCaseStudySlug] = useState<string | null>(null)
   const [supportsHover, setSupportsHover] = useState(() => {
     if (typeof window === 'undefined') {
       return false
@@ -112,6 +111,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
 
     return window.matchMedia('(hover: hover) and (pointer: fine)').matches
   })
+
   const router = useRouter()
   const prefersReducedMotion = useReducedMotion() ?? false
   const gridRef = useRef<HTMLDivElement>(null)
@@ -121,6 +121,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
 
   const orderedProjects = useMemo(() => {
     const orderIndex = new Map<string, number>(CASE_STUDY_ORDER.map((slug, index) => [slug, index]))
+
     return [...projects].sort((a, b) => {
       const aIndex = orderIndex.get(a.slug)
       const bIndex = orderIndex.get(b.slug)
@@ -134,17 +135,10 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
       if (bIndex != null) {
         return 1
       }
+
       return 0
     })
   }, [projects])
-
-  const activeCaseStudy = useMemo(() => {
-    if (!activeCaseStudySlug) {
-      return null
-    }
-
-    return orderedProjects.find((project) => project.slug === activeCaseStudySlug) ?? null
-  }, [activeCaseStudySlug, orderedProjects])
 
   const caseStudyDial = useDialKit('Case Study Stack', {
     pile: {
@@ -186,15 +180,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     router.prefetch(`/projects/${slug}`)
   }, [router])
 
-  const openCaseStudyOverlay = useCallback((slug: string) => {
-    prefetchProject(slug)
-    setActiveCaseStudySlug(slug)
-  }, [prefetchProject])
-
-  const closeCaseStudyOverlay = useCallback(() => {
-    setActiveCaseStudySlug(null)
-  }, [])
-
   useEffect(() => {
     if (typeof window === 'undefined') {
       return
@@ -205,6 +190,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
 
     updateSupportsHover()
     mediaQuery.addEventListener('change', updateSupportsHover)
+
     return () => mediaQuery.removeEventListener('change', updateSupportsHover)
   }, [])
 
@@ -234,27 +220,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     return () => timers.forEach(clearTimeout)
   }, [initialLoadDelayMs, isGridInView, prefersReducedMotion])
 
-  useEffect(() => {
-    if (!activeCaseStudySlug) {
-      return
-    }
-
-    const previousOverflow = document.body.style.overflow
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeCaseStudyOverlay()
-      }
-    }
-
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', handleEscape)
-
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleEscape)
-    }
-  }, [activeCaseStudySlug, closeCaseStudyOverlay])
-
   const isExpandedLayout = !supportsHover || isGridHovered
   const layoutTransitionDuration = isExpandedLayout ? caseStudyDial.motion.expandMs : caseStudyDial.motion.collapseMs
   const layoutSpreadFactor = isExpandedLayout ? 1 : caseStudyDial.pile.compactSpreadFactor
@@ -262,55 +227,53 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   const gridRowGap = isExpandedLayout ? caseStudyDial.expanded.gapY : caseStudyDial.pile.compactGapY
 
   return (
-    <>
-      <motion.div
-        ref={gridRef}
-        className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-6"
-        onMouseEnter={() => {
-          if (supportsHover) {
-            setIsGridHovered(true)
-          }
-        }}
-        onMouseLeave={() => {
-          if (supportsHover) {
-            setIsGridHovered(false)
-            setHoveredIndex(null)
-          }
-        }}
-        initial={{ opacity: CARD_STAGGER_PANEL.initialOpacity, y: CARD_STAGGER_PANEL.initialY }}
-        animate={{
-          opacity: stage >= 1 ? CARD_STAGGER_PANEL.finalOpacity : CARD_STAGGER_PANEL.initialOpacity,
-          y: stage >= 1 ? CARD_STAGGER_PANEL.finalY : CARD_STAGGER_PANEL.initialY,
-          columnGap: gridColumnGap,
-          rowGap: gridRowGap,
-        }}
-        transition={{
-          opacity: {
-            duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
-            ease: CARD_STAGGER_PANEL.ease,
-          },
-          y: {
-            duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
-            ease: CARD_STAGGER_PANEL.ease,
-          },
-          columnGap: {
-            duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
-            ease: CARD_STAGGER_PANEL.ease,
-          },
-          rowGap: {
-            duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
-            ease: CARD_STAGGER_PANEL.ease,
-          },
-        }}
-      >
-        {orderedProjects.map((project, index) => {
-        const isFeaturedCard = project.frontmatter.featured ?? false
+    <motion.div
+      ref={gridRef}
+      className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-6"
+      onMouseEnter={() => {
+        if (supportsHover) {
+          setIsGridHovered(true)
+        }
+      }}
+      onMouseLeave={() => {
+        if (supportsHover) {
+          setIsGridHovered(false)
+          setHoveredIndex(null)
+        }
+      }}
+      initial={{ opacity: CARD_STAGGER_PANEL.initialOpacity, y: CARD_STAGGER_PANEL.initialY }}
+      animate={{
+        opacity: stage >= 1 ? CARD_STAGGER_PANEL.finalOpacity : CARD_STAGGER_PANEL.initialOpacity,
+        y: stage >= 1 ? CARD_STAGGER_PANEL.finalY : CARD_STAGGER_PANEL.initialY,
+        columnGap: gridColumnGap,
+        rowGap: gridRowGap,
+      }}
+      transition={{
+        opacity: {
+          duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
+        y: {
+          duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
+        columnGap: {
+          duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
+        rowGap: {
+          duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+          ease: CARD_STAGGER_PANEL.ease,
+        },
+      }}
+    >
+      {orderedProjects.map((project, index) => {
         const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
         const itemsInLastRow = orderedProjects.length % 3 || 3
         const lastRowStartIndex = orderedProjects.length - itemsInLastRow
-        const mdColStart = index === lastRowStartIndex && itemsInLastRow < 3
-          ? (3 - itemsInLastRow) + 1
-          : undefined
+        const mdColStart =
+          index === lastRowStartIndex && itemsInLastRow < 3 ? (3 - itemsInLastRow) + 1 : undefined
+
         const compactX = baseAngle.x * caseStudyDial.pile.compactSpreadFactor
         const compactRotate = baseAngle.rotate * caseStudyDial.pile.compactSpreadFactor
         const mobileDampen = supportsHover ? 1 : MOBILE_TILT_FACTOR
@@ -381,13 +344,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
           >
             <Magnetic className="will-change-transform" strength={0.28} range={130} onlyOnHover disableOnTouch>
               {project.frontmatter?.image ? (
-                <ProjectCard
-                  slug={project.slug}
-                  frontmatter={project.frontmatter}
-                  index={index}
-                  isFeatured={isFeaturedCard}
-                  onOpenCaseStudy={openCaseStudyOverlay}
-                />
+                <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
               ) : (
                 <div className="aspect-[16/9] w-full rounded-md">
                   <Skeleton className="h-full w-full rounded-md" />
@@ -397,62 +354,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
           </motion.div>
         )
       })}
-      </motion.div>
-
-      <AnimatePresence>
-        {activeCaseStudy && (
-          <motion.div
-            className="fixed inset-0 z-[140] flex items-center justify-center p-3 sm:p-5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.24, ease: CARD_STAGGER_PANEL.ease }}
-            onClick={closeCaseStudyOverlay}
-          >
-            <motion.div
-              className="absolute inset-0 bg-[rgba(15,15,15,0.6)] backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-
-            <motion.section
-              role="dialog"
-              aria-modal="true"
-              aria-label={`${activeCaseStudy.frontmatter.title} case study`}
-              className="relative z-10 flex h-[min(92vh,1080px)] w-full max-w-4xl flex-col overflow-hidden rounded-md border border-[var(--border)] bg-[var(--background)] shadow-xl"
-              initial={{ opacity: 0, y: 22, scale: 0.985 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.99 }}
-              transition={{ duration: 0.28, ease: CARD_STAGGER_PANEL.ease }}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <header className="flex items-center justify-between border-b border-border/50 px-4 py-3 sm:px-5">
-                <h2 className="truncate font-sans text-sm font-medium text-foreground">{activeCaseStudy.frontmatter.title}</h2>
-                <button
-                  type="button"
-                  onClick={closeCaseStudyOverlay}
-                  className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-                  aria-label="Close"
-                >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </header>
-
-              <div className="h-full w-full bg-[var(--background)]">
-                <iframe
-                  src={`/projects/${activeCaseStudy.slug}#main-content`}
-                  className="h-full w-full border-0"
-                  title={`${activeCaseStudy.frontmatter.title} case study`}
-                  loading="eager"
-                />
-              </div>
-            </motion.section>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    </motion.div>
   )
 }

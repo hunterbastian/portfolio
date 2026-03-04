@@ -26,6 +26,7 @@
     "critters": "^0.0.23",
     "dialkit": "^0.2.0",
     "framer-motion": "^11.15.0",
+    "geist": "^1.7.0",
     "gray-matter": "^4.0.3",
     "ldrs": "^1.1.7",
     "lenis": "^1.3.17",

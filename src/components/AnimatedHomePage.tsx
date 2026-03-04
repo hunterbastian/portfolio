@@ -140,11 +140,11 @@ function IconFileText({ size = 20, title, ...props }: NucleoIconProps) {
 const experience: ExperienceItem[] = [
   {
     year: '2026 - Present',
-    company: 'Studio Alpine',
+    company: 'hunterbastian.com',
     title: 'Founder',
     active: true,
     description:
-      "Founder of Studio Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future.",
+      "Founder of hunterbastian.com. I am at the front of a photography and design portfolio focused on clear, meaningful digital experiences.",
   },
   {
     year: '2024 - Present',
@@ -201,18 +201,19 @@ const education: EducationItem[] = [
 ]
 
 const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
+const HUNTER_SITE_URL = 'https://hunterbastian.com'
 
 const contactLinks: ContactLinkItem[] = [
-  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', iconComponent: IconInstagram },
-  { label: 'Threads', href: 'https://threads.net/@studio.alpine', iconComponent: IconThreads },
+  { label: 'Instagram', href: HUNTER_SITE_URL, iconComponent: IconInstagram },
+  { label: 'Threads', href: HUNTER_SITE_URL, iconComponent: IconThreads },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconComponent: IconLinkedin },
-  { label: 'Twitter', href: 'https://x.com/thestudioalpine', iconComponent: IconTwitterBird },
+  { label: 'Twitter', href: HUNTER_SITE_URL, iconComponent: IconTwitterBird },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', iconComponent: IconGithub },
 ]
 const HERO_HEADLINE_TEXT = 'Hunter Bastian'
-const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah : 40.7608° N / 111.8910° W'
+const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
 const HERO_UPDATE_NOTE = 'Accepting new clients'
-const CONTACT_EMAIL_HREF = 'mailto:hunterbastianwork@gmail.com?subject=Project%20Inquiry'
+const CONTACT_EMAIL_HREF = 'mailto:hello@hunterbastian.com?subject=Project%20Inquiry'
 const HERO_UPDATE_NOTE_HREF = CONTACT_EMAIL_HREF
 
 const HERO_TYPING = {
@@ -448,7 +449,7 @@ function PomodoroEntry() {
         href="https://mini-pomodoro.vercel.app"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
+        className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground no-underline hover:text-primary"
         aria-label="Pomodoro Timer project"
         title="Pomodoro Timer"
       >
@@ -468,7 +469,7 @@ function PomodoroEntry() {
           {hovered ? (
             <motion.span
               key="hover"
-              className="status-pill-label whitespace-nowrap font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
+              className="status-pill-label whitespace-nowrap text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
@@ -479,7 +480,7 @@ function PomodoroEntry() {
           ) : (
             <motion.span
               key="default"
-              className="status-pill-label whitespace-nowrap font-sans text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
+              className="status-pill-label whitespace-nowrap text-[10px] leading-none tracking-[0.06em] text-muted-foreground"
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
@@ -738,7 +739,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <TiltCard
-            className="mt-4 mb-4 rounded-md border border-border bg-card px-4 py-4 sm:mt-5 sm:px-5 sm:py-5"
+            className="mt-4 mb-4 sm:mt-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -750,7 +751,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
           >
             <motion.p
-              className="text-muted-foreground text-sm font-sans leading-relaxed m-0"
+              className="text-muted-foreground text-sm leading-relaxed m-0"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
               animate={{
                 opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -766,7 +767,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <span className="ambient-word-glow font-semibold" data-glow="Department Representative">Department Representative</span>{' '}
               at UVU with experience designing and building digital products. I focus on clear,
               meaningful interfaces with an AI-first mindset while growing{' '}
-              <span className="ambient-word-glow font-semibold" data-glow="Studio Alpine">Studio Alpine</span>.
+              <span className="ambient-word-glow font-semibold" data-glow="hunterbastian.com">hunterbastian.com</span>.
             </motion.p>
           </TiltCard>
 
@@ -785,7 +786,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
           >
             <div className="flex items-center justify-start rounded-xl bg-transparent px-0 py-0">
-              <div className="flex items-center gap-3.5 sm:gap-4">
+              <div className="flex flex-col items-start gap-3 sm:gap-4">
+                <div className="flex items-center gap-3.5 sm:gap-4">
                 {contactLinks.map((link, index) => (
                   <motion.div
                     key={link.label}
@@ -868,6 +870,32 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   </button>
                   <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
                 </motion.div>
+                </div>
+
+                <motion.div
+                  initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                  animate={{
+                    opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                    y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                  }}
+                  transition={{
+                    duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                    delay: isHeroCopyVisible
+                      ? motionDelayMs(
+                          socialRevealDelay + (contactLinks.length + 1) * STAGGER_TIMING.itemStagger,
+                          prefersReducedMotion,
+                        )
+                      : 0,
+                    ease: STAGGER_PANEL.ease,
+                  }}
+                >
+                  <a
+                    href="/archive"
+                    className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+                  >
+                    <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
+                  </a>
+                </motion.div>
               </div>
             </div>
           </motion.div>
@@ -876,7 +904,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="creating"
-        title="Creating"
+        title="01 CREATING"
         isOpen={sectionOpen.creating}
         onToggle={() => toggleSection('creating')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
@@ -886,39 +914,37 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="max-w-2xl mx-auto text-left">
-          <div className="rounded-md border border-border bg-card px-4 py-4 sm:px-5 sm:py-5">
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href={CONTACT_EMAIL_HREF}
-                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                  aria-label="Open for Design Projects"
-                  title="Open for Design Projects"
-                >
-                  <span>Open for Design Projects</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://instagram.com/studio.alpine"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-sans tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                  aria-label="Photography Studio Studio Alpine"
-                  title="Photography Studio Studio Alpine"
-                >
-                  <span>Studio Alpine</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+          <ul className="space-y-2">
+            <li>
+              <a
+                href={CONTACT_EMAIL_HREF}
+                className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
+                aria-label="Open for Design Projects"
+                title="Open for Design Projects"
+              >
+                <span>Open for Design Projects</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={HUNTER_SITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
+                aria-label="Photography portfolio hunterbastian.com"
+                title="Photography portfolio hunterbastian.com"
+              >
+                <span>hunterbastian.com</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </CollapsibleSection>
       </div>
 
       <CollapsibleSection
         id="case-studies"
-        title="Projects"
+        title="02 PROJECTS"
         isOpen={sectionOpen.caseStudies}
         onToggle={() => toggleSection('caseStudies')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
@@ -930,22 +956,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-4xl rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
           {children}
         </div>
-
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-0">
-          <div className="flex justify-start mt-8">
-            <a
-              href="/archive"
-              className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <span className="font-sans font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
-            </a>
-          </div>
-        </div>
       </CollapsibleSection>
 
       <CollapsibleSection
         id="experience"
-        title="Experience"
+        title="03 EXPERIENCE"
         isOpen={sectionOpen.experience}
         onToggle={() => toggleSection('experience')}
         className="px-4 sm:px-6 lg:px-0"
@@ -1005,10 +1020,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                       </span>
                     </motion.div>
                     <div className="flex min-w-0 flex-1 items-center space-x-6">
-                      <span className="w-16 text-xs font-sans text-muted-foreground">
+                      <span className="w-16 text-xs text-muted-foreground">
                         {job.year}
                       </span>
-                      <span className="flex items-center gap-2 font-sans font-medium tracking-[0.06em]">
+                      <span className="flex items-center gap-2 font-medium tracking-[0.06em]">
                         {job.active && (
                           <span className="relative flex h-2 w-2 shrink-0" aria-label="Currently active">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#a3be8c] opacity-60" />
@@ -1018,7 +1033,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                         {job.company}
                       </span>
                     </div>
-                    <span className="hidden shrink-0 text-sm font-sans tracking-[0.06em] text-muted-foreground sm:block">
+                    <span className="hidden shrink-0 text-sm tracking-[0.06em] text-muted-foreground sm:block">
                       {job.title}
                     </span>
                   </button>
@@ -1049,7 +1064,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="education"
-        title="Education"
+        title="04 EDUCATION"
         isOpen={sectionOpen.education}
         onToggle={() => toggleSection('education')}
         className="px-4 sm:px-6 lg:px-0"
@@ -1087,13 +1102,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="text-muted-foreground text-xs font-sans sm:min-w-[100px]">{edu.year}</div>
+                  <div className="text-muted-foreground text-xs sm:min-w-[100px]">{edu.year}</div>
                   <div className="flex-1">
-                    <h3 className="font-sans font-semibold text-foreground text-base mb-1 tracking-[0.06em]">{edu.institution}</h3>
-                    <p className="text-foreground text-sm font-sans mb-1 tracking-[0.06em]">{edu.degree}</p>
-                    <p className="text-muted-foreground text-sm font-sans tracking-[0.06em]">{edu.level}</p>
+                    <h3 className="font-semibold text-foreground text-base mb-1 tracking-[0.06em]">{edu.institution}</h3>
+                    <p className="text-foreground text-sm mb-1 tracking-[0.06em]">{edu.degree}</p>
+                    <p className="text-muted-foreground text-sm tracking-[0.06em]">{edu.level}</p>
                     {edu.note && (
-                      <p className="text-muted-foreground text-xs mt-1 font-sans tracking-[0.08em]" style={{ opacity: 0.7 }}>
+                      <p className="text-muted-foreground text-xs mt-1 tracking-[0.08em]" style={{ opacity: 0.7 }}>
                         {edu.note}
                       </p>
                     )}
@@ -1107,7 +1122,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="tech-stack"
-        title="Stack"
+        title="05 STACK"
         isOpen={sectionOpen.techStack}
         onToggle={() => toggleSection('techStack')}
         className="px-4 sm:px-6 lg:px-0"
@@ -1144,7 +1159,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   ease: STAGGER_PANEL.ease,
                 }}
               >
-                <span className="text-sm font-sans text-muted-foreground tracking-[0.08em] uppercase font-medium">
+                <span className="text-sm text-muted-foreground tracking-[0.08em] uppercase font-medium">
                   {skill}
                 </span>
               </motion.div>
@@ -1155,7 +1170,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="contact"
-        title="Contact"
+        title="06 CONTACT"
         isOpen={sectionOpen.contact}
         onToggle={() => toggleSection('contact')}
         className="px-4 sm:px-6 lg:px-0"
@@ -1170,7 +1185,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             aria-label="Email Hunter"
             title="Email Hunter"
           >
-            <span className="font-sans font-light uppercase tracking-[0.08em] relative z-10">Email me</span>
+            <span className="font-light uppercase tracking-[0.08em] relative z-10">Email me</span>
           </a>
         </div>
       </CollapsibleSection>

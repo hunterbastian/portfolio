@@ -7,72 +7,38 @@ html {
 }
 
 /* ─────────────────────────────────────────────────────────
- * COLOR SYSTEM — Japandi x Patagonia (muted, minimal)
+ * COLOR SYSTEM — warm off-white minimal
  * ───────────────────────────────────────── */
 
 :root {
-  --background: #1b1f1d;
-  --background-rgb: 27, 31, 29;
-  --card: #242b27;
-  --card-foreground: #e8ede7;
-  --foreground: #e8ede7;
-  --primary: #e8ede7;
-  --primary-foreground: #1b1f1d;
-  --secondary: #2b332f;
-  --secondary-foreground: #e8ede7;
-  --muted: #333b37;
-  --muted-foreground: #97a49a;
-  --accent: #6f8f7c;
-  --accent-foreground: #f4f7f4;
-  --border: #3b4540;
-  --input: #3b4540;
-  --ring: #89a794;
-  --surface-warm-rgb: 114, 135, 122;
-  --surface-paper-rgb: 92, 108, 98;
-  --grain-rgb: 208, 217, 210;
-  --header-frost-opacity: 0.54;
-  --header-frost-highlight: 0.11;
-  --header-frost-blur: 24px;
-  --sky-top: rgba(131, 154, 140, 0.24);
-  --sky-mid: rgba(117, 139, 125, 0.14);
-  --sky-cool: rgba(175, 188, 181, 0.07);
-  --sky-spot-a: rgba(144, 167, 153, 0.14);
-  --sky-spot-b: rgba(191, 203, 196, 0.08);
+  --background: #f2f1ef;
+  --background-rgb: 242, 241, 239;
+  --card: #f6f5f3;
+  --card-foreground: #2d2b28;
+  --foreground: #2d2b28;
+  --primary: #2d2b28;
+  --primary-foreground: #f6f5f3;
+  --secondary: #ebe9e6;
+  --secondary-foreground: #2d2b28;
+  --muted: #e3e1dd;
+  --muted-foreground: #6f6a63;
+  --accent: #7f8f81;
+  --accent-foreground: #f7f6f4;
+  --border: #d9d6d1;
+  --input: #d9d6d1;
+  --ring: #8f9686;
+  --surface-warm-rgb: 214, 210, 202;
+  --surface-paper-rgb: 204, 200, 192;
+  --grain-rgb: 166, 162, 154;
+  --header-frost-opacity: 0.66;
+  --header-frost-highlight: 0.1;
+  --header-frost-blur: 20px;
+  --sky-top: rgba(216, 214, 208, 0.07);
+  --sky-mid: rgba(204, 200, 192, 0.04);
+  --sky-cool: rgba(225, 223, 219, 0.02);
+  --sky-spot-a: rgba(216, 214, 208, 0.03);
+  --sky-spot-b: rgba(225, 223, 219, 0.02);
   --box-radius: 10px;
-}
-
-/* Light mode — clean neutral palette (base: #eceae5) */
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #eceae5;
-    --background-rgb: 236, 234, 229;
-    --card: #f1efeb;
-    --card-foreground: #302c28;
-    --foreground: #302c28;
-    --primary: #302c28;
-    --primary-foreground: #f1efeb;
-    --secondary: #e4e2dd;
-    --secondary-foreground: #302c28;
-    --muted: #dad8d3;
-    --muted-foreground: #78736b;
-    --accent: #7a8978;
-    --accent-foreground: #f5f3ef;
-    --border: #d5d2cc;
-    --input: #d5d2cc;
-    --ring: #8a9a84;
-    --surface-warm-rgb: 210, 207, 200;
-    --surface-paper-rgb: 200, 197, 190;
-    --grain-rgb: 160, 157, 150;
-    --header-frost-opacity: 0.62;
-    --header-frost-highlight: 0.12;
-    --header-frost-blur: 20px;
-    --sky-top: rgba(220, 217, 210, 0.08);
-    --sky-mid: rgba(210, 207, 200, 0.04);
-    --sky-cool: rgba(225, 222, 216, 0.02);
-    --sky-spot-a: rgba(220, 217, 210, 0.03);
-    --sky-spot-b: rgba(225, 222, 216, 0.02);
-    --box-radius: 10px;
-  }
 }
 
 html {
@@ -84,15 +50,19 @@ body {
   color: var(--foreground);
   background-color: var(--background);
   background-image:
-    radial-gradient(110% 70% at 50% -8%, rgba(var(--surface-warm-rgb), 0.12), transparent 62%),
-    linear-gradient(180deg, rgba(var(--surface-paper-rgb), 0.04) 0%, rgba(var(--surface-paper-rgb), 0) 48%),
-    radial-gradient(circle at 1px 1px, rgba(var(--grain-rgb), 0.03) 0.6px, transparent 0.85px);
-  background-size: 100% 100%, 100% 100%, 4px 4px;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    radial-gradient(110% 72% at 50% -8%, rgba(var(--surface-warm-rgb), 0.07), transparent 62%),
+    linear-gradient(180deg, rgba(var(--surface-paper-rgb), 0.025) 0%, rgba(var(--surface-paper-rgb), 0) 50%),
+    radial-gradient(circle at 1px 1px, rgba(var(--grain-rgb), 0.018) 0.6px, transparent 0.85px);
+  background-size: 100% 100%, 100% 100%, 5px 5px;
   position: relative;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Paragraph / body-copy text uses Inter; everything else inherits Geist Mono from <body> */
+p, li, dd, blockquote, figcaption {
+  font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 @keyframes fade-in {

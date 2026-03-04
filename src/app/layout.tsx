@@ -1,14 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Playfair_Display } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
+import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 import './viewport.css'
 import 'dialkit/styles.css'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ScrollToTop from '@/components/ScrollToTop'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
-import DialKitRoot from '@/components/DialKitRoot'
 import SmoothScroll from '@/components/SmoothScroll'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
@@ -26,15 +25,7 @@ const inter = Inter({
   fallback: ['system-ui', 'sans-serif'],
 })
 
-// Code blocks only
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-  preload: false,
-  fallback: ['ui-monospace', 'monospace'],
-})
+// Geist Mono — used for all non-paragraph text (headings, nav, labels, buttons)
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
@@ -54,8 +45,9 @@ export const viewport = {
 }
 
 const faviconVersion = '20260207'
-const brandName = 'Hunter Bastian // Studio Alpine'
+const brandName = 'Hunter Bastian // hunterbastian.com'
 const sitePreviewTitle = 'Hunter Bastian - Portfolio'
+const siteCoordinates = '40.7608° N / 111.8910° W'
 
 export const metadata: Metadata = {
   title: sitePreviewTitle,
@@ -115,7 +107,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#191919" />
+        <meta name="theme-color" content="#f2f1ef" />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <>
@@ -166,7 +158,7 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Critical above-the-fold styles */
-            body { margin: 0; font-family: 'Inter', system-ui, sans-serif; }
+            body { margin: 0; }
             .hero-section { min-height: 0; }
             .hero-section h1 { line-height: 1.2; }
           `
@@ -186,12 +178,17 @@ export default function RootLayout({
           `
         }} />
       </head>
-                   <body className={`${inter.className} ${jetbrainsMono.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
+                   <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
                 <CursorFollower />
                 <SmoothScroll>
                   <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
+                  <p
+                    className="pointer-events-none fixed left-4 top-4 z-40 select-none text-[10px] tracking-[0.12em] text-muted-foreground sm:left-6 sm:top-6 sm:text-[11px]"
+                    aria-label={`Coordinates ${siteCoordinates}`}
+                  >
+                    {siteCoordinates}
+                  </p>
                   <div className="min-h-screen flex flex-col">
-                    <Header />
                     <main id="main-content" role="main" className="flex-1">
                       <PageTransition>{children}</PageTransition>
                     </main>

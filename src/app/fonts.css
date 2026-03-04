@@ -1,38 +1,19 @@
-/* 
- * Optimized font declarations - using Next.js font optimization from layout.tsx
- * Reduced from 5 fonts to 2 for better performance
+/*
+ * Font declarations - using Next.js font optimization from layout.tsx
+ * Body: Geist Mono (default for all UI text)
+ * Paragraphs: Inter (applied via globals.css)
+ * Serif accents: Playfair Display
  */
 
 :root {
-  --font-jetbrains-mono: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-  --font-source-code-pro: 'Source Code Pro', 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
-  /* Consolidated: Using Playfair Display for all serif needs */
   --font-playfair: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-garamond: var(--font-playfair); /* Alias for compatibility */
-  --font-garamond-narrow: var(--font-playfair); /* Alias for compatibility */
-  --font-inter: var(--font-jetbrains-mono); /* Alias for compatibility */
-}
-
-.font-jetbrains-mono {
-  font-family: var(--font-jetbrains-mono);
-}
-
-.font-inter {
-  font-family: var(--font-inter);
-}
-
-.font-code {
-  font-family: var(--font-source-code-pro);
-}
-
-.font-garamond {
-  font-family: var(--font-garamond);
+  --font-garamond: var(--font-playfair);
 }
 
 .font-playfair {
   font-family: var(--font-playfair);
 }
 
-.font-garamond-narrow {
-  font-family: var(--font-garamond-narrow);
+.font-garamond {
+  font-family: var(--font-garamond);
 }

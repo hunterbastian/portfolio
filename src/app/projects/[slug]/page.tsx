@@ -7,7 +7,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import mdxComponents from '@/components/mdx/MDXComponents'
 
 const BASE_URL = 'https://hunterbastian.com'
-const BRAND_NAME = 'Hunter Bastian // Studio Alpine'
+const BRAND_NAME = 'Hunter Bastian // hunterbastian.com'
 
 function resolveImageUrl(image: string): string {
   return image.startsWith('/') ? `${BASE_URL}${image}` : image
@@ -118,13 +118,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       <div className="mb-8">
         <Link
-          href="/"
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6"
+          href="/#case-studies"
+          className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
         >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back to case studies
+          <span aria-hidden className="text-base leading-none">↩</span>
+          <span className="text-foreground">Home</span>
+          <span aria-hidden className="text-muted-foreground/70">/</span>
+          <span>Projects</span>
         </Link>
 
         <h1 className="mb-8 text-3xl font-bold sm:text-4xl md:text-5xl">{frontmatter.title}</h1>

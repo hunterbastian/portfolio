@@ -39,18 +39,6 @@
   }
 }
 
-/* Dark mode optimizations */
-@media (prefers-color-scheme: dark) {
-  /* Improve contrast on dark backgrounds */
-  .text-gray-600 {
-    color: rgb(156 163 175) !important;
-  }
-  
-  .text-gray-500 {
-    color: rgb(107 114 128) !important;
-  }
-}
-
 /* Landscape mobile optimizations */
 @media screen and (orientation: landscape) and (max-height: 500px) {
   /* Reduce vertical padding on landscape phones */

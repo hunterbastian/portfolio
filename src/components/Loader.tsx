@@ -121,7 +121,7 @@ export default function Loader({
 
   return (
     <div className={`flex flex-col items-center justify-center ${className}`}>
-      <div className="text-gray-900 dark:text-gray-100">
+      <div className="text-foreground">
         {renderLoader()}
       </div>
       {text && (

@@ -1,25 +1,12 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
-import { useDialKit } from 'dialkit'
 import Image from 'next/image'
-import type { ComponentType, CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import {
-  IconGithub,
-  IconInstagram,
-  IconLinkedin,
-  IconThreads,
-  type IconProps as NucleoIconProps,
-} from 'nucleo-social-media'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
-import ResumePreview from './ResumePreview'
 import TiltCard from './TiltCard'
-import TextType from './TextType'
 import CollapsibleSection from './CollapsibleSection'
-
-const ResumeModal = dynamic(() => import('./ResumeModal'), { ssr: false })
 
 interface AnimatedHomePageProps {
   children: ReactNode
@@ -39,12 +26,6 @@ interface EducationItem {
   degree: string
   level: string
   note?: string
-}
-
-interface ContactLinkItem {
-  label: string
-  href: string
-  iconComponent: ComponentType<NucleoIconProps>
 }
 
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'techStack' | 'contact'
@@ -79,72 +60,14 @@ const INITIAL_SECTION_LOAD_DELAY = {
   caseStudies: 440,
 } as const
 
-const contactInlineActionClassName =
-  'group inline-flex h-9 w-9 origin-center items-center justify-center rounded-md border border-white/10 bg-white/[0.04] backdrop-blur-sm no-underline transition-all duration-150 hover:bg-white/[0.08] hover:border-white/20 sm:h-10 sm:w-10'
-
-const contactIconGlyphClassName =
-  'h-[17px] w-[17px] sm:h-[19px] sm:w-[19px]'
-
-function IconTwitterBird({ size = 20, title, style, ...props }: NucleoIconProps) {
-  const twitterStyle: CSSProperties = {
-    ...(style ?? {}),
-    transform:
-      typeof style?.transform === 'string'
-        ? `${style.transform} scale(1.08)`
-        : 'scale(1.08)',
-    transformOrigin: 'center',
-  }
-
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      fill="currentColor"
-      role={title ? 'img' : undefined}
-      aria-hidden={title ? undefined : true}
-      style={twitterStyle}
-      {...props}
-    >
-      {title ? <title>{title}</title> : null}
-      <path d="M22 5.9c-.7.3-1.4.5-2.1.6.8-.5 1.3-1.1 1.6-2-.7.4-1.5.7-2.4.9-.7-.7-1.6-1.1-2.7-1.1-2 0-3.6 1.6-3.6 3.6 0 .3 0 .6.1.8-3-.1-5.7-1.6-7.5-3.8-.3.5-.5 1.1-.5 1.8 0 1.2.6 2.3 1.6 3-.6 0-1.2-.2-1.7-.5 0 0 0 .1 0 .1 0 1.8 1.3 3.2 2.9 3.6-.3.1-.7.1-1 .1-.3 0-.5 0-.7-.1.5 1.4 1.8 2.5 3.4 2.5-1.3 1-2.8 1.6-4.5 1.6-.3 0-.6 0-.9-.1 1.6 1 3.5 1.6 5.5 1.6 6.6 0 10.2-5.5 10.2-10.2 0-.2 0-.3 0-.5.7-.5 1.3-1.1 1.8-1.8z" />
-    </svg>
-  )
-}
-
-function IconFileText({ size = 20, title, ...props }: NucleoIconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      role={title ? 'img' : undefined}
-      aria-hidden={title ? undefined : true}
-      {...props}
-    >
-      {title ? <title>{title}</title> : null}
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <path d="M14 2v6h6" />
-      <path d="M16 13H8" />
-      <path d="M16 17H8" />
-      <path d="M10 9H8" />
-    </svg>
-  )
-}
-
 const experience: ExperienceItem[] = [
   {
     year: '2026 - Present',
-    company: 'hunterbastian.com',
+    company: 'Studio Alpine',
     title: 'Founder',
     active: true,
     description:
-      "Founder of hunterbastian.com. I am at the front of a photography and design portfolio focused on clear, meaningful digital experiences.",
+      "Founder of Studio Alpine. I am at the front of a visionary studio that involves photography and design. I'm excited to see where this will go into the future.",
   },
   {
     year: '2024 - Present',
@@ -201,22 +124,14 @@ const education: EducationItem[] = [
 ]
 
 const skills = ['Figma', 'Framer', 'ChatGPT', 'Codex', 'Claude Code']
-const HUNTER_SITE_URL = 'https://hunterbastian.com'
-
-const contactLinks: ContactLinkItem[] = [
-  { label: 'Instagram', href: HUNTER_SITE_URL, iconComponent: IconInstagram },
-  { label: 'Threads', href: HUNTER_SITE_URL, iconComponent: IconThreads },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', iconComponent: IconLinkedin },
-  { label: 'Twitter', href: HUNTER_SITE_URL, iconComponent: IconTwitterBird },
-  { label: 'GitHub', href: 'https://github.com/hunterbastian', iconComponent: IconGithub },
-]
 const HERO_HEADLINE_TEXT = 'Hunter Bastian'
 const HERO_SUBTITLE_TEXT = 'Interaction Designer - Lehi, Utah'
 const CONTACT_EMAIL_HREF = 'mailto:hello@hunterbastian.com?subject=Project%20Inquiry'
-
-const HERO_TYPING = {
-  headline: 62, // keep current speed
-}
+const HERO_TEXT_LINKS = [
+  { label: 'Email', href: CONTACT_EMAIL_HREF },
+  { label: 'X', href: 'https://x.com/thestudioalpine' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian' },
+] as const
 
 const HERO_ENTRANCE = {
   profileDelay: 40, // profile appears first
@@ -259,24 +174,6 @@ const STAGGER_ITEM = {
   finalY: 0, // resting item position
 }
 
-const EXPERIENCE_TIMING = {
-  expandDuration: 320, // row detail expand/collapse duration
-  iconRotate: 240, // plus icon rotate duration
-}
-
-const SOCIAL_ICON_DIAL_DEFAULTS = {
-  baseColor: 'color-mix(in srgb, var(--foreground) 55%, transparent)',
-  hoverColor: 'var(--foreground)',
-  glowColor: 'transparent',
-  baseOpacity: 1,
-  hoverOpacity: 1,
-  iconBaseOpacity: 1,
-  iconHoverOpacity: 1,
-  hoverScale: 1.04,
-  iconHoverScale: 1.05,
-  fadeMs: 220,
-} as const
-
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
   const [stage, setStage] = useState(0)
 
@@ -301,59 +198,6 @@ function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotio
   }, [isOpen, isInView, prefersReducedMotion])
 
   return stage
-}
-
-function ContactIcon({
-  iconComponent: IconComponent,
-  label,
-  className = 'h-5 w-5',
-  style,
-}: {
-  iconComponent: ComponentType<NucleoIconProps>
-  label: string
-  className?: string
-  style?: CSSProperties
-}) {
-  return <IconComponent size={20} className={className} style={style} aria-label={label} />
-}
-
-function ContactLink({
-  link,
-  actionClassName,
-  actionStyle,
-  iconStyle,
-  onHoverStart,
-  onHoverEnd,
-}: {
-  link: ContactLinkItem
-  actionClassName: string
-  actionStyle: CSSProperties
-  iconStyle: CSSProperties
-  onHoverStart: () => void
-  onHoverEnd: () => void
-}) {
-  return (
-    <a
-      href={link.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={actionClassName}
-      style={actionStyle}
-      aria-label={link.label}
-      title={link.label}
-      onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
-      onFocus={onHoverStart}
-      onBlur={onHoverEnd}
-    >
-      <ContactIcon
-        iconComponent={link.iconComponent}
-        label={link.label}
-        className={contactIconGlyphClassName}
-        style={iconStyle}
-      />
-    </a>
-  )
 }
 
 type Breakpoint = 'mobile' | 'tablet' | 'desktop'
@@ -440,16 +284,10 @@ function CreatingLoader() {
 }
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
-  const [showResumePreview, setShowResumePreview] = useState(false)
-  const [showResumeModal, setShowResumeModal] = useState(false)
-  const [hoveredSocialAction, setHoveredSocialAction] = useState<string | null>(null)
-  const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set())
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const [heroTextStage, setHeroTextStage] = useState(0)
   const prefersReducedMotion = useReducedMotion() ?? false
 
-  const resumeButtonRef = useRef<HTMLButtonElement>(null)
-  const resumePreviewHideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const experiencePanelRef = useRef<HTMLDivElement>(null)
   const educationPanelRef = useRef<HTMLDivElement>(null)
   const stackPanelRef = useRef<HTMLDivElement>(null)
@@ -461,75 +299,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const experienceStage = useSectionStage(sectionOpen.experience, isExperienceInView, prefersReducedMotion)
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
   const stackStage = useSectionStage(sectionOpen.techStack, isStackInView, prefersReducedMotion)
-
-  const socialIconDial = useDialKit('Social Icon Lab', {
-    color: {
-      baseColor: SOCIAL_ICON_DIAL_DEFAULTS.baseColor,
-      hoverColor: SOCIAL_ICON_DIAL_DEFAULTS.hoverColor,
-      glowColor: SOCIAL_ICON_DIAL_DEFAULTS.glowColor,
-    },
-    emphasis: {
-      baseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.baseOpacity, 0.25, 1],
-      hoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.hoverOpacity, 0.45, 1],
-      iconBaseOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.iconBaseOpacity, 0.2, 1],
-      iconHoverOpacity: [SOCIAL_ICON_DIAL_DEFAULTS.iconHoverOpacity, 0.4, 1],
-    },
-    motion: {
-      hoverScale: [SOCIAL_ICON_DIAL_DEFAULTS.hoverScale, 1, 1.16],
-      iconHoverScale: [SOCIAL_ICON_DIAL_DEFAULTS.iconHoverScale, 1, 1.24],
-      fadeMs: [SOCIAL_ICON_DIAL_DEFAULTS.fadeMs, 120, 800],
-    },
-  })
-
-
-  const socialTransitionMs = Math.max(120, Math.round(socialIconDial.motion.fadeMs))
-  const socialTransition = `all ${socialTransitionMs}ms cubic-bezier(0.22, 1, 0.36, 1)`
-
-  const getSocialActionStyle = (isHovered: boolean): CSSProperties => ({
-    transition: socialTransition,
-    color: isHovered ? socialIconDial.color.hoverColor : socialIconDial.color.baseColor,
-    opacity: isHovered ? socialIconDial.emphasis.hoverOpacity : socialIconDial.emphasis.baseOpacity,
-    transform: `scale(${isHovered ? socialIconDial.motion.hoverScale : 1})`,
-  })
-
-  const getSocialIconStyle = (isHovered: boolean): CSSProperties => ({
-    transition: socialTransition,
-    opacity: isHovered ? socialIconDial.emphasis.iconHoverOpacity : socialIconDial.emphasis.iconBaseOpacity,
-    transform: `scale(${isHovered ? socialIconDial.motion.iconHoverScale : 1})`,
-    filter: 'none',
-  })
-
-  const handleSocialHoverStart = (label: string) => {
-    setHoveredSocialAction(label)
-  }
-
-  const handleSocialHoverEnd = (label: string) => {
-    setHoveredSocialAction((current) => (current === label ? null : current))
-  }
-
-  const openResumePreview = useCallback(() => {
-    if (resumePreviewHideTimeoutRef.current) {
-      clearTimeout(resumePreviewHideTimeoutRef.current)
-      resumePreviewHideTimeoutRef.current = null
-    }
-    setShowResumePreview(true)
-  }, [])
-
-  const closeResumePreview = useCallback(() => {
-    if (resumePreviewHideTimeoutRef.current) {
-      clearTimeout(resumePreviewHideTimeoutRef.current)
-    }
-
-    if (prefersReducedMotion) {
-      setShowResumePreview(false)
-      return
-    }
-
-    resumePreviewHideTimeoutRef.current = setTimeout(() => {
-      setShowResumePreview(false)
-      resumePreviewHideTimeoutRef.current = null
-    }, 120)
-  }, [prefersReducedMotion])
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -589,29 +358,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     }
   }, [])
 
-  useEffect(() => {
-    return () => {
-      if (resumePreviewHideTimeoutRef.current) {
-        clearTimeout(resumePreviewHideTimeoutRef.current)
-      }
-    }
-  }, [])
-
   const toggleSection = useCallback((key: SectionKey) => {
     setSectionOpen((prev) => ({ ...prev, [key]: !prev[key] }))
   }, [])
-
-  const toggleJob = (index: number) => {
-    setExpandedJobs((prev) => {
-      const next = new Set(prev)
-      if (next.has(index)) {
-        next.delete(index)
-      } else {
-        next.add(index)
-      }
-      return next
-    })
-  }
 
   const isHeroCopyVisible = heroTextStage >= 2
   const socialRevealDelay = Math.max(0, HERO_ENTRANCE.contactIconsDelay - HERO_ENTRANCE.textItemsDelay)
@@ -627,9 +376,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
+      <motion.p
+        className="pointer-events-none fixed right-4 top-4 z-50 select-none text-right font-mono text-[10px] font-normal tracking-[0.12em] text-foreground sm:right-6 sm:top-6 sm:text-[11px]"
+        initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+        animate={{
+          opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+          y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+        }}
+        transition={{
+          duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+          delay: heroTextStage >= 2 ? motionDelayMs(0, prefersReducedMotion) : 0,
+          ease: STAGGER_PANEL.ease,
+        }}
+      >
+        {HERO_SUBTITLE_TEXT}
+      </motion.p>
       <CreatingLoader />
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
-        <div className="max-w-2xl mx-auto hero-section relative z-10 px-4 sm:px-6 lg:px-0">
+        <div className="mx-auto max-w-[540px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <motion.div
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94 }}
@@ -651,34 +415,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </motion.div>
             <div className="min-w-0">
               <h1
-                className="text-foreground font-bold text-[clamp(2rem,6.4vw,3.2rem)] leading-[0.96] whitespace-nowrap pl-[0.03em]"
-                style={{ fontFamily: 'var(--font-playfair-display), "Playfair Display", Georgia, serif' }}
+                className="text-foreground font-mono font-normal text-[14px] leading-[1.2] tracking-[0.02em]"
               >
-                <TextType
-                  text={HERO_HEADLINE_TEXT}
-                  className="block"
-                  typingSpeed={HERO_TYPING.headline}
-                  deletingSpeed={44}
-                  pauseDuration={2800}
-                  loop={false}
-                  cinematic
-                />
+                {HERO_HEADLINE_TEXT}
               </h1>
-              <motion.div
-                className="font-mono text-muted-foreground mt-2 text-[11px] tracking-[0.06em] sm:text-xs"
-                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                animate={{
-                  opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                  y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                }}
-                transition={{
-                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                  delay: heroTextStage >= 2 ? motionDelayMs(0, prefersReducedMotion) : 0,
-                  ease: STAGGER_PANEL.ease,
-                }}
-              >
-                <span>{HERO_SUBTITLE_TEXT}</span>
-              </motion.div>
             </div>
           </div>
 
@@ -695,7 +435,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
           >
             <motion.p
-              className="text-muted-foreground text-sm leading-relaxed m-0"
+              className="m-0 font-mono font-normal text-sm leading-relaxed text-muted-foreground"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
               animate={{
                 opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -707,11 +447,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <span className="ambient-word-glow font-semibold" data-glow="Interaction Design student">Interaction Design student</span> and{' '}
-              <span className="ambient-word-glow font-semibold" data-glow="Department Representative">Department Representative</span>{' '}
-              at UVU with experience designing and building digital products. I focus on clear,
-              meaningful interfaces with an AI-first mindset while growing{' '}
-              <span className="ambient-word-glow font-semibold" data-glow="hunterbastian.com">hunterbastian.com</span>.
+              Interaction Design student and Department Representative at UVU with experience designing and
+              building digital products. I focus on clear, meaningful interfaces with an AI-first mindset while
+              growing hunterbastian.com.
             </motion.p>
           </TiltCard>
 
@@ -731,89 +469,32 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           >
             <div className="flex items-center justify-start rounded-xl bg-transparent px-0 py-0">
               <div className="flex flex-col items-start gap-3 sm:gap-4">
-                <div className="flex items-center gap-3.5 sm:gap-4">
-                {contactLinks.map((link, index) => (
-                  <motion.div
-                    key={link.label}
-                    initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                    animate={{
-                      opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                      y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                    }}
-                    transition={{
-                      duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                      delay: isHeroCopyVisible
-                        ? motionDelayMs(socialRevealDelay + index * STAGGER_TIMING.itemStagger, prefersReducedMotion)
-                        : 0,
-                      ease: STAGGER_PANEL.ease,
-                    }}
-                  >
-                    <ContactLink
-                      link={link}
-                      actionClassName={contactInlineActionClassName}
-                      actionStyle={getSocialActionStyle(hoveredSocialAction === link.label)}
-                      iconStyle={getSocialIconStyle(hoveredSocialAction === link.label)}
-                      onHoverStart={() => handleSocialHoverStart(link.label)}
-                      onHoverEnd={() => handleSocialHoverEnd(link.label)}
-                    />
-                  </motion.div>
-                ))}
-
-                <motion.div
-                  className="relative overflow-visible"
-                  initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                  animate={{
-                    opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                    y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                  }}
-                  transition={{
-                    duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                    delay: isHeroCopyVisible
-                      ? motionDelayMs(
-                          socialRevealDelay + contactLinks.length * STAGGER_TIMING.itemStagger,
-                          prefersReducedMotion,
-                        )
-                      : 0,
-                    ease: STAGGER_PANEL.ease,
-                  }}
-                >
-                  <button
-                    ref={resumeButtonRef}
-                    type="button"
-                    onClick={() => {
-                      setShowResumePreview(false)
-                      setShowResumeModal(true)
-                    }}
-                    className={contactInlineActionClassName}
-                    style={getSocialActionStyle(hoveredSocialAction === 'Resume')}
-                    onMouseEnter={() => {
-                      handleSocialHoverStart('Resume')
-                      openResumePreview()
-                    }}
-                    onMouseLeave={() => {
-                      handleSocialHoverEnd('Resume')
-                      closeResumePreview()
-                    }}
-                    onFocus={() => {
-                      handleSocialHoverStart('Resume')
-                      openResumePreview()
-                    }}
-                    onBlur={() => {
-                      handleSocialHoverEnd('Resume')
-                      closeResumePreview()
-                    }}
-                    aria-label="Resume"
-                    title="Resume"
-                  >
-                    <ContactIcon
-                      iconComponent={IconFileText}
-                      label="Resume"
-                      className={contactIconGlyphClassName}
-                      style={getSocialIconStyle(hoveredSocialAction === 'Resume')}
-                    />
-                  </button>
-                  <ResumePreview isVisible={showResumePreview} anchorRef={resumeButtonRef} />
-                </motion.div>
+                <div className="flex flex-wrap items-center gap-x-8 gap-y-2 font-mono text-[clamp(1.15rem,2.5vw,2rem)] font-normal tracking-[0.01em]">
+                  {HERO_TEXT_LINKS.map((link, index) => (
+                    <motion.a
+                      key={link.label}
+                      href={link.href}
+                      target={link.label === 'Email' ? undefined : '_blank'}
+                      rel={link.label === 'Email' ? undefined : 'noopener noreferrer'}
+                      className="text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
+                      aria-label={link.label}
+                      title={link.label}
+                      initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
+                      animate={{
+                        opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                        y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
+                      }}
+                      transition={{
+                        duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                        delay: isHeroCopyVisible
+                          ? motionDelayMs(socialRevealDelay + index * STAGGER_TIMING.itemStagger, prefersReducedMotion)
+                          : 0,
+                        ease: STAGGER_PANEL.ease,
+                      }}
+                    >
+                      {link.label}
+                    </motion.a>
+                  ))}
                 </div>
 
                 <motion.div
@@ -826,7 +507,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
                     delay: isHeroCopyVisible
                       ? motionDelayMs(
-                          socialRevealDelay + (contactLinks.length + 1) * STAGGER_TIMING.itemStagger,
+                          socialRevealDelay + HERO_TEXT_LINKS.length * STAGGER_TIMING.itemStagger,
                           prefersReducedMotion,
                         )
                       : 0,
@@ -857,7 +538,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="max-w-2xl mx-auto text-left">
+        <div className="mx-auto max-w-[540px] text-left">
           <ul className="space-y-2">
             <li>
               <a
@@ -871,14 +552,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </li>
             <li>
               <a
-                href={HUNTER_SITE_URL}
+                href="https://instagram.com/studio.alpine"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                aria-label="Photography portfolio hunterbastian.com"
-                title="Photography portfolio hunterbastian.com"
+                aria-label="Photography Studio Studio Alpine"
+                title="Photography Studio Studio Alpine"
               >
-                <span>hunterbastian.com</span>
+                <span>Studio Alpine</span>
               </a>
             </li>
           </ul>
@@ -897,7 +578,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
-        <div className="mx-auto max-w-4xl rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
+        <div className="mx-auto max-w-[540px] rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
           {children}
         </div>
       </CollapsibleSection>
@@ -912,7 +593,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="max-w-2xl mx-auto">
+        <div className="mx-auto max-w-[540px]">
           <motion.div
             ref={experiencePanelRef}
             className="nord-panel rounded-lg p-4 sm:p-5 space-y-2"
@@ -927,12 +608,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
           >
             {experience.map((job, index) => {
-              const isExpanded = expandedJobs.has(index)
-
               return (
                 <motion.div
                   key={job.company}
-                  className="border-b border-border last:border-b-0"
+                  className="border-b border-border py-3.5 last:border-b-0"
                   initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                   animate={{
                     opacity: experienceStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -944,61 +623,30 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     ease: STAGGER_PANEL.ease,
                   }}
                 >
-                  <button
-                    type="button"
-                    className="flex w-full items-center gap-4 rounded-md border border-transparent px-2 py-3.5 text-left"
-                    onClick={() => toggleJob(index)}
-                  >
-                    <motion.div
-                      className="group inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border/90 bg-background/65 text-muted-foreground shadow-[0_1px_2px_rgba(46,52,64,0.08),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[1px]"
-                      animate={{ rotate: isExpanded ? 45 : 0 }}
-                      transition={{
-                        duration: motionDurationMs(EXPERIENCE_TIMING.iconRotate, prefersReducedMotion),
-                        ease: MOTION_EASE_STANDARD,
-                      }}
-                    >
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground/70 shadow-inner transition-colors duration-300 group-hover:text-foreground">
-                        <svg className="h-[11px] w-[11px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 4v16m8-8H4" />
-                        </svg>
-                      </span>
-                    </motion.div>
-                    <div className="flex min-w-0 flex-1 items-center space-x-6">
-                      <span className="w-16 text-xs text-muted-foreground">
-                        {job.year}
-                      </span>
-                      <span className="flex items-center gap-2 font-medium tracking-[0.06em]">
+                  <div className="flex flex-col gap-2 px-2 sm:flex-row sm:items-start sm:gap-6">
+                    <span className="font-mono text-xs font-normal text-muted-foreground sm:min-w-[90px]">
+                      {job.year}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
                         {job.active && (
                           <span className="relative flex h-2 w-2 shrink-0" aria-label="Currently active">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#a3be8c] opacity-60" />
                             <span className="relative inline-flex h-2 w-2 rounded-full bg-[#a3be8c]" />
                           </span>
                         )}
-                        {job.company}
-                      </span>
+                        <h3 className="font-mono text-[13px] font-normal tracking-[0.04em] text-foreground">
+                          {job.company}
+                        </h3>
+                      </div>
+                      <p className="mt-1 font-mono text-xs font-normal tracking-[0.04em] text-muted-foreground">
+                        {job.title}
+                      </p>
+                      <p className="mt-2 font-mono text-sm font-normal leading-relaxed text-muted-foreground">
+                        {job.description}
+                      </p>
                     </div>
-                    <span className="hidden shrink-0 text-sm tracking-[0.06em] text-muted-foreground sm:block">
-                      {job.title}
-                    </span>
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{
-                          duration: motionDurationMs(EXPERIENCE_TIMING.expandDuration, prefersReducedMotion),
-                          ease: MOTION_EASE_STANDARD,
-                        }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pb-4 pl-2 sm:pl-[5.5rem] pr-2">
-                          <p className="text-muted-foreground text-sm font-inter leading-relaxed">{job.description}</p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  </div>
                 </motion.div>
               )
             })}
@@ -1016,7 +664,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="max-w-2xl mx-auto">
+        <div className="mx-auto max-w-[540px]">
           <motion.div
             ref={educationPanelRef}
             className="nord-panel rounded-lg p-5 space-y-5"
@@ -1046,13 +694,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="text-muted-foreground text-xs sm:min-w-[100px]">{edu.year}</div>
+                  <div className="font-mono text-xs font-normal text-muted-foreground sm:min-w-[100px]">
+                    {edu.year}
+                  </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground text-base mb-1 tracking-[0.06em]">{edu.institution}</h3>
-                    <p className="text-foreground text-sm mb-1 tracking-[0.06em]">{edu.degree}</p>
-                    <p className="text-muted-foreground text-sm tracking-[0.06em]">{edu.level}</p>
+                    <h3 className="mb-1 font-mono text-[13px] font-normal tracking-[0.04em] text-foreground">
+                      {edu.institution}
+                    </h3>
+                    <p className="mb-1 font-mono text-sm font-normal tracking-[0.04em] text-foreground">
+                      {edu.degree}
+                    </p>
+                    <p className="font-mono text-sm font-normal tracking-[0.04em] text-muted-foreground">
+                      {edu.level}
+                    </p>
                     {edu.note && (
-                      <p className="text-muted-foreground text-xs mt-1 tracking-[0.08em]" style={{ opacity: 0.7 }}>
+                      <p
+                        className="mt-1 font-mono text-xs font-normal tracking-[0.08em] text-muted-foreground"
+                        style={{ opacity: 0.7 }}
+                      >
                         {edu.note}
                       </p>
                     )}
@@ -1074,10 +733,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="mx-auto max-w-[540px]">
           <motion.div
             ref={stackPanelRef}
-            className="flex flex-wrap justify-start gap-x-6 gap-y-3 max-w-2xl mx-auto"
+            className="mx-auto flex max-w-[540px] flex-wrap justify-start gap-x-6 gap-y-3"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: stackStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -1122,7 +781,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4"
       >
-        <div className="max-w-2xl mx-auto">
+        <div className="mx-auto max-w-[540px]">
           <a
             href={CONTACT_EMAIL_HREF}
             className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
@@ -1134,7 +793,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </CollapsibleSection>
 
-      <ResumeModal isOpen={showResumeModal} onClose={() => setShowResumeModal(false)} />
       </div>
     </div>
   )

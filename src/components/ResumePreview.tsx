@@ -94,8 +94,8 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
       style={{ width: `${PREVIEW_WIDTH}px`, height: `${PREVIEW_HEIGHT}px` }}
     >
       <div className="bg-gray-100 px-3 py-2 border-b border-gray-200">
-        <div className="text-[8px] font-semibold text-gray-700">HUNTER BASTIAN</div>
-        <div className="text-[6px] text-gray-500">Resume Preview</div>
+        <div className="text-[8px] font-semibold text-[#171717]">HUNTER BASTIAN</div>
+        <div className="text-[6px] text-[#171717]">Resume Preview</div>
       </div>
 
       <div className="p-3 space-y-2">
@@ -136,7 +136,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
       </div>
 
       <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2">
-        <div className="text-[6px] text-gray-400">Click to view full resume</div>
+        <div className="text-[6px] text-[#171717]">Click to view full resume</div>
       </div>
     </div>
   )

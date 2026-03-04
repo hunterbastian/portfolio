@@ -45,7 +45,7 @@ export const viewport = {
 }
 
 const faviconVersion = '20260207'
-const brandName = 'Hunter Bastian // hunterbastian.com'
+const brandName = 'Hunter Bastian // Studio Alpine'
 const sitePreviewTitle = 'Hunter Bastian - Portfolio'
 const siteCoordinates = '40.7608° N / 111.8910° W'
 
@@ -180,14 +180,14 @@ export default function RootLayout({
       </head>
                    <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
                 <CursorFollower />
+                <p
+                  className="pointer-events-none fixed left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-muted-foreground sm:left-6 sm:top-6 sm:text-[11px]"
+                  aria-label={`Coordinates ${siteCoordinates}`}
+                >
+                  {siteCoordinates}
+                </p>
                 <SmoothScroll>
-                  <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
-                  <p
-                    className="pointer-events-none fixed left-4 top-4 z-40 select-none text-[10px] tracking-[0.12em] text-muted-foreground sm:left-6 sm:top-6 sm:text-[11px]"
-                    aria-label={`Coordinates ${siteCoordinates}`}
-                  >
-                    {siteCoordinates}
-                  </p>
+                  <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-[#171717] focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
                   <div className="min-h-screen flex flex-col">
                     <main id="main-content" role="main" className="flex-1">
                       <PageTransition>{children}</PageTransition>

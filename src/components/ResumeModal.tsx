@@ -143,7 +143,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             className="min-h-screen"
           >
             {/* Project page container styling */}
-            <article className="container mx-auto max-w-4xl px-4 py-8 min-h-screen">
+            <article className="container mx-auto max-w-[540px] px-4 py-8 min-h-screen">
               {/* Header - matches project page header */}
               <div className="mb-8">
                 <button
@@ -157,7 +157,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   Back to portfolio
                 </button>
                 
-                <h1 className="text-[2.08rem] md:text-[2.83rem] font-bold mb-8">Hunter Bastian // hunterbastian.com</h1>
+                <h1 className="text-[2.08rem] md:text-[2.83rem] font-bold mb-8">Hunter Bastian // Studio Alpine</h1>
               </div>
 
               {/* Resume Details - matches project details */}
@@ -198,7 +198,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     <iframe
                       src="/api/resume/file"
                       className="w-full h-screen border-0 rounded-xl"
-                      title="Hunter Bastian // hunterbastian.com Resume"
+                      title="Hunter Bastian // Studio Alpine Resume"
                     />
                   </div>
                 </>
@@ -222,7 +222,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                       autoComplete="current-password"
                     />
                     {accessError && (
-                      <p className="text-sm text-red-600">{accessError}</p>
+                      <p className="text-sm text-foreground">{accessError}</p>
                     )}
                     <button
                       type="submit"
@@ -236,9 +236,9 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               )}
 
               {/* Keyboard shortcut hint */}
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <p className="text-xs text-gray-500 text-center">
-                  Press <kbd className="px-2 py-1 bg-gray-100 rounded text-xs font-mono">Esc</kbd> to close
+              <div className="mt-8 border-t border-border pt-6">
+                <p className="text-center text-xs text-foreground">
+                  Press <kbd className="rounded bg-secondary px-2 py-1 text-xs font-mono text-foreground">Esc</kbd> to close
                 </p>
               </div>
             </article>

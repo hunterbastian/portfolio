@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 export default function NotFound() {
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-16">
+    <div className="container mx-auto max-w-[540px] px-4 py-16">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

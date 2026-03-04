@@ -5,7 +5,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 const baseUrl = 'https://hunterbastian.com'
-const brandName = 'Hunter Bastian // hunterbastian.com'
+const brandName = 'Hunter Bastian // Studio Alpine'
 
 export const metadata: Metadata = {
   title: `Playground | ${brandName} Portfolio`,
@@ -25,11 +25,11 @@ export default function ArchivePage() {
   const archivedProjects = getArchivedProjects()
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-12 sm:py-16">
+    <div className="container mx-auto max-w-[540px] px-4 py-12 sm:py-16">
       <div className="mb-8">
         <Link 
           href="/" 
-          className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-foreground transition-colors"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -39,12 +39,12 @@ export default function ArchivePage() {
       </div>
 
       <div className="mb-12">
-        <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">Playground</h1>
+        <h1 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Playground</h1>
       </div>
 
       {archivedProjects.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-gray-600 dark:text-gray-400">No archived projects yet.</p>
+          <p className="text-foreground">No archived projects yet.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

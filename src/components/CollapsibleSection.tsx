@@ -59,12 +59,6 @@ const LABEL_TIMING = {
   duration: 320, // fade-in duration
 }
 
-const TOGGLE_ARROW = {
-  closedRotate: 0, // ▸ pointing right
-  openRotate: 90, // ▾ pointing down
-  duration: 200, // rotate transition ms
-}
-
 export default function CollapsibleSection({
   id,
   title,
@@ -158,7 +152,7 @@ export default function CollapsibleSection({
 
   return (
     <section id={id} className={sectionClasses}>
-      <div className="relative mx-auto flex min-h-6 w-full max-w-2xl items-center justify-start">
+      <div className="relative mx-auto flex min-h-6 w-full max-w-[540px] items-center justify-start">
         <motion.h2
           ref={titleRef}
           className="section-heading m-0 font-mono text-[12px] leading-none tracking-[0.06em]"
@@ -176,22 +170,10 @@ export default function CollapsibleSection({
             <button
               type="button"
               onClick={onToggle}
-              className="inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-none p-0 m-0 font-mono text-[12px] tracking-[0.06em] uppercase hover:opacity-80 transition-opacity duration-200"
+              className="inline-flex items-center cursor-pointer bg-transparent border-none p-0 m-0 font-mono text-[12px] tracking-[0.06em] uppercase hover:opacity-80 transition-opacity duration-200"
               aria-expanded={isOpen}
               aria-controls={contentId}
             >
-              <motion.span
-                aria-hidden
-                className="inline-block text-[11px] leading-none"
-                animate={{ rotate: isOpen ? TOGGLE_ARROW.openRotate : TOGGLE_ARROW.closedRotate }}
-                transition={{
-                  duration: motionDurationMs(TOGGLE_ARROW.duration, prefersReducedMotion),
-                  ease: MOTION_EASE_STANDARD,
-                }}
-                style={{ originX: '50%', originY: '50%' }}
-              >
-                ▸
-              </motion.span>
               {title}
             </button>
           ) : (

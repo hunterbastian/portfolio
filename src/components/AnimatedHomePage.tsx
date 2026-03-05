@@ -16,7 +16,6 @@ interface ExperienceItem {
   company: string
   title: string
   description: string
-  active?: boolean
 }
 
 interface EducationItem {
@@ -75,21 +74,18 @@ const experience: ExperienceItem[] = [
     year: '2026 - Present',
     company: 'Studio Alpine',
     title: 'Founder',
-    active: true,
     description: 'Founder of Studio Alpine, a photography and design project.',
   },
   {
     year: '2024 - Present',
     company: 'Catapult',
     title: 'Video Producer',
-    active: true,
     description: 'Produced and edit marketing and product videos for Catapult.',
   },
   {
     year: '2024 - Present',
     company: 'Utah Valley University',
     title: 'Department Representative',
-    active: true,
     description: 'Helped new students with internship opportunities in the Web Design and Development program.',
   },
   {
@@ -137,6 +133,7 @@ const CONTACT_SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
   { label: 'Threads', href: 'https://threads.net/@studio.alpine', external: true },
   { label: 'X', href: 'https://x.com/thestudioalpine', external: true },
+  { label: 'YouTube', href: 'https://www.youtube.com/@hunterbastian', external: true },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', external: true },
 ] as const
@@ -717,7 +714,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
+                className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
                 aria-label={link.label}
                 title={link.label}
               >

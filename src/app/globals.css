@@ -159,10 +159,7 @@ p, li, dd, blockquote, figcaption {
  * ───────────────────────────────────────── */
 
 .status-radar-dot {
-  position: relative;
-  display: inline-block;
-  background: #37b24d;
-  border-radius: 50%;
+  display: none !important;
 }
 
 .status-radar-dot::before,

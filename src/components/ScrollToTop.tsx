@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { getLenisInstance } from '@/lib/lenis'
 
 export default function ScrollToTop() {
@@ -32,7 +32,7 @@ export default function ScrollToTop() {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.button
+        <m.button
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top"
@@ -65,7 +65,7 @@ export default function ScrollToTop() {
               strokeLinejoin="round"
             />
           </svg>
-        </motion.button>
+        </m.button>
       )}
     </AnimatePresence>
   )

@@ -1,6 +1,5 @@
 'use client'
 
-import Lenis from 'lenis'
 import { useEffect, type ReactNode } from 'react'
 import { setLenisInstance } from '@/lib/lenis'
 
@@ -20,27 +19,43 @@ interface SmoothScrollProps {
 
 export default function SmoothScroll({ children }: SmoothScrollProps) {
   useEffect(() => {
+    let active = true
+    let rafId = 0
+    let cleanup: (() => void) | null = null
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
       setLenisInstance(null)
       return
     }
 
-    const lenis = new Lenis(LENIS_OPTIONS)
-    setLenisInstance(lenis)
+    const initLenis = async () => {
+      const { default: Lenis } = await import('lenis')
+      if (!active) {
+        return
+      }
 
-    let rafId = 0
-    const raf = (time: number) => {
-      lenis.raf(time)
+      const lenis = new Lenis(LENIS_OPTIONS)
+      setLenisInstance(lenis)
+
+      const raf = (time: number) => {
+        lenis.raf(time)
+        rafId = window.requestAnimationFrame(raf)
+      }
+
       rafId = window.requestAnimationFrame(raf)
+      cleanup = () => {
+        window.cancelAnimationFrame(rafId)
+        setLenisInstance(null)
+        lenis.destroy()
+      }
     }
 
-    rafId = window.requestAnimationFrame(raf)
+    void initLenis()
 
     return () => {
-      window.cancelAnimationFrame(rafId)
-      setLenisInstance(null)
-      lenis.destroy()
+      active = false
+      cleanup?.()
     }
   }, [])
 

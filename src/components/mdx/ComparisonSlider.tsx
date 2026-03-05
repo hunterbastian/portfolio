@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useId, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import { MOTION_EASE_STANDARD, motionDurationMs } from '@/lib/motion'
 
 interface ComparisonSliderProps {
@@ -44,7 +44,7 @@ export default function ComparisonSlider({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 860px"
           />
 
-          <motion.div
+          <m.div
             className="absolute inset-y-0 left-0 overflow-hidden"
             animate={{ width: `${position}%` }}
             transition={{
@@ -61,9 +61,9 @@ export default function ComparisonSlider({
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 860px"
               />
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             aria-hidden
             className="pointer-events-none absolute inset-y-0 w-0.5 bg-white/95 shadow-[0_0_0_1px_rgba(0,0,0,0.28)]"
             animate={{ left: `${position}%` }}

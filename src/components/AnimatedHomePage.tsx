@@ -1,11 +1,10 @@
 'use client'
 
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
-import TiltCard from './TiltCard'
 import CollapsibleSection from './CollapsibleSection'
 
 interface AnimatedHomePageProps {
@@ -57,6 +56,19 @@ const INITIAL_SECTION_LOAD_DELAY = {
   creating: 220,
   caseStudies: 440,
 } as const
+
+const PRESENT_SUFFIX = ' - Present'
+
+function splitExperienceYear(year: string) {
+  if (!year.endsWith(PRESENT_SUFFIX)) {
+    return { primary: year, secondary: null as string | null }
+  }
+
+  return {
+    primary: `${year.slice(0, -PRESENT_SUFFIX.length)} -`,
+    secondary: 'Present',
+  }
+}
 
 const experience: ExperienceItem[] = [
   {
@@ -119,7 +131,7 @@ const education: EducationItem[] = [
 ]
 
 const HERO_HEADLINE_TEXT = 'Hunter Bastian'
-const HERO_SUBTITLE_TEXT = 'Interaction Designer'
+const HERO_SUBTITLE_TEXT = 'Interaction designer'
 const CONTACT_EMAIL_HREF = 'mailto:hello@hunterbastian.com?subject=Project%20Inquiry'
 const CONTACT_SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
@@ -239,7 +251,7 @@ function CreatingLoader() {
   return (
     <AnimatePresence>
       {flash && (
-        <motion.div
+        <m.div
           className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -247,7 +259,7 @@ function CreatingLoader() {
           transition={{ duration: 0.2, ease: 'easeInOut' }}
           style={{ background: 'rgba(25,25,25,0.6)' }}
         >
-          <motion.svg
+          <m.svg
             width="32"
             height="32"
             viewBox="0 0 32 32"
@@ -272,8 +284,8 @@ function CreatingLoader() {
               strokeDashoffset="40"
               opacity="0.7"
             />
-          </motion.svg>
-        </motion.div>
+          </m.svg>
+        </m.div>
       )}
     </AnimatePresence>
   )
@@ -373,7 +385,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
-            <motion.div
+            <m.div
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94 }}
               animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, scale: 1 }}
               transition={{
@@ -390,7 +402,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
                 priority
               />
-            </motion.div>
+            </m.div>
             <div className="min-w-0">
               <h1
                 className="text-foreground font-mono font-normal text-[14px] leading-[1.2] tracking-[0.02em]"
@@ -403,7 +415,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </div>
           </div>
 
-          <TiltCard
+          <m.div
             className="mt-4 mb-4 sm:mt-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
@@ -415,7 +427,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <motion.p
+            <m.p
               className="m-0 font-mono font-normal text-sm leading-relaxed text-muted-foreground"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
               animate={{
@@ -430,11 +442,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             >
               Interaction Design student and Department Representative at UVU with experience designing and
               building digital products. I focus on clear, meaningful interfaces with an AI-first mindset while
-              growing hunterbastian.com.
-            </motion.p>
-          </TiltCard>
+              growing <strong className="font-semibold text-foreground">Studio Alpine</strong>.
+            </m.p>
+          </m.div>
 
-          <motion.div
+          <m.div
             className="mt-4 sm:mt-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
@@ -449,7 +461,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
           >
             <div className="flex items-center justify-start rounded-xl bg-transparent px-0 py-0">
-              <motion.div
+              <m.div
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -467,9 +479,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
                 </a>
-              </motion.div>
+              </m.div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -552,7 +564,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="mx-auto max-w-[560px]">
-          <motion.div
+          <m.div
             ref={experiencePanelRef}
             className="nord-panel rounded-lg p-4 sm:p-5 space-y-2"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
@@ -566,8 +578,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
           >
             {experience.map((job, index) => {
+              const displayYear = splitExperienceYear(job.year)
               return (
-                <motion.div
+                <m.div
                   key={job.company}
                   className="border-b border-border py-3.5 last:border-b-0"
                   initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
@@ -583,16 +596,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <div className="flex flex-col gap-2 px-2 sm:flex-row sm:items-start sm:gap-6">
                     <span className="font-mono text-xs font-normal text-muted-foreground sm:min-w-[90px]">
-                      {job.year}
+                      <span className="block whitespace-nowrap">{displayYear.primary}</span>
+                      {displayYear.secondary && (
+                        <span className="block whitespace-nowrap leading-tight">{displayYear.secondary}</span>
+                      )}
                     </span>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        {job.active && (
-                          <span className="relative flex h-2 w-2 shrink-0" aria-label="Currently active">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#a3be8c] opacity-60" />
-                            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#a3be8c]" />
-                          </span>
-                        )}
                         <h3 className="font-mono text-[13px] font-normal tracking-[0.04em] text-foreground">
                           {job.company}
                         </h3>
@@ -605,10 +615,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                       </p>
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               )
             })}
-          </motion.div>
+          </m.div>
         </div>
       </CollapsibleSection>
 
@@ -623,7 +633,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="mx-auto max-w-[560px]">
-          <motion.div
+          <m.div
             ref={educationPanelRef}
             className="nord-panel rounded-lg p-5 space-y-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
@@ -637,7 +647,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
           >
             {education.map((edu, index) => (
-              <motion.div
+              <m.div
                 key={edu.institution}
                 className="border-b border-border last:border-b-0 pb-5 last:pb-0"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
@@ -675,9 +685,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     )}
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         </div>
       </CollapsibleSection>
 
@@ -692,15 +702,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="mx-auto max-w-[560px]">
-          <a
-            href={CONTACT_EMAIL_HREF}
-            className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
-            aria-label="Email Hunter"
-            title="Email Hunter"
-          >
-            <span className="font-light uppercase tracking-[0.08em] relative z-10">Email me</span>
-          </a>
           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[14px] font-normal tracking-[0.02em] sm:text-[15px]">
+            <a
+              href={CONTACT_EMAIL_HREF}
+              className="text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
+              aria-label="Email Hunter"
+              title="Email Hunter"
+            >
+              Email
+            </a>
             {CONTACT_SOCIAL_LINKS.map((link) => (
               <a
                 key={link.label}

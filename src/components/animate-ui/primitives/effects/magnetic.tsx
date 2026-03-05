@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { motion, useSpring, type MotionStyle, type SpringOptions } from 'framer-motion'
+import { m, useSpring, type MotionStyle, type SpringOptions } from 'framer-motion'
 
 const DEFAULT_SPRING: SpringOptions = {
   stiffness: 100,
@@ -9,11 +9,12 @@ const DEFAULT_SPRING: SpringOptions = {
   mass: 0.5,
 }
 
-export interface MagneticProps extends React.ComponentPropsWithoutRef<typeof motion.div> {
+export interface MagneticProps extends Omit<React.ComponentPropsWithoutRef<typeof m.div>, 'style'> {
   asChild?: boolean
   strength?: number
   range?: number
   springOptions?: SpringOptions
+  style?: MotionStyle
   onlyOnHover?: boolean
   disableOnTouch?: boolean
 }
@@ -93,7 +94,7 @@ export function Magnetic({
   }
 
   return (
-    <motion.div
+    <m.div
       className={className}
       style={motionStyle}
       onPointerEnter={handlePointerEnter}
@@ -103,6 +104,6 @@ export function Magnetic({
       {...props}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }

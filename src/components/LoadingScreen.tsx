@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import { PortfolioLoader } from './Loader'
 
 interface LoadingScreenProps {
@@ -32,7 +32,7 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
     <>
       <AnimatePresence mode="wait">
         {isLoading ? (
-          <motion.div
+          <m.div
             key="loading"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -41,16 +41,16 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
             className="fixed inset-0 z-50 bg-background"
           >
             <PortfolioLoader />
-          </motion.div>
+          </m.div>
         ) : (
-          <motion.div
+          <m.div
             key="content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.16 }}
           >
             {children}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

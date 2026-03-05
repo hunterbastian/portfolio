@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
@@ -153,7 +153,7 @@ export default function CollapsibleSection({
   return (
     <section id={id} className={sectionClasses}>
       <div className="relative mx-auto flex min-h-6 w-full max-w-[560px] items-center justify-start">
-        <motion.h2
+        <m.h2
           ref={titleRef}
           className="section-heading m-0 font-mono text-[12px] leading-none tracking-[0.06em]"
           initial={false}
@@ -179,12 +179,12 @@ export default function CollapsibleSection({
           ) : (
             title
           )}
-        </motion.h2>
+        </m.h2>
       </div>
 
       <AnimatePresence initial={false}>
         {isOpen && (
-          <motion.div
+          <m.div
             id={contentId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -195,7 +195,7 @@ export default function CollapsibleSection({
             }}
             className="overflow-hidden"
           >
-            <motion.div
+            <m.div
               ref={contentRef}
               className={contentPanelClassName}
               initial={false}
@@ -209,7 +209,7 @@ export default function CollapsibleSection({
               }}
             >
               {contentItems.map((child, index) => (
-                <motion.div
+                <m.div
                   key={isValidElement(child) && child.key != null ? String(child.key) : `section-row-${index}`}
                   initial={false}
                   animate={{
@@ -223,10 +223,10 @@ export default function CollapsibleSection({
                   }}
                 >
                   {child}
-                </motion.div>
+                </m.div>
               ))}
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
     </section>

@@ -2,7 +2,7 @@
 
 import { useRef, type CSSProperties, type ReactNode } from 'react'
 import {
-  motion,
+  m,
   useMotionValue,
   useSpring,
   useReducedMotion,
@@ -66,7 +66,7 @@ export default function TiltCard({
   }
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       style={{
         perspective,
@@ -78,7 +78,7 @@ export default function TiltCard({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <motion.div
+      <m.div
         className={className}
         style={{
           ...style,
@@ -89,7 +89,7 @@ export default function TiltCard({
         }}
       >
         {children}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   )
 }

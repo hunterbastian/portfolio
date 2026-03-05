@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import {
-  motion,
+  m,
   useMotionValue,
   useSpring,
   useReducedMotion,
@@ -74,7 +74,7 @@ export default function CursorFollower() {
     >
       {/* Ring — spring-lagged with blend mode */}
       {!prefersReduced && (
-        <motion.div
+        <m.div
           style={{
             position: 'fixed',
             left: rx,

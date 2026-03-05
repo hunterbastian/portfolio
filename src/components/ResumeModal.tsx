@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import { FormEvent, useEffect, useState } from 'react'
 
 interface ResumeModalProps {
@@ -127,7 +127,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -135,7 +135,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           className="fixed inset-0 z-50 bg-white overflow-y-auto"
         >
           {/* Full page content - styled exactly like project pages */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -242,8 +242,8 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 </p>
               </div>
             </article>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>
   )

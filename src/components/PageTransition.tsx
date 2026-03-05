@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
@@ -79,7 +79,7 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
   }, [prefersReducedMotion, timing.childStartDelay, timing.newContentDelay])
 
   return (
-    <motion.div
+    <m.div
       initial={{
         opacity: PAGE.initialOpacity,
         y: offsets.pageY,
@@ -95,7 +95,7 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
       className="will-change-transform"
     >
       {routeChildren.map((child, index) => (
-        <motion.div
+        <m.div
           key={index}
           initial={{
             opacity: CHILD.initialOpacity,
@@ -113,9 +113,9 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
           className="will-change-transform"
         >
           {child}
-        </motion.div>
+        </m.div>
       ))}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -125,7 +125,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
 
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <motion.div
+      <m.div
         key={pathname}
         exit={{ opacity: PAGE.exitOpacity }}
         transition={{
@@ -149,7 +149,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
         >
           {children}
         </RouteScene>
-      </motion.div>
+      </m.div>
     </AnimatePresence>
   )
 }

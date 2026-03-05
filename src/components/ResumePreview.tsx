@@ -1,7 +1,7 @@
 'use client'
 
 import { type RefObject, useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
 interface ResumePreviewProps {
@@ -162,7 +162,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
     return createPortal(
       <AnimatePresence initial={false}>
         {isVisible ? (
-          <motion.div
+          <m.div
             className="fixed -translate-x-1/2 z-[80] pointer-events-none origin-top"
             aria-hidden
             style={{ left: `${activePosition.left}px`, top: `${activePosition.top}px`, willChange: 'transform, opacity' }}
@@ -172,7 +172,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
             transition={PREVIEW_TRANSITION}
           >
             {previewBody}
-          </motion.div>
+          </m.div>
         ) : null}
       </AnimatePresence>,
       document.body
@@ -182,7 +182,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
   return (
     <AnimatePresence initial={false}>
       {isVisible ? (
-        <motion.div
+        <m.div
           className="absolute left-1/2 top-full mt-2 -translate-x-1/2 z-50 pointer-events-none origin-top"
           aria-hidden
           style={{ willChange: 'transform, opacity' }}
@@ -192,7 +192,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
           transition={PREVIEW_TRANSITION}
         >
           {previewBody}
-        </motion.div>
+        </m.div>
       ) : null}
     </AnimatePresence>
   )

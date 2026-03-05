@@ -3,7 +3,6 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 import './viewport.css'
-import 'dialkit/styles.css'
 import Footer from '@/components/Footer'
 import ScrollToTop from '@/components/ScrollToTop'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
@@ -13,6 +12,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 import CursorFollower from '@/components/CursorFollower'
+import MotionProvider from '@/components/MotionProvider'
 import { telemetryConfig } from '@/lib/telemetry'
 
 // Primary body font
@@ -178,55 +178,57 @@ export default function RootLayout({
           `
         }} />
       </head>
-                   <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
-                <CursorFollower />
-                <p
-                  className="pointer-events-none fixed left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-75 sm:left-6 sm:top-6 sm:text-[11px]"
-                  aria-label={`Coordinates ${siteCoordinates}`}
-                >
-                  {siteCoordinates}
-                </p>
-                <SmoothScroll>
-                  <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-[#171717] focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
-                  <div className="min-h-screen flex flex-col">
-                    <main id="main-content" role="main" className="flex-1">
-                      <PageTransition>{children}</PageTransition>
-                    </main>
-                    <Footer />
-                    <ScrollToTop />
-                  </div>
-                  {telemetryConfig.enableSpeedInsights && (
-                    <SpeedInsights 
-                      sampleRate={1}
-                    />
-                  )}
-                  {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
-                  {/* {process.env.NODE_ENV === 'development' && <DialKitRoot />} */}
-                  {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
-                  
-                  {/* Service Worker Registration - Deferred for better performance */}
-                  {process.env.NODE_ENV === 'production' && (
-                    <Script 
-                      id="sw-registration" 
-                      strategy="lazyOnload"
-                    >
-                      {`
-                        if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
-                          requestIdleCallback(function() {
-                            navigator.serviceWorker.register('/sw.js')
-                              .then(function(registration) {
-                                console.log('SW registered: ', registration);
-                              })
-                              .catch(function(registrationError) {
-                                console.log('SW registration failed: ', registrationError);
-                              });
-                          }, { timeout: 5000 });
-                        }
-                      `}
-                    </Script>
-                  )}
-                </SmoothScroll>
-              </body>
+      <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
+        <MotionProvider>
+          <CursorFollower />
+          <p
+            className="pointer-events-none fixed left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-75 sm:left-6 sm:top-6 sm:text-[11px]"
+            aria-label={`Coordinates ${siteCoordinates}`}
+          >
+            {siteCoordinates}
+          </p>
+          <SmoothScroll>
+            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-[#171717] focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
+            <div className="min-h-screen flex flex-col">
+              <main id="main-content" role="main" className="flex-1">
+                <PageTransition>{children}</PageTransition>
+              </main>
+              <Footer />
+              <ScrollToTop />
+            </div>
+            {telemetryConfig.enableSpeedInsights && (
+              <SpeedInsights
+                sampleRate={1}
+              />
+            )}
+            {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
+            {/* {process.env.NODE_ENV === 'development' && <DialKitRoot />} */}
+            {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
+
+            {/* Service Worker Registration - Deferred for better performance */}
+            {process.env.NODE_ENV === 'production' && (
+              <Script
+                id="sw-registration"
+                strategy="lazyOnload"
+              >
+                {`
+                  if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
+                    requestIdleCallback(function() {
+                      navigator.serviceWorker.register('/sw.js')
+                        .then(function(registration) {
+                          console.log('SW registered: ', registration);
+                        })
+                        .catch(function(registrationError) {
+                          console.log('SW registration failed: ', registrationError);
+                        });
+                    }, { timeout: 5000 });
+                  }
+                `}
+              </Script>
+            )}
+          </SmoothScroll>
+        </MotionProvider>
+      </body>
             </html>
           )
         }

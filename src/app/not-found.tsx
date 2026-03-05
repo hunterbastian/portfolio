@@ -1,24 +1,24 @@
 'use client'
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 
 export default function NotFound() {
   return (
     <div className="container mx-auto max-w-[560px] px-4 py-16">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <motion.h1
+        <m.h1
           className="text-6xl md:text-8xl font-bold text-muted-foreground mb-4"
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           404
-        </motion.h1>
+        </m.h1>
         
         <h2 className="text-2xl md:text-3xl font-bold mb-4">Page Not Found</h2>
         
@@ -27,26 +27,26 @@ export default function NotFound() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/"
               className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
             >
               Go Home
             </Link>
-          </motion.div>
+          </m.div>
           
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/about"
               className="inline-flex items-center justify-center rounded-md border border-input bg-background px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
             >
               About Me
             </Link>
-          </motion.div>
+          </m.div>
         </div>
         
-        <motion.div
+        <m.div
           className="mt-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -61,8 +61,8 @@ export default function NotFound() {
               let me know
             </a>
           </p>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </div>
   )
 }

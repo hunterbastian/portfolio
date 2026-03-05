@@ -2,8 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion, useInView, useReducedMotion } from 'framer-motion'
-import { useDialKit } from 'dialkit'
+import { m, useInView, useReducedMotion } from 'framer-motion'
 import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProjectFrontmatter } from '@/types/project'
@@ -58,21 +57,53 @@ interface CardLayoutAngle {
 }
 
 const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
-const CASE_STUDY_DIAL_DEFAULTS = {
-  compactSpreadFactor: -0.12,
-  compactScale: 0.82,
-  compactGapX: -8,
-  compactGapY: -2,
-  expandedGapX: 30,
-  expandedGapY: 32,
-  expandedScale: 0.89,
-  expandMs: 201,
-  collapseMs: 219,
-  inactiveOpacity: 0.88,
-  stackPriority: 'default',
-} as const
+type StackPriority = 'default' | 'center' | 'left' | 'right'
 
-function getStackPriorityZIndex(index: number, total: number, stackPriority: string): number {
+interface CaseStudyDialState {
+  pile: {
+    compactSpreadFactor: number
+    compactScale: number
+    compactGapX: number
+    compactGapY: number
+    stackPriority: StackPriority
+  }
+  expanded: {
+    gapX: number
+    gapY: number
+    scale: number
+  }
+  motion: {
+    expandMs: number
+    collapseMs: number
+  }
+  hover: {
+    inactiveOpacity: number
+  }
+}
+
+const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
+  pile: {
+    compactSpreadFactor: -0.12,
+    compactScale: 0.82,
+    compactGapX: -8,
+    compactGapY: -2,
+    stackPriority: 'default',
+  },
+  expanded: {
+    gapX: 30,
+    gapY: 32,
+    scale: 0.89,
+  },
+  motion: {
+    expandMs: 201,
+    collapseMs: 219,
+  },
+  hover: {
+    inactiveOpacity: 0.88,
+  },
+}
+
+function getStackPriorityZIndex(index: number, total: number, stackPriority: StackPriority): number {
   if (stackPriority === 'center') {
     const center = (total - 1) / 2
     return Math.round(total - Math.abs(index - center) * 2)
@@ -140,36 +171,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     })
   }, [projects])
 
-  const caseStudyDial = useDialKit('Case Study Stack', {
-    pile: {
-      compactSpreadFactor: [CASE_STUDY_DIAL_DEFAULTS.compactSpreadFactor, -1.2, 0.35],
-      compactScale: [CASE_STUDY_DIAL_DEFAULTS.compactScale, 0.82, 1.02],
-      compactGapX: [CASE_STUDY_DIAL_DEFAULTS.compactGapX, -24, 18],
-      compactGapY: [CASE_STUDY_DIAL_DEFAULTS.compactGapY, -16, 20],
-      stackPriority: {
-        type: 'select',
-        options: [
-          { value: 'default', label: 'Current Layering' },
-          { value: 'center', label: 'Center Cards On Top' },
-          { value: 'left', label: 'Left Cards On Top' },
-          { value: 'right', label: 'Right Cards On Top' },
-        ],
-        default: CASE_STUDY_DIAL_DEFAULTS.stackPriority,
-      },
-    },
-    expanded: {
-      gapX: [CASE_STUDY_DIAL_DEFAULTS.expandedGapX, 8, 52],
-      gapY: [CASE_STUDY_DIAL_DEFAULTS.expandedGapY, 10, 54],
-      scale: [CASE_STUDY_DIAL_DEFAULTS.expandedScale, 0.82, 1],
-    },
-    motion: {
-      expandMs: [CASE_STUDY_DIAL_DEFAULTS.expandMs, 80, 420],
-      collapseMs: [CASE_STUDY_DIAL_DEFAULTS.collapseMs, 90, 520],
-    },
-    hover: {
-      inactiveOpacity: [CASE_STUDY_DIAL_DEFAULTS.inactiveOpacity, 0.65, 1],
-    },
-  })
+  const caseStudyDial = CASE_STUDY_DIAL_DEFAULTS
 
   const prefetchProject = useCallback((slug: string) => {
     if (prefetchedSlugsRef.current.has(slug)) {
@@ -227,7 +229,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   const gridRowGap = isExpandedLayout ? caseStudyDial.expanded.gapY : caseStudyDial.pile.compactGapY
 
   return (
-    <motion.div
+    <m.div
       ref={gridRef}
       className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-6"
       onMouseEnter={() => {
@@ -286,7 +288,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         const stackZIndex = getStackPriorityZIndex(index, orderedProjects.length, caseStudyDial.pile.stackPriority)
 
         return (
-          <motion.div
+          <m.div
             key={project.slug}
             className={`w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]${mdColStart === 2 ? ' md:col-start-2' : mdColStart === 3 ? ' md:col-start-3' : ''}`}
             style={{
@@ -351,9 +353,9 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                 </div>
               )}
             </Magnetic>
-          </motion.div>
+          </m.div>
         )
       })}
-    </motion.div>
+    </m.div>
   )
 }

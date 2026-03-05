@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
@@ -11,7 +11,7 @@ interface ProjectCardProps {
   index: number
 }
 
-export default function ProjectCard({ slug, frontmatter, index }: ProjectCardProps) {
+function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
 
@@ -71,3 +71,8 @@ export default function ProjectCard({ slug, frontmatter, index }: ProjectCardPro
     </Link>
   )
 }
+
+const ProjectCard = memo(ProjectCardComponent)
+ProjectCard.displayName = 'ProjectCard'
+
+export default ProjectCard

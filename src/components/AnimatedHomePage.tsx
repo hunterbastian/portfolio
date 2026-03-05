@@ -133,7 +133,6 @@ const CONTACT_SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
   { label: 'Threads', href: 'https://threads.net/@studio.alpine', external: true },
   { label: 'X', href: 'https://x.com/thestudioalpine', external: true },
-  { label: 'YouTube', href: 'https://www.youtube.com/@hunterbastian', external: true },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', external: true },
 ] as const
@@ -438,8 +437,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               }}
             >
               Interaction Design student and Department Representative at UVU with experience designing and
-              building digital products. I focus on clear, meaningful interfaces with an AI-first mindset while
-              growing <strong className="font-semibold text-foreground">Studio Alpine</strong>.
+              building digital products. I create meaningful interfaces with an AI-first mindset. ☀️
             </m.p>
           </m.div>
 
@@ -702,7 +700,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[14px] font-normal tracking-[0.02em] sm:text-[15px]">
             <a
               href={CONTACT_EMAIL_HREF}
-              className="text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
+              className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
               aria-label="Email Hunter"
               title="Email Hunter"
             >

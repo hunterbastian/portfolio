@@ -60,6 +60,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.viewport-pinned {
+  position: fixed !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 /* Paragraph / body-copy text uses Inter; everything else inherits Geist Mono from <body> */
 p, li, dd, blockquote, figcaption {
   font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;

@@ -182,7 +182,7 @@ export default function RootLayout({
         <MotionProvider>
           <CursorFollower />
           <p
-            className="pointer-events-none fixed left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-75 sm:left-6 sm:top-6 sm:text-[11px]"
+            className="viewport-pinned pointer-events-none left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-75 sm:left-6 sm:top-6 sm:text-[11px]"
             aria-label={`Coordinates ${siteCoordinates}`}
           >
             {siteCoordinates}

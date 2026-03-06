@@ -439,6 +439,22 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               Interaction Design student and Department Representative at UVU with experience designing and
               building digital products. I create meaningful interfaces with an AI-first mindset. ☀️
             </m.p>
+
+            <m.div
+              className="hero-handwritten-preview"
+              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY + 4 }}
+              animate={{
+                opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
+                y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY + 4,
+              }}
+              transition={{
+                duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
+                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger + 80, prefersReducedMotion) : 0,
+                ease: STAGGER_PANEL.ease,
+              }}
+            >
+              <p className="hero-handwritten-text font-handscript">- Hunter Bastian</p>
+            </m.div>
           </m.div>
 
           <m.div

@@ -515,18 +515,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <span>Studio Alpine</span>
               </a>
             </li>
-            <li>
-              <a
-                href="https://github.com/hunterbastian/mini-lands"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                aria-label="mini-lands on GitHub"
-                title="mini-lands on GitHub"
-              >
-                <span>mini-lands (GitHub)</span>
-              </a>
-            </li>
           </ul>
         </div>
       </CollapsibleSection>

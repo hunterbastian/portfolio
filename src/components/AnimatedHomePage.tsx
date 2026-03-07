@@ -152,7 +152,6 @@ const HERO_NOTE_LABEL = 'NOT A STUDIO - JUST ME'
 const HERO_NOTE_TEXT =
   "I'm Hunter Bastian. I study interaction design at UVU and spend most of my time making interfaces, videos, brands, and small experiments for the internet. This site is a collection of the work and ideas I keep returning to."
 const WORK_TRACKER_LABEL = 'CORE THREADS OF MY WORK'
-const TINY_PROJECTS_NOTE = 'Small ideas I want to keep shaping into real projects.'
 const CONTACT_EMAIL_HREF = 'mailto:hello@hunterbastian.com?subject=Project%20Inquiry'
 const CONTACT_SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
@@ -604,7 +603,7 @@ export default function AnimatedHomePage({ children, workTracker }: AnimatedHome
                     </span>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-mono text-[13px] font-normal tracking-[0.04em] text-foreground">
+                        <h3 className="font-mono text-[13px] font-medium tracking-[0.04em] text-foreground">
                           {job.company}
                         </h3>
                       </div>
@@ -667,7 +666,7 @@ export default function AnimatedHomePage({ children, workTracker }: AnimatedHome
                     {edu.year}
                   </div>
                   <div className="flex-1">
-                    <h3 className="mb-1 font-mono text-[13px] font-normal tracking-[0.04em] text-foreground">
+                    <h3 className="mb-1 font-mono text-[13px] font-medium tracking-[0.04em] text-foreground">
                       {edu.institution}
                     </h3>
                     <p className="mb-1 font-mono text-sm font-normal tracking-[0.04em] text-foreground">
@@ -734,7 +733,6 @@ export default function AnimatedHomePage({ children, workTracker }: AnimatedHome
           <div className="tiny-projects">
             <div className="tiny-projects-head">
               <span className="tiny-projects-kicker">06 TINY PROJECTS</span>
-              <p className="tiny-projects-note">{TINY_PROJECTS_NOTE}</p>
             </div>
 
             <div className="tiny-projects-grid">

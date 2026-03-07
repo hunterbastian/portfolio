@@ -87,7 +87,7 @@ export default function Footer() {
         <span className="text-[11px] tracking-[0.04em] text-muted-foreground md:justify-self-start">
           © {currentYear}
         </span>
-        <p className="text-[11px] tracking-[0.04em] text-muted-foreground md:justify-self-end md:text-right">
+        <p className="text-[11px] uppercase tracking-[0.04em] text-muted-foreground md:justify-self-end md:text-right">
           Crafted by Hunter Bastian
         </p>
       </div>

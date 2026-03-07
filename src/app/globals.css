@@ -248,7 +248,7 @@ p, li, dd, blockquote, figcaption {
 }
 
 .hero-handwritten-preview {
-  margin-top: 1rem;
+  margin-top: 1.1rem;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
@@ -263,6 +263,205 @@ p, li, dd, blockquote, figcaption {
   transform: rotate(-4deg);
   transform-origin: left center;
   text-wrap: balance;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), text-shadow 220ms ease, color 220ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-handwritten-preview:hover .hero-handwritten-text {
+    color: color-mix(in srgb, var(--foreground) 88%, var(--accent) 12%);
+    transform: translateY(-3px) scale(1.04) rotate(-2deg);
+    text-shadow: 0 8px 18px rgba(23, 23, 23, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-handwritten-text {
+    transition: none;
+  }
+}
+
+.tiny-projects {
+  padding-top: 0.5rem;
+}
+
+.tiny-projects-head {
+  display: grid;
+  gap: 0.24rem;
+}
+
+.tiny-projects-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+.tiny-projects-note {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.tiny-projects-grid {
+  margin-top: 0.95rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.tiny-project-card {
+  border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+  background: color-mix(in srgb, var(--card) 88%, var(--background) 12%);
+  border-radius: 0.95rem;
+  padding: 0.9rem;
+}
+
+.tiny-project-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.62rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.tiny-project-card-title {
+  margin: 0.55rem 0 0;
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+.tiny-project-note-preview,
+.tiny-project-tracker-preview {
+  margin-top: 0.8rem;
+}
+
+.tiny-project-note-preview {
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+  background: color-mix(in srgb, var(--background) 86%, var(--card) 14%);
+}
+
+.tiny-project-note-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.45rem 0.18rem;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.tiny-project-note-copy {
+  margin: 0;
+  padding: 0.7rem 0.78rem 0.78rem;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  color: var(--foreground);
+}
+
+.tiny-project-tracker-preview {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.tiny-project-tracker-stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.tiny-project-tracker-stat {
+  border: 1px solid color-mix(in srgb, var(--foreground) 16%, transparent);
+  background: color-mix(in srgb, var(--background) 84%, var(--card) 16%);
+  padding: 0.48rem 0.5rem 0.46rem;
+}
+
+.tiny-project-tracker-stat dt,
+.tiny-project-tracker-stat dd {
+  margin: 0;
+}
+
+.tiny-project-tracker-stat dt {
+  font-size: 0.54rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.tiny-project-tracker-stat dd {
+  margin-top: 0.34rem;
+  font-size: 0.88rem;
+  line-height: 1;
+  color: var(--foreground);
+}
+
+.tiny-project-tracker-list {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.tiny-project-tracker-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.42rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.tiny-project-tracker-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.tiny-project-tracker-row-index,
+.tiny-project-tracker-row-count {
+  font-size: 0.62rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.tiny-project-tracker-row-title {
+  min-width: 0;
+  font-size: 0.74rem;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: var(--foreground);
+}
+
+@media (min-width: 640px) {
+  .tiny-projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .tiny-project-tracker-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .tiny-project-card {
+    padding: 0.82rem;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────

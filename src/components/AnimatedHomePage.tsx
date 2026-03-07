@@ -7,8 +7,24 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import CollapsibleSection from './CollapsibleSection'
 
+export interface WorkTrackerThread {
+  index: string
+  title: string
+  detail: string
+  count: number
+  barUnits: number
+}
+
+export interface WorkTrackerData {
+  totalProjects: number
+  totalCategories: number
+  totalTags: number
+  threads: WorkTrackerThread[]
+}
+
 interface AnimatedHomePageProps {
   children: ReactNode
+  workTracker: WorkTrackerData
 }
 
 interface ExperienceItem {
@@ -57,6 +73,10 @@ const INITIAL_SECTION_LOAD_DELAY = {
 } as const
 
 const PRESENT_SUFFIX = ' - Present'
+
+function formatTrackerCount(value: number) {
+  return value.toString().padStart(2, '0')
+}
 
 function splitExperienceYear(year: string) {
   if (!year.endsWith(PRESENT_SUFFIX)) {
@@ -128,6 +148,11 @@ const education: EducationItem[] = [
 
 const HERO_HEADLINE_TEXT = 'Hunter Bastian'
 const HERO_SUBTITLE_TEXT = 'Interaction designer'
+const HERO_NOTE_LABEL = 'NOT A STUDIO - JUST ME'
+const HERO_NOTE_TEXT =
+  "I'm Hunter Bastian. I study interaction design at UVU and spend most of my time making interfaces, videos, brands, and small experiments for the internet. This site is a collection of the work and ideas I keep returning to."
+const WORK_TRACKER_LABEL = 'CORE THREADS OF MY WORK'
+const TINY_PROJECTS_NOTE = 'Small ideas I want to keep shaping into real projects.'
 const CONTACT_EMAIL_HREF = 'mailto:hello@hunterbastian.com?subject=Project%20Inquiry'
 const CONTACT_SOCIAL_LINKS = [
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
@@ -211,6 +236,8 @@ function getBreakpoint(width: number): Breakpoint {
   return 'mobile'
 }
 
+// Detect viewport crossings between the homepage's three layout modes so the
+// resize feels acknowledged instead of snapping with no visual feedback.
 function useBreakpointChange() {
   const [flash, setFlash] = useState(false)
   const bpRef = useRef<Breakpoint | null>(null)
@@ -237,6 +264,8 @@ function useBreakpointChange() {
   return flash
 }
 
+// Keep the transition contextual. A light blur preserves the page underneath
+// better than a dark wash and stays aligned with the site's restrained palette.
 function CreatingLoader() {
   const flash = useBreakpointChange()
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -252,7 +281,11 @@ function CreatingLoader() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
-          style={{ background: 'rgba(25,25,25,0.6)' }}
+          style={{
+            background: 'rgba(var(--background-rgb), 0.16)',
+            backdropFilter: 'blur(14px) saturate(0.92)',
+            WebkitBackdropFilter: 'blur(14px) saturate(0.92)',
+          }}
         >
           <m.svg
             width="32"
@@ -286,7 +319,7 @@ function CreatingLoader() {
   )
 }
 
-export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
+export default function AnimatedHomePage({ children, workTracker }: AnimatedHomePageProps) {
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const [heroTextStage, setHeroTextStage] = useState(0)
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -445,7 +478,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               }}
               transition={{
                 duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger + 80, prefersReducedMotion) : 0,
+                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger + 170, prefersReducedMotion) : 0,
                 ease: STAGGER_PANEL.ease,
               }}
             >
@@ -695,6 +728,65 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
         </div>
       </CollapsibleSection>
+
+      <section className="px-4 pb-20 sm:px-6 lg:px-0">
+        <div className="mx-auto max-w-[560px]">
+          <div className="tiny-projects">
+            <div className="tiny-projects-head">
+              <span className="tiny-projects-kicker">Tiny Projects</span>
+              <p className="tiny-projects-note">{TINY_PROJECTS_NOTE}</p>
+            </div>
+
+            <div className="tiny-projects-grid">
+              <article className="tiny-project-card">
+                <div className="tiny-project-card-meta">
+                  <span>WIP 01</span>
+                  <span>Self intro</span>
+                </div>
+                <h3 className="tiny-project-card-title">{HERO_NOTE_LABEL}</h3>
+                <div className="tiny-project-note-preview">
+                  <span className="tiny-project-note-label">{HERO_NOTE_LABEL}</span>
+                  <p className="tiny-project-note-copy">{HERO_NOTE_TEXT}</p>
+                </div>
+              </article>
+
+              <article className="tiny-project-card">
+                <div className="tiny-project-card-meta">
+                  <span>WIP 02</span>
+                  <span>System map</span>
+                </div>
+                <h3 className="tiny-project-card-title">{WORK_TRACKER_LABEL}</h3>
+                <div className="tiny-project-tracker-preview">
+                  <dl className="tiny-project-tracker-stats">
+                    <div className="tiny-project-tracker-stat">
+                      <dt>Projects</dt>
+                      <dd>{formatTrackerCount(workTracker.totalProjects)}</dd>
+                    </div>
+                    <div className="tiny-project-tracker-stat">
+                      <dt>Categories</dt>
+                      <dd>{formatTrackerCount(workTracker.totalCategories)}</dd>
+                    </div>
+                    <div className="tiny-project-tracker-stat">
+                      <dt>Tags</dt>
+                      <dd>{formatTrackerCount(workTracker.totalTags)}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="tiny-project-tracker-list">
+                    {workTracker.threads.slice(0, 3).map((thread) => (
+                      <div key={thread.index} className="tiny-project-tracker-row">
+                        <span className="tiny-project-tracker-row-index">{thread.index}</span>
+                        <span className="tiny-project-tracker-row-title">{thread.title}</span>
+                        <span className="tiny-project-tracker-row-count">{formatTrackerCount(thread.count)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
 
       </div>
     </div>

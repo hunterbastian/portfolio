@@ -433,7 +433,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               }}
             >
               Interaction Design student and Department Representative at UVU with experience designing and
-              building digital products. I create meaningful interfaces with an AI-first mindset. ☀️
+              building digital products. I create meaningful interfaces with an AI-first mindset.
             </m.p>
 
             <m.div
@@ -449,7 +449,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <p className="hero-handwritten-text font-handscript">- Hunter</p>
+              <p className="hero-handwritten-text font-handscript">A little page on the internet all about me. ☀️</p>
             </m.div>
           </m.div>
 

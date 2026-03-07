@@ -141,7 +141,6 @@ const HERO_ENTRANCE = {
   profileDelay: 40, // profile appears first
   textPanelDelay: 60, // align with section panel reveal
   textItemsDelay: 140, // align with section item reveal
-  contactIconsDelay: 420, // icon row starts only after intro paragraph fully settles
   duration: 260, // reveal transition duration
 }
 
@@ -363,9 +362,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     setSectionOpen((prev) => ({ ...prev, [key]: !prev[key] }))
   }, [])
 
-  const isHeroCopyVisible = heroTextStage >= 2
-  const socialRevealDelay = Math.max(0, HERO_ENTRANCE.contactIconsDelay - HERO_ENTRANCE.textItemsDelay)
-
   return (
     <div className="relative isolate overflow-hidden">
       <div
@@ -453,46 +449,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <p className="hero-handwritten-text font-handscript">- Hunter Bastian</p>
+              <p className="hero-handwritten-text font-handscript">- Hunter</p>
             </m.div>
           </m.div>
 
-          <m.div
-            className="mt-4 sm:mt-5"
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
-            animate={{
-              opacity: isHeroCopyVisible ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
-              y: isHeroCopyVisible ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-            }}
-            transition={{
-              duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
-              delay: isHeroCopyVisible ? motionDelayMs(socialRevealDelay, prefersReducedMotion) : 0,
-              ease: STAGGER_PANEL.ease,
-            }}
-            style={{ pointerEvents: isHeroCopyVisible ? 'auto' : 'none' }}
-          >
-            <div className="flex items-center justify-start rounded-xl bg-transparent px-0 py-0">
-              <m.div
-                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                animate={{
-                  opacity: isHeroCopyVisible ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                  y: isHeroCopyVisible ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                }}
-                transition={{
-                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                  delay: isHeroCopyVisible ? motionDelayMs(socialRevealDelay, prefersReducedMotion) : 0,
-                  ease: STAGGER_PANEL.ease,
-                }}
-              >
-                <a
-                  href="/archive"
-                  className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
-                </a>
-              </m.div>
-            </div>
-          </m.div>
         </div>
       </section>
 
@@ -532,6 +492,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               </a>
             </li>
           </ul>
+
+          <div className="mt-5">
+            <a
+              href="/archive"
+              className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
+            </a>
+          </div>
         </div>
       </CollapsibleSection>
       </div>

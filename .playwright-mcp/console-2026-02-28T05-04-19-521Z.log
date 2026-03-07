@@ -1,0 +1,889 @@
+[     854ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:3000/:0
+[     964ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <motion.div id="case-studi..." initial={{height:0,opacity:0}} animate={{height:"auto", ...}} ...>
+      <div id="case-studi..." className="overflow-h..." style={{height:"auto", ...}} ...>
+        <motion.div ref={{...}} className="mt-4 space..." initial={false} animate={{opacity:0,y:8}} ...>
+          <div className="mt-4 space..." style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+            <motion.div initial={false} animate={{opacity:0,y:8}} transition={{duration:0.28, ...}}>
+              <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                <div className="mx-auto ma...">
+                  <Suspense fallback={<ProjectLoader>}>
+                    <ProjectGridClient projects={[...]} initialLoadDelayMs={220}>
+                      <motion.div ref={{current:null}} className="mx-auto gr..." onMouseEnter={function onMouseEnter} ...>
+                        <div
+                          className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid..."
+                          onMouseEnter={function onMouseEnter}
+                          onMouseLeave={function onMouseLeave}
+                          style={{
++                           opacity: 0
+-                           opacity: "0"
++                           transform: "translateY(8px)"
+-                           transform: "translateY(8px)"
+-                           column-gap: "30px"
+-                           row-gap: "32px"
+                          }}
+                          ref={function useMotionRef.useCallback}
+                        >
+                          <motion.div className="w-full md:..." style={{zIndex:1}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 1
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.68px) translateY(8px) scale(0.82) rotate(0.744deg)"
+-                               transform: "translateX(-6.72px) translateY(8px) scale(0.89) rotate(-2.976deg)"
+-                               z-index: "1"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:2}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 2
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateY(8px) scale(0.82)"
+-                               transform: "translateY(8px) scale(0.89)"
+-                               z-index: "2"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:3}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 3
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(-1.68px) translateY(8px) scale(0.82) rotate(-0.744deg)"
+-                               transform: "translateX(6.72px) translateY(8px) scale(0.89) rotate(2.976deg)"
+-                               z-index: "3"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:4}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms] md:col-s..."
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 4
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.3199999999999998px) translateY(8px) scale(0.82) rotate(0.648deg)"
+-                               transform: "translateX(-5.28px) translateY(8px) scale(0.89) rotate(-2.592deg)"
+-                               z-index: "4"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:5}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 5
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(0.6px) translateY(8px) scale(0.82) rotate(0.33599999999999997deg)"
+-                               transform: "translateX(-2.4px) translateY(8px) scale(0.89) rotate(-1.344deg)"
+-                               z-index: "5"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                      ...
+            ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   51248ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:3000/:0
+[   51333ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <motion.div id="case-studi..." initial={{height:0,opacity:0}} animate={{height:"auto", ...}} ...>
+      <div id="case-studi..." className="overflow-h..." style={{height:"auto", ...}} ...>
+        <motion.div ref={{...}} className="mt-4 space..." initial={false} animate={{opacity:0,y:8}} ...>
+          <div className="mt-4 space..." style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+            <motion.div initial={false} animate={{opacity:0,y:8}} transition={{duration:0.28, ...}}>
+              <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                <div className="mx-auto ma...">
+                  <Suspense fallback={<ProjectLoader>}>
+                    <ProjectGridClient projects={[...]} initialLoadDelayMs={220}>
+                      <motion.div ref={{current:null}} className="mx-auto gr..." onMouseEnter={function onMouseEnter} ...>
+                        <div
+                          className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid..."
+                          onMouseEnter={function onMouseEnter}
+                          onMouseLeave={function onMouseLeave}
+                          style={{
++                           opacity: 0
+-                           opacity: "0"
++                           transform: "translateY(8px)"
+-                           transform: "translateY(8px)"
+-                           column-gap: "30px"
+-                           row-gap: "32px"
+                          }}
+                          ref={function useMotionRef.useCallback}
+                        >
+                          <motion.div className="w-full md:..." style={{zIndex:1}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 1
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.68px) translateY(8px) scale(0.82) rotate(0.744deg)"
+-                               transform: "translateX(-6.72px) translateY(8px) scale(0.89) rotate(-2.976deg)"
+-                               z-index: "1"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:2}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 2
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateY(8px) scale(0.82)"
+-                               transform: "translateY(8px) scale(0.89)"
+-                               z-index: "2"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:3}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 3
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(-1.68px) translateY(8px) scale(0.82) rotate(-0.744deg)"
+-                               transform: "translateX(6.72px) translateY(8px) scale(0.89) rotate(2.976deg)"
+-                               z-index: "3"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:4}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms] md:col-s..."
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 4
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.3199999999999998px) translateY(8px) scale(0.82) rotate(0.648deg)"
+-                               transform: "translateX(-5.28px) translateY(8px) scale(0.89) rotate(-2.592deg)"
+-                               z-index: "4"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:5}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 5
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(0.6px) translateY(8px) scale(0.82) rotate(0.33599999999999997deg)"
+-                               transform: "translateX(-2.4px) translateY(8px) scale(0.89) rotate(-1.344deg)"
+-                               z-index: "5"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                      ...
+            ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 1341867ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:3000/:0
+[ 1341903ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} segmentPath={[...]} ...>
+            <SegmentViewNode type="page" pagePath="page.tsx">
+              <SegmentTrieNode>
+              <HomePage>
+                <AnimatedHomePage>
+                  <div className="relative i...">
+                    <div>
+                    <div className="container ...">
+                      <div className="relative">
+                        <CreatingLoader>
+                        <section className="relative a...">
+                          <div className="max-w-2xl ...">
+                            <div className="mb-6 flex ...">
+                              <motion.div>
+                              <div className="min-w-0">
+                                <h1
++                                 className="text-foreground font-sans font-semibold text-[clamp(1.65rem,6.6vw,3.25rem..."
+-                                 className="text-foreground font-sans font-semibold text-[clamp(1.5rem,4.8vw,2.25rem)..."
+                                >
+                                ...
+                            ...
+                        ...
+                      ...
+            ...
+          ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 1341951ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <motion.div id="case-studi..." initial={{height:0,opacity:0}} animate={{height:"auto", ...}} ...>
+      <div id="case-studi..." className="overflow-h..." style={{height:"auto", ...}} ...>
+        <motion.div ref={{...}} className="mt-4 space..." initial={false} animate={{opacity:0,y:8}} ...>
+          <div className="mt-4 space..." style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+            <motion.div initial={false} animate={{opacity:0,y:8}} transition={{duration:0.28, ...}}>
+              <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                <div className="mx-auto ma...">
+                  <Suspense fallback={<ProjectLoader>}>
+                    <ProjectGridClient projects={[...]} initialLoadDelayMs={220}>
+                      <motion.div ref={{current:null}} className="mx-auto gr..." onMouseEnter={function onMouseEnter} ...>
+                        <div
+                          className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid..."
+                          onMouseEnter={function onMouseEnter}
+                          onMouseLeave={function onMouseLeave}
+                          style={{
++                           opacity: 0
+-                           opacity: "0"
++                           transform: "translateY(8px)"
+-                           transform: "translateY(8px)"
+-                           column-gap: "30px"
+-                           row-gap: "32px"
+                          }}
+                          ref={function useMotionRef.useCallback}
+                        >
+                          <motion.div className="w-full md:..." style={{zIndex:1}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 1
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.68px) translateY(8px) scale(0.82) rotate(0.744deg)"
+-                               transform: "translateX(-6.72px) translateY(8px) scale(0.89) rotate(-2.976deg)"
+-                               z-index: "1"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:2}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 2
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateY(8px) scale(0.82)"
+-                               transform: "translateY(8px) scale(0.89)"
+-                               z-index: "2"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:3}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 3
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(-1.68px) translateY(8px) scale(0.82) rotate(-0.744deg)"
+-                               transform: "translateX(6.72px) translateY(8px) scale(0.89) rotate(2.976deg)"
+-                               z-index: "3"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:4}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms] md:col-s..."
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 4
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.3199999999999998px) translateY(8px) scale(0.82) rotate(0.648deg)"
+-                               transform: "translateX(-5.28px) translateY(8px) scale(0.89) rotate(-2.592deg)"
+-                               z-index: "4"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:5}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 5
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(0.6px) translateY(8px) scale(0.82) rotate(0.33599999999999997deg)"
+-                               transform: "translateX(-2.4px) translateY(8px) scale(0.89) rotate(-1.344deg)"
+-                               z-index: "5"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                      ...
+            ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 1345466ms] [WARNING] The resource http://localhost:3000/_next/static/media/83afe278b6a6bb3c.p.3a6ba036.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/:0
+[ 2149570ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:3000/:0
+[ 2149599ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} segmentPath={[...]} ...>
+            <SegmentViewNode type="page" pagePath="page.tsx">
+              <SegmentTrieNode>
+              <HomePage>
+                <AnimatedHomePage>
+                  <div className="relative i...">
+                    <div>
+                    <div className="container ...">
+                      <div className="relative">
+                        <CreatingLoader>
+                        <section className="relative a...">
+                          <div className="max-w-2xl ...">
+                            <div className="mb-6 flex ...">
+                              <motion.div>
+                              <div className="min-w-0">
+                                <h1
++                                 className="text-foreground font-sans font-semibold text-[clamp(1.65rem,6.6vw,3.25rem..."
+-                                 className="text-foreground font-sans font-semibold text-[clamp(1.5rem,4.8vw,2.25rem)..."
+                                >
+                                ...
+                            ...
+                        ...
+                      ...
+            ...
+          ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 2149644ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <motion.div id="case-studi..." initial={{height:0,opacity:0}} animate={{height:"auto", ...}} ...>
+      <div id="case-studi..." className="overflow-h..." style={{height:"auto", ...}} ...>
+        <motion.div ref={{...}} className="mt-4 space..." initial={false} animate={{opacity:0,y:8}} ...>
+          <div className="mt-4 space..." style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+            <motion.div initial={false} animate={{opacity:0,y:8}} transition={{duration:0.28, ...}}>
+              <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                <div className="mx-auto ma...">
+                  <Suspense fallback={<ProjectLoader>}>
+                    <ProjectGridClient projects={[...]} initialLoadDelayMs={220}>
+                      <motion.div ref={{current:null}} className="mx-auto gr..." onMouseEnter={function onMouseEnter} ...>
+                        <div
+                          className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid..."
+                          onMouseEnter={function onMouseEnter}
+                          onMouseLeave={function onMouseLeave}
+                          style={{
++                           opacity: 0
+-                           opacity: "0"
++                           transform: "translateY(8px)"
+-                           transform: "translateY(8px)"
+-                           column-gap: "30px"
+-                           row-gap: "32px"
+                          }}
+                          ref={function useMotionRef.useCallback}
+                        >
+                          <motion.div className="w-full md:..." style={{zIndex:1}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 1
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.68px) translateY(8px) scale(0.82) rotate(0.744deg)"
+-                               transform: "translateX(-6.72px) translateY(8px) scale(0.89) rotate(-2.976deg)"
+-                               z-index: "1"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:2}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 2
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateY(8px) scale(0.82)"
+-                               transform: "translateY(8px) scale(0.89)"
+-                               z-index: "2"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:3}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 3
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(-1.68px) translateY(8px) scale(0.82) rotate(-0.744deg)"
+-                               transform: "translateX(6.72px) translateY(8px) scale(0.89) rotate(2.976deg)"
+-                               z-index: "3"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:4}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms] md:col-s..."
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 4
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.3199999999999998px) translateY(8px) scale(0.82) rotate(0.648deg)"
+-                               transform: "translateX(-5.28px) translateY(8px) scale(0.89) rotate(-2.592deg)"
+-                               z-index: "4"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:5}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 5
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(0.6px) translateY(8px) scale(0.82) rotate(0.33599999999999997deg)"
+-                               transform: "translateX(-2.4px) translateY(8px) scale(0.89) rotate(-1.344deg)"
+-                               z-index: "5"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                      ...
+            ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 2242818ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:3000/:0
+[ 2242820ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} segmentPath={[...]} ...>
+            <SegmentViewNode type="page" pagePath="page.tsx">
+              <SegmentTrieNode>
+              <HomePage>
+                <AnimatedHomePage>
+                  <div className="relative i...">
+                    <div>
+                    <div className="container ...">
+                      <div className="relative">
+                        <CreatingLoader>
+                        <section className="relative a...">
+                          <div className="max-w-2xl ...">
+                            <div className="mb-6 flex ...">
+                              <motion.div>
+                              <div className="min-w-0">
+                                <h1
++                                 className="text-foreground font-sans font-semibold text-[clamp(1.65rem,6.6vw,3.25rem..."
+-                                 className="text-foreground font-sans font-semibold text-[clamp(1.5rem,4.8vw,2.25rem)..."
+                                >
+                                ...
+                            <motion.div>
+                            ...
+                              <div className="flex items...">
+                                <motion.div initial={{opacity:0,y:8}} animate={{opacity:0,y:8}} ...>
+                                  <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                                    <ContactLink link={{label:"Ins...", ...}} actionClassName="group inli..." ...>
+                                      <a
+                                        href="https://instagram.com/studio.alpine"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
++                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+-                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+                                        style={{
++                                         transition: "all 220ms cubic-bezier(0.22, 1, 0.36, 1)"
++                                         color: "var(--muted-foreground)"
+-                                         color: "color-mix(in srgb, var(--foreground) 55%, transparent)"
++                                         opacity: 1
+-                                         opacity: "1"
++                                         transform: "scale(1)"
+-                                         transform: "scale(1)"
+-                                         transition-behavior: "normal"
+-                                         transition-duration: "220ms"
+-                                         transition-timing-function: "cubic-bezier(0.22, 1, 0.36, 1)"
+-                                         transition-delay: "0s"
+-                                         transition-property: "all"
+                                        }}
+                                        aria-label="Instagram"
+                                        title="Instagram"
+                                        onMouseEnter={function onHoverStart}
+                                        onMouseLeave={function onHoverEnd}
+                                        onFocus={function onHoverStart}
+                                        onBlur={function onHoverEnd}
+                                      >
+                                <motion.div initial={{opacity:0,y:8}} animate={{opacity:0,y:8}} ...>
+                                  <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                                    <ContactLink link={{label:"Thr...", ...}} actionClassName="group inli..." ...>
+                                      <a
+                                        href="https://threads.net/@studio.alpine"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
++                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+-                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+                                        style={{
++                                         transition: "all 220ms cubic-bezier(0.22, 1, 0.36, 1)"
++                                         color: "var(--muted-foreground)"
+-                                         color: "color-mix(in srgb, var(--foreground) 55%, transparent)"
++                                         opacity: 1
+-                                         opacity: "1"
++                                         transform: "scale(1)"
+-                                         transform: "scale(1)"
+-                                         transition-behavior: "normal"
+-                                         transition-duration: "220ms"
+-                                         transition-timing-function: "cubic-bezier(0.22, 1, 0.36, 1)"
+-                                         transition-delay: "0s"
+-                                         transition-property: "all"
+                                        }}
+                                        aria-label="Threads"
+                                        title="Threads"
+                                        onMouseEnter={function onHoverStart}
+                                        onMouseLeave={function onHoverEnd}
+                                        onFocus={function onHoverStart}
+                                        onBlur={function onHoverEnd}
+                                      >
+                                <motion.div initial={{opacity:0,y:8}} animate={{opacity:0,y:8}} ...>
+                                  <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                                    <ContactLink link={{label:"Lin...", ...}} actionClassName="group inli..." ...>
+                                      <a
+                                        href="https://linkedin.com/in/hunterbastian"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
++                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+-                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+                                        style={{
++                                         transition: "all 220ms cubic-bezier(0.22, 1, 0.36, 1)"
++                                         color: "var(--muted-foreground)"
+-                                         color: "color-mix(in srgb, var(--foreground) 55%, transparent)"
++                                         opacity: 1
+-                                         opacity: "1"
++                                         transform: "scale(1)"
+-                                         transform: "scale(1)"
+-                                         transition-behavior: "normal"
+-                                         transition-duration: "220ms"
+-                                         transition-timing-function: "cubic-bezier(0.22, 1, 0.36, 1)"
+-                                         transition-delay: "0s"
+-                                         transition-property: "all"
+                                        }}
+                                        aria-label="LinkedIn"
+                                        title="LinkedIn"
+                                        onMouseEnter={function onHoverStart}
+                                        onMouseLeave={function onHoverEnd}
+                                        onFocus={function onHoverStart}
+                                        onBlur={function onHoverEnd}
+                                      >
+                                <motion.div initial={{opacity:0,y:8}} animate={{opacity:0,y:8}} ...>
+                                  <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                                    <ContactLink link={{label:"Twi...", ...}} actionClassName="group inli..." ...>
+                                      <a
+                                        href="https://x.com/thestudioalpine"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
++                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+-                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+                                        style={{
++                                         transition: "all 220ms cubic-bezier(0.22, 1, 0.36, 1)"
++                                         color: "var(--muted-foreground)"
+-                                         color: "color-mix(in srgb, var(--foreground) 55%, transparent)"
++                                         opacity: 1
+-                                         opacity: "1"
++                                         transform: "scale(1)"
+-                                         transform: "scale(1)"
+-                                         transition-behavior: "normal"
+-                                         transition-duration: "220ms"
+-                                         transition-timing-function: "cubic-bezier(0.22, 1, 0.36, 1)"
+-                                         transition-delay: "0s"
+-                                         transition-property: "all"
+                                        }}
+                                        aria-label="Twitter"
+                                        title="Twitter"
+                                        onMouseEnter={function onHoverStart}
+                                        onMouseLeave={function onHoverEnd}
+                                        onFocus={function onHoverStart}
+                                        onBlur={function onHoverEnd}
+                                      >
+                                <motion.div initial={{opacity:0,y:8}} animate={{opacity:0,y:8}} ...>
+                                  <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                                    <ContactLink link={{label:"GitHub", ...}} actionClassName="group inli..." ...>
+                                      <a
+                                        href="https://github.com/hunterbastian"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
++                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+-                                       className="group inline-flex h-9 w-9 origin-center items-center justify-center..."
+                                        style={{
++                                         transition: "all 220ms cubic-bezier(0.22, 1, 0.36, 1)"
++                                         color: "var(--muted-foreground)"
+-                                         color: "color-mix(in srgb, var(--foreground) 55%, transparent)"
++                                         opacity: 1
+-                                         opacity: "1"
++                                         transform: "scale(1)"
+-                                         transform: "scale(1)"
+-                                         transition-behavior: "normal"
+-                                         transition-duration: "220ms"
+-                                         transition-timing-function: "cubic-bezier(0.22, 1, 0.36, 1)"
+-                                         transition-delay: "0s"
+-                                         transition-property: "all"
+                                        }}
+                                        aria-label="GitHub"
+                                        title="GitHub"
+                                        onMouseEnter={function onHoverStart}
+                                        onMouseLeave={function onHoverEnd}
+                                        onFocus={function onHoverStart}
+                                        onBlur={function onHoverEnd}
+                                      >
+                                <motion.div className="relative o..." initial={{opacity:0,y:8}} animate={{opacity:0,y:8}} ...>
+                                  <div className="relative o..." style={{opacity:0, ...}} ...>
+                                    <button
+                                      ref={{current:null}}
+                                      type="button"
+                                      onClick={function onClick}
++                                     className="group inline-flex h-9 w-9 origin-center items-center justify-center r..."
+-                                     className="group inline-flex h-9 w-9 origin-center items-center justify-center r..."
+                                      style={{
++                                       transition: "all 220ms cubic-bezier(0.22, 1, 0.36, 1)"
++                                       color: "var(--muted-foreground)"
+-                                       color: "color-mix(in srgb, var(--foreground) 55%, transparent)"
++                                       opacity: 1
+-                                       opacity: "1"
++                                       transform: "scale(1)"
+-                                       transform: "scale(1)"
+-                                       transition-behavior: "normal"
+-                                       transition-duration: "220ms"
+-                                       transition-timing-function: "cubic-bezier(0.22, 1, 0.36, 1)"
+-                                       transition-delay: "0s"
+-                                       transition-property: "all"
+                                      }}
+                                      onMouseEnter={function onMouseEnter}
+                                      onMouseLeave={function onMouseLeave}
+                                      onFocus={function onFocus}
+                                      onBlur={function onBlur}
+                                      aria-label="Resume"
+                                      title="Resume"
+                                    >
+                                    ...
+                        ...
+                      ...
+            ...
+          ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 2242873ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <motion.div id="case-studi..." initial={{height:0,opacity:0}} animate={{height:"auto", ...}} ...>
+      <div id="case-studi..." className="overflow-h..." style={{height:"auto", ...}} ...>
+        <motion.div ref={{...}} className="mt-4 space..." initial={false} animate={{opacity:0,y:8}} ...>
+          <div className="mt-4 space..." style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+            <motion.div initial={false} animate={{opacity:0,y:8}} transition={{duration:0.28, ...}}>
+              <div style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                <div className="mx-auto ma...">
+                  <Suspense fallback={<ProjectLoader>}>
+                    <ProjectGridClient projects={[...]} initialLoadDelayMs={220}>
+                      <motion.div ref={{current:null}} className="mx-auto gr..." onMouseEnter={function onMouseEnter} ...>
+                        <div
+                          className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid..."
+                          onMouseEnter={function onMouseEnter}
+                          onMouseLeave={function onMouseLeave}
+                          style={{
++                           opacity: 0
+-                           opacity: "0"
++                           transform: "translateY(8px)"
+-                           transform: "translateY(8px)"
+-                           column-gap: "30px"
+-                           row-gap: "32px"
+                          }}
+                          ref={function useMotionRef.useCallback}
+                        >
+                          <motion.div className="w-full md:..." style={{zIndex:1}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 1
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.68px) translateY(8px) scale(0.82) rotate(0.744deg)"
+-                               transform: "translateX(-6.72px) translateY(8px) scale(0.89) rotate(-2.976deg)"
+-                               z-index: "1"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:2}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 2
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateY(8px) scale(0.82)"
+-                               transform: "translateY(8px) scale(0.89)"
+-                               z-index: "2"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:3}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 3
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(-1.68px) translateY(8px) scale(0.82) rotate(-0.744deg)"
+-                               transform: "translateX(6.72px) translateY(8px) scale(0.89) rotate(2.976deg)"
+-                               z-index: "3"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:4}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms] md:col-s..."
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 4
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(1.3199999999999998px) translateY(8px) scale(0.82) rotate(0.648deg)"
+-                               transform: "translateX(-5.28px) translateY(8px) scale(0.89) rotate(-2.592deg)"
+-                               z-index: "4"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                          <motion.div className="w-full md:..." style={{zIndex:5}} onMouseEnter={function onMouseEnter} ...>
+                            <div
+                              className="w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]"
+                              onMouseEnter={function onMouseEnter}
+                              onMouseLeave={function onMouseLeave}
+                              style={{
++                               zIndex: 5
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "translateX(0.6px) translateY(8px) scale(0.82) rotate(0.33599999999999997deg)"
+-                               transform: "translateX(-2.4px) translateY(8px) scale(0.89) rotate(-1.344deg)"
+-                               z-index: "5"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                      ...
+            ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127

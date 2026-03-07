@@ -1,9 +1,19 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import { Project, ProjectFrontmatter } from '@/types/project'
+import type { Project, ProjectFrontmatter } from '@/types/project'
 
 const projectsDirectory = path.join(process.cwd(), 'content/projects')
+
+const PROJECT_SLUG_PATTERN = /^[a-z0-9-]+$/
+
+export function isValidProjectSlug(slug: string): boolean {
+  if (!slug) {
+    return false
+  }
+
+  return PROJECT_SLUG_PATTERN.test(slug)
+}
 
 function parseProjectFile(fileName: string): Project {
   const fullPath = path.join(projectsDirectory, fileName)
@@ -45,6 +55,10 @@ export function getArchivedProjects(): Project[] {
 }
 
 export function getProjectBySlug(slug: string): Project | null {
+  if (!isValidProjectSlug(slug)) {
+    return null
+  }
+
   const fullPath = path.join(projectsDirectory, `${slug}.mdx`)
 
   if (!fs.existsSync(fullPath)) {

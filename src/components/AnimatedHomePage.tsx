@@ -733,7 +733,7 @@ export default function AnimatedHomePage({ children, workTracker }: AnimatedHome
         <div className="mx-auto max-w-[560px]">
           <div className="tiny-projects">
             <div className="tiny-projects-head">
-              <span className="tiny-projects-kicker">Tiny Projects</span>
+              <span className="tiny-projects-kicker">06 TINY PROJECTS</span>
               <p className="tiny-projects-note">{TINY_PROJECTS_NOTE}</p>
             </div>
 

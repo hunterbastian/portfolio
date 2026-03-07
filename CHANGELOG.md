@@ -2,6 +2,11 @@
 
 ## Version History
 
+### **v2.5.1** - Breakpoint Blur Pass *(March 5, 2026)*
+- Replaced the homepage breakpoint-change dark overlay with a lighter, background-tinted blur treatment.
+- Kept the existing breakpoint detection and `900ms` transition window while making the effect feel less like a dimmed screen.
+- Documented the resize transition behavior inline in `src/components/AnimatedHomePage.tsx` and in `README.md`.
+
 ### **v2.5.0** - Live Typography & Motion Iteration *(February 12, 2026)*
 - Added a detailed private day-log at `private/updates/2026-02-12-portfolio-updates.md` with one-sentence entries for each change made during this iteration.
 - Restored terminal-style typography selectively (section labels and metadata) while keeping long-form case-study and experience body copy in Inter for readability.

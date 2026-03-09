@@ -158,13 +158,7 @@ export default function ArchivePage() {
           <div className="playground-meadow-sky" aria-hidden="true" />
           <div className="playground-meadow-cloud playground-meadow-cloud-a" aria-hidden="true" />
           <div className="playground-meadow-cloud playground-meadow-cloud-b" aria-hidden="true" />
-          <div className="playground-meadow-hill playground-meadow-hill-back" aria-hidden="true" />
-          <div className="playground-meadow-hill playground-meadow-hill-mid" aria-hidden="true" />
-          <div className="playground-meadow-hill playground-meadow-hill-front" aria-hidden="true" />
-          <span className="playground-flower playground-flower-a" aria-hidden="true" />
-          <span className="playground-flower playground-flower-b" aria-hidden="true" />
-          <span className="playground-flower playground-flower-c" aria-hidden="true" />
-          <span className="playground-flower playground-flower-d" aria-hidden="true" />
+
 
           <div className="relative z-10 mb-8 max-w-[520px]">
             <p className="playground-field-kicker">The meadow</p>
@@ -191,60 +185,6 @@ export default function ArchivePage() {
         </section>
       )}
 
-      <div className="tiny-projects mt-16 max-w-[720px]">
-        <div className="tiny-projects-head">
-          <span className="tiny-projects-kicker">Tiny Projects</span>
-          <p className="tiny-projects-note">Small experiments, notes, and loose ends that live around the main work.</p>
-        </div>
-
-        <div className="tiny-projects-grid">
-          <article className="tiny-project-card">
-            <div className="tiny-project-card-meta">
-              <span>WIP 01</span>
-              <span>Self intro</span>
-            </div>
-            <h2 className="tiny-project-card-title">{HERO_NOTE_LABEL}</h2>
-            <div className="tiny-project-note-preview">
-              <span className="tiny-project-note-label">{HERO_NOTE_LABEL}</span>
-              <p className="tiny-project-note-copy">{HERO_NOTE_TEXT}</p>
-            </div>
-          </article>
-
-          <article className="tiny-project-card">
-            <div className="tiny-project-card-meta">
-              <span>WIP 02</span>
-              <span>System map</span>
-            </div>
-            <h2 className="tiny-project-card-title">{WORK_TRACKER_LABEL}</h2>
-            <div className="tiny-project-tracker-preview">
-              <dl className="tiny-project-tracker-stats">
-                <div className="tiny-project-tracker-stat">
-                  <dt>Projects</dt>
-                  <dd>{formatTrackerCount(workTracker.totalProjects)}</dd>
-                </div>
-                <div className="tiny-project-tracker-stat">
-                  <dt>Categories</dt>
-                  <dd>{formatTrackerCount(workTracker.totalCategories)}</dd>
-                </div>
-                <div className="tiny-project-tracker-stat">
-                  <dt>Tags</dt>
-                  <dd>{formatTrackerCount(workTracker.totalTags)}</dd>
-                </div>
-              </dl>
-
-              <div className="tiny-project-tracker-list">
-                {workTracker.threads.slice(0, 3).map((thread) => (
-                  <div key={thread.index} className="tiny-project-tracker-row">
-                    <span className="tiny-project-tracker-row-index">{thread.index}</span>
-                    <span className="tiny-project-tracker-row-title">{thread.title}</span>
-                    <span className="tiny-project-tracker-row-count">{formatTrackerCount(thread.count)}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
     </div>
   )
 }

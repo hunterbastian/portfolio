@@ -4,11 +4,9 @@ import { useEffect, useRef, useState } from 'react'
 import {
   m,
   useMotionValue,
-  useSpring,
   useReducedMotion,
 } from 'framer-motion'
 
-const SPRING = { stiffness: 70, damping: 20, mass: 1.2 }
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function CursorFollower() {
@@ -20,10 +18,6 @@ export default function CursorFollower() {
   // Cursor position — updates directly, no React re-renders
   const cx = useMotionValue(-100)
   const cy = useMotionValue(-100)
-
-  // Ring follows cursor with spring physics
-  const rx = useSpring(cx, SPRING)
-  const ry = useSpring(cy, SPRING)
 
   useEffect(() => {
     if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return
@@ -72,13 +66,13 @@ export default function CursorFollower() {
         pointerEvents: 'none',
       }}
     >
-      {/* Ring — spring-lagged with blend mode */}
+      {/* Ring — pinned directly to the live cursor position */}
       {!prefersReduced && (
         <m.div
           style={{
             position: 'fixed',
-            left: rx,
-            top: ry,
+            left: cx,
+            top: cy,
             x: '-50%',
             y: '-50%',
             width: 40,

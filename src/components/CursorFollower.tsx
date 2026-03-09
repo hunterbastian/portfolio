@@ -22,8 +22,10 @@ export default function CursorFollower() {
   useEffect(() => {
     if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return
     setIsTouch(false)
-
-    // No cursor hiding — keep default cursor visible alongside the follower
+    const previousHtmlCursor = document.documentElement.style.cursor
+    const previousBodyCursor = document.body.style.cursor
+    document.documentElement.style.cursor = 'none'
+    document.body.style.cursor = 'none'
 
     const onMove = (e: MouseEvent) => {
       cx.set(e.clientX)
@@ -51,6 +53,8 @@ export default function CursorFollower() {
       window.removeEventListener('mousemove', onMove)
       document.documentElement.removeEventListener('mouseleave', onLeave)
       document.documentElement.removeEventListener('mouseenter', onEnter)
+      document.documentElement.style.cursor = previousHtmlCursor
+      document.body.style.cursor = previousBodyCursor
     }
   }, [cx, cy])
 
@@ -66,27 +70,25 @@ export default function CursorFollower() {
         pointerEvents: 'none',
       }}
     >
-      {/* Ring — pinned directly to the live cursor position */}
-      {!prefersReduced && (
-        <m.div
-          style={{
-            position: 'fixed',
-            left: cx,
-            top: cy,
-            x: '-50%',
-            y: '-50%',
-            width: 40,
-            height: 40,
-            borderRadius: '50%',
-            border: '1px solid var(--foreground)',
-            mixBlendMode: 'exclusion',
-          }}
-          animate={{
-            opacity: visible ? 0.25 : 0,
-          }}
-          transition={{ duration: 0.35, ease: EASE }}
-        />
-      )}
+      {/* Small cursor dot — pinned directly to the live cursor position */}
+      <m.div
+        style={{
+          position: 'fixed',
+          left: cx,
+          top: cy,
+          x: '-50%',
+          y: '-50%',
+          width: 4,
+          height: 4,
+          borderRadius: '50%',
+          backgroundColor: 'var(--foreground)',
+          mixBlendMode: 'exclusion',
+        }}
+        animate={{
+          opacity: visible ? 0.88 : 0,
+        }}
+        transition={{ duration: prefersReduced ? 0 : 0.18, ease: EASE }}
+      />
     </div>
   )
 }

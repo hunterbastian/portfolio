@@ -1,12 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
-import { getLenisInstance } from '@/lib/lenis'
+import { AnimatePresence, m } from 'framer-motion'
 
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false)
-  const prefersReducedMotion = useReducedMotion() ?? false
 
   useEffect(() => {
     const onScroll = () => {
@@ -20,13 +18,7 @@ export default function ScrollToTop() {
   }, [])
 
   const scrollToTop = () => {
-    const lenis = getLenisInstance()
-    if (!prefersReducedMotion && lenis) {
-      lenis.scrollTo(0)
-      return
-    }
-
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' })
+    window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
   return (

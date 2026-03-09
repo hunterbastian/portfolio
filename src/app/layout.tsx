@@ -184,20 +184,20 @@ export default function RootLayout({
         <MotionProvider>
           <CursorFollower />
           <p
-            className="pointer-events-none absolute left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-75 sm:left-6 sm:top-6 sm:text-[11px]"
+            className="pointer-events-none absolute left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-90 sm:left-6 sm:top-6 sm:text-[11px]"
             aria-label={`Coordinates ${siteCoordinates}`}
             style={{ fontFamily: 'inherit' }}
           >
             {siteCoordinates}
           </p>
           <p
-            className="pointer-events-none absolute right-4 top-4 z-50 inline-flex items-center gap-1.5 select-none text-[10px] tracking-[0.12em] text-foreground opacity-75 sm:right-6 sm:top-6 sm:gap-2 sm:text-[11px]"
+            className="pointer-events-none absolute right-4 top-4 z-50 inline-flex items-center gap-1.5 select-none text-[10px] tracking-[0.12em] text-foreground opacity-90 sm:right-6 sm:top-6 sm:gap-2 sm:text-[11px]"
             aria-label={`Location ${siteLocation}, season ${siteSeason}`}
             style={{ fontFamily: 'inherit' }}
           >
             <span>{siteLocation}</span>
-            <span aria-hidden="true" className="opacity-45">/</span>
-            <span className="opacity-60">{siteSeason}</span>
+            <span aria-hidden="true" className="opacity-60">/</span>
+            <span className="opacity-80">{siteSeason}</span>
           </p>
           <SmoothScroll>
             <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-[#171717] focus:px-3 focus:py-2 focus:rounded">Skip to content</a>

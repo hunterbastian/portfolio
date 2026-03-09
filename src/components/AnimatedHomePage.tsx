@@ -537,10 +537,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <a
                 href={CONTACT_EMAIL_HREF}
                 className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                aria-label="Avaliable for Freelance"
-                title="Avaliable for Freelance"
+                aria-label="Avaliable for freelance"
+                title="Avaliable for freelance"
               >
-                <span>Avaliable for Freelance</span>
+                <span>Avaliable for freelance</span>
               </a>
             </li>
           </ul>

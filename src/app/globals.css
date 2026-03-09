@@ -248,7 +248,7 @@ p, li, dd, blockquote, figcaption {
 }
 
 .hero-handwritten-preview {
-  margin-top: 2.15rem;
+  margin-top: 2.35rem;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
@@ -448,6 +448,158 @@ p, li, dd, blockquote, figcaption {
   color: var(--foreground);
 }
 
+.playground-meadow {
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 248, 232, 0.9), transparent 18%),
+    radial-gradient(circle at 81% 11%, rgba(255, 251, 240, 0.88), transparent 15%),
+    linear-gradient(180deg, #f6f2e9 0%, #edf3e1 52%, #d5e3ba 100%);
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, white 90%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.68),
+    0 20px 60px rgba(103, 121, 78, 0.12);
+}
+
+.playground-meadow-sky {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 42%;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 252, 244, 0.75), transparent 56%),
+    linear-gradient(180deg, rgba(255, 250, 242, 0.62) 0%, rgba(255, 250, 242, 0) 100%);
+}
+
+.playground-meadow-cloud {
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255, 252, 248, 0.72);
+  filter: blur(0.3px);
+  box-shadow:
+    2rem 0.35rem 0 -0.35rem rgba(255, 252, 248, 0.65),
+    4.35rem -0.1rem 0 -0.45rem rgba(255, 252, 248, 0.68);
+}
+
+.playground-meadow-cloud-a {
+  top: 4.5rem;
+  left: 9%;
+  width: 5rem;
+  height: 1.6rem;
+}
+
+.playground-meadow-cloud-b {
+  top: 6.5rem;
+  right: 13%;
+  width: 4.5rem;
+  height: 1.45rem;
+}
+
+.playground-meadow-hill {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.playground-meadow-hill-back {
+  left: -5%;
+  right: 22%;
+  bottom: 15rem;
+  height: 17rem;
+  background: radial-gradient(circle at 50% 25%, #c7dda0 0%, #a7c674 65%, #8aaa5c 100%);
+  opacity: 0.95;
+}
+
+.playground-meadow-hill-mid {
+  left: 18%;
+  right: -8%;
+  bottom: 9.75rem;
+  height: 20rem;
+  background: radial-gradient(circle at 50% 25%, #b0d36c 0%, #7fb04e 62%, #5d8940 100%);
+}
+
+.playground-meadow-hill-front {
+  left: -10%;
+  right: -10%;
+  bottom: -7.5rem;
+  height: 23rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(217, 239, 172, 0.92) 0%, rgba(217, 239, 172, 0) 35%),
+    linear-gradient(180deg, #83b957 0%, #57843b 55%, #436a31 100%);
+}
+
+.playground-flower {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(255, 249, 191, 0.96) 0 22%, transparent 23%),
+    radial-gradient(circle at 50% 0%, #ffe5ef 0 34%, transparent 36%),
+    radial-gradient(circle at 100% 50%, #f7d0ea 0 34%, transparent 36%),
+    radial-gradient(circle at 50% 100%, #ffdff0 0 34%, transparent 36%),
+    radial-gradient(circle at 0% 50%, #f7d0ea 0 34%, transparent 36%);
+  opacity: 0.82;
+}
+
+.playground-flower-a {
+  left: 11%;
+  bottom: 11.5rem;
+}
+
+.playground-flower-b {
+  left: 27%;
+  bottom: 8.25rem;
+  transform: scale(0.82);
+}
+
+.playground-flower-c {
+  right: 23%;
+  bottom: 12rem;
+  transform: scale(0.88);
+}
+
+.playground-flower-d {
+  right: 12%;
+  bottom: 9rem;
+  transform: scale(0.72);
+}
+
+.playground-field-kicker {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 74%, #5d7a45 26%);
+}
+
+.playground-field-title {
+  margin: 0;
+  max-width: 12ch;
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-size: clamp(2rem, 1.2rem + 2vw, 3.3rem);
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+  color: color-mix(in srgb, var(--foreground) 86%, #4c6b3e 14%);
+  text-wrap: balance;
+}
+
+.playground-field-copy {
+  margin: 0.95rem 0 0;
+  max-width: 30rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--foreground) 58%, #6d8355 42%);
+}
+
+.playground-card-plot {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .playground-card-plot {
+    position: absolute;
+    margin: 0;
+  }
+}
+
 @media (min-width: 640px) {
   .tiny-projects-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -461,6 +613,14 @@ p, li, dd, blockquote, figcaption {
 
   .tiny-project-card {
     padding: 0.82rem;
+  }
+
+  .playground-meadow {
+    padding-bottom: 8rem;
+  }
+
+  .playground-field-title {
+    max-width: none;
   }
 }
 

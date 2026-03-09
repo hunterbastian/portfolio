@@ -11,6 +11,14 @@ const HERO_NOTE_LABEL = 'NOT A STUDIO - JUST ME'
 const HERO_NOTE_TEXT =
   "I'm Hunter Bastian. I study interaction design at UVU and spend most of my time making interfaces, videos, brands, and small experiments for the internet. This site is a collection of the work and ideas I keep returning to."
 const WORK_TRACKER_LABEL = 'CORE THREADS OF MY WORK'
+const PLAYGROUND_CARD_LAYOUT = [
+  'lg:left-[4%] lg:top-[10%] lg:w-[320px] lg:-rotate-[7deg]',
+  'lg:left-[38%] lg:top-[3%] lg:w-[320px] lg:rotate-[4deg]',
+  'lg:right-[4%] lg:top-[18%] lg:w-[320px] lg:-rotate-[5deg]',
+  'lg:left-[16%] lg:bottom-[6%] lg:w-[320px] lg:rotate-[6deg]',
+  'lg:right-[17%] lg:bottom-[3%] lg:w-[320px] lg:-rotate-[3deg]',
+  'lg:left-[43%] lg:bottom-[14%] lg:w-[320px] lg:rotate-[2deg]',
+] as const
 
 interface ThreadDefinition {
   index: string
@@ -124,8 +132,8 @@ export default function ArchivePage() {
   const workTracker = buildWorkTracker(projects)
 
   return (
-    <div className="container mx-auto max-w-[560px] px-4 py-12 sm:py-16">
-      <div className="mb-8">
+    <div className="container mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+      <div className="mb-8 max-w-[560px]">
         <Link 
           href="/" 
           className="inline-flex items-center gap-2 text-sm text-foreground transition-colors"
@@ -137,11 +145,53 @@ export default function ArchivePage() {
         </Link>
       </div>
 
-      <div className="mb-12">
+      <div className="mb-12 max-w-[560px]">
         <h1 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Playground</h1>
       </div>
 
-      <div className="tiny-projects mb-12">
+      {archivedProjects.length === 0 ? (
+        <div className="text-center py-16">
+          <p className="text-foreground">No archived projects yet.</p>
+        </div>
+      ) : (
+        <section className="playground-meadow relative overflow-hidden rounded-[2rem] px-4 py-8 sm:px-6 sm:py-10 lg:px-10 lg:py-12">
+          <div className="playground-meadow-sky" aria-hidden="true" />
+          <div className="playground-meadow-cloud playground-meadow-cloud-a" aria-hidden="true" />
+          <div className="playground-meadow-cloud playground-meadow-cloud-b" aria-hidden="true" />
+          <div className="playground-meadow-hill playground-meadow-hill-back" aria-hidden="true" />
+          <div className="playground-meadow-hill playground-meadow-hill-mid" aria-hidden="true" />
+          <div className="playground-meadow-hill playground-meadow-hill-front" aria-hidden="true" />
+          <span className="playground-flower playground-flower-a" aria-hidden="true" />
+          <span className="playground-flower playground-flower-b" aria-hidden="true" />
+          <span className="playground-flower playground-flower-c" aria-hidden="true" />
+          <span className="playground-flower playground-flower-d" aria-hidden="true" />
+
+          <div className="relative z-10 mb-8 max-w-[520px]">
+            <p className="playground-field-kicker">The meadow</p>
+            <h2 className="playground-field-title">Archived work scattered across a small field of experiments.</h2>
+            <p className="playground-field-copy">
+              Older studies, side quests, and playful detours live out here. On larger screens they wander a little.
+            </p>
+          </div>
+
+          <div className="relative z-10 flex flex-col gap-6 lg:min-h-[54rem] lg:block">
+            {archivedProjects.map((project, index) => (
+              <div
+                key={project.slug}
+                className={`playground-card-plot mx-auto w-full max-w-[340px] ${PLAYGROUND_CARD_LAYOUT[index % PLAYGROUND_CARD_LAYOUT.length]}`}
+              >
+                <ProjectCard
+                  slug={project.slug}
+                  frontmatter={project.frontmatter}
+                  index={index}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <div className="tiny-projects mt-16 max-w-[720px]">
         <div className="tiny-projects-head">
           <span className="tiny-projects-kicker">Tiny Projects</span>
           <p className="tiny-projects-note">Small experiments, notes, and loose ends that live around the main work.</p>
@@ -195,23 +245,6 @@ export default function ArchivePage() {
           </article>
         </div>
       </div>
-
-      {archivedProjects.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-foreground">No archived projects yet.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {archivedProjects.map((project, index) => (
-            <ProjectCard
-              key={project.slug}
-              slug={project.slug}
-              frontmatter={project.frontmatter}
-              index={index}
-            />
-          ))}
-        </div>
-      )}
     </div>
   )
 }

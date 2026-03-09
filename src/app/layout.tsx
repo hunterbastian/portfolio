@@ -13,6 +13,7 @@ import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 import CursorFollower from '@/components/CursorFollower'
 import MotionProvider from '@/components/MotionProvider'
+import TopMeta from '@/components/TopMeta'
 import { telemetryConfig } from '@/lib/telemetry'
 
 // Primary body font
@@ -183,22 +184,7 @@ export default function RootLayout({
       <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
         <MotionProvider>
           <CursorFollower />
-          <p
-            className="pointer-events-none absolute left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-90 sm:left-6 sm:top-6 sm:text-[11px]"
-            aria-label={`Coordinates ${siteCoordinates}`}
-            style={{ fontFamily: 'inherit' }}
-          >
-            {siteCoordinates}
-          </p>
-          <p
-            className="pointer-events-none absolute right-4 top-4 z-50 inline-flex items-center gap-1.5 select-none text-[10px] tracking-[0.12em] text-foreground opacity-90 sm:right-6 sm:top-6 sm:gap-2 sm:text-[11px]"
-            aria-label={`Location ${siteLocation}, season ${siteSeason}`}
-            style={{ fontFamily: 'inherit' }}
-          >
-            <span>{siteLocation}</span>
-            <span aria-hidden="true" className="opacity-60">/</span>
-            <span className="opacity-80">{siteSeason}</span>
-          </p>
+          <TopMeta coordinates={siteCoordinates} location={siteLocation} season={siteSeason} />
           <SmoothScroll>
             <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-[#171717] focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
             <div className="min-h-screen flex flex-col">

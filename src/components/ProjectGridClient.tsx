@@ -20,8 +20,8 @@ interface ProjectGridClientProps {
 }
 
 const CASE_STUDY_ORDER = [
-  'brand-identity-system',
   'wander-utah',
+  'brand-identity-system',
   'porsche-app',
   'aol-redesign',
   'grand-teton-wallet',
@@ -84,7 +84,7 @@ interface CaseStudyDialState {
 const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
   pile: {
     compactSpreadFactor: -0.12,
-    compactScale: 0.82,
+    compactScale: 0.85,
     compactGapX: -8,
     compactGapY: -2,
     stackPriority: 'default',
@@ -92,7 +92,7 @@ const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
   expanded: {
     gapX: 30,
     gapY: 32,
-    scale: 0.89,
+    scale: 0.92,
   },
   motion: {
     expandMs: 201,
@@ -231,7 +231,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   return (
     <m.div
       ref={gridRef}
-      className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-6"
+      className="mx-auto grid w-full max-w-[820px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-6"
       onMouseEnter={() => {
         if (supportsHover) {
           setIsGridHovered(true)

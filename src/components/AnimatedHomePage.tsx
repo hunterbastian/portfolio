@@ -68,8 +68,8 @@ const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
 }
 
 const INITIAL_SECTION_LOAD_DELAY = {
-  creating: 220,
-  caseStudies: 440,
+  caseStudies: 220,
+  creating: 440,
 } as const
 
 const PRESENT_SUFFIX = ' - Present'
@@ -489,8 +489,24 @@ export default function AnimatedHomePage({ children, workTracker }: AnimatedHome
       </section>
 
       <CollapsibleSection
+        id="case-studies"
+        title="01 PROJECTS"
+        isOpen={sectionOpen.caseStudies}
+        onToggle={() => toggleSection('caseStudies')}
+        initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
+        className="px-4 sm:px-6 lg:px-0 relative z-10"
+        openClassName="py-12"
+        closedClassName="py-5"
+        contentClassName="mt-4 space-y-8"
+      >
+        <div className="mx-auto max-w-[560px] rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
+          {children}
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection
         id="creating"
-        title="01 CREATING"
+        title="02 CURRENT ENDEAVORS"
         isOpen={sectionOpen.creating}
         onToggle={() => toggleSection('creating')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
@@ -528,30 +544,72 @@ export default function AnimatedHomePage({ children, workTracker }: AnimatedHome
           <div className="mt-5">
             <a
               href="/archive"
-              className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+              className="tiny-projects group block rounded-[1rem] border border-border/70 bg-card/40 px-4 py-4 text-current no-underline transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-md"
+              aria-label="Open Playground"
+              title="Open Playground"
             >
-              <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
+              <div className="tiny-projects-head">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="tiny-projects-kicker">Playground</span>
+                  <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
+                    Open archive
+                  </span>
+                </div>
+                <p className="tiny-projects-note">Tiny projects, experiments, and works in progress.</p>
+              </div>
+
+              <div className="tiny-projects-grid">
+                <article className="tiny-project-card">
+                  <div className="tiny-project-card-meta">
+                    <span>WIP 01</span>
+                    <span>Self intro</span>
+                  </div>
+                  <h3 className="tiny-project-card-title">{HERO_NOTE_LABEL}</h3>
+                  <div className="tiny-project-note-preview">
+                    <span className="tiny-project-note-label">{HERO_NOTE_LABEL}</span>
+                    <p className="tiny-project-note-copy">{HERO_NOTE_TEXT}</p>
+                  </div>
+                </article>
+
+                <article className="tiny-project-card">
+                  <div className="tiny-project-card-meta">
+                    <span>WIP 02</span>
+                    <span>System map</span>
+                  </div>
+                  <h3 className="tiny-project-card-title">{WORK_TRACKER_LABEL}</h3>
+                  <div className="tiny-project-tracker-preview">
+                    <dl className="tiny-project-tracker-stats">
+                      <div className="tiny-project-tracker-stat">
+                        <dt>Projects</dt>
+                        <dd>{formatTrackerCount(workTracker.totalProjects)}</dd>
+                      </div>
+                      <div className="tiny-project-tracker-stat">
+                        <dt>Categories</dt>
+                        <dd>{formatTrackerCount(workTracker.totalCategories)}</dd>
+                      </div>
+                      <div className="tiny-project-tracker-stat">
+                        <dt>Tags</dt>
+                        <dd>{formatTrackerCount(workTracker.totalTags)}</dd>
+                      </div>
+                    </dl>
+
+                    <div className="tiny-project-tracker-list">
+                      {workTracker.threads.slice(0, 3).map((thread) => (
+                        <div key={thread.index} className="tiny-project-tracker-row">
+                          <span className="tiny-project-tracker-row-index">{thread.index}</span>
+                          <span className="tiny-project-tracker-row-title">{thread.title}</span>
+                          <span className="tiny-project-tracker-row-count">{formatTrackerCount(thread.count)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </div>
             </a>
           </div>
         </div>
       </CollapsibleSection>
       </div>
-
-      <CollapsibleSection
-        id="case-studies"
-        title="02 PROJECTS"
-        isOpen={sectionOpen.caseStudies}
-        onToggle={() => toggleSection('caseStudies')}
-        initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
-        className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-12"
-        closedClassName="py-5"
-        contentClassName="mt-4 space-y-8"
-      >
-        <div className="mx-auto max-w-[560px] rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
-          {children}
-        </div>
-      </CollapsibleSection>
 
       <CollapsibleSection
         id="experience"
@@ -727,64 +785,6 @@ export default function AnimatedHomePage({ children, workTracker }: AnimatedHome
           </div>
         </div>
       </CollapsibleSection>
-
-      <section className="px-4 pb-20 sm:px-6 lg:px-0">
-        <div className="mx-auto max-w-[560px]">
-          <div className="tiny-projects">
-            <div className="tiny-projects-head">
-              <span className="tiny-projects-kicker">06 TINY PROJECTS</span>
-            </div>
-
-            <div className="tiny-projects-grid">
-              <article className="tiny-project-card">
-                <div className="tiny-project-card-meta">
-                  <span>WIP 01</span>
-                  <span>Self intro</span>
-                </div>
-                <h3 className="tiny-project-card-title">{HERO_NOTE_LABEL}</h3>
-                <div className="tiny-project-note-preview">
-                  <span className="tiny-project-note-label">{HERO_NOTE_LABEL}</span>
-                  <p className="tiny-project-note-copy">{HERO_NOTE_TEXT}</p>
-                </div>
-              </article>
-
-              <article className="tiny-project-card">
-                <div className="tiny-project-card-meta">
-                  <span>WIP 02</span>
-                  <span>System map</span>
-                </div>
-                <h3 className="tiny-project-card-title">{WORK_TRACKER_LABEL}</h3>
-                <div className="tiny-project-tracker-preview">
-                  <dl className="tiny-project-tracker-stats">
-                    <div className="tiny-project-tracker-stat">
-                      <dt>Projects</dt>
-                      <dd>{formatTrackerCount(workTracker.totalProjects)}</dd>
-                    </div>
-                    <div className="tiny-project-tracker-stat">
-                      <dt>Categories</dt>
-                      <dd>{formatTrackerCount(workTracker.totalCategories)}</dd>
-                    </div>
-                    <div className="tiny-project-tracker-stat">
-                      <dt>Tags</dt>
-                      <dd>{formatTrackerCount(workTracker.totalTags)}</dd>
-                    </div>
-                  </dl>
-
-                  <div className="tiny-project-tracker-list">
-                    {workTracker.threads.slice(0, 3).map((thread) => (
-                      <div key={thread.index} className="tiny-project-tracker-row">
-                        <span className="tiny-project-tracker-row-index">{thread.index}</span>
-                        <span className="tiny-project-tracker-row-title">{thread.title}</span>
-                        <span className="tiny-project-tracker-row-count">{formatTrackerCount(thread.count)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
 
       </div>
     </div>

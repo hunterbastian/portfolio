@@ -7,21 +7,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import CollapsibleSection from './CollapsibleSection'
 
-export interface WorkTrackerThread {
-  index: string
-  title: string
-  detail: string
-  count: number
-  barUnits: number
-}
-
-export interface WorkTrackerData {
-  totalProjects: number
-  totalCategories: number
-  totalTags: number
-  threads: WorkTrackerThread[]
-}
-
 interface AnimatedHomePageProps {
   children: ReactNode
 }
@@ -510,7 +495,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="creating"
-        title="02 ENDERAVORS"
+        title="02 ENDEAVORS"
         isOpen={sectionOpen.creating}
         onToggle={() => toggleSection('creating')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
@@ -537,10 +522,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <a
                 href={CONTACT_EMAIL_HREF}
                 className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                aria-label="Avaliable for freelance"
-                title="Avaliable for freelance"
+                aria-label="Available for freelance"
+                title="Available for freelance"
               >
-                <span>Avaliable for freelance</span>
+                <span>Available for freelance</span>
               </a>
             </li>
           </ul>

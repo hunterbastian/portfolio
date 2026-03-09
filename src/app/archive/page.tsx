@@ -1,16 +1,11 @@
-import { getAllProjects, getArchivedProjects } from '@/lib/projects'
+import { getArchivedProjects } from '@/lib/projects'
 import ProjectCard from '@/components/ProjectCard'
 import Link from 'next/link'
 
 import type { Metadata } from 'next'
-import type { Project } from '@/types/project'
 
 const baseUrl = 'https://hunterbastian.com'
 const brandName = 'Hunter Bastian // Studio Alpine'
-const HERO_NOTE_LABEL = 'NOT A STUDIO - JUST ME'
-const HERO_NOTE_TEXT =
-  "I'm Hunter Bastian. I study interaction design at UVU and spend most of my time making interfaces, videos, brands, and small experiments for the internet. This site is a collection of the work and ideas I keep returning to."
-const WORK_TRACKER_LABEL = 'CORE THREADS OF MY WORK'
 const PLAYGROUND_CARD_LAYOUT = [
   'lg:left-[4%] lg:top-[10%] lg:w-[320px] lg:-rotate-[7deg]',
   'lg:left-[38%] lg:top-[3%] lg:w-[320px] lg:rotate-[4deg]',
@@ -19,98 +14,6 @@ const PLAYGROUND_CARD_LAYOUT = [
   'lg:right-[17%] lg:bottom-[3%] lg:w-[320px] lg:-rotate-[3deg]',
   'lg:left-[43%] lg:bottom-[14%] lg:w-[320px] lg:rotate-[2deg]',
 ] as const
-
-interface ThreadDefinition {
-  index: string
-  title: string
-  detail: string
-  categories: string[]
-  tags: string[]
-}
-
-interface WorkTrackerData {
-  totalProjects: number
-  totalCategories: number
-  totalTags: number
-  threads: Array<{
-    index: string
-    title: string
-    detail: string
-    count: number
-    barUnits: number
-  }>
-}
-
-const THREAD_DEFINITIONS: ThreadDefinition[] = [
-  {
-    index: '01',
-    title: 'INTERFACE SYSTEMS',
-    detail: 'web / mobile / product ux',
-    categories: ['Web Design', 'UI and Web Design', 'Mobile Design'],
-    tags: ['UI Design', 'UX Design', 'UI/UX', 'Interactive Design', 'App Design', 'Mobile'],
-  },
-  {
-    index: '02',
-    title: 'BRAND & IMAGE',
-    detail: 'identity / graphic / marketing',
-    categories: ['Brand Identity', 'Graphic Design'],
-    tags: ['Brand Identity', 'Logo Design', 'Visual Identity', 'Graphic Design', 'Marketing'],
-  },
-  {
-    index: '03',
-    title: 'OBJECTS & PRODUCT',
-    detail: 'physical / packaging / applied',
-    categories: ['Product Design'],
-    tags: ['Product Design', 'Wallet', 'E-commerce'],
-  },
-  {
-    index: '04',
-    title: 'TOOLS & EXPERIMENTS',
-    detail: 'html / css / figma / framer',
-    categories: [],
-    tags: ['HTML', 'CSS', 'Figma', 'Framer', 'Immersive Design', 'Storytelling'],
-  },
-] as const
-
-function formatTrackerCount(value: number) {
-  return value.toString().padStart(2, '0')
-}
-
-function buildWorkTracker(projects: Project[]): WorkTrackerData {
-  const uniqueCategories = new Set(projects.map((project) => project.frontmatter.category))
-  const uniqueTags = new Set(projects.flatMap((project) => project.frontmatter.tags))
-
-  const threadCounts = THREAD_DEFINITIONS.map((thread) => {
-    const categorySet = new Set(thread.categories.map((category) => category.toLowerCase()))
-    const tagSet = new Set(thread.tags.map((tag) => tag.toLowerCase()))
-
-    const count = projects.filter((project) => {
-      const category = project.frontmatter.category.toLowerCase()
-      const tags = project.frontmatter.tags.map((tag) => tag.toLowerCase())
-
-      return categorySet.has(category) || tags.some((tag) => tagSet.has(tag))
-    }).length
-
-    return {
-      index: thread.index,
-      title: thread.title,
-      detail: thread.detail,
-      count,
-    }
-  })
-
-  const maxCount = Math.max(...threadCounts.map((thread) => thread.count), 1)
-
-  return {
-    totalProjects: projects.length,
-    totalCategories: uniqueCategories.size,
-    totalTags: uniqueTags.size,
-    threads: threadCounts.map((thread) => ({
-      ...thread,
-      barUnits: Math.max(7, Math.round((thread.count / maxCount) * 18)),
-    })),
-  }
-}
 
 export const metadata: Metadata = {
   title: `Playground | ${brandName} Portfolio`,
@@ -127,9 +30,7 @@ export const metadata: Metadata = {
 }
 
 export default function ArchivePage() {
-  const projects = getAllProjects()
   const archivedProjects = getArchivedProjects()
-  const workTracker = buildWorkTracker(projects)
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">

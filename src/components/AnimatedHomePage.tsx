@@ -495,9 +495,22 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </CollapsibleSection>
 
+      <div className="px-4 pb-2 sm:px-6 lg:px-0 relative z-10">
+        <div className="mx-auto max-w-[560px]">
+          <a
+            href="/archive"
+            className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+            aria-label="Open Playground"
+            title="Open Playground"
+          >
+            <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
+          </a>
+        </div>
+      </div>
+
       <CollapsibleSection
         id="creating"
-        title="02 CURRENT ENDEAVORS"
+        title="02 ENDERAVORS"
         isOpen={sectionOpen.creating}
         onToggle={() => toggleSection('creating')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
@@ -510,16 +523,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <ul className="space-y-2">
             <li>
               <a
-                href={CONTACT_EMAIL_HREF}
-                className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                aria-label="Inquire about freelance design work"
-                title="Inquire about freelance design work"
-              >
-                <span>Freelance design work</span>
-              </a>
-            </li>
-            <li>
-              <a
                 href="https://instagram.com/studio.alpine"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -530,18 +533,17 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <span>Studio Alpine</span>
               </a>
             </li>
+            <li>
+              <a
+                href={CONTACT_EMAIL_HREF}
+                className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
+                aria-label="Avaliable for Freelance"
+                title="Avaliable for Freelance"
+              >
+                <span>Avaliable for Freelance</span>
+              </a>
+            </li>
           </ul>
-
-          <div className="mt-5">
-            <a
-              href="/archive"
-              className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
-              aria-label="Open Playground"
-              title="Open Playground"
-            >
-              <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
-            </a>
-          </div>
         </div>
       </CollapsibleSection>
       </div>

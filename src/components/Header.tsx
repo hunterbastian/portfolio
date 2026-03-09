@@ -15,7 +15,7 @@ function handleSmoothScroll(e: React.MouseEvent<HTMLAnchorElement>, href: string
 
 const HOME_SECTION_NAV = [
   { name: 'PROJECTS', href: '#case-studies' },
-  { name: 'CURRENT ENDEAVORS', href: '#creating' },
+  { name: 'ENDERAVORS', href: '#creating' },
   { name: 'EXPERIENCE', href: '#experience' },
   { name: 'EDUCATION', href: '#education' },
   { name: 'CONTACT', href: '#contact' },

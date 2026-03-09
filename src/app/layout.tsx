@@ -11,7 +11,6 @@ import SmoothScroll from '@/components/SmoothScroll'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
-import CursorFollower from '@/components/CursorFollower'
 import MotionProvider from '@/components/MotionProvider'
 import TopMeta from '@/components/TopMeta'
 import { telemetryConfig } from '@/lib/telemetry'
@@ -183,7 +182,6 @@ export default function RootLayout({
       </head>
       <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
         <MotionProvider>
-          <CursorFollower />
           <TopMeta coordinates={siteCoordinates} location={siteLocation} season={siteSeason} />
           <SmoothScroll>
             <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-[#171717] focus:px-3 focus:py-2 focus:rounded">Skip to content</a>

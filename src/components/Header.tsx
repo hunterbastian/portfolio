@@ -1,112 +1,53 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
-function handleSmoothScroll(e: React.MouseEvent<HTMLAnchorElement>, href: string): void {
-  e.preventDefault()
-  const target = document.querySelector(href)
-  if (target) {
-    window.dispatchEvent(new CustomEvent('hb:section-navigate', { detail: { href } }))
-    target.scrollIntoView({ behavior: 'auto', block: 'start' })
-    window.history.pushState({}, '', href)
-  }
-}
-
-const HOME_SECTION_NAV = [
-  { name: 'PROJECTS', href: '#case-studies' },
-  { name: 'ENDEAVORS', href: '#creating' },
-  { name: 'EXPERIENCE', href: '#experience' },
-  { name: 'EDUCATION', href: '#education' },
-  { name: 'CONTACT', href: '#contact' },
-] as const
-
-const PROJECT_PAGE_NAV = [
+const PAGE_NAV = [
   { name: 'HOME', href: '/' },
+  { name: 'ABOUT', href: '/about' },
   { name: 'PROJECTS', href: '/#case-studies' },
-  { name: 'CONTACT', href: '/#contact' },
 ] as const
+
+function ThemeToggle() {
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'))
+  }, [])
+
+  const toggle = useCallback(() => {
+    const next = !isDark
+    setIsDark(next)
+    document.documentElement.classList.toggle('dark', next)
+    localStorage.setItem('theme', next ? 'dark' : 'light')
+  }, [isDark])
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className="p-1.5 text-muted-foreground hover:text-foreground transition-colors duration-200"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
+        {isDark ? (
+          <path d="M12 3v1m0 16v1m8.66-13.66l-.71.71M4.05 19.95l-.71.71M21 12h-1M4 12H3m16.66 7.66l-.71-.71M4.05 4.05l-.71-.71M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        ) : (
+          <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+        )}
+      </svg>
+    </button>
+  )
+}
 
 export default function Header() {
   const pathname = usePathname()
-  const isHomeRoute = pathname === '/'
-  const navigation = useMemo(
-    () => (isHomeRoute ? HOME_SECTION_NAV : PROJECT_PAGE_NAV),
-    [isHomeRoute],
-  )
   const [showMobileMenu, setShowMobileMenu] = useState(false)
-  const [activeSection, setActiveSection] = useState('')
-  const [hoveredSection, setHoveredSection] = useState('')
 
-  const handleBrandAction = () => {
-    if (!isHomeRoute) {
-      window.location.assign('/')
-      return
-    }
-
-    window.scrollTo({ top: 0, behavior: 'auto' })
-    const { pathname, search } = window.location
-    window.location.assign(`${pathname}${search}`)
-  }
-
-  useEffect(() => {
-    if (!isHomeRoute) {
-      setActiveSection('')
-      return
-    }
-
-    const sectionIds = HOME_SECTION_NAV.map((item) => item.href.slice(1))
-    const sectionElements = sectionIds
-      .map((sectionId) => document.getElementById(sectionId))
-      .filter((element): element is HTMLElement => Boolean(element))
-
-    if (sectionElements.length === 0) {
-      return
-    }
-
-    const visibilityRatios = new Map<string, number>()
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          visibilityRatios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0)
-        })
-
-        let nextSection = ''
-        let bestRatio = 0
-        visibilityRatios.forEach((ratio, sectionId) => {
-          if (ratio > bestRatio) {
-            bestRatio = ratio
-            nextSection = `#${sectionId}`
-          }
-        })
-
-        if (nextSection) {
-          setActiveSection((previous) => (previous === nextSection ? previous : nextSection))
-        }
-      },
-      {
-        root: null,
-        rootMargin: '-100px 0px -50% 0px',
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
-      }
-    )
-
-    sectionElements.forEach((section) => {
-      visibilityRatios.set(section.id, 0)
-      observer.observe(section)
-    })
-
-    const currentHash = window.location.hash
-    if (currentHash && sectionIds.includes(currentHash.slice(1))) {
-      setActiveSection(currentHash)
-    } else {
-      setActiveSection(`#${sectionElements[0].id}`)
-    }
-
-    return () => observer.disconnect()
-  }, [isHomeRoute])
-
-  const emphasizedSection = hoveredSection || activeSection || navigation[0]?.href || ''
+  if (pathname === '/archive') return null
 
   return (
     <header
@@ -117,12 +58,10 @@ export default function Header() {
     >
       <div className="container mx-auto max-w-6xl">
         <div className="flex h-14 items-center justify-between">
-          <button
-            type="button"
-            onClick={handleBrandAction}
+          <Link
+            href="/"
             className="group flex items-baseline gap-1.5 focus-visible:outline-none"
-            aria-label="Return to top"
-            title="Return to top"
+            aria-label="Home"
           >
             <span
               className="text-[11px] font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
@@ -130,78 +69,26 @@ export default function Header() {
             >
               Hunter Bastian
             </span>
-          </button>
+          </Link>
 
-          <nav
-            className="header-nav-vertical hidden md:flex"
-            role="navigation"
-            aria-label="Primary"
-            onMouseLeave={() => setHoveredSection('')}
-          >
-            {navigation.map((item) => {
-              const isSectionLink = isHomeRoute && item.href.startsWith('#')
-              const isActive = isHomeRoute && activeSection === item.href
-
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => {
-                    if (isSectionLink) {
-                      handleSmoothScroll(e, item.href)
-                    }
-                  }}
-                  onMouseEnter={() => setHoveredSection(item.href)}
-                  onFocus={() => setHoveredSection(item.href)}
-                  onBlur={() => setHoveredSection('')}
-                  className={`header-nav-link cursor-pointer ${isActive ? 'is-active' : ''} ${
-                    emphasizedSection === item.href ? 'is-emphasis' : 'is-subdued'
-                  }`}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  {item.name}
-                </a>
-              )
-            })}
-          </nav>
-
-          <button
-            onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="md:hidden p-2 text-foreground hover:text-primary transition-colors duration-300"
-            aria-label="Toggle navigation menu"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
-              {showMobileMenu ? <path d="M6 18L18 6M6 6l12 12" /> : <path d="M4 6h16M4 12h16M4 18h16" />}
-            </svg>
-          </button>
         </div>
       </div>
 
       {showMobileMenu && (
-        <div className="md:hidden mt-4 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
+        <div className="sm:hidden mt-4 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
           <div className="container mx-auto max-w-6xl space-y-1 px-1">
-            {navigation.map((item) => {
-              const isSectionLink = isHomeRoute && item.href.startsWith('#')
-              const isActive = isHomeRoute && activeSection === item.href
-
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => {
-                    if (isSectionLink) {
-                      handleSmoothScroll(e, item.href)
-                    }
-                    setShowMobileMenu(false)
-                  }}
-                  className={`block py-3 text-xs tracking-[0.14em] transition-colors duration-300 cursor-pointer ${
-                    isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  {item.name}
-                </a>
-              )
-            })}
+            {PAGE_NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setShowMobileMenu(false)}
+                className={`block py-3 text-xs tracking-[0.14em] transition-colors duration-300 ${
+                  pathname === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
         </div>
       )}

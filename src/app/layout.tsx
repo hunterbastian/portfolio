@@ -11,8 +11,10 @@ import SmoothScroll from '@/components/SmoothScroll'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
+import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
 import TopMeta from '@/components/TopMeta'
+import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
 
 // Primary body font
@@ -41,73 +43,71 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  viewportFit: 'cover'
+  viewportFit: 'cover',
 }
 
 const faviconVersion = '20260207'
-const brandName = 'Hunter Bastian // Studio Alpine'
-const sitePreviewTitle = 'Hunter Bastian - Portfolio'
-const siteCoordinates = '40.7608° N / 111.8910° W'
-const siteLocation = 'LEHI UT'
-const siteSeason = 'SPRING / 2026'
 
 export const metadata: Metadata = {
-  title: sitePreviewTitle,
-  description: 'Student Product Designer and Photographer',
-  keywords: [brandName, 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
-  authors: [{ name: brandName }],
-  creator: brandName,
-  metadataBase: new URL('https://hunterbastian.com'),
+  title: siteConfig.siteTitle,
+  description: siteConfig.siteDescription,
+  keywords: [siteConfig.brandName, 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
+  authors: [{ name: siteConfig.brandName }],
+  creator: siteConfig.brandName,
+  metadataBase: new URL(siteConfig.url),
 
   icons: {
     icon: [
       { url: `/favicon/favicon-16x16.png?v=${faviconVersion}`, sizes: '16x16', type: 'image/png' },
       { url: `/favicon/favicon-32x32.png?v=${faviconVersion}`, sizes: '32x32', type: 'image/png' },
-      { url: `/favicon/favicon.ico?v=${faviconVersion}`, sizes: 'any' }
+      { url: `/favicon/favicon.ico?v=${faviconVersion}`, sizes: 'any' },
     ],
     apple: [
-      { url: `/favicon/apple-touch-icon.png?v=${faviconVersion}`, sizes: '180x180', type: 'image/png' }
+      { url: `/favicon/apple-touch-icon.png?v=${faviconVersion}`, sizes: '180x180', type: 'image/png' },
     ],
     other: [
       { url: `/favicon/favicon-192x192.png?v=${faviconVersion}`, sizes: '192x192', type: 'image/png' },
-      { url: `/favicon/favicon-512x512.png?v=${faviconVersion}`, sizes: '512x512', type: 'image/png' }
-    ]
+      { url: `/favicon/favicon-512x512.png?v=${faviconVersion}`, sizes: '512x512', type: 'image/png' },
+    ],
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://hunterbastian.com',
-    title: sitePreviewTitle,
-    description: 'Student Product Designer and Photographer',
-    siteName: `${brandName} Portfolio`,
+    url: siteConfig.url,
+    title: siteConfig.siteTitle,
+    description: siteConfig.siteDescription,
+    siteName: sitePortfolioName,
     images: [
       {
         url: '/images/social/profile-preview.jpg',
         width: 1200,
         height: 630,
-        alt: `${brandName} - Designer & Developer Portfolio`,
+        alt: `${siteConfig.brandName} - Designer & Developer Portfolio`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: sitePreviewTitle,
-    description: 'Student Product Designer and Photographer',
+    title: siteConfig.siteTitle,
+    description: siteConfig.siteDescription,
     images: ['/images/social/profile-preview.jpg'],
   },
   alternates: {
-    canonical: 'https://hunterbastian.com',
+    canonical: siteConfig.url,
   },
 }
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{
+          __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark')}catch(e){}})()`,
+        }} />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#f2f1ef" />
 
@@ -130,10 +130,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Person',
-              name: brandName,
-              url: 'https://hunterbastian.com',
-              jobTitle: 'Student Product Designer and Photographer',
-              description: 'Student Product Designer and Photographer',
+              name: siteConfig.brandName,
+              url: siteConfig.url,
+              jobTitle: siteConfig.siteDescription,
+              description: siteConfig.siteDescription,
               sameAs: [
                 // Add your social profiles here
                 // 'https://github.com/hunterbastian',
@@ -182,9 +182,18 @@ export default function RootLayout({
       </head>
       <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
         <MotionProvider>
-          <TopMeta coordinates={siteCoordinates} location={siteLocation} season={siteSeason} />
+          <TopMeta
+            coordinates={siteConfig.siteCoordinates}
+            location={siteConfig.siteLocation}
+            season={siteConfig.siteSeason}
+          />
           <SmoothScroll>
-            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-[#171717] focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-[#171717]"
+            >
+              Skip to content
+            </a>
             <div className="min-h-screen flex flex-col">
               <main id="main-content" role="main" className="flex-1">
                 <PageTransition>{children}</PageTransition>
@@ -224,6 +233,6 @@ export default function RootLayout({
           </SmoothScroll>
         </MotionProvider>
       </body>
-            </html>
-          )
-        }
+    </html>
+  )
+}

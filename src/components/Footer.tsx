@@ -2,12 +2,16 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 import { getLenisInstance } from '@/lib/lenis'
 
 const FOOTER_REVEAL_EPSILON_PX = 6
 
 export default function Footer() {
+  const pathname = usePathname()
   const currentYear = new Date().getFullYear()
+
+  if (pathname === '/archive') return null
   const [visible, setVisible] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
@@ -87,7 +91,7 @@ export default function Footer() {
         <span className="text-[11px] tracking-[0.04em] text-muted-foreground md:justify-self-start">
           © {currentYear}
         </span>
-        <p className="text-[11px] uppercase tracking-[0.04em] text-muted-foreground md:justify-self-end md:text-right">
+        <p className="text-[11px] uppercase tracking-[0.04em] text-muted-foreground md:justify-self-end md:text-right" style={{ fontFamily: 'inherit' }}>
           Crafted by Hunter Bastian
         </p>
       </div>

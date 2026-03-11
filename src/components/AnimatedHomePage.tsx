@@ -4,26 +4,19 @@ import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  contactSocialLinks,
+  creatingLinks,
+  educationItems,
+  experienceItems,
+  homeHeroContent,
+} from '@/content/homepage'
+import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
 import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import CollapsibleSection from './CollapsibleSection'
 
 interface AnimatedHomePageProps {
   children: ReactNode
-}
-
-interface ExperienceItem {
-  year: string
-  company: string
-  title: string
-  description: string
-}
-
-interface EducationItem {
-  year: string
-  institution: string
-  degree: string
-  level: string
-  note?: string
 }
 
 type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'contact'
@@ -68,74 +61,6 @@ function splitExperienceYear(year: string) {
     secondary: 'Present',
   }
 }
-
-const experience: ExperienceItem[] = [
-  {
-    year: '2026 - Present',
-    company: 'Studio Alpine',
-    title: 'Founder',
-    description: 'Founder of Studio Alpine, a photography and design project.',
-  },
-  {
-    year: '2024 - Present',
-    company: 'Catapult',
-    title: 'Video Producer',
-    description: 'Produced and edit marketing and product videos for Catapult.',
-  },
-  {
-    year: '2024 - Present',
-    company: 'Utah Valley University',
-    title: 'Department Representative',
-    description: 'Helped new students with internship opportunities in the Web Design and Development program.',
-  },
-  {
-    year: '2023',
-    company: 'Nutricost',
-    title: 'Graphic Design Intern',
-    description:
-      'At Nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue.',
-  },
-  {
-    year: '2017',
-    company: 'Clutch.',
-    title: 'Digital Design Intern',
-    description:
-      'At Clutch, I helped with design branding and further improved my knowledge about the UX design process.',
-  },
-]
-
-const education: EducationItem[] = [
-  {
-    year: '2023 - 2027',
-    institution: 'Utah Valley University',
-    degree: 'Interaction Design',
-    level: "Bachelor's Degree",
-  },
-  {
-    year: '2021',
-    institution: 'Columbus State Community College',
-    degree: 'Graphic Design',
-    level: "Associate's Degree",
-    note: 'TRANSFERRED TO UVU',
-  },
-  {
-    year: '2021',
-    institution: 'Google',
-    degree: 'IT Support Professional Certificate',
-    level: 'Issued in 2021',
-  },
-]
-
-const HERO_HEADLINE_TEXT = 'Hunter Bastian'
-const HERO_SUBTITLE_TEXT = 'Interaction designer'
-const CONTACT_EMAIL_HREF = 'mailto:hello@hunterbastian.com?subject=Project%20Inquiry'
-const CONTACT_SOCIAL_LINKS = [
-  { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
-  { label: 'Threads', href: 'https://threads.net/@studio.alpine', external: true },
-  { label: 'X', href: 'https://x.com/thestudioalpine', external: true },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
-  { label: 'GitHub', href: 'https://github.com/hunterbastian', external: true },
-] as const
 
 const HERO_ENTRANCE = {
   profileDelay: 40, // profile appears first
@@ -407,10 +332,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <h1
                 className="text-foreground font-mono font-normal text-[14px] leading-[1.2] tracking-[0.02em]"
               >
-                {HERO_HEADLINE_TEXT}
+                {homeHeroContent.headline}
               </h1>
               <p className="mt-1 font-mono text-[11px] font-normal tracking-[0.06em] text-foreground opacity-75 sm:text-xs">
-                {HERO_SUBTITLE_TEXT}
+                {homeHeroContent.subtitle}
+              </p>
+              <p className="mt-1 font-mono text-[9px] font-normal tracking-[0.1em] uppercase text-foreground opacity-40 sm:text-[10px]">
+                {siteConfig.siteLocation} / {siteConfig.siteSeason}
               </p>
             </div>
           </div>
@@ -440,8 +368,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              Interaction Design student and Department Representative at UVU with experience designing and
-              building digital products. I create meaningful interfaces with an AI-first mindset.
+              {homeHeroContent.intro}
             </m.p>
 
             <m.div
@@ -457,7 +384,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <p className="hero-handwritten-text font-handscript">A little page on the internet all about me. ☀️</p>
+              <a href="/about" className="hero-handwritten-text font-handscript cursor-pointer">{homeHeroContent.handwrittenNote}</a>
             </m.div>
           </m.div>
 
@@ -484,7 +411,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <a
             href="/archive"
-            className="social-button nord-button inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+            className="social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
             aria-label="Open Playground"
             title="Open Playground"
           >
@@ -506,28 +433,20 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       >
         <div className="mx-auto max-w-[560px] text-left">
           <ul className="space-y-2">
-            <li>
-              <a
-                href="https://instagram.com/studio.alpine"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                aria-label="Photography Studio Studio Alpine"
-                title="Photography Studio Studio Alpine"
-              >
-                <span>Studio Alpine</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href={CONTACT_EMAIL_HREF}
-                className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
-                aria-label="Available for freelance"
-                title="Available for freelance"
-              >
-                <span>Available for freelance</span>
-              </a>
-            </li>
+            {creatingLinks.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                  className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
+                  aria-label={link.ariaLabel ?? link.label}
+                  title={link.title ?? link.label}
+                >
+                  <span>{link.label}</span>
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </CollapsibleSection>
@@ -557,7 +476,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            {experience.map((job, index) => {
+            {experienceItems.map((job, index) => {
               const displayYear = splitExperienceYear(job.year)
               return (
                 <m.div
@@ -626,7 +545,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            {education.map((edu, index) => (
+            {educationItems.map((edu, index) => (
               <m.div
                 key={edu.institution}
                 className="border-b border-border last:border-b-0 pb-5 last:pb-0"
@@ -684,14 +603,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[14px] font-normal tracking-[0.02em] sm:text-[15px]">
             <a
-              href={CONTACT_EMAIL_HREF}
+              href={siteProjectInquiryHref}
               className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
               aria-label="Email Hunter"
               title="Email Hunter"
             >
               Email
             </a>
-            {CONTACT_SOCIAL_LINKS.map((link) => (
+            {contactSocialLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}

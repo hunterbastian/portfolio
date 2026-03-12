@@ -65,7 +65,7 @@ export default function Header() {
         <div className="flex h-10 items-center justify-between sm:h-14">
           <Link
             href="/"
-            className="group flex items-baseline gap-1.5 focus-visible:outline-none"
+            className="group flex items-baseline gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:rounded-sm"
             aria-label="Home"
           >
             <span

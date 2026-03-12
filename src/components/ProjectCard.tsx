@@ -13,7 +13,7 @@ interface ProjectCardProps {
 
 function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
-  const [imgLoaded, setImgLoaded] = useState(false)
+  const [imgLoaded, setImgLoaded] = useState(index === 0)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const onLoad = useCallback(() => setImgLoaded(true), [])
 
@@ -33,7 +33,7 @@ function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
             src={imgSrc}
             alt={frontmatter.title}
             fill
-            className={`object-cover transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
             sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 300px"
             priority={index === 0}
             loading={index === 0 ? 'eager' : 'lazy'}

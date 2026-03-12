@@ -243,10 +243,10 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
           setHoveredIndex(null)
         }
       }}
-      initial={{ opacity: CARD_STAGGER_PANEL.initialOpacity, y: CARD_STAGGER_PANEL.initialY }}
+      initial={{ opacity: CARD_STAGGER_PANEL.finalOpacity, y: CARD_STAGGER_PANEL.finalY }}
       animate={{
-        opacity: stage >= 1 ? CARD_STAGGER_PANEL.finalOpacity : CARD_STAGGER_PANEL.initialOpacity,
-        y: stage >= 1 ? CARD_STAGGER_PANEL.finalY : CARD_STAGGER_PANEL.initialY,
+        opacity: CARD_STAGGER_PANEL.finalOpacity,
+        y: CARD_STAGGER_PANEL.finalY,
         columnGap: gridColumnGap,
         rowGap: gridRowGap,
       }}
@@ -306,28 +306,28 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               }
             }}
             initial={{
-              opacity: CARD_STAGGER_ITEM.initialOpacity,
-              y: CARD_STAGGER_ITEM.initialY,
+              opacity: index === 0 ? CARD_STAGGER_ITEM.finalOpacity : CARD_STAGGER_ITEM.initialOpacity,
+              y: index === 0 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
               x: compactX,
               rotate: compactRotate,
               scale: caseStudyDial.pile.compactScale,
             }}
             animate={{
-              opacity: stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity,
-              y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
+              opacity: index === 0 ? cardOpacity : (stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity),
+              y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : (index === 0 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY),
               x: targetX,
               rotate: targetRotate,
               scale: targetScale,
             }}
             transition={{
               opacity: {
-                duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
-                delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
+                duration: index === 0 ? 0 : motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
+                delay: index === 0 ? 0 : (stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0),
                 ease: CARD_STAGGER_PANEL.ease,
               },
               y: {
-                duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
-                delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
+                duration: index === 0 ? 0 : motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
+                delay: index === 0 ? 0 : (stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0),
                 ease: CARD_STAGGER_PANEL.ease,
               },
               x: {
@@ -344,7 +344,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               },
             }}
           >
-            <Magnetic className="will-change-transform" strength={0.28} range={130} onlyOnHover disableOnTouch>
+            <Magnetic strength={0.28} range={130} onlyOnHover disableOnTouch>
               {project.frontmatter?.image ? (
                 <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
               ) : (

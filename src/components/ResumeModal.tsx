@@ -132,7 +132,10 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 bg-white overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Resume"
+          className="fixed inset-0 z-50 bg-background overflow-y-auto"
         >
           {/* Full page content - styled exactly like project pages */}
           <m.div

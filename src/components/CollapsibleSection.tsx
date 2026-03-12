@@ -15,6 +15,8 @@ interface CollapsibleSectionProps {
   closedClassName?: string
   contentClassName?: string
   initialLoadDelayMs?: number
+  /** Skip inner content staging animation — content renders immediately when open. Use for sections containing LCP elements. */
+  skipContentStaging?: boolean
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -70,6 +72,7 @@ export default function CollapsibleSection({
   closedClassName,
   contentClassName,
   initialLoadDelayMs = 0,
+  skipContentStaging = false,
 }: CollapsibleSectionProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
   const contentRef = useRef<HTMLDivElement>(null)
@@ -200,11 +203,11 @@ export default function CollapsibleSection({
               className={contentPanelClassName}
               initial={false}
               animate={{
-                opacity: stage >= 1 ? SECTION_PANEL.finalOpacity : SECTION_PANEL.initialOpacity,
-                y: stage >= 1 ? SECTION_PANEL.finalY : SECTION_PANEL.initialY,
+                opacity: skipContentStaging ? SECTION_PANEL.finalOpacity : (stage >= 1 ? SECTION_PANEL.finalOpacity : SECTION_PANEL.initialOpacity),
+                y: skipContentStaging ? SECTION_PANEL.finalY : (stage >= 1 ? SECTION_PANEL.finalY : SECTION_PANEL.initialY),
               }}
               transition={{
-                duration: panelDuration,
+                duration: skipContentStaging ? 0 : panelDuration,
                 ease: SECTION_PANEL.ease,
               }}
             >
@@ -213,12 +216,12 @@ export default function CollapsibleSection({
                   key={isValidElement(child) && child.key != null ? String(child.key) : `section-row-${index}`}
                   initial={false}
                   animate={{
-                    opacity: stage >= 2 ? SECTION_ROW.finalOpacity : SECTION_ROW.initialOpacity,
-                    y: stage >= 2 ? SECTION_ROW.finalY : SECTION_ROW.initialY,
+                    opacity: skipContentStaging ? SECTION_ROW.finalOpacity : (stage >= 2 ? SECTION_ROW.finalOpacity : SECTION_ROW.initialOpacity),
+                    y: skipContentStaging ? SECTION_ROW.finalY : (stage >= 2 ? SECTION_ROW.finalY : SECTION_ROW.initialY),
                   }}
                   transition={{
-                    duration: rowDuration,
-                    delay: stage >= 2 ? index * rowStagger : 0,
+                    duration: skipContentStaging ? 0 : rowDuration,
+                    delay: skipContentStaging ? 0 : (stage >= 2 ? index * rowStagger : 0),
                     ease: SECTION_PANEL.ease,
                   }}
                 >

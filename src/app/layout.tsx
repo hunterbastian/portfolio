@@ -156,28 +156,9 @@ export default function RootLayout({
           <link rel="dns-prefetch" href="//analytics.vercel.com" />
         )}
         
-        {/* Critical CSS - Inline for faster FCP */}
+        {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: `
-            /* Critical above-the-fold styles */
-            body { margin: 0; }
-            .hero-section { min-height: 0; }
-            .hero-section h1 { line-height: 1.2; }
-          `
-        }} />
-        
-        {/* Text selection highlight - Notion blue */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            ::selection {
-              background-color: rgba(35, 131, 226, 0.15) !important;
-              color: inherit !important;
-            }
-            ::-moz-selection {
-              background-color: rgba(35, 131, 226, 0.15) !important;
-              color: inherit !important;
-            }
-          `
+          __html: 'body{margin:0}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}::-moz-selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}'
         }} />
       </head>
       <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>

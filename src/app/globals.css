@@ -625,16 +625,6 @@ button {
   transform: translateY(0);
 }
 
-::selection {
-  background: rgba(35, 131, 226, 0.15) !important;
-  color: inherit;
-}
-
-::-moz-selection {
-  background: rgba(35, 131, 226, 0.15) !important;
-  color: inherit;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -353,7 +353,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             }}
           >
             <m.p
-              className="m-0 font-mono font-normal text-sm leading-relaxed text-muted-foreground"
+              className="m-0 font-inter font-normal text-sm leading-relaxed text-muted-foreground"
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
               animate={{
                 opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -381,7 +381,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <a href="/about" className="hero-handwritten-text font-handscript cursor-pointer">{homeHeroContent.handwrittenNote}</a>
+              <a href="/about" className="hero-handwritten-text font-handscript cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 rounded-sm">{homeHeroContent.handwrittenNote}</a>
             </m.div>
           </m.div>
 
@@ -392,8 +392,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="case-studies"
         title="01 PROJECTS"
         isOpen={sectionOpen.caseStudies}
-        onToggle={() => toggleSection('caseStudies')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
+        skipContentStaging
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
         closedClassName="py-5"
@@ -408,7 +408,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <a
             href="/archive"
-            className="social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md"
+            className="social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
             aria-label="Open Playground"
             title="Open Playground"
           >
@@ -421,7 +421,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="creating"
         title="02 ENDEAVORS"
         isOpen={sectionOpen.creating}
-        onToggle={() => toggleSection('creating')}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
@@ -453,7 +452,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="experience"
         title="03 EXPERIENCE"
         isOpen={sectionOpen.experience}
-        onToggle={() => toggleSection('experience')}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-12"
         closedClassName="py-5"
@@ -506,7 +504,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                       <p className="mt-1 font-mono text-xs font-normal tracking-[0.04em] text-muted-foreground">
                         {job.title}
                       </p>
-                      <p className="mt-2 font-mono text-sm font-normal leading-relaxed text-muted-foreground">
+                      <p className="mt-2 font-inter text-sm font-normal leading-relaxed text-muted-foreground">
                         {job.description}
                       </p>
                     </div>
@@ -522,7 +520,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="education"
         title="04 EDUCATION"
         isOpen={sectionOpen.education}
-        onToggle={() => toggleSection('education')}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-12"
         closedClassName="py-5"
@@ -591,7 +588,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         id="contact"
         title="05 CONTACT"
         isOpen={sectionOpen.contact}
-        onToggle={() => toggleSection('contact')}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="pt-12 pb-14 sm:pb-20"
         closedClassName="py-5"

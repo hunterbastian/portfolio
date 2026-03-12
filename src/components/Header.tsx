@@ -8,6 +8,7 @@ const PAGE_NAV = [
   { name: 'HOME', href: '/' },
   { name: 'ABOUT', href: '/about' },
   { name: 'PROJECTS', href: '/#case-studies' },
+  { name: 'PLAYGROUND', href: '/archive' },
 ] as const
 
 function ThemeToggle() {
@@ -28,7 +29,7 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="p-1.5 text-muted-foreground hover:text-foreground transition-colors duration-200"
+      className="flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-foreground transition-colors duration-200"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
@@ -47,6 +48,10 @@ export default function Header() {
   const pathname = usePathname()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
+  useEffect(() => {
+    setShowMobileMenu(false)
+  }, [pathname])
+
   if (pathname === '/archive') return null
 
   return (
@@ -57,34 +62,54 @@ export default function Header() {
       }}
     >
       <div className="container mx-auto max-w-6xl">
-        <div className="flex h-14 items-center justify-between">
+        <div className="flex h-10 items-center justify-between sm:h-14">
           <Link
             href="/"
             className="group flex items-baseline gap-1.5 focus-visible:outline-none"
             aria-label="Home"
           >
             <span
-              className="text-sm font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
+              className="text-xs font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100 sm:text-sm"
               style={{ color: 'var(--foreground)', opacity: 0.9 }}
             >
               Hunter Bastian
             </span>
           </Link>
 
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+
+            <button
+              type="button"
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              className="flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-foreground transition-colors duration-200 sm:hidden"
+              aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
+              aria-expanded={showMobileMenu}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                {showMobileMenu ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
       {showMobileMenu && (
-        <div className="sm:hidden mt-4 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-          <div className="container mx-auto max-w-6xl space-y-1 px-1">
+        <div className="sm:hidden mt-3 border-t pt-3 pb-1" style={{ borderColor: 'var(--border)' }}>
+          <div className="container mx-auto max-w-6xl space-y-0.5">
             {PAGE_NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setShowMobileMenu(false)}
-                className={`block py-3 text-xs tracking-[0.14em] transition-colors duration-300 ${
+                className={`block py-3 text-xs tracking-[0.14em] uppercase transition-colors duration-200 ${
                   pathname === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                 }`}
+                style={{ fontFamily: 'inherit' }}
               >
                 {item.name}
               </Link>

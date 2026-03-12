@@ -146,8 +146,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       <div className="mx-auto max-w-[560px]">
         <header className="mb-8 flex flex-col items-center text-center">
-          <h1 className="text-xl font-medium tracking-[0.01em] text-foreground sm:text-2xl">{displayTitle}</h1>
-          {formattedDate && <p className="mt-1 text-lg text-muted-foreground">{formattedDate}</p>}
+          <h1 className="text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">{displayTitle}</h1>
+          {formattedDate && <p className="mt-1 text-base text-muted-foreground sm:text-lg">{formattedDate}</p>}
         </header>
 
         <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden rounded-sm">
@@ -161,14 +161,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           />
         </div>
 
-        <p className="mb-14 px-2 text-center text-lg leading-relaxed text-muted-foreground">
+        <p className="mb-14 px-3 text-center text-base leading-relaxed text-muted-foreground sm:px-2 sm:text-lg">
           {frontmatter.description}
         </p>
 
         <div className="mb-12 flex flex-wrap gap-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span className="font-medium">Category:</span>
-            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
+            <span className="bg-primary/10 text-primary px-3 py-1.5 rounded-full sm:py-1">
               {frontmatter.category}
             </span>
           </div>

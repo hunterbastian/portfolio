@@ -67,14 +67,14 @@ export default function TopMeta({ coordinates }: TopMetaProps) {
         {coordinates}
       </p>
       <div
-        className="absolute right-4 top-4 z-50 flex items-center gap-3 sm:right-6 sm:top-6 sm:gap-4"
+        className="absolute right-4 top-4 z-50 hidden items-center gap-4 sm:right-6 sm:top-6 sm:flex"
         style={{ fontFamily: 'inherit' }}
       >
         {PAGE_NAV.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className="text-[10px] tracking-[0.12em] uppercase text-foreground opacity-90 hover:opacity-100 transition-opacity duration-200 sm:text-[11px]"
+            className="text-[11px] tracking-[0.12em] uppercase text-foreground opacity-90 hover:opacity-100 transition-opacity duration-200"
           >
             {item.name}
           </Link>

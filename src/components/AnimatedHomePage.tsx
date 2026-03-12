@@ -596,12 +596,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         isOpen={sectionOpen.contact}
         onToggle={() => toggleSection('contact')}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="pt-12 pb-20"
+        openClassName="pt-12 pb-14 sm:pb-20"
         closedClassName="py-5"
         contentClassName="mt-4"
       >
         <div className="mx-auto max-w-[560px]">
-          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[14px] font-normal tracking-[0.02em] sm:text-[15px]">
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-5 sm:gap-y-2 sm:text-[15px]">
             <a
               href={siteProjectInquiryHref}
               className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
@@ -616,7 +616,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
+                className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground py-2 sm:py-0"
                 aria-label={link.label}
                 title={link.label}
               >

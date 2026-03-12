@@ -225,7 +225,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                       autoComplete="current-password"
                     />
                     {accessError && (
-                      <p className="text-sm text-foreground">{accessError}</p>
+                      <p className="text-sm text-destructive">{accessError}</p>
                     )}
                     <button
                       type="submit"

@@ -47,7 +47,7 @@ export default function AboutPage() {
           className="mt-6 text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
           style={{ fontFamily: 'inherit' }}
         >
-          Socials →
+          Contact →
         </Link>
 
       </div>

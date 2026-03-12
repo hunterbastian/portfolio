@@ -28,7 +28,15 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
   })
 
   return (
-    <div className="hidden lg:flex items-center justify-center h-[calc(100vh-140px)]">
+    <div className="hidden lg:flex items-center justify-center h-[calc(100vh-140px)] relative">
+      {/* Center text — outside the rotating container so it never moves */}
+      <p
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none text-xs tracking-[0.06em] text-muted-foreground whitespace-nowrap z-10"
+        style={{ fontFamily: 'inherit' }}
+      >
+        a place for my random stuff :)
+      </p>
+
       <m.div
         className="relative"
         style={{
@@ -37,16 +45,6 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
           rotate: rotation,
         }}
       >
-        {/* Center text — counter-rotates to stay upright */}
-        <m.div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none"
-          style={{ rotate: counterRotation }}
-        >
-          <p className="text-xs tracking-[0.06em] text-muted-foreground whitespace-nowrap" style={{ fontFamily: 'inherit' }}>
-            a place for my random stuff :)
-          </p>
-        </m.div>
-
         {projects.map((project, index) => {
           const angle = (index / count) * 360
           const tilt = ((index % 3) - 1) * 4

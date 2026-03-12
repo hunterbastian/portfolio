@@ -58,13 +58,31 @@ function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
         </div>
 
         <div className="border-t border-border/20 px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
-          <h3
-            className="block w-full truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-200 group-hover:text-foreground/80"
-            style={{ fontSize: '13px' }}
-            title={displayTitle}
-          >
-            {displayTitle}
-          </h3>
+          <div className="flex items-center justify-between gap-2">
+            <h3
+              className="block min-w-0 flex-1 truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-200 group-hover:text-foreground/80"
+              style={{ fontSize: '13px' }}
+              title={displayTitle}
+            >
+              {displayTitle}
+            </h3>
+            {frontmatter.demo && (
+              <a
+                href={frontmatter.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary transition-colors duration-200 hover:bg-primary/20"
+                aria-label={`Live demo for ${displayTitle}`}
+              >
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+                </span>
+                Live
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </Link>

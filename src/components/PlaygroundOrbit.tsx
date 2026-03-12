@@ -77,6 +77,21 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
                     frontmatter={project.frontmatter}
                     index={index}
                   />
+                  {project.frontmatter.demo && (
+                    <a
+                      href={project.frontmatter.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1.5 flex items-center justify-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-medium tracking-[0.04em] text-primary transition-all duration-200 hover:bg-primary/20 hover:-translate-y-0.5"
+                      aria-label={`Live demo for ${project.frontmatter.title}`}
+                    >
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+                      </span>
+                      Live Demo
+                    </a>
+                  )}
                 </div>
               </m.div>
             </div>

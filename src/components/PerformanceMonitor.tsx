@@ -4,9 +4,8 @@ import { useEffect } from 'react'
 
 export default function PerformanceMonitor() {
   useEffect(() => {
-    if (!('performance' in window)) {
-      return
-    }
+    if (process.env.NODE_ENV !== 'development') return
+    if (!('performance' in window)) return
 
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {

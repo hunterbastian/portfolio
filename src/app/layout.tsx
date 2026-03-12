@@ -218,13 +218,7 @@ export default function RootLayout({
                 {`
                   if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
                     requestIdleCallback(function() {
-                      navigator.serviceWorker.register('/sw.js')
-                        .then(function(registration) {
-                          console.log('SW registered: ', registration);
-                        })
-                        .catch(function(registrationError) {
-                          console.log('SW registration failed: ', registrationError);
-                        });
+                      navigator.serviceWorker.register('/sw.js').catch(function() {});
                     }, { timeout: 5000 });
                   }
                 `}

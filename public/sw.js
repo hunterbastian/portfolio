@@ -1,16 +1,12 @@
 // Service Worker for Portfolio - Assets only, fresh HTML always
-const CACHE_NAME = 'portfolio-assets-v8'
+const CACHE_NAME = 'portfolio-assets-v9'
 const STATIC_ASSETS = [
   '/offline.html',
   '/favicon.ico',
-  '/favicon/favicon.ico',
   '/favicon/favicon-32x32.png',
   '/favicon/apple-touch-icon.png',
   '/images/profilepicture.webp',
-  '/images/social/profile-preview.jpg',
-  '/images/projects/brand-identity-system.svg',
-  '/images/projects/porscheapp.webp',
-  '/images/projects/wanderutah.webp'
+  '/images/projects/brand-identity-system.svg'
 ]
 
 // Install event - cache static assets

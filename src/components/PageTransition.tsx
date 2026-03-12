@@ -16,27 +16,27 @@ import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/mot
  * ───────────────────────────────────────────────────────── */
 
 const TIMING = {
-  oldFadeDuration: 160, // previous page fade-out duration
-  newContentDelay: 30, // wait before new container starts
-  newSlideDuration: 320, // new container slide/fade duration
-  childStartDelay: 60, // wait before child stagger starts
-  childStagger: 50, // gap between each child animation
-  childDuration: 220, // each child slide/fade duration
+  oldFadeDuration: 120, // previous page fade-out — snappy exit
+  newContentDelay: 20, // minimal wait before new container
+  newSlideDuration: 280, // new container slide/fade — smooth but quick
+  childStartDelay: 40, // tight delay before child stagger
+  childStagger: 35, // quicker cascade between children
+  childDuration: 200, // each child slide/fade
 }
 
 const PAGE = {
-  initialY: 12, // px offset before page slides up
-  finalY: 0, // resting position
-  initialOpacity: 0, // hidden state before enter
-  finalOpacity: 1, // resting visibility
-  exitOpacity: 0, // old page fades to transparent
+  initialY: 8, // subtle slide — less dramatic, more refined
+  finalY: 0,
+  initialOpacity: 0,
+  finalOpacity: 1,
+  exitOpacity: 0,
 }
 
 const CHILD = {
-  initialY: 8, // px offset before each child slides up
-  finalY: 0, // resting child position
-  initialOpacity: 0, // hidden child state
-  finalOpacity: 1, // resting child visibility
+  initialY: 5, // very subtle child offset
+  finalY: 0,
+  initialOpacity: 0,
+  finalOpacity: 1,
 }
 
 interface PageTransitionProps {

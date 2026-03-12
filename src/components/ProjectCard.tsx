@@ -20,11 +20,9 @@ function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
   return (
     <Link href={`/projects/${slug}`} className="group block h-full w-full">
       <div
-        className="relative isolate overflow-hidden rounded-md border text-card-foreground transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.998] touch-manipulation shadow-sm hover:-translate-y-0.5 hover:shadow-md will-change-transform"
+        className="project-card relative isolate overflow-hidden rounded-md border text-card-foreground transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.998] touch-manipulation shadow-sm hover:-translate-y-0.5 hover:shadow-md will-change-transform"
         style={{
           animationDelay: `${index * 80}ms`,
-          borderColor: 'var(--border)',
-          background: 'var(--card)',
         }}
       >
         <div className="relative aspect-[16/9] overflow-hidden">
@@ -59,7 +57,7 @@ function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/16 opacity-55 transition-opacity duration-500 ease-out group-hover:opacity-70" />
         </div>
 
-        <div className="border-t border-border/30 bg-card/96 px-3.5 pb-3 pt-2.5">
+        <div className="border-t border-border/20 px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
           <h3
             className="block w-full truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-200 group-hover:text-foreground/80"
             style={{ fontSize: '13px' }}

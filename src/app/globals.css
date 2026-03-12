@@ -74,6 +74,22 @@ html {
   --box-radius: 10px;
 }
 
+/* Project cards — refined borders per mode */
+.project-card {
+  border-color: var(--border);
+  background: var(--card);
+}
+
+.dark .project-card {
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.dark .project-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
 .dark {
   --background: #232527;
   --background-rgb: 35, 37, 39;

@@ -5,12 +5,10 @@ import { getAllProjects, getProjectBySlug } from '@/lib/projects'
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import mdxComponents from '@/components/mdx/MDXComponents'
-
-const BASE_URL = 'https://hunterbastian.com'
-const BRAND_NAME = 'Hunter Bastian // Studio Alpine'
+import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 
 function resolveImageUrl(image: string): string {
-  return image.startsWith('/') ? `${BASE_URL}${image}` : image
+  return image.startsWith('/') ? resolveSiteUrl(image) : image
 }
 
 function formatProjectDate(dateValue?: string): string {
@@ -55,15 +53,15 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const imageUrl = resolveImageUrl(image)
 
   return {
-    title: `${title} | ${BRAND_NAME} Portfolio`,
+    title: `${title} | ${sitePortfolioName}`,
     description,
-    keywords: [title, category, ...(tags || []), BRAND_NAME, 'portfolio', 'case study'],
+    keywords: [title, category, ...(tags || []), siteConfig.brandName, 'portfolio', 'case study'],
     openGraph: {
       type: 'article',
       title: `${title} - Case Study`,
       description,
-      url: `${BASE_URL}/projects/${slug}`,
-      siteName: `${BRAND_NAME} Portfolio`,
+      url: resolveSiteUrl(`/projects/${slug}`),
+      siteName: sitePortfolioName,
       images: [
         {
           url: imageUrl,
@@ -73,7 +71,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
         },
       ],
       publishedTime: date,
-      authors: [BRAND_NAME],
+      authors: [siteConfig.brandName],
       tags,
     },
     twitter: {
@@ -83,7 +81,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       images: [imageUrl],
     },
     alternates: {
-      canonical: `${BASE_URL}/projects/${slug}`,
+      canonical: resolveSiteUrl(`/projects/${slug}`),
     },
   }
 }
@@ -97,7 +95,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   const { frontmatter, content } = project
-  const projectUrl = `${BASE_URL}/projects/${slug}`
+  const projectUrl = resolveSiteUrl(`/projects/${slug}`)
   const imageUrl = resolveImageUrl(frontmatter.image)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const formattedDate = formatProjectDate(frontmatter.date)
@@ -112,12 +110,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     dateModified: frontmatter.date,
     author: {
       '@type': 'Person',
-      name: BRAND_NAME,
-      url: BASE_URL,
+      name: siteConfig.brandName,
+      url: siteConfig.url,
     },
     publisher: {
       '@type': 'Person',
-      name: BRAND_NAME,
+      name: siteConfig.brandName,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',

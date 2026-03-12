@@ -1,12 +1,12 @@
 import { MetadataRoute } from 'next'
 import { getAllProjects } from '@/lib/projects'
+import { resolveSiteUrl } from '@/lib/site'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const projects = getAllProjects()
-  const baseUrl = 'https://hunterbastian.com'
 
   const projectUrls = projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
+    url: resolveSiteUrl(`/projects/${project.slug}`),
     lastModified: project.frontmatter?.date ? new Date(project.frontmatter.date) : new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
@@ -14,13 +14,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: baseUrl,
+      url: resolveSiteUrl(),
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${baseUrl}/archive`,
+      url: resolveSiteUrl('/archive'),
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,

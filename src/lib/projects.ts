@@ -7,6 +7,16 @@ const projectsDirectory = path.join(process.cwd(), 'content/projects')
 
 const PROJECT_SLUG_PATTERN = /^[a-z0-9-]+$/
 
+interface ProjectIndex {
+  all: Project[]
+  published: Project[]
+  archived: Project[]
+  bySlug: Map<string, Project>
+  categories: string[]
+}
+
+let cachedProjectIndex: ProjectIndex | null = null
+
 export function isValidProjectSlug(slug: string): boolean {
   if (!slug) {
     return false
@@ -42,16 +52,34 @@ function loadAllProjectFiles(): Project[] {
     .map(parseProjectFile)
 }
 
+function buildProjectIndex(): ProjectIndex {
+  const allProjects = loadAllProjectFiles().sort(sortByDateDescending)
+  const publishedProjects = allProjects.filter((project) => !project.frontmatter.archived)
+  const archivedProjects = allProjects.filter((project) => project.frontmatter.archived === true)
+
+  return {
+    all: allProjects,
+    published: publishedProjects,
+    archived: archivedProjects,
+    bySlug: new Map(allProjects.map((project) => [project.slug, project])),
+    categories: [...new Set(publishedProjects.map((project) => project.frontmatter.category))],
+  }
+}
+
+function getProjectIndex(): ProjectIndex {
+  if (!cachedProjectIndex) {
+    cachedProjectIndex = buildProjectIndex()
+  }
+
+  return cachedProjectIndex
+}
+
 export function getAllProjects(): Project[] {
-  return loadAllProjectFiles()
-    .filter((project) => !project.frontmatter.archived)
-    .sort(sortByDateDescending)
+  return getProjectIndex().published
 }
 
 export function getArchivedProjects(): Project[] {
-  return loadAllProjectFiles()
-    .filter((project) => project.frontmatter.archived === true)
-    .sort(sortByDateDescending)
+  return getProjectIndex().archived
 }
 
 export function getProjectBySlug(slug: string): Project | null {
@@ -59,14 +87,8 @@ export function getProjectBySlug(slug: string): Project | null {
     return null
   }
 
-  const fullPath = path.join(projectsDirectory, `${slug}.mdx`)
-
-  if (!fs.existsSync(fullPath)) {
-    return null
-  }
-
   try {
-    return parseProjectFile(`${slug}.mdx`)
+    return getProjectIndex().bySlug.get(slug) ?? null
   } catch (error) {
     console.error(`Error loading project ${slug}:`, error)
     return null
@@ -74,6 +96,5 @@ export function getProjectBySlug(slug: string): Project | null {
 }
 
 export function getAllCategories(): string[] {
-  const categories = getAllProjects().map((project) => project.frontmatter.category)
-  return [...new Set(categories)]
+  return getProjectIndex().categories
 }

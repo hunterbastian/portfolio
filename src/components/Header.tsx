@@ -64,7 +64,7 @@ export default function Header() {
             aria-label="Home"
           >
             <span
-              className="text-[11px] font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
+              className="text-sm font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100"
               style={{ color: 'var(--foreground)', opacity: 0.9 }}
             >
               Hunter Bastian

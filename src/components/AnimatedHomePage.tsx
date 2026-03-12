@@ -320,7 +320,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               }}
             >
               <Image
-                src="/images/profilepicture.jpg"
+                src="/images/profilepicture.webp"
                 alt="Hunter Bastian"
                 width={72}
                 height={72}

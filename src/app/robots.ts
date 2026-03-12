@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { resolveSiteUrl } from '@/lib/site'
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://hunterbastian.com/sitemap.xml',
+    sitemap: resolveSiteUrl('/sitemap.xml'),
   }
 }

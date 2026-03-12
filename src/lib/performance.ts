@@ -8,8 +8,8 @@ export function preloadCriticalResources(): void {
 
   const aboveFoldImages = [
     '/images/projects/brand-identity-system.svg',
-    '/images/projects/porscheapp.png',
-    '/images/projects/wanderutah.png',
+    '/images/projects/porscheapp.webp',
+    '/images/projects/wanderutah.webp',
   ]
 
   for (const src of aboveFoldImages) {

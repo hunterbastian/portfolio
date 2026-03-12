@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { m } from 'framer-motion'
+import { siteMailtoHref } from '@/lib/site'
 
 export default function NotFound() {
   return (
@@ -38,10 +39,10 @@ export default function NotFound() {
           
           <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
-              href="/about"
+              href="/#contact"
               className="inline-flex items-center justify-center rounded-md border border-input bg-background px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
             >
-              About Me
+              Contact Me
             </Link>
           </m.div>
         </div>
@@ -55,7 +56,7 @@ export default function NotFound() {
           <p className="text-sm text-muted-foreground">
             If you think this is an error, please{' '}
             <a
-              href="mailto:hello@hunterbastian.com"
+              href={siteMailtoHref}
               className="text-primary hover:text-primary/80 underline underline-offset-4"
             >
               let me know

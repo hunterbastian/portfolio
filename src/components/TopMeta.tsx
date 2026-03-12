@@ -50,6 +50,42 @@ function ThemeToggle() {
   )
 }
 
+function CoordinateLabel({ coordinates }: { coordinates: string }) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <div
+      className="absolute left-4 top-4 z-50 select-none sm:left-6 sm:top-6 cursor-default"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      aria-label={`Location: ${coordinates}`}
+      style={{ fontFamily: 'inherit' }}
+    >
+      <div className="relative overflow-hidden">
+        <span
+          className="block text-[10px] tracking-[0.12em] text-foreground opacity-90 whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[11px]"
+          style={{
+            transform: hovered ? 'translateY(-100%)' : 'translateY(0)',
+            opacity: hovered ? 0 : 0.9,
+          }}
+        >
+          {coordinates}
+        </span>
+        <span
+          className="absolute left-0 top-0 block text-[10px] tracking-[0.12em] text-foreground whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-[11px]"
+          style={{
+            transform: hovered ? 'translateY(0)' : 'translateY(100%)',
+            opacity: hovered ? 0.9 : 0,
+          }}
+          aria-hidden
+        >
+          UTAH, USA
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export default function TopMeta({ coordinates }: TopMetaProps) {
   const pathname = usePathname()
 
@@ -59,13 +95,7 @@ export default function TopMeta({ coordinates }: TopMetaProps) {
 
   return (
     <>
-      <p
-        className="pointer-events-none absolute left-4 top-4 z-50 select-none text-[10px] tracking-[0.12em] text-foreground opacity-90 sm:left-6 sm:top-6 sm:text-[11px]"
-        aria-label={`Coordinates ${coordinates}`}
-        style={{ fontFamily: 'inherit' }}
-      >
-        {coordinates}
-      </p>
+      <CoordinateLabel coordinates={coordinates} />
       <div
         className="absolute right-4 top-4 z-50 hidden items-center gap-4 sm:right-6 sm:top-6 sm:flex"
         style={{ fontFamily: 'inherit' }}

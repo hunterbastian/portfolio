@@ -82,17 +82,17 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-foreground transition-colors duration-200 sm:hidden"
+              className="flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-foreground transition-all duration-200 sm:hidden"
               aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
               aria-expanded={showMobileMenu}
+              style={{ fontFamily: 'inherit' }}
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                {showMobileMenu ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
-                )}
-              </svg>
+              <span
+                className="text-sm leading-none transition-transform duration-200"
+                style={{ transform: showMobileMenu ? 'rotate(45deg)' : 'none' }}
+              >
+                {showMobileMenu ? '✕' : '⁙'}
+              </span>
             </button>
           </div>
         </div>

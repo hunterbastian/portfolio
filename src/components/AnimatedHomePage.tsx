@@ -337,9 +337,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <p className="mt-1 font-mono text-[11px] font-normal tracking-[0.06em] text-foreground opacity-75 sm:text-xs">
                 {homeHeroContent.subtitle}
               </p>
-              <p className="mt-1 font-mono text-[9px] font-normal tracking-[0.1em] uppercase text-foreground opacity-40 sm:text-[10px]">
-                {siteConfig.siteLocation} / {siteConfig.siteSeason}
-              </p>
             </div>
           </div>
 

@@ -46,7 +46,7 @@ function ThemeToggle() {
           viewBox="0 0 24 24"
           initial={{ opacity: 0, rotate: -120, scale: 0.3, filter: 'blur(4px)' }}
           animate={{ opacity: 1, rotate: 0, scale: [0.3, 1.18, 0.95, 1], filter: 'blur(0px)' }}
-          exit={{ opacity: 0, rotate: 90, scale: 0.4, filter: 'blur(3px)' }}
+          exit={{ opacity: 0, rotate: 30, scale: 0.8, filter: 'blur(4px)' }}
           transition={{
             duration: 0.45,
             ease: [0.22, 1, 0.36, 1],
@@ -79,10 +79,7 @@ export default function Header() {
 
   return (
     <header
-      className="site-header-frosted sticky top-0 z-50 w-full border-b px-4 py-3 sm:px-6 sm:py-4"
-      style={{
-        borderColor: 'var(--border)',
-      }}
+      className="site-header-frosted sticky top-0 z-50 w-full px-4 py-3 sm:px-6 sm:py-4 header-separator"
     >
       <div className="container mx-auto max-w-6xl">
         <div className="flex h-10 items-center justify-between sm:h-14">

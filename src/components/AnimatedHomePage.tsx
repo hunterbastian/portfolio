@@ -204,7 +204,7 @@ function CreatingLoader() {
             fill="none"
             initial={{ rotate: 0, opacity: 0, scale: 0.7 }}
             animate={{ rotate: 360, opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.7 }}
+            exit={{ opacity: 0, scale: 0.9 }}
             transition={{
               rotate: { duration: 0.8, ease: 'linear', repeat: Infinity },
               opacity: { duration: 0.18 },
@@ -334,7 +334,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 alt="Hunter Bastian"
                 width={72}
                 height={72}
-                className="h-16 w-16 shrink-0 rounded-full border border-border object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
+                className="h-16 w-16 shrink-0 rounded-full img-inset-outline object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
                 priority
               />
             </m.div>
@@ -409,7 +409,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
-        <div className="mx-auto max-w-[560px] rounded-[3px] border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
+        <div className="mx-auto max-w-[560px] rounded-[3px] bg-card/32 px-2 py-4 sm:px-3 sm:py-5" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)' }}>
           {children}
         </div>
       </CollapsibleSection>
@@ -418,7 +418,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <a
             href="/archive"
-            className="group social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+            className="group social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] px-4 py-2 text-xs font-medium transition-[transform,box-shadow] duration-500 relative overflow-hidden hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
             aria-label="Open Playground"
             title="Open Playground"
           >

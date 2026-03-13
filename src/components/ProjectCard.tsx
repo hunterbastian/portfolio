@@ -22,12 +22,12 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
     <div className="relative">
       <Link href={`/projects/${slug}`} className="group block h-full w-full">
         <div
-          className="project-card relative isolate overflow-hidden rounded-[3px] border text-card-foreground transition-[transform,box-shadow,border-color] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation shadow-sm hover:-translate-y-1 hover:shadow-md will-change-transform"
+          className="project-card relative isolate overflow-hidden rounded-[3px] text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1 will-change-transform"
           style={{
             animationDelay: `${index * 80}ms`,
           }}
         >
-          <div className="relative aspect-[16/9] overflow-hidden">
+          <div className="relative aspect-[16/9] overflow-hidden img-inset-outline">
             {!imgLoaded && (
               <div className="absolute inset-0 animate-pulse bg-muted" />
             )}
@@ -60,7 +60,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/16 opacity-55 transition-opacity duration-500 ease-out group-hover:opacity-70" />
           </div>
 
-          <div className="border-t border-border/20 px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
+          <div className="px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
             <h3
               className="block w-full truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-200 group-hover:text-foreground/80"
               style={{ fontSize: '13px' }}
@@ -76,7 +76,8 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
           href={frontmatter.demo}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-[3px] bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary transition-colors duration-200 hover:bg-background/95 border border-border/40"
+          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-[3px] bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary transition-[background-color,box-shadow] duration-200 hover:bg-background/95"
+          style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)' }}
           aria-label={`Live demo for ${displayTitle}`}
         >
           <span className="relative flex h-2 w-2">

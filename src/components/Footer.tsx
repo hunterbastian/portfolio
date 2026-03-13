@@ -14,8 +14,7 @@ export default function Footer() {
 
   const [visible, setVisible] = useState(false)
   const prefersReducedMotion = useReducedMotion()
-
-  if (pathname === '/archive') return null
+  const isArchive = pathname === '/archive'
 
   const syncFooterVisibility = useCallback((scrollY: number, limit: number) => {
     const atBottom = limit <= 0 || scrollY >= Math.max(0, limit - FOOTER_REVEAL_EPSILON_PX)
@@ -23,6 +22,8 @@ export default function Footer() {
   }, [])
 
   useEffect(() => {
+    if (isArchive) return
+
     // Poll for Lenis instance (it initializes async in SmoothScroll)
     let intervalId: ReturnType<typeof setInterval> | null = null
     let cleanup: (() => void) | null = null
@@ -62,18 +63,19 @@ export default function Footer() {
       cleanup?.()
       window.removeEventListener('scroll', onNativeScroll)
     }
-  }, [syncFooterVisibility])
+  }, [isArchive, syncFooterVisibility])
+
+  if (isArchive) return null
 
   return (
     <m.footer
-      className="border-t"
+      className="footer-separator"
       style={{
         position: 'fixed',
         bottom: 0,
         left: 0,
         right: 0,
         zIndex: 40,
-        borderColor: 'var(--border)',
         background: 'var(--background)',
       }}
       initial={{ y: '100%' }}

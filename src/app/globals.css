@@ -76,8 +76,18 @@ html {
 
 /* Project cards — refined borders per mode */
 .project-card {
-  border-color: var(--border);
   background: var(--card);
+  box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+}
+
+.project-card:hover {
+  box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.08),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.06);
 }
 
 .dark .project-card {
@@ -203,9 +213,13 @@ p, li, dd, blockquote, figcaption {
 
 .status-pill {
   position: relative;
-  border: 1px solid var(--border);
+  border: none;
   background: var(--card);
   border-radius: var(--box-radius);
+  box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
 }
 
 .status-pill::before {
@@ -268,20 +282,33 @@ p, li, dd, blockquote, figcaption {
  * ───────────────────────────────────────── */
 
 .nord-panel {
-  border: 1px solid var(--border);
+  border: none;
   background: var(--card);
   border-radius: var(--box-radius);
+  box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
 }
 
 .nord-button {
-  border: 1px solid var(--border);
+  border: none;
   background: var(--card);
   color: var(--foreground);
   border-radius: var(--box-radius);
+  box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
 .nord-button:hover {
   background: var(--secondary);
+  box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.08),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.06);
 }
 
 .social-button:hover {
@@ -339,20 +366,18 @@ p, li, dd, blockquote, figcaption {
 }
 
 .dark .nord-panel {
-  border-color: var(--border);
   background: var(--card);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 }
 
 .dark .nord-button {
-  border-color: var(--border);
   background: var(--card);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 }
 
 .dark .nord-button:hover {
   background: var(--secondary);
-  border-color: color-mix(in srgb, var(--border) 80%, var(--foreground) 20%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
 }
 
 .dark .social-button:hover {
@@ -360,8 +385,8 @@ p, li, dd, blockquote, figcaption {
 }
 
 .dark .status-pill {
-  border-color: var(--border);
   background: var(--card);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 }
 
 .dark ::selection {
@@ -568,6 +593,22 @@ p, li, dd, blockquote, figcaption {
   outline: none;
 }
 
+.header-separator {
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.06);
+}
+
+.dark .header-separator {
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+.footer-separator {
+  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.06);
+}
+
+.dark .footer-separator {
+  box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
 .site-header-frosted {
   background-color: rgba(var(--background-rgb), var(--header-frost-opacity));
   -webkit-backdrop-filter: saturate(118%) blur(var(--header-frost-blur));
@@ -581,6 +622,15 @@ p, li, dd, blockquote, figcaption {
 img {
   image-rendering: -webkit-optimize-contrast;
   transition: opacity 0.3s ease-in-out;
+}
+
+.img-inset-outline {
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+}
+
+.dark .img-inset-outline {
+  outline-color: rgba(255, 255, 255, 0.1);
 }
 
 img:not([src]):not([srcset]) {

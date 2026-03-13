@@ -85,15 +85,15 @@ interface CaseStudyDialState {
 const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
   pile: {
     compactSpreadFactor: -0.12,
-    compactScale: 0.85,
+    compactScale: 0.9,
     compactGapX: -8,
     compactGapY: -2,
     stackPriority: 'default',
   },
   expanded: {
-    gapX: 30,
-    gapY: 32,
-    scale: 0.92,
+    gapX: 20,
+    gapY: 24,
+    scale: 1,
   },
   motion: {
     expandMs: 380,

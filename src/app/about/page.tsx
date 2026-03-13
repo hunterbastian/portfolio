@@ -30,7 +30,7 @@ export default function AboutPage() {
           alt="Hunter Bastian"
           width={120}
           height={120}
-          className="rounded-full"
+          className="rounded-full img-inset-outline shadow-sm"
           priority
         />
 
@@ -38,7 +38,7 @@ export default function AboutPage() {
           Hunter Bastian
         </h1>
 
-        <p className="mt-4 text-sm leading-relaxed" style={{ color: 'var(--muted-foreground)', fontFamily: 'inherit' }}>
+        <p className="mt-4 text-sm leading-relaxed text-balance" style={{ color: 'var(--muted-foreground)', fontFamily: 'inherit' }}>
           Interaction design student at Utah Valley University. I design and build
           digital products with care and photograph the world in between.
         </p>

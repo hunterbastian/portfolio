@@ -31,10 +31,9 @@ export default function ScrollToTop() {
           aria-label="Scroll to top"
           className="fixed bottom-8 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full focus-visible:outline-none sm:bottom-10 sm:right-8"
           style={{
-            border: '1px solid var(--border)',
             background: 'var(--card)',
             color: 'var(--foreground)',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+            boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)',
           }}
           initial={{ opacity: 0, y: 16, scale: 0.85 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}

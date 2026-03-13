@@ -3,37 +3,42 @@
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_SOFT, MOTION_EASE_EXIT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 /* ─────────────────────────────────────────────────────────
- * ANIMATION STORYBOARD
+ * PAGE TRANSITION STORYBOARD
  *
  * Read top-to-bottom. Each `at` value is ms after route swap.
  *
- *    0ms   previous page fades out
- *   60ms   new page container starts sliding up + fading in
- *  180ms   new page children start sliding up (staggered 90ms)
+ *    0ms   previous page fades out + drifts up, blur 0 → 3px
+ *  340ms   old page gone
+ *   80ms   new page container slides up y 18 → 0, blur 4 → 0
+ *  200ms   new page children rise into place (staggered 70ms)
  * ───────────────────────────────────────────────────────── */
 
 const TIMING = {
-  oldFadeDuration: 120, // previous page fade-out — snappy exit
-  newContentDelay: 20, // minimal wait before new container
-  newSlideDuration: 280, // new container slide/fade — smooth but quick
-  childStartDelay: 40, // tight delay before child stagger
-  childStagger: 35, // quicker cascade between children
-  childDuration: 200, // each child slide/fade
+  oldFadeDuration: 340,   // gentle fade-out — unhurried exit
+  newContentDelay: 80,    // breathing room before new page arrives
+  newSlideDuration: 600,  // slow editorial entrance
+  childStartDelay: 120,   // let container settle before children reveal
+  childStagger: 70,       // wider cascade — each child gets its moment
+  childDuration: 500,     // each child fades in gently
 }
 
 const PAGE = {
-  initialY: 8, // subtle slide — less dramatic, more refined
+  initialY: 18,           // more travel distance for a visible glide
   finalY: 0,
   initialOpacity: 0,
   finalOpacity: 1,
   exitOpacity: 0,
+  exitY: -8,              // exits upward — feels like turning a page
+  initialBlur: 'blur(4px)',
+  finalBlur: 'blur(0px)',
+  exitBlur: 'blur(3px)',
 }
 
 const CHILD = {
-  initialY: 5, // very subtle child offset
+  initialY: 14,           // children rise more — noticeable but not dramatic
   finalY: 0,
   initialOpacity: 0,
   finalOpacity: 1,
@@ -83,14 +88,17 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
       initial={{
         opacity: PAGE.initialOpacity,
         y: offsets.pageY,
+        filter: PAGE.initialBlur,
       }}
       animate={{
         opacity: stage >= 1 ? PAGE.finalOpacity : PAGE.initialOpacity,
         y: stage >= 1 ? PAGE.finalY : offsets.pageY,
+        filter: stage >= 1 ? PAGE.finalBlur : PAGE.initialBlur,
       }}
       transition={{
         duration: motionDurationMs(timing.newSlideDuration, prefersReducedMotion),
-        ease: MOTION_EASE_STANDARD,
+        ease: MOTION_EASE_SOFT,
+        filter: { duration: motionDurationMs(timing.newSlideDuration * 0.65, prefersReducedMotion) },
       }}
       className="will-change-transform"
     >
@@ -108,7 +116,7 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
           transition={{
             duration: motionDurationMs(timing.childDuration, prefersReducedMotion),
             delay: stage >= 2 ? motionDelayMs(index * timing.childStagger, prefersReducedMotion) : 0,
-            ease: MOTION_EASE_STANDARD,
+            ease: MOTION_EASE_SOFT,
           }}
           className="will-change-transform"
         >
@@ -127,10 +135,10 @@ export default function PageTransition({ children }: PageTransitionProps) {
     <AnimatePresence mode="wait" initial={false}>
       <m.div
         key={pathname}
-        exit={{ opacity: PAGE.exitOpacity }}
+        exit={{ opacity: PAGE.exitOpacity, y: PAGE.exitY, filter: PAGE.exitBlur }}
         transition={{
           duration: motionDurationMs(TIMING.oldFadeDuration, prefersReducedMotion),
-          ease: MOTION_EASE_STANDARD,
+          ease: MOTION_EASE_EXIT,
         }}
       >
         <RouteScene

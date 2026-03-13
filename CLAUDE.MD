@@ -68,12 +68,34 @@ image: "/images/optimized/projects/your-image.webp"
 video: "/images/projects/hover.mp4"      # optional hover video
 demo: ""
 github: ""
+figjam: ""                               # optional FigJam slide link
 featured: false                          # true = large card in grid
 date: "2025-01-01"
 ---
 ```
 
+Blog posts go in `content/blog/your-slug.mdx` with frontmatter: `title`, `description`, `date`, `tags` (optional). Blog nav link is prepared but hidden — add `{ name: 'BLOG', href: '/blog' }` to `PAGE_NAV` in `Header.tsx` to enable.
+
 Run `npm run optimize-images` before adding new images.
+
+## Motion System
+
+Spring-first animation approach. Constants live in `src/lib/motion.ts`:
+- `MOTION_EASE_SOFT [0.16, 1, 0.3, 1]` — default entrance/reveal ease
+- `MOTION_EASE_EXIT [0.4, 0, 0.7, 0.2]` — exit transitions
+- `MOTION_SPRING_SMOOTH { stiffness: 170, damping: 26, mass: 1 }` — interactive/layout elements
+- `motionDurationMs()` / `motionDelayMs()` — helpers that respect `prefers-reduced-motion`
+
+Animation orchestration uses the Interface Craft storyboard pattern: named timing constants, stage-driven sequencing via a single integer state, config objects at the top of the file.
+
+## Icons
+
+Uses `nucleo-pixel-essential` — React SVG icon library. Tree-shakeable ESM imports:
+```tsx
+import { IconChevronLeft, IconTag } from 'nucleo-pixel-essential'
+<IconChevronLeft size={12} />
+```
+`IconProps` extends `SVGProps<SVGSVGElement>` with `size` and `title` props.
 
 ## Typography
 
@@ -98,11 +120,19 @@ Fluid sizing via `clamp()` in `tailwind.config.ts`.
 
 ## Color System
 
-Nord dark palette (dark-by-default, no media query needed):
-- `--background: #2e3440` — base canvas
-- `--card: #3b4252` — elevated panels
-- `--primary: #88c0d0` — frost blue accent
-- Light mode via `prefers-color-scheme: light` in `globals.css`
+Light-by-default, warm neutral palette. Dark mode via `.dark` class on `<html>` (toggled by user, persisted in localStorage).
+
+**Light mode** (`:root` in `globals.css`):
+- `--background: #f2f1ef` — warm off-white canvas
+- `--card: #f6f5f3` — slightly lighter panels
+- `--foreground / --primary: #171717` — near-black text
+- `--accent: #7f8f81` — muted sage green
+
+**Dark mode** (`.dark` in `globals.css`):
+- `--background: #232527` — dark charcoal canvas
+- `--card: #2a2c2f` — slightly lighter panels
+- `--foreground / --primary: #cdc8c0` — warm light gray text
+- `--accent: #8a9b7a` — olive green
 
 ## Deployment
 

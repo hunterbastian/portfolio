@@ -7,7 +7,7 @@ import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProjectFrontmatter } from '@/types/project'
 import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
-import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface Project {
   slug: string
@@ -20,6 +20,7 @@ interface ProjectGridClientProps {
 }
 
 const CASE_STUDY_ORDER = [
+  'ai-project',
   'wander-utah',
   'brand-identity-system',
   'porsche-app',
@@ -29,25 +30,25 @@ const CASE_STUDY_ORDER = [
 ] as const
 
 const CARD_STAGGER_TIMING = {
-  panelAppear: 72,
-  cardsAppear: 168,
-  panelDuration: 228,
-  cardDuration: 252,
-  cardStagger: 54,
+  panelAppear: 90,      // panel starts appearing
+  cardsAppear: 220,     // cards begin staggered reveal
+  panelDuration: 360,   // panel fade-in
+  cardDuration: 400,    // each card transitions smoothly
+  cardStagger: 75,      // wider gap between cards
 }
 
 const CARD_STAGGER_PANEL = {
   initialOpacity: 0,
   finalOpacity: 1,
-  initialY: 8,
+  initialY: 12,         // more travel distance
   finalY: 0,
-  ease: MOTION_EASE_STANDARD,
+  ease: MOTION_EASE_SOFT,
 }
 
 const CARD_STAGGER_ITEM = {
   initialOpacity: 0,
   finalOpacity: 1,
-  initialY: 8,
+  initialY: 12,
   finalY: 0,
 }
 
@@ -95,8 +96,8 @@ const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
     scale: 0.92,
   },
   motion: {
-    expandMs: 201,
-    collapseMs: 219,
+    expandMs: 380,
+    collapseMs: 340,
   },
   hover: {
     inactiveOpacity: 0.88,
@@ -290,7 +291,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         return (
           <m.div
             key={project.slug}
-            className={`w-full md:col-span-2 transition-[transform,opacity] duration-[430ms]${mdColStart === 2 ? ' md:col-start-2' : mdColStart === 3 ? ' md:col-start-3' : ''}`}
+            className={`w-full md:col-span-2 transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]${mdColStart === 2 ? ' md:col-start-2' : mdColStart === 3 ? ' md:col-start-3' : ''}`}
             style={{
               zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
             }}
@@ -348,8 +349,8 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               {project.frontmatter?.image ? (
                 <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
               ) : (
-                <div className="aspect-[16/9] w-full rounded-md">
-                  <Skeleton className="h-full w-full rounded-md" />
+                <div className="aspect-[16/9] w-full rounded-[3px]">
+                  <Skeleton className="h-full w-full rounded-[3px]" />
                 </div>
               )}
             </Magnetic>

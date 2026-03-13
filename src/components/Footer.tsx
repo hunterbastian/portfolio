@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { getLenisInstance } from '@/lib/lenis'
+import { IconHeart2 } from 'nucleo-pixel-essential'
 
 const FOOTER_REVEAL_EPSILON_PX = 6
 
@@ -11,9 +12,10 @@ export default function Footer() {
   const pathname = usePathname()
   const currentYear = new Date().getFullYear()
 
-  if (pathname === '/archive') return null
   const [visible, setVisible] = useState(false)
   const prefersReducedMotion = useReducedMotion()
+
+  if (pathname === '/archive') return null
 
   const syncFooterVisibility = useCallback((scrollY: number, limit: number) => {
     const atBottom = limit <= 0 || scrollY >= Math.max(0, limit - FOOTER_REVEAL_EPSILON_PX)
@@ -81,9 +83,9 @@ export default function Footer() {
           ? { duration: 0 }
           : {
               type: 'spring',
-              stiffness: 260,
-              damping: 28,
-              mass: 0.8,
+              stiffness: 180,
+              damping: 26,
+              mass: 1,
             }
       }
     >
@@ -92,7 +94,7 @@ export default function Footer() {
           © {currentYear}
         </span>
         <p className="text-[11px] uppercase tracking-[0.04em] text-muted-foreground md:justify-self-end md:text-right" style={{ fontFamily: 'inherit' }}>
-          Crafted by Hunter Bastian
+          <span className="group inline-flex items-center gap-0.5">Crafted with <IconHeart2 size={10} className="inline-block mx-0.5 text-primary/70 transition-transform duration-300 ease-out group-hover:scale-125" aria-hidden /> by Hunter Bastian</span>
         </p>
       </div>
     </m.footer>

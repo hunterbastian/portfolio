@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { AnimatePresence, m } from 'framer-motion'
 import Link from 'next/link'
 
 const PAGE_NAV = [
@@ -13,6 +14,7 @@ const PAGE_NAV = [
 
 function ThemeToggle() {
   const [isDark, setIsDark] = useState(false)
+  const [hovered, setHovered] = useState(false)
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'))
@@ -29,17 +31,38 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-foreground transition-colors duration-200"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-foreground transition-colors duration-200"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24">
-        {isDark ? (
-          <path d="M12 3v1m0 16v1m8.66-13.66l-.71.71M4.05 19.95l-.71.71M21 12h-1M4 12H3m16.66 7.66l-.71-.71M4.05 4.05l-.71-.71M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        ) : (
-          <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
-        )}
-      </svg>
+      <AnimatePresence mode="wait" initial={false}>
+        <m.svg
+          key={isDark ? 'sun' : 'moon'}
+          className="w-3.5 h-3.5 absolute"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          viewBox="0 0 24 24"
+          initial={{ opacity: 0, rotate: -120, scale: 0.3, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, rotate: 0, scale: [0.3, 1.18, 0.95, 1], filter: 'blur(0px)' }}
+          exit={{ opacity: 0, rotate: 90, scale: 0.4, filter: 'blur(3px)' }}
+          transition={{
+            duration: 0.45,
+            ease: [0.22, 1, 0.36, 1],
+            scale: { duration: 0.5, times: [0, 0.5, 0.75, 1], ease: [0.22, 1, 0.36, 1] },
+            opacity: { duration: 0.3 },
+            filter: { duration: 0.35 },
+          }}
+          style={{ fill: hovered ? 'currentColor' : 'none', transition: 'fill 300ms ease' }}
+        >
+          {isDark ? (
+            <path d="M12 3v1m0 16v1m8.66-13.66l-.71.71M4.05 19.95l-.71.71M21 12h-1M4 12H3m16.66 7.66l-.71-.71M4.05 4.05l-.71-.71M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          ) : (
+            <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+          )}
+        </m.svg>
+      </AnimatePresence>
     </button>
   )
 }
@@ -65,7 +88,7 @@ export default function Header() {
         <div className="flex h-10 items-center justify-between sm:h-14">
           <Link
             href="/"
-            className="group flex items-baseline gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:rounded-sm"
+            className="group flex items-baseline gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Home"
           >
             <span

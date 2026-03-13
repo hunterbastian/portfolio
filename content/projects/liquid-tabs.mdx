@@ -1,0 +1,34 @@
+---
+title: "Liquid Tab Navigation"
+displayTitle: "Liquid Tabs"
+description: "A 15-minute challenge — two tab variants with elastic spring indicators, zero dependencies."
+category: "Creative Coding"
+tags: ["CSS", "Animation", "UI Component", "Playground", "Challenge"]
+image: "/images/projects/liquid-tabs.webp"
+demo: ""
+github: ""
+featured: false
+archived: true
+date: "2026-03-12"
+---
+
+## The Challenge
+
+Build two tab navigation variants — a pill indicator and an underline indicator — both sliding with an elastic spring, in 15 minutes. No animation libraries. No dependencies. Just CSS transitions and a few lines of DOM math.
+
+## The Trick
+
+A single absolutely-positioned `<div>` gets repositioned with `getBoundingClientRect()` on click. The `left` and `width` properties transition independently with different durations, so the indicator subtly stretches mid-travel before snapping to its final size. The easing is `cubic-bezier(.34, 1.56, .64, 1)` — an elastic overshoot that feels like a spring without needing JS animation loops.
+
+Panel content swaps use a `position: absolute` → `relative` swap so the entering panel pushes layout while the exiting panel collapses without a flash.
+
+## Try It
+
+<LiquidTabs />
+
+## Skills Exercised
+
+- Positional DOM math without any layout magic
+- Spring easing feel without JS animation loops
+- Panel enter/exit with absolute → relative swap
+- Zero dependencies — pure CSS transitions + a few lines of JS

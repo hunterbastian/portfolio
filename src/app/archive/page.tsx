@@ -1,8 +1,8 @@
 import { getArchivedProjects } from '@/lib/projects'
-import ProjectCard from '@/components/ProjectCard'
 import PlaygroundOrbit from '@/components/PlaygroundOrbit'
 import Link from 'next/link'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
+import { IconChevronLeft } from 'nucleo-pixel-essential'
 
 import type { Metadata } from 'next'
 
@@ -24,61 +24,33 @@ export default function ArchivePage() {
   const archivedProjects = getArchivedProjects()
 
   return (
-    <div className="relative h-screen overflow-hidden">
+    <div className="relative h-[100dvh] overflow-hidden">
       <div
         className="pointer-events-none fixed inset-0 z-0 playground-page-bg"
         aria-hidden="true"
       />
-      <div className="relative z-10 h-full container mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-        <div className="mb-8">
+      <div className="relative z-10 flex h-full flex-col container mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-8">
+        <div className="mb-4 sm:mb-8 shrink-0">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+            className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
           >
-            <span aria-hidden className="text-base leading-none">↩</span>
+            <IconChevronLeft size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
             <span className="text-foreground">Home</span>
             <span aria-hidden className="text-muted-foreground/70">/</span>
             <span>Playground</span>
           </Link>
         </div>
 
-        {archivedProjects.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-foreground text-xs" style={{ fontFamily: 'inherit' }}>No archived projects yet.</p>
-          </div>
-        ) : (
-          <>
-            {/* Desktop: rotating orbit */}
-            <PlaygroundOrbit projects={archivedProjects} />
-            {/* Mobile: simple stack */}
-            <div className="flex flex-col items-center gap-4 lg:hidden">
-              {archivedProjects.map((project, index) => (
-                <div key={project.slug} className="w-full max-w-[130px]">
-                  <ProjectCard
-                    slug={project.slug}
-                    frontmatter={project.frontmatter}
-                    index={index}
-                  />
-                  {project.frontmatter.demo && (
-                    <a
-                      href={project.frontmatter.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-1.5 flex items-center justify-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-medium tracking-[0.04em] text-primary transition-colors duration-200 hover:bg-primary/20"
-                      aria-label={`Live demo for ${project.frontmatter.title}`}
-                    >
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-                      </span>
-                      Live Demo
-                    </a>
-                  )}
-                </div>
-              ))}
+        <div className="flex-1 min-h-0">
+          {archivedProjects.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-foreground text-xs" style={{ fontFamily: 'inherit' }}>No archived projects yet.</p>
             </div>
-          </>
-        )}
+          ) : (
+            <PlaygroundOrbit projects={archivedProjects} />
+          )}
+        </div>
       </div>
     </div>
   )

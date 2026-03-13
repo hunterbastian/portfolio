@@ -12,8 +12,9 @@ import {
   homeHeroContent,
 } from '@/content/homepage'
 import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
-import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import CollapsibleSection from './CollapsibleSection'
+import { IconGamepad2, IconHandshake } from 'nucleo-pixel-essential'
 
 interface AnimatedHomePageProps {
   children: ReactNode
@@ -62,11 +63,20 @@ function splitExperienceYear(year: string) {
   }
 }
 
+/* ─────────────────────────────────────────────────────────
+ * HERO ENTRANCE STORYBOARD
+ *
+ *    0ms   waiting for mount
+ *   60ms   profile image fades in, scales 0.94 → 1
+ *  100ms   text panel glides up y 12 → 0
+ *  220ms   intro paragraph + handwritten note rise in
+ * ───────────────────────────────────────────────────────── */
+
 const HERO_ENTRANCE = {
-  profileDelay: 40, // profile appears first
-  textPanelDelay: 60, // align with section panel reveal
-  textItemsDelay: 140, // align with section item reveal
-  duration: 260, // reveal transition duration
+  profileDelay: 60,     // profile appears first
+  textPanelDelay: 100,  // text panel follows shortly
+  textItemsDelay: 220,  // intro + note arrive last
+  duration: 400,        // longer, cinematic reveal
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -75,31 +85,31 @@ const HERO_ENTRANCE = {
  * Read top-to-bottom. Each `at` value is ms after section enters view.
  *
  *    0ms   waiting for section in-view + open
- *  120ms   panel fades in, y 14 → 0
- *  280ms   rows/items reveal (staggered 90ms)
+ *  100ms   panel fades in, y 12 → 0
+ *  240ms   rows/items rise into place (staggered 70ms)
  * ───────────────────────────────────────────────────────── */
 
 const STAGGER_TIMING = {
-  panelAppear: 60, // panel starts appearing
-  itemsAppear: 140, // items begin staggered reveal
-  panelDuration: 240, // panel transition duration
-  itemDuration: 280, // each item transition duration
-  itemStagger: 50, // stagger gap between items
+  panelAppear: 100,     // panel starts appearing
+  itemsAppear: 240,     // items begin staggered reveal
+  panelDuration: 380,   // slower panel transition
+  itemDuration: 420,    // each item transitions gently
+  itemStagger: 70,      // wider stagger — items breathe
 }
 
 const STAGGER_PANEL = {
-  initialOpacity: 0, // hidden before stage 1
-  finalOpacity: 1, // visible at rest
-  initialY: 8, // panel vertical offset before reveal
-  finalY: 0, // resting panel position
-  ease: MOTION_EASE_STANDARD,
+  initialOpacity: 0,    // hidden before stage 1
+  finalOpacity: 1,      // visible at rest
+  initialY: 12,         // more travel for visible glide
+  finalY: 0,            // resting panel position
+  ease: MOTION_EASE_SOFT,
 }
 
 const STAGGER_ITEM = {
-  initialOpacity: 0, // hidden item before stage 2
-  finalOpacity: 1, // visible item at rest
-  initialY: 8, // item vertical offset before reveal
-  finalY: 0, // resting item position
+  initialOpacity: 0,    // hidden item before stage 2
+  finalOpacity: 1,      // visible item at rest
+  initialY: 12,         // items rise from further down
+  finalY: 0,            // resting item position
 }
 
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
@@ -377,11 +387,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               }}
               transition={{
                 duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger + 170, prefersReducedMotion) : 0,
+                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger + 200, prefersReducedMotion) : 0,
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <a href="/about" className="hero-handwritten-text font-handscript cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 rounded-sm">{homeHeroContent.handwrittenNote}</a>
+              <a href="/about" className="hero-handwritten-text font-handscript cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2">{homeHeroContent.handwrittenNote}</a>
             </m.div>
           </m.div>
 
@@ -399,7 +409,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
-        <div className="mx-auto max-w-[560px] rounded-md border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
+        <div className="mx-auto max-w-[560px] rounded-[3px] border border-border/70 bg-card/32 px-3 py-5 sm:px-5 sm:py-6">
           {children}
         </div>
       </CollapsibleSection>
@@ -408,10 +418,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <a
             href="/archive"
-            className="social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-sm px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+            className="group social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] px-4 py-2 text-xs font-medium transition-transform transition-shadow duration-500 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
             aria-label="Open Playground"
             title="Open Playground"
           >
+            <IconGamepad2 size={12} className="relative z-10 opacity-60 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-[-8deg]" aria-hidden />
             <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
           </a>
         </div>
@@ -435,11 +446,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   href={link.href}
                   target={link.external ? '_blank' : undefined}
                   rel={link.external ? 'noopener noreferrer' : undefined}
-                  className="inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
+                  className="group inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
                   aria-label={link.ariaLabel ?? link.label}
                   title={link.title ?? link.label}
                 >
                   <span>{link.label}</span>
+                  {link.iconType === 'handshake' && (
+                    <IconHandshake size={13} className="shrink-0 opacity-50 transition-all duration-300 ease-out group-hover:opacity-80 group-hover:scale-110" aria-hidden />
+                  )}
+                  {link.iconType === 'studio-alpine' && (
+                    <Image
+                      src="/images/studio-alpine-logo.png"
+                      alt=""
+                      width={50}
+                      height={50}
+                      className="h-[35px] w-[35px] shrink-0 dark:invert -ml-1 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3"
+                      aria-hidden
+                    />
+                  )}
                 </a>
               </li>
             ))}
@@ -460,7 +484,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <m.div
             ref={experiencePanelRef}
-            className="nord-panel rounded-lg p-4 sm:p-5 space-y-2"
+            className="nord-panel rounded-[3px] p-4 sm:p-5 space-y-2"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: experienceStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -528,7 +552,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <m.div
             ref={educationPanelRef}
-            className="nord-panel rounded-lg p-5 space-y-5"
+            className="nord-panel rounded-[3px] p-5 space-y-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: educationStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -597,7 +621,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-5 sm:gap-y-2 sm:text-[15px]">
             <a
               href={siteProjectInquiryHref}
-              className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground"
+              className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-[color,font-weight] duration-200 hover:text-foreground hover:font-semibold"
               aria-label="Email Hunter"
               title="Email Hunter"
             >
@@ -609,7 +633,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-colors duration-200 hover:text-foreground py-2 sm:py-0"
+                className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-[color,font-weight] duration-200 hover:text-foreground hover:font-semibold py-2 sm:py-0"
                 aria-label={link.label}
                 title={link.label}
               >

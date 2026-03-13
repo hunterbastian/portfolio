@@ -201,7 +201,7 @@ export default function ArcSigilLoader({
         <div className="flex flex-wrap items-center justify-center gap-2">
           <button
             type="button"
-            className="nord-button rounded-md px-3 py-2 text-xs font-code tracking-[0.08em] uppercase"
+            className="nord-button rounded-[3px] px-3 py-2 text-xs font-code tracking-[0.08em] uppercase"
             onClick={downloadSvg}
             disabled={isExporting}
           >
@@ -209,7 +209,7 @@ export default function ArcSigilLoader({
           </button>
           <button
             type="button"
-            className="nord-button rounded-md px-3 py-2 text-xs font-code tracking-[0.08em] uppercase"
+            className="nord-button rounded-[3px] px-3 py-2 text-xs font-code tracking-[0.08em] uppercase"
             onClick={downloadLogoPng}
             disabled={isExporting}
           >
@@ -217,7 +217,7 @@ export default function ArcSigilLoader({
           </button>
           <button
             type="button"
-            className="nord-button rounded-md px-3 py-2 text-xs font-code tracking-[0.08em] uppercase"
+            className="nord-button rounded-[3px] px-3 py-2 text-xs font-code tracking-[0.08em] uppercase"
             onClick={downloadLinkedInPng}
             disabled={isExporting}
           >

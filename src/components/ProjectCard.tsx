@@ -9,83 +9,85 @@ interface ProjectCardProps {
   slug: string
   frontmatter: ProjectFrontmatter
   index: number
+  hideLiveBadge?: boolean
 }
 
-function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
+function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const onLoad = useCallback(() => setImgLoaded(true), [])
 
   return (
-    <Link href={`/projects/${slug}`} className="group block h-full w-full">
-      <div
-        className="project-card relative isolate overflow-hidden rounded-md border text-card-foreground transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-[0.998] touch-manipulation shadow-sm hover:-translate-y-0.5 hover:shadow-md will-change-transform"
-        style={{
-          animationDelay: `${index * 80}ms`,
-        }}
-      >
-        <div className="relative aspect-[16/9] overflow-hidden">
-          {!imgLoaded && (
-            <div className="absolute inset-0 animate-pulse bg-muted" />
-          )}
-          <Image
-            src={imgSrc}
-            alt={frontmatter.title}
-            fill
-            className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-            sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 300px"
-            priority={index === 0}
-            loading={index === 0 ? 'eager' : 'lazy'}
-            fetchPriority={index === 0 ? 'high' : 'low'}
-            onLoad={onLoad}
-            onError={() => setImgSrc('/images/placeholder.svg')}
-          />
-
-          {frontmatter.video && (
-            <video
-              src={frontmatter.video}
-              className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="none"
+    <div className="relative">
+      <Link href={`/projects/${slug}`} className="group block h-full w-full">
+        <div
+          className="project-card relative isolate overflow-hidden rounded-[3px] border text-card-foreground transition-[transform,box-shadow,border-color] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation shadow-sm hover:-translate-y-1 hover:shadow-md will-change-transform"
+          style={{
+            animationDelay: `${index * 80}ms`,
+          }}
+        >
+          <div className="relative aspect-[16/9] overflow-hidden">
+            {!imgLoaded && (
+              <div className="absolute inset-0 animate-pulse bg-muted" />
+            )}
+            <Image
+              src={imgSrc}
+              alt={frontmatter.title}
+              fill
+              className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+              style={frontmatter.imageZoom ? { objectPosition: 'center', scale: `${frontmatter.imageZoom}` } : undefined}
+              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
+              priority={index === 0}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'low'}
+              onLoad={onLoad}
+              onError={() => setImgSrc('/images/placeholder.svg')}
             />
-          )}
 
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/16 opacity-55 transition-opacity duration-500 ease-out group-hover:opacity-70" />
-        </div>
+            {frontmatter.video && (
+              <video
+                src={frontmatter.video}
+                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="none"
+              />
+            )}
 
-        <div className="border-t border-border/20 px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
-          <div className="flex items-center justify-between gap-2">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/16 opacity-55 transition-opacity duration-500 ease-out group-hover:opacity-70" />
+          </div>
+
+          <div className="border-t border-border/20 px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
             <h3
-              className="block min-w-0 flex-1 truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-200 group-hover:text-foreground/80"
+              className="block w-full truncate whitespace-nowrap font-medium leading-tight text-foreground transition-colors duration-200 group-hover:text-foreground/80"
               style={{ fontSize: '13px' }}
               title={displayTitle}
             >
               {displayTitle}
             </h3>
-            {frontmatter.demo && (
-              <a
-                href={frontmatter.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary transition-colors duration-200 hover:bg-primary/20"
-                aria-label={`Live demo for ${displayTitle}`}
-              >
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-                </span>
-                Live
-              </a>
-            )}
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+      {frontmatter.demo && !hideLiveBadge && (
+        <a
+          href={frontmatter.demo}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-[3px] bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary transition-colors duration-200 hover:bg-background/95 border border-border/40"
+          aria-label={`Live demo for ${displayTitle}`}
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
+            <span className="absolute inset-[-2px] rounded-full bg-emerald-400/20" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.5)]" />
+          </span>
+          Live
+        </a>
+      )}
+    </div>
   )
 }
 

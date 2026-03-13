@@ -6,6 +6,7 @@ import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import mdxComponents from '@/components/mdx/MDXComponents'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
+import { IconChevronLeft, IconTag } from 'nucleo-pixel-essential'
 
 function resolveImageUrl(image: string): string {
   return image.startsWith('/') ? resolveSiteUrl(image) : image
@@ -132,12 +133,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mb-16 flex justify-start">
+      <div className="mb-8 sm:mb-16 flex justify-start">
         <Link
           href="/#case-studies"
-          className="inline-flex items-center gap-2 font-inter text-[13px] text-muted-foreground hover:text-foreground"
+          className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
         >
-          <span aria-hidden className="text-base leading-none">↩</span>
+          <IconChevronLeft size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
           <span className="text-foreground">Home</span>
           <span aria-hidden className="text-muted-foreground/70">/</span>
           <span>Projects</span>
@@ -150,7 +151,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {formattedDate && <p className="mt-1 font-mono text-sm text-muted-foreground">{formattedDate}</p>}
         </header>
 
-        <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden rounded-sm">
+        <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden rounded-[3px]">
           <Image
             src={frontmatter.image}
             alt={frontmatter.title}
@@ -166,15 +167,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </p>
 
         <div className="mb-12 flex flex-wrap gap-4">
-          <div className="flex items-center gap-2 font-inter text-[13px] text-muted-foreground">
+          <div className="group flex items-center gap-2 font-inter text-[13px] text-muted-foreground">
+            <IconTag size={12} className="shrink-0 opacity-50 transition-transform duration-200 ease-out group-hover:rotate-[-6deg] group-hover:scale-110" aria-hidden />
             <span className="font-medium">Category:</span>
-            <span className="bg-primary/10 text-primary px-3 py-1.5 rounded-full sm:py-1">
+            <span className="bg-primary/10 text-primary px-3 py-1.5 rounded-[3px] sm:py-1">
               {frontmatter.category}
             </span>
           </div>
         </div>
 
-        {(frontmatter.github || frontmatter.demo) && (
+        {(frontmatter.github || frontmatter.demo || frontmatter.figjam) && (
           <div className="mb-12 flex flex-wrap gap-4">
             {frontmatter.github && (
               <a
@@ -200,6 +202,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
                 Live Demo
+              </a>
+            )}
+            {frontmatter.figjam && (
+              <a
+                href={frontmatter.figjam}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-inter text-[13px] font-medium text-primary hover:text-primary/80"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                View Slides
               </a>
             )}
           </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
+import { IconChevronUp } from 'nucleo-pixel-essential'
 
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false)
@@ -35,28 +36,20 @@ export default function ScrollToTop() {
             color: 'var(--foreground)',
             boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
           }}
-          initial={{ opacity: 0, y: 12, scale: 0.88 }}
+          initial={{ opacity: 0, y: 16, scale: 0.85 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 8, scale: 0.92 }}
-          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={{ y: -1 }}
-          whileTap={{ scale: 0.94 }}
+          exit={{ opacity: 0, y: 10, scale: 0.9 }}
+          transition={{
+            type: 'spring',
+            stiffness: 260,
+            damping: 24,
+            mass: 0.8,
+            opacity: { duration: 0.25 },
+          }}
+          whileHover={{ y: -2, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
+          whileTap={{ scale: 0.92 }}
         >
-          <svg
-            width="15"
-            height="15"
-            viewBox="0 0 15 15"
-            fill="none"
-            aria-hidden
-          >
-            <path
-              d="M7.5 2.5L2.5 7.5M7.5 2.5L12.5 7.5M7.5 2.5V12.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <IconChevronUp size={15} aria-hidden />
         </m.button>
       )}
     </AnimatePresence>

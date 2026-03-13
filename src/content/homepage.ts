@@ -21,6 +21,8 @@ export interface HomeLinkItem {
   external?: boolean
   ariaLabel?: string
   title?: string
+  /** Identifier for a special icon/image to render alongside the label */
+  iconType?: 'studio-alpine' | 'handshake'
 }
 
 export const homeHeroContent = {
@@ -38,12 +40,14 @@ export const creatingLinks: HomeLinkItem[] = [
     external: true,
     ariaLabel: 'Photography Studio Studio Alpine',
     title: 'Photography Studio Studio Alpine',
+    iconType: 'studio-alpine',
   },
   {
     label: 'Available for freelance',
     href: siteProjectInquiryHref,
     ariaLabel: 'Available for freelance',
     title: 'Available for freelance',
+    iconType: 'handshake',
   },
 ]
 
@@ -53,6 +57,7 @@ export const contactSocialLinks: HomeLinkItem[] = [
   { label: 'X', href: 'https://x.com/thestudioalpine', external: true },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', external: true },
+  { label: 'YouTube', href: 'https://youtube.com/@studio.alpine', external: true },
 ]
 
 export const experienceItems: ExperienceItem[] = [

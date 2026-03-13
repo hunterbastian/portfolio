@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ComparisonSlider from './ComparisonSlider'
+import LiquidTabs from './LiquidTabs'
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>
 type ParagraphProps = React.HTMLAttributes<HTMLParagraphElement>
@@ -69,7 +70,7 @@ export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, he
       alt={alt}
       width={width}
       height={height}
-      className="w-full rounded-lg shadow-lg"
+      className="w-full rounded-[3px] shadow-lg"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
       priority={false}
       {...props}
@@ -82,7 +83,7 @@ export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = ({ c
     <video
       controls
       playsInline
-      className={`w-full rounded-lg shadow-lg ${className}`}
+      className={`w-full rounded-[3px] shadow-lg ${className}`}
       {...props}
     />
   </div>
@@ -100,6 +101,7 @@ const mdxComponents = {
   img: Img,
   video: Video,
   ComparisonSlider,
+  LiquidTabs,
 }
 
 export default mdxComponents

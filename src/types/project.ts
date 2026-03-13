@@ -8,6 +8,8 @@ export interface ProjectFrontmatter {
   video?: string
   github?: string
   demo?: string
+  figjam?: string
+  imageZoom?: number
   featured?: boolean
   archived?: boolean
   date: string

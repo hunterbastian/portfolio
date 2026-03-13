@@ -167,20 +167,20 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               <div className="mb-12 flex flex-wrap gap-4">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <span className="font-medium">Document:</span>
-                  <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
+                  <span className="bg-primary/10 text-primary px-3 py-1 rounded-[3px]">
                     Resume
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <span className="font-medium">Format:</span>
-                  <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full">
+                  <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-[3px]">
                     PDF
                   </span>
                 </div>
               </div>
 
               {isCheckingAccess ? (
-                <div className="mb-12 rounded-xl border border-border bg-card p-6">
+                <div className="mb-12 rounded-[3px] border border-border bg-card p-6">
                   <p className="text-sm text-muted-foreground">Checking resume access...</p>
                 </div>
               ) : isUnlocked ? (
@@ -197,16 +197,16 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     </a>
                   </div>
 
-                  <div className="relative rounded-xl overflow-hidden mb-12">
+                  <div className="relative overflow-hidden rounded-[3px] mb-12">
                     <iframe
                       src="/api/resume/file"
-                      className="w-full h-screen border-0 rounded-xl"
+                      className="w-full h-screen border-0"
                       title="Hunter Bastian // Studio Alpine Resume"
                     />
                   </div>
                 </>
               ) : (
-                <div className="mb-12 rounded-xl border border-border bg-card p-6 sm:p-8">
+                <div className="mb-12 rounded-[3px] border border-border bg-card p-6 sm:p-8">
                   <h2 className="text-2xl font-semibold font-garamond-narrow mb-3">Resume Access</h2>
                   <p className="text-sm text-muted-foreground mb-6">
                     Enter the password to view or download the resume.
@@ -221,7 +221,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
                       disabled={!isConfigured || isSubmittingPassword}
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                      className="w-full rounded-[3px] border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
                       autoComplete="current-password"
                     />
                     {accessError && (
@@ -230,7 +230,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     <button
                       type="submit"
                       disabled={!isConfigured || isSubmittingPassword}
-                      className="nord-button rounded-md px-4 py-2 text-xs font-code tracking-[0.08em] uppercase disabled:opacity-50"
+                      className="nord-button rounded-[3px] px-4 py-2 text-xs font-code tracking-[0.08em] uppercase disabled:opacity-50"
                     >
                       {isSubmittingPassword ? 'Unlocking...' : 'Unlock Resume'}
                     </button>

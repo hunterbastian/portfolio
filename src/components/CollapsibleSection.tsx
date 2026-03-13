@@ -2,7 +2,7 @@
 
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
-import { MOTION_EASE_STANDARD, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface CollapsibleSectionProps {
   id: string
@@ -25,40 +25,43 @@ interface CollapsibleSectionProps {
  * Read top-to-bottom. Each `at` value is ms after section opens.
  *
  *    0ms   waiting for section open trigger
- *  120ms   panel fades in, y 14 → 0
- *  280ms   content rows slide in (staggered 90ms)
+ *   80ms   panel fades in, y 12 → 0 (spring)
+ *  200ms   content rows rise into place (staggered 70ms, spring)
  * ───────────────────────────────────────────────────────── */
 
 const SECTION_TIMING = {
-  panelAppear: 60, // panel starts appearing
-  rowsAppear: 140, // child rows begin staggered reveal
-  panelDuration: 240, // panel transition duration
-  rowDuration: 280, // each child row transition duration
-  rowStagger: 50, // stagger gap between child rows
+  panelAppear: 80,      // panel starts appearing
+  rowsAppear: 200,      // child rows begin staggered reveal
+  panelDuration: 380,   // panel fade-in duration
+  rowDuration: 420,     // each child row transition duration
+  rowStagger: 70,       // wider stagger — each row gets its moment
 }
 
 const SECTION_PANEL = {
-  initialOpacity: 0, // hidden before stage 1
-  finalOpacity: 1, // visible at rest
-  initialY: 8, // panel vertical offset before reveal
-  finalY: 0, // resting panel position
-  ease: MOTION_EASE_STANDARD,
+  initialOpacity: 0,    // hidden before stage 1
+  finalOpacity: 1,      // visible at rest
+  initialY: 12,         // more travel for visible glide
+  finalY: 0,            // resting panel position
+  ease: MOTION_EASE_SOFT,
 }
 
 const SECTION_ROW = {
-  initialOpacity: 0, // hidden row before stage 2
-  finalOpacity: 1, // visible row at rest
-  initialY: 8, // row vertical offset before reveal
-  finalY: 0, // resting row position
+  initialOpacity: 0,    // hidden row before stage 2
+  finalOpacity: 1,      // visible row at rest
+  initialY: 12,         // rows rise from further down
+  finalY: 0,            // resting row position
 }
 
+/* Height animation uses a spring for organic open/close feel */
+const HEIGHT_SPRING = { type: 'spring' as const, stiffness: 200, damping: 28, mass: 0.9 }
+
 /* ─────────────────────────────────────────────────────────
- * LABEL ENTRANCE — simple fade-in (Notion-style)
+ * LABEL ENTRANCE — gentle fade-in
  * ───────────────────────────────────────────────────────── */
 
 const LABEL_TIMING = {
-  start: 72, // heading label reveal starts
-  duration: 320, // fade-in duration
+  start: 72,            // heading label reveal starts
+  duration: 420,        // longer, gentler fade-in
 }
 
 export default function CollapsibleSection({
@@ -85,8 +88,7 @@ export default function CollapsibleSection({
   const [titleStage, setTitleStage] = useState(0)
 
   const contentId = `${id}-content`
-  const contentDuration = motionDurationMs(300, prefersReducedMotion)
-  const contentOpacityDuration = motionDurationMs(250, prefersReducedMotion)
+  const contentOpacityDuration = motionDurationMs(340, prefersReducedMotion)
   const panelDuration = motionDurationMs(SECTION_TIMING.panelDuration, prefersReducedMotion)
   const rowDuration = motionDurationMs(SECTION_TIMING.rowDuration, prefersReducedMotion)
   const rowStagger = motionDelayMs(SECTION_TIMING.rowStagger, prefersReducedMotion)
@@ -166,7 +168,7 @@ export default function CollapsibleSection({
           }}
           transition={{
             duration: motionDurationMs(LABEL_TIMING.duration, prefersReducedMotion),
-            ease: MOTION_EASE_STANDARD,
+            ease: MOTION_EASE_SOFT,
           }}
         >
           {onToggle ? (
@@ -193,8 +195,8 @@ export default function CollapsibleSection({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{
-              height: { duration: contentDuration, ease: MOTION_EASE_STANDARD },
-              opacity: { duration: contentOpacityDuration, ease: MOTION_EASE_STANDARD },
+              height: prefersReducedMotion ? { duration: 0 } : HEIGHT_SPRING,
+              opacity: { duration: contentOpacityDuration, ease: MOTION_EASE_SOFT },
             }}
             className="overflow-hidden"
           >

@@ -6,7 +6,8 @@ import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import mdxComponents from '@/components/mdx/MDXComponents'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
-import { IconChevronLeft, IconTag } from 'nucleo-pixel-essential'
+import { IconTag } from 'nucleo-pixel-essential'
+import IconArrowBackUp from '@/components/IconArrowBackUp'
 import ProjectDetailContent from '@/components/ProjectDetailContent'
 
 function resolveImageUrl(image: string): string {
@@ -139,7 +140,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           href="/#case-studies"
           className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
         >
-          <IconChevronLeft size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
+          <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
           <span className="text-foreground">Home</span>
           <span aria-hidden className="text-muted-foreground/70">/</span>
           <span>Projects</span>
@@ -155,7 +156,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </header>
           }
           image={
-            <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden rounded-[3px] img-inset-outline" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)' }}>
+            <div className="relative mb-16 aspect-[4/3] w-full overflow-hidden rounded-[3px] img-inset-outline" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)' }}>
               <Image
                 src={frontmatter.image}
                 alt={frontmatter.title}

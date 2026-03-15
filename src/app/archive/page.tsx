@@ -2,7 +2,7 @@ import { getArchivedProjects } from '@/lib/projects'
 import PlaygroundOrbit from '@/components/PlaygroundOrbit'
 import Link from 'next/link'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
-import { IconChevronLeft } from 'nucleo-pixel-essential'
+import IconArrowBackUp from '@/components/IconArrowBackUp'
 
 import type { Metadata } from 'next'
 
@@ -35,7 +35,7 @@ export default function ArchivePage() {
             href="/"
             className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
           >
-            <IconChevronLeft size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
+            <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
             <span className="text-foreground">Home</span>
             <span aria-hidden className="text-muted-foreground/70">/</span>
             <span>Playground</span>

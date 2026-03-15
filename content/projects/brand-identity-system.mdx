@@ -10,7 +10,9 @@ featured: true
 date: "2025-12-01"
 ---
 
+<ScrollReveal>
 <img src="/images/projects/middle-earth/ajourneythroughmiddleearth.webp" alt="A Journey through Middle-Earth — hero screen showing Rivendell" />
+</ScrollReveal>
 
 ## Overview
 
@@ -18,25 +20,38 @@ A Journey through Middle-Earth is an interactive mini website that guides users 
 
 I'm a big Lord of the Rings fan, and I wanted to make something that helps people understand where the story is set — the geography, the scale, and the character of each place — in a way that feels immersive rather than encyclopedic.
 
+<div className="flex flex-wrap gap-3 justify-center my-8">
+<MetricCard value={8} label="locations mapped" />
+<MetricCard value={2} label="Tolkien sagas covered" />
+</div>
+
 ## Research & Direction
 
+<ScrollReveal>
 <img src="/images/projects/middle-earth/Moodboard.webp" alt="Mood board for Middle-Earth project" />
+</ScrollReveal>
 
 I started with mood boards to define the visual language. I wanted the site to feel like opening an old book — warm, textured, and grounded in the world Tolkien built. That led to a palette of deep teals, muted golds, and parchment textures that reference old cartography without feeling kitschy.
 
+<ScrollReveal delay={80}>
 <img src="/images/projects/middle-earth/thought process.webp" alt="Thought process and planning" />
+</ScrollReveal>
 
 From there I mapped out which locations to include and how to organize them. I chose eight places that span both The Hobbit and The Lord of the Rings: The Shire, Rivendell, Lonely Mountain, Mirkwood, Helm's Deep, Mordor, Minas Tirith, and Mount Doom. Each one needed to feel distinct while fitting into the same design system.
 
 ## Sketches & Exploration
 
+<ScrollReveal>
 <img src="/images/projects/middle-earth/Sketches.webp" alt="Early sketches for site layout and map interaction" />
+</ScrollReveal>
 
 Early sketches focused on how the map interaction should work — how to surface location names on hover without cluttering the map, and how clicking should transition the user to the detail view. I explored several navigation patterns before landing on the scroll-to-card approach, which felt the most natural for an exploratory experience.
 
 ## The Interactive Map
 
+<ScrollReveal>
 <img src="/images/projects/middle-earth/interactive-map.webp" alt="Interactive map of Middle-Earth with clickable location pins" />
+</ScrollReveal>
 
 The centerpiece of the site is a full interactive map of Middle-Earth. Hovering over a location reveals its name, and clicking scrolls the user down to a detailed card for that place. Each card includes a landscape image, a short description, and a tag showing which films or books the location appears in.
 
@@ -44,7 +59,9 @@ The map uses subtle pin animations on hover to invite interaction without being 
 
 ## Visual Design
 
+<ScrollReveal>
 <img src="/images/projects/middle-earth/style.webp" alt="Visual style and color palette" />
+</ScrollReveal>
 
 The color palette pulls from the films and the source material: deep forest greens for the background, warm gold for interactive elements, and desaturated landscape photography for the location cards. Typography stays restrained — the content and imagery do the storytelling, not decorative type.
 
@@ -58,4 +75,8 @@ If I were to revisit this, I'd probably rebuild it in code. Framer was great for
 
 ## Outcome
 
+<ScrollReveal>
+
 The project demonstrated how interactive design can make informational content feel like an experience rather than a reference page. By grounding the interface in the world it represents — the map aesthetic, the color palette, the exploratory navigation — the site invites users to engage with the content on their own terms instead of following a prescribed path.
+
+</ScrollReveal>

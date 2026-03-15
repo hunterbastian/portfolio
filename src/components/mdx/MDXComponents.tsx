@@ -3,6 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ComparisonSlider from './ComparisonSlider'
 import LiquidTabs from './LiquidTabs'
+import MetricCard from './MetricCard'
+import ScrollReveal from './ScrollReveal'
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>
 type ParagraphProps = React.HTMLAttributes<HTMLParagraphElement>
@@ -102,6 +104,8 @@ const mdxComponents = {
   video: Video,
   ComparisonSlider,
   LiquidTabs,
+  MetricCard,
+  ScrollReveal,
 }
 
 export default mdxComponents

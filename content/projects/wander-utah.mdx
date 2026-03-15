@@ -10,11 +10,19 @@ featured: false
 date: "2025-11-30"
 ---
 
+<ScrollReveal>
 <img src="/images/projects/wanderutah.webp" alt="WanderUtah app screens" />
+</ScrollReveal>
 
 ## Overview
 
 WanderUtah is a mobile app concept for exploring and planning trips to Utah's five national parks: Arches, Bryce Canyon, Canyonlands, Capitol Reef, and Zion. The project ran from early sketches through high-fidelity Figma prototypes, and the goal was to design something that feels as good as the landscape it represents.
+
+<div className="flex flex-wrap gap-3 justify-center my-8">
+<MetricCard value={5} label="national parks" />
+<MetricCard value={5} label="unique color themes" />
+<MetricCard value={3} label="information levels" />
+</div>
 
 ## The Problem
 
@@ -26,6 +34,8 @@ I started with mood boards to define the visual language — what does "Utah" lo
 
 From there I sketched navigation concepts before committing anything to Figma. The key question was how to organize five parks with different characters without making users feel lost between them.
 
+<ScrollReveal>
+
 ## Design Decisions
 
 **Park-specific color theming.** Rather than one brand color, each park section uses a tinted palette pulled from its landscape. This makes navigation intuitive — you always know where you are — and it rewards users who explore all five parks.
@@ -34,10 +44,16 @@ From there I sketched navigation concepts before committing anything to Figma. T
 
 **Event calendar as an anchor feature.** A lot of people plan trips around specific events — meteor showers, ranger programs, peak bloom seasons. Surfacing those upfront gave the app a reason to be opened more than once.
 
+</ScrollReveal>
+
 ## What I'd Do Differently
 
 The prototype doesn't yet handle the "planning" side well — there's no way to save parks, build an itinerary, or share a trip. If I were taking this further, that would be the next feature set. I'd also want to do user testing with actual trip planners to validate the navigation structure before building out more park content.
 
 ## Outcome
 
+<ScrollReveal>
+
 WanderUtah showed me how design constraints — in this case, five parks that each needed to feel like their own place — can actually be a useful forcing function. The limitation pushed me toward a theming system I wouldn't have arrived at otherwise, and the result is something that feels personal rather than generic.
+
+</ScrollReveal>

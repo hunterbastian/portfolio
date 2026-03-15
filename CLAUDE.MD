@@ -142,3 +142,7 @@ Vercel, auto-deploys from `master` branch. Set `RESUME_PASSWORD` and `NEXT_PUBLI
 
 - Main branch: `master`
 - Reference `CHANGELOG.md` for version history
+
+## Verification
+
+Run `npm run build` after multi-file changes. Run `npm run lint` before commits. For visual changes, run `npm run dev` and check in Dia browser.

@@ -3,8 +3,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ComparisonSlider from './ComparisonSlider'
 import LiquidTabs from './LiquidTabs'
+import DesignDecision from './DesignDecision'
+import ImageAnnotation from './ImageAnnotation'
 import MetricCard from './MetricCard'
 import ScrollReveal from './ScrollReveal'
+import ScrollStage from './ScrollStage'
+import LiveDemo from './LiveDemo'
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>
 type ParagraphProps = React.HTMLAttributes<HTMLParagraphElement>
@@ -103,9 +107,13 @@ const mdxComponents = {
   img: Img,
   video: Video,
   ComparisonSlider,
+  DesignDecision,
+  ImageAnnotation,
   LiquidTabs,
   MetricCard,
   ScrollReveal,
+  ScrollStage,
+  LiveDemo,
 }
 
 export default mdxComponents

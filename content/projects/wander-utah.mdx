@@ -34,17 +34,25 @@ I started with mood boards to define the visual language — what does "Utah" lo
 
 From there I sketched navigation concepts before committing anything to Figma. The key question was how to organize five parks with different characters without making users feel lost between them.
 
-<ScrollReveal>
-
 ## Design Decisions
 
-**Park-specific color theming.** Rather than one brand color, each park section uses a tinted palette pulled from its landscape. This makes navigation intuitive — you always know where you are — and it rewards users who explore all five parks.
+<DesignDecision
+  question="How should color work across five distinct parks?"
+  chosen={0}
+  options='[{"label":"Park-specific theming","description":"Each park section uses a tinted palette pulled from its actual landscape — sandstone reds for Arches, sage greens for Canyonlands. Navigation becomes intuitive since you always know where you are, and it rewards users who explore all five parks."},{"label":"Single brand color","description":"Simpler to maintain and more brand-consistent, but every park section feels the same and loses the emotional connection to the landscape."}]'
+/>
 
-**Simplified information hierarchy.** I kept each park detail page to three levels: a hero image with the park name, a brief description and conditions summary, and an events/activities section. No menus buried inside menus.
+<DesignDecision
+  question="How deep should the information architecture go?"
+  chosen={0}
+  options='[{"label":"Three-level hierarchy","description":"Each park detail page has exactly three levels: a hero image with the park name, a brief description and conditions summary, and an events/activities section. No menus buried inside menus."},{"label":"Deep sub-page navigation","description":"Would allow more content per park, but adds cognitive load and makes the app feel like a reference tool rather than an inspiring travel companion."}]'
+/>
 
-**Event calendar as an anchor feature.** A lot of people plan trips around specific events — meteor showers, ranger programs, peak bloom seasons. Surfacing those upfront gave the app a reason to be opened more than once.
-
-</ScrollReveal>
+<DesignDecision
+  question="What feature gives users a reason to return?"
+  chosen={0}
+  options='[{"label":"Event calendar as anchor","description":"Surfacing events like meteor showers, ranger programs, and peak bloom seasons upfront gives the app a reason to be opened more than once. It shifts the app from a one-time planning tool to something you check regularly."},{"label":"Static park info only","description":"Easier to build and maintain, but the app becomes disposable after the first visit — no reason to come back."}]'
+/>
 
 ## What I'd Do Differently
 

@@ -9,6 +9,7 @@ import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 import { IconTag } from 'nucleo-pixel-essential'
 import IconArrowBackUp from '@/components/IconArrowBackUp'
 import ProjectDetailContent from '@/components/ProjectDetailContent'
+import CaseStudyNav from '@/components/CaseStudyNav'
 
 function resolveImageUrl(image: string): string {
   return image.startsWith('/') ? resolveSiteUrl(image) : image
@@ -147,7 +148,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Link>
       </div>
 
-      <div className="mx-auto max-w-[560px]">
+      <div className="relative mx-auto max-w-[560px]">
+        <CaseStudyNav />
         <ProjectDetailContent
           header={
             <header className="mb-8 flex flex-col items-center text-center">

@@ -33,7 +33,7 @@ function ThemeToggle() {
       onClick={toggle}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-foreground transition-colors duration-200"
+      className="relative flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 active:scale-[0.96]"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
@@ -85,7 +85,7 @@ export default function Header() {
         <div className="flex h-10 items-center justify-between sm:h-14">
           <Link
             href="/"
-            className="group flex items-baseline gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="group flex min-h-[40px] items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Home"
           >
             <span
@@ -102,7 +102,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="flex items-center justify-center w-9 h-9 text-muted-foreground hover:text-foreground transition-all duration-200 sm:hidden"
+              className="flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 active:scale-[0.96] sm:hidden"
               aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
               aria-expanded={showMobileMenu}
               style={{ fontFamily: 'inherit' }}

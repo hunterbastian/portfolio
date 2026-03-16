@@ -12,10 +12,18 @@ interface ProjectCardProps {
   hideLiveBadge?: boolean
 }
 
+function formatCardDate(dateValue?: string): string {
+  if (!dateValue) return ''
+  const d = new Date(dateValue)
+  if (Number.isNaN(d.getTime())) return dateValue
+  return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(d)
+}
+
 function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
+  const formattedDate = formatCardDate(frontmatter.date)
   const onLoad = useCallback(() => setImgLoaded(true), [])
 
   return (
@@ -68,6 +76,11 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
             >
               {displayTitle}
             </h3>
+            {formattedDate && (
+              <p className="mt-0.5 font-mono text-[10px] tracking-[0.04em] text-muted-foreground tabular-nums">
+                {formattedDate}
+              </p>
+            )}
           </div>
         </div>
       </Link>

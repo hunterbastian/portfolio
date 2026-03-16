@@ -48,7 +48,7 @@ export default function ScrollToTop() {
           whileHover={{ y: -2, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
           whileTap={{ scale: 0.92 }}
         >
-          <IconChevronUp size={15} aria-hidden />
+          <IconChevronUp size={15} aria-hidden style={{ marginTop: '-1px' }} />
         </m.button>
       )}
     </AnimatePresence>

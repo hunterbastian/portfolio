@@ -10,11 +10,9 @@ featured: false
 date: "2025-11-30"
 ---
 
-<ScrollReveal>
-<img src="/images/projects/wanderutah.webp" alt="WanderUtah app screens" />
-</ScrollReveal>
+<ScrollStage chapter="01" title="Overview">
 
-## Overview
+<img src="/images/projects/wanderutah.webp" alt="WanderUtah app screens" />
 
 WanderUtah is a mobile app concept for exploring and planning trips to Utah's five national parks: Arches, Bryce Canyon, Canyonlands, Capitol Reef, and Zion. The project ran from early sketches through high-fidelity Figma prototypes, and the goal was to design something that feels as good as the landscape it represents.
 
@@ -24,17 +22,23 @@ WanderUtah is a mobile app concept for exploring and planning trips to Utah's fi
 <MetricCard value={3} label="information levels" />
 </div>
 
-## The Problem
+</ScrollStage>
+
+<ScrollStage chapter="02" title="The Problem">
 
 Most national park apps and websites are utility-first — they get you permits and directions, but they don't inspire. I wanted to design something that bridges the gap between trip planning and the feeling of actually being out there. The challenge was building that emotional quality into a functional, navigable app.
 
-## Research & Direction
+</ScrollStage>
+
+<ScrollStage chapter="03" title="Research & Direction">
 
 I started with mood boards to define the visual language — what does "Utah" look like digitally? I landed on a palette rooted in each park's actual colors: sandstone reds, sage greens, desert sky blues. Each park needed to feel distinct while sharing a cohesive design system.
 
 From there I sketched navigation concepts before committing anything to Figma. The key question was how to organize five parks with different characters without making users feel lost between them.
 
-## Design Decisions
+</ScrollStage>
+
+<ScrollStage chapter="04" title="Design Decisions">
 
 <DesignDecision
   question="How should color work across five distinct parks?"
@@ -54,14 +58,16 @@ From there I sketched navigation concepts before committing anything to Figma. T
   options='[{"label":"Event calendar as anchor","description":"Surfacing events like meteor showers, ranger programs, and peak bloom seasons upfront gives the app a reason to be opened more than once. It shifts the app from a one-time planning tool to something you check regularly."},{"label":"Static park info only","description":"Easier to build and maintain, but the app becomes disposable after the first visit — no reason to come back."}]'
 />
 
-## What I'd Do Differently
+</ScrollStage>
+
+<ScrollStage chapter="05" title="Retrospective">
 
 The prototype doesn't yet handle the "planning" side well — there's no way to save parks, build an itinerary, or share a trip. If I were taking this further, that would be the next feature set. I'd also want to do user testing with actual trip planners to validate the navigation structure before building out more park content.
 
-## Outcome
+</ScrollStage>
 
-<ScrollReveal>
+<ScrollStage chapter="06" title="Outcome">
 
 WanderUtah showed me how design constraints — in this case, five parks that each needed to feel like their own place — can actually be a useful forcing function. The limitation pushed me toward a theming system I wouldn't have arrived at otherwise, and the result is something that feels personal rather than generic.
 
-</ScrollReveal>
+</ScrollStage>

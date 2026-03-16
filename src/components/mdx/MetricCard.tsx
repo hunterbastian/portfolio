@@ -77,7 +77,7 @@ export default function MetricCard({
         ease: MOTION_EASE_SOFT,
       }}
     >
-      <span className="font-mono text-2xl font-medium tracking-tight text-foreground sm:text-3xl">
+      <span className="font-mono text-2xl font-medium tracking-tight text-foreground tabular-nums sm:text-3xl">
         {prefix}{prefersReducedMotion ? value : displayValue}{suffix}
       </span>
       <span className="mt-1.5 font-inter text-xs font-normal leading-snug text-muted-foreground sm:text-sm">

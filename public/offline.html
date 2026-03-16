@@ -6,89 +6,179 @@
     <title>Offline | Hunter Bastian // Studio Alpine</title>
     <style>
       :root {
-        color-scheme: light;
+        --bg: #f2f1ef;
+        --card: #f6f5f3;
+        --fg: #171717;
+        --muted: #171717;
+        --accent: #7f8f81;
+        --border: #d9d6d1;
+        color-scheme: light dark;
       }
 
-      * {
-        box-sizing: border-box;
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #232527;
+          --card: #2a2c2f;
+          --fg: #cdc8c0;
+          --muted: #8a8580;
+          --accent: #8a9b7a;
+          --border: #3a3c3e;
+        }
       }
+
+      * { box-sizing: border-box; margin: 0; }
 
       body {
-        margin: 0;
         min-height: 100vh;
         display: grid;
         place-items: center;
         padding: 24px;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        background:
-          radial-gradient(circle at 12% 18%, rgba(94, 129, 172, 0.2), transparent 42%),
-          radial-gradient(circle at 88% 8%, rgba(67, 76, 94, 0.16), transparent 36%),
-          #f4f7fb;
-        color: #0f1720;
+        font-family: ui-monospace, 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        background: var(--bg);
+        color: var(--fg);
+        -webkit-font-smoothing: antialiased;
       }
 
-      .card {
-        width: min(560px, 100%);
-        border: 1px solid rgba(15, 23, 32, 0.2);
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 14px 42px rgba(15, 23, 32, 0.14);
-        padding: 28px 24px;
+      main {
+        width: min(440px, 100%);
+        text-align: center;
+      }
+
+      /* signal indicator */
+      .signal {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 28px;
+        position: relative;
+      }
+
+      .signal-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        position: relative;
+        z-index: 1;
+      }
+
+      .signal-ring {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1px solid var(--accent);
+        opacity: 0;
+        animation: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+      }
+
+      .signal-ring:nth-child(2) { animation-delay: 1s; }
+      .signal-ring:nth-child(3) { animation-delay: 2s; }
+
+      @keyframes ping {
+        0% { opacity: 0.4; transform: scale(0.3); }
+        100% { opacity: 0; transform: scale(1); }
       }
 
       .eyebrow {
-        margin: 0;
-        letter-spacing: 0.16em;
-        font-size: 11px;
-        color: #516072;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 16px;
       }
 
       h1 {
-        margin: 10px 0 10px;
-        font-size: clamp(22px, 4vw, 30px);
-        line-height: 1.2;
+        font-size: clamp(18px, 3.5vw, 24px);
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        line-height: 1.3;
+        margin-bottom: 12px;
       }
 
-      p {
-        margin: 0 0 16px;
-        line-height: 1.6;
-        font-size: 14px;
-        color: #344255;
+      .desc {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--muted);
+        margin-bottom: 32px;
       }
 
       .actions {
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+        justify-content: center;
+        gap: 8px;
       }
 
-      .button {
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         appearance: none;
-        border: 1px solid #0f1720;
-        background: #0f1720;
-        color: #ffffff;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--fg);
         text-decoration: none;
-        padding: 10px 14px;
-        border-radius: 9px;
-        font-size: 12px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        padding: 8px 16px;
+        border-radius: 3px;
+        font-family: inherit;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
       }
 
-      .button.secondary {
-        background: transparent;
-        color: #0f1720;
+      .btn:hover {
+        background: var(--card);
+        border-color: var(--fg);
+      }
+
+      .btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .btn-primary {
+        background: var(--fg);
+        color: var(--bg);
+        border-color: var(--fg);
+      }
+
+      .btn-primary:hover {
+        opacity: 0.85;
+        background: var(--fg);
+      }
+
+      .separator {
+        width: 32px;
+        height: 1px;
+        background: var(--border);
+        margin: 0 auto 28px;
       }
     </style>
   </head>
   <body>
-    <main class="card">
-      <p class="eyebrow">STUDIO ALPINE</p>
-      <h1>You are offline</h1>
-      <p>The portfolio needs a network connection for fresh pages. Reconnect and refresh, or return to the homepage.</p>
+    <main>
+      <div class="signal" aria-hidden="true">
+        <span class="signal-ring"></span>
+        <span class="signal-ring"></span>
+        <span class="signal-ring"></span>
+        <span class="signal-dot"></span>
+      </div>
+
+      <p class="eyebrow">Studio Alpine</p>
+      <div class="separator"></div>
+
+      <h1>You're offline</h1>
+      <p class="desc">
+        The portfolio needs a connection for fresh pages.
+        Reconnect and try again, or head back home.
+      </p>
+
       <div class="actions">
-        <a class="button" href="/" rel="noreferrer">Go Home</a>
-        <a class="button secondary" href="." rel="noreferrer">Try Again</a>
+        <a class="btn btn-primary" href="/">Home</a>
+        <button class="btn" onclick="location.reload()">Retry</button>
       </div>
     </main>
   </body>

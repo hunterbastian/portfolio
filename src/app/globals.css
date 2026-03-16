@@ -157,6 +157,12 @@ body {
 /* Paragraph / body-copy text uses Inter; everything else inherits Geist Mono from <body> */
 p, li, dd, blockquote, figcaption {
   font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+  text-wrap: pretty;
+}
+
+/* Headings wrap evenly — prevents orphaned words on short lines */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
 }
 
 @keyframes fade-in {
@@ -309,6 +315,10 @@ p, li, dd, blockquote, figcaption {
     0px 0px 0px 1px rgba(0, 0, 0, 0.08),
     0px 1px 2px -1px rgba(0, 0, 0, 0.08),
     0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+}
+
+.nord-button:active {
+  transform: scale(0.96);
 }
 
 .social-button:hover {

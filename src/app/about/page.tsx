@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import IconArrowBackUp from '@/components/IconArrowBackUp'
+import AnimatedDashedArrow from '@/components/AnimatedDashedArrow'
 
 export const metadata: Metadata = {
   title: 'About - Hunter Bastian',
@@ -45,10 +46,11 @@ export default function AboutPage() {
 
         <Link
           href="/#contact"
-          className="mt-6 text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
+          className="group mt-6 inline-flex items-center gap-1.5 text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
           style={{ fontFamily: 'inherit' }}
         >
-          Contact →
+          Contact
+          <AnimatedDashedArrow size={14} />
         </Link>
 
       </div>

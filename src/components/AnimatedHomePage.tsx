@@ -418,11 +418,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <a
             href="/archive"
-            className="group social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] px-4 py-2 text-xs font-medium transition-[transform,box-shadow] duration-500 relative overflow-hidden hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+            className="group social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] pl-3.5 pr-4 py-2 text-xs font-medium transition-[transform,box-shadow] duration-500 relative overflow-hidden hover:-translate-y-0.5 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
             aria-label="Open Playground"
             title="Open Playground"
           >
-            <IconGamepad2 size={12} className="relative z-10 opacity-60 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-[-8deg]" aria-hidden />
+            <IconGamepad2 size={12} className="relative z-10 opacity-60 transition-[transform,filter] duration-300 ease-out group-hover:scale-110 group-hover:rotate-[-8deg] group-hover:blur-[0.3px]" aria-hidden />
             <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
           </a>
         </div>
@@ -452,7 +452,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <span>{link.label}</span>
                   {link.iconType === 'handshake' && (
-                    <IconHandshake size={13} className="shrink-0 opacity-50 transition-all duration-300 ease-out group-hover:opacity-80 group-hover:scale-110" aria-hidden />
+                    <IconHandshake size={13} className="shrink-0 opacity-50 transition-[opacity,transform,filter] duration-300 ease-out group-hover:opacity-80 group-hover:scale-110 group-hover:blur-[0.3px]" aria-hidden />
                   )}
                   {link.iconType === 'studio-alpine' && (
                     <Image
@@ -513,7 +513,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   }}
                 >
                   <div className="flex flex-col gap-2 px-2 sm:flex-row sm:items-start sm:gap-6">
-                    <span className="font-mono text-xs font-normal text-muted-foreground sm:min-w-[90px]">
+                    <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums sm:min-w-[90px]">
                       <span className="block whitespace-nowrap">{displayYear.primary}</span>
                       {displayYear.secondary && (
                         <span className="block whitespace-nowrap leading-tight">{displayYear.secondary}</span>
@@ -579,7 +579,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 }}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="font-mono text-xs font-normal text-muted-foreground sm:min-w-[100px]">
+                  <div className="font-mono text-xs font-normal text-muted-foreground tabular-nums sm:min-w-[100px]">
                     {edu.year}
                   </div>
                   <div className="flex-1">
@@ -621,7 +621,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-5 sm:gap-y-2 sm:text-[15px]">
             <a
               href={siteProjectInquiryHref}
-              className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-[color,font-weight] duration-200 hover:text-foreground hover:font-semibold"
+              className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-[color,font-weight] duration-200 hover:text-foreground hover:font-semibold inline-flex items-center min-h-[40px]"
               aria-label="Email Hunter"
               title="Email Hunter"
             >
@@ -633,7 +633,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-[color,font-weight] duration-200 hover:text-foreground hover:font-semibold py-2 sm:py-0"
+                className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-[color,font-weight] duration-200 hover:text-foreground hover:font-semibold inline-flex items-center min-h-[40px]"
                 aria-label={link.label}
                 title={link.label}
               >

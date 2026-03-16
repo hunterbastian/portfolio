@@ -39,7 +39,7 @@ function ThemeToggle() {
       onClick={toggle}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex items-center justify-center w-5 h-5 text-foreground opacity-90 hover:opacity-100 transition-opacity duration-200"
+      className="relative flex items-center justify-center w-10 h-10 -m-2.5 text-foreground opacity-90 hover:opacity-100 transition-[opacity,transform] duration-200 active:scale-[0.96]"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
@@ -119,7 +119,7 @@ function NavLink({ href, name }: { href: string; name: string }) {
   return (
     <Link
       href={href}
-      className="relative overflow-hidden block"
+      className="relative overflow-hidden block min-h-[40px] flex items-center"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

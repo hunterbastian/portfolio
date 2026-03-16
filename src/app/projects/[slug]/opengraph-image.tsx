@@ -1,7 +1,9 @@
 import { ImageResponse } from 'next/og'
 import { getProjectBySlug, getAllProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
+import { getOgFonts } from '@/lib/og-fonts'
 
+export const runtime = 'nodejs'
 export const alt = 'Project preview'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
@@ -17,15 +19,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
   const title = project?.frontmatter.displayTitle ?? project?.frontmatter.title ?? slug
   const category = project?.frontmatter.category ?? ''
 
-  const geistMonoMedium = fetch(
-    new URL('../../../../node_modules/geist/dist/fonts/geist-mono/GeistMono-Medium.ttf', import.meta.url),
-  ).then((res) => res.arrayBuffer())
-
-  const geistMonoRegular = fetch(
-    new URL('../../../../node_modules/geist/dist/fonts/geist-mono/GeistMono-Regular.ttf', import.meta.url),
-  ).then((res) => res.arrayBuffer())
-
-  const [mediumFont, regularFont] = await Promise.all([geistMonoMedium, geistMonoRegular])
+  const fonts = await getOgFonts()
 
   return new ImageResponse(
     (
@@ -129,10 +123,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
     ),
     {
       ...size,
-      fonts: [
-        { name: 'GeistMono', data: mediumFont, weight: 500 },
-        { name: 'GeistMono', data: regularFont, weight: 400 },
-      ],
+      fonts,
     },
   )
 }

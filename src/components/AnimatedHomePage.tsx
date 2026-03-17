@@ -14,6 +14,7 @@ import {
 import { siteProjectInquiryHref } from '@/lib/site'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import CollapsibleSection from './CollapsibleSection'
+import TextReveal from './TextReveal'
 import { IconGamepad2, IconHandshake } from 'nucleo-pixel-essential'
 
 interface AnimatedHomePageProps {
@@ -374,37 +375,26 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <m.p
+            <TextReveal
+              text={homeHeroContent.intro}
               className="m-0 font-inter font-normal text-sm leading-relaxed text-muted-foreground"
-              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-              animate={{
-                opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-              }}
-              transition={{
-                duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
-                ease: STAGGER_PANEL.ease,
-              }}
-            >
-              {homeHeroContent.intro}
-            </m.p>
+              trigger={heroTextStage >= 2}
+              duration={0.5}
+              staggerDelay={0.04}
+              startDelay={0.1}
+            />
 
-            <m.div
-              className="hero-handwritten-preview"
-              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY + 4 }}
-              animate={{
-                opacity: heroTextStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                y: heroTextStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY + 4,
-              }}
-              transition={{
-                duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                delay: heroTextStage >= 2 ? motionDelayMs(STAGGER_TIMING.itemStagger + 200, prefersReducedMotion) : 0,
-                ease: STAGGER_PANEL.ease,
-              }}
-            >
-              <a href="/about" className="hero-handwritten-text font-handscript cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2">{homeHeroContent.handwrittenNote}</a>
-            </m.div>
+            <a href="/about" className="hero-handwritten-preview hero-handwritten-text font-handscript cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mt-2">
+              <TextReveal
+                text={homeHeroContent.handwrittenNote}
+                as="span"
+                trigger={heroTextStage >= 2}
+                duration={0.5}
+                staggerDelay={0.06}
+                startDelay={0.8}
+                filter
+              />
+            </a>
           </m.div>
 
         </div>

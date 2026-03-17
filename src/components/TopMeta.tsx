@@ -120,18 +120,16 @@ function NavLink({ href, name }: { href: string; name: string }) {
     <Link
       href={href}
       className="relative overflow-hidden block min-h-[40px] flex items-center"
-      style={{ perspective: '120px' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <span
         className="block text-[11px] tracking-[0.12em] uppercase text-foreground whitespace-nowrap"
         style={{
-          transformOrigin: 'bottom center',
-          transform: hovered ? 'rotateX(90deg)' : 'rotateX(0deg)',
+          transform: hovered ? 'translateY(-100%) scale(0.92)' : 'translateY(0) scale(1)',
           opacity: hovered ? 0 : 0.9,
           filter: hovered ? 'blur(2px)' : 'blur(0)',
-          transition: 'transform 650ms cubic-bezier(0.16,1,0.3,1), opacity 450ms cubic-bezier(0.16,1,0.3,1), filter 500ms cubic-bezier(0.16,1,0.3,1)',
+          transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 400ms cubic-bezier(0.22,1,0.36,1), filter 450ms cubic-bezier(0.22,1,0.36,1)',
         }}
       >
         {name}
@@ -139,11 +137,10 @@ function NavLink({ href, name }: { href: string; name: string }) {
       <span
         className="absolute left-0 top-0 block text-[11px] tracking-[0.12em] uppercase text-foreground whitespace-nowrap h-full flex items-center"
         style={{
-          transformOrigin: 'top center',
-          transform: hovered ? 'rotateX(0deg)' : 'rotateX(-90deg)',
+          transform: hovered ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.92)',
           opacity: hovered ? 0.9 : 0,
           filter: hovered ? 'blur(0)' : 'blur(2px)',
-          transition: 'transform 650ms cubic-bezier(0.16,1,0.3,1), opacity 470ms cubic-bezier(0.16,1,0.3,1) 80ms, filter 500ms cubic-bezier(0.16,1,0.3,1) 80ms',
+          transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 420ms cubic-bezier(0.22,1,0.36,1) 60ms, filter 450ms cubic-bezier(0.22,1,0.36,1) 60ms',
         }}
         aria-hidden
       >

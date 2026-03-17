@@ -522,19 +522,6 @@ h1, h2, h3, h4, h5, h6 {
   to { transform: rotate(-360deg); }
 }
 
-.playground-page-bg {
-  background:
-    radial-gradient(circle at 18% 16%, rgba(255, 248, 232, 0.9), transparent 18%),
-    radial-gradient(circle at 81% 11%, rgba(255, 251, 240, 0.88), transparent 15%),
-    linear-gradient(180deg, #f6f2e9 0%, #edf3e1 52%, #d5e3ba 100%);
-}
-
-.dark .playground-page-bg {
-  background:
-    radial-gradient(circle at 18% 16%, rgba(26, 30, 22, 0.7), transparent 18%),
-    radial-gradient(circle at 81% 11%, rgba(22, 26, 20, 0.6), transparent 15%),
-    linear-gradient(180deg, #161819 0%, #181c16 52%, #1a2014 100%);
-}
 
 @media (max-width: 640px) {
   .playground-meadow {

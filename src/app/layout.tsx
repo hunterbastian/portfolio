@@ -179,9 +179,9 @@ export default function RootLayout({
               <Footer />
               <ScrollToTop />
               <div
-                className="pointer-events-none fixed inset-x-0 bottom-0 z-0 h-[40vh] opacity-15"
+                className="pointer-events-none fixed inset-x-0 bottom-0 z-0 h-[50vh] opacity-15"
                 style={{
-                  backgroundImage: 'radial-gradient(125% 200% at 50% 100%, #ffffff 40%, #f59e0b 100%)',
+                  backgroundImage: 'radial-gradient(125% 200% at 50% 100%, transparent 30%, #f59e0b 100%)',
                   backgroundSize: '100% 100%',
                 }}
                 aria-hidden="true"

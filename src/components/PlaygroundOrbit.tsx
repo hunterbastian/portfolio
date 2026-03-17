@@ -59,7 +59,6 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
                 slug={project.slug}
                 frontmatter={project.frontmatter}
                 index={index}
-                hideLiveBadge
               />
               {project.frontmatter.demo && (
                 <LiveDemoPill title={project.frontmatter.title} href={project.frontmatter.demo} />
@@ -139,7 +138,6 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
                       slug={project.slug}
                       frontmatter={project.frontmatter}
                       index={index}
-                      hideLiveBadge
                     />
                     {project.frontmatter.demo && (
                       <LiveDemoPill title={project.frontmatter.title} href={project.frontmatter.demo} />

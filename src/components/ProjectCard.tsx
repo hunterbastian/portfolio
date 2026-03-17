@@ -9,7 +9,6 @@ interface ProjectCardProps {
   slug: string
   frontmatter: ProjectFrontmatter
   index: number
-  hideLiveBadge?: boolean
 }
 
 function formatCardDate(dateValue?: string): string {
@@ -19,7 +18,7 @@ function formatCardDate(dateValue?: string): string {
   return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(d)
 }
 
-function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: ProjectCardProps) {
+function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
@@ -84,23 +83,6 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
           </div>
         </div>
       </Link>
-      {frontmatter.demo && !hideLiveBadge && (
-        <a
-          href={frontmatter.demo}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-[3px] bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary transition-[background-color,box-shadow] duration-200 hover:bg-background/95"
-          style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)' }}
-          aria-label={`Live demo for ${displayTitle}`}
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
-            <span className="absolute inset-[-2px] rounded-full bg-emerald-400/20" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.5)]" />
-          </span>
-          Live
-        </a>
-      )}
     </div>
   )
 }

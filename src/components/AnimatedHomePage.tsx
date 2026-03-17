@@ -229,6 +229,48 @@ function CreatingLoader() {
   )
 }
 
+function PlaygroundButton() {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <a
+      href="/archive"
+      className="social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] pl-3.5 pr-4 py-2 text-xs font-medium transition-[transform,box-shadow] duration-500 relative overflow-hidden hover:-translate-y-0.5 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+      aria-label="Open Playground"
+      title="a place for my random projects"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <IconGamepad2 size={12} className="relative z-10 opacity-60 transition-[transform,filter] duration-300 ease-out" style={{ transform: hovered ? 'scale(1.1) rotate(-8deg)' : 'scale(1) rotate(0deg)' }} aria-hidden />
+      <span className="relative z-10 overflow-hidden" style={{ height: '1.2em' }}>
+        <span
+          className="block font-light uppercase tracking-[0.08em]"
+          style={{
+            transform: hovered ? 'translateY(-100%) scale(0.92)' : 'translateY(0) scale(1)',
+            opacity: hovered ? 0 : 1,
+            filter: hovered ? 'blur(2px)' : 'blur(0)',
+            transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 400ms cubic-bezier(0.22,1,0.36,1), filter 450ms cubic-bezier(0.22,1,0.36,1)',
+          }}
+        >
+          Playground
+        </span>
+        <span
+          className="absolute left-0 top-0 block font-light tracking-[0.08em] whitespace-nowrap"
+          style={{
+            transform: hovered ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.92)',
+            opacity: hovered ? 1 : 0,
+            filter: hovered ? 'blur(0)' : 'blur(2px)',
+            transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 420ms cubic-bezier(0.22,1,0.36,1) 60ms, filter 450ms cubic-bezier(0.22,1,0.36,1) 60ms',
+          }}
+          aria-hidden
+        >
+          a place for my random projects 😊
+        </span>
+      </span>
+    </a>
+  )
+}
+
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const [heroTextStage, setHeroTextStage] = useState(0)
@@ -416,15 +458,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <div className="px-4 pb-2 sm:px-6 lg:px-0 relative z-10">
         <div className="mx-auto max-w-[560px]">
-          <a
-            href="/archive"
-            className="group social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] pl-3.5 pr-4 py-2 text-xs font-medium transition-[transform,box-shadow] duration-500 relative overflow-hidden hover:-translate-y-0.5 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-            aria-label="Open Playground"
-            title="Open Playground"
-          >
-            <IconGamepad2 size={12} className="relative z-10 opacity-60 transition-[transform,filter] duration-300 ease-out group-hover:scale-110 group-hover:rotate-[-8deg] group-hover:blur-[0.3px]" aria-hidden />
-            <span className="font-light uppercase tracking-[0.08em] relative z-10">Playground</span>
-          </a>
+          <PlaygroundButton />
         </div>
       </div>
 

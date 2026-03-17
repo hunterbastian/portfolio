@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import IconArrowBackUp from '@/components/IconArrowBackUp'
 import AnimatedDashedArrow from '@/components/AnimatedDashedArrow'
+import ResumeButton from '@/components/ResumeButton'
 
 export const metadata: Metadata = {
   title: 'About - Hunter Bastian',
@@ -13,7 +14,7 @@ export default function AboutPage() {
   return (
     <div className="relative min-h-screen">
       <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-25"
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.15]"
         style={{
           backgroundImage: 'radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%)',
           backgroundSize: '100% 100%',
@@ -53,14 +54,17 @@ export default function AboutPage() {
           digital products with care and photograph the world in between.
         </p>
 
-        <Link
-          href="/#contact"
-          className="group mt-6 inline-flex items-center gap-1.5 text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
-          style={{ fontFamily: 'inherit' }}
-        >
-          Contact
-          <AnimatedDashedArrow size={14} />
-        </Link>
+        <div className="mt-6 flex items-center gap-5">
+          <Link
+            href="/#contact"
+            className="group inline-flex items-center gap-1.5 text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
+            style={{ fontFamily: 'inherit' }}
+          >
+            Contact
+            <AnimatedDashedArrow size={14} />
+          </Link>
+          <ResumeButton />
+        </div>
 
       </div>
       </div>

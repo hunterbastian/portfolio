@@ -5,8 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
 import { startProjectTransition } from '@/lib/project-transition'
-import { useUISound } from '@/lib/sounds/context'
-import { clickSoftSound } from '@/lib/sounds/click-soft'
 
 interface ProjectCardProps {
   slug: string
@@ -35,13 +33,11 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
   const imageRef = useRef<HTMLDivElement>(null)
-  const { play } = useUISound()
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const categoryLabel = formatCategoryLabel(frontmatter.category)
   const onLoad = useCallback(() => setImgLoaded(true), [])
 
   const handleTransitionClick = useCallback(() => {
-    play(clickSoftSound, 0.35)
     if (imageRef.current) {
       const rect = imageRef.current.getBoundingClientRect()
       startProjectTransition(slug, imgSrc, {
@@ -51,7 +47,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
         height: rect.height,
       })
     }
-  }, [slug, imgSrc, play])
+  }, [slug, imgSrc])
 
   return (
     <div className="relative">

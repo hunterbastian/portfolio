@@ -27,7 +27,7 @@ export default function ArchivePage() {
   return (
     <div className="relative h-[100dvh] overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 z-0 opacity-25"
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.15]"
         style={{
           backgroundImage: 'radial-gradient(80% 30% at 50% 0%, #f59e0b 0%, transparent 100%)',
         }}

@@ -98,6 +98,14 @@ export default function Footer() {
             }
       }
     >
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-15"
+        style={{
+          backgroundImage: 'radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #f59e0b 100%)',
+          backgroundSize: '100% 100%',
+        }}
+        aria-hidden="true"
+      />
       <div className="container relative z-10 mx-auto grid max-w-6xl gap-3 px-4 py-6 text-center font-mono md:grid-cols-2 md:items-center">
         <span className="text-[11px] tracking-[0.04em] text-muted-foreground tabular-nums md:justify-self-start">
           © {currentYear}

@@ -27,20 +27,10 @@ export default function ArchivePage() {
   return (
     <div className="relative h-[100dvh] overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 z-0 opacity-25 dark:opacity-0"
+        className="pointer-events-none absolute inset-0 z-0 opacity-25"
         style={{
           backgroundImage: 'radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%)',
           backgroundSize: '100% 100%',
-          transition: 'opacity 300ms ease',
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 z-0 opacity-0 dark:opacity-20"
-        style={{
-          backgroundImage: 'radial-gradient(125% 125% at 50% 10%, #232527 40%, #d97706 100%)',
-          backgroundSize: '100% 100%',
-          transition: 'opacity 300ms ease',
         }}
         aria-hidden="true"
       />

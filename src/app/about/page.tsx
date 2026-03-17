@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="relative container mx-auto max-w-6xl px-4 sm:px-6">
+    <div className="relative min-h-screen">
       <div
         className="pointer-events-none fixed inset-0 z-0 opacity-25 dark:opacity-0"
         style={{
@@ -30,7 +30,8 @@ export default function AboutPage() {
         }}
         aria-hidden="true"
       />
-      <div className="relative z-10 mb-16 flex justify-start pt-8">
+      <div className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mb-16 flex justify-start pt-8">
         <Link
           href="/"
           className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
@@ -71,6 +72,7 @@ export default function AboutPage() {
           <AnimatedDashedArrow size={14} />
         </Link>
 
+      </div>
       </div>
       </div>
     </div>

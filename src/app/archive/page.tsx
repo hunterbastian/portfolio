@@ -1,5 +1,6 @@
 import { getArchivedProjects } from '@/lib/projects'
 import PlaygroundOrbit from '@/components/PlaygroundOrbit'
+import PlaygroundDraw from '@/components/PlaygroundDraw'
 import Link from 'next/link'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 import IconArrowBackUp from '@/components/IconArrowBackUp'
@@ -29,6 +30,7 @@ export default function ArchivePage() {
         className="pointer-events-none fixed inset-0 z-0 playground-page-bg"
         aria-hidden="true"
       />
+      <PlaygroundDraw />
       <div className="relative z-10 flex h-full flex-col container mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-8">
         <div className="mb-4 sm:mb-8 shrink-0">
           <Link

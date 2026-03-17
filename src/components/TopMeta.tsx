@@ -126,10 +126,10 @@ function NavLink({ href, name }: { href: string; name: string }) {
       <span
         className="block text-[11px] tracking-[0.12em] uppercase text-foreground whitespace-nowrap"
         style={{
-          transform: hovered ? 'translateY(-100%) scale(0.92)' : 'translateY(0) scale(1)',
+          transform: hovered ? 'translateY(-100%) scale(0.95)' : 'translateY(0) scale(1)',
           opacity: hovered ? 0 : 0.9,
-          filter: hovered ? 'blur(2px)' : 'blur(0)',
-          transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 400ms cubic-bezier(0.22,1,0.36,1), filter 450ms cubic-bezier(0.22,1,0.36,1)',
+          filter: hovered ? 'blur(3px)' : 'blur(0)',
+          transition: 'transform 650ms cubic-bezier(0.16,1,0.3,1), opacity 550ms cubic-bezier(0.16,1,0.3,1), filter 600ms cubic-bezier(0.16,1,0.3,1)',
         }}
       >
         {name}
@@ -137,10 +137,10 @@ function NavLink({ href, name }: { href: string; name: string }) {
       <span
         className="absolute left-0 top-0 block text-[11px] tracking-[0.12em] uppercase text-foreground whitespace-nowrap"
         style={{
-          transform: hovered ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.92)',
+          transform: hovered ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.95)',
           opacity: hovered ? 0.9 : 0,
-          filter: hovered ? 'blur(0)' : 'blur(2px)',
-          transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 420ms cubic-bezier(0.22,1,0.36,1) 60ms, filter 450ms cubic-bezier(0.22,1,0.36,1) 60ms',
+          filter: hovered ? 'blur(0)' : 'blur(3px)',
+          transition: 'transform 650ms cubic-bezier(0.16,1,0.3,1), opacity 570ms cubic-bezier(0.16,1,0.3,1) 80ms, filter 600ms cubic-bezier(0.16,1,0.3,1) 80ms',
         }}
         aria-hidden
       >

@@ -500,7 +500,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               return (
                 <m.div
                   key={job.company}
-                  className="border-b border-border py-3.5 last:border-b-0"
+                  className="border-b border-border py-3.5"
                   initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                   animate={{
                     opacity: experienceStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -566,7 +566,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             {educationItems.map((edu, index) => (
               <m.div
                 key={edu.institution}
-                className="border-b border-border last:border-b-0 pb-5 last:pb-0"
+                className="border-b border-border pb-5 last:pb-0"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: educationStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,

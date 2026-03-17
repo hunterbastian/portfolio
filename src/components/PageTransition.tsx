@@ -25,8 +25,11 @@ const TIMING = {
   childDuration: 500,     // each child fades in gently
 }
 
+/** Exported for shared-element transition measurement offset */
+export const PAGE_ENTRANCE_INITIAL_Y = 18
+
 const PAGE = {
-  initialY: 18,           // more travel distance for a visible glide
+  initialY: PAGE_ENTRANCE_INITIAL_Y, // more travel distance for a visible glide
   finalY: 0,
   initialOpacity: 0,
   finalOpacity: 1,
@@ -37,8 +40,11 @@ const PAGE = {
   exitBlur: 'blur(3px)',
 }
 
+/** Exported for shared-element transition measurement offset */
+export const CHILD_ENTRANCE_INITIAL_Y = 14
+
 const CHILD = {
-  initialY: 14,           // children rise more — noticeable but not dramatic
+  initialY: CHILD_ENTRANCE_INITIAL_Y, // children rise more — noticeable but not dramatic
   finalY: 0,
   initialOpacity: 0,
   finalOpacity: 1,

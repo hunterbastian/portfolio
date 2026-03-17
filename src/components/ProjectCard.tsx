@@ -1,9 +1,10 @@
 'use client'
 
-import { memo, useState, useCallback } from 'react'
+import { memo, useState, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
+import { startProjectTransition } from '@/lib/project-transition'
 
 interface ProjectCardProps {
   slug: string
@@ -28,31 +29,36 @@ function formatCategoryLabel(category?: string): string {
   return map[category] ?? category.toUpperCase()
 }
 
-function formatCardDate(dateValue?: string): string {
-  if (!dateValue) return ''
-  const d = new Date(dateValue)
-  if (Number.isNaN(d.getTime())) return dateValue
-  return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(d)
-}
-
 function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
+  const imageRef = useRef<HTMLDivElement>(null)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
-  const formattedDate = formatCardDate(frontmatter.date)
   const categoryLabel = formatCategoryLabel(frontmatter.category)
   const onLoad = useCallback(() => setImgLoaded(true), [])
 
+  const handleTransitionClick = useCallback(() => {
+    if (imageRef.current) {
+      const rect = imageRef.current.getBoundingClientRect()
+      startProjectTransition(slug, imgSrc, {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      })
+    }
+  }, [slug, imgSrc])
+
   return (
     <div className="relative">
-      <Link href={`/projects/${slug}`} className="group block h-full w-full">
+      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} className="group block h-full w-full rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/50">
         <div
           className="project-card relative isolate overflow-hidden rounded-xl text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1 will-change-transform"
           style={{
             animationDelay: `${index * 80}ms`,
           }}
         >
-          <div className="relative aspect-[16/9] overflow-hidden img-inset-outline">
+          <div ref={imageRef} className="relative aspect-[16/9] overflow-hidden img-inset-outline">
             {!imgLoaded && (
               <div className="absolute inset-0 animate-pulse bg-muted" />
             )}
@@ -63,6 +69,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
               className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
               style={frontmatter.imageZoom ? { objectPosition: 'center', scale: `${frontmatter.imageZoom}` } : undefined}
               sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
+              quality={90}
               priority={index === 0}
               loading={index === 0 ? 'eager' : 'lazy'}
               fetchPriority={index === 0 ? 'high' : 'low'}
@@ -78,7 +85,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
                 loop
                 muted
                 playsInline
-                preload="none"
+                preload="metadata"
               />
             )}
 

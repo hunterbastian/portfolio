@@ -2,18 +2,4 @@
  * Font declarations - using Next.js font optimization from layout.tsx
  * Body: Geist Mono (default for all UI text)
  * Paragraphs: Inter (applied via globals.css)
- * Serif accents: Playfair Display
  */
-
-:root {
-  --font-playfair: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-garamond: var(--font-playfair);
-}
-
-.font-playfair {
-  font-family: var(--font-playfair);
-}
-
-.font-garamond {
-  font-family: var(--font-garamond);
-}

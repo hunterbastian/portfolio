@@ -151,6 +151,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="relative mx-auto max-w-[560px]">
         <CaseStudyNav />
         <ProjectDetailContent
+          slug={slug}
           header={
             <header className="mb-8 flex flex-col items-center text-center">
               <h1 className="font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">{displayTitle}</h1>
@@ -165,6 +166,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 fill
                 className="object-cover"
                 priority
+                quality={90}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
               />
             </div>

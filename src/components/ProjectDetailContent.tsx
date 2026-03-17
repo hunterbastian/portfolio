@@ -1,8 +1,14 @@
 'use client'
 
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import {
+  getProjectTransition,
+  subscribeProjectTransition,
+  setProjectTransitionTarget,
+} from '@/lib/project-transition'
+import { PAGE_ENTRANCE_INITIAL_Y, CHILD_ENTRANCE_INITIAL_Y } from '@/components/PageTransition'
 
 /* ─────────────────────────────────────────────────────────
  * PROJECT DETAIL STORYBOARD
@@ -30,6 +36,10 @@ const ITEM = {
   ease: MOTION_EASE_SOFT,
 }
 
+// PageTransition entrance offsets at mount time — subtract from
+// getBoundingClientRect() to get the hero's final resting position.
+const PAGE_TRANSITION_Y_OFFSET = PAGE_ENTRANCE_INITIAL_Y + CHILD_ENTRANCE_INITIAL_Y
+
 interface ProjectDetailContentProps {
   header: ReactNode
   image: ReactNode
@@ -37,6 +47,7 @@ interface ProjectDetailContentProps {
   meta: ReactNode
   links: ReactNode | null
   content: ReactNode
+  slug?: string
 }
 
 export default function ProjectDetailContent({
@@ -46,9 +57,33 @@ export default function ProjectDetailContent({
   meta,
   links,
   content,
+  slug,
 }: ProjectDetailContentProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
   const [stage, setStage] = useState(0)
+  const heroRef = useRef<HTMLDivElement>(null)
+
+  const transition = useSyncExternalStore(
+    subscribeProjectTransition,
+    getProjectTransition,
+    () => null,
+  )
+  // Active = transition matches this slug and overlay hasn't started fading out
+  const isTransitionActive = transition != null && transition.slug === slug && !transition.completing
+
+  // Measure the hero image position and feed it to the overlay.
+  // useLayoutEffect fires before paint, so the overlay gets the target immediately.
+  useLayoutEffect(() => {
+    if (isTransitionActive && heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect()
+      setProjectTransitionTarget({
+        top: rect.top - PAGE_TRANSITION_Y_OFFSET,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      })
+    }
+  }, [isTransitionActive])
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -82,10 +117,11 @@ export default function ProjectDetailContent({
       </m.div>
 
       <m.div
-        initial={{ opacity: ITEM.initialOpacity, y: 16 }}
+        ref={heroRef}
+        initial={{ opacity: isTransitionActive ? 0 : ITEM.initialOpacity, y: isTransitionActive ? 0 : 16 }}
         animate={{
-          opacity: stage >= 2 ? ITEM.finalOpacity : ITEM.initialOpacity,
-          y: stage >= 2 ? ITEM.finalY : 16,
+          opacity: isTransitionActive ? 0 : (stage >= 2 ? ITEM.finalOpacity : ITEM.initialOpacity),
+          y: isTransitionActive ? 0 : (stage >= 2 ? ITEM.finalY : 16),
         }}
         transition={{ duration, ease: ITEM.ease }}
       >

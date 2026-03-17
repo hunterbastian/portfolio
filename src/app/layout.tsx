@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 import './viewport.css'
@@ -13,6 +13,7 @@ import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
+import ProjectTransitionOverlay from '@/components/ProjectTransitionOverlay'
 import TopMeta from '@/components/TopMeta'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
@@ -29,14 +30,6 @@ const inter = Inter({
 
 // Geist Mono — used for all non-paragraph text (headings, nav, labels, buttons)
 
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['700'],
-  variable: '--font-playfair-display',
-  display: 'swap',
-  preload: true,
-  fallback: ['Georgia', 'Times New Roman', 'serif'],
-})
 
 export const viewport = {
   width: 'device-width',
@@ -79,7 +72,7 @@ export const metadata: Metadata = {
     siteName: sitePortfolioName,
     images: [
       {
-        url: '/images/social/profile-preview.jpg',
+        url: '/images/social/profile-preview.webp',
         width: 1200,
         height: 630,
         alt: `${siteConfig.brandName} - Designer & Developer Portfolio`,
@@ -90,7 +83,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.siteTitle,
     description: siteConfig.siteDescription,
-    images: ['/images/social/profile-preview.jpg'],
+    images: ['/images/social/profile-preview.webp'],
   },
   alternates: {
     canonical: siteConfig.url,
@@ -159,14 +152,15 @@ export default function RootLayout({
         }} />
       </head>
       <body
-        className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding text-foreground`}
+        className={`${GeistMono.className} ${inter.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
-          backgroundImage: 'radial-gradient(80% 30% at 50% 100%, rgba(245, 158, 11, 0.12) 0%, transparent 100%)',
+          backgroundImage: 'radial-gradient(80% 30% at 50% 100%, rgba(245, 158, 11, 1) 0%, transparent 100%)',
           backgroundAttachment: 'fixed',
         }}
       >
         <MotionProvider>
+          <ProjectTransitionOverlay />
           <TopMeta
             coordinates={siteConfig.siteCoordinates}
             location={siteConfig.siteLocation}

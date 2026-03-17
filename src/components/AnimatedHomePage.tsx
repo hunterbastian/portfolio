@@ -421,7 +421,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
-        <div className="mx-auto max-w-[560px] rounded-[3px] bg-card/32 px-2 py-4 sm:px-3 sm:py-5" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)' }}>
+        <div className="mx-auto max-w-[560px] frost-panel rounded-[3px] px-2 py-4 sm:px-3 sm:py-5">
           {children}
         </div>
       </CollapsibleSection>
@@ -488,7 +488,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <m.div
             ref={experiencePanelRef}
-            className="nord-panel rounded-[3px] p-4 sm:p-5 space-y-2"
+            className="frost-panel rounded-[3px] p-4 sm:p-5 space-y-2"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: experienceStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -504,7 +504,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               return (
                 <m.div
                   key={job.company}
-                  className="border-b border-border py-3.5"
+                  className="border-b border-border py-3.5 last:border-b-0"
                   initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                   animate={{
                     opacity: experienceStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -556,7 +556,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <m.div
             ref={educationPanelRef}
-            className="nord-panel rounded-[3px] p-5 space-y-5"
+            className="frost-panel rounded-[3px] p-5 space-y-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: educationStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -570,7 +570,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             {educationItems.map((edu, index) => (
               <m.div
                 key={edu.institution}
-                className="border-b border-border pb-5 last:pb-0"
+                className="border-b border-border pb-5 last:border-b-0 last:pb-0"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: educationStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,

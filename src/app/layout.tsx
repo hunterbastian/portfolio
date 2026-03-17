@@ -13,6 +13,7 @@ import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
+import { SoundProvider } from '@/lib/sounds/context'
 import ProjectTransitionOverlay from '@/components/ProjectTransitionOverlay'
 import TopMeta from '@/components/TopMeta'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
@@ -155,10 +156,11 @@ export default function RootLayout({
         className={`${GeistMono.className} ${inter.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
-          backgroundImage: 'radial-gradient(80% 30% at 50% 100%, rgba(245, 158, 11, 1) 0%, transparent 100%)',
+          backgroundImage: 'radial-gradient(80% 30% at 50% 100%, rgba(245, 158, 11, 0.8) 0%, transparent 100%)',
           backgroundAttachment: 'fixed',
         }}
       >
+        <SoundProvider>
         <MotionProvider>
           <ProjectTransitionOverlay />
           <TopMeta
@@ -205,6 +207,7 @@ export default function RootLayout({
             )}
           </SmoothScroll>
         </MotionProvider>
+        </SoundProvider>
       </body>
     </html>
   )

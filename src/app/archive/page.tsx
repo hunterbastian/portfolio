@@ -30,6 +30,14 @@ export default function ArchivePage() {
         className="pointer-events-none fixed inset-0 z-0 playground-page-bg"
         aria-hidden="true"
       />
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-25"
+        style={{
+          backgroundImage: 'radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%)',
+          backgroundSize: '100% 100%',
+        }}
+        aria-hidden="true"
+      />
       <div className="relative z-10 flex h-full flex-col container mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6">
         <div className="mb-2 sm:mb-4 shrink-0">
           <Link

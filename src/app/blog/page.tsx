@@ -45,28 +45,53 @@ export default function BlogPage() {
         </Link>
       </div>
 
-      <div className="mx-auto max-w-[560px]">
+      <div className="mx-auto max-w-[700px]">
         {posts.length === 0 ? (
           <p className="text-center text-sm text-muted-foreground" style={{ fontFamily: 'inherit' }}>
             Nothing here yet. Check back soon.
           </p>
         ) : (
-          <ul className="space-y-8">
+          <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
             {posts.map((post) => (
-              <li key={post.slug}>
+              <li key={post.slug} className="h-full">
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="group block"
+                  className="group flex h-full min-h-[156px] flex-col rounded-[3px] bg-card/92 px-3.5 pb-3.5 pt-3 transition-[transform,box-shadow,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 active:scale-[0.96]"
+                  style={{
+                    boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 1px 2px -1px rgba(0, 0, 0, 0.06), 0px 8px 20px -18px rgba(0, 0, 0, 0.18)',
+                  }}
                 >
-                  <p className="font-mono text-[11px] tracking-[0.06em] text-muted-foreground">
-                    {formatDate(post.frontmatter.date)}
-                  </p>
-                  <h2 className="mt-1 font-mono text-[15px] font-medium tracking-[0.01em] text-foreground group-hover:text-foreground/80 transition-colors duration-200">
+                  <div className="flex items-start gap-3">
+                    <p className="inline-flex rounded-full bg-background/72 px-2.5 py-1 font-mono text-[10px] tracking-[0.06em] text-muted-foreground shadow-[0_0_0_1px_rgba(0,0,0,0.05)]">
+                      {formatDate(post.frontmatter.date)}
+                    </p>
+                  </div>
+                  <h2
+                    className="mt-3 font-mono text-[15px] font-medium leading-snug tracking-[0.01em] text-foreground transition-colors duration-200 group-hover:text-foreground/80"
+                    style={{ textWrap: 'balance' }}
+                  >
                     {post.frontmatter.title}
                   </h2>
-                  <p className="mt-1.5 font-inter text-[13px] leading-relaxed text-muted-foreground">
+                  <p
+                    className="mt-2 font-inter text-[13px] leading-relaxed text-muted-foreground"
+                    style={{ textWrap: 'pretty' }}
+                  >
                     {post.frontmatter.description}
                   </p>
+                  {post.frontmatter.tags && post.frontmatter.tags.length > 0 ? (
+                    <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
+                      {post.frontmatter.tags.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex rounded-full bg-secondary/85 px-2.5 py-1 font-mono text-[10px] tracking-[0.04em] text-muted-foreground shadow-[0_0_0_1px_rgba(0,0,0,0.04)]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="mt-auto pt-4" />
+                  )}
                 </Link>
               </li>
             ))}

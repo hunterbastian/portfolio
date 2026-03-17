@@ -42,9 +42,16 @@ export default function Footer() {
       return false
     }
 
-    // Try immediately, then poll every 100ms
+    // Try immediately, then poll every 100ms (max 50 attempts / 5s)
     if (!attach()) {
-      intervalId = setInterval(() => { attach() }, 100)
+      let attempts = 0
+      intervalId = setInterval(() => {
+        attempts++
+        if (attach() || attempts >= 50) {
+          if (intervalId) clearInterval(intervalId)
+          intervalId = null
+        }
+      }, 100)
     }
 
     // Fallback: also listen to native scroll for non-Lenis environments

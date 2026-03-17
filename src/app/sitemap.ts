@@ -20,6 +20,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: resolveSiteUrl('/about'),
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: resolveSiteUrl('/blog'),
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
       url: resolveSiteUrl('/archive'),
       lastModified: new Date(),
       changeFrequency: 'monthly',

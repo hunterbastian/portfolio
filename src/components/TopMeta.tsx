@@ -15,8 +15,8 @@ const PAGE_NAV = [
   { name: 'HOME', href: '/' },
   { name: 'ABOUT ME', href: '/about' },
   { name: 'PROJECTS', href: '/#case-studies' },
-  { name: 'BLOG', href: '/blog' },
   { name: 'PLAYGROUND', href: '/archive' },
+  { name: 'BLOG', href: '/blog' },
 ] as const
 
 function ThemeToggle() {

@@ -9,8 +9,8 @@ const PAGE_NAV = [
   { name: 'HOME', href: '/' },
   { name: 'ABOUT', href: '/about' },
   { name: 'PROJECTS', href: '/#case-studies' },
-  { name: 'BLOG', href: '/blog' },
   { name: 'PLAYGROUND', href: '/archive' },
+  { name: 'BLOG', href: '/blog' },
 ] as const
 
 function ThemeToggle() {
@@ -34,7 +34,7 @@ function ThemeToggle() {
       onClick={toggle}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 active:scale-[0.96]"
+      className="relative flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
@@ -103,7 +103,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 active:scale-[0.96] sm:hidden"
+              className="flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:hidden"
               aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
               aria-expanded={showMobileMenu}
               style={{ fontFamily: 'inherit' }}

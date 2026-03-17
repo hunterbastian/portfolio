@@ -411,7 +411,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--muted-foreground);
 }
 
-.dark img {
+.dark img:not([aria-hidden]):not([data-icon]) {
   filter: brightness(0.92);
 }
 

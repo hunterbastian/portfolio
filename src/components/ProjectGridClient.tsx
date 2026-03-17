@@ -6,6 +6,7 @@ import { m, useInView, useReducedMotion } from 'framer-motion'
 import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProjectFrontmatter } from '@/types/project'
+import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface Project {
@@ -78,9 +79,6 @@ interface CaseStudyDialState {
   }
   hover: {
     inactiveOpacity: number
-    inactiveScale: number
-    activeScale: number
-    activeLiftY: number
   }
 }
 
@@ -93,8 +91,8 @@ const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
     stackPriority: 'default',
   },
   expanded: {
-    gapX: 24,
-    gapY: 28,
+    gapX: 20,
+    gapY: 24,
     scale: 1,
   },
   motion: {
@@ -102,10 +100,7 @@ const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
     collapseMs: 340,
   },
   hover: {
-    inactiveOpacity: 1,
-    inactiveScale: 1,
-    activeScale: 1.42,
-    activeLiftY: -2,
+    inactiveOpacity: 0.88,
   },
 }
 
@@ -127,12 +122,12 @@ function getStackPriorityZIndex(index: number, total: number, stackPriority: Sta
 }
 
 const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
-  'brand-identity-system': { rotate: 0, x: 0 },
-  'aol-redesign': { rotate: 0, x: 0 },
-  'porsche-app': { rotate: 0, x: 0 },
+  'brand-identity-system': { rotate: -6.2, x: -14 },
+  'aol-redesign': { rotate: -5.4, x: -11 },
+  'porsche-app': { rotate: 6.2, x: 14 },
   'wander-utah': { rotate: 0, x: 0 },
   'grand-teton-wallet': { rotate: 0, x: 0 },
-  nutricost: { rotate: 0, x: 0 },
+  nutricost: { rotate: -2.8, x: -5 },
 }
 
 const MOBILE_TILT_FACTOR = 0.48
@@ -228,7 +223,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     return () => timers.forEach(clearTimeout)
   }, [initialLoadDelayMs, isGridInView, prefersReducedMotion])
 
-  const isExpandedLayout = !supportsHover || isGridHovered || hoveredIndex !== null || stage >= 2
+  const isExpandedLayout = !supportsHover || isGridHovered
   const layoutTransitionDuration = isExpandedLayout ? caseStudyDial.motion.expandMs : caseStudyDial.motion.collapseMs
   const layoutSpreadFactor = isExpandedLayout ? 1 : caseStudyDial.pile.compactSpreadFactor
   const gridColumnGap = isExpandedLayout ? caseStudyDial.expanded.gapX : caseStudyDial.pile.compactGapX
@@ -237,7 +232,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   return (
     <m.div
       ref={gridRef}
-      className="mx-auto grid w-full max-w-[740px] grid-cols-1 overflow-visible px-1 sm:grid-cols-2 sm:px-0"
+      className="mx-auto grid w-full max-w-[820px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0 md:grid-cols-6"
       onMouseEnter={() => {
         if (supportsHover) {
           setIsGridHovered(true)
@@ -277,26 +272,26 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     >
       {orderedProjects.map((project, index) => {
         const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
+        const itemsInLastRow = orderedProjects.length % 3 || 3
+        const lastRowStartIndex = orderedProjects.length - itemsInLastRow
+        const mdColStart =
+          index === lastRowStartIndex && itemsInLastRow < 3 ? (3 - itemsInLastRow) + 1 : undefined
 
         const compactX = baseAngle.x * caseStudyDial.pile.compactSpreadFactor
         const compactRotate = baseAngle.rotate * caseStudyDial.pile.compactSpreadFactor
         const mobileDampen = supportsHover ? 1 : MOBILE_TILT_FACTOR
-        const targetX = isExpandedLayout ? 0 : baseAngle.x * layoutSpreadFactor * mobileDampen
-        const targetRotate = isExpandedLayout ? 0 : baseAngle.rotate * layoutSpreadFactor * mobileDampen
+        const targetX = baseAngle.x * layoutSpreadFactor * mobileDampen
+        const targetRotate = baseAngle.rotate * layoutSpreadFactor * mobileDampen
         const targetScale = isExpandedLayout ? caseStudyDial.expanded.scale : caseStudyDial.pile.compactScale
         const isHovered = hoveredIndex === index
         const hasHoverTarget = hoveredIndex !== null
-        const hoverScale = supportsHover && hasHoverTarget
-          ? (isHovered ? caseStudyDial.hover.activeScale : caseStudyDial.hover.inactiveScale)
-          : 1
-        const hoverLiftY = supportsHover && isHovered ? caseStudyDial.hover.activeLiftY : 0
         const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : caseStudyDial.hover.inactiveOpacity
         const stackZIndex = getStackPriorityZIndex(index, orderedProjects.length, caseStudyDial.pile.stackPriority)
 
         return (
           <m.div
             key={project.slug}
-            className="w-full overflow-visible transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+            className={`w-full md:col-span-2 transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]${mdColStart === 2 ? ' md:col-start-2' : mdColStart === 3 ? ' md:col-start-3' : ''}`}
             style={{
               zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
             }}
@@ -320,12 +315,10 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             }}
             animate={{
               opacity: index === 0 ? cardOpacity : (stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity),
-              y: stage >= 2
-                ? CARD_STAGGER_ITEM.finalY + hoverLiftY
-                : (index === 0 ? CARD_STAGGER_ITEM.finalY + hoverLiftY : CARD_STAGGER_ITEM.initialY),
+              y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : (index === 0 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY),
               x: targetX,
               rotate: targetRotate,
-              scale: targetScale * hoverScale,
+              scale: targetScale,
             }}
             transition={{
               opacity: {
@@ -347,19 +340,20 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                 ease: CARD_STAGGER_PANEL.ease,
               },
               scale: {
-                ...(prefersReducedMotion
-                  ? { duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion) }
-                  : { type: 'spring', stiffness: 280, damping: 28, mass: 0.72 }),
+                duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+                ease: CARD_STAGGER_PANEL.ease,
               },
             }}
           >
-            {project.frontmatter?.image ? (
-              <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} isHovered={isHovered} />
-            ) : (
-              <div className="aspect-[16/9] w-full rounded-[3px]">
-                <Skeleton className="h-full w-full rounded-[3px]" />
-              </div>
-            )}
+            <Magnetic strength={0.28} range={130} onlyOnHover disableOnTouch>
+              {project.frontmatter?.image ? (
+                <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
+              ) : (
+                <div className="aspect-[16/9] w-full rounded-[3px]">
+                  <Skeleton className="h-full w-full rounded-[3px]" />
+                </div>
+              )}
+            </Magnetic>
           </m.div>
         )
       })}

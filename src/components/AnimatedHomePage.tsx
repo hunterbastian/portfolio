@@ -421,13 +421,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
-        <div className="mx-auto max-w-[620px] rounded-[3px] bg-card/32 px-2 py-4 sm:px-3 sm:py-5" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)' }}>
+        <div className="mx-auto max-w-[560px] rounded-[3px] bg-card/32 px-2 py-4 sm:px-3 sm:py-5" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)' }}>
           {children}
         </div>
       </CollapsibleSection>
 
       <div className="px-4 pb-2 sm:px-6 lg:px-0 relative z-10">
-        <div className="mx-auto max-w-[620px]">
+        <div className="mx-auto max-w-[560px]">
           <PlaygroundButton />
         </div>
       </div>

@@ -1,17 +1,15 @@
 'use client'
 
-import { memo, useCallback, useState } from 'react'
-import { m, useReducedMotion } from 'framer-motion'
+import { memo, useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
-import { MOTION_SPRING_SMOOTH } from '@/lib/motion'
 
 interface ProjectCardProps {
   slug: string
   frontmatter: ProjectFrontmatter
   index: number
-  isHovered?: boolean
+  hideLiveBadge?: boolean
 }
 
 function formatCardDate(dateValue?: string): string {
@@ -21,39 +19,23 @@ function formatCardDate(dateValue?: string): string {
   return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(d)
 }
 
-function ProjectCardComponent({ slug, frontmatter, index, isHovered = false }: ProjectCardProps) {
+function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const formattedDate = formatCardDate(frontmatter.date)
-  const prefersReducedMotion = useReducedMotion() ?? false
-
   const onLoad = useCallback(() => setImgLoaded(true), [])
 
   return (
     <div className="relative">
       <Link href={`/projects/${slug}`} className="group block h-full w-full">
-        <m.div
-          className="project-card relative isolate overflow-hidden rounded-[3px] text-card-foreground transition-[box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation will-change-transform"
+        <div
+          className="project-card relative isolate overflow-hidden rounded-[3px] text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1 will-change-transform"
           style={{
             animationDelay: `${index * 80}ms`,
-            transformOrigin: '50% 50%',
           }}
-          animate={{
-            y: isHovered && !prefersReducedMotion ? -1 : 0,
-            boxShadow: isHovered
-              ? '0px 0px 0px 1px rgba(0, 0, 0, 0.08), 0px 18px 38px -24px rgba(0, 0, 0, 0.28), 0px 28px 48px -34px rgba(0, 0, 0, 0.18)'
-              : undefined,
-          }}
-          transition={MOTION_SPRING_SMOOTH}
         >
-          <m.div
-            className="relative aspect-[16/9] overflow-hidden img-inset-outline"
-            animate={{
-              scale: isHovered && !prefersReducedMotion ? 1.015 : 1,
-            }}
-            transition={MOTION_SPRING_SMOOTH}
-          >
+          <div className="relative aspect-[16/9] overflow-hidden img-inset-outline">
             {!imgLoaded && (
               <div className="absolute inset-0 animate-pulse bg-muted" />
             )}
@@ -84,7 +66,7 @@ function ProjectCardComponent({ slug, frontmatter, index, isHovered = false }: P
             )}
 
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/16 opacity-55 transition-opacity duration-500 ease-out group-hover:opacity-70" />
-          </m.div>
+          </div>
 
           <div className="px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
             <h3
@@ -100,8 +82,25 @@ function ProjectCardComponent({ slug, frontmatter, index, isHovered = false }: P
               </p>
             )}
           </div>
-        </m.div>
+        </div>
       </Link>
+      {frontmatter.demo && !hideLiveBadge && (
+        <a
+          href={frontmatter.demo}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-[3px] bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary transition-[background-color,box-shadow] duration-200 hover:bg-background/95"
+          style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)' }}
+          aria-label={`Live demo for ${displayTitle}`}
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
+            <span className="absolute inset-[-2px] rounded-full bg-emerald-400/20" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.5)]" />
+          </span>
+          Live
+        </a>
+      )}
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { ImageResponse } from 'next/og'
 import { getProjectBySlug, getAllProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
 import { getOgFonts } from '@/lib/og-fonts'
+import { OG_COLORS } from '@/lib/og-colors'
 
 export const runtime = 'nodejs'
 export const alt = 'Project preview'
@@ -31,7 +32,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
           flexDirection: 'column',
           justifyContent: 'space-between',
           padding: '60px 64px',
-          background: '#f2f1ef',
+          background: OG_COLORS.background,
           fontFamily: 'GeistMono',
         }}
       >
@@ -42,7 +43,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
               width: '8px',
               height: '8px',
               borderRadius: '50%',
-              background: '#7f8f81',
+              background: OG_COLORS.accent,
             }}
           />
           <span
@@ -50,7 +51,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
               fontSize: '13px',
               letterSpacing: '0.12em',
               textTransform: 'uppercase' as const,
-              color: '#7f8f81',
+              color: OG_COLORS.accent,
               fontWeight: 500,
             }}
           >
@@ -64,7 +65,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
             style={{
               fontSize: title.length > 30 ? '42px' : '52px',
               fontWeight: 500,
-              color: '#171717',
+              color: OG_COLORS.foreground,
               lineHeight: 1.15,
               letterSpacing: '0.01em',
             }}
@@ -77,8 +78,8 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
                 style={{
                   fontSize: '14px',
                   letterSpacing: '0.06em',
-                  color: '#171717',
-                  background: 'rgba(23,23,23,0.06)',
+                  color: OG_COLORS.foreground,
+                  background: `${OG_COLORS.foreground}0F`,
                   padding: '6px 14px',
                   borderRadius: '3px',
                   fontWeight: 400,
@@ -102,7 +103,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
             style={{
               fontSize: '11px',
               letterSpacing: '0.08em',
-              color: '#a09d98',
+              color: OG_COLORS.muted,
               fontWeight: 400,
             }}
           >
@@ -112,7 +113,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
             style={{
               fontSize: '11px',
               letterSpacing: '0.08em',
-              color: '#a09d98',
+              color: OG_COLORS.muted,
               fontWeight: 400,
             }}
           >

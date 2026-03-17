@@ -29,7 +29,12 @@ function formatDate(dateValue: string): string {
 }
 
 export default function BlogPage() {
-  const posts = getAllPosts()
+  let posts: ReturnType<typeof getAllPosts> = []
+  try {
+    posts = getAllPosts()
+  } catch (e) {
+    console.error('Failed to load blog posts:', e)
+  }
 
   return (
     <div className="container mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">

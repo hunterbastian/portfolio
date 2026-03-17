@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { siteConfig } from '@/lib/site'
 import { getOgFonts } from '@/lib/og-fonts'
+import { OG_COLORS } from '@/lib/og-colors'
 
 export const runtime = 'nodejs'
 export const alt = 'Hunter Bastian Portfolio'
@@ -20,7 +21,7 @@ export default async function OgImage() {
           flexDirection: 'column',
           justifyContent: 'space-between',
           padding: '60px 64px',
-          background: '#f2f1ef',
+          background: OG_COLORS.background,
           fontFamily: 'GeistMono',
         }}
       >
@@ -31,7 +32,7 @@ export default async function OgImage() {
               width: '8px',
               height: '8px',
               borderRadius: '50%',
-              background: '#7f8f81',
+              background: OG_COLORS.accent,
             }}
           />
           <span
@@ -39,7 +40,7 @@ export default async function OgImage() {
               fontSize: '13px',
               letterSpacing: '0.12em',
               textTransform: 'uppercase' as const,
-              color: '#7f8f81',
+              color: OG_COLORS.accent,
               fontWeight: 500,
             }}
           >
@@ -53,7 +54,7 @@ export default async function OgImage() {
             style={{
               fontSize: '56px',
               fontWeight: 500,
-              color: '#171717',
+              color: OG_COLORS.foreground,
               lineHeight: 1.1,
               letterSpacing: '0.01em',
             }}
@@ -64,7 +65,7 @@ export default async function OgImage() {
             style={{
               fontSize: '20px',
               fontWeight: 400,
-              color: '#a09d98',
+              color: OG_COLORS.muted,
               letterSpacing: '0.02em',
             }}
           >
@@ -84,7 +85,7 @@ export default async function OgImage() {
             style={{
               fontSize: '11px',
               letterSpacing: '0.08em',
-              color: '#a09d98',
+              color: OG_COLORS.muted,
               fontWeight: 400,
             }}
           >
@@ -94,7 +95,7 @@ export default async function OgImage() {
             style={{
               fontSize: '11px',
               letterSpacing: '0.08em',
-              color: '#a09d98',
+              color: OG_COLORS.muted,
               fontWeight: 400,
             }}
           >

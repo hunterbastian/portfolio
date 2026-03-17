@@ -12,6 +12,22 @@ interface ProjectCardProps {
   hideLiveBadge?: boolean
 }
 
+function formatCategoryLabel(category?: string): string {
+  if (!category) return ''
+  const map: Record<string, string> = {
+    'Mobile Design': 'UX/UI, MOBILE',
+    'Web Design': 'UX/UI, WEB',
+    'Product Design': 'UX/UI, PRODUCT',
+    'UI and Web Design': 'UX/UI, WEB',
+    'Graphic Design': 'GRAPHIC DESIGN',
+    'Brand Identity': 'BRAND IDENTITY',
+    'Creative Coding': 'CREATIVE CODING',
+    'Photography': 'PHOTOGRAPHY',
+    'AI': 'AI',
+  }
+  return map[category] ?? category.toUpperCase()
+}
+
 function formatCardDate(dateValue?: string): string {
   if (!dateValue) return ''
   const d = new Date(dateValue)
@@ -24,6 +40,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
   const [imgLoaded, setImgLoaded] = useState(index === 0)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const formattedDate = formatCardDate(frontmatter.date)
+  const categoryLabel = formatCategoryLabel(frontmatter.category)
   const onLoad = useCallback(() => setImgLoaded(true), [])
 
   return (
@@ -76,9 +93,9 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
             >
               {displayTitle}
             </h3>
-            {formattedDate && (
-              <p className="mt-0.5 font-mono text-[10px] tracking-[0.04em] text-muted-foreground tabular-nums">
-                {formattedDate}
+            {categoryLabel && (
+              <p className="mt-1 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/70">
+                [{categoryLabel}]
               </p>
             )}
           </div>

@@ -11,8 +11,26 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto max-w-6xl px-4 sm:px-6">
-      <div className="mb-16 flex justify-start pt-8">
+    <div className="relative container mx-auto max-w-6xl px-4 sm:px-6">
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-25 dark:opacity-0"
+        style={{
+          backgroundImage: 'radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%)',
+          backgroundSize: '100% 100%',
+          transition: 'opacity 300ms ease',
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-0 dark:opacity-20"
+        style={{
+          backgroundImage: 'radial-gradient(125% 125% at 50% 10%, #232527 40%, #d97706 100%)',
+          backgroundSize: '100% 100%',
+          transition: 'opacity 300ms ease',
+        }}
+        aria-hidden="true"
+      />
+      <div className="relative z-10 mb-16 flex justify-start pt-8">
         <Link
           href="/"
           className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
@@ -24,7 +42,7 @@ export default function AboutPage() {
         </Link>
       </div>
 
-      <div className="flex min-h-[calc(100vh-240px)] items-center justify-center">
+      <div className="relative z-10 flex min-h-[calc(100vh-240px)] items-center justify-center">
       <div className="flex flex-col items-center text-center max-w-md">
         <Image
           src="/images/profilepicture.webp"

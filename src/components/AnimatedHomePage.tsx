@@ -3,7 +3,7 @@
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   contactSocialLinks,
   creatingLinks,
@@ -11,7 +11,7 @@ import {
   experienceItems,
   homeHeroContent,
 } from '@/content/homepage'
-import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
+import { siteProjectInquiryHref } from '@/lib/site'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import CollapsibleSection from './CollapsibleSection'
 import { IconGamepad2, IconHandshake } from 'nucleo-pixel-essential'
@@ -317,10 +317,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     }
   }, [])
 
-  const toggleSection = useCallback((key: SectionKey) => {
-    setSectionOpen((prev) => ({ ...prev, [key]: !prev[key] }))
-  }, [])
-
   return (
     <div className="relative isolate overflow-hidden">
       <div
@@ -425,13 +421,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 space-y-8"
       >
-        <div className="mx-auto max-w-[560px] rounded-[3px] bg-card/32 px-2 py-4 sm:px-3 sm:py-5" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)' }}>
+        <div className="mx-auto max-w-[620px] rounded-[3px] bg-card/32 px-2 py-4 sm:px-3 sm:py-5" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)' }}>
           {children}
         </div>
       </CollapsibleSection>
 
       <div className="px-4 pb-2 sm:px-6 lg:px-0 relative z-10">
-        <div className="mx-auto max-w-[560px]">
+        <div className="mx-auto max-w-[620px]">
           <PlaygroundButton />
         </div>
       </div>

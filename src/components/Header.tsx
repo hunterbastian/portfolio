@@ -9,6 +9,7 @@ const PAGE_NAV = [
   { name: 'HOME', href: '/' },
   { name: 'ABOUT', href: '/about' },
   { name: 'PROJECTS', href: '/#case-studies' },
+  { name: 'BLOG', href: '/blog' },
   { name: 'PLAYGROUND', href: '/archive' },
 ] as const
 

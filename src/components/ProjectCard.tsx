@@ -1,14 +1,17 @@
 'use client'
 
-import { memo, useState, useCallback } from 'react'
+import { memo, useCallback, useState } from 'react'
+import { m, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
+import { MOTION_SPRING_SMOOTH } from '@/lib/motion'
 
 interface ProjectCardProps {
   slug: string
   frontmatter: ProjectFrontmatter
   index: number
+  isHovered?: boolean
 }
 
 function formatCardDate(dateValue?: string): string {
@@ -18,23 +21,39 @@ function formatCardDate(dateValue?: string): string {
   return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(d)
 }
 
-function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
+function ProjectCardComponent({ slug, frontmatter, index, isHovered = false }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const formattedDate = formatCardDate(frontmatter.date)
+  const prefersReducedMotion = useReducedMotion() ?? false
+
   const onLoad = useCallback(() => setImgLoaded(true), [])
 
   return (
     <div className="relative">
       <Link href={`/projects/${slug}`} className="group block h-full w-full">
-        <div
-          className="project-card relative isolate overflow-hidden rounded-[3px] text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1 will-change-transform"
+        <m.div
+          className="project-card relative isolate overflow-hidden rounded-[3px] text-card-foreground transition-[box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation will-change-transform"
           style={{
             animationDelay: `${index * 80}ms`,
+            transformOrigin: '50% 50%',
           }}
+          animate={{
+            y: isHovered && !prefersReducedMotion ? -1 : 0,
+            boxShadow: isHovered
+              ? '0px 0px 0px 1px rgba(0, 0, 0, 0.08), 0px 18px 38px -24px rgba(0, 0, 0, 0.28), 0px 28px 48px -34px rgba(0, 0, 0, 0.18)'
+              : undefined,
+          }}
+          transition={MOTION_SPRING_SMOOTH}
         >
-          <div className="relative aspect-[16/9] overflow-hidden img-inset-outline">
+          <m.div
+            className="relative aspect-[16/9] overflow-hidden img-inset-outline"
+            animate={{
+              scale: isHovered && !prefersReducedMotion ? 1.015 : 1,
+            }}
+            transition={MOTION_SPRING_SMOOTH}
+          >
             {!imgLoaded && (
               <div className="absolute inset-0 animate-pulse bg-muted" />
             )}
@@ -65,7 +84,7 @@ function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
             )}
 
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/16 opacity-55 transition-opacity duration-500 ease-out group-hover:opacity-70" />
-          </div>
+          </m.div>
 
           <div className="px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
             <h3
@@ -81,7 +100,7 @@ function ProjectCardComponent({ slug, frontmatter, index }: ProjectCardProps) {
               </p>
             )}
           </div>
-        </div>
+        </m.div>
       </Link>
     </div>
   )

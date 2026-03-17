@@ -29,8 +29,7 @@ export default function ArchivePage() {
       <div
         className="pointer-events-none absolute inset-0 z-0 opacity-25"
         style={{
-          backgroundImage: 'radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%)',
-          backgroundSize: '100% 100%',
+          backgroundImage: 'radial-gradient(80% 30% at 50% 0%, #f59e0b 0%, transparent 100%)',
         }}
         aria-hidden="true"
       />

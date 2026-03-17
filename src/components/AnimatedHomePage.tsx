@@ -255,7 +255,7 @@ function PlaygroundButton() {
           Playground
         </span>
         <span
-          className="absolute left-0 top-0 block font-light tracking-[0.08em] whitespace-nowrap"
+          className="absolute left-0 top-0 block font-light uppercase tracking-[0.08em]"
           style={{
             transform: hovered ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.92)',
             opacity: hovered ? 1 : 0,
@@ -264,7 +264,7 @@ function PlaygroundButton() {
           }}
           aria-hidden
         >
-          a place for my random projects 😊
+          Playground
         </span>
       </span>
     </a>

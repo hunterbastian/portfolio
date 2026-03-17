@@ -13,7 +13,7 @@ interface TopMetaProps {
 
 const PAGE_NAV = [
   { name: 'HOME', href: '/' },
-  { name: 'ABOUT', href: '/about' },
+  { name: 'ABOUT ME', href: '/about' },
   { name: 'PROJECTS', href: '/#case-studies' },
   { name: 'PLAYGROUND', href: '/archive' },
 ] as const

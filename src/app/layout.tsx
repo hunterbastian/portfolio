@@ -178,6 +178,14 @@ export default function RootLayout({
               </main>
               <Footer />
               <ScrollToTop />
+              <div
+                className="pointer-events-none fixed inset-x-0 bottom-0 z-0 h-[40vh] opacity-15"
+                style={{
+                  backgroundImage: 'radial-gradient(125% 200% at 50% 100%, #ffffff 40%, #f59e0b 100%)',
+                  backgroundSize: '100% 100%',
+                }}
+                aria-hidden="true"
+              />
             </div>
             {telemetryConfig.enableSpeedInsights && (
               <SpeedInsights

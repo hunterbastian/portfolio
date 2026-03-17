@@ -181,7 +181,7 @@ export default function RootLayout({
               <div
                 className="pointer-events-none fixed inset-0 z-0 opacity-15"
                 style={{
-                  backgroundImage: 'radial-gradient(80% 50% at 50% 100%, #f59e0b 0%, transparent 100%)',
+                  backgroundImage: 'radial-gradient(80% 30% at 50% 100%, #f59e0b 0%, transparent 100%)',
                 }}
                 aria-hidden="true"
               />

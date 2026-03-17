@@ -23,11 +23,11 @@ function CoordinateLabel({ coordinates }: { coordinates: string }) {
 
   return (
     <div
-      className="absolute left-4 top-4 z-50 select-none sm:left-6 sm:top-6 cursor-default"
+      className="absolute left-4 top-4 z-50 select-none sm:left-6 sm:top-6 cursor-default rounded-full bg-background/60 backdrop-blur-sm px-3 py-1.5"
+      style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06)', fontFamily: 'inherit' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       aria-label={`Location: ${coordinates}`}
-      style={{ fontFamily: 'inherit' }}
     >
       <div className="relative overflow-hidden">
         <span
@@ -80,8 +80,8 @@ export default function TopMeta({ coordinates }: TopMetaProps) {
     <>
       <CoordinateLabel coordinates={coordinates} />
       <div
-        className="absolute right-4 top-4 z-50 hidden items-center gap-4 sm:right-6 sm:top-6 sm:flex"
-        style={{ fontFamily: 'inherit' }}
+        className="absolute right-4 top-4 z-50 hidden items-center gap-4 rounded-full bg-background/60 backdrop-blur-sm px-4 py-1.5 sm:right-6 sm:top-6 sm:flex"
+        style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06)', fontFamily: 'inherit' }}
       >
         {PAGE_NAV.map((item) => (
           <NavLink key={item.href} href={item.href} name={item.name} />

@@ -158,7 +158,14 @@ export default function RootLayout({
           __html: 'body{margin:0}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}::-moz-selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}'
         }} />
       </head>
-      <body className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding bg-background text-foreground`}>
+      <body
+        className={`${GeistMono.className} ${inter.variable} ${playfairDisplay.variable} safe-area-padding text-foreground`}
+        style={{
+          backgroundColor: 'var(--background)',
+          backgroundImage: 'radial-gradient(80% 30% at 50% 100%, rgba(245, 158, 11, 0.12) 0%, transparent 100%)',
+          backgroundAttachment: 'fixed',
+        }}
+      >
         <MotionProvider>
           <TopMeta
             coordinates={siteConfig.siteCoordinates}
@@ -178,13 +185,6 @@ export default function RootLayout({
               </main>
               <Footer />
               <ScrollToTop />
-              <div
-                className="pointer-events-none fixed inset-0 z-0 opacity-15"
-                style={{
-                  backgroundImage: 'radial-gradient(80% 30% at 50% 100%, #f59e0b 0%, transparent 100%)',
-                }}
-                aria-hidden="true"
-              />
             </div>
             {telemetryConfig.enableSpeedInsights && (
               <SpeedInsights

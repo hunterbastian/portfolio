@@ -98,7 +98,7 @@ export default function Footer() {
             }
       }
     >
-      <div className="container relative z-10 mx-auto grid max-w-6xl gap-3 px-4 py-6 text-center font-mono md:grid-cols-2 md:items-center">
+      <div className="relative z-10 mx-auto grid max-w-7xl gap-3 px-6 py-8 text-center font-mono sm:px-8 md:grid-cols-2 md:items-center">
         <span className="text-[11px] tracking-[0.04em] text-muted-foreground tabular-nums md:justify-self-start">
           © {currentYear}
         </span>

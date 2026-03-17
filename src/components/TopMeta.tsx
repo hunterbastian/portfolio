@@ -23,8 +23,8 @@ function CoordinateLabel({ coordinates }: { coordinates: string }) {
 
   return (
     <div
-      className="absolute left-4 top-4 z-50 select-none sm:left-6 sm:top-6 cursor-default rounded-full bg-white/50 backdrop-blur-sm px-3 py-1.5"
-      style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06)', fontFamily: 'inherit' }}
+      className="absolute left-4 top-4 z-50 select-none sm:left-6 sm:top-6 cursor-default rounded-full bg-background/40 backdrop-blur-md px-3 py-1.5"
+      style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)', fontFamily: 'inherit' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       aria-label={`Location: ${coordinates}`}
@@ -62,7 +62,7 @@ function NavLink({ href, name }: { href: string; name: string }) {
   return (
     <Link
       href={href}
-      className="block min-h-[40px] flex items-center text-[11px] tracking-[0.12em] uppercase text-foreground opacity-90 whitespace-nowrap no-underline hover:underline underline-offset-[3px] decoration-[1px] transition-[text-decoration-color] duration-300 ease-out"
+      className="flex items-center text-[11px] tracking-[0.12em] uppercase text-foreground opacity-90 whitespace-nowrap no-underline hover:underline underline-offset-[3px] decoration-[1px] transition-[text-decoration-color] duration-300 ease-out"
     >
       {name}
     </Link>
@@ -80,8 +80,8 @@ export default function TopMeta({ coordinates }: TopMetaProps) {
     <>
       <CoordinateLabel coordinates={coordinates} />
       <div
-        className="absolute right-4 top-4 z-50 hidden items-center gap-4 rounded-full bg-white/50 backdrop-blur-sm px-4 py-1.5 sm:right-6 sm:top-6 sm:flex"
-        style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06)', fontFamily: 'inherit' }}
+        className="absolute right-4 top-4 z-50 hidden items-center gap-4 rounded-full bg-background/40 backdrop-blur-md px-4 py-1.5 sm:right-6 sm:top-6 sm:flex"
+        style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)', fontFamily: 'inherit' }}
       >
         {PAGE_NAV.map((item) => (
           <NavLink key={item.href} href={item.href} name={item.name} />

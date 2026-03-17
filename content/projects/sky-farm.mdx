@@ -1,14 +1,14 @@
 ---
 title: "Sky Farm"
-description: "A pixel art idle farming game above the clouds, built with PixiJS and TypeScript."
+description: "An Animal Crossing-inspired pixel idle game with cinematic lighting, bee ecosystems, and anime clouds."
 category: "Creative Coding"
 tags: ["Creative Coding", "Game Dev", "Interactive Design", "Playground"]
 image: "/images/optimized/projects/sky-farm.webp"
 demo: "https://sky-farm.vercel.app"
 github: "https://github.com/hunterbastian/sky-farm"
 featured: false
-archived: true
-date: "2026-03-13"
+archived: false
+date: "2026-03-16"
 ---
 
 <ScrollReveal>
@@ -17,19 +17,19 @@ date: "2026-03-13"
 
 ## Overview
 
-Sky Farm is a browser-based idle farming game rendered entirely with procedural pixel art. A floating island above the clouds hosts crops, chickens, cherry blossom trees, and a pond — all growing and harvesting on their own.
+Sky Farm is a browser-based idle farming game on a floating island above the clouds. Crops grow on their own, three bee species forage wildflowers to produce honey, and chickens lay eggs in their pen. The whole world is drawn procedurally each frame with no sprite sheets.
 
 <div className="flex flex-wrap gap-3 justify-center my-8">
 <MetricCard value={100} suffix="%" label="procedural art" />
-<MetricCard value={0} label="sprite sheets" />
-<MetricCard value={1} label="TypeScript file" />
+<MetricCard value={3} label="bee species" />
+<MetricCard value={8} label="lighting layers" />
 </div>
 
 ## Direction
 
 <ScrollReveal>
 
-The visual style draws from Stardew Valley and early-2000s Windows XP aesthetics — soft CRT scanlines, a Luna-themed toolbar, and a DOS-style boot sequence. Everything is drawn procedurally each frame with no sprite sheets.
+The visual style blends Animal Crossing's soft pastel UI with anime-inspired clouds and cinematic golden hour lighting. Frosted glass panels, hand-crafted fabric grass textures, and an 8-layer lighting system that shifts from rose-tinted dawn to golden sunset to moonlit night with fireflies.
 
 </ScrollReveal>
 
@@ -37,6 +37,6 @@ The visual style draws from Stardew Valley and early-2000s Windows XP aesthetics
 
 <ScrollReveal>
 
-Auto-farm mechanics, touch-first interaction design, real-time day/night lighting, and the challenge of building a complete game loop in a single TypeScript file with PixiJS v8.
+Procedural pixel art, multi-species AI ecosystems, real-time cinematic lighting with directional sunlight and vignetting, touch-first idle game design, and smooth pinch-to-zoom camera controls — all in a single TypeScript file with PixiJS v8.
 
 </ScrollReveal>

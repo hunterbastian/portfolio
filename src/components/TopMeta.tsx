@@ -114,38 +114,13 @@ function CoordinateLabel({ coordinates }: { coordinates: string }) {
 }
 
 function NavLink({ href, name }: { href: string; name: string }) {
-  const [hovered, setHovered] = useState(false)
-
   return (
     <Link
       href={href}
-      className="relative overflow-hidden block min-h-[40px] flex items-center"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="block min-h-[40px] flex items-center text-[11px] tracking-[0.12em] uppercase text-foreground opacity-90 whitespace-nowrap underline-offset-[3px] decoration-foreground/0 hover:decoration-foreground/90 transition-[text-decoration-color] duration-300 ease-out"
+      style={{ textDecorationLine: 'underline', textDecorationThickness: '1px' }}
     >
-      <span
-        className="block text-[11px] tracking-[0.12em] uppercase text-foreground whitespace-nowrap"
-        style={{
-          transform: hovered ? 'translateY(-100%) scale(0.92)' : 'translateY(0) scale(1)',
-          opacity: hovered ? 0 : 0.9,
-          filter: hovered ? 'blur(2px)' : 'blur(0)',
-          transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 400ms cubic-bezier(0.22,1,0.36,1), filter 450ms cubic-bezier(0.22,1,0.36,1)',
-        }}
-      >
-        {name}
-      </span>
-      <span
-        className="absolute left-0 top-0 block text-[11px] tracking-[0.12em] uppercase text-foreground whitespace-nowrap h-full flex items-center"
-        style={{
-          transform: hovered ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.92)',
-          opacity: hovered ? 0.9 : 0,
-          filter: hovered ? 'blur(0)' : 'blur(2px)',
-          transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 420ms cubic-bezier(0.22,1,0.36,1) 60ms, filter 450ms cubic-bezier(0.22,1,0.36,1) 60ms',
-        }}
-        aria-hidden
-      >
-        {name}
-      </span>
+      {name}
     </Link>
   )
 }

@@ -122,12 +122,12 @@ function getStackPriorityZIndex(index: number, total: number, stackPriority: Sta
 }
 
 const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
-  'brand-identity-system': { rotate: -6.2, x: -14 },
-  'aol-redesign': { rotate: -5.4, x: -11 },
-  'porsche-app': { rotate: 6.2, x: 14 },
+  'brand-identity-system': { rotate: -1.2, x: -3 },
+  'aol-redesign': { rotate: -1, x: -2 },
+  'porsche-app': { rotate: 1.2, x: 3 },
   'wander-utah': { rotate: 0, x: 0 },
   'grand-teton-wallet': { rotate: 0, x: 0 },
-  nutricost: { rotate: -2.8, x: -5 },
+  nutricost: { rotate: -0.6, x: -1 },
 }
 
 const MOBILE_TILT_FACTOR = 0.48

@@ -117,8 +117,7 @@ function NavLink({ href, name }: { href: string; name: string }) {
   return (
     <Link
       href={href}
-      className="block min-h-[40px] flex items-center text-[11px] tracking-[0.12em] uppercase text-foreground opacity-90 whitespace-nowrap underline-offset-[3px] decoration-foreground/0 hover:decoration-foreground/90 transition-[text-decoration-color] duration-300 ease-out"
-      style={{ textDecorationLine: 'underline', textDecorationThickness: '1px' }}
+      className="block min-h-[40px] flex items-center text-[11px] tracking-[0.12em] uppercase text-foreground opacity-90 whitespace-nowrap no-underline hover:underline underline-offset-[3px] decoration-[1px] transition-[text-decoration-color] duration-300 ease-out"
     >
       {name}
     </Link>

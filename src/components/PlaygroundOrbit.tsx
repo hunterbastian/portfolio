@@ -43,7 +43,7 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
         className="mb-6 text-center text-xs tracking-[0.06em] text-muted-foreground"
         style={{ fontFamily: 'inherit' }}
       >
-        a place for my random stuff :)
+        a place for my random projects 😊
       </p>
 
       <div className="flex w-full snap-x snap-mandatory gap-5 overflow-x-auto px-[calc(50%-100px)] pb-4 scrollbar-hide">
@@ -74,7 +74,7 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
 export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const count = projects.length
-  const radius = 260
+  const radius = 340
   const rotation = useMotionValue(0)
   const counterRotation = useTransform(rotation, (v) => -v)
   const speedRef = useRef(NORMAL_SPEED)
@@ -96,14 +96,14 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none text-xs tracking-[0.06em] text-muted-foreground whitespace-nowrap z-10"
           style={{ fontFamily: 'inherit' }}
         >
-          a place for my random stuff :)
+          a place for my random projects 😊
         </p>
 
         <m.div
           className="relative"
           style={{
-            width: radius * 2 + 253,
-            height: radius * 2 + 253,
+            width: radius * 2 + 300,
+            height: radius * 2 + 300,
             rotate: rotation,
           }}
         >
@@ -118,12 +118,12 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
                 className="absolute left-1/2 top-1/2"
                 style={{
                   transform: `rotate(${angle}deg) translateY(-${radius}px) rotate(-${angle}deg)`,
-                  marginLeft: -65,
-                  marginTop: -54,
+                  marginLeft: -80,
+                  marginTop: -60,
                 }}
               >
                 <m.div
-                  className="w-[130px]"
+                  className="w-[160px]"
                   style={{ rotate: counterRotation }}
                 >
                   <div

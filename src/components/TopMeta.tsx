@@ -80,7 +80,7 @@ export default function TopMeta({ coordinates }: TopMetaProps) {
     <>
       <CoordinateLabel coordinates={coordinates} />
       <div
-        className="absolute right-4 top-4 z-50 hidden items-center gap-4 rounded-full bg-background/40 backdrop-blur-md px-4 py-1.5 sm:right-6 sm:top-6 sm:flex"
+        className="absolute right-4 top-4 z-50 hidden items-center gap-4 rounded-full bg-background/40 backdrop-blur-md px-5 py-2.5 sm:right-6 sm:top-6 sm:flex"
         style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)', fontFamily: 'inherit' }}
       >
         {PAGE_NAV.map((item) => (

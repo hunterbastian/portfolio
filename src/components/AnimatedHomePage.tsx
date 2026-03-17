@@ -617,7 +617,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="05 CONTACT"
         isOpen={sectionOpen.contact}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="pt-12 pb-14 sm:pb-20"
+        openClassName="pt-12 pb-20 sm:pb-28"
         closedClassName="py-5"
         contentClassName="mt-4"
       >

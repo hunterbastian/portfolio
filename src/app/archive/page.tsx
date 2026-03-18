@@ -27,10 +27,7 @@ export default function ArchivePage() {
   return (
     <div className="relative h-[100dvh] overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 z-0 opacity-[0.15]"
-        style={{
-          backgroundImage: 'radial-gradient(80% 30% at 50% 0%, #f59e0b 0%, transparent 100%)',
-        }}
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.1] archive-glow"
         aria-hidden="true"
       />
       <div className="relative z-10 flex h-full flex-col container mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6">

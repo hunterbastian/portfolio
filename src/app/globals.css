@@ -431,6 +431,22 @@ h1, h2, h3, h4, h5, h6 {
   filter: brightness(0.92);
 }
 
+.body-glow {
+  background-image: radial-gradient(80% 30% at 50% 100%, rgba(245, 158, 11, 0.7) 0%, transparent 100%);
+}
+
+.dark .body-glow {
+  background-image: radial-gradient(80% 30% at 50% 100%, rgba(146, 64, 14, 0.35) 0%, transparent 100%);
+}
+
+.archive-glow {
+  background-image: radial-gradient(80% 30% at 50% 0%, #f59e0b 0%, transparent 100%);
+}
+
+.dark .archive-glow {
+  background-image: radial-gradient(80% 30% at 50% 0%, rgba(146, 64, 14, 0.5) 0%, transparent 100%);
+}
+
 .about-page-glow {
   background-image: radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%);
   background-size: 100% 100%;

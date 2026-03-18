@@ -99,7 +99,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#f2f1ef" />
+        <meta name="theme-color" content="#f2f1ef" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#232527" media="(prefers-color-scheme: dark)" />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <>
@@ -173,10 +174,9 @@ export default function RootLayout({
         }} />
       </head>
       <body
-        className={`${GeistMono.className} ${inter.variable} safe-area-padding text-foreground`}
+        className={`${GeistMono.className} ${inter.variable} safe-area-padding text-foreground body-glow`}
         style={{
           backgroundColor: 'var(--background)',
-          backgroundImage: 'radial-gradient(80% 30% at 50% 100%, rgba(245, 158, 11, 0.7) 0%, transparent 100%)',
           backgroundAttachment: 'fixed',
         }}
       >

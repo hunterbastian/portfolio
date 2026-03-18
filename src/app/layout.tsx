@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Geist } from 'next/font/google'
 import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 import './viewport.css'
@@ -17,6 +17,10 @@ import ProjectTransitionOverlay from '@/components/ProjectTransitionOverlay'
 import TopMeta from '@/components/TopMeta'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
 
 // Primary body font
 const inter = Inter({
@@ -96,7 +100,7 @@ export default function RootLayout({
   children: ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#f2f1ef" media="(prefers-color-scheme: light)" />

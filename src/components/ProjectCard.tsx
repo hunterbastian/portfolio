@@ -11,6 +11,7 @@ interface ProjectCardProps {
   frontmatter: ProjectFrontmatter
   index: number
   hideLiveBadge?: boolean
+  hideLabel?: boolean
 }
 
 function formatCategoryLabel(category?: string): string {
@@ -29,7 +30,7 @@ function formatCategoryLabel(category?: string): string {
   return map[category] ?? category.toUpperCase()
 }
 
-function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: ProjectCardProps) {
+function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLabel }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
   const imageRef = useRef<HTMLDivElement>(null)
@@ -92,19 +93,21 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 transition-opacity duration-500 ease-out group-hover:opacity-80" />
           </div>
 
-          <div className="px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
-            <h3
-              className="block w-full truncate whitespace-nowrap text-[13px] font-medium leading-tight text-foreground transition-colors duration-200"
-              title={displayTitle}
-            >
-              {displayTitle}
-            </h3>
-            {categoryLabel && (
-              <p className="mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60">
-                [{categoryLabel}]
-              </p>
-            )}
-          </div>
+          {!hideLabel && (
+            <div className="px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
+              <h3
+                className="block w-full truncate whitespace-nowrap text-[13px] font-medium leading-tight text-foreground transition-colors duration-200"
+                title={displayTitle}
+              >
+                {displayTitle}
+              </h3>
+              {categoryLabel && (
+                <p className="mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60">
+                  [{categoryLabel}]
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </Link>
       {frontmatter.demo && !hideLiveBadge && (

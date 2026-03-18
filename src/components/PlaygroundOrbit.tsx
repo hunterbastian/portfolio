@@ -83,7 +83,7 @@ function CenterLabel() {
       <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/50">
         Playground
       </p>
-      <p className="mt-2.5 max-w-[180px] font-inter text-[11px] leading-relaxed text-muted-foreground/35">
+      <p className="mt-2.5 whitespace-nowrap font-inter text-[11px] text-muted-foreground/35">
         a collection of my random projects :)
       </p>
     </m.div>
@@ -104,7 +104,7 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
         <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/50">
           Playground
         </p>
-        <p className="mt-2.5 max-w-[200px] mx-auto font-inter text-[11px] leading-relaxed text-muted-foreground/35">
+        <p className="mt-2.5 whitespace-nowrap font-inter text-[11px] text-muted-foreground/35">
           a collection of my random projects :)
         </p>
       </m.div>
@@ -177,14 +177,14 @@ function OrbitCard({
 
   return (
     <m.div
-      className="absolute w-[160px]"
+      className="absolute w-[144px]"
       style={{
         left: '50%',
         top: '50%',
         x,
         y,
-        marginLeft: -80,
-        marginTop: -60,
+        marginLeft: -72,
+        marginTop: -54,
       }}
       initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8, filter: 'blur(6px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
@@ -208,6 +208,7 @@ function OrbitCard({
           frontmatter={project.frontmatter}
           index={index}
           hideLiveBadge
+          hideLabel
         />
         <AnimatePresence>
           {isHovered && (

@@ -57,11 +57,15 @@ function CoordinateLabel({ coordinates }: { coordinates: string }) {
   )
 }
 
-function NavLink({ href, name }: { href: string; name: string }) {
+function NavLink({ href, name, isActive }: { href: string; name: string; isActive: boolean }) {
   return (
     <Link
       href={href}
-      className="flex items-center text-[11px] tracking-[0.12em] uppercase text-foreground opacity-90 whitespace-nowrap no-underline hover:underline underline-offset-[3px] decoration-[1px] transition-[text-decoration-color] duration-300 ease-out"
+      className={`flex items-center text-[11px] tracking-[0.12em] uppercase whitespace-nowrap underline-offset-[3px] decoration-[1px] transition-[text-decoration-color,opacity] duration-300 ease-out ${
+        isActive
+          ? 'text-foreground underline decoration-foreground/40'
+          : 'text-foreground opacity-60 no-underline hover:opacity-90 hover:underline'
+      }`}
     >
       {name}
     </Link>
@@ -81,9 +85,16 @@ export default function TopMeta({ coordinates }: TopMetaProps) {
       <div
         className="fixed right-4 top-4 z-50 hidden items-center gap-4 rounded-full backdrop-blur-xl px-5 py-2.5 sm:right-6 sm:top-6 sm:flex top-meta-pill"
       >
-        {PAGE_NAV.map((item) => (
-          <NavLink key={item.href} href={item.href} name={item.name} />
-        ))}
+        {PAGE_NAV.map((item) => {
+          const isActive = item.href === '/'
+            ? pathname === '/'
+            : item.href.startsWith('/#')
+              ? pathname === '/'
+              : pathname.startsWith(item.href)
+          return (
+            <NavLink key={item.href} href={item.href} name={item.name} isActive={isActive} />
+          )
+        })}
       </div>
     </>
   )

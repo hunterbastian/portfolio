@@ -102,15 +102,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#232527" media="(prefers-color-scheme: dark)" />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
-          <>
-            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${telemetryConfig.gaId}`} />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${telemetryConfig.gaId}');`,
-              }}
-            />
-          </>
+          <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
         )}
 
         {/* Structured Data - Person + Organization Schema for SEO
@@ -203,6 +195,19 @@ export default function RootLayout({
             )}
             {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
             {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
+
+            {/* Google Analytics - deferred to avoid blocking */}
+            {telemetryConfig.enableGa && telemetryConfig.gaId && (
+              <>
+                <Script
+                  src={`https://www.googletagmanager.com/gtag/js?id=${telemetryConfig.gaId}`}
+                  strategy="afterInteractive"
+                />
+                <Script id="ga-init" strategy="afterInteractive">
+                  {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${telemetryConfig.gaId}');`}
+                </Script>
+              </>
+            )}
 
             {/* Service Worker Registration - Deferred for better performance */}
             {process.env.NODE_ENV === 'production' && (

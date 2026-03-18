@@ -70,7 +70,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
               className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
               style={frontmatter.imageZoom ? { objectPosition: 'center', scale: `${frontmatter.imageZoom}` } : undefined}
               sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
-              quality={90}
+              quality={80}
               priority={index === 0}
               loading={index === 0 ? 'eager' : 'lazy'}
               fetchPriority={index === 0 ? 'high' : 'low'}

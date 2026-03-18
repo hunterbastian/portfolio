@@ -348,6 +348,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 width={72}
                 height={72}
                 className="h-16 w-16 shrink-0 rounded-full img-inset-outline object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
+                sizes="72px"
                 priority
               />
             </m.div>

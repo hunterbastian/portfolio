@@ -22,10 +22,10 @@ const ORBIT_RADIUS = 320
  * ───────────────────────────────────────────────────────── */
 
 const ENTRANCE = {
-  centerDelay: 0.2,
-  cardsDelay: 0.4,
-  cardStagger: 0.08,
-  cardDuration: 0.5,
+  centerDelay: 0.3,
+  cardsDelay: 0.6,
+  cardStagger: 0.12,
+  cardDuration: 0.7,
   ease: [0.16, 1, 0.3, 1] as const,
 }
 
@@ -56,16 +56,16 @@ function LiveDemoPill({ title, href }: { title: string; href: string }) {
 function CenterLabel({ count }: { count: number }) {
   return (
     <m.div
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none text-center"
-      initial={{ opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay: ENTRANCE.centerDelay, ease: ENTRANCE.ease }}
+      className="text-center flex flex-col items-center"
+      initial={{ opacity: 0, scale: 0.96, filter: 'blur(4px)' }}
+      animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+      transition={{ duration: 0.4, delay: ENTRANCE.centerDelay, ease: ENTRANCE.ease }}
     >
       <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground/60">
         Playground
       </p>
-      <p className="mt-1 font-mono text-[10px] tracking-[0.06em] text-muted-foreground/40 tabular-nums">
-        {count} projects
+      <p className="mt-2 max-w-[180px] font-mono text-[10px] leading-relaxed tracking-[0.04em] text-muted-foreground/40">
+        a collection of my random projects :)
       </p>
     </m.div>
   )
@@ -85,8 +85,8 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
         <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground/60">
           Playground
         </p>
-        <p className="mt-1 font-mono text-[10px] tracking-[0.06em] text-muted-foreground/40 tabular-nums">
-          {projects.length} projects
+        <p className="mt-2 max-w-[200px] mx-auto font-mono text-[10px] leading-relaxed tracking-[0.04em] text-muted-foreground/40">
+          a collection of my random projects :)
         </p>
       </m.div>
 
@@ -122,6 +122,91 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
   )
 }
 
+function OrbitCard({
+  project,
+  index,
+  baseAngle,
+  tilt,
+  isHovered,
+  hasHoverTarget,
+  rotation,
+  mounted,
+  prefersReducedMotion,
+  onHoverStart,
+  onHoverEnd,
+}: {
+  project: Project
+  index: number
+  baseAngle: number
+  tilt: number
+  isHovered: boolean
+  hasHoverTarget: boolean
+  rotation: ReturnType<typeof useMotionValue<number>>
+  mounted: boolean
+  prefersReducedMotion: boolean
+  onHoverStart: () => void
+  onHoverEnd: () => void
+}) {
+  const x = useTransform(rotation, (r) => {
+    const rad = ((baseAngle + r) * Math.PI) / 180
+    return Math.sin(rad) * ORBIT_RADIUS
+  })
+  const y = useTransform(rotation, (r) => {
+    const rad = ((baseAngle + r) * Math.PI) / 180
+    return -Math.cos(rad) * ORBIT_RADIUS
+  })
+
+  return (
+    <m.div
+      className="absolute w-[144px]"
+      style={{
+        left: '50%',
+        top: '50%',
+        x,
+        y,
+        marginLeft: -72,
+        marginTop: -54,
+      }}
+      initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8, filter: 'blur(6px)' }}
+      animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+      transition={{
+        duration: ENTRANCE.cardDuration,
+        delay: ENTRANCE.cardsDelay + index * ENTRANCE.cardStagger,
+        ease: ENTRANCE.ease,
+      }}
+    >
+      <div
+        className="transition-[transform,filter] duration-300 ease-out"
+        style={{
+          transform: `rotate(${tilt}deg) scale(${isHovered ? 1.1 : 1})`,
+          filter: hasHoverTarget && !isHovered ? 'brightness(0.92) saturate(0.8)' : 'none',
+        }}
+        onMouseEnter={onHoverStart}
+        onMouseLeave={onHoverEnd}
+      >
+        <ProjectCard
+          slug={project.slug}
+          frontmatter={project.frontmatter}
+          index={index}
+          hideLiveBadge
+        />
+        <AnimatePresence>
+          {project.frontmatter.demo && isHovered && (
+            <m.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+            >
+              <LiveDemoPill title={project.frontmatter.title} href={project.frontmatter.demo} />
+            </m.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </m.div>
+  )
+}
+
 export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [mounted, setMounted] = useState(false)
@@ -129,7 +214,6 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
   const count = projects.length
   const rotation = useMotionValue(0)
-  const counterRotation = useTransform(rotation, (v) => -v)
   const speedRef = useRef(0)
 
   useEffect(() => {
@@ -154,75 +238,33 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
       <MobilePlayground projects={projects} />
 
       {/* Desktop: rotating orbit */}
-      <div className="hidden md:flex items-center justify-center h-full relative">
-        <CenterLabel count={count} />
+      <div className="hidden md:block h-full relative">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+          <CenterLabel count={count} />
+        </div>
 
-        <m.div
-          className="relative"
-          style={{
-            width: ORBIT_RADIUS * 2 + 300,
-            height: ORBIT_RADIUS * 2 + 300,
-            rotate: rotation,
-          }}
-        >
-          {projects.map((project, index) => {
-            const angle = (index / count) * 360
-            const tilt = cardTilt(index)
-            const isHovered = hoveredIndex === index
+        {projects.map((project, index) => {
+          const baseAngle = (index / count) * 360
+          const tilt = cardTilt(index)
+          const isHovered = hoveredIndex === index
 
-            return (
-              <m.div
-                key={project.slug}
-                className="absolute left-1/2 top-1/2"
-                style={{
-                  transform: `rotate(${angle}deg) translateY(-${ORBIT_RADIUS}px) rotate(-${angle}deg)`,
-                  marginLeft: -72,
-                  marginTop: -54,
-                }}
-                initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8 }}
-                animate={{ opacity: mounted ? 1 : 0, scale: mounted ? 1 : 0.8 }}
-                transition={{
-                  duration: ENTRANCE.cardDuration,
-                  delay: ENTRANCE.cardsDelay + index * ENTRANCE.cardStagger,
-                  ease: ENTRANCE.ease,
-                }}
-              >
-                <m.div
-                  className="w-[144px]"
-                  style={{ rotate: counterRotation }}
-                >
-                  <div
-                    className="transition-[transform,filter] duration-300 ease-out"
-                    style={{
-                      transform: `rotate(${tilt}deg) scale(${isHovered ? 1.1 : 1})`,
-                      filter: hoveredIndex !== null && !isHovered ? 'brightness(0.92) saturate(0.8)' : 'none',
-                    }}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                  >
-                    <ProjectCard
-                      slug={project.slug}
-                      frontmatter={project.frontmatter}
-                      index={index}
-                    />
-                    <AnimatePresence>
-                      {project.frontmatter.demo && isHovered && (
-                        <m.div
-                          initial={{ opacity: 0, y: -4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -4 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <LiveDemoPill title={project.frontmatter.title} href={project.frontmatter.demo} />
-                        </m.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </m.div>
-              </m.div>
-            )
-          })}
-        </m.div>
+          return (
+            <OrbitCard
+              key={project.slug}
+              project={project}
+              index={index}
+              baseAngle={baseAngle}
+              tilt={tilt}
+              isHovered={isHovered}
+              hasHoverTarget={hoveredIndex !== null}
+              rotation={rotation}
+              mounted={mounted}
+              prefersReducedMotion={prefersReducedMotion}
+              onHoverStart={() => setHoveredIndex(index)}
+              onHoverEnd={() => setHoveredIndex(null)}
+            />
+          )
+        })}
       </div>
     </div>
   )

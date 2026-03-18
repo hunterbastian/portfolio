@@ -2,6 +2,7 @@
 
 import { AnimatePresence, m } from 'framer-motion'
 import { FormEvent, useEffect, useState } from 'react'
+import IconArrowBackUp from './IconArrowBackUp'
 
 interface ResumeModalProps {
   isOpen: boolean
@@ -152,28 +153,28 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 <button
                   type="button"
                   onClick={onClose}
-                  className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
+                  className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground mb-6 transition-colors"
                 >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  Back to portfolio
+                  <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
+                  <span className="text-foreground">Home</span>
+                  <span aria-hidden className="text-muted-foreground/70">/</span>
+                  <span>Resume</span>
                 </button>
-                
-                <h1 className="text-[2.08rem] md:text-[2.83rem] font-bold mb-8">Hunter Bastian // Studio Alpine</h1>
+
+                <h1 className="font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">Resume</h1>
               </div>
 
               {/* Resume Details - matches project details */}
               <div className="mb-12 flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span className="font-medium">Document:</span>
-                  <span className="bg-primary/10 text-primary px-3 py-1 rounded-[3px]">
+                <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+                  <span className="font-medium tracking-[0.04em]">Document:</span>
+                  <span className="bg-primary/10 text-primary px-3 py-1.5 rounded-[3px] tracking-[0.04em]">
                     Resume
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span className="font-medium">Format:</span>
-                  <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-[3px]">
+                <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+                  <span className="font-medium tracking-[0.04em]">Format:</span>
+                  <span className="bg-secondary text-secondary-foreground px-3 py-1.5 rounded-[3px] tracking-[0.04em]">
                     PDF
                   </span>
                 </div>
@@ -207,12 +208,12 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 </>
               ) : (
                 <div className="mb-12 rounded-[3px] border border-border bg-card p-6 sm:p-8">
-                  <h2 className="text-2xl font-semibold font-garamond-narrow mb-3">Resume Access</h2>
+                  <h2 className="font-mono text-[13px] font-medium tracking-[0.04em] text-foreground mb-3">Resume Access</h2>
                   <p className="text-sm text-muted-foreground mb-6">
                     Enter the password to view or download the resume.
                   </p>
                   <form className="max-w-sm space-y-4" onSubmit={handleUnlock}>
-                    <label htmlFor="resume-password" className="block text-xs font-code tracking-[0.08em] uppercase text-muted-foreground">
+                    <label htmlFor="resume-password" className="block text-xs tracking-[0.08em] uppercase text-muted-foreground">
                       Password
                     </label>
                     <input
@@ -230,7 +231,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     <button
                       type="submit"
                       disabled={!isConfigured || isSubmittingPassword}
-                      className="nord-button rounded-[3px] px-4 py-2 text-xs font-code tracking-[0.08em] uppercase disabled:opacity-50"
+                      className="nord-button rounded-[3px] px-4 py-2 text-xs tracking-[0.08em] uppercase disabled:opacity-50"
                     >
                       {isSubmittingPassword ? 'Unlocking...' : 'Unlock Resume'}
                     </button>

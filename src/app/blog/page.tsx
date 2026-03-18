@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/blog'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
-import IconArrowBackUp from '@/components/IconArrowBackUp'
+import BreadcrumbPill from '@/components/BreadcrumbPill'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -38,16 +38,8 @@ export default function BlogPage() {
 
   return (
     <div className="container mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
-      <div className="mb-16">
-        <Link
-          href="/"
-          className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
-        >
-          <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
-          <span className="text-foreground">Home</span>
-          <span aria-hidden className="text-muted-foreground/70">/</span>
-          <span>Blog</span>
-        </Link>
+      <div className="mb-8 sm:mb-12">
+        <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Blog" />
       </div>
 
       <div className="mx-auto max-w-[700px]">

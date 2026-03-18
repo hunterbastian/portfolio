@@ -7,7 +7,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import mdxComponents from '@/components/mdx/MDXComponents'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 import { IconTag } from 'nucleo-pixel-essential'
-import IconArrowBackUp from '@/components/IconArrowBackUp'
+import BreadcrumbPill from '@/components/BreadcrumbPill'
 import ProjectDetailContent from '@/components/ProjectDetailContent'
 import CaseStudyNav from '@/components/CaseStudyNav'
 
@@ -147,16 +147,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mb-8 sm:mb-16 flex justify-start">
-        <Link
-          href="/#case-studies"
-          className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
-        >
-          <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
-          <span className="text-foreground">Home</span>
-          <span aria-hidden className="text-muted-foreground/70">/</span>
-          <span>Projects</span>
-        </Link>
+      <div className="mb-4 sm:mb-8 flex justify-start">
+        <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Projects" />
       </div>
 
       <div className="relative mx-auto max-w-[560px]">

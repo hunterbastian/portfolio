@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import IconArrowBackUp from '@/components/IconArrowBackUp'
+import BreadcrumbPill from '@/components/BreadcrumbPill'
 import AnimatedDashedArrow from '@/components/AnimatedDashedArrow'
 import ResumeButton from '@/components/ResumeButton'
 
@@ -18,16 +18,8 @@ export default function AboutPage() {
         aria-hidden="true"
       />
       <div className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6">
-      <div className="mb-16 flex justify-start pt-8">
-        <Link
-          href="/"
-          className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
-        >
-          <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
-          <span className="text-foreground">Home</span>
-          <span aria-hidden className="text-muted-foreground/70">/</span>
-          <span>About</span>
-        </Link>
+      <div className="mb-8 sm:mb-12 flex justify-start pt-4 sm:pt-6">
+        <BreadcrumbPill href="/" parentLabel="Home" currentLabel="About" />
       </div>
 
       <div className="relative z-10 flex min-h-[calc(100vh-240px)] items-center justify-center">

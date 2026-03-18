@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import mdxComponents from '@/components/mdx/MDXComponents'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
-import IconArrowBackUp from '@/components/IconArrowBackUp'
+import BreadcrumbPill from '@/components/BreadcrumbPill'
 
 export const revalidate = 300
 
@@ -62,16 +62,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <article className="container mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
-      <div className="mb-16 flex justify-start">
-        <Link
-          href="/blog"
-          className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
-        >
-          <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
-          <span className="text-foreground">Home</span>
-          <span aria-hidden className="text-muted-foreground/70">/</span>
-          <span>Blog</span>
-        </Link>
+      <div className="mb-8 sm:mb-12 flex justify-start">
+        <BreadcrumbPill href="/blog" parentLabel="Blog" currentLabel={post.frontmatter.title} />
       </div>
 
       <div className="mx-auto max-w-[560px]">

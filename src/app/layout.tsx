@@ -182,11 +182,7 @@ export default function RootLayout({
       >
         <MotionProvider>
           <ProjectTransitionOverlay />
-          <TopMeta
-            coordinates={siteConfig.siteCoordinates}
-            location={siteConfig.siteLocation}
-            season={siteConfig.siteSeason}
-          />
+          <TopMeta />
           <SmoothScroll>
             <a
               href="#main-content"

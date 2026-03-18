@@ -5,12 +5,6 @@ import Link from 'next/link'
 import { useScrambleText } from '@/lib/scramble'
 import { siteConfig } from '@/lib/site'
 
-interface TopMetaProps {
-  coordinates: string
-  location: string
-  season: string
-}
-
 const PAGE_NAV = [
   { name: 'HOME', href: '/' },
   { name: 'ABOUT ME', href: '/about' },
@@ -34,15 +28,27 @@ function NavLink({ href, name, isActive }: { href: string; name: string; isActiv
   )
 }
 
-export default function TopMeta({ coordinates }: TopMetaProps) {
-  const pathname = usePathname()
-
-  if (pathname.startsWith('/projects/') || pathname === '/about' || pathname === '/archive') {
-    return null
-  }
-
+function CoordinateDisplay() {
   const coord = useScrambleText(siteConfig.siteCoordinates, true, 400)
-  const location = useScrambleText('UTAH, USA', true, 600)
+  const loc = useScrambleText(siteConfig.siteLocation, true, 600)
+
+  return (
+    <div
+      className="fixed left-4 top-4 z-50 hidden select-none cursor-default sm:left-6 sm:top-6 sm:block"
+      onMouseEnter={() => { coord.scramble(); loc.scramble() }}
+    >
+      <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight">
+        {coord.display}
+      </p>
+      <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight">
+        {loc.display}
+      </p>
+    </div>
+  )
+}
+
+export default function TopMeta() {
+  const pathname = usePathname()
 
   return (
     <>
@@ -51,17 +57,7 @@ export default function TopMeta({ coordinates }: TopMetaProps) {
         className="pointer-events-none fixed inset-x-0 top-0 z-40 hidden h-16 sm:block"
         style={{ background: 'linear-gradient(to bottom, var(--background) 0%, transparent 100%)' }}
       />
-      <div
-        className="fixed left-4 top-4 z-50 hidden select-none cursor-default sm:left-6 sm:top-6 sm:block"
-        onMouseEnter={() => { coord.scramble(); location.scramble() }}
-      >
-        <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight">
-          {coord.display}
-        </p>
-        <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight">
-          {location.display}
-        </p>
-      </div>
+      {pathname === '/' && <CoordinateDisplay />}
       <div
         className="fixed right-4 top-4 z-50 hidden items-center gap-4 rounded-full backdrop-blur-xl px-5 py-2.5 sm:right-6 sm:top-6 sm:flex top-meta-pill"
       >

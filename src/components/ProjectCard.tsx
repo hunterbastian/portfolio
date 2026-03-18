@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
 import { startProjectTransition } from '@/lib/project-transition'
+import { DepthCardWrapper } from '@/components/react-bits/depth-card'
 
 interface ProjectCardProps {
   slug: string
@@ -53,62 +54,64 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
   return (
     <div className="relative">
       <Link href={`/projects/${slug}`} onClick={handleTransitionClick} className="group block h-full w-full rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/50">
-        <div
-          className="project-card relative isolate overflow-hidden rounded-xl text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1.5 will-change-transform"
-          style={{
-            animationDelay: `${index * 80}ms`,
-          }}
-        >
-          <div ref={imageRef} className="relative aspect-[16/9] overflow-hidden img-inset-outline">
-            {!imgLoaded && (
-              <div className="absolute inset-0 animate-pulse bg-muted" />
-            )}
-            <Image
-              src={imgSrc}
-              alt={frontmatter.title}
-              fill
-              className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-              style={frontmatter.imageZoom ? { objectPosition: 'center', scale: `${frontmatter.imageZoom}` } : undefined}
-              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
-              quality={80}
-              priority={index === 0}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              fetchPriority={index === 0 ? 'high' : 'low'}
-              onLoad={onLoad}
-              onError={() => setImgSrc('/images/placeholder.svg')}
-            />
-
-            {frontmatter.video && (
-              <video
-                src={frontmatter.video}
-                className="absolute inset-0 hidden h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 sm:block"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="none"
-              />
-            )}
-
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 transition-opacity duration-500 ease-out group-hover:opacity-80" />
-          </div>
-
-          {!hideLabel && (
-            <div className="px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
-              <h3
-                className="block w-full truncate whitespace-nowrap text-[13px] font-medium leading-tight text-foreground transition-colors duration-200"
-                title={displayTitle}
-              >
-                {displayTitle}
-              </h3>
-              {categoryLabel && (
-                <p className="mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60">
-                  [{categoryLabel}]
-                </p>
+        <DepthCardWrapper maxRotation={2.5} disableOnMobile>
+          <div
+            className="project-card relative isolate overflow-hidden rounded-xl text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1.5 will-change-transform"
+            style={{
+              animationDelay: `${index * 80}ms`,
+            }}
+          >
+            <div ref={imageRef} className="relative aspect-[16/9] overflow-hidden img-inset-outline">
+              {!imgLoaded && (
+                <div className="absolute inset-0 animate-pulse bg-muted" />
               )}
+              <Image
+                src={imgSrc}
+                alt={frontmatter.title}
+                fill
+                className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                style={frontmatter.imageZoom ? { objectPosition: 'center', scale: `${frontmatter.imageZoom}` } : undefined}
+                sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
+                quality={80}
+                priority={index === 0}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : 'low'}
+                onLoad={onLoad}
+                onError={() => setImgSrc('/images/placeholder.svg')}
+              />
+
+              {frontmatter.video && (
+                <video
+                  src={frontmatter.video}
+                  className="absolute inset-0 hidden h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 sm:block"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="none"
+                />
+              )}
+
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 transition-opacity duration-500 ease-out group-hover:opacity-80" />
             </div>
-          )}
-        </div>
+
+            {!hideLabel && (
+              <div className="px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
+                <h3
+                  className="block w-full truncate whitespace-nowrap text-[13px] font-medium leading-tight text-foreground transition-colors duration-200"
+                  title={displayTitle}
+                >
+                  {displayTitle}
+                </h3>
+                {categoryLabel && (
+                  <p className="mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60">
+                    [{categoryLabel}]
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        </DepthCardWrapper>
       </Link>
       {frontmatter.demo && !hideLiveBadge && (
         <a

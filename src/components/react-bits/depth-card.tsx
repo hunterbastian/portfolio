@@ -386,4 +386,124 @@ const DepthCard: React.FC<DepthCardProps> = ({
 
 DepthCard.displayName = "DepthCard";
 
+/* ─── Wrapper variant ───────────────────────────────────────────────
+ * A composable wrapper that applies the same perspective-tilt effect
+ * to arbitrary children. Use this when you already have card markup
+ * and just want the depth hover behavior layered on top.
+ * ─────────────────────────────────────────────────────────────────── */
+
+export interface DepthCardWrapperProps {
+  children: React.ReactNode;
+  /** Maximum rotation angle in degrees (default 3 -- subtle) */
+  maxRotation?: number;
+  /** CSS class for the outer perspective container */
+  className?: string;
+  /** Disable on non-hover devices */
+  disableOnMobile?: boolean;
+  /** Respect prefers-reduced-motion */
+  respectReducedMotion?: boolean;
+}
+
+export function DepthCardWrapper({
+  children,
+  maxRotation = 3,
+  className,
+  disableOnMobile = true,
+  respectReducedMotion = true,
+}: DepthCardWrapperProps) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReduced, setPrefersReduced] = useState(false);
+
+  const targetRef = useRef({ rotateX: 0, rotateY: 0 });
+  const currentRef = useRef({ rotateX: 0, rotateY: 0 });
+  const rafId = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (!disableOnMobile) return;
+    const check = () => {
+      setIsMobile(!window.matchMedia("(hover: hover)").matches);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [disableOnMobile]);
+
+  useEffect(() => {
+    if (!respectReducedMotion) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    handler({ matches: mq.matches } as MediaQueryListEvent);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [respectReducedMotion]);
+
+  const disabled = (disableOnMobile && isMobile) || prefersReduced;
+
+  useEffect(() => {
+    if (disabled) return;
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    const tick = () => {
+      const t = targetRef.current;
+      const c = currentRef.current;
+      c.rotateX = lerp(c.rotateX, t.rotateX, 0.1);
+      c.rotateY = lerp(c.rotateY, t.rotateY, 0.1);
+
+      if (innerRef.current) {
+        innerRef.current.style.transform = `rotateX(${c.rotateX}deg) rotateY(${c.rotateY}deg)`;
+      }
+      rafId.current = requestAnimationFrame(tick);
+    };
+
+    rafId.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
+  }, [disabled]);
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!wrapperRef.current || disabled) return;
+      const rect = wrapperRef.current.getBoundingClientRect();
+      const px = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      const py = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      targetRef.current = {
+        rotateX: -py * maxRotation,
+        rotateY: px * maxRotation,
+      };
+    },
+    [maxRotation, disabled],
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    targetRef.current = { rotateX: 0, rotateY: 0 };
+  }, []);
+
+  return (
+    <div
+      ref={wrapperRef}
+      className={className}
+      style={{ perspective: "900px" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div
+        ref={innerRef}
+        style={{
+          transformStyle: "preserve-3d",
+          willChange: "transform",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
+DepthCardWrapper.displayName = "DepthCardWrapper";
+
 export default DepthCard;

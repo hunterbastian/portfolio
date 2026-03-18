@@ -11,7 +11,7 @@ import {
   experienceItems,
   homeHeroContent,
 } from '@/content/homepage'
-import { siteProjectInquiryHref } from '@/lib/site'
+import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import CollapsibleSection from './CollapsibleSection'
 import TextReveal from './TextReveal'
@@ -616,15 +616,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="mx-auto max-w-[560px]">
+          <p className="text-sm font-inter text-muted-foreground leading-relaxed mb-4">
+            Want to work together? I&#39;m available for freelance projects and always open to interesting conversations.
+          </p>
+          <a
+            href={siteProjectInquiryHref}
+            className="inline-flex items-center gap-1.5 text-sm font-inter font-medium text-accent underline decoration-accent/40 underline-offset-4 transition-[color,text-decoration-color] duration-200 hover:text-accent hover:decoration-accent mb-5"
+            aria-label="Send a project inquiry email"
+            title="Send a project inquiry email"
+          >
+            {siteConfig.email}
+          </a>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-5 sm:gap-y-2 sm:text-[15px]">
-            <a
-              href={siteProjectInquiryHref}
-              className="text-[13px] text-foreground underline decoration-current/30 underline-offset-4 transition-[color,text-decoration-color] duration-200 hover:text-foreground hover:decoration-current inline-flex items-center min-h-[40px]"
-              aria-label="Email Hunter"
-              title="Email Hunter"
-            >
-              Email
-            </a>
             {contactSocialLinks.map((link) => (
               <a
                 key={link.label}

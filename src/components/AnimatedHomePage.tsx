@@ -238,8 +238,8 @@ function PlaygroundButton() {
       aria-label="Open Playground"
       title="a place for my random projects"
     >
-      <IconGamepad2 size={12} className="relative z-10 opacity-60 transition-[transform] duration-300 ease-out group-hover:scale-110 group-hover:rotate-[-8deg]" aria-hidden />
-      <span className="relative z-10 font-light uppercase tracking-[0.08em] text-foreground/70 transition-colors duration-300 ease-out group-hover:text-foreground">
+      <IconGamepad2 size={12} className="relative z-10 opacity-50 transition-[transform,opacity] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-80 group-hover:scale-110 group-hover:rotate-[-6deg]" aria-hidden />
+      <span className="relative z-10 font-light uppercase tracking-[0.08em] text-foreground/60 transition-[color] duration-300 ease-out group-hover:text-foreground/90">
         Playground
       </span>
     </a>

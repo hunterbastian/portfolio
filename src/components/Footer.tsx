@@ -85,27 +85,24 @@ export default function Footer() {
         zIndex: 40,
         background: 'var(--background)',
       }}
-      initial={{ y: '100%' }}
-      animate={{ y: visible ? '0%' : '100%' }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={
+        visible
+          ? { opacity: 1, y: 0 }
+          : { opacity: 0, y: 12, pointerEvents: 'none' as const }
+      }
       transition={
         prefersReducedMotion
           ? { duration: 0 }
-          : {
-              type: 'spring',
-              stiffness: 180,
-              damping: 26,
-              mass: 1,
-            }
+          : { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
       }
     >
-      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-center gap-[0.6em] px-6 py-5 font-mono text-[11px] tracking-[0.06em] text-muted-foreground sm:px-8">
-        <span className="tabular-nums">© {currentYear}</span>
-        <span className="opacity-30" aria-hidden>·</span>
-        <span>Hunter Bastian</span>
-        <span className="opacity-30" aria-hidden>·</span>
-        <span className="group inline-flex items-center gap-1 cursor-default">
-          Utah
-          <IconHeart2 size={9} className="text-primary/40 transition-[transform,color] duration-300 ease-out group-hover:scale-125 group-hover:text-primary/70" aria-hidden />
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center gap-1.5 px-6 py-6 sm:px-8">
+        <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-muted-foreground/50">
+          Made with care <IconHeart2 size={8} className="inline -mt-px text-muted-foreground/40" aria-hidden />
+        </span>
+        <span className="font-mono text-[10px] tracking-[0.08em] text-muted-foreground/30">
+          © {currentYear} Hunter Bastian
         </span>
       </div>
     </m.footer>

@@ -19,7 +19,7 @@ export default function ScrollToTop() {
   }, [])
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'auto' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
@@ -29,10 +29,11 @@ export default function ScrollToTop() {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className="fixed bottom-8 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:bottom-10 sm:right-8"
+          className="fixed bottom-16 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:bottom-20 sm:right-8"
           style={{
-            background: 'var(--card)',
-            color: 'var(--foreground)',
+            background: 'linear-gradient(160deg, #a8c084 0%, #7b8f5e 50%, #6a7d4f 100%)',
+            color: '#fff',
+            boxShadow: '0 0 0 1px rgba(255,255,255,0.25) inset, 0 1px 2px rgba(255,255,255,0.3) inset, 0 -1px 3px rgba(0,0,0,0.08) inset, 0 4px 12px rgba(123,143,94,0.35), 0 8px 24px rgba(123,143,94,0.2)',
           }}
           initial={{ opacity: 0, y: 16, scale: 0.85 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -44,8 +45,8 @@ export default function ScrollToTop() {
             mass: 0.8,
             opacity: { duration: 0.25 },
           }}
-          whileHover={{ y: -2, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
-          whileTap={{ scale: 0.92 }}
+          whileHover={{ y: -2, boxShadow: '0 0 0 1px rgba(255,255,255,0.3) inset, 0 1px 2px rgba(255,255,255,0.35) inset, 0 -1px 3px rgba(0,0,0,0.08) inset, 0 6px 18px rgba(123,143,94,0.4), 0 12px 32px rgba(123,143,94,0.25)', transition: { type: 'spring', stiffness: 400, damping: 20 } }}
+          whileTap={{ scale: 0.94, y: 1 }}
         >
           <IconChevronUp size={15} aria-hidden style={{ marginTop: '-1px' }} />
         </m.button>

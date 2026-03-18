@@ -345,8 +345,8 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               {project.frontmatter?.image ? (
                 <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
               ) : (
-                <div className="aspect-[16/9] w-full rounded-[3px]">
-                  <Skeleton className="h-full w-full rounded-[3px]" />
+                <div className="aspect-[16/9] w-full rounded-xl">
+                  <Skeleton className="h-full w-full rounded-xl" />
                 </div>
               )}
             </Magnetic>

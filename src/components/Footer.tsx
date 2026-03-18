@@ -5,6 +5,7 @@ import { m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { getLenisInstance } from '@/lib/lenis'
 import { IconHeart2 } from 'nucleo-pixel-essential'
+import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 const FOOTER_REVEAL_EPSILON_PX = 6
 
@@ -94,7 +95,7 @@ export default function Footer() {
       transition={
         prefersReducedMotion
           ? { duration: 0 }
-          : { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
+          : { duration: 0.4, ease: MOTION_EASE_SOFT }
       }
     >
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center gap-1.5 px-6 pt-6 sm:px-8" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))' }}>

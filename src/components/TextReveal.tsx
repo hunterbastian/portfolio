@@ -1,6 +1,7 @@
 'use client'
 
 import { m, useReducedMotion } from 'framer-motion'
+import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 interface TextRevealProps {
   text: string
@@ -63,7 +64,7 @@ export default function TextReveal({
             transition={{
               duration,
               delay: startDelay + i * staggerDelay,
-              ease: [0.16, 1, 0.3, 1],
+              ease: MOTION_EASE_SOFT,
             }}
           >
             {word}

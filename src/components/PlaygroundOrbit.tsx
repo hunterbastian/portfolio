@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { AnimatePresence, m, useMotionValue, useTransform, useAnimationFrame, useReducedMotion } from 'framer-motion'
 import type { Project } from '@/types/project'
+import { MOTION_EASE_SOFT } from '@/lib/motion'
 import ProjectCard from '@/components/ProjectCard'
 
 interface PlaygroundOrbitProps {
@@ -29,7 +30,7 @@ const ENTRANCE = {
   cardsDelay: 0.6,
   cardStagger: 0.12,
   cardDuration: 0.7,
-  ease: [0.16, 1, 0.3, 1] as const,
+  ease: MOTION_EASE_SOFT,
 }
 
 /** Tilts alternate between -3°, 0°, 3° for a subtle scattered feel */

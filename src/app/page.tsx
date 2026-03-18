@@ -1,8 +1,25 @@
+import type { Metadata } from 'next'
 import { getAllProjects } from '@/lib/projects'
 import AnimatedHomePage from '@/components/AnimatedHomePage'
 import ProjectGridClient from '@/components/ProjectGridClient'
 import { ProjectLoader } from '@/components/Loader'
 import { Suspense } from 'react'
+import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
+
+export const metadata: Metadata = {
+  title: siteConfig.siteTitle,
+  description: `${siteConfig.brandName} — interaction designer, creative coder, and photographer based in Utah. View case studies, experiments, and side projects.`,
+  alternates: {
+    canonical: resolveSiteUrl('/'),
+  },
+  openGraph: {
+    title: siteConfig.siteTitle,
+    description: `${siteConfig.brandName} — interaction designer, creative coder, and photographer based in Utah.`,
+    url: resolveSiteUrl('/'),
+    siteName: sitePortfolioName,
+    type: 'website',
+  },
+}
 
 // Revalidate every 1 minute in production
 export const revalidate = 60

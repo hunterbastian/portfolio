@@ -113,25 +113,46 @@ export default function RootLayout({
           </>
         )}
 
-        {/* Structured Data - Person Schema for SEO */}
+        {/* Structured Data - Person + Organization Schema for SEO
+             All values are static string literals from siteConfig — no user input, safe for JSON.stringify. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Person',
-              name: siteConfig.brandName,
-              url: siteConfig.url,
-              jobTitle: siteConfig.siteDescription,
-              description: siteConfig.siteDescription,
-              sameAs: [
-                // Add your social profiles here
-                // 'https://github.com/hunterbastian',
-                // 'https://linkedin.com/in/hunterbastian',
-                // 'https://twitter.com/hunterbastian',
-              ],
-              knowsAbout: ['React', 'Next.js', 'TypeScript', 'UI Design', 'UX Design', 'Web Development'],
-            }),
+            __html: JSON.stringify([
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Person',
+                '@id': `${siteConfig.url}/#person`,
+                name: 'Hunter Bastian',
+                url: siteConfig.url,
+                jobTitle: 'Interaction Designer',
+                description: siteConfig.siteDescription,
+                sameAs: [
+                  'https://github.com/hunterbastian',
+                  'https://linkedin.com/in/hunterbastian',
+                  'https://x.com/thestudioalpine',
+                  'https://instagram.com/studio.alpine',
+                  'https://threads.net/@studio.alpine',
+                  'https://youtube.com/@studio.alpine',
+                ],
+                knowsAbout: ['Interaction Design', 'UI Design', 'UX Design', 'React', 'Next.js', 'TypeScript', 'Photography', 'Creative Coding'],
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                '@id': `${siteConfig.url}/#organization`,
+                name: 'Studio Alpine',
+                url: 'https://instagram.com/studio.alpine',
+                logo: `${siteConfig.url}/images/optimized/studio-alpine-logo.webp`,
+                description: 'Photography and design studio founded by Hunter Bastian.',
+                founder: { '@id': `${siteConfig.url}/#person` },
+                foundingDate: '2026',
+                sameAs: [
+                  'https://instagram.com/studio.alpine',
+                  'https://youtube.com/@studio.alpine',
+                ],
+              },
+            ]),
           }}
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />

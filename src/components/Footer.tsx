@@ -98,13 +98,15 @@ export default function Footer() {
             }
       }
     >
-      <div className="relative z-10 mx-auto grid max-w-7xl gap-3 px-6 py-8 text-center font-mono sm:px-8 md:grid-cols-2 md:items-center">
-        <span className="text-[11px] tracking-[0.04em] text-muted-foreground tabular-nums md:justify-self-start">
-          © {currentYear}
+      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-center gap-[0.6em] px-6 py-5 font-mono text-[11px] tracking-[0.06em] text-muted-foreground sm:px-8">
+        <span className="tabular-nums">© {currentYear}</span>
+        <span className="opacity-30" aria-hidden>·</span>
+        <span>Hunter Bastian</span>
+        <span className="opacity-30" aria-hidden>·</span>
+        <span className="group inline-flex items-center gap-1 cursor-default">
+          Utah
+          <IconHeart2 size={9} className="text-primary/40 transition-[transform,color] duration-300 ease-out group-hover:scale-125 group-hover:text-primary/70" aria-hidden />
         </span>
-        <p className="text-[11px] uppercase tracking-[0.04em] text-muted-foreground md:justify-self-end md:text-right" style={{ fontFamily: 'inherit' }}>
-          <span className="group inline-flex items-center gap-0.5">Crafted with <IconHeart2 size={10} className="inline-block mx-0.5 text-primary/70 transition-[transform,filter] duration-300 ease-out group-hover:scale-125 group-hover:blur-[0.3px]" aria-hidden /> by Hunter Bastian</span>
-        </p>
       </div>
     </m.footer>
   )

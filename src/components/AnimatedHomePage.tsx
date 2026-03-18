@@ -330,7 +330,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
       <CreatingLoader />
-      <section className="relative animate-fade-in pb-0 pt-8 sm:pt-12">
+      <section className="relative animate-fade-in pb-0 pt-16 sm:pt-24">
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <m.div
@@ -384,16 +384,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               startDelay={0.1}
             />
 
-            <a href="/about" className="hero-handwritten-preview hero-handwritten-text font-handscript cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mt-2">
-              <TextReveal
-                text={homeHeroContent.handwrittenNote}
-                as="span"
-                trigger={heroTextStage >= 2}
-                duration={0.5}
-                staggerDelay={0.06}
-                startDelay={0.8}
-                filter
-              />
+            <a href="/about" className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mt-5">
+              <span className="hero-handwritten-text font-handscript">
+                <TextReveal
+                  text={homeHeroContent.handwrittenNote}
+                  as="span"
+                  trigger={heroTextStage >= 2}
+                  duration={0.5}
+                  staggerDelay={0.06}
+                  startDelay={0.8}
+                  filter
+                />
+              </span>
             </a>
           </m.div>
 
@@ -450,7 +452,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   )}
                   {link.iconType === 'studio-alpine' && (
                     <Image
-                      src="/images/studio-alpine-logo.png"
+                      src="/images/optimized/studio-alpine-logo.webp"
                       alt=""
                       width={50}
                       height={50}
@@ -612,28 +614,30 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4"
       >
         <div className="mx-auto max-w-[560px]">
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-5 sm:gap-y-2 sm:text-[15px]">
-            <a
-              href={siteProjectInquiryHref}
-              className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-[color,font-weight] duration-200 hover:text-foreground hover:font-semibold inline-flex items-center min-h-[40px]"
-              aria-label="Email Hunter"
-              title="Email Hunter"
-            >
-              Email
-            </a>
-            {contactSocialLinks.map((link) => (
+          <div className="frost-panel rounded-[3px] px-5 py-5">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-5 sm:gap-y-2 sm:text-[15px]">
               <a
-                key={link.label}
-                href={link.href}
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-foreground underline decoration-current underline-offset-4 transition-[color,font-weight] duration-200 hover:text-foreground hover:font-semibold inline-flex items-center min-h-[40px]"
-                aria-label={link.label}
-                title={link.label}
+                href={siteProjectInquiryHref}
+                className="text-[13px] text-foreground underline decoration-current/30 underline-offset-4 transition-[color,text-decoration-color] duration-200 hover:text-foreground hover:decoration-current inline-flex items-center min-h-[40px]"
+                aria-label="Email Hunter"
+                title="Email Hunter"
               >
-                {link.label}
+                Email
               </a>
-            ))}
+              {contactSocialLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                  className="text-[13px] text-foreground underline decoration-current/30 underline-offset-4 transition-[color,text-decoration-color] duration-200 hover:text-foreground hover:decoration-current inline-flex items-center min-h-[40px]"
+                  aria-label={link.label}
+                  title={link.label}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </CollapsibleSection>

@@ -113,8 +113,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge }: Proje
           href={frontmatter.demo}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-[3px] bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary transition-[background-color,box-shadow] duration-200 hover:bg-background/95"
-          style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)' }}
+          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-[3px] bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium tracking-[0.04em] text-primary shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-background/95"
           aria-label={`Live demo for ${displayTitle}`}
         >
           <span className="relative flex h-2 w-2">

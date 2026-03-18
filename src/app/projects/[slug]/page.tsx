@@ -104,30 +104,41 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const formattedDate = formatProjectDate(frontmatter.date)
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: frontmatter.title,
-    description: frontmatter.description,
-    image: imageUrl,
-    datePublished: frontmatter.date,
-    dateModified: frontmatter.date,
-    author: {
-      '@type': 'Person',
-      name: siteConfig.brandName,
-      url: siteConfig.url,
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: frontmatter.title,
+      description: frontmatter.description,
+      image: imageUrl,
+      datePublished: frontmatter.date,
+      dateModified: frontmatter.date,
+      author: {
+        '@type': 'Person',
+        name: siteConfig.brandName,
+        url: siteConfig.url,
+      },
+      publisher: {
+        '@type': 'Person',
+        name: siteConfig.brandName,
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': projectUrl,
+      },
+      keywords: frontmatter.tags?.join(', '),
+      articleSection: frontmatter.category,
     },
-    publisher: {
-      '@type': 'Person',
-      name: siteConfig.brandName,
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+        { '@type': 'ListItem', position: 2, name: 'Projects', item: resolveSiteUrl('/#case-studies') },
+        { '@type': 'ListItem', position: 3, name: frontmatter.title, item: projectUrl },
+      ],
     },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': projectUrl,
-    },
-    keywords: frontmatter.tags?.join(', '),
-    articleSection: frontmatter.category,
-  }
+  ]
 
   return (
     <article className="container mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
@@ -159,7 +170,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </header>
           }
           image={
-            <div className="relative mb-16 aspect-[4/3] w-full overflow-hidden rounded-[3px] img-inset-outline" style={{ boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)' }}>
+            <div className="relative mb-16 aspect-[4/3] w-full overflow-hidden rounded-[3px] img-inset-outline shadow-card">
               <Image
                 src={frontmatter.image}
                 alt={frontmatter.title}

@@ -431,6 +431,15 @@ h1, h2, h3, h4, h5, h6 {
   filter: brightness(0.92);
 }
 
+.about-page-glow {
+  background-image: radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%);
+  background-size: 100% 100%;
+}
+
+.dark .about-page-glow {
+  background-image: radial-gradient(125% 125% at 50% 10%, #232527 40%, #92400e 100%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-handwritten-text {
     transition: none;
@@ -622,6 +631,16 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.06);
 }
 
+.top-meta-pill {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.04);
+}
+
+.dark .top-meta-pill {
+  background: rgba(42, 44, 47, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
 .site-header-frosted {
   background-color: rgba(var(--background-rgb), var(--header-frost-opacity));
   -webkit-backdrop-filter: saturate(118%) blur(var(--header-frost-blur));
@@ -635,6 +654,31 @@ h1, h2, h3, h4, h5, h6 {
 img {
   image-rendering: -webkit-optimize-contrast;
   transition: opacity 0.3s ease-in-out;
+}
+
+.shadow-card {
+  box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+}
+
+.dark .shadow-card {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.shadow-card-subtle {
+  box-shadow:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.04),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06);
+}
+
+.dark .shadow-card-subtle {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
 }
 
 .img-inset-outline {

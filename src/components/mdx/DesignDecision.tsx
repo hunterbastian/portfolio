@@ -45,10 +45,7 @@ export default function DesignDecision({
   return (
     <figure ref={ref} className="not-prose my-10">
       <m.div
-        className="rounded-[3px] border border-border bg-card/50 p-5 sm:p-6"
-        style={{
-          boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04), 0px 1px 2px -1px rgba(0,0,0,0.06)',
-        }}
+        className="rounded-[3px] border border-border bg-card/50 p-5 sm:p-6 shadow-card-subtle"
         initial={{ opacity: 0, y: 12 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         transition={{

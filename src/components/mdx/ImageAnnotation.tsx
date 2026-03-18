@@ -55,8 +55,8 @@ export default function ImageAnnotation({
   return (
     <figure className="my-8">
       <div
-        className="relative w-full overflow-hidden rounded-[3px]"
-        style={{ aspectRatio: aspect, boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)' }}
+        className="relative w-full overflow-hidden rounded-[3px] shadow-card"
+        style={{ aspectRatio: aspect }}
       >
         <Image
           src={src}

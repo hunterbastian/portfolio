@@ -29,11 +29,10 @@ export default function ScrollToTop() {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className="fixed bottom-8 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:bottom-10 sm:right-8"
+          className="fixed bottom-8 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:bottom-10 sm:right-8"
           style={{
             background: 'var(--card)',
             color: 'var(--foreground)',
-            boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.06), 0px 1px 2px -1px rgba(0,0,0,0.06), 0px 2px 4px 0px rgba(0,0,0,0.04)',
           }}
           initial={{ opacity: 0, y: 16, scale: 0.85 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}

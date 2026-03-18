@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { AnimatePresence, m } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
@@ -48,38 +49,58 @@ export default function Header() {
               className="flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:hidden"
               aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
               aria-expanded={showMobileMenu}
-              style={{ fontFamily: 'inherit' }}
             >
-              <span
-                className="text-sm leading-none transition-transform duration-200"
-                style={{ transform: showMobileMenu ? 'rotate(45deg)' : 'none' }}
-              >
-                {showMobileMenu ? '✕' : '⁙'}
-              </span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
+                <line
+                  x1="2" y1="5" x2="14" y2="5"
+                  className="origin-center transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  style={{ transform: showMobileMenu ? 'translateY(3px) rotate(45deg)' : 'none' }}
+                />
+                <line
+                  x1="2" y1="11" x2="14" y2="11"
+                  className="origin-center transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  style={{ transform: showMobileMenu ? 'translateY(-3px) rotate(-45deg)' : 'none' }}
+                />
+              </svg>
             </button>
           </div>
         </div>
       </div>
 
-      {showMobileMenu && (
-        <div className="sm:hidden mt-3 border-t pt-3 pb-1" style={{ borderColor: 'var(--border)' }}>
-          <div className="container mx-auto max-w-6xl space-y-0.5">
-            {PAGE_NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setShowMobileMenu(false)}
-                className={`block py-3 text-xs tracking-[0.14em] uppercase transition-colors duration-200 ${
-                  pathname === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                }`}
-                style={{ fontFamily: 'inherit' }}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {showMobileMenu && (
+          <m.div
+            className="sm:hidden mt-3 border-t pt-3 pb-1 overflow-hidden"
+            style={{ borderColor: 'var(--border)' }}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="container mx-auto max-w-6xl space-y-0.5">
+              {PAGE_NAV.map((item, i) => (
+                <m.div
+                  key={item.href}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={() => setShowMobileMenu(false)}
+                    className={`block py-3 text-xs tracking-[0.14em] uppercase transition-colors duration-200 ${
+                      pathname === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                    style={{ fontFamily: 'inherit' }}
+                  >
+                    {item.name}
+                  </Link>
+                </m.div>
+              ))}
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
     </header>
   )
 }

@@ -14,11 +14,7 @@ export default function AboutPage() {
   return (
     <div className="relative min-h-screen">
       <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.15]"
-        style={{
-          backgroundImage: 'radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%)',
-          backgroundSize: '100% 100%',
-        }}
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.15] dark:opacity-[0.08] about-page-glow"
         aria-hidden="true"
       />
       <div className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6">

@@ -23,15 +23,14 @@ function CoordinateLabel({ coordinates }: { coordinates: string }) {
 
   return (
     <div
-      className="fixed left-4 top-4 z-50 select-none sm:left-6 sm:top-6 cursor-default rounded-full backdrop-blur-xl px-3 py-1.5"
-      style={{ background: 'rgba(255,255,255,0.45)', boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)', fontFamily: 'inherit' }}
+      className="fixed left-4 top-4 z-50 select-none sm:left-6 sm:top-6 cursor-default rounded-full backdrop-blur-xl px-5 py-2.5 top-meta-pill"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       aria-label={`Location: ${coordinates}`}
     >
       <div className="relative overflow-hidden">
         <span
-          className="block text-[10px] tracking-[0.12em] text-foreground whitespace-nowrap sm:text-[11px]"
+          className="block text-[11px] tracking-[0.12em] text-foreground whitespace-nowrap"
           style={{
             transform: hovered ? 'translateY(-100%) scale(0.92)' : 'translateY(0) scale(1)',
             opacity: hovered ? 0 : 0.9,
@@ -42,7 +41,7 @@ function CoordinateLabel({ coordinates }: { coordinates: string }) {
           {coordinates}
         </span>
         <span
-          className="absolute left-0 top-0 block text-[10px] tracking-[0.12em] text-foreground whitespace-nowrap sm:text-[11px]"
+          className="absolute left-0 top-0 block text-[11px] tracking-[0.12em] text-foreground whitespace-nowrap"
           style={{
             transform: hovered ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.92)',
             opacity: hovered ? 0.9 : 0,
@@ -80,8 +79,7 @@ export default function TopMeta({ coordinates }: TopMetaProps) {
     <>
       <CoordinateLabel coordinates={coordinates} />
       <div
-        className="fixed right-4 top-4 z-50 hidden items-center gap-4 rounded-full backdrop-blur-xl px-5 py-2.5 sm:right-6 sm:top-6 sm:flex"
-        style={{ background: 'rgba(255,255,255,0.45)', boxShadow: '0px 0px 0px 1px rgba(0,0,0,0.04)', fontFamily: 'inherit' }}
+        className="fixed right-4 top-4 z-50 hidden items-center gap-4 rounded-full backdrop-blur-xl px-5 py-2.5 sm:right-6 sm:top-6 sm:flex top-meta-pill"
       >
         {PAGE_NAV.map((item) => (
           <NavLink key={item.href} href={item.href} name={item.name} />

@@ -232,7 +232,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   return (
     <m.div
       ref={gridRef}
-      className="mx-auto grid w-full max-w-[820px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0"
+      className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0"
       onMouseEnter={() => {
         if (supportsHover) {
           setIsGridHovered(true)

@@ -29,7 +29,7 @@ export default function ScrollToTop() {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className="fixed bottom-16 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:bottom-20 sm:right-8"
+          className="fixed bottom-24 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:bottom-20 sm:right-8"
           style={{
             background: 'linear-gradient(160deg, #a8c084 0%, #7b8f5e 50%, #6a7d4f 100%)',
             color: '#fff',

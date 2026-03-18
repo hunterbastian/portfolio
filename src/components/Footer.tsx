@@ -97,7 +97,7 @@ export default function Footer() {
           : { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
       }
     >
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center gap-1.5 px-6 py-6 sm:px-8">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center gap-1.5 px-6 pt-6 sm:px-8" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))' }}>
         <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-muted-foreground/50">
           Made with care <IconHeart2 size={8} className="inline -mt-px text-muted-foreground/40" aria-hidden />
         </span>

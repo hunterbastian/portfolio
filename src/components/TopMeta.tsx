@@ -58,6 +58,7 @@ export default function TopMeta() {
         style={{ background: 'linear-gradient(to bottom, var(--background) 0%, transparent 100%)' }}
       />
       {pathname === '/' && <CoordinateDisplay />}
+      {/* Desktop: top-right pill */}
       <div
         className="fixed right-4 top-4 z-50 hidden items-center gap-4 rounded-full backdrop-blur-xl px-5 py-2.5 sm:right-6 sm:top-6 sm:flex top-meta-pill"
       >
@@ -72,6 +73,33 @@ export default function TopMeta() {
           )
         })}
       </div>
+
+      {/* Mobile: bottom nav bar */}
+      <nav
+        className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-around backdrop-blur-xl px-2 sm:hidden top-meta-pill"
+        style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom, 0px))' }}
+      >
+        {PAGE_NAV.map((item) => {
+          const isActive = item.href === '/'
+            ? pathname === '/'
+            : item.href.startsWith('/#')
+              ? false
+              : pathname.startsWith(item.href)
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex flex-col items-center justify-center py-2.5 px-2 min-h-[44px] min-w-[44px] text-[9px] tracking-[0.1em] uppercase transition-colors duration-200 ${
+                isActive
+                  ? 'text-foreground'
+                  : 'text-muted-foreground/50 active:text-foreground'
+              }`}
+            >
+              {item.name}
+            </Link>
+          )
+        })}
+      </nav>
     </>
   )
 }

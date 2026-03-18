@@ -81,12 +81,12 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
             {frontmatter.video && (
               <video
                 src={frontmatter.video}
-                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+                className="absolute inset-0 hidden h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 sm:block"
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                preload="none"
               />
             )}
 

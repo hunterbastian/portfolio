@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { useScrambleText } from '@/lib/scramble'
+import { siteConfig } from '@/lib/site'
 
 const PAGE_NAV = [
   { name: 'HOME', href: '/' },
@@ -13,9 +15,29 @@ const PAGE_NAV = [
   { name: 'BLOG', href: '/blog' },
 ] as const
 
+function CoordinateDisplay() {
+  const coord = useScrambleText(siteConfig.siteCoordinates, true, 400)
+  const location = useScrambleText('UTAH, USA', true, 600)
+
+  return (
+    <div
+      className="select-none cursor-default"
+      onMouseEnter={() => { coord.scramble(); location.scramble() }}
+    >
+      <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight">
+        {coord.display}
+      </p>
+      <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight">
+        {location.display}
+      </p>
+    </div>
+  )
+}
+
 export default function Header() {
   const pathname = usePathname()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
+  const showCoordinates = true
 
   useEffect(() => {
     setShowMobileMenu(false)
@@ -29,18 +51,21 @@ export default function Header() {
     >
       <div className="container mx-auto max-w-6xl">
         <div className="flex h-10 items-center justify-between sm:h-14">
-          <Link
-            href="/"
-            className="group flex min-h-[40px] items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            aria-label="Home"
-          >
-            <span
-              className="text-xs font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100 sm:text-sm"
-              style={{ color: 'var(--foreground)', opacity: 0.9 }}
+          <div className="flex items-center gap-4">
+            <Link
+              href="/"
+              className="group flex min-h-[40px] items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              aria-label="Home"
             >
-              Hunter Bastian
-            </span>
-          </Link>
+              <span
+                className="text-xs font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100 sm:text-sm"
+                style={{ color: 'var(--foreground)', opacity: 0.9 }}
+              >
+                Hunter Bastian
+              </span>
+            </Link>
+            {showCoordinates && <CoordinateDisplay />}
+          </div>
 
           <div className="flex items-center gap-1">
             <button

@@ -75,7 +75,7 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
 
   return (
-    <div className="flex h-full flex-col items-center justify-center lg:hidden">
+    <div className="flex h-full flex-col items-center justify-center md:hidden">
       <m.div
         className="mb-8 text-center"
         initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
@@ -125,20 +125,27 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
 export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [orbitActive, setOrbitActive] = useState(false)
   const prefersReducedMotion = useReducedMotion() ?? false
   const count = projects.length
   const rotation = useMotionValue(0)
   const counterRotation = useTransform(rotation, (v) => -v)
-  const speedRef = useRef(NORMAL_SPEED)
+  const speedRef = useRef(0)
 
   useEffect(() => {
     setMounted(true)
-  }, [])
+    // Start orbit after all cards have finished their entrance
+    const entranceDuration = (ENTRANCE.cardsDelay + count * ENTRANCE.cardStagger + ENTRANCE.cardDuration) * 1000
+    const timer = setTimeout(() => setOrbitActive(true), entranceDuration)
+    return () => clearTimeout(timer)
+  }, [count])
 
   useAnimationFrame(() => {
-    const target = hoveredIndex !== null ? SLOW_SPEED : NORMAL_SPEED
-    speedRef.current += (target - speedRef.current) * 0.05
-    rotation.set((rotation.get() + speedRef.current) % 360)
+    const target = !orbitActive ? 0 : hoveredIndex !== null ? SLOW_SPEED : NORMAL_SPEED
+    speedRef.current += (target - speedRef.current) * 0.03
+    if (Math.abs(speedRef.current) > 0.0001) {
+      rotation.set((rotation.get() + speedRef.current) % 360)
+    }
   })
 
   return (
@@ -147,7 +154,7 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
       <MobilePlayground projects={projects} />
 
       {/* Desktop: rotating orbit */}
-      <div className="hidden lg:flex items-center justify-center h-full relative">
+      <div className="hidden md:flex items-center justify-center h-full relative">
         <CenterLabel count={count} />
 
         <m.div
@@ -173,7 +180,7 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
                   marginTop: -54,
                 }}
                 initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8 }}
-                animate={mounted ? { opacity: 1, scale: 1 } : false}
+                animate={{ opacity: mounted ? 1 : 0, scale: mounted ? 1 : 0.8 }}
                 transition={{
                   duration: ENTRANCE.cardDuration,
                   delay: ENTRANCE.cardsDelay + index * ENTRANCE.cardStagger,

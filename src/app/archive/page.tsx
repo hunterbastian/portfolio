@@ -34,11 +34,11 @@ export default function ArchivePage() {
         <div className="mb-2 sm:mb-4 shrink-0">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground hover:text-foreground"
+            className="group inline-flex items-center gap-2 rounded-full backdrop-blur-xl px-5 py-2.5 top-meta-pill font-mono text-[11px] tracking-[0.12em] text-muted-foreground hover:text-foreground transition-colors duration-200"
           >
-            <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
-            <span className="text-foreground">Home</span>
-            <span aria-hidden className="text-muted-foreground/70">/</span>
+            <IconArrowBackUp size={11} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
+            <span className="text-foreground opacity-90">Home</span>
+            <span aria-hidden className="text-muted-foreground/40">/</span>
             <span>Playground</span>
           </Link>
         </div>

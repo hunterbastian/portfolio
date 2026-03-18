@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { AnimatePresence, m, useMotionValue, useTransform, useAnimationFrame, useReducedMotion } from 'framer-motion'
 import type { Project } from '@/types/project'
 import ProjectCard from '@/components/ProjectCard'
@@ -9,16 +9,19 @@ interface PlaygroundOrbitProps {
   projects: Project[]
 }
 
-const NORMAL_SPEED = 0.04
-const SLOW_SPEED = 0.01
-const ORBIT_RADIUS = 320
+const NORMAL_SPEED = 0.03
+const SLOW_SPEED = 0.008
+const ORBIT_RADIUS_DESKTOP = 300
+const ORBIT_RADIUS_LARGE = 360
 
 /* ─────────────────────────────────────────────────────────
  * ENTRANCE STORYBOARD
  *
  *    0ms   waiting for mount
- *  200ms   center label fades in
- *  400ms   cards begin staggered reveal (80ms each)
+ *  300ms   center label fades in from blur
+ *  600ms   cards begin staggered reveal (120ms each)
+ *          each card: blur(6px) + scale(0.8) → clear + scale(1)
+ *  ~2.4s   orbit rotation begins smoothly
  * ───────────────────────────────────────────────────────── */
 
 const ENTRANCE = {
@@ -29,9 +32,25 @@ const ENTRANCE = {
   ease: [0.16, 1, 0.3, 1] as const,
 }
 
-/** Tilts alternate between -4°, 0°, 4° for a scattered feel */
+/** Tilts alternate between -3°, 0°, 3° for a subtle scattered feel */
 function cardTilt(index: number) {
-  return ((index % 3) - 1) * 4
+  return ((index % 3) - 1) * 3
+}
+
+/** Responsive orbit radius */
+function useOrbitRadius() {
+  const [radius, setRadius] = useState(ORBIT_RADIUS_DESKTOP)
+
+  useEffect(() => {
+    function update() {
+      setRadius(window.innerWidth >= 1280 ? ORBIT_RADIUS_LARGE : ORBIT_RADIUS_DESKTOP)
+    }
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
+
+  return radius
 }
 
 function LiveDemoPill({ title, href }: { title: string; href: string }) {
@@ -53,18 +72,18 @@ function LiveDemoPill({ title, href }: { title: string; href: string }) {
   )
 }
 
-function CenterLabel({ count }: { count: number }) {
+function CenterLabel() {
   return (
     <m.div
       className="text-center flex flex-col items-center"
       initial={{ opacity: 0, scale: 0.96, filter: 'blur(4px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-      transition={{ duration: 0.4, delay: ENTRANCE.centerDelay, ease: ENTRANCE.ease }}
+      transition={{ duration: 0.5, delay: ENTRANCE.centerDelay, ease: ENTRANCE.ease }}
     >
-      <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground/60">
+      <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/50">
         Playground
       </p>
-      <p className="mt-2 max-w-[180px] font-mono text-[10px] leading-relaxed tracking-[0.04em] text-muted-foreground/40">
+      <p className="mt-2.5 max-w-[180px] font-inter text-[11px] leading-relaxed text-muted-foreground/35">
         a collection of my random projects :)
       </p>
     </m.div>
@@ -78,14 +97,14 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
     <div className="flex h-full flex-col items-center justify-center md:hidden">
       <m.div
         className="mb-8 text-center"
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1, ease: ENTRANCE.ease }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 8, filter: 'blur(4px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 0.5, delay: 0.1, ease: ENTRANCE.ease }}
       >
-        <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground/60">
+        <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/50">
           Playground
         </p>
-        <p className="mt-2 max-w-[200px] mx-auto font-mono text-[10px] leading-relaxed tracking-[0.04em] text-muted-foreground/40">
+        <p className="mt-2.5 max-w-[200px] mx-auto font-inter text-[11px] leading-relaxed text-muted-foreground/35">
           a collection of my random projects :)
         </p>
       </m.div>
@@ -96,10 +115,10 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
           return (
             <m.div
               key={project.slug}
-              className="w-[180px] shrink-0 snap-center"
+              className="w-[200px] shrink-0 snap-center"
               style={{ transform: `rotate(${tilt}deg)` }}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 16, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{
                 duration: ENTRANCE.cardDuration,
                 delay: ENTRANCE.cardsDelay + index * ENTRANCE.cardStagger,
@@ -130,7 +149,7 @@ function OrbitCard({
   isHovered,
   hasHoverTarget,
   rotation,
-  mounted,
+  orbitRadius,
   prefersReducedMotion,
   onHoverStart,
   onHoverEnd,
@@ -142,30 +161,30 @@ function OrbitCard({
   isHovered: boolean
   hasHoverTarget: boolean
   rotation: ReturnType<typeof useMotionValue<number>>
-  mounted: boolean
+  orbitRadius: number
   prefersReducedMotion: boolean
   onHoverStart: () => void
   onHoverEnd: () => void
 }) {
   const x = useTransform(rotation, (r) => {
     const rad = ((baseAngle + r) * Math.PI) / 180
-    return Math.sin(rad) * ORBIT_RADIUS
+    return Math.sin(rad) * orbitRadius
   })
   const y = useTransform(rotation, (r) => {
     const rad = ((baseAngle + r) * Math.PI) / 180
-    return -Math.cos(rad) * ORBIT_RADIUS
+    return -Math.cos(rad) * orbitRadius
   })
 
   return (
     <m.div
-      className="absolute w-[144px]"
+      className="absolute w-[160px]"
       style={{
         left: '50%',
         top: '50%',
         x,
         y,
-        marginLeft: -72,
-        marginTop: -54,
+        marginLeft: -80,
+        marginTop: -60,
       }}
       initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8, filter: 'blur(6px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
@@ -176,10 +195,10 @@ function OrbitCard({
       }}
     >
       <div
-        className="transition-[transform,filter] duration-300 ease-out"
+        className="transition-[transform,filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
-          transform: `rotate(${tilt}deg) scale(${isHovered ? 1.1 : 1})`,
-          filter: hasHoverTarget && !isHovered ? 'brightness(0.92) saturate(0.8)' : 'none',
+          transform: `rotate(${tilt}deg) scale(${isHovered ? 1.08 : 1})`,
+          filter: hasHoverTarget && !isHovered ? 'brightness(0.95) saturate(0.85)' : 'none',
         }}
         onMouseEnter={onHoverStart}
         onMouseLeave={onHoverEnd}
@@ -191,14 +210,20 @@ function OrbitCard({
           hideLiveBadge
         />
         <AnimatePresence>
-          {project.frontmatter.demo && isHovered && (
+          {isHovered && (
             <m.div
+              className="mt-1 text-center"
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.2, ease: ENTRANCE.ease }}
             >
-              <LiveDemoPill title={project.frontmatter.title} href={project.frontmatter.demo} />
+              <p className="font-mono text-[9px] tracking-[0.06em] text-muted-foreground/50 truncate">
+                {project.frontmatter.title}
+              </p>
+              {project.frontmatter.demo && (
+                <LiveDemoPill title={project.frontmatter.title} href={project.frontmatter.demo} />
+              )}
             </m.div>
           )}
         </AnimatePresence>
@@ -209,28 +234,30 @@ function OrbitCard({
 
 export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [mounted, setMounted] = useState(false)
   const [orbitActive, setOrbitActive] = useState(false)
   const prefersReducedMotion = useReducedMotion() ?? false
   const count = projects.length
   const rotation = useMotionValue(0)
   const speedRef = useRef(0)
+  const orbitRadius = useOrbitRadius()
 
   useEffect(() => {
-    setMounted(true)
-    // Start orbit after all cards have finished their entrance
     const entranceDuration = (ENTRANCE.cardsDelay + count * ENTRANCE.cardStagger + ENTRANCE.cardDuration) * 1000
     const timer = setTimeout(() => setOrbitActive(true), entranceDuration)
     return () => clearTimeout(timer)
   }, [count])
 
   useAnimationFrame(() => {
+    if (prefersReducedMotion) return
     const target = !orbitActive ? 0 : hoveredIndex !== null ? SLOW_SPEED : NORMAL_SPEED
-    speedRef.current += (target - speedRef.current) * 0.03
+    speedRef.current += (target - speedRef.current) * 0.04
     if (Math.abs(speedRef.current) > 0.0001) {
       rotation.set((rotation.get() + speedRef.current) % 360)
     }
   })
+
+  const handleHoverStart = useCallback((index: number) => setHoveredIndex(index), [])
+  const handleHoverEnd = useCallback(() => setHoveredIndex(null), [])
 
   return (
     <div className="h-full">
@@ -239,10 +266,12 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
 
       {/* Desktop: rotating orbit */}
       <div className="hidden md:block h-full relative">
+        {/* Center label — absolutely centered independent of orbit */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-          <CenterLabel count={count} />
+          <CenterLabel />
         </div>
 
+        {/* Orbit cards — each positioned independently via useTransform */}
         {projects.map((project, index) => {
           const baseAngle = (index / count) * 360
           const tilt = cardTilt(index)
@@ -258,10 +287,10 @@ export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
               isHovered={isHovered}
               hasHoverTarget={hoveredIndex !== null}
               rotation={rotation}
-              mounted={mounted}
+              orbitRadius={orbitRadius}
               prefersReducedMotion={prefersReducedMotion}
-              onHoverStart={() => setHoveredIndex(index)}
-              onHoverEnd={() => setHoveredIndex(null)}
+              onHoverStart={() => handleHoverStart(index)}
+              onHoverEnd={handleHoverEnd}
             />
           )
         })}

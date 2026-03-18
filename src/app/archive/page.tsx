@@ -29,20 +29,20 @@ export default function ArchivePage() {
         className="pointer-events-none absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.1] archive-glow"
         aria-hidden="true"
       />
-      <div className="relative z-10 flex h-full flex-col container mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6">
-        <div className="mb-2 sm:mb-4 shrink-0">
-          <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Playground" />
-        </div>
+      {/* Breadcrumb — fixed top-left, independent of orbit centering */}
+      <div className="absolute top-4 left-4 z-20 sm:top-6 sm:left-6">
+        <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Playground" />
+      </div>
 
-        <div className="flex-1 min-h-0">
-          {archivedProjects.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-foreground text-xs" style={{ fontFamily: 'inherit' }}>No archived projects yet.</p>
-            </div>
-          ) : (
-            <PlaygroundOrbit projects={archivedProjects} />
-          )}
-        </div>
+      {/* Orbit — fills entire viewport, centers from true middle */}
+      <div className="relative z-10 h-full">
+        {archivedProjects.length === 0 ? (
+          <div className="flex h-full items-center justify-center">
+            <p className="text-foreground text-xs" style={{ fontFamily: 'inherit' }}>No archived projects yet.</p>
+          </div>
+        ) : (
+          <PlaygroundOrbit projects={archivedProjects} />
+        )}
       </div>
     </div>
   )

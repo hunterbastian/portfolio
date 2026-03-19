@@ -29,7 +29,7 @@ export const homeHeroContent = {
   headline: 'Hunter Bastian',
   subtitle: 'Interaction designer',
   intro:
-    'Interaction Design student and Department Representative at UVU with experience designing and building digital products. I create interfaces with an AI-first mindset.',
+    'Interaction Design student and Department Representative at UVU with experience designing and building digital products. I create experiences with craft and detail.',
   handwrittenNote: 'A little page on the internet all about me. ☀️',
 } as const
 

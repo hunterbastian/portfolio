@@ -31,9 +31,9 @@ export default function ScrollToTop() {
           aria-label="Scroll to top"
           className="fixed bottom-24 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:bottom-20 sm:right-8"
           style={{
-            background: 'linear-gradient(160deg, #e8503a 0%, #c8382a 50%, #a82e22 100%)',
+            background: 'linear-gradient(160deg, #b8ccdf 0%, #a3bad2 50%, #8da8c4 100%)',
             color: '#fff',
-            boxShadow: '0 0 0 1px rgba(255,255,255,0.25) inset, 0 1px 2px rgba(255,255,255,0.3) inset, 0 -1px 3px rgba(0,0,0,0.08) inset, 0 4px 12px rgba(200,56,42,0.35), 0 8px 24px rgba(200,56,42,0.2)',
+            boxShadow: '0 0 0 1px rgba(255,255,255,0.3) inset, 0 1px 2px rgba(255,255,255,0.35) inset, 0 -1px 3px rgba(0,0,0,0.06) inset, 0 4px 12px rgba(163,186,210,0.35), 0 8px 24px rgba(163,186,210,0.2)',
           }}
           initial={{ opacity: 0, y: 16, scale: 0.85 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -45,7 +45,7 @@ export default function ScrollToTop() {
             mass: 0.8,
             opacity: { duration: 0.25 },
           }}
-          whileHover={{ y: -2, boxShadow: '0 0 0 1px rgba(255,255,255,0.3) inset, 0 1px 2px rgba(255,255,255,0.35) inset, 0 -1px 3px rgba(0,0,0,0.08) inset, 0 6px 18px rgba(200,56,42,0.4), 0 12px 32px rgba(200,56,42,0.25)', transition: { type: 'spring', stiffness: 400, damping: 20 } }}
+          whileHover={{ y: -2, boxShadow: '0 0 0 1px rgba(255,255,255,0.35) inset, 0 1px 2px rgba(255,255,255,0.4) inset, 0 -1px 3px rgba(0,0,0,0.06) inset, 0 6px 18px rgba(163,186,210,0.4), 0 12px 32px rgba(163,186,210,0.25)', transition: { type: 'spring', stiffness: 400, damping: 20 } }}
           whileTap={{ scale: 0.94, y: 1 }}
         >
           <IconChevronUp size={15} aria-hidden style={{ marginTop: '-1px' }} />

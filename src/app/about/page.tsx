@@ -50,18 +50,6 @@ export default function AboutPage() {
               digital products with care and photograph the world in between.
             </p>
 
-            {/* --- Currently --- */}
-            <div className="mt-14 w-full">
-              <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
-                Currently
-              </p>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground text-left">
-                Studying Interaction Design at UVU, where I also serve as Department
-                Representative. Building games, tools, and interfaces in my spare time.
-                Available for freelance and collaboration.
-              </p>
-            </div>
-
             {/* --- Actions --- */}
             <div className="mt-14 flex items-center gap-5">
               <Link

@@ -413,18 +413,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
         closedClassName="py-5"
-        contentClassName="mt-4 space-y-8"
+        contentClassName="mt-4 pb-6 space-y-8"
       >
         <div className="mx-auto max-w-[560px] frost-panel rounded-[3px] px-2 py-4 sm:px-3 sm:py-5">
           {children}
+          <div className="flex justify-center pt-4">
+            <PlaygroundButton />
+          </div>
         </div>
       </CollapsibleSection>
-
-      <div className="px-4 pb-2 sm:px-6 lg:px-0 relative z-10">
-        <div className="mx-auto max-w-[560px]">
-          <PlaygroundButton />
-        </div>
-      </div>
 
       <CollapsibleSection
         id="creating"
@@ -434,7 +431,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-12"
         closedClassName="py-5"
-        contentClassName="mt-4"
+        contentClassName="mt-4 pb-6"
       >
         <div className="mx-auto max-w-[560px] text-left">
           <ul className="space-y-2">
@@ -477,7 +474,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-12"
         closedClassName="py-5"
-        contentClassName="mt-4"
+        contentClassName="mt-4 pb-6"
       >
         <div className="mx-auto max-w-[560px]">
           <m.div
@@ -545,7 +542,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-12"
         closedClassName="py-5"
-        contentClassName="mt-4"
+        contentClassName="mt-4 pb-6"
       >
         <div className="mx-auto max-w-[560px]">
           <m.div

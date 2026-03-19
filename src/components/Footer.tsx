@@ -84,7 +84,10 @@ export default function Footer() {
         left: 0,
         right: 0,
         zIndex: 40,
-        background: 'var(--background)',
+        backdropFilter: 'blur(20px) saturate(1.15)',
+        WebkitBackdropFilter: 'blur(20px) saturate(1.15)',
+        background: 'rgba(var(--background-rgb), 0.72)',
+        borderTop: '1px solid rgba(0, 0, 0, 0.06)',
       }}
       initial={{ opacity: 0, y: 12 }}
       animate={
@@ -98,12 +101,11 @@ export default function Footer() {
           : { duration: 0.4, ease: MOTION_EASE_SOFT }
       }
     >
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center gap-1.5 px-6 pt-6 sm:px-8" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))' }}>
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center px-6 py-4 sm:px-8" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}>
         <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-muted-foreground/50">
           Made with care <IconHeart2 size={8} className="inline -mt-px text-muted-foreground/40" aria-hidden />
-        </span>
-        <span className="font-mono text-[10px] tracking-[0.08em] text-muted-foreground/30">
-          © {currentYear} Hunter Bastian
+          <span className="mx-1.5 opacity-30">·</span>
+          <span className="tracking-[0.08em] normal-case text-muted-foreground/30">© {currentYear} Hunter Bastian</span>
         </span>
       </div>
     </m.footer>

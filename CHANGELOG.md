@@ -2,6 +2,9 @@
 
 ## Version History
 
+### **v2.5.2** - Remove Ireland project *(March 19, 2026)*
+- Removed Ireland project (low-res image placeholder)
+
 ### **v2.5.1** - Breakpoint Blur Pass *(March 5, 2026)*
 - Replaced the homepage breakpoint-change dark overlay with a lighter, background-tinted blur treatment.
 - Kept the existing breakpoint detection and `900ms` transition window while making the effect feel less like a dimmed screen.

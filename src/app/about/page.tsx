@@ -50,22 +50,6 @@ export default function AboutPage() {
               digital products with care and photograph the world in between.
             </p>
 
-            {/* --- What I Do --- */}
-            <div className="mt-14 w-full">
-              <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
-                What I Do
-              </p>
-              <ul className="mt-4 space-y-3 text-left">
-                {skillAreas.map((area) => (
-                  <li key={area.label} className="text-sm leading-relaxed text-muted-foreground">
-                    <span className="font-medium text-foreground">{area.label}</span>
-                    <span className="mx-1.5 opacity-40">·</span>
-                    {area.detail}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             {/* --- Currently --- */}
             <div className="mt-14 w-full">
               <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">

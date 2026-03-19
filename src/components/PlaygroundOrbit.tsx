@@ -185,7 +185,7 @@ function OrbitCard({
         x,
         y,
         marginLeft: -72,
-        marginTop: -54,
+        marginTop: -72,
       }}
       initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8, filter: 'blur(6px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
@@ -196,10 +196,10 @@ function OrbitCard({
       }}
     >
       <div
-        className="transition-[transform,filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="transition-[transform,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
-          transform: `rotate(${tilt}deg) scale(${isHovered ? 1.08 : 1})`,
-          filter: hasHoverTarget && !isHovered ? 'brightness(0.95) saturate(0.85)' : 'none',
+          transform: `rotate(${tilt}deg) scale(${isHovered ? 1.06 : 1})`,
+          filter: hasHoverTarget && !isHovered ? 'brightness(0.92) saturate(0.8)' : 'none',
         }}
         onMouseEnter={onHoverStart}
         onMouseLeave={onHoverEnd}

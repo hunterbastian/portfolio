@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useScrambleText } from '@/lib/scramble'
 import { siteConfig } from '@/lib/site'
+import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 const PAGE_NAV = [
   { name: 'HOME', href: '/' },
@@ -68,6 +69,31 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-1">
+            <nav className="hidden sm:flex items-center gap-1">
+              {PAGE_NAV.map((item, i) => (
+                <m.div
+                  key={item.href}
+                  initial={{ opacity: 0, y: -6, filter: 'blur(4px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.2 + i * 0.06,
+                    ease: MOTION_EASE_SOFT,
+                  }}
+                >
+                  <Link
+                    href={item.href}
+                    className={`px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 ${
+                      pathname === item.href
+                        ? 'text-foreground'
+                        : 'text-muted-foreground/60 hover:text-foreground'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                </m.div>
+              ))}
+            </nav>
             <button
               type="button"
               onClick={() => setShowMobileMenu(!showMobileMenu)}

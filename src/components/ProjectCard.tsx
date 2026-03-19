@@ -53,15 +53,15 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
 
   return (
     <div className="relative">
-      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} className="group block h-full w-full rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">
+      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} className={`group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}>
         <DepthCardWrapper maxRotation={2.5} disableOnMobile>
           <div
-            className="project-card relative isolate overflow-hidden rounded-xl text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1.5 will-change-transform"
+            className={`project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1.5 will-change-transform ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}
             style={{
               animationDelay: `${index * 80}ms`,
             }}
           >
-            <div ref={imageRef} className="relative aspect-[16/9] overflow-hidden img-inset-outline">
+            <div ref={imageRef} className={`relative overflow-hidden ${hideLabel ? 'aspect-square' : 'aspect-[16/9] img-inset-outline'}`}>
               {!imgLoaded && (
                 <div className="absolute inset-0 animate-pulse bg-muted" />
               )}

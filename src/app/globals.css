@@ -501,6 +501,17 @@ h1, h2, h3, h4, h5, h6 {
   .hero-handwritten-text {
     transition: none;
   }
+
+  .animate-fade-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .playground-orbit-spin,
+  .playground-orbit-counter {
+    animation: none;
+  }
 }
 
 .playground-meadow {

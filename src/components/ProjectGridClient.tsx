@@ -20,6 +20,7 @@ interface ProjectGridClientProps {
 }
 
 const CASE_STUDY_ORDER = [
+  'lumo',
   'ai-project',
   'wander-utah',
   'brand-identity-system',

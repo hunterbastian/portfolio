@@ -1,5 +1,5 @@
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import "tw-animate-css/dist/tw-animate.css";
+@import "shadcn/dist/tailwind.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -154,7 +154,6 @@ html {
 }
 
 html {
-  scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -668,9 +667,15 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--muted-foreground);
 }
 
-.header-nav-link:hover,
+.header-nav-link:hover {
+  color: var(--foreground);
+}
+
 .header-nav-link:focus-visible {
   color: var(--foreground);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .header-nav-link.is-active:not(.is-emphasis) {

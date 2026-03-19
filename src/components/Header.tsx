@@ -54,7 +54,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="group flex min-h-[40px] items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="group flex min-h-[44px] items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               aria-label="Home"
             >
               <span
@@ -113,7 +113,7 @@ export default function Header() {
                   <Link
                     href={item.href}
                     onClick={() => setShowMobileMenu(false)}
-                    className={`block py-3 text-xs tracking-[0.14em] uppercase transition-colors duration-200 ${
+                    className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 ${
                       pathname === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                     }`}
                     style={{ fontFamily: 'inherit' }}

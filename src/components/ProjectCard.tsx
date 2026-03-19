@@ -53,7 +53,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
 
   return (
     <div className="relative">
-      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} className="group block h-full w-full rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/50">
+      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} className="group block h-full w-full rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">
         <DepthCardWrapper maxRotation={2.5} disableOnMobile>
           <div
             className="project-card relative isolate overflow-hidden rounded-xl text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1.5 will-change-transform"
@@ -67,7 +67,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
               )}
               <Image
                 src={imgSrc}
-                alt={frontmatter.title}
+                alt={`Preview of ${frontmatter.title}`}
                 fill
                 className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
                 style={frontmatter.imageZoom ? { objectPosition: 'center', scale: `${frontmatter.imageZoom}` } : undefined}

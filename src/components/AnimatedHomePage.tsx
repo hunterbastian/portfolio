@@ -497,7 +497,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               const displayYear = splitExperienceYear(job.year)
               return (
                 <m.div
-                  key={job.company}
+                  key={`${job.company}-${index}`}
                   className="border-b border-border py-3.5 last:border-b-0"
                   initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                   animate={{

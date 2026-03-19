@@ -361,6 +361,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <p className="mt-1 font-mono text-[11px] font-normal tracking-[0.06em] text-foreground opacity-75 sm:text-xs">
                 {homeHeroContent.subtitle}
               </p>
+              <p className="mt-1.5 font-mono text-[10px] tracking-[0.06em] text-accent">
+                Currently seeking UX internships
+              </p>
             </div>
           </div>
 

@@ -117,6 +117,7 @@ Fluid sizing via `clamp()` in `tailwind.config.ts`.
 - **`CollapsibleSection` shadow clipping**: Use `contentClassName="mt-4 pb-6"` (not outer section padding) to prevent box shadows being clipped by the animation wrapper's `overflow-hidden`.
 - **Hero headline one-line**: Add `whitespace-nowrap` to the `<h1>` in `AnimatedHomePage.tsx:522` to prevent "Hunter Bastian // Studio Alpine" from wrapping.
 - **Profile picture**: `public/images/profilepicture.webp` — 200×200 WebP, 13KB. Regenerate with `sharp` if updating; keep dimensions ≤200px.
+- **No frosted glass on Endeavors or Contact cards** — user explicitly reverted this; don't re-add.
 
 ## Color System
 

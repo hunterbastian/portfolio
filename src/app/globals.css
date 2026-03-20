@@ -405,11 +405,12 @@ h1, h2, h3, h4, h5, h6 {
 @media (hover: hover) and (pointer: fine) {
   .hero-handwritten-preview:hover .hero-handwritten-text {
     color: color-mix(in srgb, var(--foreground) 88%, var(--accent) 12%);
-    transform: translateY(-2px) scale(1.035) rotate(-1deg);
+    transform: translateY(-2px) scale(1.035);
     text-shadow: 0 10px 22px rgba(23, 23, 23, 0.11);
   }
   .hero-handwritten-preview:hover .hero-handwritten-text::after {
     transform: scaleX(1);
+    background: var(--accent);
   }
 }
 

@@ -16,10 +16,10 @@ export default function PlaygroundBackground() {
         waveFrequency={3}
         lineThickness={0.12}
         grainIntensity={35}
-        startColor="#8a9b7a"
-        endColor="#7f8f81"
-        lightBackground="#f2f1ef"
-        darkBackground="#232527"
+        startColor="#3f4f5c"
+        endColor="#d4928e"
+        lightBackground="#f2f0ec"
+        darkBackground="#1e2830"
         brightness={0.4}
         speedVariation={0.004}
         waveWidth={4}

@@ -3,8 +3,8 @@
 // Update here if the light-mode palette in globals.css changes.
 
 export const OG_COLORS = {
-  background: '#f2f1ef',
-  foreground: '#171717',
-  accent: '#a2c0cc',
-  muted: '#a09d98',
+  background: '#f2f0ec',
+  foreground: '#3f4f5c',
+  accent: '#d4928e',
+  muted: '#a8a8a8',
 } as const

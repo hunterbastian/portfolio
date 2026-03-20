@@ -50,31 +50,32 @@ html {
  * ───────────────────────────────────────── */
 
 :root {
-  --background-rgb: 242, 241, 239;
-  --card: #f6f5f3;
-  --card-foreground: #171717;
-  --primary: #171717;
-  --primary-foreground: #f6f5f3;
-  --secondary: #ebe9e6;
-  --secondary-foreground: #171717;
-  --muted: #e3e1dd;
-  --muted-foreground: #171717;
-  --accent: #a2c0cc;
-  --accent-foreground: #171717;
-  --border: #d9d6d1;
-  --input: #d9d6d1;
-  --ring: #a2c0cc;
-  --surface-warm-rgb: 214, 210, 202;
-  --surface-paper-rgb: 204, 200, 192;
-  --grain-rgb: 166, 162, 154;
+  /* August palette — 白色 · 縹色 · 銀鼠 · 肉色 */
+  --background-rgb: 242, 240, 236;
+  --card: #f5f3ef;
+  --card-foreground: #3f4f5c;
+  --primary: #3f4f5c;
+  --primary-foreground: #f2f0ec;
+  --secondary: #e9e6e1;
+  --secondary-foreground: #3f4f5c;
+  --muted: #e1ded9;
+  --muted-foreground: #3f4f5c;
+  --accent: #d4928e;
+  --accent-foreground: #3f4f5c;
+  --border: #d6d3cd;
+  --input: #d6d3cd;
+  --ring: #d4928e;
+  --surface-warm-rgb: 212, 208, 200;
+  --surface-paper-rgb: 202, 198, 190;
+  --grain-rgb: 164, 160, 152;
   --header-frost-opacity: 0.66;
   --header-frost-highlight: 0.1;
   --header-frost-blur: 20px;
-  --sky-top: rgba(216, 214, 208, 0.07);
-  --sky-mid: rgba(204, 200, 192, 0.04);
-  --sky-cool: rgba(225, 223, 219, 0.02);
-  --sky-spot-a: rgba(216, 214, 208, 0.03);
-  --sky-spot-b: rgba(225, 223, 219, 0.02);
+  --sky-top: rgba(214, 210, 204, 0.07);
+  --sky-mid: rgba(202, 198, 190, 0.04);
+  --sky-cool: rgba(222, 220, 216, 0.02);
+  --sky-spot-a: rgba(214, 210, 204, 0.03);
+  --sky-spot-b: rgba(222, 220, 216, 0.02);
   --box-radius: 10px;
 }
 
@@ -125,32 +126,33 @@ html {
 }
 
 .dark {
-  --background: #232527;
-  --background-rgb: 35, 37, 39;
-  --card: #2a2c2f;
-  --card-foreground: #cdc8c0;
-  --foreground: #cdc8c0;
-  --primary: #cdc8c0;
-  --primary-foreground: #232527;
-  --secondary: #313335;
-  --secondary-foreground: #cdc8c0;
-  --muted: #393b3e;
-  --muted-foreground: #9a9590;
-  --accent: #8ab0bc;
-  --accent-foreground: #232527;
-  --border: #353739;
-  --input: #353739;
-  --ring: #8ab0bc;
-  --surface-warm-rgb: 38, 40, 42;
-  --surface-paper-rgb: 45, 47, 49;
-  --grain-rgb: 53, 55, 57;
+  /* August palette dark — 縹色 deepened canvas, 白色 text, 肉色 accent */
+  --background: #1e2830;
+  --background-rgb: 30, 40, 48;
+  --card: #252e36;
+  --card-foreground: #e0ddd8;
+  --foreground: #e0ddd8;
+  --primary: #e0ddd8;
+  --primary-foreground: #1e2830;
+  --secondary: #2c3540;
+  --secondary-foreground: #e0ddd8;
+  --muted: #333c46;
+  --muted-foreground: #8a8f94;
+  --accent: #d4928e;
+  --accent-foreground: #1e2830;
+  --border: #2f3840;
+  --input: #2f3840;
+  --ring: #d4928e;
+  --surface-warm-rgb: 34, 44, 52;
+  --surface-paper-rgb: 40, 50, 58;
+  --grain-rgb: 48, 58, 66;
   --header-frost-opacity: 0.88;
   --header-frost-highlight: 0.02;
-  --sky-top: rgba(30, 32, 34, 0.12);
-  --sky-mid: rgba(37, 39, 41, 0.07);
-  --sky-cool: rgba(44, 46, 49, 0.04);
-  --sky-spot-a: rgba(30, 32, 34, 0.06);
-  --sky-spot-b: rgba(44, 46, 49, 0.04);
+  --sky-top: rgba(26, 36, 44, 0.12);
+  --sky-mid: rgba(34, 44, 52, 0.07);
+  --sky-cool: rgba(40, 50, 58, 0.04);
+  --sky-spot-a: rgba(26, 36, 44, 0.06);
+  --sky-spot-b: rgba(40, 50, 58, 0.04);
 }
 
 html {

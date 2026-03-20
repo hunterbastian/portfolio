@@ -51,7 +51,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
     return () => mq.removeEventListener('change', update)
   }, [])
 
-  const showPixelate = isDesktop && !frontmatter.video && (!frontmatter.imageZoom || frontmatter.imageZoom <= 1.1)
+  const showPixelate = isDesktop && !frontmatter.video
 
   const handleTransitionClick = useCallback(() => {
     if (imageRef.current) {

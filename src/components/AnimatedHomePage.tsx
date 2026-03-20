@@ -332,6 +332,20 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <CreatingLoader />
       <section className="relative animate-fade-in pb-0 pt-16 sm:pt-24">
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
+          <a href="/about" className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-5">
+            <span className="hero-handwritten-text font-handscript">
+              <TextReveal
+                text={homeHeroContent.handwrittenNote}
+                as="span"
+                trigger={heroTextStage >= 1}
+                duration={0.5}
+                staggerDelay={0.06}
+                startDelay={0.1}
+                filter
+              />
+            </span>
+          </a>
+
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <m.div
               initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94, filter: 'blur(6px)' }}
@@ -385,20 +399,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               staggerDelay={0.04}
               startDelay={0.1}
             />
-
-            <a href="/about" className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mt-5">
-              <span className="hero-handwritten-text font-handscript">
-                <TextReveal
-                  text={homeHeroContent.handwrittenNote}
-                  as="span"
-                  trigger={heroTextStage >= 2}
-                  duration={0.5}
-                  staggerDelay={0.06}
-                  startDelay={0.8}
-                  filter
-                />
-              </span>
-            </a>
           </m.div>
 
         </div>

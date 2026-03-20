@@ -86,7 +86,7 @@ export default function Header() {
                     className={`px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 ${
                       pathname === item.href
                         ? 'text-foreground'
-                        : 'text-muted-foreground/60 hover:text-foreground'
+                        : 'text-muted-foreground/60 hover:text-accent'
                     }`}
                   >
                     {item.name}
@@ -140,7 +140,7 @@ export default function Header() {
                     href={item.href}
                     onClick={() => setShowMobileMenu(false)}
                     className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 ${
-                      pathname === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                      pathname === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-accent'
                     }`}
                     style={{ fontFamily: 'inherit' }}
                   >

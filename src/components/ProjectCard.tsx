@@ -1,14 +1,10 @@
 'use client'
 
-import { memo, useState, useCallback, useRef, useEffect } from 'react'
-import dynamic from 'next/dynamic'
+import { memo, useState, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
 import { startProjectTransition } from '@/lib/project-transition'
-import { DepthCardWrapper } from '@/components/react-bits/depth-card'
-
-const PixelateHover = dynamic(() => import('@/components/react-bits/pixelate-hover'), { ssr: false })
 
 interface ProjectCardProps {
   slug: string
@@ -37,21 +33,10 @@ function formatCategoryLabel(category?: string): string {
 function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLabel }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
   const [imgLoaded, setImgLoaded] = useState(index === 0)
-  const [isDesktop, setIsDesktop] = useState(false)
   const imageRef = useRef<HTMLDivElement>(null)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const categoryLabel = formatCategoryLabel(frontmatter.category)
   const onLoad = useCallback(() => setImgLoaded(true), [])
-
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)')
-    const update = () => setIsDesktop(mq.matches)
-    update()
-    mq.addEventListener('change', update)
-    return () => mq.removeEventListener('change', update)
-  }, [])
-
-  const showPixelate = isDesktop && !frontmatter.video
 
   const handleTransitionClick = useCallback(() => {
     if (imageRef.current) {
@@ -68,7 +53,6 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
   return (
     <div className="relative">
       <Link href={`/projects/${slug}`} onClick={handleTransitionClick} className={`group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}>
-        <DepthCardWrapper maxRotation={2.5} disableOnMobile>
           <div
             className={`project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1.5 will-change-transform ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}
             style={{
@@ -97,19 +81,6 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                   onError={() => setImgSrc('/images/placeholder.svg')}
                 />
               </div>
-
-              {showPixelate && (
-                <div className="absolute inset-0 z-[1]">
-                  <PixelateHover
-                    image={imgSrc}
-                    mode="pixelate"
-                    pixelSize={12}
-                    cursorRadius={120}
-                    falloff={0.5}
-                    autoDemo={false}
-                  />
-                </div>
-              )}
 
               {frontmatter.video && (
                 <video
@@ -142,7 +113,6 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
               </div>
             )}
           </div>
-        </DepthCardWrapper>
       </Link>
       {frontmatter.demo && !hideLiveBadge && (
         <a

@@ -99,6 +99,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   const { frontmatter, content } = project
+  const isPlayground = frontmatter.archived === true
   const projectUrl = resolveSiteUrl(`/projects/${slug}`)
   const imageUrl = resolveImageUrl(frontmatter.image)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
@@ -148,7 +149,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       />
 
       <div className="mb-4 sm:mb-8 flex justify-start">
-        <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Projects" />
+        <BreadcrumbPill
+          href={isPlayground ? '/archive' : '/'}
+          parentLabel={isPlayground ? 'Playground' : 'Home'}
+          currentLabel="Projects"
+        />
       </div>
 
       <div className="relative mx-auto max-w-[560px]">

@@ -417,9 +417,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       >
         <div className="mx-auto max-w-[560px] frost-panel rounded-[3px] px-2 py-4 sm:px-3 sm:py-5">
           {children}
-          <div className="flex justify-center pt-4">
-            <PlaygroundButton />
-          </div>
+        </div>
+        <div className="flex justify-center pt-5">
+          <PlaygroundButton />
         </div>
       </CollapsibleSection>
 
@@ -520,7 +520,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                           {job.company}
                         </h3>
                       </div>
-                      <p className="mt-1 font-mono text-xs font-normal tracking-[0.04em] text-muted-foreground">
+                      <p className="mt-1 font-inter text-xs font-normal text-muted-foreground">
                         {job.title}
                       </p>
                       <p className="mt-2 font-inter text-sm font-normal leading-relaxed text-muted-foreground">
@@ -581,10 +581,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     <h3 className="mb-1 font-mono text-[13px] font-medium tracking-[0.04em] text-foreground">
                       {edu.institution}
                     </h3>
-                    <p className="mb-1 font-mono text-sm font-normal tracking-[0.04em] text-foreground">
+                    <p className="mb-1 font-inter text-sm font-normal text-foreground">
                       {edu.degree}
                     </p>
-                    <p className="font-mono text-sm font-normal tracking-[0.04em] text-muted-foreground">
+                    <p className="font-inter text-sm font-normal text-muted-foreground">
                       {edu.level}
                     </p>
                     {edu.note && (

@@ -7,6 +7,7 @@ import DesignDecision from './DesignDecision'
 import ImageAnnotation from './ImageAnnotation'
 import MetricCard from './MetricCard'
 import ScrollReveal from './ScrollReveal'
+import { BlurHighlight } from '@/components/react-bits/blur-highlight'
 import ScrollStage from './ScrollStage'
 import LiveDemo from './LiveDemo'
 
@@ -114,6 +115,7 @@ const mdxComponents = {
   ScrollReveal,
   ScrollStage,
   LiveDemo,
+  BlurHighlight,
 }
 
 export default mdxComponents

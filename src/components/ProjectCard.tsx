@@ -65,20 +65,24 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
               {!imgLoaded && (
                 <div className="absolute inset-0 animate-pulse bg-muted" />
               )}
-              <Image
-                src={imgSrc}
-                alt={`Preview of ${frontmatter.title}`}
-                fill
-                className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-                style={frontmatter.imageZoom ? { objectPosition: 'center', scale: `${frontmatter.imageZoom}` } : undefined}
-                sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
-                quality={80}
-                priority={index === 0}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                fetchPriority={index === 0 ? 'high' : 'low'}
-                onLoad={onLoad}
-                onError={() => setImgSrc('/images/placeholder.svg')}
-              />
+              <div
+                className="absolute inset-0"
+                style={frontmatter.imageZoom ? { transform: `scale(${frontmatter.imageZoom})` } : undefined}
+              >
+                <Image
+                  src={imgSrc}
+                  alt={`Preview of ${frontmatter.title}`}
+                  fill
+                  className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
+                  quality={80}
+                  priority={index === 0}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={index === 0 ? 'high' : 'low'}
+                  onLoad={onLoad}
+                  onError={() => setImgSrc('/images/placeholder.svg')}
+                />
+              </div>
 
               {frontmatter.video && (
                 <video

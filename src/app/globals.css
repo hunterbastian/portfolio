@@ -59,11 +59,11 @@ html {
   --secondary-foreground: #171717;
   --muted: #e3e1dd;
   --muted-foreground: #171717;
-  --accent: #7f8f81;
+  --accent: #a2c0cc;
   --accent-foreground: #171717;
   --border: #d9d6d1;
   --input: #d9d6d1;
-  --ring: #8f9686;
+  --ring: #a2c0cc;
   --surface-warm-rgb: 214, 210, 202;
   --surface-paper-rgb: 204, 200, 192;
   --grain-rgb: 166, 162, 154;
@@ -136,11 +136,11 @@ html {
   --secondary-foreground: #cdc8c0;
   --muted: #393b3e;
   --muted-foreground: #9a9590;
-  --accent: #8a9b7a;
+  --accent: #8ab0bc;
   --accent-foreground: #232527;
   --border: #353739;
   --input: #353739;
-  --ring: #8a9b7a;
+  --ring: #8ab0bc;
   --surface-warm-rgb: 38, 40, 42;
   --surface-paper-rgb: 45, 47, 49;
   --grain-rgb: 53, 55, 57;
@@ -472,28 +472,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .body-glow {
-  background-image: radial-gradient(80% 30% at 50% 100%, rgba(245, 158, 11, 0.7) 0%, transparent 100%);
+  background-image: radial-gradient(80% 30% at 50% 100%, rgba(216, 200, 122, 0.7) 0%, transparent 100%);
 }
 
 .dark .body-glow {
-  background-image: radial-gradient(80% 30% at 50% 100%, rgba(146, 64, 14, 0.35) 0%, transparent 100%);
+  background-image: radial-gradient(80% 30% at 50% 100%, rgba(168, 152, 72, 0.35) 0%, transparent 100%);
 }
 
 .archive-glow {
-  background-image: radial-gradient(80% 30% at 50% 0%, #f59e0b 0%, transparent 100%);
+  background-image: radial-gradient(80% 30% at 50% 0%, #d8c87a 0%, transparent 100%);
 }
 
 .dark .archive-glow {
-  background-image: radial-gradient(80% 30% at 50% 0%, rgba(146, 64, 14, 0.5) 0%, transparent 100%);
+  background-image: radial-gradient(80% 30% at 50% 0%, rgba(168, 152, 72, 0.5) 0%, transparent 100%);
 }
 
 .about-page-glow {
-  background-image: radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #f59e0b 100%);
+  background-image: radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #d8c87a 100%);
   background-size: 100% 100%;
 }
 
 .dark .about-page-glow {
-  background-image: radial-gradient(125% 125% at 50% 10%, #232527 40%, #92400e 100%);
+  background-image: radial-gradient(125% 125% at 50% 10%, #232527 40%, #a89848 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -517,11 +517,11 @@ h1, h2, h3, h4, h5, h6 {
   background:
     radial-gradient(circle at 18% 16%, rgba(255, 248, 232, 0.9), transparent 18%),
     radial-gradient(circle at 81% 11%, rgba(255, 251, 240, 0.88), transparent 15%),
-    linear-gradient(180deg, #f6f2e9 0%, #edf3e1 52%, #d5e3ba 100%);
+    linear-gradient(180deg, #f2f4f6 0%, #e1edf3 52%, #bad5e3 100%);
   border: 1px solid color-mix(in srgb, var(--foreground) 10%, white 90%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.68),
-    0 20px 60px rgba(103, 121, 78, 0.12);
+    0 20px 60px rgba(78, 109, 121, 0.12);
 }
 
 .playground-meadow-sky {
@@ -562,7 +562,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--foreground) 74%, #5d7a45 26%);
+  color: color-mix(in srgb, var(--foreground) 74%, #457a7a 26%);
 }
 
 .playground-field-title {
@@ -572,7 +572,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: clamp(2rem, 1.2rem + 2vw, 3.3rem);
   line-height: 0.94;
   letter-spacing: -0.05em;
-  color: color-mix(in srgb, var(--foreground) 86%, #4c6b3e 14%);
+  color: color-mix(in srgb, var(--foreground) 86%, #3e5f6b 14%);
   text-wrap: balance;
 }
 
@@ -581,7 +581,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 30rem;
   font-size: 0.95rem;
   line-height: 1.55;
-  color: color-mix(in srgb, var(--foreground) 58%, #6d8355 42%);
+  color: color-mix(in srgb, var(--foreground) 58%, #558394 42%);
 }
 
 .playground-card-plot {
@@ -597,11 +597,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .playground-btn:hover {
-  background: linear-gradient(135deg, rgba(168, 192, 132, 0.15), rgba(123, 143, 94, 0.1)) !important;
+  background: linear-gradient(135deg, rgba(132, 176, 192, 0.15), rgba(94, 134, 143, 0.1)) !important;
 }
 
 .dark .playground-btn:hover {
-  background: linear-gradient(135deg, rgba(123, 143, 94, 0.15), rgba(106, 125, 79, 0.1)) !important;
+  background: linear-gradient(135deg, rgba(94, 134, 143, 0.15), rgba(79, 115, 125, 0.1)) !important;
 }
 
 @keyframes playground-orbit-spin {

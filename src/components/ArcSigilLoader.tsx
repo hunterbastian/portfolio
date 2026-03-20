@@ -10,7 +10,7 @@ interface ArcSigilLoaderProps {
 
 const EXPORT_COLORS = {
   stroke: '#d8dee9',
-  accent: '#88c0d0',
+  accent: '#a2c0cc',
   background: '#2e3440',
   panel: '#3b4252',
 }

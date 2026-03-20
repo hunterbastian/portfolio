@@ -5,6 +5,6 @@
 export const OG_COLORS = {
   background: '#f2f1ef',
   foreground: '#171717',
-  accent: '#7f8f81',
+  accent: '#a2c0cc',
   muted: '#a09d98',
 } as const

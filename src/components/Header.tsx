@@ -22,13 +22,13 @@ function CoordinateDisplay() {
 
   return (
     <div
-      className="select-none cursor-default"
+      className="select-none cursor-default group/coord"
       onMouseEnter={() => { coord.scramble(); location.scramble() }}
     >
-      <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight">
+      <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight transition-[filter] duration-300 ease-out group-hover/coord:blur-[3px]">
         {coord.display}
       </p>
-      <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight">
+      <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-out group-hover/coord:blur-[3px]">
         {location.display}
       </p>
     </div>
@@ -83,10 +83,10 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 ${
+                    className={`px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
                       pathname === item.href
-                        ? 'text-foreground'
-                        : 'text-muted-foreground/60 hover:text-accent'
+                        ? 'text-foreground underline decoration-foreground'
+                        : 'text-muted-foreground/60 hover:text-accent hover:underline'
                     }`}
                   >
                     {item.name}
@@ -139,8 +139,8 @@ export default function Header() {
                   <Link
                     href={item.href}
                     onClick={() => setShowMobileMenu(false)}
-                    className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 ${
-                      pathname === item.href ? 'text-foreground' : 'text-muted-foreground hover:text-accent'
+                    className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
+                      pathname === item.href ? 'text-foreground underline decoration-foreground' : 'text-muted-foreground hover:text-accent hover:underline'
                     }`}
                     style={{ fontFamily: 'inherit' }}
                   >

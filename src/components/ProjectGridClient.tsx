@@ -285,6 +285,42 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : caseStudyDial.hover.inactiveOpacity
         const stackZIndex = getStackPriorityZIndex(index, orderedProjects.length, caseStudyDial.pile.stackPriority)
 
+        // First card renders as plain div for instant LCP paint (no Framer Motion hydration delay)
+        if (index === 0) {
+          return (
+            <div
+              key={project.slug}
+              className="w-full transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={{
+                zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
+                opacity: cardOpacity,
+                transform: `translateX(${targetX}px) rotate(${targetRotate}deg) scale(${targetScale})`,
+              }}
+              onMouseEnter={() => {
+                prefetchProject(project.slug)
+                if (supportsHover) {
+                  setHoveredIndex(index)
+                }
+              }}
+              onMouseLeave={() => {
+                if (supportsHover) {
+                  setHoveredIndex(null)
+                }
+              }}
+            >
+              <Magnetic strength={0.28} range={130} onlyOnHover disableOnTouch>
+                {project.frontmatter?.image ? (
+                  <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
+                ) : (
+                  <div className="aspect-[16/9] w-full rounded-xl">
+                    <Skeleton className="h-full w-full rounded-xl" />
+                  </div>
+                )}
+              </Magnetic>
+            </div>
+          )
+        }
+
         return (
           <m.div
             key={project.slug}
@@ -304,28 +340,28 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               }
             }}
             initial={{
-              opacity: index === 0 ? CARD_STAGGER_ITEM.finalOpacity : CARD_STAGGER_ITEM.initialOpacity,
-              y: index === 0 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
+              opacity: CARD_STAGGER_ITEM.initialOpacity,
+              y: CARD_STAGGER_ITEM.initialY,
               x: compactX,
               rotate: compactRotate,
               scale: caseStudyDial.pile.compactScale,
             }}
             animate={{
-              opacity: index === 0 ? cardOpacity : (stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity),
-              y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : (index === 0 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY),
+              opacity: stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity,
+              y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
               x: targetX,
               rotate: targetRotate,
               scale: targetScale,
             }}
             transition={{
               opacity: {
-                duration: index === 0 ? 0 : motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
-                delay: index === 0 ? 0 : (stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0),
+                duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
+                delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
                 ease: CARD_STAGGER_PANEL.ease,
               },
               y: {
-                duration: index === 0 ? 0 : motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
-                delay: index === 0 ? 0 : (stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0),
+                duration: motionDurationMs(CARD_STAGGER_TIMING.cardDuration, prefersReducedMotion),
+                delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
                 ease: CARD_STAGGER_PANEL.ease,
               },
               x: {

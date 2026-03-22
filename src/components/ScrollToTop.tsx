@@ -40,10 +40,10 @@ export default function ScrollToTop() {
           exit={{ opacity: 0, y: 10, scale: 0.9 }}
           transition={{
             type: 'spring',
-            stiffness: 260,
-            damping: 24,
-            mass: 0.8,
-            opacity: { duration: 0.25 },
+            stiffness: 200,
+            damping: 26,
+            mass: 1,
+            opacity: { duration: 0.4 },
           }}
           whileHover={{ y: -2, boxShadow: '0 0 0 1px rgba(255,255,255,0.35) inset, 0 1px 2px rgba(255,255,255,0.4) inset, 0 -1px 3px rgba(0,0,0,0.06) inset, 0 6px 18px rgba(212,146,142,0.4), 0 12px 32px rgba(212,146,142,0.25)', transition: { type: 'spring', stiffness: 400, damping: 20 } }}
           whileTap={{ scale: 0.94, y: 1 }}

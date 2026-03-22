@@ -4,6 +4,16 @@ import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
+function SectionTitle({ title }: { title: string }) {
+  const match = title.match(/^(\d+)\s+(.+)$/)
+  if (!match) return <>{title}</>
+  return (
+    <>
+      <span className="text-accent/70">{match[1]}</span>{' '}{match[2]}
+    </>
+  )
+}
+
 interface CollapsibleSectionProps {
   id: string
   title: string
@@ -179,10 +189,10 @@ export default function CollapsibleSection({
               aria-expanded={isOpen}
               aria-controls={contentId}
             >
-              {title}
+              <SectionTitle title={title} />
             </button>
           ) : (
-            title
+            <SectionTitle title={title} />
           )}
         </m.h2>
       </div>

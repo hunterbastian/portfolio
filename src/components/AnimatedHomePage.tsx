@@ -91,11 +91,11 @@ const HERO_ENTRANCE = {
  * ───────────────────────────────────────────────────────── */
 
 const STAGGER_TIMING = {
-  panelAppear: 100,     // panel starts appearing
-  itemsAppear: 240,     // items begin staggered reveal
-  panelDuration: 380,   // slower panel transition
-  itemDuration: 420,    // each item transitions gently
-  itemStagger: 70,      // wider stagger — items breathe
+  panelAppear: 120,     // panel starts appearing
+  itemsAppear: 280,     // items begin staggered reveal
+  panelDuration: 420,   // slower panel transition
+  itemDuration: 460,    // each item transitions gently
+  itemStagger: 90,      // wider stagger — items breathe (間)
 }
 
 const STAGGER_PANEL = {
@@ -330,7 +330,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
       <CreatingLoader />
-      <section className="relative animate-fade-in pb-0 pt-16 sm:pt-24">
+      <section className="relative animate-fade-in pb-0 pt-20 sm:pt-28">
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <a href="/about" className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-5">
             <span className="hero-handwritten-text font-handscript">
@@ -379,7 +379,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <m.div
-            className="mt-4 mb-4 sm:mt-5"
+            className="mt-4 mb-8 sm:mt-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(6px)' }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -411,7 +411,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         skipContentStaging
         className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-12"
+        openClassName="py-16"
         closedClassName="py-5"
         contentClassName="mt-4 pb-6 space-y-8"
       >
@@ -429,7 +429,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         isOpen={sectionOpen.creating}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-12"
+        openClassName="py-16"
         closedClassName="py-5"
         contentClassName="mt-4 pb-6"
       >
@@ -472,7 +472,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="03 EXPERIENCE"
         isOpen={sectionOpen.experience}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-12"
+        openClassName="py-16"
         closedClassName="py-5"
         contentClassName="mt-4 pb-6"
       >
@@ -540,7 +540,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="04 EDUCATION"
         isOpen={sectionOpen.education}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-12"
+        openClassName="py-16"
         closedClassName="py-5"
         contentClassName="mt-4 pb-6"
       >
@@ -608,7 +608,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="05 CONTACT"
         isOpen={sectionOpen.contact}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="pt-12 pb-20 sm:pb-28"
+        openClassName="pt-16 pb-24 sm:pb-32"
         closedClassName="py-5"
         contentClassName="mt-4"
       >

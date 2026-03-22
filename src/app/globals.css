@@ -71,11 +71,11 @@ html {
   --header-frost-opacity: 0.66;
   --header-frost-highlight: 0.1;
   --header-frost-blur: 20px;
-  --sky-top: rgba(214, 210, 204, 0.07);
-  --sky-mid: rgba(202, 198, 190, 0.04);
-  --sky-cool: rgba(222, 220, 216, 0.02);
-  --sky-spot-a: rgba(214, 210, 204, 0.03);
-  --sky-spot-b: rgba(222, 220, 216, 0.02);
+  --sky-top: rgba(214, 210, 204, 0.1);
+  --sky-mid: rgba(202, 198, 190, 0.06);
+  --sky-cool: rgba(222, 220, 216, 0.035);
+  --sky-spot-a: rgba(214, 210, 204, 0.045);
+  --sky-spot-b: rgba(222, 220, 216, 0.035);
   --box-radius: 10px;
 }
 

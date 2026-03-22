@@ -16,20 +16,32 @@ const PAGE_NAV = [
   { name: 'BLOG', href: '/blog' },
 ] as const
 
+function getSeason(): string {
+  const month = new Date().getMonth()
+  if (month >= 2 && month <= 4) return '春 · Spring'
+  if (month >= 5 && month <= 7) return '夏 · Summer'
+  if (month >= 8 && month <= 10) return '秋 · Autumn'
+  return '冬 · Winter'
+}
+
 function CoordinateDisplay() {
   const coord = useScrambleText(siteConfig.siteCoordinates, true, 400)
   const location = useScrambleText('UTAH, USA', true, 600)
+  const season = useScrambleText(getSeason(), true, 800)
 
   return (
     <div
       className="select-none cursor-default group/coord"
-      onMouseEnter={() => { coord.scramble(); location.scramble() }}
+      onMouseEnter={() => { coord.scramble(); location.scramble(); season.scramble() }}
     >
       <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight transition-[filter] duration-300 ease-out group-hover/coord:blur-[3px]">
         {coord.display}
       </p>
       <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-out group-hover/coord:blur-[3px]">
         {location.display}
+      </p>
+      <p className="text-[9px] tracking-[0.1em] text-accent/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-out group-hover/coord:blur-[3px]">
+        {season.display}
       </p>
     </div>
   )

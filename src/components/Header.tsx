@@ -63,8 +63,8 @@ export default function Header() {
       className="site-header-frosted sticky top-0 z-50 w-full px-4 py-3 sm:px-6 sm:py-4 header-separator"
     >
       <div className="container mx-auto max-w-6xl">
-        <div className="flex h-10 items-center justify-between sm:h-14">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between py-1">
+          <div className="flex items-start gap-4">
             <Link
               href="/"
               className="group flex min-h-[44px] items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"

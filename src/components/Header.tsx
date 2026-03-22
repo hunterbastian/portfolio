@@ -97,7 +97,7 @@ export default function Header() {
                     href={item.href}
                     className={`px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
                       pathname === item.href
-                        ? 'text-foreground underline decoration-foreground'
+                        ? 'text-foreground underline decoration-accent'
                         : 'text-muted-foreground/60 hover:text-accent hover:underline'
                     }`}
                   >
@@ -152,7 +152,7 @@ export default function Header() {
                     href={item.href}
                     onClick={() => setShowMobileMenu(false)}
                     className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
-                      pathname === item.href ? 'text-foreground underline decoration-foreground' : 'text-muted-foreground hover:text-accent hover:underline'
+                      pathname === item.href ? 'text-foreground underline decoration-accent' : 'text-muted-foreground hover:text-accent hover:underline'
                     }`}
                     style={{ fontFamily: 'inherit' }}
                   >

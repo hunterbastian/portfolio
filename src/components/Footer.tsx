@@ -102,7 +102,7 @@ export default function Footer() {
       }
     >
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center px-6 py-4 sm:px-8" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}>
-        <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-muted-foreground/50">
+        <span className="font-mono text-[9px] tracking-[0.14em] uppercase text-muted-foreground/50 sm:text-[10px]">
           Made with care <IconHeart2 size={8} className="inline -mt-px text-muted-foreground/40" aria-hidden />
           <span className="mx-1.5 opacity-30">·</span>
           <span className="tracking-[0.08em] normal-case text-muted-foreground/30">© {currentYear} Hunter Bastian</span>

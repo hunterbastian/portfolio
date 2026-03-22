@@ -185,7 +185,7 @@ export default function CollapsibleSection({
             <button
               type="button"
               onClick={onToggle}
-              className="inline-flex items-center cursor-pointer bg-transparent border-none p-0 m-0 font-mono text-[12px] tracking-[0.06em] uppercase hover:opacity-80 transition-opacity duration-200"
+              className="inline-flex items-center min-h-[44px] cursor-pointer bg-transparent border-none p-0 m-0 font-mono text-[11px] tracking-[0.06em] uppercase hover:opacity-80 transition-opacity duration-200 sm:text-[12px]"
               aria-expanded={isOpen}
               aria-controls={contentId}
             >

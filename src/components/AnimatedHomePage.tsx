@@ -368,11 +368,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </m.div>
             <div className="min-w-0">
               <h1
-                className="text-foreground font-mono font-normal text-[14px] leading-[1.2] tracking-[0.02em]"
+                className="text-foreground font-mono font-normal text-[13px] leading-[1.2] tracking-[0.02em] sm:text-[14px]"
               >
                 {homeHeroContent.headline}
               </h1>
-              <p className="mt-1 font-mono text-[11px] font-normal tracking-[0.06em] text-foreground opacity-75 sm:text-xs">
+              <p className="mt-1 font-mono text-[10px] font-normal tracking-[0.06em] text-foreground opacity-75 sm:text-[11px]">
                 {homeHeroContent.subtitle}
               </p>
             </div>
@@ -620,7 +620,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-foreground underline decoration-current/30 underline-offset-4 transition-[color,text-decoration-color] duration-200 hover:text-foreground hover:decoration-current inline-flex items-center min-h-[40px]"
+                className="text-[13px] text-foreground underline decoration-current/30 underline-offset-4 transition-[color,text-decoration-color] duration-200 hover:text-foreground hover:decoration-current inline-flex items-center min-h-[44px]"
                 aria-label={link.label}
                 title={link.label}
               >

@@ -98,7 +98,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
             </div>
 
             {!hideLabel && (
-              <div className="px-3.5 pb-3 pt-2.5" style={{ background: 'var(--card)' }}>
+              <div className="px-2.5 pb-2 pt-2 sm:px-3.5 sm:pb-3 sm:pt-2.5" style={{ background: 'var(--card)' }}>
                 <h3
                   className="block w-full truncate whitespace-nowrap text-[13px] font-medium leading-tight text-foreground transition-colors duration-200"
                   title={displayTitle}

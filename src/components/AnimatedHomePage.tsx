@@ -2,6 +2,7 @@
 
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
+import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
@@ -427,9 +428,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 pb-6 space-y-8"
       >
-        <div className="mx-auto max-w-[560px] frost-panel rounded-[3px] px-2 py-4 sm:px-3 sm:py-5">
+        <Card className="mx-auto max-w-[560px] px-2 sm:px-3" size="sm">
           {children}
-        </div>
+        </Card>
         <div className="flex justify-center pt-5">
           <PlaygroundButton />
         </div>
@@ -499,7 +500,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <m.div
             ref={experiencePanelRef}
-            className="frost-panel rounded-[3px] p-4 sm:p-5 space-y-2"
+            className="rounded-xl bg-card ring-1 ring-foreground/10 p-4 sm:p-5 space-y-2"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: experienceStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -571,7 +572,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <m.div
             ref={educationPanelRef}
-            className="frost-panel rounded-[3px] p-5 space-y-5"
+            className="rounded-xl bg-card ring-1 ring-foreground/10 p-5 space-y-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: educationStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,

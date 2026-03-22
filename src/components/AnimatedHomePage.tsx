@@ -2,6 +2,7 @@
 
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
+import { Separator } from '@/components/ui/separator'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -423,6 +424,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </CollapsibleSection>
 
+      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0">
+        <Separator className="bg-border/40" />
+      </div>
+
       <CollapsibleSection
         id="creating"
         title="02 ENDEAVORS"
@@ -465,6 +470,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </ul>
         </div>
       </CollapsibleSection>
+      </div>
+
+      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0">
+        <Separator className="bg-border/40" />
       </div>
 
       <CollapsibleSection
@@ -535,6 +544,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </CollapsibleSection>
 
+      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0">
+        <Separator className="bg-border/40" />
+      </div>
+
       <CollapsibleSection
         id="education"
         title="04 EDUCATION"
@@ -602,6 +615,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </m.div>
         </div>
       </CollapsibleSection>
+
+      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0">
+        <Separator className="bg-border/40" />
+      </div>
 
       <CollapsibleSection
         id="contact"

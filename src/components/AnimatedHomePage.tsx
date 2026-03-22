@@ -332,7 +332,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <CreatingLoader />
       <section className="relative animate-fade-in pb-0 pt-20 sm:pt-28">
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
-          <a href="/about" className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-5">
+          <a href="/about" className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10">
             <span className="hero-handwritten-text font-handscript">
               <TextReveal
                 text={homeHeroContent.handwrittenNote}

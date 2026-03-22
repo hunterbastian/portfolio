@@ -47,8 +47,8 @@ const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
 }
 
 const INITIAL_SECTION_LOAD_DELAY = {
-  caseStudies: 220,
-  creating: 440,
+  caseStudies: 0,
+  creating: 220,
 } as const
 
 const PRESENT_SUFFIX = ' - Present'

@@ -32,7 +32,7 @@ export default function HomePage() {
     <ErrorBoundary>
       <AnimatedHomePage>
         <Suspense fallback={<ProjectLoader />}>
-          <ProjectGridClient projects={projects} initialLoadDelayMs={220} />
+          <ProjectGridClient projects={projects} initialLoadDelayMs={0} />
         </Suspense>
 
         {projects.length === 0 && (

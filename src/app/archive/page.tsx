@@ -3,7 +3,6 @@ import PlaygroundOrbit from '@/components/PlaygroundOrbit'
 
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
-import PlaygroundBackground from '@/components/PlaygroundBackground'
 
 import type { Metadata } from 'next'
 
@@ -32,7 +31,6 @@ export default function ArchivePage() {
       </div>
 
       <div className="relative h-full overflow-hidden">
-        <PlaygroundBackground />
         <div
           className="pointer-events-none absolute inset-0 z-0 opacity-[0.15] dark:opacity-[0.1] archive-glow"
           aria-hidden="true"

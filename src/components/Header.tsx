@@ -18,10 +18,10 @@ const PAGE_NAV = [
 
 function getSeason(): string {
   const month = new Date().getMonth()
-  if (month >= 2 && month <= 4) return '春 · Spring'
-  if (month >= 5 && month <= 7) return '夏 · Summer'
-  if (month >= 8 && month <= 10) return '秋 · Autumn'
-  return '冬 · Winter'
+  if (month >= 2 && month <= 4) return 'Spring'
+  if (month >= 5 && month <= 7) return 'Summer'
+  if (month >= 8 && month <= 10) return 'Autumn'
+  return 'Winter'
 }
 
 function CoordinateDisplay() {

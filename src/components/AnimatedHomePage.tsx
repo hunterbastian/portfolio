@@ -392,14 +392,25 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <TextReveal
-              text={homeHeroContent.intro}
-              className="m-0 font-inter font-normal text-sm leading-relaxed text-muted-foreground"
-              trigger={heroTextStage >= 2}
-              duration={0.5}
-              staggerDelay={0.04}
-              startDelay={0.1}
-            />
+            <p className="m-0 font-inter text-sm leading-relaxed text-muted-foreground">
+              <TextReveal
+                text="Interaction Design student and Department Representative at UVU"
+                as="span"
+                className="font-medium text-foreground/80"
+                trigger={heroTextStage >= 2}
+                duration={0.5}
+                staggerDelay={0.04}
+                startDelay={0.1}
+              />{' '}
+              <TextReveal
+                text="with experience designing and building digital products. I create experiences with craft and detail."
+                as="span"
+                trigger={heroTextStage >= 2}
+                duration={0.5}
+                staggerDelay={0.04}
+                startDelay={0.5}
+              />
+            </p>
           </m.div>
 
         </div>

@@ -105,9 +105,9 @@ export default function Footer() {
         <span className="font-mono text-[9px] tracking-[0.14em] uppercase text-muted-foreground/50 sm:text-[10px]">
           Made with care <IconHeart2 size={8} className="inline -mt-px text-muted-foreground/40" aria-hidden />
           <span className="mx-1.5 opacity-30">·</span>
-          <span className="tracking-[0.08em] normal-case text-muted-foreground/30">© {currentYear} Hunter Bastian</span>
+          <span className="text-muted-foreground/30">LAST UPDATED: MAR 2026</span>
           <span className="mx-1.5 opacity-30">·</span>
-          <span className="tracking-[0.08em] normal-case text-muted-foreground/30">Last updated: Mar 2026</span>
+          <span className="tracking-[0.08em] normal-case text-muted-foreground/30">© {currentYear} Hunter Bastian</span>
         </span>
       </div>
     </m.footer>

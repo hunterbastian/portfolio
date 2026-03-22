@@ -218,6 +218,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   background:
+    radial-gradient(70% 50% at 50% 55%, rgba(216, 200, 122, 0.06), transparent 100%),
     linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 50%, var(--sky-cool) 78%, transparent 100%),
     radial-gradient(65% 50% at 68% 12%, var(--sky-spot-a), transparent 100%),
     radial-gradient(50% 45% at 28% 20%, var(--sky-spot-b), transparent 100%);

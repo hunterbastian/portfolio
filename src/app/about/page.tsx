@@ -10,13 +10,6 @@ export const metadata: Metadata = {
   description: 'A little about Hunter Bastian — interaction designer, photographer, and student based in Utah.',
 }
 
-const skillAreas = [
-  { label: 'Design', detail: 'Interfaces, interaction patterns, prototyping' },
-  { label: 'Development', detail: 'Next.js, TypeScript, Three.js, Rust' },
-  { label: 'Photography', detail: 'Studio Alpine — landscape and editorial' },
-  { label: 'Games', detail: 'WebGPU, voxel engines, browser-based worlds' },
-] as const
-
 export default function AboutPage() {
   return (
     <div className="relative min-h-screen">
@@ -25,11 +18,11 @@ export default function AboutPage() {
         aria-hidden="true"
       />
       <div className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mb-8 sm:mb-12 flex justify-start pt-4 sm:pt-6">
+        <div className="mb-10 sm:mb-14 flex justify-start pt-4 sm:pt-6">
           <BreadcrumbPill href="/" parentLabel="Home" currentLabel="About" />
         </div>
 
-        <div className="relative z-10 flex justify-center pb-24 pt-12 sm:pt-20">
+        <div className="relative z-10 flex justify-center pb-32 pt-16 sm:pt-24">
           <div className="flex flex-col items-center text-center max-w-md">
             {/* --- Profile --- */}
             <Image
@@ -41,20 +34,20 @@ export default function AboutPage() {
               priority
             />
 
-            <h1 className="mt-8 text-sm font-medium tracking-[0.12em] uppercase text-foreground">
+            <h1 className="mt-10 font-mono text-[13px] font-medium tracking-[0.12em] uppercase text-foreground sm:text-sm">
               Hunter Bastian
             </h1>
 
-            <p className="mt-4 text-sm leading-relaxed text-balance text-muted-foreground">
+            <p className="mt-5 text-[13px] leading-relaxed text-balance text-muted-foreground sm:text-sm">
               Interaction design student at Utah Valley University. I design and build
               digital products with care and photograph the world in between.
             </p>
 
             {/* --- Actions --- */}
-            <div className="mt-14 flex items-center gap-5">
+            <div className="mt-16 flex items-center gap-5">
               <Link
                 href="/#contact"
-                className="group inline-flex items-center gap-1.5 text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className="group inline-flex items-center gap-1.5 min-h-[44px] text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-accent transition-colors duration-200 underline-offset-4 decoration-transparent hover:underline hover:decoration-accent"
               >
                 Contact
                 <AnimatedDashedArrow size={14} />

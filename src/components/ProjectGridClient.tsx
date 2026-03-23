@@ -137,13 +137,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   const [stage, setStage] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isGridHovered, setIsGridHovered] = useState(false)
-  const [supportsHover, setSupportsHover] = useState(() => {
-    if (typeof window === 'undefined') {
-      return false
-    }
-
-    return window.matchMedia('(hover: hover) and (pointer: fine)').matches
-  })
+  const [supportsHover, setSupportsHover] = useState(false)
 
   const router = useRouter()
   const prefersReducedMotion = useReducedMotion() ?? false

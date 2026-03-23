@@ -539,7 +539,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     </span>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-mono text-[13px] font-medium tracking-[0.04em] text-foreground">
+                        <h3 className="font-mono text-[13px] font-semibold tracking-[0.04em] text-foreground">
                           {job.company}
                         </h3>
                       </div>
@@ -605,7 +605,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     {edu.year}
                   </div>
                   <div className="flex-1">
-                    <h3 className="mb-1 font-mono text-[13px] font-medium tracking-[0.04em] text-foreground">
+                    <h3 className="mb-1 font-mono text-[13px] font-semibold tracking-[0.04em] text-foreground">
                       {edu.institution}
                     </h3>
                     <p className="mb-1 font-inter text-sm font-normal text-foreground">

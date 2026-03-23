@@ -54,6 +54,17 @@ export default function AboutPageClient() {
               />
             </p>
 
+            <p className="mt-4 text-[13px] leading-relaxed text-balance text-muted-foreground sm:text-sm">
+              <TextReveal
+                text="I also love photography and I own a Fujifilm X-100F, which has been my favorite item recently."
+                as="span"
+                trigger
+                duration={0.5}
+                staggerDelay={0.04}
+                startDelay={1.2}
+              />
+            </p>
+
             {/* --- Actions --- */}
             <div className="mt-16 flex items-center gap-5">
               <Link

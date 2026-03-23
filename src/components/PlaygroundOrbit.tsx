@@ -131,9 +131,6 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
                 frontmatter={project.frontmatter}
                 index={index}
               />
-              {project.frontmatter.demo && (
-                <LiveDemoPill title={project.frontmatter.title} href={project.frontmatter.demo} />
-              )}
             </m.div>
           )
         })}
@@ -223,9 +220,6 @@ function OrbitCard({
               <p className="font-mono text-[9px] tracking-[0.06em] text-muted-foreground/50 truncate">
                 {project.frontmatter.title}
               </p>
-              {project.frontmatter.demo && (
-                <LiveDemoPill title={project.frontmatter.title} href={project.frontmatter.demo} />
-              )}
             </m.div>
           )}
         </AnimatePresence>

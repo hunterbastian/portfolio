@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss'
+// @ts-expect-error -- daisyui has no type declarations
+import daisyui from 'daisyui'
 
 const config: Config = {
   content: [
@@ -79,7 +81,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [daisyui],
+  daisyui: {
+    themes: false,
+  },
 }
 
 export default config

@@ -360,15 +360,17 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <Image
-                src="/images/profilepicture.webp"
-                alt="Hunter Bastian"
-                width={72}
-                height={72}
-                className="h-16 w-16 shrink-0 rounded-full img-inset-outline object-cover shadow-sm sm:h-[72px] sm:w-[72px]"
-                sizes="72px"
-                priority
-              />
+              <div className="shrink-0 mask mask-squircle p-[2px] shadow-sm" style={{ background: 'var(--border)' }}>
+                <Image
+                  src="/images/profilepicture.webp"
+                  alt="Hunter Bastian"
+                  width={72}
+                  height={72}
+                  className="h-16 w-16 mask mask-squircle object-cover sm:h-[72px] sm:w-[72px]"
+                  sizes="72px"
+                  priority
+                />
+              </div>
             </m.div>
             <div className="min-w-0">
               <h1

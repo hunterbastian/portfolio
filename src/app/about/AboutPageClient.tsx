@@ -22,14 +22,16 @@ export default function AboutPageClient() {
         <div className="relative z-10 flex justify-center pb-32 pt-16 sm:pt-24">
           <div className="flex flex-col items-center text-center max-w-md">
             {/* --- Profile --- */}
-            <Image
-              src="/images/profilepicture.webp"
-              alt="Hunter Bastian"
-              width={120}
-              height={120}
-              className="rounded-full img-inset-outline shadow-sm"
-              priority
-            />
+            <div className="mask mask-squircle p-[2px] shadow-sm" style={{ background: 'var(--border)' }}>
+              <Image
+                src="/images/profilepicture.webp"
+                alt="Hunter Bastian"
+                width={120}
+                height={120}
+                className="mask mask-squircle object-cover"
+                priority
+              />
+            </div>
 
             <h1 className="mt-10 font-mono text-[13px] font-medium tracking-[0.12em] uppercase text-foreground sm:text-sm">
               <TextReveal

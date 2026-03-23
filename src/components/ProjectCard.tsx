@@ -106,9 +106,9 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                   {displayTitle}
                 </h3>
                 {categoryLabel && (
-                  <p className="mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60">
-                    [{categoryLabel}]
-                  </p>
+                  <span className="badge badge-ghost mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60 h-auto py-0.5 px-1.5 min-h-0 border-border/40">
+                    {categoryLabel}
+                  </span>
                 )}
               </div>
             )}

@@ -79,8 +79,8 @@ export default function Header() {
             {showCoordinates && <CoordinateDisplay />}
           </div>
 
-          <div className="flex items-center gap-1">
-            <nav className="hidden sm:flex items-center gap-1">
+          <div className="flex items-start gap-1">
+            <nav className="hidden sm:flex items-start gap-3">
               {PAGE_NAV.map((item, i) => (
                 <m.div
                   key={item.href}
@@ -97,17 +97,17 @@ export default function Header() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-muted-foreground/60 hover:text-accent hover:underline"
+                      className="text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight"
                     >
                       {item.name}
                     </a>
                   ) : (
                     <Link
                       href={item.href}
-                      className={`px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
+                      className={`text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight ${
                         pathname === item.href
                           ? 'text-foreground underline decoration-accent'
-                          : 'text-muted-foreground/60 hover:text-accent hover:underline'
+                          : 'text-foreground/60 hover:text-accent hover:underline'
                       }`}
                     >
                       {item.name}

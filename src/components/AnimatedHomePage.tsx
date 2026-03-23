@@ -3,6 +3,8 @@
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import { Card } from '@/components/ui/card'
+
+const MotionCard = m.create(Card)
 import { Separator } from '@/components/ui/separator'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
@@ -498,9 +500,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4 pb-6"
       >
         <div className="mx-auto max-w-[560px]">
-          <m.div
+          <MotionCard
             ref={experiencePanelRef}
-            className="rounded-xl bg-card ring-1 ring-foreground/10 p-4 sm:p-5 space-y-2"
+            className="p-4 sm:p-5 space-y-2"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: experienceStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -552,7 +554,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 </m.div>
               )
             })}
-          </m.div>
+          </MotionCard>
         </div>
       </CollapsibleSection>
 
@@ -570,9 +572,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-4 pb-6"
       >
         <div className="mx-auto max-w-[560px]">
-          <m.div
+          <MotionCard
             ref={educationPanelRef}
-            className="rounded-xl bg-card ring-1 ring-foreground/10 p-5 space-y-5"
+            className="p-5 space-y-5"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: educationStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -624,7 +626,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 </div>
               </m.div>
             ))}
-          </m.div>
+          </MotionCard>
         </div>
       </CollapsibleSection>
 

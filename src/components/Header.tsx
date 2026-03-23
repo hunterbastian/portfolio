@@ -9,11 +9,10 @@ import { siteConfig } from '@/lib/site'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 const PAGE_NAV = [
-  { name: 'HOME', href: '/' },
-  { name: 'ABOUT', href: '/about' },
-  { name: 'PROJECTS', href: '/#case-studies' },
-  { name: 'PLAYGROUND', href: '/archive' },
-  { name: 'BLOG', href: '/blog' },
+  { name: 'INFO', href: '/about' },
+  { name: 'WORK', href: '/#case-studies' },
+  { name: 'EMAIL', href: 'mailto:hello@hunterbastian.com', external: true },
+  { name: 'LINKEDIN', href: 'https://linkedin.com/in/hunterbastian', external: true },
 ] as const
 
 function getSeason(): string {
@@ -93,16 +92,27 @@ export default function Header() {
                     ease: MOTION_EASE_SOFT,
                   }}
                 >
-                  <Link
-                    href={item.href}
-                    className={`px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
-                      pathname === item.href
-                        ? 'text-foreground underline decoration-accent'
-                        : 'text-muted-foreground/60 hover:text-accent hover:underline'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
+                  {'external' in item && item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-muted-foreground/60 hover:text-accent hover:underline"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={`px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
+                        pathname === item.href
+                          ? 'text-foreground underline decoration-accent'
+                          : 'text-muted-foreground/60 hover:text-accent hover:underline'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
                 </m.div>
               ))}
             </nav>
@@ -148,16 +158,29 @@ export default function Header() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <Link
-                    href={item.href}
-                    onClick={() => setShowMobileMenu(false)}
-                    className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
-                      pathname === item.href ? 'text-foreground underline decoration-accent' : 'text-muted-foreground hover:text-accent hover:underline'
-                    }`}
-                    style={{ fontFamily: 'inherit' }}
-                  >
-                    {item.name}
-                  </Link>
+                  {'external' in item && item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setShowMobileMenu(false)}
+                      className="block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-muted-foreground hover:text-accent hover:underline"
+                      style={{ fontFamily: 'inherit' }}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={() => setShowMobileMenu(false)}
+                      className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
+                        pathname === item.href ? 'text-foreground underline decoration-accent' : 'text-muted-foreground hover:text-accent hover:underline'
+                      }`}
+                      style={{ fontFamily: 'inherit' }}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
                 </m.div>
               ))}
             </div>

@@ -118,22 +118,27 @@ Fluid sizing via `clamp()` in `tailwind.config.ts`.
 - **Hero headline one-line**: Add `whitespace-nowrap` to the `<h1>` in `AnimatedHomePage.tsx:522` to prevent "Hunter Bastian // Studio Alpine" from wrapping.
 - **Profile picture**: `public/images/profilepicture.webp` — 200×200 WebP, 13KB. Regenerate with `sharp` if updating; keep dimensions ≤200px.
 - **No frosted glass on Endeavors or Contact cards** — user explicitly reverted this; don't re-add.
+- **No dark mode toggle** — user decided against it; site respects `prefers-color-scheme` only.
+- **No PixelateHover or DepthCard** — removed in 2026-03-22 session, files deleted. Don't re-add.
+- **Nav links**: Info, Work, Email, LinkedIn — Email is mailto, LinkedIn is external. No padding boxes, matches coordinates text style.
+- **shadcn Card** used for Projects, Experience, Education panels — no ring/outline on cards.
+- **About page** is split: `page.tsx` (server, metadata) + `AboutPageClient.tsx` (client, TextReveal animations).
 
 ## Color System
 
-Light-by-default, warm neutral palette. Dark mode via `.dark` class on `<html>` (toggled by user, persisted in localStorage).
+Light-by-default, warm neutral palette. August palette (白色 · 縹色 · 銀鼠 · 肉色). Dark mode via `.dark` class on `<html>` (respects OS `prefers-color-scheme`).
 
 **Light mode** (`:root` in `globals.css`):
-- `--background: #f2f1ef` — warm off-white canvas
+- `--background: #f2f0ec` — warm off-white canvas
 - `--card: #f6f5f3` — slightly lighter panels
-- `--foreground / --primary: #171717` — near-black text
-- `--accent: #7f8f81` — muted sage green
+- `--foreground: #3f4f5c` — slate blue text
+- `--accent: #d4928e` — dusty rose / apricot
 
 **Dark mode** (`.dark` in `globals.css`):
-- `--background: #232527` — dark charcoal canvas
+- `--background: #1e2830` — dark charcoal canvas
 - `--card: #2a2c2f` — slightly lighter panels
-- `--foreground / --primary: #cdc8c0` — warm light gray text
-- `--accent: #8a9b7a` — olive green
+- `--foreground: #cdc8c0` — warm light gray text
+- `--accent: #d4928e` — dusty rose (same as light)
 
 ## Deployment
 

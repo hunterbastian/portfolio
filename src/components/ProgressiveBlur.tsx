@@ -18,7 +18,7 @@ export default function ProgressiveBlur() {
   return (
     <div
       className="pointer-events-none fixed inset-x-0 bottom-0 z-30"
-      style={{ height: '120px' }}
+      style={{ height: '90px' }}
       aria-hidden
     >
       {BLUR_LAYERS.map(({ blur, start, end }, i) => (

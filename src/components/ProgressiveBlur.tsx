@@ -7,11 +7,11 @@
  */
 
 const BLUR_LAYERS = [
-  { blur: 0.8, start: 0, end: 20 },
-  { blur: 1.6, start: 15, end: 40 },
-  { blur: 3.2, start: 35, end: 60 },
-  { blur: 6.4, start: 55, end: 80 },
-  { blur: 9.6, start: 75, end: 100 },
+  { blur: 0.7, start: 0, end: 20 },
+  { blur: 1.4, start: 15, end: 40 },
+  { blur: 2.9, start: 35, end: 60 },
+  { blur: 5.8, start: 55, end: 80 },
+  { blur: 8.6, start: 75, end: 100 },
 ]
 
 export default function ProgressiveBlur() {

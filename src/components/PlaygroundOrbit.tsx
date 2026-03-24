@@ -82,7 +82,7 @@ function CenterLabel() {
       transition={{ duration: 0.5, delay: ENTRANCE.centerDelay, ease: ENTRANCE.ease }}
     >
       <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/50">
-        Playground
+        <span className="font-bold">Playground</span>
       </p>
       <p className="mt-2.5 whitespace-nowrap font-inter text-[11px] text-muted-foreground/35">
         a collection of my random projects :)

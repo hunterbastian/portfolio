@@ -22,7 +22,7 @@ export default function AboutPageClient() {
         <div className="relative z-10 flex justify-center pb-32 pt-16 sm:pt-24">
           <div className="flex flex-col items-center text-center max-w-md">
             {/* --- Profile --- */}
-            <div className="mask mask-squircle p-[2px] shadow-sm" style={{ background: 'var(--border)' }}>
+            <div className="mask mask-squircle p-[2px] shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.06]" style={{ background: 'var(--border)' }}>
               <Image
                 src="/images/profilepicture.webp"
                 alt="Hunter Bastian"
@@ -58,7 +58,7 @@ export default function AboutPageClient() {
 
             <p className="mt-4 text-[13px] leading-relaxed text-balance text-muted-foreground sm:text-sm">
               <TextReveal
-                text="I also love photography and I own a Fujifilm X-100F, which has been my favorite item recently."
+                text="I also love photography and I own a Fujifilm X100VI, which has been my favorite item recently."
                 as="span"
                 trigger
                 duration={0.5}

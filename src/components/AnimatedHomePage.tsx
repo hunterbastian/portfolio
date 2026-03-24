@@ -238,12 +238,12 @@ function PlaygroundButton() {
   return (
     <a
       href="/archive"
-      className="group social-button nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] pl-3.5 pr-4 py-2 text-xs font-medium transition-[transform,box-shadow] duration-500 relative overflow-hidden hover:-translate-y-0.5 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+      className="group nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] pl-3.5 pr-4 py-2 text-xs font-medium transition-[transform,box-shadow,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden hover:-translate-y-0.5 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
       aria-label="Open Playground"
       title="a place for my random projects"
     >
-      <IconGamepad2 size={12} className="relative z-10 opacity-50 transition-[transform,opacity] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-80 group-hover:scale-110 group-hover:rotate-[-6deg]" aria-hidden />
-      <span className="relative z-10 font-light uppercase tracking-[0.08em] text-foreground/60 transition-[color] duration-300 ease-out group-hover:text-foreground/90">
+      <IconGamepad2 size={12} className="relative z-10 opacity-50 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-80 group-hover:scale-110 group-hover:rotate-[-6deg]" aria-hidden />
+      <span className="relative z-10 font-light uppercase tracking-[0.08em] text-foreground/60 transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-foreground/90">
         Playground
       </span>
     </a>
@@ -360,7 +360,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <div className="shrink-0 mask mask-squircle p-[2px] shadow-sm" style={{ background: 'var(--border)' }}>
+              <div className="shrink-0 mask mask-squircle p-[2px] shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.06]" style={{ background: 'var(--border)' }}>
                 <Image
                   src="/images/profilepicture.webp"
                   alt="Hunter Bastian"
@@ -653,7 +653,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-foreground underline decoration-current/30 underline-offset-4 transition-[color,text-decoration-color] duration-200 hover:text-foreground hover:decoration-current inline-flex items-center min-h-[44px]"
+                className="text-[13px] text-muted-foreground/50 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-foreground/60 hover:decoration-accent inline-flex items-center min-h-[44px]"
                 aria-label={link.label}
                 title={link.label}
               >

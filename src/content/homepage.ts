@@ -52,10 +52,10 @@ export const creatingLinks: HomeLinkItem[] = [
 ]
 
 export const contactSocialLinks: HomeLinkItem[] = [
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
   { label: 'Threads', href: 'https://threads.net/@studio.alpine', external: true },
   { label: 'X', href: 'https://x.com/thestudioalpine', external: true },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', external: true },
   { label: 'YouTube', href: 'https://youtube.com/@studio.alpine', external: true },
   { label: 'Are.na', href: 'https://www.are.na/hunter-bastian/channels', external: true },

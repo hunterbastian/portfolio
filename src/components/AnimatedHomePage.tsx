@@ -424,7 +424,6 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <TextReveal
                 text="Interaction Design student and Department Representative at UVU"
                 as="span"
-                className="font-medium text-foreground/80"
                 trigger={heroTextStage >= 2}
                 duration={0.5}
                 staggerDelay={0.04}

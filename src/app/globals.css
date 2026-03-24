@@ -473,11 +473,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .body-glow {
-  background-image: radial-gradient(80% 30% at 50% 100%, rgba(216, 200, 122, 0.6) 0%, transparent 100%);
+  background-image: radial-gradient(80% 30% at 50% 100%, rgba(216, 200, 122, 0.55) 0%, transparent 100%);
 }
 
 .dark .body-glow {
-  background-image: radial-gradient(80% 30% at 50% 100%, rgba(168, 152, 72, 0.3) 0%, transparent 100%);
+  background-image: radial-gradient(80% 30% at 50% 100%, rgba(168, 152, 72, 0.27) 0%, transparent 100%);
 }
 
 .archive-glow {

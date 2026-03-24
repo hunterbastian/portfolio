@@ -4,6 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 import './viewport.css'
 import Footer from '@/components/Footer'
+import ProgressiveBlur from '@/components/ProgressiveBlur'
 import ScrollToTop from '@/components/ScrollToTop'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -185,6 +186,7 @@ export default function RootLayout({
               <main id="main-content" role="main" className="flex-1">
                 <PageTransition>{children}</PageTransition>
               </main>
+              <ProgressiveBlur />
               <Footer />
               <ScrollToTop />
             </div>

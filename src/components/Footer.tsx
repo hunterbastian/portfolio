@@ -92,7 +92,7 @@ export default function Footer() {
       style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}
     >
       <div className="container mx-auto max-w-6xl">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between py-1">
           <span className="text-[10px] tracking-[0.1em] font-mono text-foreground/60">
             © {currentYear} Hunter Bastian
           </span>

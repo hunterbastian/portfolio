@@ -17,6 +17,7 @@ import {
 } from '@/content/homepage'
 import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { useIsInitialLoad } from '@/lib/initial-load'
 import CollapsibleSection from './CollapsibleSection'
 import TextReveal from './TextReveal'
 import { IconGamepad2, IconHandshake } from 'nucleo-pixel-essential'
@@ -251,8 +252,9 @@ function PlaygroundButton() {
 }
 
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
+  const isInitialLoad = useIsInitialLoad()
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
-  const [heroTextStage, setHeroTextStage] = useState(0)
+  const [heroTextStage, setHeroTextStage] = useState(isInitialLoad ? 2 : 0)
   const prefersReducedMotion = useReducedMotion() ?? false
 
   const experiencePanelRef = useRef<HTMLDivElement>(null)
@@ -265,6 +267,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
 
   useEffect(() => {
+    if (isInitialLoad) return
     if (prefersReducedMotion) {
       setHeroTextStage(2)
       return
@@ -276,7 +279,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
     timers.push(setTimeout(() => setHeroTextStage(2), HERO_ENTRANCE.textItemsDelay))
 
     return () => timers.forEach(clearTimeout)
-  }, [prefersReducedMotion])
+  }, [isInitialLoad, prefersReducedMotion])
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -334,7 +337,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
       <CreatingLoader />
-      <section className="relative animate-fade-in pb-0 pt-20 sm:pt-28">
+      <section className={`relative pb-0 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`}>
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <a href="/about" className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10">
             <span className="hero-handwritten-text font-handscript">
@@ -352,7 +355,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <m.div
-              initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY, scale: 0.94, filter: 'blur(6px)' }}
+              initial={isInitialLoad ? false : {
+                opacity: STAGGER_ITEM.initialOpacity,
+                y: STAGGER_ITEM.initialY,
+                scale: 0.94,
+                filter: 'blur(6px)',
+              }}
               animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, scale: 1, filter: 'blur(0px)' }}
               transition={{
                 duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
@@ -386,7 +394,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
           <m.div
             className="mt-4 mb-8 sm:mt-5"
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY, filter: 'blur(6px)' }}
+            initial={isInitialLoad ? false : {
+              opacity: STAGGER_PANEL.initialOpacity,
+              y: STAGGER_PANEL.initialY,
+              filter: 'blur(6px)',
+            }}
             animate={{
               opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
               y: heroTextStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
@@ -416,6 +428,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 startDelay={0.5}
               />
             </p>
+            <p className="m-0 mt-3 font-inter text-sm leading-relaxed text-muted-foreground">
+              <TextReveal
+                text="0 → 1 product designer bringing motion, craft and detail to production."
+                as="span"
+                trigger={heroTextStage >= 2}
+                duration={0.5}
+                staggerDelay={0.04}
+                startDelay={0.9}
+              />
+            </p>
           </m.div>
 
         </div>
@@ -423,7 +445,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="case-studies"
-        title="01 PROJECTS"
+        title="PROJECTS"
         isOpen={sectionOpen.caseStudies}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         skipContentStaging
@@ -446,7 +468,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="creating"
-        title="02 ENDEAVORS"
+        title="ENDEAVORS"
         isOpen={sectionOpen.creating}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
@@ -462,7 +484,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   href={link.href}
                   target={link.external ? '_blank' : undefined}
                   rel={link.external ? 'noopener noreferrer' : undefined}
-                  className="group inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-primary hover:decoration-primary/40"
+                  className="group inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-accent hover:decoration-accent"
                   aria-label={link.ariaLabel ?? link.label}
                   title={link.title ?? link.label}
                 >
@@ -494,7 +516,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="experience"
-        title="03 EXPERIENCE"
+        title="EXPERIENCE"
         isOpen={sectionOpen.experience}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-16"

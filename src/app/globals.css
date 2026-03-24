@@ -371,7 +371,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-handwritten-text {
   margin: 0;
   font-size: clamp(1.58rem, 1.3rem + 1.05vw, 2.24rem);
-  line-height: 0.92;
+  line-height: 1.1;
   letter-spacing: 0.01em;
   color: color-mix(in srgb, var(--foreground) 80%, var(--accent) 20%);
   transform: rotate(-2.4deg);
@@ -473,11 +473,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .body-glow {
-  background-image: radial-gradient(80% 30% at 50% 100%, rgba(216, 200, 122, 0.7) 0%, transparent 100%);
+  background-image: radial-gradient(80% 30% at 50% 100%, rgba(216, 200, 122, 0.6) 0%, transparent 100%);
 }
 
 .dark .body-glow {
-  background-image: radial-gradient(80% 30% at 50% 100%, rgba(168, 152, 72, 0.35) 0%, transparent 100%);
+  background-image: radial-gradient(80% 30% at 50% 100%, rgba(168, 152, 72, 0.3) 0%, transparent 100%);
 }
 
 .archive-glow {
@@ -696,15 +696,12 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06);
 }
 
-.footer-separator::before {
-  content: '';
-  position: absolute;
-  top: -24px;
-  left: 0;
-  right: 0;
-  height: 24px;
-  background: linear-gradient(to bottom, transparent, var(--background));
-  pointer-events: none;
+.footer-separator {
+  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.06);
+}
+
+.dark .footer-separator {
+  box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.06);
 }
 
 .top-meta-pill {

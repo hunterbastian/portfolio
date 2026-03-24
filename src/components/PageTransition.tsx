@@ -4,6 +4,7 @@ import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { MOTION_EASE_SOFT, MOTION_EASE_EXIT, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { useIsInitialLoad } from '@/lib/initial-load'
 
 /* ─────────────────────────────────────────────────────────
  * PAGE TRANSITION STORYBOARD
@@ -57,6 +58,7 @@ interface PageTransitionProps {
 interface RouteSceneProps {
   children: ReactNode
   prefersReducedMotion: boolean
+  isInitialLoad: boolean
   timing: {
     newContentDelay: number
     newSlideDuration: number
@@ -70,11 +72,12 @@ interface RouteSceneProps {
   }
 }
 
-function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSceneProps) {
-  const [stage, setStage] = useState(0)
+function RouteScene({ children, prefersReducedMotion, isInitialLoad, timing, offsets }: RouteSceneProps) {
+  const [stage, setStage] = useState(isInitialLoad ? 2 : 0)
   const routeChildren = useMemo(() => Children.toArray(children), [children])
 
   useEffect(() => {
+    if (isInitialLoad) return  // Content already visible from SSR
     if (prefersReducedMotion) {
       setStage(2)
       return
@@ -87,11 +90,11 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
     timers.push(setTimeout(() => setStage(2), timing.newContentDelay + timing.childStartDelay))
 
     return () => timers.forEach(clearTimeout)
-  }, [prefersReducedMotion, timing.childStartDelay, timing.newContentDelay])
+  }, [isInitialLoad, prefersReducedMotion, timing.childStartDelay, timing.newContentDelay])
 
   return (
     <m.div
-      initial={{
+      initial={isInitialLoad ? false : {
         opacity: PAGE.initialOpacity,
         y: offsets.pageY,
         filter: PAGE.initialBlur,
@@ -111,7 +114,7 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
       {routeChildren.map((child, index) => (
         <m.div
           key={index}
-          initial={{
+          initial={isInitialLoad ? false : {
             opacity: CHILD.initialOpacity,
             y: offsets.childY,
           }}
@@ -136,6 +139,7 @@ function RouteScene({ children, prefersReducedMotion, timing, offsets }: RouteSc
 export default function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname()
   const prefersReducedMotion = useReducedMotion() ?? false
+  const isInitialLoad = useIsInitialLoad()
 
   return (
     <AnimatePresence mode="wait" initial={false}>
@@ -148,6 +152,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
         }}
       >
         <RouteScene
+          isInitialLoad={isInitialLoad}
           prefersReducedMotion={prefersReducedMotion}
           timing={{
             newContentDelay: TIMING.newContentDelay,

@@ -77,18 +77,7 @@ export default function Footer() {
 
   return (
     <m.footer
-      className="footer-separator"
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 40,
-        backdropFilter: 'blur(20px) saturate(1.15)',
-        WebkitBackdropFilter: 'blur(20px) saturate(1.15)',
-        background: 'rgba(var(--background-rgb), 0.72)',
-        borderTop: '1px solid rgba(0, 0, 0, 0.06)',
-      }}
+      className="site-header-frosted footer-separator fixed bottom-0 left-0 right-0 z-40 w-full px-4 py-3 sm:px-6 sm:py-4"
       initial={{ opacity: 0, y: 12 }}
       animate={
         visible
@@ -100,15 +89,17 @@ export default function Footer() {
           ? { duration: 0 }
           : { duration: 0.4, ease: MOTION_EASE_SOFT }
       }
+      style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}
     >
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-center px-6 py-4 sm:px-8" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}>
-        <span className="font-mono text-[9px] tracking-[0.14em] uppercase text-muted-foreground/50 sm:text-[10px]">
-          Made with care <IconHeart2 size={8} className="inline -mt-px text-muted-foreground/40" aria-hidden />
-          <span className="mx-1.5 opacity-30">·</span>
-          <span className="text-muted-foreground/30">LAST UPDATED: MAR 2026</span>
-          <span className="mx-1.5 opacity-30">·</span>
-          <span className="tracking-[0.08em] normal-case text-muted-foreground/30">© {currentYear} Hunter Bastian</span>
-        </span>
+      <div className="container mx-auto max-w-6xl">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] tracking-[0.1em] font-mono text-foreground/60">
+            © {currentYear} Hunter Bastian
+          </span>
+          <span className="text-[10px] tracking-[0.1em] font-mono text-foreground/60">
+            Made with care <IconHeart2 size={8} className="inline -mt-px text-muted-foreground/40" aria-hidden />
+          </span>
+        </div>
       </div>
     </m.footer>
   )

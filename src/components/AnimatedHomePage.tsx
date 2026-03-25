@@ -618,7 +618,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="education"
-        title="04 EDUCATION"
+        title="EDUCATION"
         isOpen={sectionOpen.education}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-16"
@@ -690,7 +690,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
 
       <CollapsibleSection
         id="contact"
-        title="05 CONTACT"
+        title="CONTACT"
         isOpen={sectionOpen.contact}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="pt-16 pb-24 sm:pb-32"

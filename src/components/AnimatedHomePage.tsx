@@ -235,19 +235,49 @@ function CreatingLoader() {
   )
 }
 
+const playgroundIconVariants = {
+  idle: { opacity: 0.5, rotate: 0, scale: 1 },
+  hover: {
+    opacity: 0.9,
+    rotate: [0, -12, 8, -4, 0],
+    scale: 1.15,
+    transition: {
+      rotate: { duration: 0.45, ease: 'easeInOut' },
+      scale: { type: 'spring', stiffness: 400, damping: 15 },
+      opacity: { duration: 0.15 },
+    },
+  },
+}
+
+const playgroundTextVariants = {
+  idle: { color: 'var(--foreground-muted, rgba(0,0,0,0.5))' },
+  hover: { color: 'var(--foreground)', transition: { duration: 0.2 } },
+}
+
 function PlaygroundButton() {
+  const prefersReducedMotion = useReducedMotion() ?? false
+
   return (
-    <a
+    <m.a
       href="/archive"
-      className="group nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] pl-3.5 pr-4 py-2 text-xs font-medium transition-[transform,box-shadow,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden hover:-translate-y-0.5 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+      className="nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] pl-3.5 pr-4 py-2 text-xs font-medium relative overflow-hidden focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
       aria-label="Open Playground"
       title="a place for my random projects"
+      initial="idle"
+      whileHover={prefersReducedMotion ? undefined : 'hover'}
+      animate="idle"
+      whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+      style={{ y: 0 }}
+      variants={{ idle: { y: 0 }, hover: { y: -2 } }}
     >
-      <IconGamepad2 size={12} className="relative z-10 opacity-50 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-80 group-hover:scale-110 group-hover:rotate-[-6deg]" aria-hidden />
+      <m.span className="relative z-10" variants={prefersReducedMotion ? undefined : playgroundIconVariants}>
+        <IconGamepad2 size={12} aria-hidden />
+      </m.span>
       <span className="relative z-10 font-light uppercase tracking-[0.08em] text-foreground/60 transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-foreground/90">
         Playground
       </span>
-    </a>
+    </m.a>
   )
 }
 

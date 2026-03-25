@@ -17,9 +17,9 @@ date: "2025-11-30"
 WanderUtah is a mobile app concept for exploring and planning trips to Utah's five national parks: Arches, Bryce Canyon, Canyonlands, Capitol Reef, and Zion. The project ran from early sketches through high-fidelity Figma prototypes, and the goal was to design something that feels as good as the landscape it represents.
 
 <div className="flex flex-wrap gap-3 justify-center my-8">
-<MetricCard value={5} label="national parks" />
-<MetricCard value={5} label="unique color themes" />
-<MetricCard value={3} label="information levels" />
+<MetricCard value="5" label="national parks" />
+<MetricCard value="5" label="unique color themes" />
+<MetricCard value="3" label="information levels" />
 </div>
 
 </ScrollStage>
@@ -32,9 +32,11 @@ Most national park apps and websites are utility-first — they get you permits 
 
 <ScrollStage chapter="03" title="Research & Direction">
 
-I started with mood boards to define the visual language — what does "Utah" look like digitally? I landed on a palette rooted in each park's actual colors: sandstone reds, sage greens, desert sky blues. Each park needed to feel distinct while sharing a cohesive design system.
+I started with mood boards to define the visual language — what does "Utah" look like digitally? Not the tourist-brochure version, but the actual feeling of being there. I pulled landscape photography from each park and sampled directly from the rock faces, sky gradients, and vegetation. Arches gave me warm sandstone. Canyonlands was sage and dust. Zion skewed deeper — canyon shadow reds and cottonwood greens.
 
-From there I sketched navigation concepts before committing anything to Figma. The key question was how to organize five parks with different characters without making users feel lost between them.
+The early sketches were messy. I tried a tab-based layout first — one tab per park — but it felt like flipping between five separate apps. A map-based home screen tested better conceptually but added a tap before you could do anything useful. I ended up with a scrollable park selector that gives each park a hero moment while keeping the others visible, so you're always aware of the full collection.
+
+The key tension throughout: five parks with genuinely different characters needed to feel like one cohesive product, not a sampler pack.
 
 </ScrollStage>
 
@@ -43,31 +45,37 @@ From there I sketched navigation concepts before committing anything to Figma. T
 <DesignDecision
   question="How should color work across five distinct parks?"
   chosen={0}
-  options='[{"label":"Park-specific theming","description":"Each park section uses a tinted palette pulled from its actual landscape — sandstone reds for Arches, sage greens for Canyonlands. Navigation becomes intuitive since you always know where you are, and it rewards users who explore all five parks."},{"label":"Single brand color","description":"Simpler to maintain and more brand-consistent, but every park section feels the same and loses the emotional connection to the landscape."}]'
+  options='[{"label":"Park-specific theming","description":"Early wireframes with a single brand color made every park section feel identical — in testing, people could not tell which park they were browsing without reading the header. But five separate palettes risked feeling disjointed, like five apps stitched together. The solve was sampling color directly from each park landscape photography, then anchoring everything with shared typography, layout grid, and icon language. Each section gets its own emotional register while still clearly belonging to one system."},{"label":"Single brand color","description":"Safer from a consistency standpoint and much simpler to maintain. But after testing, the emotional flatness was a real problem — the whole point of the app is to make people want to go outside, and a neutral UI was not doing that. Every park felt interchangeable."}]'
 />
 
 <DesignDecision
   question="How deep should the information architecture go?"
   chosen={0}
-  options='[{"label":"Three-level hierarchy","description":"Each park detail page has exactly three levels: a hero image with the park name, a brief description and conditions summary, and an events/activities section. No menus buried inside menus."},{"label":"Deep sub-page navigation","description":"Would allow more content per park, but adds cognitive load and makes the app feel like a reference tool rather than an inspiring travel companion."}]'
+  options='[{"label":"Three-level hierarchy","description":"I tried deeper navigation early and it just felt heavy — too many taps to reach basic info like trail conditions or current weather. Three levels keeps everything two taps from the home screen. The harder part was deciding what not to include, which turned out to be the better exercise. Constraints like this forced clarity about what the app actually is."},{"label":"Deep sub-page navigation","description":"Would support more detailed content per park — trail guides, gear lists, packing checklists. But it turns the app into a reference manual. Users would bookmark it once before a trip and never feel compelled to open it again. Not the relationship I wanted."}]'
 />
 
 <DesignDecision
   question="What feature gives users a reason to return?"
   chosen={0}
-  options='[{"label":"Event calendar as anchor","description":"Surfacing events like meteor showers, ranger programs, and peak bloom seasons upfront gives the app a reason to be opened more than once. It shifts the app from a one-time planning tool to something you check regularly."},{"label":"Static park info only","description":"Easier to build and maintain, but the app becomes disposable after the first visit — no reason to come back."}]'
+  options='[{"label":"Event calendar as anchor","description":"This was not in the original concept. I added it after realizing the static park info made the app feel like a brochure — something you download before a trip and delete after. Surfacing live events like ranger programs, meteor showers, and peak wildflower seasons gives the app a pulse. It shifts from plan your trip to what is happening right now."},{"label":"Static park info only","description":"Easier to build and maintain, and honestly what most park apps settle for. But it makes the app disposable — no reason to come back once your trip is booked. I kept going back to the question of what would make someone keep this on their home screen."}]'
 />
 
 </ScrollStage>
 
 <ScrollStage chapter="05" title="Retrospective">
 
-The prototype doesn't yet handle the "planning" side well — there's no way to save parks, build an itinerary, or share a trip. If I were taking this further, that would be the next feature set. I'd also want to do user testing with actual trip planners to validate the navigation structure before building out more park content.
+The prototype handles the discovery side well but drops off at planning — there's no way to save parks, build an itinerary, or share a trip with someone else. That's the obvious next feature set, and it's also where the hardest design problems live: how do you plan a multi-park road trip without the app becoming a logistics tool?
+
+If I were continuing this, I'd also want to test with actual trip planners — not just people browsing parks, but someone actively booking a trip to Utah. The navigation structure works for exploration, but I haven't validated whether it holds up under real planning pressure where someone needs specific info fast.
+
+The biggest thing I'd change: I spent too long on visual polish before locking down the information architecture. The three-level hierarchy works, but I arrived at it late, which meant reworking screens I'd already designed at high fidelity. Wireframes first, every time.
 
 </ScrollStage>
 
 <ScrollStage chapter="06" title="Outcome">
 
-WanderUtah showed me how design constraints — in this case, five parks that each needed to feel like their own place — can actually be a useful forcing function. The limitation pushed me toward a theming system I wouldn't have arrived at otherwise, and the result is something that feels personal rather than generic.
+WanderUtah taught me that constraints are a forcing function. Five parks that each needed their own identity — within one cohesive system — pushed me toward a theming approach I wouldn't have considered otherwise. The limitation was the design.
+
+It also showed me the gap between an app that inspires and one that actually helps you do something. Inspiration is the easier problem. The harder, more interesting one is building utility that doesn't kill the emotion — and that's where I'd take this next.
 
 </ScrollStage>

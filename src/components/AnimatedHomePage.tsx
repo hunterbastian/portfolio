@@ -394,9 +394,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 filter
               />
               <m.span
-                className="inline select-none ml-1"
+                className="inline select-none ml-1.5"
                 onClick={() => haptic.trigger('soft')}
-                style={{ display: 'inline-flex', verticalAlign: 'baseline', position: 'relative', top: '0.15em' }}
+                style={{ display: 'inline-flex', verticalAlign: 'text-top', position: 'relative', top: '-0.05em' }}
                 variants={{
                   idle: { rotate: 0, scale: 1, filter: 'drop-shadow(0 0 0px transparent)' },
                   hover: {

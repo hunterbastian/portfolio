@@ -290,7 +290,8 @@ function PlaygroundButton() {
 export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const isInitialLoad = useIsInitialLoad()
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
-  const [heroTextStage, setHeroTextStage] = useState(isInitialLoad ? 2 : 0)
+  // Skip internal hero entrance on client-side nav — PageTransition handles it
+  const [heroTextStage, setHeroTextStage] = useState(2)
   const haptic = useWebHaptics()
   const prefersReducedMotion = useReducedMotion() ?? false
 
@@ -376,7 +377,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <CreatingLoader />
       <section className={`relative pb-8 sm:pb-12 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`}>
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
-          <a href="/about" className="hero-handwritten-preview group/sun cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10">
+          <m.a
+            href="/about"
+            className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10"
+            initial="idle"
+            whileHover="hover"
+          >
             <span className="hero-handwritten-text font-handscript">
               <TextReveal
                 text={homeHeroContent.handwrittenNote}
@@ -388,18 +394,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 filter
               />
               <m.span
-                className="inline select-none sun-icon ml-1.5"
+                className="inline select-none ml-1"
                 onClick={() => haptic.trigger('soft')}
-                initial={{ opacity: 0, scale: 0.6, rotate: -30 }}
-                animate={heroTextStage >= 1 ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.6, rotate: -30 }}
-                transition={{ delay: 0.6, duration: 0.5, type: 'spring', stiffness: 300, damping: 15 }}
-                style={{ display: 'inline-flex', verticalAlign: 'baseline' }}
+                style={{ display: 'inline-flex', verticalAlign: 'baseline', position: 'relative', top: '0.15em' }}
+                variants={{
+                  idle: { rotate: 0, scale: 1, filter: 'drop-shadow(0 0 0px transparent)' },
+                  hover: {
+                    rotate: 360,
+                    scale: 1.2,
+                    filter: 'drop-shadow(0 0 6px rgba(255, 200, 50, 0.5))',
+                    transition: { rotate: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }, scale: { type: 'spring', stiffness: 300, damping: 15 }, filter: { duration: 0.3 } },
+                  },
+                }}
                 aria-hidden
               >
-                <Sun size={16} strokeWidth={2} className="text-accent" style={{ marginBottom: '0.1em' }} />
+                <Sun size={16} strokeWidth={2} className="text-accent" />
               </m.span>
             </span>
-          </a>
+          </m.a>
 
           <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
             <m.div
@@ -487,7 +499,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               />
             </p>
             <m.div
-              className="mt-5"
+              className="mt-8"
               initial={isInitialLoad ? false : { opacity: 0, y: 8 }}
               animate={{
                 opacity: heroTextStage >= 2 ? 1 : 0,

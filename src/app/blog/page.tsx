@@ -53,7 +53,7 @@ export default function BlogPage() {
               <li key={post.slug} className="h-full">
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="blog-card group relative flex h-full min-h-[156px] flex-col overflow-hidden rounded-xl bg-card px-4 pb-4 pt-3.5 transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:scale-[1.01] active:scale-[0.97]"
+                  className="blog-card group relative flex h-full min-h-[156px] flex-col overflow-hidden rounded-xl bg-card px-4 pb-4 pt-3.5 hover:-translate-y-2 hover:scale-[1.015] active:scale-[0.95]"
                 >
                   <div className="relative z-10 flex items-start gap-3">
                     <p className="inline-flex rounded-full bg-background/60 px-2.5 py-1 font-mono text-[10px] tracking-[0.06em] text-muted-foreground/70">

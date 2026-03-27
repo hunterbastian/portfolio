@@ -131,7 +131,7 @@ const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
   nutricost: { rotate: -2.8, x: -5 },
 }
 
-const MOBILE_TILT_FACTOR = 0.48
+const MOBILE_TILT_FACTOR = 0
 
 export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
   const [stage, setStage] = useState(0)
@@ -227,7 +227,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   return (
     <m.div
       ref={gridRef}
-      className="mx-auto grid w-full max-w-[780px] grid-cols-1 px-1 sm:grid-cols-2 sm:px-0"
+      className="mx-auto grid w-full max-w-[780px] grid-cols-1 gap-3 px-0 sm:grid-cols-2 sm:gap-0 sm:px-0"
       onMouseEnter={() => {
         if (supportsHover) {
           setIsGridHovered(true)

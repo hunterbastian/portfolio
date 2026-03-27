@@ -25,9 +25,11 @@ export default function ArchivePage() {
 
   return (
     <div className="relative h-[100dvh]">
-      {/* Breadcrumb — outside overflow-hidden so backdrop-blur works */}
-      <div className="absolute top-4 left-4 z-30 sm:top-6 sm:left-6">
-        <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Playground" />
+      {/* Breadcrumb — matches About page positioning */}
+      <div className="absolute top-0 left-0 right-0 z-30">
+        <div className="container mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6">
+          <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Playground" />
+        </div>
       </div>
 
       <div className="relative h-full overflow-hidden">

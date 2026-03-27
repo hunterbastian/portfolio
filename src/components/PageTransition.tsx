@@ -18,12 +18,12 @@ import { useIsInitialLoad } from '@/lib/initial-load'
  * ───────────────────────────────────────────────────────── */
 
 const TIMING = {
-  oldFadeDuration: 340,   // gentle fade-out — unhurried exit
-  newContentDelay: 80,    // breathing room before new page arrives
-  newSlideDuration: 600,  // slow editorial entrance
-  childStartDelay: 120,   // let container settle before children reveal
+  oldFadeDuration: 450,   // gentle fade-out — unhurried exit
+  newContentDelay: 100,   // breathing room before new page arrives
+  newSlideDuration: 700,  // slow editorial entrance
+  childStartDelay: 140,   // let container settle before children reveal
   childStagger: 70,       // wider cascade — each child gets its moment
-  childDuration: 500,     // each child fades in gently
+  childDuration: 550,     // each child fades in gently
 }
 
 /** Exported for shared-element transition measurement offset */

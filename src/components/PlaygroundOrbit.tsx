@@ -190,7 +190,7 @@ function OrbitCard({
         className="transition-[transform,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
           transform: `rotate(${tilt}deg) scale(${isHovered ? 1.06 : 1})`,
-          filter: hasHoverTarget && !isHovered ? 'brightness(0.92) saturate(0.8)' : 'none',
+          filter: hasHoverTarget && !isHovered ? 'brightness(0.88) saturate(0.75)' : 'none',
         }}
         onMouseEnter={onHoverStart}
         onMouseLeave={onHoverEnd}

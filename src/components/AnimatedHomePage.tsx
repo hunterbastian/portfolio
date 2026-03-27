@@ -383,7 +383,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             initial="idle"
             whileHover="hover"
           >
-            <span className="hero-handwritten-text font-handscript">
+            <span className="hero-handwritten-text hero-handwritten-text--no-underline font-handscript">
               <TextReveal
                 text={homeHeroContent.handwrittenNote}
                 as="span"
@@ -398,7 +398,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 onClick={() => haptic.trigger('soft')}
                 style={{ display: 'inline-flex', verticalAlign: 'text-top', position: 'relative', top: '-0.05em' }}
                 variants={{
-                  idle: { rotate: 0, scale: 1, filter: 'drop-shadow(0 0 0px transparent)' },
+                  idle: {
+                    rotate: 0,
+                    scale: [null, 1.15, 1],
+                    filter: [null, 'drop-shadow(0 0 10px rgba(255, 200, 50, 0.7))', 'drop-shadow(0 0 0px transparent)'],
+                    transition: {
+                      rotate: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                      scale: { duration: 0.6, times: [0, 0.3, 1], ease: 'easeOut' },
+                      filter: { duration: 0.8, times: [0, 0.25, 1], ease: 'easeOut' },
+                    },
+                  },
                   hover: {
                     rotate: 360,
                     scale: 1.2,
@@ -410,6 +419,32 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               >
                 <Sun size={16} strokeWidth={2} className="text-accent" />
               </m.span>
+              <m.svg
+                className="hero-ink-underline"
+                viewBox="0 0 200 6"
+                fill="none"
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                <m.path
+                  d="M1 3.5C20 2.2 40 4.8 60 3.1C80 1.4 100 4.6 120 3.3C140 2 160 4.2 180 3C190 2.4 197 3.8 199 3.2"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  variants={{
+                    idle: {
+                      pathLength: 0,
+                      opacity: 0,
+                      transition: { pathLength: { duration: 0.4, ease: [0.4, 0, 0.7, 0.2] }, opacity: { duration: 0.3, delay: 0.15 } },
+                    },
+                    hover: {
+                      pathLength: 1,
+                      opacity: 1,
+                      transition: { pathLength: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.15 } },
+                    },
+                  }}
+                />
+              </m.svg>
             </span>
           </m.a>
 

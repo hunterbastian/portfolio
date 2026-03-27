@@ -22,6 +22,7 @@ import CollapsibleSection from './CollapsibleSection'
 import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
 import TextReveal from './TextReveal'
 import { IconGamepad2, IconHandshake } from 'nucleo-pixel-essential'
+import { Sun, ArrowDown } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
 
 interface AnimatedHomePageProps {
@@ -373,9 +374,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
       <CreatingLoader />
-      <section className={`relative pb-0 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`}>
+      <section className={`relative pb-8 sm:pb-12 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`}>
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
-          <a href="/about" className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10">
+          <a href="/about" className="hero-handwritten-preview group/sun cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10">
             <span className="hero-handwritten-text font-handscript">
               <TextReveal
                 text={homeHeroContent.handwrittenNote}
@@ -386,16 +387,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 startDelay={0.1}
                 filter
               />
-              {' '}
               <m.span
-                className="inline-block cursor-default select-none sun-hover"
+                className="inline select-none sun-icon ml-1.5"
                 onClick={() => haptic.trigger('soft')}
                 initial={{ opacity: 0, scale: 0.6, rotate: -30 }}
                 animate={heroTextStage >= 1 ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.6, rotate: -30 }}
                 transition={{ delay: 0.6, duration: 0.5, type: 'spring', stiffness: 300, damping: 15 }}
+                style={{ display: 'inline-flex', verticalAlign: 'baseline' }}
                 aria-hidden
               >
-                ☀️
+                <Sun size={16} strokeWidth={2} className="text-accent" style={{ marginBottom: '0.1em' }} />
               </m.span>
             </span>
           </a>
@@ -440,7 +441,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <m.div
-            className="mt-4 mb-8 sm:mt-5"
+            className="mt-4 mb-8 sm:mt-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.008] hover:-translate-y-0.5"
             initial={isInitialLoad ? false : {
               opacity: STAGGER_PANEL.initialOpacity,
               y: STAGGER_PANEL.initialY,
@@ -485,6 +486,61 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 startDelay={0.9}
               />
             </p>
+            <m.div
+              className="mt-5"
+              initial={isInitialLoad ? false : { opacity: 0, y: 8 }}
+              animate={{
+                opacity: heroTextStage >= 2 ? 1 : 0,
+                y: heroTextStage >= 2 ? 0 : 8,
+              }}
+              transition={{
+                duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
+                delay: motionDelayMs(200, prefersReducedMotion),
+                ease: STAGGER_PANEL.ease,
+              }}
+            >
+              <m.a
+                href="#contact"
+                className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                onClick={(e) => {
+                  e.preventDefault()
+                  haptic.trigger('light')
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+                initial="idle"
+                whileHover={prefersReducedMotion ? undefined : 'hover'}
+                animate="idle"
+                whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                variants={{ idle: { y: 0 }, hover: { y: -3 } }}
+              >
+                <m.span
+                  className="relative z-10"
+                  variants={prefersReducedMotion ? undefined : {
+                    idle: { letterSpacing: '0.06em' },
+                    hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+                  }}
+                >
+                  Contact
+                </m.span>
+                <m.span
+                  className="relative z-10"
+                  variants={prefersReducedMotion ? undefined : {
+                    idle: { rotate: 0, scale: 1 },
+                    hover: {
+                      rotate: [0, -15, 10, -5, 0],
+                      scale: 1.2,
+                      transition: {
+                        rotate: { duration: 0.5, ease: 'easeInOut' },
+                        scale: { type: 'spring', stiffness: 500, damping: 12 },
+                      },
+                    },
+                  }}
+                >
+                  <ArrowDown size={13} aria-hidden />
+                </m.span>
+              </m.a>
+            </m.div>
           </m.div>
 
         </div>
@@ -575,7 +631,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <MotionCard
             ref={experiencePanelRef}
-            className="p-4 sm:p-5 space-y-2"
+            className="p-4 sm:p-5 space-y-2 section-card-glow overflow-visible"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: experienceStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -647,7 +703,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px]">
           <MotionCard
             ref={educationPanelRef}
-            className="p-5 space-y-5"
+            className="p-5 space-y-5 section-card-glow overflow-visible"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: educationStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -724,7 +780,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-muted-foreground/50 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-foreground/60 hover:decoration-accent inline-flex items-center min-h-[44px]"
+                className="text-[13px] text-muted-foreground/50 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent inline-flex items-center min-h-[44px]"
                 aria-label={link.label}
                 title={link.label}
               >

@@ -97,8 +97,8 @@ const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
     scale: 1,
   },
   motion: {
-    expandMs: 600,
-    collapseMs: 450,
+    expandMs: 800,
+    collapseMs: 550,
   },
   hover: {
     inactiveOpacity: 0.88,

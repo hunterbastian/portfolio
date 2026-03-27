@@ -68,12 +68,12 @@ export default function AboutPageClient() {
             </p>
 
             {/* --- Actions --- */}
-            <div className="mt-16 flex items-center gap-5">
+            <div className="mt-16 flex items-center gap-4">
               <Link
                 href="/#contact"
-                className="group inline-flex items-center gap-1.5 min-h-[44px] text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-accent transition-colors duration-200 underline-offset-4 decoration-transparent hover:underline hover:decoration-accent"
+                className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase transition-[box-shadow,background,border-color,opacity] duration-400 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
               >
-                Contact
+                <span className="relative z-10">Contact</span>
                 <AnimatedDashedArrow size={14} />
               </Link>
               <ResumeButton />

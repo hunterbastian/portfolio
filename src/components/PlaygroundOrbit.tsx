@@ -84,9 +84,6 @@ function CenterLabel() {
       <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/50">
         <span className="font-bold">Playground</span>
       </p>
-      <p className="mt-2.5 whitespace-nowrap font-inter text-[11px] text-muted-foreground/35">
-        a collection of my random projects :)
-      </p>
     </m.div>
   )
 }

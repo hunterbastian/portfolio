@@ -66,9 +66,16 @@ export default function Header() {
           <div className="flex items-start gap-4">
             <Link
               href="/"
-              className="group flex min-h-[44px] items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="group flex min-h-[44px] items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               aria-label="Home"
             >
+              <span
+                className="inline-block size-5 rounded-full shrink-0"
+                style={{
+                  background: 'radial-gradient(circle at 45% 48%, #ff8c3c, #e8a060 50%, #ddb89a 80%, #e1b9a5)',
+                }}
+                aria-hidden
+              />
               <span
                 className="text-xs font-medium tracking-[0.1em] uppercase transition-opacity duration-300 group-hover:opacity-100 sm:text-sm"
                 style={{ color: 'var(--foreground)', opacity: 0.9 }}

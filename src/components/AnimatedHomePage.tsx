@@ -19,8 +19,10 @@ import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import { useIsInitialLoad } from '@/lib/initial-load'
 import CollapsibleSection from './CollapsibleSection'
+import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
 import TextReveal from './TextReveal'
 import { IconGamepad2, IconHandshake } from 'nucleo-pixel-essential'
+import { useWebHaptics } from 'web-haptics/react'
 
 interface AnimatedHomePageProps {
   children: ReactNode
@@ -236,47 +238,50 @@ function CreatingLoader() {
 }
 
 const playgroundIconVariants = {
-  idle: { opacity: 0.5, rotate: 0, scale: 1 },
+  idle: { rotate: 0, scale: 1 },
   hover: {
-    opacity: 0.9,
-    rotate: [0, -12, 8, -4, 0],
-    scale: 1.15,
+    rotate: [0, -15, 10, -5, 0],
+    scale: 1.2,
     transition: {
-      rotate: { duration: 0.45, ease: 'easeInOut' },
-      scale: { type: 'spring', stiffness: 400, damping: 15 },
-      opacity: { duration: 0.15 },
+      rotate: { duration: 0.5, ease: 'easeInOut' },
+      scale: { type: 'spring', stiffness: 500, damping: 12 },
     },
   },
 }
 
-const playgroundTextVariants = {
-  idle: { color: 'var(--foreground-muted, rgba(0,0,0,0.5))' },
-  hover: { color: 'var(--foreground)', transition: { duration: 0.2 } },
-}
-
 function PlaygroundButton() {
   const prefersReducedMotion = useReducedMotion() ?? false
+  const haptic = useWebHaptics()
 
   return (
     <m.a
       href="/archive"
-      className="nord-button playground-btn inline-flex items-center justify-center gap-1.5 rounded-[3px] pl-3.5 pr-4 py-2 text-xs font-medium relative overflow-hidden focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+      className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
       aria-label="Open Playground"
-      title="a place for my random projects"
+      title="Joy"
       initial="idle"
       whileHover={prefersReducedMotion ? undefined : 'hover'}
       animate="idle"
-      whileTap={prefersReducedMotion ? undefined : { scale: 0.96 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-      style={{ y: 0 }}
-      variants={{ idle: { y: 0 }, hover: { y: -2 } }}
+      whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
+      onClick={() => haptic.trigger('light')}
+      transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+      variants={{ idle: { y: 0 }, hover: { y: -3 } }}
     >
-      <m.span className="relative z-10" variants={prefersReducedMotion ? undefined : playgroundIconVariants}>
-        <IconGamepad2 size={12} aria-hidden />
+      <m.span
+        className="relative z-10"
+        variants={prefersReducedMotion ? undefined : playgroundIconVariants}
+      >
+        <IconGamepad2 size={13} aria-hidden />
       </m.span>
-      <span className="relative z-10 font-light uppercase tracking-[0.08em] text-foreground/60 transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-foreground/90">
+      <m.span
+        className="relative z-10"
+        variants={prefersReducedMotion ? undefined : {
+          idle: { letterSpacing: '0.06em' },
+          hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+        }}
+      >
         Playground
-      </span>
+      </m.span>
     </m.a>
   )
 }
@@ -285,6 +290,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const isInitialLoad = useIsInitialLoad()
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   const [heroTextStage, setHeroTextStage] = useState(isInitialLoad ? 2 : 0)
+  const haptic = useWebHaptics()
   const prefersReducedMotion = useReducedMotion() ?? false
 
   const experiencePanelRef = useRef<HTMLDivElement>(null)
@@ -380,6 +386,17 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 startDelay={0.1}
                 filter
               />
+              {' '}
+              <m.span
+                className="inline-block cursor-default select-none sun-hover"
+                onClick={() => haptic.trigger('soft')}
+                initial={{ opacity: 0, scale: 0.6, rotate: -30 }}
+                animate={heroTextStage >= 1 ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.6, rotate: -30 }}
+                transition={{ delay: 0.6, duration: 0.5, type: 'spring', stiffness: 300, damping: 15 }}
+                aria-hidden
+              >
+                ☀️
+              </m.span>
             </span>
           </a>
 
@@ -482,13 +499,15 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         className="px-4 sm:px-6 lg:px-0 relative z-10"
         openClassName="py-16"
         closedClassName="py-5"
-        contentClassName="mt-4 pb-6 space-y-8"
+        contentClassName="mt-4 px-2 pb-6 space-y-8"
       >
-        <Card className="mx-auto max-w-[560px] px-2 sm:px-3" size="sm">
+        <Card className="mx-auto max-w-[560px] px-2 sm:px-3 overflow-visible" size="sm">
           {children}
         </Card>
-        <div className="flex justify-center pt-5">
-          <PlaygroundButton />
+        <div className="flex justify-start mx-auto max-w-[560px] pt-5">
+          <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
+            <PlaygroundButton />
+          </Magnetic>
         </div>
       </CollapsibleSection>
 
@@ -514,11 +533,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   href={link.href}
                   target={link.external ? '_blank' : undefined}
                   rel={link.external ? 'noopener noreferrer' : undefined}
-                  className="group inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground underline decoration-muted-foreground/30 underline-offset-4 hover:text-accent hover:decoration-accent"
+                  className="group inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent"
                   aria-label={link.ariaLabel ?? link.label}
                   title={link.title ?? link.label}
                 >
-                  <span>{link.label}</span>
+                  <span className="underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:decoration-accent">{link.label}</span>
                   {link.iconType === 'handshake' && (
                     <IconHandshake size={13} className="shrink-0 opacity-50 transition-[opacity,transform,filter] duration-300 ease-out group-hover:opacity-80 group-hover:scale-110 group-hover:blur-[0.3px]" aria-hidden />
                   )}

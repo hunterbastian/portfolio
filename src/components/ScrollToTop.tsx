@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
 import { IconChevronUp } from 'nucleo-pixel-essential'
+import { useWebHaptics } from 'web-haptics/react'
 
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false)
+  const haptic = useWebHaptics()
 
   useEffect(() => {
     const onScroll = () => {
@@ -19,6 +21,7 @@ export default function ScrollToTop() {
   }, [])
 
   const scrollToTop = () => {
+    haptic.trigger('light')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

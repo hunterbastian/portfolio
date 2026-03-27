@@ -97,8 +97,8 @@ const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
     scale: 1,
   },
   motion: {
-    expandMs: 380,
-    collapseMs: 340,
+    expandMs: 600,
+    collapseMs: 450,
   },
   hover: {
     inactiveOpacity: 0.88,
@@ -360,14 +360,17 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               },
               x: {
                 duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+                delay: motionDelayMs(index * 50, prefersReducedMotion),
                 ease: CARD_STAGGER_PANEL.ease,
               },
               rotate: {
                 duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+                delay: motionDelayMs(index * 50, prefersReducedMotion),
                 ease: CARD_STAGGER_PANEL.ease,
               },
               scale: {
                 duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+                delay: motionDelayMs(index * 50, prefersReducedMotion),
                 ease: CARD_STAGGER_PANEL.ease,
               },
             }}

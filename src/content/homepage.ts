@@ -30,7 +30,7 @@ export const homeHeroContent = {
   subtitle: 'Interaction designer',
   intro:
     '0 → 1 product designer bringing motion, craft and detail to production.\n\nInteraction Design student and Department Representative at UVU with experience designing and building digital products. I create experiences with craft and detail.',
-  handwrittenNote: 'A little page on the internet all about me. ☀️',
+  handwrittenNote: 'A little page on the internet all about me.',
 } as const
 
 export const creatingLinks: HomeLinkItem[] = [

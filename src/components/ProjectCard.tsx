@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
 import { startProjectTransition } from '@/lib/project-transition'
+import { useWebHaptics } from 'web-haptics/react'
 
 interface ProjectCardProps {
   slug: string
@@ -37,8 +38,10 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const categoryLabel = formatCategoryLabel(frontmatter.category)
   const onLoad = useCallback(() => setImgLoaded(true), [])
+  const haptic = useWebHaptics()
 
   const handleTransitionClick = useCallback(() => {
+    haptic.trigger('medium')
     if (imageRef.current) {
       const rect = imageRef.current.getBoundingClientRect()
       startProjectTransition(slug, imgSrc, {
@@ -48,7 +51,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
         height: rect.height,
       })
     }
-  }, [slug, imgSrc])
+  }, [slug, imgSrc, haptic])
 
   return (
     <div className="relative">
@@ -98,15 +101,15 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
             </div>
 
             {!hideLabel && (
-              <div className="px-2.5 pb-2 pt-2 sm:px-3.5 sm:pb-3 sm:pt-2.5" style={{ background: 'var(--card)' }}>
+              <div className="card-label-area relative z-[3] overflow-hidden px-2.5 pb-2 pt-2 sm:px-3.5 sm:pb-3 sm:pt-2.5" style={{ background: 'var(--card)' }}>
                 <h3
-                  className="block w-full truncate whitespace-nowrap text-[13px] font-medium leading-tight text-foreground transition-colors duration-200"
+                  className="relative z-10 block w-full truncate whitespace-nowrap text-[13px] font-medium leading-tight text-foreground transition-colors duration-200"
                   title={displayTitle}
                 >
                   {displayTitle}
                 </h3>
                 {categoryLabel && (
-                  <span className="badge badge-ghost mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60 h-auto py-0.5 px-1.5 min-h-0 border-border/40">
+                  <span className="relative z-10 badge badge-ghost mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60 h-auto py-0.5 px-1.5 min-h-0 border-border/40">
                     {categoryLabel}
                   </span>
                 )}

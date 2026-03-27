@@ -529,14 +529,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .body-glow {
   background-image:
-    radial-gradient(70% 28% at 30% 88%, rgba(210, 135, 75, 0.32) 0%, transparent 100%),
-    radial-gradient(80% 30% at 50% 100%, rgba(216, 200, 122, 0.55) 0%, transparent 100%);
+    radial-gradient(70% 28% at 30% 88%, rgba(210, 135, 75, 0.26) 0%, transparent 100%),
+    radial-gradient(80% 30% at 50% 100%, rgba(216, 200, 122, 0.47) 0%, transparent 100%);
 }
 
 .dark .body-glow {
   background-image:
-    radial-gradient(70% 28% at 30% 88%, rgba(180, 110, 60, 0.16) 0%, transparent 100%),
-    radial-gradient(80% 30% at 50% 100%, rgba(168, 152, 72, 0.27) 0%, transparent 100%);
+    radial-gradient(70% 28% at 30% 88%, rgba(180, 110, 60, 0.12) 0%, transparent 100%),
+    radial-gradient(80% 30% at 50% 100%, rgba(168, 152, 72, 0.22) 0%, transparent 100%);
 }
 
 .archive-glow {

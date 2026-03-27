@@ -18,7 +18,8 @@ export default function Footer() {
   const isArchive = pathname === '/archive'
 
   const syncFooterVisibility = useCallback((scrollY: number, limit: number) => {
-    const atBottom = limit <= 0 || scrollY >= Math.max(0, limit - FOOTER_REVEAL_EPSILON_PX)
+    if (limit <= 0) return // Content hasn't measured yet — don't flash footer
+    const atBottom = scrollY >= Math.max(0, limit - FOOTER_REVEAL_EPSILON_PX)
     setVisible(atBottom)
   }, [])
 

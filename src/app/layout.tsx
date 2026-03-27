@@ -15,6 +15,7 @@ import Script from 'next/script'
 import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
 import ProjectTransitionOverlay from '@/components/ProjectTransitionOverlay'
+import { Agentation } from 'agentation'
 import TopMeta from '@/components/TopMeta'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
@@ -197,6 +198,7 @@ export default function RootLayout({
             )}
             {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
             {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
+            {process.env.NODE_ENV === 'development' && <Agentation />}
 
             {/* Google Analytics - deferred to avoid blocking */}
             {telemetryConfig.enableGa && telemetryConfig.gaId && (

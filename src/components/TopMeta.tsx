@@ -79,9 +79,7 @@ function CoordinateDisplay() {
     >
       <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight">
         {coord.display}
-      </p>
-      <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight">
-        {loc.display}
+        <span className="ml-3 text-[9px] text-muted-foreground/50">{loc.display}</span>
       </p>
     </div>
   )

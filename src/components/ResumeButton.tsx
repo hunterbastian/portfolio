@@ -1,23 +1,44 @@
 'use client'
 
 import { useState } from 'react'
+import { m, useReducedMotion } from 'framer-motion'
 import ResumeModal from './ResumeModal'
 import AnimatedDashedArrow from './AnimatedDashedArrow'
+import { useWebHaptics } from 'web-haptics/react'
+import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
 
 export default function ResumeButton() {
   const [isOpen, setIsOpen] = useState(false)
+  const prefersReducedMotion = useReducedMotion() ?? false
+  const haptic = useWebHaptics()
 
   return (
     <>
-      <button
+      <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
+      <m.button
         type="button"
-        onClick={() => setIsOpen(true)}
-        className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase transition-[box-shadow,background,border-color,opacity] duration-400 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+        onClick={() => { haptic.trigger('light'); setIsOpen(true) }}
+        className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
         style={{ fontFamily: 'inherit' }}
+        initial="idle"
+        whileHover={prefersReducedMotion ? undefined : 'hover'}
+        animate="idle"
+        whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+        variants={{ idle: { y: 0 }, hover: { y: -3 } }}
       >
-        <span className="relative z-10">Resume</span>
+        <m.span
+          className="relative z-10"
+          variants={prefersReducedMotion ? undefined : {
+            idle: { letterSpacing: '0.06em' },
+            hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+          }}
+        >
+          Resume
+        </m.span>
         <AnimatedDashedArrow size={14} />
-      </button>
+      </m.button>
+      </Magnetic>
       <ResumeModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   )

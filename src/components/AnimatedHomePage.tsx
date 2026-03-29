@@ -292,6 +292,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
   const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
   // Skip internal hero entrance on client-side nav — PageTransition handles it
   const [heroTextStage, setHeroTextStage] = useState(2)
+  const [underlineRevealed, setUnderlineRevealed] = useState(false)
   const haptic = useWebHaptics()
   const prefersReducedMotion = useReducedMotion() ?? false
 
@@ -429,19 +430,28 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <m.path
                   d="M1 3.5C20 2.2 40 4.8 60 3.1C80 1.4 100 4.6 120 3.3C140 2 160 4.2 180 3C190 2.4 197 3.8 199 3.2"
                   stroke="currentColor"
-                  strokeWidth="1.5"
+                  strokeWidth="1"
                   strokeLinecap="round"
-                  variants={{
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={underlineRevealed ? { pathLength: 1, opacity: 1 } : undefined}
+                  variants={underlineRevealed ? undefined : {
                     idle: {
                       pathLength: 0,
                       opacity: 0,
-                      transition: { pathLength: { duration: 0.4, ease: [0.4, 0, 0.7, 0.2] }, opacity: { duration: 0.3, delay: 0.15 } },
                     },
                     hover: {
                       pathLength: 1,
                       opacity: 1,
-                      transition: { pathLength: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }, opacity: { duration: 0.15 } },
+                      strokeWidth: [1, 1.5, 1],
+                      transition: {
+                        pathLength: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+                        opacity: { duration: 0.12 },
+                        strokeWidth: { duration: 0.8, ease: 'easeInOut' },
+                      },
                     },
+                  }}
+                  onAnimationComplete={(variant) => {
+                    if (variant === 'hover') setUnderlineRevealed(true)
                   }}
                 />
               </m.svg>
@@ -546,47 +556,51 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <m.a
-                href="#contact"
-                className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-                onClick={(e) => {
-                  e.preventDefault()
-                  haptic.trigger('light')
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                initial="idle"
-                whileHover={prefersReducedMotion ? undefined : 'hover'}
-                animate="idle"
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 22 }}
-                variants={{ idle: { y: 0 }, hover: { y: -3 } }}
-              >
-                <m.span
-                  className="relative z-10"
-                  variants={prefersReducedMotion ? undefined : {
-                    idle: { letterSpacing: '0.06em' },
-                    hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
-                  }}
-                >
-                  Contact
-                </m.span>
-                <m.span
-                  className="relative z-10"
-                  variants={prefersReducedMotion ? undefined : {
-                    idle: { rotate: 0, scale: 1 },
-                    hover: {
-                      rotate: [0, -15, 10, -5, 0],
-                      scale: 1.2,
-                      transition: {
-                        rotate: { duration: 0.5, ease: 'easeInOut' },
-                        scale: { type: 'spring', stiffness: 500, damping: 12 },
-                      },
-                    },
-                  }}
-                >
-                  <ArrowDown size={13} aria-hidden />
-                </m.span>
-              </m.a>
+              <div className="inline-block">
+                <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
+                  <m.a
+                    href="#contact"
+                    className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      haptic.trigger('light')
+                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                    initial="idle"
+                    whileHover={prefersReducedMotion ? undefined : 'hover'}
+                    animate="idle"
+                    whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                    variants={{ idle: { y: 0 }, hover: { y: -3 } }}
+                  >
+                    <m.span
+                      className="relative z-10"
+                      variants={prefersReducedMotion ? undefined : {
+                        idle: { letterSpacing: '0.06em' },
+                        hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+                      }}
+                    >
+                      Contact
+                    </m.span>
+                    <m.span
+                      className="relative z-10"
+                      variants={prefersReducedMotion ? undefined : {
+                        idle: { rotate: 0, scale: 1 },
+                        hover: {
+                          rotate: [0, -15, 10, -5, 0],
+                          scale: 1.2,
+                          transition: {
+                            rotate: { duration: 0.5, ease: 'easeInOut' },
+                            scale: { type: 'spring', stiffness: 500, damping: 12 },
+                          },
+                        },
+                      }}
+                    >
+                      <ArrowDown size={13} aria-hidden />
+                    </m.span>
+                  </m.a>
+                </Magnetic>
+              </div>
             </m.div>
           </m.div>
 

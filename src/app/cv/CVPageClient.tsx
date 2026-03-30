@@ -11,10 +11,14 @@ const STAGGER_DELAY = 0.06
 
 function SectionHeading({ children, delay = 0 }: { children: string; delay?: number }) {
   return (
-    <h2 className="font-mono text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground mb-6">
+    <h2 className="font-mono text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground mb-5">
       <TextReveal text={children} as="span" trigger duration={0.4} staggerDelay={0.06} startDelay={delay} />
     </h2>
   )
+}
+
+function Divider() {
+  return <div className="border-t border-border/40 print:border-border/20" />
 }
 
 export default function CVPageClient() {
@@ -36,27 +40,55 @@ export default function CVPageClient() {
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 container mx-auto max-w-2xl px-4 sm:px-6">
-        <div className="mb-10 sm:mb-14 flex justify-start pt-4 sm:pt-6">
+        {/* Breadcrumb — hidden in print */}
+        <div className="mb-10 sm:mb-14 flex justify-start pt-4 sm:pt-6 print:hidden">
           <BreadcrumbPill href="/" parentLabel="Home" currentLabel="CV" />
         </div>
 
         {/* Header */}
-        <header className="pb-12 sm:pb-16 pt-8 sm:pt-12">
-          <h1 className="font-mono text-[14px] font-semibold tracking-[0.08em] uppercase text-foreground sm:text-[15px]">
-            <TextReveal text="Hunter Bastian" as="span" trigger duration={0.5} staggerDelay={0.08} startDelay={0.1} filter />
-          </h1>
-          <p className="mt-2 text-[13px] text-muted-foreground">
-            <TextReveal text={siteConfig.siteDescription} as="span" trigger duration={0.4} staggerDelay={0.03} startDelay={0.4} />
-          </p>
-          <p className="mt-1 text-[12px] text-muted-foreground/70 font-mono tracking-wide">
-            <TextReveal text="Utah, USA · hunterbastianwork@gmail.com" as="span" trigger duration={0.4} staggerDelay={0.02} startDelay={0.6} />
-          </p>
+        <header className="pb-8 sm:pb-10 pt-8 sm:pt-12 print:pt-0 print:pb-6">
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="font-mono text-[14px] font-semibold tracking-[0.08em] uppercase text-foreground sm:text-[15px]">
+                <TextReveal text="Hunter Bastian" as="span" trigger duration={0.5} staggerDelay={0.08} startDelay={0.1} filter />
+              </h1>
+              <p className="mt-2 text-[13px] text-muted-foreground">
+                <TextReveal text={siteConfig.siteDescription} as="span" trigger duration={0.4} staggerDelay={0.03} startDelay={0.4} />
+              </p>
+            </div>
+            <button
+              onClick={() => window.print()}
+              className="print:hidden shrink-0 ml-4 rounded-full border border-border bg-card px-4 py-2 text-[11px] font-mono tracking-wide text-muted-foreground transition-colors hover:text-foreground hover:border-foreground/20 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 min-h-[44px] inline-flex items-center"
+              aria-label="Print or save as PDF"
+            >
+              Print
+            </button>
+          </div>
+
+          {/* Contact links */}
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-mono tracking-wide text-muted-foreground/70">
+            <span>Utah, USA</span>
+            <span className="text-border">·</span>
+            <a href="mailto:hunterbastianwork@gmail.com" className="underline-offset-4 hover:text-foreground hover:underline transition-colors">
+              hunterbastianwork@gmail.com
+            </a>
+            <span className="text-border">·</span>
+            <a href="https://hunterbastian.com" className="underline-offset-4 hover:text-foreground hover:underline transition-colors print:no-underline">
+              hunterbastian.com
+            </a>
+            <span className="text-border">·</span>
+            <a href="https://linkedin.com/in/hunterbastian" className="underline-offset-4 hover:text-foreground hover:underline transition-colors">
+              LinkedIn
+            </a>
+          </div>
         </header>
 
+        <Divider />
+
         {/* Experience */}
-        <section className="pb-10 sm:pb-14">
+        <section className="py-8 sm:py-10 print:py-5">
           <SectionHeading delay={0.5}>Experience</SectionHeading>
-          <div className="space-y-6">
+          <div className="space-y-5">
             {experienceItems.map((item, i) => (
               <m.div
                 key={`${item.company}-${item.year}`}
@@ -80,10 +112,12 @@ export default function CVPageClient() {
           </div>
         </section>
 
+        <Divider />
+
         {/* Education */}
-        <section className="pb-10 sm:pb-14">
+        <section className="py-8 sm:py-10 print:py-5">
           <SectionHeading delay={0.8}>Education</SectionHeading>
-          <div className="space-y-6">
+          <div className="space-y-5">
             {educationItems.map((item, i) => (
               <m.div
                 key={`${item.institution}-${item.year}`}
@@ -111,7 +145,7 @@ export default function CVPageClient() {
         </section>
 
         {/* Bottom spacer */}
-        <div className="pb-16 sm:pb-24" />
+        <div className="pb-16 sm:pb-24 print:pb-4" />
       </div>
     </div>
   )

@@ -5,8 +5,11 @@ import { AnimatePresence, m } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useScrambleText } from '@/lib/scramble'
+import { getSeason } from '@/lib/season'
 import { siteConfig } from '@/lib/site'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
+import { useSound } from '@/lib/sounds/context'
+import SoundToggle from '@/components/SoundToggle'
 
 const PAGE_NAV = [
   { name: 'INFO', href: '/about' },
@@ -14,14 +17,6 @@ const PAGE_NAV = [
   { name: 'EMAIL', href: 'mailto:hello@hunterbastian.com', external: true },
   { name: 'LINKEDIN', href: 'https://linkedin.com/in/hunterbastian', external: true },
 ] as const
-
-function getSeason(): string {
-  const month = new Date().getMonth()
-  if (month >= 2 && month <= 4) return 'Spring'
-  if (month >= 5 && month <= 7) return 'Summer'
-  if (month >= 8 && month <= 10) return 'Autumn'
-  return 'Winter'
-}
 
 function CoordinateDisplay() {
   const coord = useScrambleText(siteConfig.siteCoordinates, true, 400)
@@ -50,6 +45,7 @@ export default function Header() {
   const pathname = usePathname()
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const showCoordinates = true
+  const { play } = useSound()
 
   useEffect(() => {
     setShowMobileMenu(false)
@@ -104,6 +100,7 @@ export default function Header() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => play('click')}
                       className="text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight"
                     >
                       {item.name}
@@ -111,6 +108,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={item.href}
+                      onClick={() => play('click')}
                       className={`text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight ${
                         pathname === item.href
                           ? 'text-foreground underline decoration-accent'
@@ -123,6 +121,7 @@ export default function Header() {
                 </m.div>
               ))}
             </nav>
+            <SoundToggle />
             <button
               type="button"
               onClick={() => setShowMobileMenu(!showMobileMenu)}
@@ -170,7 +169,7 @@ export default function Header() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => setShowMobileMenu(false)}
+                      onClick={() => { play('click'); setShowMobileMenu(false) }}
                       className="block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-muted-foreground hover:text-accent hover:underline"
                       style={{ fontFamily: 'inherit' }}
                     >
@@ -179,7 +178,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={item.href}
-                      onClick={() => setShowMobileMenu(false)}
+                      onClick={() => { play('click'); setShowMobileMenu(false) }}
                       className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
                         pathname === item.href ? 'text-foreground underline decoration-accent' : 'text-muted-foreground hover:text-accent hover:underline'
                       }`}

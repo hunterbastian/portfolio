@@ -1,11 +1,12 @@
 'use client'
 
-import { memo, useState, useCallback, useRef } from 'react'
+import { memo, useState, useCallback, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
 import { startProjectTransition } from '@/lib/project-transition'
 import { useWebHaptics } from 'web-haptics/react'
+import { useSound } from '@/lib/sounds/context'
 
 interface ProjectCardProps {
   slug: string
@@ -39,6 +40,17 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
   const categoryLabel = formatCategoryLabel(frontmatter.category)
   const onLoad = useCallback(() => setImgLoaded(true), [])
   const haptic = useWebHaptics()
+  const { play } = useSound()
+  const [canHover, setCanHover] = useState(false)
+
+  // Only enable hover sounds on devices that support fine pointer (desktop)
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: hover)')
+    setCanHover(mq.matches)
+    const onChange = (e: MediaQueryListEvent) => setCanHover(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   const handleTransitionClick = useCallback(() => {
     haptic.trigger('medium')
@@ -55,7 +67,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
 
   return (
     <div className="relative">
-      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} className={`group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}>
+      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className={`group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}>
           <div
             className={`project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1.5 will-change-transform ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}
             style={{
@@ -103,7 +115,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
             {!hideLabel && (
               <div className="card-label-area relative z-[3] overflow-hidden px-2.5 pb-2 pt-2 sm:px-3.5 sm:pb-3 sm:pt-2.5" style={{ background: 'var(--card)' }}>
                 <h3
-                  className="relative z-10 block w-full truncate whitespace-nowrap text-[13px] font-medium leading-tight text-foreground transition-colors duration-200"
+                  className="relative z-10 block w-full truncate whitespace-nowrap text-[13px] font-semibold leading-tight text-foreground transition-colors duration-200"
                   title={displayTitle}
                 >
                   {displayTitle}

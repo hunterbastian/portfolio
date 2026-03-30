@@ -1,13 +1,16 @@
 'use client'
 
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
-import { getAudioContext, decodeAudioData } from './engine'
-import type { SoundAsset } from './types'
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
+import { playClick, playTone, playChime, playWhoosh } from './synth'
+import type { SoundName } from './types'
 
 interface SoundContextValue {
+  /** Whether sound is enabled (opt-in, default false) */
   enabled: boolean
+  /** Toggle sound on/off and persist preference */
   toggle: () => void
-  play: (sound: SoundAsset, volume?: number) => void
+  /** Play a named synthesized sound */
+  play: (sound: SoundName) => void
 }
 
 const SoundContext = createContext<SoundContextValue>({
@@ -18,9 +21,15 @@ const SoundContext = createContext<SoundContextValue>({
 
 const STORAGE_KEY = 'hb-sound-enabled'
 
+const synthMap: Record<SoundName, () => void> = {
+  click: playClick,
+  tone: playTone,
+  chime: playChime,
+  whoosh: playWhoosh,
+}
+
 export function SoundProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(false)
-  const bufferCache = useRef(new Map<string, AudioBuffer>())
 
   // Read persisted preference on mount
   useEffect(() => {
@@ -45,31 +54,10 @@ export function SoundProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const play = useCallback(
-    (sound: SoundAsset, volume = 0.4) => {
+    (sound: SoundName) => {
       if (!enabled) return
-
-      const doPlay = async () => {
-        let buffer = bufferCache.current.get(sound.dataUri)
-        if (!buffer) {
-          buffer = await decodeAudioData(sound.dataUri)
-          bufferCache.current.set(sound.dataUri, buffer)
-        }
-
-        const ctx = getAudioContext()
-        if (ctx.state === 'suspended') {
-          await ctx.resume()
-        }
-
-        const source = ctx.createBufferSource()
-        const gain = ctx.createGain()
-        source.buffer = buffer
-        gain.gain.value = volume
-        source.connect(gain)
-        gain.connect(ctx.destination)
-        source.start(0)
-      }
-
-      doPlay().catch(() => {})
+      const fn = synthMap[sound]
+      if (fn) fn()
     },
     [enabled],
   )
@@ -81,6 +69,6 @@ export function SoundProvider({ children }: { children: ReactNode }) {
   )
 }
 
-export function useUISound() {
+export function useSound() {
   return useContext(SoundContext)
 }

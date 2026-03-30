@@ -16,6 +16,8 @@ import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
 import ProjectTransitionOverlay from '@/components/ProjectTransitionOverlay'
 import { Agentation } from 'agentation'
+import SeasonalAccent from '@/components/SeasonalAccent'
+import { SoundProvider } from '@/lib/sounds/context'
 import TopMeta from '@/components/TopMeta'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
@@ -164,6 +166,8 @@ export default function RootLayout({
         }}
       >
         <MotionProvider>
+          <SoundProvider>
+          <SeasonalAccent />
           <ProjectTransitionOverlay />
           <TopMeta />
           <SmoothScroll>
@@ -219,6 +223,7 @@ export default function RootLayout({
               </Script>
             )}
           </SmoothScroll>
+          </SoundProvider>
         </MotionProvider>
       </body>
     </html>

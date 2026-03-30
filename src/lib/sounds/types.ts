@@ -1,3 +1,5 @@
+export type SoundName = 'click' | 'tone' | 'chime' | 'whoosh'
+
 export interface SoundAsset {
   name: string
   dataUri: string

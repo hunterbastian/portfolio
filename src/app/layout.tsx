@@ -111,7 +111,7 @@ export default function RootLayout({
                 '@id': `${siteConfig.url}/#person`,
                 name: 'Hunter Bastian',
                 url: siteConfig.url,
-                jobTitle: 'Interaction Designer',
+                jobTitle: 'Design Engineer',
                 description: siteConfig.siteDescription,
                 sameAs: [
                   'https://github.com/hunterbastian',

@@ -9,13 +9,13 @@ import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: siteConfig.siteTitle,
-  description: `${siteConfig.brandName} — interaction designer, creative coder, and photographer based in Utah. View case studies, experiments, and side projects.`,
+  description: `${siteConfig.brandName} — design engineer, creative coder, and photographer based in Utah. View case studies, experiments, and side projects.`,
   alternates: {
     canonical: resolveSiteUrl('/'),
   },
   openGraph: {
     title: siteConfig.siteTitle,
-    description: `${siteConfig.brandName} — interaction designer, creative coder, and photographer based in Utah.`,
+    description: `${siteConfig.brandName} — design engineer, creative coder, and photographer based in Utah.`,
     url: resolveSiteUrl('/'),
     siteName: sitePortfolioName,
     type: 'website',

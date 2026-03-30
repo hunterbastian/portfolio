@@ -516,7 +516,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           >
             <p className="m-0 font-inter text-sm leading-relaxed text-muted-foreground">
               <TextReveal
-                text="0 → 1 product designer bringing motion, craft and detail to production."
+                text="0 → 1 design engineer bringing motion, craft and detail to production."
                 as="span"
                 className="font-medium text-foreground/80"
                 trigger={heroTextStage >= 2}

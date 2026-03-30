@@ -37,7 +37,7 @@ function ControlButton({
     <button
       type="button"
       onClick={() => onPress(direction)}
-      className="h-9 min-w-9 border border-black bg-white px-3 text-[10px] font-code tracking-[0.1em] text-black transition-colors hover:bg-black hover:text-white active:bg-black active:text-white touch-manipulation"
+      className="h-9 min-w-9 border border-black bg-white px-3 text-[10px] font-mono tracking-[0.1em] text-black transition-colors hover:bg-black hover:text-white active:bg-black active:text-white touch-manipulation"
       aria-label={`Move ${direction}`}
     >
       {label}
@@ -205,11 +205,11 @@ export default function FooterSnakeEasterEgg() {
             className="w-full max-w-sm border-2 border-black bg-white p-4 text-black shadow-[8px_8px_0_0_#000000]"
           >
             <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="font-code text-[11px] tracking-[0.12em]">SNAKE // SCORE {game.score}</p>
+              <p className="font-mono text-[11px] tracking-[0.12em]">SNAKE // SCORE {game.score}</p>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="border border-black px-2 py-1 font-code text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
+                className="border border-black px-2 py-1 font-mono text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
               >
                 CLOSE
               </button>
@@ -249,19 +249,19 @@ export default function FooterSnakeEasterEgg() {
               <button
                 type="button"
                 onClick={() => setIsPaused((previousValue) => !previousValue)}
-                className="border border-black px-2 py-1 font-code text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
+                className="border border-black px-2 py-1 font-mono text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
               >
                 {isPaused ? 'RESUME' : 'PAUSE'}
               </button>
               <button
                 type="button"
                 onClick={restartGame}
-                className="border border-black px-2 py-1 font-code text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
+                className="border border-black px-2 py-1 font-mono text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
               >
                 RESTART
               </button>
-              <p className="font-code text-[10px] tracking-[0.1em] text-black/75">ARROWS/WASD</p>
-              <p className="font-code text-[10px] tracking-[0.1em] text-black/75">SPACE PAUSE</p>
+              <p className="font-mono text-[10px] tracking-[0.1em] text-black/75">ARROWS/WASD</p>
+              <p className="font-mono text-[10px] tracking-[0.1em] text-black/75">SPACE PAUSE</p>
             </div>
 
             <div className="mt-3 flex flex-col items-center gap-1 sm:hidden">
@@ -274,7 +274,7 @@ export default function FooterSnakeEasterEgg() {
             </div>
 
             {game.gameOver && (
-              <p className="mt-3 border border-black bg-black px-2 py-1 text-center font-code text-[10px] tracking-[0.12em] text-white">
+              <p className="mt-3 border border-black bg-black px-2 py-1 text-center font-mono text-[10px] tracking-[0.12em] text-white">
                 GAME OVER. PRESS RESTART OR R.
               </p>
             )}

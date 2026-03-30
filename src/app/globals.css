@@ -78,6 +78,7 @@ html {
   --sky-cool: rgba(222, 220, 216, 0.035);
   --sky-spot-a: rgba(214, 210, 204, 0.045);
   --sky-spot-b: rgba(222, 220, 216, 0.035);
+  --ink-underline: #b8a48a;
   --box-radius: 16px;
 }
 
@@ -208,6 +209,7 @@ html {
   --sky-mid: rgba(34, 44, 52, 0.09);
   --sky-cool: rgba(40, 50, 58, 0.055);
   --sky-spot-a: rgba(26, 36, 44, 0.08);
+  --ink-underline: #b8a48a;
   --sky-spot-b: rgba(40, 50, 58, 0.055);
 }
 
@@ -452,7 +454,7 @@ h1, h2, h3, h4, h5, h6 {
   bottom: -3px;
   width: 100%;
   height: 6px;
-  color: #b8a48a;
+  color: var(--ink-underline);
   transition: color 300ms ease;
 }
 

@@ -36,6 +36,7 @@ Warm neutral palette. No pure white, no pure black. Colors defined as CSS custom
 | `--accent`         | `#da8a82`  | Dusty rose (spring default)    |
 | `--border`         | `#d6d3cd`  | Dividers, input borders        |
 | `--ring`           | `#da8a82`  | Focus indicators               |
+| `--ink-underline`  | `#b8a48a`  | Hero handscript ink underline   |
 
 ### Dark Mode (`.dark`)
 
@@ -51,6 +52,7 @@ Warm neutral palette. No pure white, no pure black. Colors defined as CSS custom
 | `--accent`         | `#da8a82`  | Dusty rose (spring default)    |
 | `--border`         | `#353739`  | Dividers, input borders        |
 | `--ring`           | `#da8a82`  | Focus indicators               |
+| `--ink-underline`  | `#b8a48a`  | Hero handscript ink underline   |
 
 ### Seasonal Accent Colors
 

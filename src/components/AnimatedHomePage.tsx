@@ -375,7 +375,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
       <CreatingLoader />
-      <section className={`relative pb-8 sm:pb-12 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`}>
+      <section className={`relative pb-8 sm:pb-12 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`} suppressHydrationWarning>
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <m.a
             href="/about"

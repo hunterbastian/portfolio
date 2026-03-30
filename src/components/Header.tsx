@@ -101,7 +101,7 @@ export default function Header() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => play('click')}
-                      className="text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight inline-flex items-center min-h-[44px]"
+                      className="text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       {item.name}
                     </a>
@@ -109,7 +109,7 @@ export default function Header() {
                     <Link
                       href={item.href}
                       onClick={() => play('click')}
-                      className={`text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight inline-flex items-center min-h-[44px] ${
+                      className={`text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
                         pathname === item.href
                           ? 'text-foreground underline decoration-accent'
                           : 'text-foreground/60 hover:text-accent hover:underline'
@@ -170,7 +170,7 @@ export default function Header() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => { play('click'); setShowMobileMenu(false) }}
-                      className="block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-muted-foreground hover:text-accent hover:underline"
+                      className="block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-muted-foreground hover:text-accent hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                       style={{ fontFamily: 'inherit' }}
                     >
                       {item.name}
@@ -179,7 +179,7 @@ export default function Header() {
                     <Link
                       href={item.href}
                       onClick={() => { play('click'); setShowMobileMenu(false) }}
-                      className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent ${
+                      className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
                         pathname === item.href ? 'text-foreground underline decoration-accent' : 'text-muted-foreground hover:text-accent hover:underline'
                       }`}
                       style={{ fontFamily: 'inherit' }}

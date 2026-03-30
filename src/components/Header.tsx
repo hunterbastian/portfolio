@@ -14,7 +14,6 @@ import SoundToggle from '@/components/SoundToggle'
 const PAGE_NAV = [
   { name: 'INFO', href: '/about' },
   { name: 'WORK', href: '/#case-studies' },
-  { name: 'CV', href: '/cv' },
   { name: 'EMAIL', href: 'mailto:hello@hunterbastian.com', external: true },
   { name: 'LINKEDIN', href: 'https://linkedin.com/in/hunterbastian', external: true },
 ] as const

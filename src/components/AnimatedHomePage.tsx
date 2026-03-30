@@ -15,7 +15,6 @@ import {
   experienceItems,
   homeHeroContent,
 } from '@/content/homepage'
-import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import { useIsInitialLoad } from '@/lib/initial-load'
 import CollapsibleSection from './CollapsibleSection'

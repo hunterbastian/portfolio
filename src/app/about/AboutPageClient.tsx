@@ -99,6 +99,24 @@ export default function AboutPageClient() {
                 <AnimatedDashedArrow size={14} />
               </m.a>
               </Magnetic>
+              <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
+              <m.div
+                initial="idle"
+                whileHover={prefersReducedMotion ? undefined : 'hover'}
+                animate="idle"
+                whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                variants={{ idle: { y: 0 }, hover: { y: -3 } }}
+              >
+                <Link
+                  href="/cv"
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase text-muted-foreground transition-colors hover:text-foreground hover:border-foreground/20 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                  onClick={() => haptic.trigger('light')}
+                >
+                  View CV
+                </Link>
+              </m.div>
+              </Magnetic>
               <ResumeButton />
             </div>
           </div>

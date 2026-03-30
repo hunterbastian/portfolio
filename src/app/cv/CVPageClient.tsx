@@ -7,19 +7,6 @@ import { experienceItems, educationItems } from '@/content/homepage'
 import { siteConfig } from '@/lib/site'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 
-const SKILLS = [
-  'Figma',
-  'React',
-  'Next.js',
-  'TypeScript',
-  'Tailwind CSS',
-  'Framer Motion',
-  'Three.js',
-  'Adobe Creative Suite',
-  'Prototyping',
-  'User Research',
-] as const
-
 const STAGGER_DELAY = 0.06
 
 function SectionHeading({ children, delay = 0 }: { children: string; delay?: number }) {
@@ -123,25 +110,8 @@ export default function CVPageClient() {
           </div>
         </section>
 
-        {/* Skills */}
-        <section className="pb-16 sm:pb-24">
-          <SectionHeading delay={1.0}>Skills</SectionHeading>
-          <m.div
-            className="flex flex-wrap gap-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: prefersReducedMotion ? 0 : 1.1, duration: 0.5, ease: MOTION_EASE_SOFT }}
-          >
-            {SKILLS.map((skill) => (
-              <span
-                key={skill}
-                className="rounded-full border border-border bg-card px-3 py-1 text-[11px] font-mono tracking-wide text-muted-foreground transition-colors hover:text-foreground hover:border-foreground/20"
-              >
-                {skill}
-              </span>
-            ))}
-          </m.div>
-        </section>
+        {/* Bottom spacer */}
+        <div className="pb-16 sm:pb-24" />
       </div>
     </div>
   )

@@ -1,72 +1,44 @@
 ---
 title: "How this site was built"
-description: "The design decisions behind hunterbastian.com. Pixel fonts, seasonal colors, sound design, and why every detail matters."
+description: "Design decisions behind hunterbastian.com."
 date: "2026-03-30"
-tags: ["design engineering", "craft", "process"]
+tags: ["design engineering", "process"]
 ---
 
-I rebuilt my portfolio from scratch this year. Not because the old one was broken, but because I wanted something that felt like mine. Not a template. Not a Figma export. Something where every detail was a decision I could explain.
+I rebuilt my portfolio this year because I wanted something that felt like mine. Every detail is a decision I can explain.
 
-This is that explanation.
+## Pixel font
 
-## The pixel font
+Geist Pixel Square for all structural text. Headings, nav, labels, buttons. Nobody in portfolio-land does this. Most reach for Inter. I wanted unexpected.
 
-The biggest risk on this site is the typography. I use Geist Pixel Square as the primary structural typeface for headings, navigation, labels, buttons, section titles. Everything structural is pixel.
+Geist Sans for body text. Pixel is for identity, not reading.
 
-Nobody in the designer portfolio space does this. Most portfolios use Inter or some safe geometric sans. I wanted something unexpected, something that says "this person thinks about typography differently." Pixel fonts feel technical and retro-futuristic at the same time. They force you to be precise because every character is visible at that resolution.
+A handwritten face appears once, in the hero. One moment of warmth.
 
-Geist Sans handles the body text. Paragraphs, descriptions, anything you need to actually read. Pixel is for identity, not reading. That distinction matters.
+## Warm neutrals
 
-There's also a third font. A handwritten face called HB Handscript that appears exactly once, in the hero. "A little page on the internet all about me." One moment of warmth in an otherwise precise system.
-
-## No pure white, no pure black
-
-The background is `#f2f0ec`. Not white. Warm off-white. The text is `#3f4f5c`. Not black. Slate blue. This was a rule from day one: no pure white, no pure black, anywhere in the UI.
-
-The reason is simple. Pure white is harsh. Pure black is heavy. Warm neutrals feel like paper. The whole palette is built on this idea. There's a warm off-white canvas, slightly lighter card panels, and a dusty rose accent that ties everything together.
+Background is `#f2f0ec`. Text is `#3f4f5c`. No pure white, no pure black, anywhere. Warm neutrals feel like paper.
 
 ## Seasonal accents
 
-The accent color changes with the season.
+The accent color shifts with the season. Dusty rose in spring, warm amber in summer, burnt sienna in autumn, slate blue in winter. The site responds to time.
 
-Spring is dusty rose. Summer shifts to warm amber. Autumn goes burnt sienna. Winter is slate blue. The site literally feels different depending on when you visit it.
+## Sound
 
-I think about this like tending a garden. The site is alive. It responds to time. Most portfolios are static. This one breathes. It's a small thing but it changes the relationship between the visitor and the site. You come back in October and the accent is different. That's memorable.
+Soft clicks on navigation. Gentle tones on hover. All opt-in, muted by default. Interfaces can be multi-sensory. The sounds are quiet and organic, like tapping a ceramic bowl.
 
-## Sound design
+## Springs
 
-The site has sound. Soft clicks on navigation, gentle tones on hover, a chime for the snake easter egg. All opt-in. Muted by default. Sound only activates after you interact.
-
-I added this because I believe interfaces can be multi-sensory. A wooden click when you navigate feels different than silence. It's not about being flashy. It's about craft. The sounds are quiet and organic, like tapping a ceramic bowl.
-
-Web haptics pair with the sounds on supported devices. A subtle vibration on a button press. These things compound.
-
-## Springs, not easing
-
-Every animation uses spring physics. Not `ease-in-out`. Springs. The motion library has three core presets: a soft ease for entrances, an exit curve, and a smooth spring for interactive elements. Every animation in the codebase references these constants.
-
-The stagger pattern follows what I call the storyboard approach. Named timing constants at the top of the file. A single integer state variable drives the sequence. Config objects define initial and final values. It reads like a script: at 60ms the profile fades in, at 100ms the text panel glides up, at 220ms the intro paragraph rises.
-
-`prefers-reduced-motion` disables everything. Animation should never be the only way to understand the interface.
+Every animation uses spring physics. Three presets, referenced everywhere. `prefers-reduced-motion` disables all of it.
 
 ## Shadows over borders
 
-Cards don't use borders. They use multi-layer box shadows. Three layers in light mode: a 1px pseudo-border at 6% opacity, a subtle lift shadow, and a soft ambient shadow. Hover deepens all three.
+Cards use multi-layer box shadows, not borders. Shadows adapt to any background. Hover deepens all three layers.
 
-Dark mode flips the approach. Deeper shadows plus an inset `rgba(255,255,255,0.04)` for inner edge definition. The same card works in both modes without conditional logic.
+## Texture
 
-Borders are rigid. Shadows adapt to any background. That's the principle.
-
-## The background has texture
-
-The background isn't flat. Three layers: a warm radial gradient from center-top, a linear paper gradient, and a grain texture at near-invisible opacity. You don't notice any of these individually. Together they create a paper feel.
-
-The hero has its own sky gradient on top. Two radial spot highlights that give the top of the page a sense of atmosphere. Subtle enough that you feel it more than see it.
+The background has three barely-visible layers: a warm radial gradient, a paper gradient, and grain. You feel it more than see it.
 
 ## What this site is not
 
-Not flashy. No neon gradients. No glassmorphism. No bouncing elements. Not trendy for the sake of being trendy. If something is removed, it was intentional. If it looks default, I revisit it.
-
-The philosophy is warm minimal. Japandi-evolved. When in doubt, do less. Let typography, spacing, and composition create hierarchy. The site should feel like a well-made tool. Precise, warm, and quiet.
-
-That's the whole game.
+Not flashy. Not trendy. When in doubt, do less.

@@ -100,7 +100,10 @@ export default function AboutPageClient() {
               </m.a>
               </Magnetic>
               <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
-              <m.div
+              <m.a
+                href="/cv"
+                className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                onClick={() => haptic.trigger('light')}
                 initial="idle"
                 whileHover={prefersReducedMotion ? undefined : 'hover'}
                 animate="idle"
@@ -108,14 +111,17 @@ export default function AboutPageClient() {
                 transition={{ type: 'spring', stiffness: 400, damping: 22 }}
                 variants={{ idle: { y: 0 }, hover: { y: -3 } }}
               >
-                <Link
-                  href="/cv"
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase text-muted-foreground transition-colors hover:text-foreground hover:border-foreground/20 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-                  onClick={() => haptic.trigger('light')}
+                <m.span
+                  className="relative z-10"
+                  variants={prefersReducedMotion ? undefined : {
+                    idle: { letterSpacing: '0.06em' },
+                    hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+                  }}
                 >
                   View CV
-                </Link>
-              </m.div>
+                </m.span>
+                <AnimatedDashedArrow size={14} />
+              </m.a>
               </Magnetic>
               <ResumeButton />
             </div>

@@ -257,7 +257,7 @@ function PlaygroundButton() {
   return (
     <m.a
       href="/archive"
-      className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+      className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 min-h-[44px] text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
       aria-label="Open Playground"
       title="Joy"
       initial="idle"
@@ -560,7 +560,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
                   <m.a
                     href="#contact"
-                    className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                    className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 min-h-[44px] text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
                     onClick={(e) => {
                       e.preventDefault()
                       haptic.trigger('light')
@@ -650,7 +650,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   href={link.href}
                   target={link.external ? '_blank' : undefined}
                   rel={link.external ? 'noopener noreferrer' : undefined}
-                  className="group inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent"
+                  className="group inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent min-h-[44px]"
                   aria-label={link.ariaLabel ?? link.label}
                   title={link.title ?? link.label}
                 >
@@ -841,7 +841,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-muted-foreground/50 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent inline-flex items-center min-h-[44px]"
+                className="text-[13px] text-muted-foreground/50 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent inline-flex items-center min-h-[44px] min-w-[44px] justify-center"
                 aria-label={link.label}
                 title={link.label}
               >

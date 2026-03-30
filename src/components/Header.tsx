@@ -82,8 +82,8 @@ export default function Header() {
             {showCoordinates && <CoordinateDisplay />}
           </div>
 
-          <div className="flex items-start gap-1">
-            <nav className="hidden sm:flex items-start gap-3">
+          <div className="flex items-center gap-1">
+            <nav className="hidden sm:flex items-center gap-3">
               {PAGE_NAV.map((item, i) => (
                 <m.div
                   key={item.href}
@@ -101,7 +101,7 @@ export default function Header() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => play('click')}
-                      className="text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight"
+                      className="text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight inline-flex items-center min-h-[44px]"
                     >
                       {item.name}
                     </a>
@@ -109,7 +109,7 @@ export default function Header() {
                     <Link
                       href={item.href}
                       onClick={() => play('click')}
-                      className={`text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight ${
+                      className={`text-[10px] tracking-[0.1em] font-mono transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight inline-flex items-center min-h-[44px] ${
                         pathname === item.href
                           ? 'text-foreground underline decoration-accent'
                           : 'text-foreground/60 hover:text-accent hover:underline'

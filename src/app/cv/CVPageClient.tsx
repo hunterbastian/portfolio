@@ -49,7 +49,7 @@ export default function CVPageClient() {
             <TextReveal text={siteConfig.siteDescription} as="span" trigger duration={0.4} staggerDelay={0.03} startDelay={0.4} />
           </p>
           <p className="mt-1 text-[12px] text-muted-foreground/70 font-mono tracking-wide">
-            <TextReveal text="Utah, USA · hello@hunterbastian.com" as="span" trigger duration={0.4} staggerDelay={0.02} startDelay={0.6} />
+            <TextReveal text="Utah, USA · hunterbastianwork@gmail.com" as="span" trigger duration={0.4} staggerDelay={0.02} startDelay={0.6} />
           </p>
         </header>
 

@@ -487,7 +487,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </m.div>
             <div className="min-w-0">
               <h1
-                className="text-foreground font-mono font-normal text-[13px] leading-[1.2] tracking-[0.02em] sm:text-[14px]"
+                className="text-foreground font-mono font-semibold text-[13px] leading-[1.2] tracking-[0.02em] sm:text-[14px]"
               >
                 {homeHeroContent.headline}
               </h1>

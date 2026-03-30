@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
+import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
 import './viewport.css'
 import Footer from '@/components/Footer'
@@ -19,17 +19,7 @@ import { Agentation } from 'agentation'
 import TopMeta from '@/components/TopMeta'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
-// Primary body font
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-inter',
-  display: 'swap',
-  preload: true,
-  fallback: ['system-ui', 'sans-serif'],
-})
-
-// Geist Mono — used for all non-paragraph text (headings, nav, labels, buttons)
+// Geist Pixel Square — used for all non-paragraph text (headings, nav, labels, buttons)
 
 
 export const viewport = {
@@ -167,7 +157,7 @@ export default function RootLayout({
         }} />
       </head>
       <body
-        className={`${GeistMono.className} ${inter.variable} safe-area-padding text-foreground body-glow`}
+        className={`${GeistPixelSquare.className} ${GeistSans.variable} safe-area-padding text-foreground body-glow`}
         style={{
           backgroundColor: 'var(--background)',
           backgroundAttachment: 'fixed',

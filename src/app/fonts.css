@@ -1,5 +1,6 @@
 /*
  * Font declarations - using Next.js font optimization from layout.tsx
- * Body: Geist Mono (default for all UI text)
- * Paragraphs: Inter (applied via globals.css)
+ * Body: Geist Pixel Square (default for all UI text)
+ * Paragraphs: Geist Sans (applied via globals.css)
+ * OG images: GeistMono (Satori requires TTF, pixel font is woff2 only)
  */

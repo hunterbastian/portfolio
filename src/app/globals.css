@@ -232,9 +232,9 @@ body {
   backface-visibility: hidden;
 }
 
-/* Paragraph / body-copy text uses Inter; everything else inherits Geist Mono from <body> */
+/* Paragraph / body-copy text uses Geist Sans; everything else inherits Geist Mono from <body> */
 p, li, dd, blockquote, figcaption {
-  font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-geist-sans), 'Geist Sans', system-ui, -apple-system, sans-serif;
   text-wrap: pretty;
 }
 
@@ -627,7 +627,7 @@ h1, h2, h3, h4, h5, h6 {
 .playground-field-title {
   margin: 0;
   max-width: 12ch;
-  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-family: var(--font-geist-sans), 'Geist Sans', system-ui, sans-serif;
   font-size: clamp(2rem, 1.2rem + 2vw, 3.3rem);
   line-height: 0.94;
   letter-spacing: -0.05em;

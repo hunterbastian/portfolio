@@ -49,6 +49,8 @@ export function measurePerformance(): void {
     return
   }
 
+  if (process.env.NODE_ENV !== 'development') return
+
   import('web-vitals')
     .then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
       onCLS(console.log)
@@ -58,6 +60,6 @@ export function measurePerformance(): void {
       onTTFB(console.log)
     })
     .catch(() => {
-      console.log('Web Vitals not available')
+      // Web Vitals API not available in this browser
     })
 }

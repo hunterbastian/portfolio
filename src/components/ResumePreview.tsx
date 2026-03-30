@@ -90,7 +90,7 @@ export default function ResumePreview({ isVisible, anchorRef }: ResumePreviewPro
 
   const previewBody = (
     <div
-      className="relative rounded-[3px] bg-white border border-gray-300 shadow-2xl overflow-hidden"
+      className="relative rounded-[3px] bg-card border border-gray-300 shadow-2xl overflow-hidden"
       style={{ width: `${PREVIEW_WIDTH}px`, height: `${PREVIEW_HEIGHT}px` }}
     >
       <div className="bg-gray-100 px-3 py-2 border-b border-gray-200">

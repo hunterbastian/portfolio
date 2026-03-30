@@ -26,7 +26,7 @@ export default function GlareHover({
   borderRadius = 'var(--box-radius)',
   borderColor = '#333',
   children,
-  glareColor = '#ffffff',
+  glareColor = '#f2f0ec',
   glareOpacity = 0.5,
   glareAngle = -45,
   glareSize = 250,

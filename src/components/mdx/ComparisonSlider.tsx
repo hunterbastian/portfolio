@@ -65,7 +65,7 @@ export default function ComparisonSlider({
 
           <m.div
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 w-0.5 bg-white/95 shadow-[0_0_0_1px_rgba(0,0,0,0.28)]"
+            className="pointer-events-none absolute inset-y-0 w-0.5 bg-card/95 shadow-[0_0_0_1px_rgba(0,0,0,0.28)]"
             animate={{ left: `${position}%` }}
             transition={{
               duration: motionDurationMs(260, prefersReducedMotion),

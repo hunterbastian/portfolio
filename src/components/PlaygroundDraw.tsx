@@ -108,7 +108,7 @@ export default function PlaygroundDraw() {
 
       {/* Tool tray */}
       <div
-        className="fixed bottom-5 left-1/2 z-30 -translate-x-1/2 flex items-end gap-1 rounded-xl bg-white/60 dark:bg-neutral-800/60 backdrop-blur-xl px-3 pt-2 pb-2 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-black/[0.04] dark:border-white/[0.06]"
+        className="fixed bottom-5 left-1/2 z-30 -translate-x-1/2 flex items-end gap-1 rounded-xl bg-card/60 dark:bg-neutral-800/60 backdrop-blur-xl px-3 pt-2 pb-2 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-black/[0.04] dark:border-white/[0.06]"
       >
         {/* Pencil */}
         <button

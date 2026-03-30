@@ -51,6 +51,8 @@ html {
 
 :root {
   /* August palette — 白色 · 縹色 · 銀鼠 · 肉色 */
+  --background: #f2f0ec;
+  --foreground: #3f4f5c;
   --background-rgb: 242, 240, 236;
   --card: #f5f3ef;
   --card-foreground: #3f4f5c;
@@ -547,7 +549,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .about-page-glow {
-  background-image: radial-gradient(125% 125% at 50% 10%, #ffffff 40%, #d8c87a 100%);
+  background-image: radial-gradient(125% 125% at 50% 10%, #f2f0ec 40%, #d8c87a 100%);
   background-size: 100% 100%;
 }
 

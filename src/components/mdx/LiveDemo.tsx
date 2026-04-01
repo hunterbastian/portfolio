@@ -47,7 +47,7 @@ export default function LiveDemo({
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-foreground/8 transition-colors duration-200 group-hover:bg-foreground/12">
                 <svg
-                  className="h-5 w-5 text-foreground/70 ml-0.5"
+                  className="h-5 w-5 text-foreground/70 ml-1"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden

@@ -71,7 +71,7 @@ export default function DesignDecision({
                 role="radio"
                 aria-checked={isActive}
                 onClick={() => setActiveIndex(i)}
-                className={`relative flex items-center gap-1.5 rounded-[3px] px-3 py-2 font-mono text-[12px] tracking-[0.04em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 ${
+                className={`relative flex items-center gap-1.5 rounded-[3px] px-3 py-2 font-mono text-[12px] tracking-[0.04em] transition-[color,background-color,border-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 ${
                   isActive
                     ? 'bg-foreground/10 text-foreground border border-foreground/20'
                     : 'bg-transparent text-muted-foreground border border-border hover:text-foreground/70 hover:border-foreground/10'

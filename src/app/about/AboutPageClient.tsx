@@ -34,7 +34,7 @@ export default function AboutPageClient() {
                 alt="Hunter Bastian"
                 width={120}
                 height={120}
-                className="mask mask-squircle object-cover"
+                className="mask mask-squircle object-cover img-inset-outline"
                 priority
               />
             </div>

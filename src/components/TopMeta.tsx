@@ -129,7 +129,7 @@ export default function TopMeta() {
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
           <line
             x1="3" y1="5.5" x2="13" y2="5.5"
-            className="transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
             style={{
               transform: mobileMenuOpen ? 'translate(0.5px, 2.5px) rotate(45deg)' : 'none',
               transformOrigin: '8px 8px',
@@ -137,7 +137,7 @@ export default function TopMeta() {
           />
           <line
             x1="3" y1="10.5" x2="13" y2="10.5"
-            className="transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
             style={{
               transform: mobileMenuOpen ? 'translate(0.5px, -2.5px) rotate(-45deg)' : 'none',
               transformOrigin: '8px 8px',

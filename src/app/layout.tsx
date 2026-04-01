@@ -37,7 +37,7 @@ const faviconVersion = '20260327'
 export const metadata: Metadata = {
   title: siteConfig.siteTitle,
   description: siteConfig.siteDescription,
-  keywords: [siteConfig.brandName, 'developer', 'designer', 'portfolio', 'full-stack', 'React', 'Next.js'],
+  keywords: ['Hunter Bastian', 'design engineer', 'portfolio', 'interaction design', 'UI design', 'web development', 'React', 'Next.js', 'Three.js', 'photographer', 'Utah', 'UVU'],
   authors: [{ name: siteConfig.brandName }],
   creator: siteConfig.brandName,
   metadataBase: new URL(siteConfig.url),
@@ -76,6 +76,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.siteTitle,
     description: siteConfig.siteDescription,
+    creator: '@thestudioalpine',
     images: ['/images/social/profile-preview.webp'],
   },
   alternates: {
@@ -92,6 +93,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="alternate" type="application/rss+xml" title="Hunter Bastian — Blog" href="/feed.xml" />
         <meta name="theme-color" content="#f2f1ef" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#232527" media="(prefers-color-scheme: dark)" />
 

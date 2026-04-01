@@ -44,7 +44,15 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       url: resolveSiteUrl(`/blog/${slug}`),
       siteName: sitePortfolioName,
       publishedTime: post.frontmatter.date,
+      modifiedTime: post.frontmatter.date,
       authors: [siteConfig.brandName],
+      tags: post.frontmatter.tags,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.frontmatter.title,
+      description: post.frontmatter.description,
+      creator: '@thestudioalpine',
     },
     alternates: {
       canonical: resolveSiteUrl(`/blog/${slug}`),

@@ -13,7 +13,7 @@ export default function SoundToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="flex items-center justify-center w-11 h-11 text-foreground/40 hover:text-foreground/70 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      className="flex items-center justify-center w-11 h-11 text-foreground/40 hover:text-foreground/70 active:scale-[0.92] transition-[color,transform] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       aria-label={enabled ? 'Mute sounds' : 'Enable sounds'}
       title={enabled ? 'Mute sounds' : 'Enable sounds'}
     >

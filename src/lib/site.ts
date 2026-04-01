@@ -1,8 +1,8 @@
 export const siteConfig = {
   url: 'https://hunterbastian.com',
   brandName: 'Hunter Bastian // Studio Alpine',
-  siteTitle: 'Hunter Bastian - Portfolio',
-  siteDescription: 'Design Engineer and Photographer',
+  siteTitle: 'Hunter Bastian — Design Engineer & Photographer',
+  siteDescription: 'Design engineer building digital products with motion, craft, and detail. Interaction design student at UVU, based in Utah.',
   siteCoordinates: '40.7608° N / 111.8910° W',
   siteLocation: 'LEHI UT',
   siteSeason: 'SPRING / 2026',

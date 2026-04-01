@@ -28,18 +28,18 @@ export default function NotFound() {
         </h1>
 
         <p
-          className="mt-3 text-xs leading-relaxed text-muted-foreground"
+          className="mt-1.5 text-xs leading-relaxed text-muted-foreground"
           style={{ fontFamily: 'inherit' }}
         >
           It might have been moved or deleted.
         </p>
 
-        <div className="mt-8 flex items-center justify-center gap-6">
+        <div className="mt-10 flex items-center justify-center gap-6">
           <Link
             href="/"
             className="group inline-flex items-center gap-1.5 font-mono text-[12px] tracking-[0.06em] text-foreground hover:text-muted-foreground transition-colors duration-200"
           >
-            <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-0.5" aria-hidden />
+            <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-1" aria-hidden />
             Home
           </Link>
           <Link

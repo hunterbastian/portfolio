@@ -73,11 +73,12 @@ export default function CaseStudyNav() {
               aria-label={`Chapter ${chapter.id}: ${chapter.title}`}
             >
               <m.span
-                className="block rounded-full bg-foreground"
+                className="block rounded-full"
                 animate={{
                   width: isActive ? 16 : 4,
                   height: 4,
                   opacity: isActive ? 0.9 : 0.15,
+                  backgroundColor: isActive ? 'var(--accent)' : 'var(--foreground)',
                 }}
                 transition={{
                   duration: motionDurationMs(300, prefersReducedMotion),

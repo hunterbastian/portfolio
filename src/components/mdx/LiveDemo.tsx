@@ -40,7 +40,7 @@ export default function LiveDemo({
           <button
             type="button"
             onClick={() => setIsLoaded(true)}
-            className="group relative w-full bg-card/80"
+            className="group relative w-full bg-card/80 active:scale-[0.995] transition-transform duration-150"
             style={{ aspectRatio }}
             aria-label={`Load ${title} demo`}
           >

@@ -66,7 +66,7 @@ export default function CVPageClient() {
           </div>
 
           {/* Contact links */}
-          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-mono tracking-wide text-muted-foreground/70">
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-mono tracking-wide text-muted-foreground/70">
             <span>Utah, USA</span>
             <span className="text-border">·</span>
             <a href="mailto:hunterbastianwork@gmail.com" className="underline-offset-4 hover:text-foreground hover:underline transition-colors">
@@ -104,7 +104,7 @@ export default function CVPageClient() {
                     <span className="text-[11px] text-muted-foreground/60">·</span>
                     <span className="text-[12px] text-muted-foreground">{item.title}</span>
                   </div>
-                  <p className="mt-1 text-[12px] leading-relaxed text-muted-foreground/70">{item.description}</p>
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground/70">{item.description}</p>
                 </div>
                 <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap">{item.year}</span>
               </m.div>

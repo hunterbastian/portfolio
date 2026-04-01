@@ -524,7 +524,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 startDelay={0.1}
               />
             </p>
-            <p className="m-0 mt-3 font-inter text-sm leading-relaxed text-muted-foreground">
+            <p className="m-0 mt-2 font-inter text-sm leading-relaxed text-muted-foreground">
               <TextReveal
                 text="Interaction Design student and Department Representative at UVU"
                 as="span"
@@ -655,7 +655,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <span className="underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:decoration-accent">{link.label}</span>
                   {link.iconType === 'handshake' && (
-                    <IconHandshake size={13} className="shrink-0 opacity-50 transition-[opacity,transform,filter] duration-300 ease-out group-hover:opacity-80 group-hover:scale-110 group-hover:blur-[0.3px]" aria-hidden />
+                    <IconHandshake size={13} className="shrink-0 opacity-50 transition-[opacity,transform,filter] duration-300 ease-out group-hover:opacity-100 group-hover:scale-110 group-hover:blur-[0.3px]" aria-hidden />
                   )}
                   {link.iconType === 'studio-alpine' && (
                     <Image
@@ -707,7 +707,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               return (
                 <m.div
                   key={`${job.company}-${index}`}
-                  className="border-b border-border py-3.5 last:border-b-0"
+                  className="border-b border-border/60 py-3.5 last:border-b-0"
                   initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                   animate={{
                     opacity: experienceStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -732,10 +732,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                           {job.company}
                         </h3>
                       </div>
-                      <p className="mt-1 font-inter text-xs font-normal text-muted-foreground">
+                      <p className="mt-0.5 font-inter text-xs font-normal text-muted-foreground">
                         {job.title}
                       </p>
-                      <p className="mt-2 font-inter text-sm font-normal leading-relaxed text-muted-foreground">
+                      <p className="mt-2.5 font-inter text-sm font-normal leading-relaxed text-muted-foreground">
                         {job.description}
                       </p>
                     </div>
@@ -777,7 +777,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             {educationItems.map((edu, index) => (
               <m.div
                 key={edu.institution}
-                className="border-b border-border pb-5 last:border-b-0 last:pb-0"
+                className="border-b border-border/60 pb-5 last:border-b-0 last:pb-0"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: educationStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -794,10 +794,10 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     {edu.year}
                   </div>
                   <div className="flex-1">
-                    <h3 className="mb-1 font-mono text-[13px] font-semibold tracking-[0.04em] text-foreground">
+                    <h3 className="mb-0.5 font-mono text-[13px] font-semibold tracking-[0.04em] text-foreground">
                       {edu.institution}
                     </h3>
-                    <p className="mb-1 font-inter text-sm font-normal text-foreground">
+                    <p className="mb-0.5 font-inter text-sm font-normal text-foreground">
                       {edu.degree}
                     </p>
                     <p className="font-inter text-sm font-normal text-muted-foreground">
@@ -805,7 +805,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     </p>
                     {edu.note && (
                       <p
-                        className="mt-1 font-mono text-xs font-normal tracking-[0.08em] text-muted-foreground"
+                        className="mt-3 font-mono text-xs font-normal tracking-[0.08em] text-muted-foreground"
                         style={{ opacity: 0.7 }}
                       >
                         {edu.note}
@@ -840,7 +840,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-muted-foreground/50 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent inline-flex items-center min-h-[44px] min-w-[44px] justify-center"
+                className="text-[13px] text-muted-foreground/60 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent inline-flex items-center min-h-[44px] min-w-[44px] justify-center"
                 aria-label={link.label}
                 title={link.label}
               >

@@ -9,7 +9,7 @@ import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: siteConfig.siteTitle,
-  description: `${siteConfig.brandName} — design engineer, creative coder, and photographer based in Utah. View case studies, experiments, and side projects.`,
+  description: 'Hunter Bastian — design engineer, creative coder, and photographer based in Utah. Case studies, experiments, and side projects in UI design, web development, and interactive media.',
   alternates: {
     canonical: resolveSiteUrl('/'),
   },

@@ -121,7 +121,7 @@ export default function RootLayout({
                   'https://threads.net/@studio.alpine',
                   'https://youtube.com/@studio.alpine',
                 ],
-                knowsAbout: ['Interaction Design', 'UI Design', 'UX Design', 'React', 'Next.js', 'TypeScript', 'Photography', 'Creative Coding'],
+                knowsAbout: ['Interaction Design', 'UI Design', 'UX Design', 'Web Development', 'Frontend Development', 'React', 'Next.js', 'TypeScript', 'Three.js', 'Framer Motion', 'Photography', 'Creative Coding'],
               },
               {
                 '@context': 'https://schema.org',

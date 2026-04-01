@@ -26,6 +26,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: resolveSiteUrl('/cv'),
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: resolveSiteUrl('/blog'),
       lastModified: new Date(),
       changeFrequency: 'weekly',

@@ -167,7 +167,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </header>
           }
           image={
-            <div className="relative mb-16 aspect-[4/3] w-full overflow-hidden rounded-[3px] img-inset-outline shadow-card">
+            <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden rounded-[3px] img-inset-outline shadow-card">
               <Image
                 src={frontmatter.image}
                 alt={frontmatter.title}
@@ -180,7 +180,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
           }
           description={
-            <p className="mb-14 px-3 text-center text-balance font-inter text-[13px] leading-relaxed text-muted-foreground sm:px-2">
+            <p className="mb-10 px-3 text-center text-balance font-inter text-[13px] leading-relaxed text-muted-foreground sm:px-2">
               {frontmatter.description}
             </p>
           }
@@ -189,7 +189,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div className="group flex items-center gap-2 font-inter text-[13px] text-muted-foreground">
                 <IconTag size={12} className="shrink-0 opacity-50 transition-transform duration-200 ease-out group-hover:rotate-[-6deg] group-hover:scale-110" aria-hidden />
                 <span className="font-medium">Category:</span>
-                <span className="bg-primary/10 text-primary px-3 py-1.5 rounded-[3px] sm:py-1">
+                <span className="bg-accent/10 text-accent px-3 py-1.5 rounded-[3px] sm:py-1">
                   {frontmatter.category}
                 </span>
               </div>
@@ -197,7 +197,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           }
           links={
             (frontmatter.github || frontmatter.demo || frontmatter.figjam) ? (
-              <div className="mb-12 flex flex-wrap gap-4">
+              <div className="mb-12 flex flex-wrap gap-3">
                 {frontmatter.github && (
                   <a
                     href={frontmatter.github}

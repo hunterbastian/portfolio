@@ -4,8 +4,8 @@
   "description": "Hunter Bastian's design and development portfolio",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#f2f0ec",
+  "theme_color": "#f2f0ec",
   "orientation": "portrait-primary",
   "icons": [
     {

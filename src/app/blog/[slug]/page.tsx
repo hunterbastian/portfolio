@@ -67,11 +67,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </div>
 
       <div className="mx-auto max-w-[560px]">
-        <header className="mb-12">
+        <header className="mb-10">
           <p className="font-mono text-[11px] tracking-[0.06em] text-muted-foreground">
             {formatDate(post.frontmatter.date)}
           </p>
-          <h1 className="mt-2 font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">
+          <h1 className="mt-1.5 font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">
             {post.frontmatter.title}
           </h1>
         </header>

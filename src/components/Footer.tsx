@@ -98,7 +98,7 @@ export default function Footer() {
             © {currentYear} Hunter Bastian
           </span>
           <span className="group/heart text-[10px] tracking-[0.1em] font-mono text-foreground/60 cursor-default">
-            Made with care <IconHeart2 size={8} className="inline -mt-px text-accent transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/heart:scale-[1.5]" style={{ fill: 'var(--accent)' }} aria-hidden />
+            Made with care <IconHeart2 size={8} className="inline -mt-px text-accent transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/heart:scale-[1.5] group-hover/heart:rotate-[-8deg]" style={{ fill: 'var(--accent)' }} aria-hidden />
           </span>
         </div>
       </div>

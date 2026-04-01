@@ -39,7 +39,7 @@ export default function AboutPageClient() {
               />
             </div>
 
-            <h1 className="mt-10 font-mono text-[13px] font-medium tracking-[0.12em] uppercase text-foreground sm:text-sm">
+            <h1 className="mt-8 font-mono text-[13px] font-medium tracking-[0.12em] uppercase text-foreground sm:text-sm">
               <TextReveal
                 text="Hunter Bastian"
                 as="span"
@@ -62,7 +62,7 @@ export default function AboutPageClient() {
               />
             </p>
 
-            <p className="mt-4 text-[13px] leading-relaxed text-balance text-muted-foreground sm:text-sm">
+            <p className="mt-2.5 text-[13px] leading-relaxed text-balance text-muted-foreground sm:text-sm">
               <TextReveal
                 text="I also love photography and I own a Fujifilm X100VI, which has been my favorite item recently."
                 as="span"
@@ -74,7 +74,7 @@ export default function AboutPageClient() {
             </p>
 
             {/* --- Actions --- */}
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-8 flex items-center gap-4">
               <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
               <m.a
                 href="/#contact"

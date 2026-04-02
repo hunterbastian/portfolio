@@ -3,54 +3,66 @@
 import Link from 'next/link'
 import { m } from 'framer-motion'
 import IconArrowBackUp from '@/components/IconArrowBackUp'
+import { MOTION_EASE_SOFT } from '@/lib/motion'
+
+const STAGGER_DELAY = 0.08
 
 export default function NotFound() {
   return (
     <div className="flex min-h-[calc(100vh-140px)] items-center justify-center px-4">
-      <m.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="text-center max-w-sm"
-      >
-        <p
+      <div className="text-center max-w-sm">
+        <m.p
           className="text-[11px] tracking-[0.14em] uppercase text-muted-foreground"
           style={{ fontFamily: 'inherit' }}
+          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.4, ease: MOTION_EASE_SOFT }}
         >
           404
-        </p>
+        </m.p>
 
-        <h1
+        <m.h1
           className="mt-3 text-sm font-medium tracking-[0.06em] text-foreground"
           style={{ fontFamily: 'inherit' }}
+          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.4, delay: STAGGER_DELAY, ease: MOTION_EASE_SOFT }}
         >
           This page doesn&apos;t exist.
-        </h1>
+        </m.h1>
 
-        <p
+        <m.p
           className="mt-1.5 text-xs leading-relaxed text-muted-foreground"
           style={{ fontFamily: 'inherit' }}
+          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.4, delay: STAGGER_DELAY * 2, ease: MOTION_EASE_SOFT }}
         >
           It might have been moved or deleted.
-        </p>
+        </m.p>
 
-        <div className="mt-10 flex items-center justify-center gap-6">
+        <m.div
+          className="mt-10 flex items-center justify-center gap-6"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: STAGGER_DELAY * 3, ease: MOTION_EASE_SOFT }}
+        >
           <Link
             href="/"
-            className="group inline-flex items-center gap-1.5 font-mono text-[12px] tracking-[0.06em] text-foreground hover:text-muted-foreground transition-colors duration-200"
+            className="group inline-flex items-center gap-1.5 font-mono text-[12px] tracking-[0.06em] text-foreground hover:text-accent transition-colors duration-200 active:scale-[0.96]"
           >
             <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-1" aria-hidden />
             Home
           </Link>
           <Link
             href="/#contact"
-            className="text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className="text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-accent transition-colors duration-200 active:scale-[0.96]"
             style={{ fontFamily: 'inherit' }}
           >
             Contact
           </Link>
-        </div>
-      </m.div>
+        </m.div>
+      </div>
     </div>
   )
 }

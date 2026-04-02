@@ -5,8 +5,8 @@ import { m, useInView, useReducedMotion } from 'framer-motion'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 
 interface MetricCardProps {
-  /** The numeric value to count up to (e.g. 40) */
-  value: number
+  /** The value to display. Numbers animate; non-numeric strings (e.g. "Figma") render as-is. */
+  value: number | string
   /** Label shown below the number (e.g. "faster task completion") */
   label: string
   /** Text before the number (e.g. "$") */
@@ -57,10 +57,16 @@ export default function MetricCard({
   suffix = '',
   duration = 1200,
 }: MetricCardProps) {
+  const numericValue = Number(value)
+  const isNumeric = !isNaN(numericValue)
+
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px 0px -60px 0px' })
+  // Use no negative margin so elements near the viewport edge still trigger.
+  // The -60px margin combined with parent element transforms was preventing cards
+  // from ever entering the detection zone, leaving the counter stuck at 0.
+  const isInView = useInView(ref, { once: true, margin: '0px' })
   const prefersReducedMotion = useReducedMotion() ?? false
-  const displayValue = useCountUp(value, isInView, prefersReducedMotion ? 0 : duration)
+  const displayValue = useCountUp(numericValue, isInView && isNumeric, prefersReducedMotion ? 0 : duration)
 
   return (
     <m.div
@@ -75,7 +81,7 @@ export default function MetricCard({
       }}
     >
       <span className="font-mono text-2xl font-medium tracking-tight text-foreground tabular-nums sm:text-3xl">
-        {prefix}{prefersReducedMotion ? value : displayValue}{suffix}
+        {prefix}{(prefersReducedMotion || !isNumeric) ? value : displayValue}{suffix}
       </span>
       <span className="mt-1.5 font-inter text-xs font-normal leading-snug text-muted-foreground sm:text-sm">
         {label}

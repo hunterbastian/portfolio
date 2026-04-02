@@ -17,6 +17,12 @@ A self-initiated mobile app concept designed and built in HTML/CSS, inspired by 
 
 <video src="/images/projects/porscheapp.mp4" autoPlay muted loop playsInline controls />
 
+<div className="flex flex-wrap gap-3 justify-center my-8">
+<MetricCard value={6} label="models in lineup" />
+<MetricCard value={3} label="core specs per card" />
+<MetricCard value="HTML/CSS" label="built with" />
+</div>
+
 </ScrollStage>
 
 <ScrollStage chapter="02" title="Design Direction">
@@ -24,7 +30,41 @@ A self-initiated mobile app concept designed and built in HTML/CSS, inspired by 
 <DesignDecision
   question="How much information does a browser need?"
   chosen={0}
-  options='[{"label":"Essentials only: model, specs, visuals","description":"The official Porsche website packs every page with configurators, financing, and lifestyle content. For someone just browsing the lineup, that is noise. I reduced each model to the three things that actually drive interest."},{"label":"Feature-rich configurator","description":"Closer to the official experience, but replicating Porsche own tool would not demonstrate a design point of view — the value is in the simplification."}]'
+  options='[{"label":"Essentials only: model, specs, visuals","description":"The official Porsche website packs every page with configurators, financing, and lifestyle content. For someone just browsing the lineup, that is noise. I reduced each model to the three things that actually drive interest: the name, two or three key specs, and a clean image. Everything else is a secondary tap away."},{"label":"Feature-rich configurator","description":"Closer to the official experience, but replicating Porsche own tool would not demonstrate a design point of view — the value is in the simplification."}]'
 />
+
+</ScrollStage>
+
+<ScrollStage chapter="03" title="Visual Language">
+
+The aesthetic had to match the brand without mimicking it. Porsche lives in dark, high-contrast territory — matte blacks, polished silvers, and tight typography. I worked within those cues while keeping the layout clearly a design exercise, not a brand asset.
+
+<DesignDecision
+  question="What visual tone fits the subject matter?"
+  chosen={0}
+  options='[{"label":"Dark, minimal, automotive","description":"The car industry gravitates toward dark UIs for a reason — dark surfaces make vehicle photography pop and reinforce a premium feel. I used a near-black background with off-white type and a single warm accent color. The restraint was intentional: the cars are the content, so the UI stays out of the way."},{"label":"Light and editorial","description":"A white-based layout would feel more editorial and modern, closer to a car magazine. But for an app that is primarily browsing photography, light backgrounds compete with the imagery rather than supporting it."}]'
+/>
+
+</ScrollStage>
+
+<ScrollStage chapter="04" title="Layout Decisions">
+
+Each model card became its own design problem. I needed to surface enough to be useful — model name, body style, top speed, engine — without turning a browse screen into a spec sheet. The constraint forced a clear hierarchy: image first, identity second, numbers third.
+
+<DesignDecision
+  question="How should model cards be organized?"
+  chosen={0}
+  options='[{"label":"Single-column scroll with full-bleed images","description":"Testing a grid layout early made the app feel like a catalog — dense and flat. A single-column scroll with full-bleed images gave each model room to breathe and made the browsing feel more intentional, like flipping through a physical brochure. You encounter one car at a time instead of scanning a table."},{"label":"Two-column grid","description":"More efficient use of screen space and easier to compare models side by side. But at mobile scale the images get too small to appreciate the cars, and the layout loses any sense of craft. Density is not always a win in a luxury context."}]'
+/>
+
+</ScrollStage>
+
+<ScrollStage chapter="05" title="Reflection">
+
+Building in HTML and CSS without a design tool forced every decision to be a code decision. There was no Figma prototype to hide behind — if the spacing felt off, I fixed it directly. That constraint made the iteration faster and the final result more considered.
+
+The main thing I would revisit is interactivity. The current build is a static browse experience. Adding transitions between the card list and a model detail page — and animating the spec numbers in on scroll — would make it feel like a real product rather than a styled component. That is the obvious next step.
+
+The other thing the project exposed: automotive UI is almost entirely about photography. The design decisions I made were mostly about getting out of the way. If the images are good, the interface almost designs itself.
 
 </ScrollStage>

@@ -9,6 +9,10 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: `Playground | ${sitePortfolioName}`,
   description: `Browse side projects and experiments by ${siteConfig.brandName}. A collection of explorations in UI/UX design, web development, and branding.`,
+  robots: {
+    index: false,
+    follow: true,
+  },
   openGraph: {
     title: `Playground - ${siteConfig.brandName}`,
     description: 'Browse side projects and experiments.',

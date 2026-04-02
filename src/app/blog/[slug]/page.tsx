@@ -68,8 +68,49 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound()
   }
 
+  const postUrl = resolveSiteUrl(`/blog/${slug}`)
+
+  // All values are static string literals from frontmatter — no user input, safe for JSON.stringify.
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: post.frontmatter.title,
+      description: post.frontmatter.description,
+      datePublished: post.frontmatter.date,
+      dateModified: post.frontmatter.date,
+      author: {
+        '@type': 'Person',
+        name: 'Hunter Bastian',
+        url: siteConfig.url,
+      },
+      publisher: {
+        '@type': 'Person',
+        name: 'Hunter Bastian',
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': postUrl,
+      },
+      keywords: post.frontmatter.tags?.join(', '),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: resolveSiteUrl('/blog') },
+        { '@type': 'ListItem', position: 3, name: post.frontmatter.title, item: postUrl },
+      ],
+    },
+  ]
+
   return (
     <article className="container mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mb-8 sm:mb-12 flex justify-start">
         <BreadcrumbPill href="/blog" parentLabel="Blog" currentLabel={post.frontmatter.title} />
       </div>

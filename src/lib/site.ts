@@ -6,7 +6,7 @@ export const siteConfig = {
   siteCoordinates: '40.7608° N / 111.8910° W',
   siteLocation: 'LEHI UT',
   siteSeason: 'SPRING / 2026',
-  email: 'hello@hunterbastian.com',
+  email: 'hunterbastianux@gmail.com',
   inquirySubject: 'Project Inquiry',
 } as const
 

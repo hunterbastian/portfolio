@@ -69,8 +69,8 @@ export default function CVPageClient() {
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-mono tracking-wide text-muted-foreground/70">
             <span>Utah, USA</span>
             <span className="text-border">·</span>
-            <a href="mailto:hunterbastianwork@gmail.com" className="underline-offset-4 hover:text-foreground hover:underline transition-colors">
-              hunterbastianwork@gmail.com
+            <a href="mailto:hunterbastianux@gmail.com" className="underline-offset-4 hover:text-foreground hover:underline transition-colors">
+              hunterbastianux@gmail.com
             </a>
             <span className="text-border">·</span>
             <a href="https://hunterbastian.com" className="underline-offset-4 hover:text-foreground hover:underline transition-colors print:no-underline">

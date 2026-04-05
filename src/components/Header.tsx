@@ -15,7 +15,7 @@ const PAGE_NAV = [
   { name: 'INFO', href: '/about' },
   { name: 'WORK', href: '/#case-studies' },
   { name: 'BLOG', href: '/blog' },
-  { name: 'EMAIL', href: 'mailto:hello@hunterbastian.com', external: true },
+  { name: 'EMAIL', href: 'mailto:hunterbastianux@gmail.com', external: true },
   { name: 'LINKEDIN', href: 'https://linkedin.com/in/hunterbastian', external: true },
 ] as const
 

@@ -840,7 +840,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-muted-foreground/60 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent inline-flex items-center min-h-[44px] min-w-[44px] justify-center"
+                className="text-[13px] text-muted-foreground/60 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent hover:-translate-y-[2px] hover:opacity-100 inline-flex items-center min-h-[44px] min-w-[44px] justify-center"
                 aria-label={link.label}
                 title={link.label}
               >

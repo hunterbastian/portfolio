@@ -39,7 +39,6 @@
     "nucleo-pixel-essential": "^1.0.0",
     "nucleo-social-media": "^1.0.2",
     "react": "^19.0.1",
-    "react-activity-calendar": "^3.1.1",
     "react-dom": "^19.0.1",
     "react-github-calendar": "^5.0.5",
     "shadcn": "^4.0.8",

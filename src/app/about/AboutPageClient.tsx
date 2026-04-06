@@ -9,7 +9,12 @@ import AnimatedDashedArrow from '@/components/AnimatedDashedArrow'
 import ResumeButton from '@/components/ResumeButton'
 import TextReveal from '@/components/TextReveal'
 import { useWebHaptics } from 'web-haptics/react'
-import GitHubContributions from '@/components/GitHubContributions'
+import dynamic from 'next/dynamic'
+
+const GitHubContributions = dynamic(() => import('@/components/GitHubContributions'), {
+  ssr: false,
+  loading: () => <div className="h-[120px]" />,
+})
 
 export default function AboutPageClient() {
   const prefersReducedMotion = useReducedMotion() ?? false

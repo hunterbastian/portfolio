@@ -1,7 +1,7 @@
 'use client'
 
 import { GitHubCalendar } from 'react-github-calendar'
-import type { Activity } from 'react-activity-calendar'
+import type { Activity } from 'react-github-calendar'
 
 function selectRecentMonths(data: Activity[], months: number): Activity[] {
   const cutoff = new Date()

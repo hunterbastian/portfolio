@@ -379,7 +379,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <m.a
             href="/about"
-            className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10"
+            className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-14"
             initial="idle"
             whileHover="hover"
           >
@@ -486,7 +486,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </m.div>
             <div className="min-w-0">
               <h1
-                className="text-foreground font-mono font-semibold text-[13px] leading-[1.2] tracking-[0.02em] sm:text-[14px]"
+                className="text-foreground font-mono font-semibold text-[14px] leading-[1.2] tracking-[0.02em] sm:text-[16px]"
               >
                 {homeHeroContent.headline}
               </h1>
@@ -497,7 +497,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           </div>
 
           <m.div
-            className="mt-4 mb-8 sm:mt-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.008] hover:-translate-y-0.5"
+            className="hero-bio mt-4 mb-8 sm:mt-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.008] hover:-translate-y-0.5"
             initial={isInitialLoad ? false : {
               opacity: STAGGER_PANEL.initialOpacity,
               y: STAGGER_PANEL.initialY,
@@ -517,7 +517,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               <TextReveal
                 text="0 → 1 design engineer bringing motion, craft and detail to production."
                 as="span"
-                className="font-medium text-foreground/80"
+                className="hero-bio-headline font-medium text-foreground/80"
                 trigger={heroTextStage >= 2}
                 duration={0.5}
                 staggerDelay={0.04}
@@ -617,9 +617,16 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         closedClassName="py-5"
         contentClassName="mt-4 px-2 pb-6 space-y-8"
       >
-        <Card className="mx-auto max-w-[560px] px-2 sm:px-3 overflow-visible" size="sm">
-          {children}
-        </Card>
+        <m.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px 0px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Card className="mx-auto max-w-[560px] px-3 sm:px-5 overflow-visible" size="sm">
+            {children}
+          </Card>
+        </m.div>
         <div className="flex justify-start mx-auto max-w-[560px] pt-5">
           <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
             <PlaygroundButton />

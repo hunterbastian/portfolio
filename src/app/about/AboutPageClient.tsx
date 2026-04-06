@@ -9,6 +9,7 @@ import AnimatedDashedArrow from '@/components/AnimatedDashedArrow'
 import ResumeButton from '@/components/ResumeButton'
 import TextReveal from '@/components/TextReveal'
 import { useWebHaptics } from 'web-haptics/react'
+import GitHubContributions from '@/components/GitHubContributions'
 
 export default function AboutPageClient() {
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -125,6 +126,8 @@ export default function AboutPageClient() {
               </Magnetic>
               <ResumeButton />
             </div>
+
+            <GitHubContributions />
           </div>
         </div>
       </div>

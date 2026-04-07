@@ -167,6 +167,10 @@ export default function RootLayout({
           backgroundAttachment: 'fixed',
         }}
       >
+        <div
+          aria-hidden
+          className="window-sunlight pointer-events-none fixed inset-0 z-[9999]"
+        />
         <MotionProvider>
           <SoundProvider>
           <SeasonalAccent />

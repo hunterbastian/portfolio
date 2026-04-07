@@ -273,6 +273,24 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 0;
 }
 
+/* ─────────────────────────────────────────────────────────
+ * WINDOW SUNLIGHT — diagonal light bands
+ * ───────────────────────────────────────── */
+
+.window-sunlight {
+  background: url('/images/hero-shadow-v5.png') no-repeat top right / cover;
+  opacity: 0.2;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 65%);
+  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 65%);
+}
+
+.dark .window-sunlight {
+  background: url('/images/hero-shadow-v5.png') no-repeat top right / cover;
+  opacity: 0.05;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 65%);
+  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 65%);
+}
+
 .hero-bio:hover .hero-bio-headline {
   color: var(--foreground);
   transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);

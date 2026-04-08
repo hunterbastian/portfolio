@@ -375,11 +375,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
       <CreatingLoader />
-      <section className={`relative pb-8 sm:pb-12 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`} suppressHydrationWarning>
+      <section className={`relative pb-6 sm:pb-8 pt-16 sm:pt-24${isInitialLoad ? '' : ' animate-fade-in'}`} suppressHydrationWarning>
         <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <m.a
             href="/about"
-            className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-14"
+            className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10"
             initial="idle"
             whileHover="hover"
           >
@@ -613,7 +613,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         skipContentStaging
         className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-16"
+        openClassName="py-10"
         closedClassName="py-5"
         contentClassName="mt-4 px-2 pb-6 space-y-8"
       >
@@ -644,7 +644,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         isOpen={sectionOpen.creating}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-16"
+        openClassName="py-10"
         closedClassName="py-5"
         contentClassName="mt-4 pb-6"
       >
@@ -691,7 +691,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="EXPERIENCE"
         isOpen={sectionOpen.experience}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-16"
+        openClassName="py-10"
         closedClassName="py-5"
         contentClassName="mt-4 pb-6"
       >
@@ -763,7 +763,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="EDUCATION"
         isOpen={sectionOpen.education}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-16"
+        openClassName="py-10"
         closedClassName="py-5"
         contentClassName="mt-4 pb-6"
       >
@@ -835,7 +835,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         title="CONTACT"
         isOpen={sectionOpen.contact}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="pt-16 pb-24 sm:pb-32"
+        openClassName="pt-10 pb-16 sm:pb-24"
         closedClassName="py-5"
         contentClassName="mt-4"
       >

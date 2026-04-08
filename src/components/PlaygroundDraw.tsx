@@ -114,7 +114,7 @@ export default function PlaygroundDraw() {
         <button
           type="button"
           onClick={() => setTool('pencil')}
-          className="group relative flex flex-col items-center"
+          className="group relative flex flex-col items-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary rounded"
           aria-label="Pencil tool"
           title="Pencil"
         >
@@ -147,7 +147,7 @@ export default function PlaygroundDraw() {
         <button
           type="button"
           onClick={() => setTool('eraser')}
-          className="group relative flex flex-col items-center"
+          className="group relative flex flex-col items-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary rounded"
           aria-label="Eraser tool"
           title="Eraser"
         >
@@ -179,7 +179,7 @@ export default function PlaygroundDraw() {
         <button
           type="button"
           onClick={clearAll}
-          className="ml-1 flex items-center justify-center w-7 h-7 rounded-lg text-muted-foreground/60 hover:text-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors duration-150"
+          className="ml-1 flex items-center justify-center w-7 h-7 rounded-lg text-muted-foreground/60 hover:text-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           aria-label="Clear drawing"
           title="Clear all"
         >

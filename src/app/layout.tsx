@@ -171,6 +171,11 @@ export default function RootLayout({
           aria-hidden
           className="window-sunlight pointer-events-none fixed inset-0 z-[9999]"
         />
+        <div
+          aria-hidden
+          className="window-sunlight-small pointer-events-none fixed z-[9999]"
+          style={{ top: '35%', right: '-5%', width: '45%', height: '40%' }}
+        />
         <MotionProvider>
           <SoundProvider>
           <SeasonalAccent />

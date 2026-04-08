@@ -51,34 +51,34 @@ html {
 
 :root {
   /* August palette — 白色 · 縹色 · 銀鼠 · 肉色 */
-  --background: #f2f0ec;
-  --foreground: #3f4f5c;
+  --background: oklch(0.956 0.006 84.6);
+  --foreground: oklch(0.419 0.030 243.0);
   --background-rgb: 242, 240, 236;
-  --card: #f5f3ef;
-  --card-foreground: #3f4f5c;
-  --primary: #3f4f5c;
-  --primary-foreground: #f2f0ec;
-  --secondary: #e9e6e1;
-  --secondary-foreground: #3f4f5c;
-  --muted: #e1ded9;
-  --muted-foreground: #3f4f5c;
-  --accent: #da8a82;
-  --accent-foreground: #3f4f5c;
-  --border: #d6d3cd;
-  --input: #d6d3cd;
-  --ring: #da8a82;
+  --card: oklch(0.965 0.006 84.6);
+  --card-foreground: oklch(0.419 0.030 243.0);
+  --primary: oklch(0.419 0.030 243.0);
+  --primary-foreground: oklch(0.956 0.006 84.6);
+  --secondary: oklch(0.926 0.007 80.7);
+  --secondary-foreground: oklch(0.419 0.030 243.0);
+  --muted: oklch(0.902 0.008 80.7);
+  --muted-foreground: oklch(0.419 0.030 243.0);
+  --accent: oklch(0.714 0.099 26.0);
+  --accent-foreground: oklch(0.419 0.030 243.0);
+  --border: oklch(0.868 0.009 84.6);
+  --input: oklch(0.868 0.009 84.6);
+  --ring: oklch(0.714 0.099 26.0);
   --surface-warm-rgb: 212, 208, 200;
   --surface-paper-rgb: 202, 198, 190;
   --grain-rgb: 164, 160, 152;
   --header-frost-opacity: 0.66;
   --header-frost-highlight: 0.1;
   --header-frost-blur: 20px;
-  --sky-top: rgba(214, 210, 204, 0.1);
-  --sky-mid: rgba(202, 198, 190, 0.06);
-  --sky-cool: rgba(222, 220, 216, 0.035);
-  --sky-spot-a: rgba(214, 210, 204, 0.045);
-  --sky-spot-b: rgba(222, 220, 216, 0.035);
-  --ink-underline: #b8a48a;
+  --sky-top: oklch(0.868 0.009 84.6 / 0.1);
+  --sky-mid: oklch(0.844 0.010 80.7 / 0.06);
+  --sky-cool: oklch(0.893 0.006 84.6 / 0.035);
+  --sky-spot-a: oklch(0.868 0.009 84.6 / 0.045);
+  --sky-spot-b: oklch(0.893 0.006 84.6 / 0.035);
+  --ink-underline: oklch(0.729 0.043 74.3);
   --box-radius: 16px;
 }
 
@@ -184,33 +184,33 @@ html {
 
 .dark {
   /* August palette dark — 縹色 deepened canvas, 白色 text, 肉色 accent */
-  --background: #1e2830;
+  --background: oklch(0.271 0.020 242.7);
   --background-rgb: 30, 40, 48;
-  --card: #252e36;
-  --card-foreground: #e0ddd8;
-  --foreground: #e0ddd8;
-  --primary: #e0ddd8;
-  --primary-foreground: #1e2830;
-  --secondary: #2c3540;
-  --secondary-foreground: #e0ddd8;
-  --muted: #333c46;
-  --muted-foreground: #8a8f94;
-  --accent: #da8a82;
-  --accent-foreground: #1e2830;
-  --border: #2f3840;
-  --input: #2f3840;
-  --ring: #da8a82;
+  --card: oklch(0.296 0.019 245.3);
+  --card-foreground: oklch(0.898 0.008 80.7);
+  --foreground: oklch(0.898 0.008 80.7);
+  --primary: oklch(0.898 0.008 80.7);
+  --primary-foreground: oklch(0.271 0.020 242.7);
+  --secondary: oklch(0.325 0.023 253.6);
+  --secondary-foreground: oklch(0.898 0.008 80.7);
+  --muted: oklch(0.352 0.021 251.2);
+  --muted-foreground: oklch(0.647 0.009 248.0);
+  --accent: oklch(0.714 0.099 26.0);
+  --accent-foreground: oklch(0.271 0.020 242.7);
+  --border: oklch(0.336 0.019 245.2);
+  --input: oklch(0.336 0.019 245.2);
+  --ring: oklch(0.714 0.099 26.0);
   --surface-warm-rgb: 34, 44, 52;
   --surface-paper-rgb: 40, 50, 58;
   --grain-rgb: 48, 58, 66;
   --header-frost-opacity: 0.88;
   --header-frost-highlight: 0.02;
-  --sky-top: rgba(26, 36, 44, 0.16);
-  --sky-mid: rgba(34, 44, 52, 0.09);
-  --sky-cool: rgba(40, 50, 58, 0.055);
-  --sky-spot-a: rgba(26, 36, 44, 0.08);
-  --ink-underline: #b8a48a;
-  --sky-spot-b: rgba(40, 50, 58, 0.055);
+  --sky-top: oklch(0.271 0.020 242.7 / 0.16);
+  --sky-mid: oklch(0.296 0.019 245.3 / 0.09);
+  --sky-cool: oklch(0.336 0.019 245.2 / 0.055);
+  --sky-spot-a: oklch(0.271 0.020 242.7 / 0.08);
+  --ink-underline: oklch(0.729 0.043 74.3);
+  --sky-spot-b: oklch(0.336 0.019 245.2 / 0.055);
 }
 
 html {
@@ -289,6 +289,18 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.05;
   -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 65%);
   mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 65%);
+}
+
+.window-sunlight-small {
+  background: url('/images/hero-shadow-v5.png') no-repeat center / contain;
+  opacity: 0.12;
+  transform: scaleX(-1);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+}
+
+.dark .window-sunlight-small {
+  opacity: 0.03;
 }
 
 .hero-bio:hover .hero-bio-headline {
@@ -433,6 +445,11 @@ h1, h2, h3, h4, h5, h6 {
     0px 0px 0px 1px rgba(0, 0, 0, 0.08),
     0px 2px 4px -1px rgba(0, 0, 0, 0.08),
     0px 6px 16px -4px rgba(0, 0, 0, 0.08);
+}
+
+.nord-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .social-button:hover {

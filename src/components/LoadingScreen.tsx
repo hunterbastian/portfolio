@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
-import { PortfolioLoader } from './Loader'
+import UnicodeLoader from './UnicodeLoader'
+import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 interface LoadingScreenProps {
   children: React.ReactNode
@@ -15,15 +16,10 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
 
   useEffect(() => {
     setIsMounted(true)
-    
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, duration)
-
+    const timer = setTimeout(() => setIsLoading(false), duration)
     return () => clearTimeout(timer)
   }, [duration])
 
-  // Prevent hydration mismatch by not rendering until mounted
   if (!isMounted) {
     return <>{children}</>
   }
@@ -37,17 +33,16 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-            className="fixed inset-0 z-50 bg-background"
+            transition={{ duration: 0.5, ease: MOTION_EASE_SOFT }}
           >
-            <PortfolioLoader />
+            <UnicodeLoader />
           </m.div>
         ) : (
           <m.div
             key="content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 0.16 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: MOTION_EASE_SOFT }}
           >
             {children}
           </m.div>

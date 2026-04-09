@@ -15,7 +15,7 @@ import {
   experienceItems,
   homeHeroContent,
 } from '@/content/homepage'
-import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_SOFT, MOTION_SPRING_SNAPPY, MOTION_SPRING_BOUNCY, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import { useIsInitialLoad } from '@/lib/initial-load'
 import CollapsibleSection from './CollapsibleSection'
 import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
@@ -244,7 +244,7 @@ const playgroundIconVariants = {
     scale: 1.2,
     transition: {
       rotate: { duration: 0.5, ease: 'easeInOut' },
-      scale: { type: 'spring', stiffness: 500, damping: 12 },
+      scale: MOTION_SPRING_BOUNCY,
     },
   },
 }
@@ -262,9 +262,9 @@ function PlaygroundButton() {
       initial="idle"
       whileHover={prefersReducedMotion ? undefined : 'hover'}
       animate="idle"
-      whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
+      whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
       onClick={() => haptic.trigger('light')}
-      transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+      transition={MOTION_SPRING_SNAPPY}
       variants={{ idle: { y: 0 }, hover: { y: -3 } }}
     >
       <m.span
@@ -513,7 +513,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <p className="m-0 font-inter text-sm leading-relaxed text-muted-foreground">
+            <p className="peer m-0 font-inter text-sm leading-relaxed text-muted-foreground">
               <TextReveal
                 text="0 → 1 design engineer bringing motion, craft and detail to production."
                 as="span"
@@ -524,7 +524,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 startDelay={0.1}
               />
             </p>
-            <p className="m-0 mt-2 font-inter text-sm leading-relaxed text-muted-foreground">
+            <p className="m-0 mt-2 font-inter text-sm leading-relaxed text-muted-foreground transition-[filter,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] peer-hover:blur-[2px] peer-hover:opacity-60">
               <TextReveal
                 text="Interaction Design student and Department Representative at UVU"
                 as="span"
@@ -568,8 +568,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     initial="idle"
                     whileHover={prefersReducedMotion ? undefined : 'hover'}
                     animate="idle"
-                    whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                    whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
+                    transition={MOTION_SPRING_SNAPPY}
                     variants={{ idle: { y: 0 }, hover: { y: -3 } }}
                   >
                     <m.span
@@ -590,7 +590,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                           scale: 1.2,
                           transition: {
                             rotate: { duration: 0.5, ease: 'easeInOut' },
-                            scale: { type: 'spring', stiffness: 500, damping: 12 },
+                            scale: MOTION_SPRING_BOUNCY,
                           },
                         },
                       }}
@@ -662,7 +662,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 >
                   <span className="underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:decoration-accent">{link.label}</span>
                   {link.iconType === 'handshake' && (
-                    <IconHandshake size={13} className="shrink-0 opacity-50 transition-[opacity,transform,filter] duration-300 ease-out group-hover:opacity-100 group-hover:scale-110 group-hover:blur-[0.3px]" aria-hidden />
+                    <IconHandshake size={13} className="shrink-0 opacity-50 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:scale-110 group-hover:blur-[0.3px]" aria-hidden />
                   )}
                   {link.iconType === 'studio-alpine' && (
                     <Image
@@ -670,7 +670,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                       alt=""
                       width={50}
                       height={50}
-                      className="h-[35px] w-[35px] shrink-0 dark:invert -ml-1 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3"
+                      className="h-[35px] w-[35px] shrink-0 dark:invert -ml-1 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:rotate-3"
                       aria-hidden
                     />
                   )}

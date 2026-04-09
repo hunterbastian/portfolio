@@ -123,7 +123,7 @@ export default function PlaygroundDraw() {
             height="56"
             viewBox="0 0 28 56"
             fill="none"
-            className={`transition-transform duration-300 ease-out ${
+            className={`transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               tool === 'pencil' ? '-translate-y-2' : 'translate-y-0 group-hover:-translate-y-1'
             }`}
           >
@@ -156,7 +156,7 @@ export default function PlaygroundDraw() {
             height="24"
             viewBox="0 0 32 24"
             fill="none"
-            className={`transition-transform duration-300 ease-out ${
+            className={`transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               tool === 'eraser' ? '-translate-y-2' : 'translate-y-0 group-hover:-translate-y-1'
             }`}
           >

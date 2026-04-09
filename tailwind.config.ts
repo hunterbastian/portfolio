@@ -71,9 +71,16 @@ const config: Config = {
           DEFAULT: 'var(--muted)',
           foreground: 'var(--muted-foreground)',
         },
+        subtle: {
+          foreground: 'var(--subtle-foreground)',
+        },
         accent: {
           DEFAULT: 'var(--accent)',
           foreground: 'var(--accent-foreground)',
+          subtle: 'var(--accent-subtle)',
+          muted: 'var(--accent-muted)',
+          blue: 'var(--accent-blue)',
+          green: 'var(--accent-green)',
         },
         border: 'var(--border)',
         input: 'var(--input)',

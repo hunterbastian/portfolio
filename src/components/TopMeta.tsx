@@ -122,7 +122,7 @@ export default function TopMeta() {
       <button
         type="button"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="fixed right-4 top-4 z-50 flex items-center justify-center w-10 h-10 rounded-full backdrop-blur-xl text-foreground/70 active:scale-[0.94] transition-transform duration-200 sm:hidden top-meta-pill"
+        className="fixed right-4 top-4 z-50 flex items-center justify-center w-10 h-10 rounded-full backdrop-blur-xl text-foreground/70 active:scale-[0.96] transition-transform duration-200 sm:hidden top-meta-pill"
         aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={mobileMenuOpen}
       >

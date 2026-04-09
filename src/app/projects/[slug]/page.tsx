@@ -187,7 +187,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           meta={
             <div className="mb-12 flex flex-wrap gap-4">
               <div className="group flex items-center gap-2 font-inter text-[13px] text-muted-foreground">
-                <IconTag size={12} className="shrink-0 opacity-50 transition-transform duration-200 ease-out group-hover:rotate-[-6deg] group-hover:scale-110" aria-hidden />
+                <IconTag size={12} className="shrink-0 opacity-50 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-[-6deg] group-hover:scale-110" aria-hidden />
                 <span className="font-medium">Category:</span>
                 <span className="bg-accent/10 text-accent px-3 py-1.5 rounded-[3px] sm:py-1">
                   {frontmatter.category}

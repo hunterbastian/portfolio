@@ -56,9 +56,9 @@ function PillTabs({ activeIndex, onSelect }: { activeIndex: number; onSelect: (i
           suppressHydrationWarning
           className="absolute top-1 bottom-1 rounded-full bg-foreground/10 shadow-sm"
           style={{
-            left: indicator.left,
             width: indicator.width,
-            transition: 'left 500ms cubic-bezier(.34,1.56,.64,1), width 400ms cubic-bezier(.34,1.56,.64,1)',
+            transform: `translateX(${indicator.left}px)`,
+            transition: 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1), width 400ms cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         />
         {TABS.map((tab, i) => (
@@ -95,9 +95,9 @@ function UnderlineTabs({ activeIndex, onSelect }: { activeIndex: number; onSelec
           suppressHydrationWarning
           className="absolute bottom-0 h-[2px] rounded-full bg-foreground"
           style={{
-            left: indicator.left,
             width: indicator.width,
-            transition: 'left 500ms cubic-bezier(.34,1.56,.64,1), width 400ms cubic-bezier(.34,1.56,.64,1)',
+            transform: `translateX(${indicator.left}px)`,
+            transition: 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1), width 400ms cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         />
         {TABS.map((tab, i) => (

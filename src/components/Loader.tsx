@@ -2,6 +2,7 @@
 
 import { createElement, useEffect } from 'react'
 import ArcSigilLoader from './ArcSigilLoader'
+import UnicodeLoader from './UnicodeLoader'
 
 // LDRS loader types
 type LoaderType = 
@@ -135,41 +136,13 @@ export default function Loader({
 
 // Specialized loaders for common use cases
 export function PortfolioLoader({ className = '' }: { className?: string }) {
-  return (
-    <div className={`min-h-screen flex items-center justify-center bg-background ${className}`}>
-      <ArcSigilLoader />
-    </div>
-  )
+  return <UnicodeLoader className={className} />
 }
 
 export function ProjectLoader({ className = '' }: { className?: string }) {
-  return (
-    <div className={`flex justify-center items-center py-16 ${className}`}>
-      <Loader 
-        type="ring" 
-        size="40" 
-        speed="2" 
-        text="Loading projects..." 
-      />
-    </div>
-  )
+  return <UnicodeLoader className={className} />
 }
 
-export function InlineLoader({ 
-  type = 'dots-pulse', 
-  size = '20', 
-  className = '' 
-}: { 
-  type?: LoaderType
-  size?: string
-  className?: string 
-}) {
-  return (
-    <Loader 
-      type={type} 
-      size={size} 
-      speed="1.8" 
-      className={`inline-flex ${className}`}
-    />
-  )
+export function InlineLoader({ className = '' }: { className?: string }) {
+  return <UnicodeLoader className={className} />
 }

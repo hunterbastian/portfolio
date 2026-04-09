@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { m, useReducedMotion } from 'framer-motion'
+import { MOTION_SPRING_SNAPPY } from '@/lib/motion'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
 import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
 import AnimatedDashedArrow from '@/components/AnimatedDashedArrow'
@@ -89,8 +90,8 @@ export default function AboutPageClient() {
                 initial="idle"
                 whileHover={prefersReducedMotion ? undefined : 'hover'}
                 animate="idle"
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
+                transition={MOTION_SPRING_SNAPPY}
                 variants={{ idle: { y: 0 }, hover: { y: -3 } }}
               >
                 <m.span
@@ -113,8 +114,8 @@ export default function AboutPageClient() {
                 initial="idle"
                 whileHover={prefersReducedMotion ? undefined : 'hover'}
                 animate="idle"
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.93, y: 0 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
+                transition={MOTION_SPRING_SNAPPY}
                 variants={{ idle: { y: 0 }, hover: { y: -3 } }}
               >
                 <m.span

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
+import { MOTION_SPRING_SMOOTH, MOTION_SPRING_SNAPPY } from '@/lib/motion'
 import { IconChevronUp } from 'nucleo-pixel-essential'
 import { useWebHaptics } from 'web-haptics/react'
 
@@ -42,14 +43,11 @@ export default function ScrollToTop() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 10, scale: 0.9 }}
           transition={{
-            type: 'spring',
-            stiffness: 200,
-            damping: 26,
-            mass: 1,
+            ...MOTION_SPRING_SMOOTH,
             opacity: { duration: 0.4 },
           }}
-          whileHover={{ y: -2, boxShadow: '0 0 0 1px rgba(255,255,255,0.35) inset, 0 1px 2px rgba(255,255,255,0.4) inset, 0 -1px 3px rgba(0,0,0,0.06) inset, 0 6px 18px rgba(212,146,142,0.4), 0 12px 32px rgba(212,146,142,0.25)', transition: { type: 'spring', stiffness: 400, damping: 20 } }}
-          whileTap={{ scale: 0.94, y: 1 }}
+          whileHover={{ y: -2, boxShadow: '0 0 0 1px rgba(255,255,255,0.35) inset, 0 1px 2px rgba(255,255,255,0.4) inset, 0 -1px 3px rgba(0,0,0,0.06) inset, 0 6px 18px rgba(212,146,142,0.4), 0 12px 32px rgba(212,146,142,0.25)', transition: MOTION_SPRING_SNAPPY }}
+          whileTap={{ scale: 0.96, y: 1 }}
         >
           <IconChevronUp size={15} aria-hidden style={{ marginTop: '-1px' }} />
         </m.button>

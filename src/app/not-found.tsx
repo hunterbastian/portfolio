@@ -51,7 +51,7 @@ export default function NotFound() {
             href="/"
             className="group inline-flex items-center gap-1.5 font-mono text-[12px] tracking-[0.06em] text-foreground hover:text-accent transition-colors duration-200 active:scale-[0.96]"
           >
-            <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-out group-hover:-translate-x-1" aria-hidden />
+            <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1" aria-hidden />
             Home
           </Link>
           <Link

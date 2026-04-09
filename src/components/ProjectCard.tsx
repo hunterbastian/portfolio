@@ -86,7 +86,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                   src={imgSrc}
                   alt={`Preview of ${frontmatter.title}`}
                   fill
-                  className={`object-cover ${index === 0 ? 'transition-transform' : 'transition-[transform,opacity]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  className={`object-cover ${index === 0 ? 'transition-[transform,filter]' : 'transition-[transform,opacity,filter]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
                   sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
                   quality={80}
                   priority={index === 0}
@@ -100,7 +100,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
               {frontmatter.video && (
                 <video
                   src={frontmatter.video}
-                  className="absolute inset-0 hidden h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 sm:block"
+                  className="absolute inset-0 hidden h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 sm:block"
                   autoPlay
                   loop
                   muted
@@ -109,7 +109,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                 />
               )}
 
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 transition-opacity duration-500 ease-out group-hover:opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-80" />
             </div>
 
             {!hideLabel && (

@@ -50,7 +50,10 @@ html {
  * ───────────────────────────────────────── */
 
 :root {
-  /* August palette — 白色 · 縹色 · 銀鼠 · 肉色 */
+  /* August palette — 白色 · 縹色 · 銀鼠 · 肉色
+   * Warm backgrounds (hue 84.6) / cool text (hue 243.0) / dusty rose accent (hue 26.0)
+   * Scale: background → card → secondary → muted → border (warm surfaces)
+   *        foreground → muted-fg → subtle-fg (cool text, darkest to lightest) */
   --background: oklch(0.956 0.006 84.6);
   --foreground: oklch(0.419 0.030 243.0);
   --background-rgb: 242, 240, 236;
@@ -61,9 +64,14 @@ html {
   --secondary: oklch(0.926 0.007 80.7);
   --secondary-foreground: oklch(0.419 0.030 243.0);
   --muted: oklch(0.902 0.008 80.7);
-  --muted-foreground: oklch(0.419 0.030 243.0);
+  --muted-foreground: oklch(0.55 0.020 243.0);
+  --subtle-foreground: oklch(0.65 0.012 243.0);
   --accent: oklch(0.714 0.099 26.0);
   --accent-foreground: oklch(0.419 0.030 243.0);
+  --accent-subtle: oklch(0.95 0.025 26.0);
+  --accent-muted: oklch(0.82 0.055 26.0);
+  --accent-blue: oklch(0.62 0.08 240);
+  --accent-green: oklch(0.55 0.09 145);
   --border: oklch(0.868 0.009 84.6);
   --input: oklch(0.868 0.009 84.6);
   --ring: oklch(0.714 0.099 26.0);
@@ -168,6 +176,11 @@ html {
     0px 8px 20px -4px rgba(0, 0, 0, 0.1);
 }
 
+/* Risograph / printed feel on card images — filter only, transform/opacity handled by Tailwind */
+.project-card:hover img {
+  filter: saturate(0.82) contrast(1.06) sepia(0.06);
+}
+
 .dark .project-card {
   border-color: rgba(255, 255, 255, 0.06);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
@@ -195,8 +208,13 @@ html {
   --secondary-foreground: oklch(0.898 0.008 80.7);
   --muted: oklch(0.352 0.021 251.2);
   --muted-foreground: oklch(0.647 0.009 248.0);
+  --subtle-foreground: oklch(0.50 0.010 248.0);
   --accent: oklch(0.714 0.099 26.0);
   --accent-foreground: oklch(0.271 0.020 242.7);
+  --accent-subtle: oklch(0.32 0.035 26.0);
+  --accent-muted: oklch(0.60 0.080 26.0);
+  --accent-blue: oklch(0.58 0.07 240);
+  --accent-green: oklch(0.50 0.08 145);
   --border: oklch(0.336 0.019 245.2);
   --input: oklch(0.336 0.019 245.2);
   --ring: oklch(0.714 0.099 26.0);
@@ -222,8 +240,9 @@ body {
   background-image:
     radial-gradient(110% 72% at 50% -8%, rgba(var(--surface-warm-rgb), 0.07), transparent 62%),
     linear-gradient(180deg, rgba(var(--surface-paper-rgb), 0.025) 0%, rgba(var(--surface-paper-rgb), 0) 50%),
-    radial-gradient(circle at 1px 1px, rgba(var(--grain-rgb), 0.018) 0.6px, transparent 0.85px);
-  background-size: 100% 100%, 100% 100%, 5px 5px;
+    repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(var(--grain-rgb), 0.014) 2px, rgba(var(--grain-rgb), 0.014) 3px),
+    radial-gradient(circle at 1px 1px, rgba(var(--grain-rgb), 0.026) 0.6px, transparent 0.85px);
+  background-size: 100% 100%, 100% 100%, 100% 3px, 5px 5px;
   position: relative;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -303,9 +322,13 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.03;
 }
 
+.hero-bio .hero-bio-headline {
+  transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .hero-bio:hover .hero-bio-headline {
   color: var(--foreground);
-  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.005em;
 }
 
 .hero-sky {
@@ -364,7 +387,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .status-pill-action {
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .status-pill-action:hover {
@@ -476,7 +499,7 @@ h1, h2, h3, h4, h5, h6 {
   transform: rotate(-2.4deg);
   transform-origin: left center;
   text-wrap: balance;
-  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1), text-shadow 560ms ease, color 420ms ease;
+  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1), text-shadow 560ms cubic-bezier(0.16, 1, 0.3, 1), color 420ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
 
@@ -495,7 +518,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 6px;
   color: var(--ink-underline);
-  transition: color 300ms ease;
+  transition: color 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 
@@ -806,7 +829,7 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--muted-foreground);
-  transition: color 0.15s ease, font-size 0.15s ease, opacity 0.15s ease, flex-grow 0.15s ease;
+  transition: color 0.15s cubic-bezier(0.16, 1, 0.3, 1), font-size 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1), flex-grow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .header-nav-link.is-emphasis {
@@ -960,7 +983,7 @@ h1, h2, h3, h4, h5, h6 {
 
 img {
   image-rendering: -webkit-optimize-contrast;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .shadow-card {
@@ -1002,11 +1025,11 @@ img:not([src]):not([srcset]) {
 }
 
 a {
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition: color 0.15s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 button {
-  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .skeleton {
@@ -1031,7 +1054,7 @@ button {
 [data-reveal] {
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-reveal].reveal {

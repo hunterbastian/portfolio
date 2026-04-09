@@ -29,13 +29,13 @@ function CoordinateDisplay() {
       className="select-none cursor-default group/coord"
       onMouseEnter={() => { coord.scramble(); location.scramble(); season.scramble() }}
     >
-      <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight transition-[filter] duration-300 ease-out group-hover/coord:blur-[3px]">
+      <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight transition-[filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/coord:blur-[3px]">
         {coord.display}
       </p>
-      <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-out group-hover/coord:blur-[3px]">
+      <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/coord:blur-[3px]">
         {location.display}
       </p>
-      <p className="text-[9px] tracking-[0.1em] text-accent/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-out group-hover/coord:blur-[3px]">
+      <p className="text-[9px] tracking-[0.1em] text-accent/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/coord:blur-[3px]">
         {season.display}
       </p>
     </div>
@@ -110,12 +110,15 @@ export default function Header() {
                     <Link
                       href={item.href}
                       onClick={() => play('click')}
-                      className={`text-[10px] tracking-[0.1em] font-mono transition-colors duration-150 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                      className={`relative text-[10px] tracking-[0.1em] font-mono transition-colors duration-150 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
                         pathname === item.href
                           ? 'text-foreground underline decoration-accent'
                           : 'text-foreground/60 hover:text-accent hover:underline'
                       }`}
                     >
+                      {pathname === item.href && (
+                        <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-[4px] h-[4px] rounded-full bg-accent" aria-hidden />
+                      )}
                       {item.name}
                     </Link>
                   )}

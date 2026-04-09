@@ -2,7 +2,7 @@
 
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
-import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_SOFT, MOTION_SPRING_HEAVY, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 function SectionTitle({ title }: { title: string }) {
   const match = title.match(/^(\d+)\s+(.+)$/)
@@ -63,7 +63,7 @@ const SECTION_ROW = {
 }
 
 /* Height animation uses a spring for organic open/close feel */
-const HEIGHT_SPRING = { type: 'spring' as const, stiffness: 200, damping: 28, mass: 0.9 }
+const HEIGHT_SPRING = MOTION_SPRING_HEAVY
 
 /* ─────────────────────────────────────────────────────────
  * LABEL ENTRANCE — gentle fade-in

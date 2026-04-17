@@ -16,6 +16,7 @@ import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
 import ProjectTransitionOverlay from '@/components/ProjectTransitionOverlay'
 import { Agentation } from 'agentation'
+// import { Measurer } from 'mesurer' // NOTE: breaks Next 16 dev (no 'use client'). See docs/superpowers/plans/2026-04-16-measurer-dev-break.md
 import SeasonalAccent from '@/components/SeasonalAccent'
 import { SoundProvider } from '@/lib/sounds/context'
 import TopMeta from '@/components/TopMeta'
@@ -204,6 +205,7 @@ export default function RootLayout({
             {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
             {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
             {process.env.NODE_ENV === 'development' && <Agentation />}
+            {/* {process.env.NODE_ENV === 'development' && <Measurer />} — breaks dev under Next 16 / Turbopack */}
 
             {/* Google Analytics - deferred to avoid blocking */}
             {telemetryConfig.enableGa && telemetryConfig.gaId && (

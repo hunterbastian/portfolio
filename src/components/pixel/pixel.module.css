@@ -1,0 +1,15 @@
+.crisp {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  shape-rendering: crispEdges;
+}
+
+.pixelHover {
+  cursor: url('/cursors/pixel-pointer.svg') 2 2, pointer;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .pixelHover {
+    cursor: pointer;
+  }
+}

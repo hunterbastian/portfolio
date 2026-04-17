@@ -23,7 +23,7 @@ We also adopt a complementary principle from Refactoring UI's *Labels Are A Last
 - No change to typography (Inter + mono scale stays).
 - No change to the oklch color palette.
 - No change to motion system or spring constants.
-- No change to information architecture (/, /about, /work or /projects, /cv, /blog, /archive, /playground).
+- No change to information architecture (/, /about, /projects, /cv, /blog, /archive, /playground).
 - No pixel styling on photographic project imagery — photos stay clean.
 - No pixel-font body copy — pixel stays at micro scale only.
 - Playground stays as-is per prior preference.
@@ -59,7 +59,9 @@ We also adopt a complementary principle from Refactoring UI's *Labels Are A Last
 **Glyph library (new):** `src/components/pixel/glyphs.tsx` — 6 custom 8×8 SVGs rendered with `shape-rendering: crispEdges`:
 - `work` (small monitor), `writing` (page), `games` (controller), `contact` (letter), `archive` (box), `now` (dot)
 
-**Label audit rule:** before shipping, every `LABEL: value` pair gets one of three treatments:
+**Label audit deliverable:** the implementation plan produces an inventory of every current label in the form `{page, component, label text, current treatment, proposed treatment (delete / shrink / embed), rationale}` before any edits. Review the inventory, then apply.
+
+**Label audit rule:** every `LABEL: value` pair gets one of three treatments:
 1. **Delete label** — if format already signals (`2026` reads as year).
 2. **Shrink label** — reduce to 10px, opacity ~55%, letter-spacing tightened; pair with pixel glyph where section/category meaning matters.
 3. **Embed in prose** — rewrite "Role: Designer" → "Led design for…" style.
@@ -89,7 +91,7 @@ Examples to kill/shrink:
 
 **Scope:** Custom CSS cursor for hover state on links, buttons, and card CTAs.
 
-**Implementation:** Global class `.pixel-hover` applied to interactive surfaces; CSS cursor uses a 16×16 pixel-art PNG/SVG data URL.
+**Implementation:** Global class `.pixel-hover` applied to interactive surfaces; CSS cursor uses a 16×16 pixel-art SVG served from `public/cursors/`.
 
 **Assets:** `public/cursors/pixel-pointer.svg` (and `-default.svg` if needed).
 
@@ -111,7 +113,7 @@ Examples to kill/shrink:
 
 **Spec:**
 - Source: 32×32 SVG, crisp edges, monochrome (render in current foreground token).
-- Favicon scales: 16, 32, 48, 180 (Apple), 512 (manifest).
+- Favicon scales: 16, 32, 192, 512 (matching existing on-disk set) + 180 `apple-touch-icon.png`. Regenerate all from the 32×32 source.
 - Keep existing `manifest.json` theme/background colors.
 
 **Success:** browser tab shows a recognizable pixel HB; footer feels signed rather than branded.

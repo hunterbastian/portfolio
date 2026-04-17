@@ -25,27 +25,53 @@ export default async function OgImage() {
           fontFamily: 'GeistMono',
         }}
       >
-        {/* Top — accent dot */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div
-            style={{
-              width: '8px',
-              height: '8px',
-              borderRadius: '50%',
-              background: OG_COLORS.accent,
-            }}
-          />
-          <span
-            style={{
-              fontSize: '13px',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase' as const,
-              color: OG_COLORS.accent,
-              fontWeight: 500,
-            }}
+        {/* Top — accent dot + pixel HB signature */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div
+              style={{
+                width: '10px',
+                height: '10px',
+                background: OG_COLORS.accent,
+              }}
+            />
+            <span
+              style={{
+                fontSize: '13px',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase' as const,
+                color: OG_COLORS.accent,
+                fontWeight: 500,
+              }}
+            >
+              Portfolio
+            </span>
+          </div>
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 32 32"
+            shapeRendering="crispEdges"
+            style={{ opacity: 0.5 }}
           >
-            Portfolio
-          </span>
+            <g fill={OG_COLORS.foreground}>
+              <rect x="4" y="8" width="2" height="16" />
+              <rect x="12" y="8" width="2" height="16" />
+              <rect x="6" y="15" width="6" height="2" />
+              <rect x="18" y="8" width="2" height="16" />
+              <rect x="20" y="8" width="6" height="2" />
+              <rect x="26" y="10" width="2" height="4" />
+              <rect x="20" y="14" width="6" height="2" />
+              <rect x="26" y="16" width="2" height="6" />
+              <rect x="20" y="22" width="6" height="2" />
+            </g>
+          </svg>
         </div>
 
         {/* Center — name + role */}

@@ -2,6 +2,18 @@
 
 ## Version History
 
+### **v2.6.0** - Pixel Micro-Details *(April 16, 2026)*
+- New pixel accent system: 8×8 glyph library (work, writing, games, contact, archive, now, Spring/Summer/Autumn/Winter) + `SectionMarker` + `PixelDivider` components under `src/components/pixel/`.
+- Section markers on Home (PROJECTS, ENDEAVORS, EXPERIENCE, EDUCATION, CONTACT) and CV (Experience, Education), plus the GitHub Activity heading on About.
+- Pixel dividers replace hairlines before Endeavors and before Contact on Home.
+- GitHub contributions heatmap now renders with crisp-edged pixel tiles (no rounded corners).
+- Project detail pages show a category-mapped pixel glyph above the title; blog post headers use a writing-glyph + date marker.
+- 404 page gets a small pixel "archive" glyph.
+- Header CoordinateDisplay pairs the season text with a matching seasonal pixel glyph.
+- New pixel HB favicon (16/32/192/512 + 180 apple-touch) and pixel HB signature on the OG image.
+- Shrunk overused `LABEL: value` mono strings per a label-restraint pass (e.g. project list category meta).
+- Dev guard: commented out `<Measurer />` import in `layout.tsx` (breaks Next 16 Turbopack dev).
+
 ### **v2.5.2** - Remove Ireland project *(March 19, 2026)*
 - Removed Ireland project (low-res image placeholder)
 

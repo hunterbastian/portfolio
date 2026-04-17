@@ -5,11 +5,22 @@ import { AnimatePresence, m } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useScrambleText } from '@/lib/scramble'
-import { getSeason } from '@/lib/season'
+import { getSeason, type Season } from '@/lib/season'
 import { siteConfig } from '@/lib/site'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 import { useSound } from '@/lib/sounds/context'
 import SoundToggle from '@/components/SoundToggle'
+import { Spring, Summer, Autumn, Winter } from '@/components/pixel/glyphs'
+import type { ComponentType, SVGProps } from 'react'
+
+type GlyphComponent = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>
+
+const SEASON_GLYPH: Record<Season, GlyphComponent> = {
+  Spring,
+  Summer,
+  Autumn,
+  Winter,
+}
 
 const PAGE_NAV = [
   { name: 'INFO', href: '/about' },
@@ -20,9 +31,11 @@ const PAGE_NAV = [
 ] as const
 
 function CoordinateDisplay() {
+  const currentSeason = getSeason()
   const coord = useScrambleText(siteConfig.siteCoordinates, true, 400)
   const location = useScrambleText('UTAH, USA', true, 600)
-  const season = useScrambleText(getSeason(), true, 800)
+  const season = useScrambleText(currentSeason, true, 800)
+  const SeasonGlyph = SEASON_GLYPH[currentSeason]
 
   return (
     <div
@@ -35,7 +48,8 @@ function CoordinateDisplay() {
       <p className="text-[9px] tracking-[0.1em] text-muted-foreground/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/coord:blur-[3px]">
         {location.display}
       </p>
-      <p className="text-[9px] tracking-[0.1em] text-accent/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/coord:blur-[3px]">
+      <p className="inline-flex items-center gap-1.5 text-[9px] tracking-[0.1em] text-accent/50 whitespace-nowrap font-mono leading-tight transition-[filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/coord:blur-[3px]">
+        <SeasonGlyph size={8} className="shrink-0" aria-hidden />
         {season.display}
       </p>
     </div>

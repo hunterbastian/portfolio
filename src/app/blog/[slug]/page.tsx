@@ -6,6 +6,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import mdxComponents from '@/components/mdx/MDXComponents'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
+import SectionMarker from '@/components/pixel/SectionMarker'
 
 export const revalidate = 300
 
@@ -117,10 +118,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <div className="mx-auto max-w-[560px]">
         <header className="mb-10">
-          <p className="font-mono text-[11px] tracking-[0.06em] text-muted-foreground">
-            {formatDate(post.frontmatter.date)}
-          </p>
-          <h1 className="mt-1.5 font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">
+          <SectionMarker kind="writing" label={formatDate(post.frontmatter.date)} className="normal-case tracking-[0.04em]" />
+          <h1 className="mt-2 font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">
             {post.frontmatter.title}
           </h1>
         </header>

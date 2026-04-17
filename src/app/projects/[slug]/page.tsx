@@ -10,6 +10,7 @@ import { IconTag } from 'nucleo-pixel-essential'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
 import ProjectDetailContent from '@/components/ProjectDetailContent'
 import CaseStudyNav from '@/components/CaseStudyNav'
+import SectionMarker, { categoryToKind } from '@/components/pixel/SectionMarker'
 
 function resolveImageUrl(image: string): string {
   return image.startsWith('/') ? resolveSiteUrl(image) : image
@@ -162,6 +163,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           slug={slug}
           header={
             <header className="mb-8 flex flex-col items-center text-center">
+              <SectionMarker kind={categoryToKind(frontmatter.category)} label={frontmatter.category} className="mb-3" />
               <h1 className="font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">{displayTitle}</h1>
               {formattedDate && <p className="mt-1 font-mono text-sm text-muted-foreground">{formattedDate}</p>}
             </header>

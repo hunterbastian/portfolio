@@ -1,7 +1,17 @@
 import type { ComponentType, SVGProps } from 'react'
 import * as Glyphs from './glyphs'
 
-type Kind = 'work' | 'writing' | 'games' | 'contact' | 'archive' | 'now'
+export type Kind =
+  | 'work'
+  | 'writing'
+  | 'games'
+  | 'contact'
+  | 'archive'
+  | 'now'
+  | 'spring'
+  | 'summer'
+  | 'autumn'
+  | 'winter'
 type GlyphComponent = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>
 
 type Props = {
@@ -17,6 +27,19 @@ const GLYPHS: Record<Kind, GlyphComponent> = {
   contact: Glyphs.Contact,
   archive: Glyphs.Archive,
   now: Glyphs.Now,
+  spring: Glyphs.Spring,
+  summer: Glyphs.Summer,
+  autumn: Glyphs.Autumn,
+  winter: Glyphs.Winter,
+}
+
+export function categoryToKind(category?: string): Kind {
+  if (!category) return 'work'
+  const c = category.toLowerCase()
+  if (c.includes('game') || c.includes('creative cod')) return 'games'
+  if (c.includes('brand') || c.includes('writing') || c.includes('graphic')) return 'writing'
+  if (c.includes('photo')) return 'archive'
+  return 'work'
 }
 
 export default function SectionMarker({ kind, label, className }: Props) {

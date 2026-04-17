@@ -102,7 +102,7 @@ export default function ProjectTextList({ projects }: ProjectTextListProps) {
                   {title}
                 </span>
               </div>
-              <span className="font-mono text-[10px] tracking-[0.1em] text-muted-foreground uppercase shrink-0">
+              <span className="font-mono text-[9px] tracking-[0.1em] text-muted-foreground/50 uppercase shrink-0">
                 {project.frontmatter.category}
               </span>
             </m.button>

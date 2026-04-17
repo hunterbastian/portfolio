@@ -3,15 +3,31 @@
 import { m, useReducedMotion } from 'framer-motion'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
 import TextReveal from '@/components/TextReveal'
+import * as Glyphs from '@/components/pixel/glyphs'
 import { experienceItems, educationItems } from '@/content/homepage'
 import { siteConfig } from '@/lib/site'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 const STAGGER_DELAY = 0.06
 
-function SectionHeading({ children, delay = 0 }: { children: string; delay?: number }) {
+const CV_KIND_GLYPHS = {
+  work: Glyphs.Work,
+  writing: Glyphs.Writing,
+} as const
+
+function SectionHeading({
+  children,
+  delay = 0,
+  kind,
+}: {
+  children: string
+  delay?: number
+  kind?: keyof typeof CV_KIND_GLYPHS
+}) {
+  const Glyph = kind ? CV_KIND_GLYPHS[kind] : null
   return (
-    <h2 className="font-mono text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground mb-5">
+    <h2 className="font-mono text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground mb-5 inline-flex items-center gap-2">
+      {Glyph ? <Glyph size={10} className="text-muted-foreground/70" /> : null}
       <TextReveal text={children} as="span" trigger duration={0.4} staggerDelay={0.06} startDelay={delay} />
     </h2>
   )
@@ -87,7 +103,7 @@ export default function CVPageClient() {
 
         {/* Experience */}
         <section className="py-8 sm:py-10 print:py-5">
-          <SectionHeading delay={0.5}>Experience</SectionHeading>
+          <SectionHeading delay={0.5} kind="work">Experience</SectionHeading>
           <div className="space-y-5">
             {experienceItems.map((item, i) => (
               <m.div
@@ -116,7 +132,7 @@ export default function CVPageClient() {
 
         {/* Education */}
         <section className="py-8 sm:py-10 print:py-5">
-          <SectionHeading delay={0.8}>Education</SectionHeading>
+          <SectionHeading delay={0.8} kind="writing">Education</SectionHeading>
           <div className="space-y-5">
             {educationItems.map((item, i) => (
               <m.div

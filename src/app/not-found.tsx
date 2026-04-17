@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { m } from 'framer-motion'
 import IconArrowBackUp from '@/components/IconArrowBackUp'
+import { Archive as ArchiveGlyph } from '@/components/pixel/glyphs'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 const STAGGER_DELAY = 0.08
@@ -11,12 +12,21 @@ export default function NotFound() {
   return (
     <div className="flex min-h-[calc(100vh-140px)] items-center justify-center px-4">
       <div className="text-center max-w-sm">
+        <m.div
+          className="flex justify-center mb-4"
+          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.4, ease: MOTION_EASE_SOFT }}
+        >
+          <ArchiveGlyph size={24} className="text-muted-foreground/50" />
+        </m.div>
+
         <m.p
           className="text-[11px] tracking-[0.14em] uppercase text-muted-foreground"
           style={{ fontFamily: 'inherit' }}
           initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.4, ease: MOTION_EASE_SOFT }}
+          transition={{ duration: 0.4, delay: 0.04, ease: MOTION_EASE_SOFT }}
         >
           404
         </m.p>

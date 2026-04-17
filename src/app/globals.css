@@ -1083,13 +1083,3 @@ button {
     --radius: 1rem;
   }
 }
-
-/* Pixel cursor — signature accent on hover-capable pointers only */
-@media (hover: hover) and (pointer: fine) {
-  .pixel-hover,
-  a.pixel-hover,
-  button.pixel-hover,
-  .playground-joy {
-    cursor: url('/cursors/pixel-pointer.svg') 2 2, pointer;
-  }
-}

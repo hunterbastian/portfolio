@@ -102,7 +102,7 @@ export default function Header() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => play('click')}
-                      className="pixel-hover text-[10px] tracking-[0.1em] font-mono transition-colors duration-150 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      className="text-[10px] tracking-[0.1em] font-mono transition-colors duration-150 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       {item.name}
                     </a>
@@ -110,7 +110,7 @@ export default function Header() {
                     <Link
                       href={item.href}
                       onClick={() => play('click')}
-                      className={`pixel-hover relative text-[10px] tracking-[0.1em] font-mono transition-colors duration-150 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                      className={`relative text-[10px] tracking-[0.1em] font-mono transition-colors duration-150 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
                         pathname === item.href
                           ? 'text-foreground underline decoration-accent'
                           : 'text-foreground/60 hover:text-accent hover:underline'

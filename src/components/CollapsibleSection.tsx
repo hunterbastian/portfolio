@@ -3,6 +3,18 @@
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_SOFT, MOTION_SPRING_HEAVY, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import * as Glyphs from './pixel/glyphs'
+
+type SectionKind = 'work' | 'writing' | 'games' | 'contact' | 'archive' | 'now'
+
+const KIND_GLYPHS = {
+  work: Glyphs.Work,
+  writing: Glyphs.Writing,
+  games: Glyphs.Games,
+  contact: Glyphs.Contact,
+  archive: Glyphs.Archive,
+  now: Glyphs.Now,
+} as const
 
 function SectionTitle({ title }: { title: string }) {
   const match = title.match(/^(\d+)\s+(.+)$/)
@@ -27,6 +39,8 @@ interface CollapsibleSectionProps {
   initialLoadDelayMs?: number
   /** Skip inner content staging animation — content renders immediately when open. Use for sections containing LCP elements. */
   skipContentStaging?: boolean
+  /** Optional pixel glyph rendered before the title text — signature marker. */
+  kind?: SectionKind
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -86,6 +100,7 @@ export default function CollapsibleSection({
   contentClassName,
   initialLoadDelayMs = 0,
   skipContentStaging = false,
+  kind,
 }: CollapsibleSectionProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
   const contentRef = useRef<HTMLDivElement>(null)
@@ -181,19 +196,34 @@ export default function CollapsibleSection({
             ease: MOTION_EASE_SOFT,
           }}
         >
-          {onToggle ? (
-            <button
-              type="button"
-              onClick={onToggle}
-              className="inline-flex items-center min-h-[44px] cursor-pointer bg-transparent border-none p-0 m-0 font-mono text-[11px] tracking-[0.06em] uppercase hover:opacity-80 transition-opacity duration-200 sm:text-[12px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              aria-expanded={isOpen}
-              aria-controls={contentId}
-            >
-              <SectionTitle title={title} />
-            </button>
-          ) : (
-            <SectionTitle title={title} />
-          )}
+          {(() => {
+            const Glyph = kind ? KIND_GLYPHS[kind] : null
+            const content = (
+              <>
+                {Glyph ? (
+                  <Glyph
+                    size={10}
+                    className="text-muted-foreground/70"
+                    style={{ marginRight: 8 }}
+                  />
+                ) : null}
+                <SectionTitle title={title} />
+              </>
+            )
+            return onToggle ? (
+              <button
+                type="button"
+                onClick={onToggle}
+                className="inline-flex items-center min-h-[44px] cursor-pointer bg-transparent border-none p-0 m-0 font-mono text-[11px] tracking-[0.06em] uppercase hover:opacity-80 transition-opacity duration-200 sm:text-[12px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                aria-expanded={isOpen}
+                aria-controls={contentId}
+              >
+                {content}
+              </button>
+            ) : (
+              <span className="inline-flex items-center">{content}</span>
+            )
+          })()}
         </m.h2>
       </div>
 

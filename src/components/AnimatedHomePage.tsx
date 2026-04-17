@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card'
 
 const MotionCard = m.create(Card)
 import { Separator } from '@/components/ui/separator'
+import PixelDivider from '@/components/pixel/PixelDivider'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -609,6 +610,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <CollapsibleSection
         id="case-studies"
         title="PROJECTS"
+        kind="work"
         isOpen={sectionOpen.caseStudies}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         skipContentStaging
@@ -634,13 +636,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </CollapsibleSection>
 
-      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0">
-        <Separator className="bg-border/40" />
+      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0 flex justify-center py-4">
+        <PixelDivider className="text-muted-foreground/35" />
       </div>
 
       <CollapsibleSection
         id="creating"
         title="ENDEAVORS"
+        kind="games"
         isOpen={sectionOpen.creating}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
@@ -689,6 +692,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <CollapsibleSection
         id="experience"
         title="EXPERIENCE"
+        kind="work"
         isOpen={sectionOpen.experience}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-10"
@@ -761,6 +765,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <CollapsibleSection
         id="education"
         title="EDUCATION"
+        kind="writing"
         isOpen={sectionOpen.education}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="py-10"
@@ -826,13 +831,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </CollapsibleSection>
 
-      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0">
-        <Separator className="bg-border/40" />
+      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0 flex justify-center py-4">
+        <PixelDivider className="text-muted-foreground/35" />
       </div>
 
       <CollapsibleSection
         id="contact"
         title="CONTACT"
+        kind="contact"
         isOpen={sectionOpen.contact}
         className="px-4 sm:px-6 lg:px-0"
         openClassName="pt-10 pb-16 sm:pb-24"

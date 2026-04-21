@@ -94,7 +94,7 @@ export default function Footer() {
     >
       <div className="container mx-auto max-w-6xl">
         <div className="flex items-center justify-between py-1">
-          <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.1em] font-mono text-foreground/60">
+          <span className="inline-flex items-center gap-2 text-[9px] tracking-[0.1em] font-mono text-foreground/60">
             <span
               className="inline-block size-[10px] rounded-full shrink-0"
               style={{
@@ -104,7 +104,7 @@ export default function Footer() {
             />
             © {currentYear} Hunter Bastian
           </span>
-          <span className="group/heart text-[10px] tracking-[0.1em] font-mono text-foreground/60 cursor-default">
+          <span className="group/heart text-[9px] tracking-[0.1em] font-mono text-foreground/60 cursor-default">
             Made with care <IconHeart2 size={8} className="inline -mt-px text-accent transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/heart:scale-[1.5] group-hover/heart:rotate-[-8deg]" style={{ fill: 'var(--accent)' }} aria-hidden />
           </span>
         </div>

@@ -23,7 +23,7 @@ function NavLink({ href, name, isActive }: { href: string; name: string; isActiv
   return (
     <Link
       href={href}
-      className={`flex min-h-[28px] items-center text-[9px] tracking-[0.16em] font-mono whitespace-nowrap underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`flex min-h-[28px] items-center text-[8px] tracking-[0.16em] font-mono whitespace-nowrap underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isActive
           ? 'font-medium text-foreground/74 underline decoration-foreground/18'
           : 'text-muted-foreground/42 underline decoration-transparent hover:text-foreground/60 hover:decoration-foreground/18'
@@ -77,9 +77,9 @@ function CoordinateDisplay() {
       style={{ opacity: 'calc(1 - var(--scroll-progress, 0))' }}
       onMouseEnter={() => { coord.scramble(); loc.scramble() }}
     >
-      <p className="text-[10px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight">
+      <p className="text-[9px] tracking-[0.1em] text-foreground/60 whitespace-nowrap font-mono tabular-nums leading-tight">
         {coord.display}
-        <span className="ml-3 text-[9px] text-muted-foreground/50">{loc.display}</span>
+        <span className="ml-3 text-[8px] text-muted-foreground/50">{loc.display}</span>
       </p>
     </div>
   )
@@ -168,7 +168,7 @@ export default function TopMeta() {
                     <Link
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`block py-2.5 min-h-[44px] flex items-center text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 ${
+                      className={`block py-2.5 min-h-[44px] flex items-center text-[10px] tracking-[0.12em] uppercase transition-colors duration-200 ${
                         isActive(item.href)
                           ? 'text-foreground'
                           : 'text-foreground/50 active:text-foreground'

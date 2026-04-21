@@ -259,7 +259,7 @@ function PlaygroundButton() {
   return (
     <m.a
       href="/archive"
-      className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 min-h-[44px] text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+      className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 min-h-[44px] text-[10px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
       aria-label="Open Playground"
       title="Joy"
       initial="idle"
@@ -489,11 +489,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               </div>
               <div className="min-w-0">
                 <h1
-                  className="text-balance text-foreground font-mono font-semibold text-[15px] leading-[1.15] tracking-[0.02em] sm:text-[17px]"
+                  className="text-balance text-foreground font-mono font-semibold text-[14px] leading-[1.15] tracking-[0.02em] sm:text-[16px]"
                 >
                   {homeHeroContent.headline}
                 </h1>
-                <p className="mt-1 font-mono text-[10px] font-normal tracking-[0.14em] text-foreground/68 sm:text-[11px]">
+                <p className="mt-1 font-mono text-[9px] font-normal tracking-[0.14em] text-foreground/68 sm:text-[10px]">
                   {homeHeroContent.subtitle}
                 </p>
               </div>
@@ -516,7 +516,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <p className="m-0 max-w-[38rem] text-pretty font-inter text-[16px] leading-[1.9] text-muted-foreground sm:text-[18px]">
+            <p className="m-0 max-w-[38rem] text-pretty font-inter text-[15px] leading-[1.9] text-muted-foreground sm:text-[17px]">
               <TextReveal
                 text={heroLede}
                 as="span"
@@ -527,7 +527,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 startDelay={0.1}
               />
             </p>
-            <p className="m-0 mt-4 max-w-[40rem] text-pretty font-inter text-[15px] leading-[1.85] text-muted-foreground/92 sm:text-[16px]">
+            <p className="m-0 mt-4 max-w-[40rem] text-pretty font-inter text-[14px] leading-[1.85] text-muted-foreground/92 sm:text-[15px]">
               <TextReveal
                 text={heroBody}
                 as="span"
@@ -554,7 +554,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
                   <m.a
                     href="#contact"
-                    className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-[8px] px-5 py-2.5 min-h-[44px] text-[11px] font-medium tracking-[0.1em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                    className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-[8px] px-5 py-2.5 min-h-[44px] text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
                     onClick={(e) => {
                       e.preventDefault()
                       haptic.trigger('light')
@@ -725,7 +725,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     ease: STAGGER_PANEL.ease,
                   }}
                 >
-                  <div className="font-mono text-[11px] font-normal tracking-[0.14em] text-muted-foreground/72 tabular-nums sm:pt-0.5">
+                  <div className="font-mono text-[10px] font-normal tracking-[0.14em] text-muted-foreground/72 tabular-nums sm:pt-0.5">
                     <span className="block whitespace-nowrap">{displayYear.primary}</span>
                     {displayYear.secondary && (
                       <span className="mt-0.5 block whitespace-nowrap leading-tight text-muted-foreground/58">
@@ -734,13 +734,13 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     )}
                   </div>
                   <div className="min-w-0">
-                    <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground/62">
+                    <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground/62">
                       {job.title}
                     </p>
-                    <h3 className="text-[15px] font-medium tracking-[0.01em] text-foreground sm:text-[16px]">
+                    <h3 className="text-[14px] font-medium tracking-[0.01em] text-foreground sm:text-[15px]">
                       {job.company}
                     </h3>
-                    <p className="mt-3 max-w-[36rem] font-inter text-[14px] leading-[1.8] text-muted-foreground/92">
+                    <p className="mt-3 max-w-[36rem] font-inter text-[13px] leading-[1.8] text-muted-foreground/92">
                       {job.description}
                     </p>
                   </div>
@@ -794,21 +794,21 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   ease: STAGGER_PANEL.ease,
                 }}
               >
-                <div className="font-mono text-[11px] font-normal tracking-[0.14em] text-muted-foreground/72 tabular-nums sm:pt-0.5">
+                <div className="font-mono text-[10px] font-normal tracking-[0.14em] text-muted-foreground/72 tabular-nums sm:pt-0.5">
                   {edu.year}
                 </div>
                 <div className="min-w-0">
-                  <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground/62">
+                  <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground/62">
                     {edu.level}
                   </p>
-                  <h3 className="text-[15px] font-medium tracking-[0.01em] text-foreground sm:text-[16px]">
+                  <h3 className="text-[14px] font-medium tracking-[0.01em] text-foreground sm:text-[15px]">
                     {edu.institution}
                   </h3>
-                  <p className="mt-2 font-inter text-[14px] leading-[1.75] text-muted-foreground/92">
+                  <p className="mt-2 font-inter text-[13px] leading-[1.75] text-muted-foreground/92">
                     {edu.degree}
                   </p>
                   {edu.note && (
-                    <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground/58">
+                    <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground/58">
                       {edu.note}
                     </p>
                   )}
@@ -834,14 +834,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         contentClassName="mt-6"
       >
         <div className="mx-auto max-w-[760px]">
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-4 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-6 sm:gap-y-3 sm:text-[15px]">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-4 font-mono text-[13px] font-normal tracking-[0.02em] sm:gap-x-6 sm:gap-y-3 sm:text-[14px]">
             {contactSocialLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[13px] text-muted-foreground/60 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent hover:-translate-y-[2px] hover:opacity-100 inline-flex items-center min-h-[44px] min-w-[44px] justify-center"
+                className="text-[12px] text-muted-foreground/60 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent hover:-translate-y-[2px] hover:opacity-100 inline-flex items-center min-h-[44px] min-w-[44px] justify-center"
                 aria-label={link.label}
                 title={link.label}
               >

@@ -6,7 +6,6 @@ import { m, useInView, useReducedMotion } from 'framer-motion'
 import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProjectFrontmatter } from '@/types/project'
-import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 
 interface Project {
@@ -53,12 +52,6 @@ const CARD_STAGGER_ITEM = {
   finalY: 0,
 }
 
-interface CardLayoutAngle {
-  rotate: number
-  x: number
-}
-
-const CARD_DEFAULT_LAYOUT: CardLayoutAngle = { rotate: -1.6, x: -2 }
 type StackPriority = 'default' | 'center' | 'left' | 'right'
 
 interface CaseStudyDialState {
@@ -121,17 +114,6 @@ function getStackPriorityZIndex(index: number, total: number, stackPriority: Sta
 
   return index + 1
 }
-
-const CARD_LAYOUT_BY_SLUG: Record<string, CardLayoutAngle> = {
-  'brand-identity-system': { rotate: -6.2, x: -14 },
-  'aol-redesign': { rotate: -5.4, x: -11 },
-  'porsche-app': { rotate: 6.2, x: 14 },
-  'wander-utah': { rotate: 0, x: 0 },
-  'grand-teton-wallet': { rotate: 0, x: 0 },
-  nutricost: { rotate: -2.8, x: -5 },
-}
-
-const MOBILE_TILT_FACTOR = 0
 
 export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
   const [stage, setStage] = useState(0)
@@ -219,7 +201,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
 
   const isExpandedLayout = true
   const layoutTransitionDuration = isExpandedLayout ? caseStudyDial.motion.expandMs : caseStudyDial.motion.collapseMs
-  const layoutSpreadFactor = isExpandedLayout ? 1 : caseStudyDial.pile.compactSpreadFactor
   const gridColumnGap = isExpandedLayout ? caseStudyDial.expanded.gapX : caseStudyDial.pile.compactGapX
   const gridRowGap = isExpandedLayout ? caseStudyDial.expanded.gapY : caseStudyDial.pile.compactGapY
 
@@ -255,13 +236,10 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
       }}
     >
       {orderedProjects.map((project, index) => {
-        const baseAngle = CARD_LAYOUT_BY_SLUG[project.slug] ?? CARD_DEFAULT_LAYOUT
-
-        const compactX = baseAngle.x * caseStudyDial.pile.compactSpreadFactor
-        const compactRotate = baseAngle.rotate * caseStudyDial.pile.compactSpreadFactor
-        const mobileDampen = supportsHover ? 1 : MOBILE_TILT_FACTOR
-        const targetX = baseAngle.x * layoutSpreadFactor * mobileDampen
-        const targetRotate = baseAngle.rotate * layoutSpreadFactor * mobileDampen
+        const compactX = 0
+        const compactRotate = 0
+        const targetX = 0
+        const targetRotate = 0
         const targetScale = isExpandedLayout ? caseStudyDial.expanded.scale : caseStudyDial.pile.compactScale
         const isHovered = hoveredIndex === index
         const hasHoverTarget = hoveredIndex !== null
@@ -291,15 +269,13 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                 }
               }}
             >
-              <Magnetic strength={0.18} range={110} onlyOnHover disableOnTouch>
-                {project.frontmatter?.image ? (
-                  <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
-                ) : (
-                  <div className="aspect-[16/9] w-full rounded-[8px]">
-                    <Skeleton className="h-full w-full rounded-[8px]" />
-                  </div>
-                )}
-              </Magnetic>
+              {project.frontmatter?.image ? (
+                <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
+              ) : (
+                <div className="aspect-[16/9] w-full rounded-[8px]">
+                  <Skeleton className="h-full w-full rounded-[8px]" />
+                </div>
+              )}
             </div>
           )
         }
@@ -364,15 +340,13 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               },
             }}
           >
-            <Magnetic strength={0.18} range={110} onlyOnHover disableOnTouch>
-              {project.frontmatter?.image ? (
-                <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
-              ) : (
-                <div className="aspect-[16/9] w-full rounded-[8px]">
-                  <Skeleton className="h-full w-full rounded-[8px]" />
-                </div>
-              )}
-            </Magnetic>
+            {project.frontmatter?.image ? (
+              <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
+            ) : (
+              <div className="aspect-[16/9] w-full rounded-[8px]">
+                <Skeleton className="h-full w-full rounded-[8px]" />
+              </div>
+            )}
           </m.div>
         )
       })}

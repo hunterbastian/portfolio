@@ -46,18 +46,18 @@ export default function BlogCardList({ posts }: { posts: BlogPost[] }) {
             className="blog-card group relative flex h-full min-h-[156px] flex-col overflow-hidden rounded-[8px] bg-card px-4 pb-4 pt-3.5 hover:-translate-y-1 active:scale-[0.998]"
           >
             <div className="relative z-10 flex items-start gap-3">
-              <p className="inline-flex rounded-[4px] border border-border/60 bg-background/60 px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-muted-foreground/70">
+              <p className="inline-flex rounded-[4px] border border-border/60 bg-background/60 px-2.5 py-1 font-mono text-[9px] tracking-[0.08em] text-muted-foreground/70">
                 {formatDate(post.frontmatter.date)}
               </p>
             </div>
             <h2
-              className="relative z-10 mt-3 font-mono text-[15px] font-medium leading-snug tracking-[0.01em] text-foreground transition-colors duration-300 group-hover:text-accent"
+              className="relative z-10 mt-3 font-mono text-[14px] font-medium leading-snug tracking-[0.01em] text-foreground transition-colors duration-300 group-hover:text-accent"
               style={{ textWrap: 'balance' }}
             >
               {post.frontmatter.title}
             </h2>
             <p
-              className="relative z-10 mt-2 font-inter text-[13px] leading-relaxed text-muted-foreground"
+              className="relative z-10 mt-2 font-inter text-[12px] leading-relaxed text-muted-foreground"
               style={{ textWrap: 'pretty' }}
             >
               {post.frontmatter.description}
@@ -67,7 +67,7 @@ export default function BlogCardList({ posts }: { posts: BlogPost[] }) {
                 {post.frontmatter.tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex rounded-[4px] border border-border/60 bg-secondary/50 px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-muted-foreground"
+                    className="inline-flex rounded-[4px] border border-border/60 bg-secondary/50 px-2.5 py-1 font-mono text-[9px] tracking-[0.08em] text-muted-foreground"
                   >
                     {tag}
                   </span>

@@ -43,6 +43,7 @@ html, body {
 
 html {
   scroll-behavior: auto;
+  font-size: 15px;
 }
 
 /* ─────────────────────────────────────────────────────────

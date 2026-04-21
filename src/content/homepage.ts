@@ -27,9 +27,9 @@ export interface HomeLinkItem {
 
 export const homeHeroContent = {
   headline: 'Hunter Bastian',
-  subtitle: 'Design Engineer',
+  subtitle: 'Design Engineer, Utah',
   intro:
-    '0 → 1 design engineer bringing motion, craft and detail to production.\n\nInteraction Design student and Department Representative at UVU with experience designing and building digital products. I create experiences with craft and detail.',
+    '0 → 1 design engineer shaping interfaces, motion, and systems with restraint.\n\nInteraction Design student at UVU designing and building digital products with an emphasis on craft, clarity, and atmosphere.',
   handwrittenNote: 'A little page on the internet all about me',
 } as const
 

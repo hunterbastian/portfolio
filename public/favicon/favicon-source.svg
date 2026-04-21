@@ -1,13 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" shape-rendering="crispEdges">
-  <g fill="#3f4f5c">
-    <rect x="4" y="8"  width="2" height="16"/>
-    <rect x="12" y="8" width="2" height="16"/>
-    <rect x="6" y="15" width="6" height="2"/>
-    <rect x="18" y="8"  width="2" height="16"/>
-    <rect x="20" y="8"  width="6" height="2"/>
-    <rect x="26" y="10" width="2" height="4"/>
-    <rect x="20" y="14" width="6" height="2"/>
-    <rect x="26" y="16" width="2" height="6"/>
-    <rect x="20" y="22" width="6" height="2"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="sun" cx="50%" cy="50%" r="62%" fx="50%" fy="50%">
+      <stop offset="0%"   stop-color="#ff5a2d"/>
+      <stop offset="28%"  stop-color="#ff7a3a"/>
+      <stop offset="58%"  stop-color="#f2a06a"/>
+      <stop offset="100%" stop-color="#e0a893"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#sun)"/>
 </svg>

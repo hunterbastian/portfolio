@@ -74,7 +74,7 @@ export default function CVPageClient() {
             </div>
             <button
               onClick={() => window.print()}
-              className="print:hidden shrink-0 ml-4 rounded-full border border-border bg-card px-4 py-2 text-[11px] font-mono tracking-wide text-muted-foreground transition-colors hover:text-foreground hover:border-foreground/20 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 min-h-[44px] inline-flex items-center"
+              className="print:hidden ml-4 inline-flex min-h-[44px] shrink-0 items-center rounded-[8px] border border-border bg-card px-4 py-2 text-[11px] font-mono tracking-wide text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
               aria-label="Print or save as PDF"
             >
               Print

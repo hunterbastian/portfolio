@@ -19,7 +19,7 @@ export default function ResumeButton() {
       <m.button
         type="button"
         onClick={() => { haptic.trigger('light'); setIsOpen(true) }}
-        className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+        className="playground-joy group relative inline-flex items-center gap-2 overflow-hidden rounded-[8px] px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.06em] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
         style={{ fontFamily: 'inherit' }}
         initial="idle"
         whileHover={prefersReducedMotion ? undefined : 'hover'}

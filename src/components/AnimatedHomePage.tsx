@@ -121,6 +121,8 @@ const STAGGER_ITEM = {
   finalY: 0,            // resting item position
 }
 
+const [heroLede, heroBody] = homeHeroContent.intro.split('\n\n')
+
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
   const [stage, setStage] = useState(0)
 
@@ -376,11 +378,11 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="relative">
       <CreatingLoader />
-      <section className={`relative pb-6 sm:pb-8 pt-16 sm:pt-24${isInitialLoad ? '' : ' animate-fade-in'}`} suppressHydrationWarning>
-        <div className="mx-auto max-w-[560px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
+      <section className={`relative pb-8 sm:pb-10 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`} suppressHydrationWarning>
+        <div className="mx-auto max-w-[760px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
           <m.a
             href="/about"
-            className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-10"
+            className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-8"
             initial="idle"
             whileHover="hover"
           >
@@ -458,8 +460,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </span>
           </m.a>
 
-          <div className="mb-6 flex items-start gap-3 sm:items-center sm:gap-4">
+          <div className="grid items-start gap-8 md:grid-cols-[176px_minmax(0,1fr)] md:gap-12">
             <m.div
+              className="flex items-start gap-3 sm:items-center sm:gap-4 md:flex-col md:items-start md:gap-5"
               initial={isInitialLoad ? false : {
                 opacity: STAGGER_ITEM.initialOpacity,
                 y: STAGGER_ITEM.initialY,
@@ -473,32 +476,31 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 ease: STAGGER_PANEL.ease,
               }}
             >
-              <div className="shrink-0 mask mask-squircle p-[2px] shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.06]" style={{ background: 'var(--border)' }}>
+              <div className="shrink-0 mask mask-squircle p-[2px] shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.03]" style={{ background: 'var(--border)' }}>
                 <Image
                   src="/images/profilepicture.webp"
                   alt="Hunter Bastian"
-                  width={72}
-                  height={72}
-                  className="h-16 w-16 mask mask-squircle object-cover sm:h-[72px] sm:w-[72px]"
-                  sizes="72px"
+                  width={108}
+                  height={108}
+                  className="h-20 w-20 mask mask-squircle object-cover sm:h-[92px] sm:w-[92px] md:h-[108px] md:w-[108px]"
+                  sizes="(min-width: 768px) 108px, 92px"
                   priority
                 />
               </div>
+              <div className="min-w-0">
+                <h1
+                  className="text-balance text-foreground font-mono font-semibold text-[15px] leading-[1.15] tracking-[0.02em] sm:text-[17px]"
+                >
+                  {homeHeroContent.headline}
+                </h1>
+                <p className="mt-1 font-mono text-[10px] font-normal tracking-[0.14em] text-foreground/68 sm:text-[11px]">
+                  {homeHeroContent.subtitle}
+                </p>
+              </div>
             </m.div>
-            <div className="min-w-0">
-              <h1
-                className="text-foreground font-mono font-semibold text-[14px] leading-[1.2] tracking-[0.02em] sm:text-[16px]"
-              >
-                {homeHeroContent.headline}
-              </h1>
-              <p className="mt-1 font-mono text-[10px] font-normal tracking-[0.06em] text-foreground opacity-75 sm:text-[11px]">
-                {homeHeroContent.subtitle}
-              </p>
-            </div>
-          </div>
 
-          <m.div
-            className="hero-bio mt-4 mb-8 sm:mt-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.008] hover:-translate-y-0.5"
+            <m.div
+            className="hero-bio mt-0 mb-12"
             initial={isInitialLoad ? false : {
               opacity: STAGGER_PANEL.initialOpacity,
               y: STAGGER_PANEL.initialY,
@@ -514,37 +516,29 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               ease: STAGGER_PANEL.ease,
             }}
           >
-            <p className="peer m-0 font-inter text-sm leading-relaxed text-muted-foreground">
+            <p className="m-0 max-w-[38rem] text-pretty font-inter text-[16px] leading-[1.9] text-muted-foreground sm:text-[18px]">
               <TextReveal
-                text="0 → 1 design engineer bringing motion, craft and detail to production."
+                text={heroLede}
                 as="span"
-                className="hero-bio-headline font-medium text-foreground/80"
+                className="hero-bio-headline font-medium text-foreground/86"
                 trigger={heroTextStage >= 2}
                 duration={0.5}
                 staggerDelay={0.04}
                 startDelay={0.1}
               />
             </p>
-            <p className="m-0 mt-2 font-inter text-sm leading-relaxed text-muted-foreground transition-[filter,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] peer-hover:blur-[2px] peer-hover:opacity-60">
+            <p className="m-0 mt-4 max-w-[40rem] text-pretty font-inter text-[15px] leading-[1.85] text-muted-foreground/92 sm:text-[16px]">
               <TextReveal
-                text="Interaction Design student and Department Representative at UVU"
+                text={heroBody}
                 as="span"
                 trigger={heroTextStage >= 2}
                 duration={0.5}
                 staggerDelay={0.04}
-                startDelay={0.5}
-              />{' '}
-              <TextReveal
-                text="with experience designing and building digital products. I create experiences with craft and detail."
-                as="span"
-                trigger={heroTextStage >= 2}
-                duration={0.5}
-                staggerDelay={0.04}
-                startDelay={0.9}
+                startDelay={0.45}
               />
             </p>
             <m.div
-              className="mt-8"
+              className="mt-7"
               initial={isInitialLoad ? false : { opacity: 0, y: 8 }}
               animate={{
                 opacity: heroTextStage >= 2 ? 1 : 0,
@@ -560,7 +554,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
                   <m.a
                     href="#contact"
-                    className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 min-h-[44px] text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                    className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-[8px] px-5 py-2.5 min-h-[44px] text-[11px] font-medium tracking-[0.1em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
                     onClick={(e) => {
                       e.preventDefault()
                       haptic.trigger('light')
@@ -602,7 +596,8 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                 </Magnetic>
               </div>
             </m.div>
-          </m.div>
+            </m.div>
+          </div>
 
         </div>
       </section>
@@ -615,9 +610,9 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
         skipContentStaging
         className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-10"
-        closedClassName="py-5"
-        contentClassName="mt-4 px-2 pb-6 space-y-8"
+        openClassName="py-12"
+        closedClassName="py-6"
+        contentClassName="mt-6 px-0 pb-8 space-y-8"
       >
         <m.div
           initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
@@ -625,18 +620,18 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           viewport={{ once: true, margin: '-80px 0px' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <Card className="mx-auto max-w-[560px] px-3 sm:px-5 overflow-visible" size="sm">
+          <Card className="mx-auto max-w-[980px] px-0 sm:px-0 overflow-visible border-none bg-transparent shadow-none" size="sm">
             {children}
           </Card>
         </m.div>
-        <div className="flex justify-start mx-auto max-w-[560px] pt-5">
+        <div className="flex justify-start mx-auto max-w-[980px] pt-6">
           <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
             <PlaygroundButton />
           </Magnetic>
         </div>
       </CollapsibleSection>
 
-      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0 flex justify-center py-4">
+      <div className="mx-auto max-w-[760px] px-4 sm:px-6 lg:px-0 flex justify-center py-6">
         <PixelDivider className="text-muted-foreground/35" />
       </div>
 
@@ -647,12 +642,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         isOpen={sectionOpen.creating}
         initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
         className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-10"
-        closedClassName="py-5"
-        contentClassName="mt-4 pb-6"
+        openClassName="py-12"
+        closedClassName="py-6"
+        contentClassName="mt-6 pb-8"
       >
-        <div className="mx-auto max-w-[560px] text-left">
-          <ul className="space-y-2">
+        <div className="mx-auto max-w-[760px] text-left">
+          <ul className="space-y-3">
             {creatingLinks.map((link) => (
               <li key={link.label}>
                 <a
@@ -685,7 +680,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
       </CollapsibleSection>
       </div>
 
-      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0">
+      <div className="mx-auto max-w-[760px] px-4 sm:px-6 lg:px-0">
         <Separator className="bg-border/40" />
       </div>
 
@@ -695,14 +690,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         kind="work"
         isOpen={sectionOpen.experience}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-10"
-        closedClassName="py-5"
-        contentClassName="mt-4 pb-6"
+        openClassName="py-12"
+        closedClassName="py-6"
+        contentClassName="mt-6 pb-8"
       >
-        <div className="mx-auto max-w-[560px]">
+        <div className="mx-auto max-w-[760px]">
           <MotionCard
             ref={experiencePanelRef}
-            className="p-4 sm:p-5 space-y-2 section-card-glow overflow-visible"
+            className="border-none bg-transparent p-0 shadow-none space-y-0 overflow-visible"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: experienceStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -718,7 +713,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
               return (
                 <m.div
                   key={`${job.company}-${index}`}
-                  className="border-b border-border/60 py-3.5 last:border-b-0"
+                  className="grid gap-4 border-t border-border/50 py-7 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-10 sm:py-8"
                   initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                   animate={{
                     opacity: experienceStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -730,26 +725,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                     ease: STAGGER_PANEL.ease,
                   }}
                 >
-                  <div className="flex flex-col gap-2 px-2 sm:flex-row sm:items-start sm:gap-6">
-                    <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums sm:min-w-[90px]">
-                      <span className="block whitespace-nowrap">{displayYear.primary}</span>
-                      {displayYear.secondary && (
-                        <span className="block whitespace-nowrap leading-tight">{displayYear.secondary}</span>
-                      )}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-mono text-[13px] font-semibold tracking-[0.04em] text-foreground">
-                          {job.company}
-                        </h3>
-                      </div>
-                      <p className="mt-0.5 font-inter text-xs font-normal text-muted-foreground">
-                        {job.title}
-                      </p>
-                      <p className="mt-2.5 font-inter text-sm font-normal leading-relaxed text-muted-foreground">
-                        {job.description}
-                      </p>
-                    </div>
+                  <div className="font-mono text-[11px] font-normal tracking-[0.14em] text-muted-foreground/72 tabular-nums sm:pt-0.5">
+                    <span className="block whitespace-nowrap">{displayYear.primary}</span>
+                    {displayYear.secondary && (
+                      <span className="mt-0.5 block whitespace-nowrap leading-tight text-muted-foreground/58">
+                        {displayYear.secondary}
+                      </span>
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground/62">
+                      {job.title}
+                    </p>
+                    <h3 className="text-[15px] font-medium tracking-[0.01em] text-foreground sm:text-[16px]">
+                      {job.company}
+                    </h3>
+                    <p className="mt-3 max-w-[36rem] font-inter text-[14px] leading-[1.8] text-muted-foreground/92">
+                      {job.description}
+                    </p>
                   </div>
                 </m.div>
               )
@@ -758,7 +751,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </CollapsibleSection>
 
-      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0">
+      <div className="mx-auto max-w-[760px] px-4 sm:px-6 lg:px-0">
         <Separator className="bg-border/40" />
       </div>
 
@@ -768,14 +761,14 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         kind="writing"
         isOpen={sectionOpen.education}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-10"
-        closedClassName="py-5"
-        contentClassName="mt-4 pb-6"
+        openClassName="py-12"
+        closedClassName="py-6"
+        contentClassName="mt-6 pb-8"
       >
-        <div className="mx-auto max-w-[560px]">
+        <div className="mx-auto max-w-[760px]">
           <MotionCard
             ref={educationPanelRef}
-            className="p-5 space-y-5 section-card-glow overflow-visible"
+            className="border-none bg-transparent p-0 shadow-none space-y-0 overflow-visible"
             initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
             animate={{
               opacity: educationStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
@@ -789,7 +782,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             {educationItems.map((edu, index) => (
               <m.div
                 key={edu.institution}
-                className="border-b border-border/60 pb-5 last:border-b-0 last:pb-0"
+                className="grid gap-4 border-t border-border/50 py-7 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-10 sm:py-8"
                 initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
                 animate={{
                   opacity: educationStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
@@ -801,29 +794,24 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
                   ease: STAGGER_PANEL.ease,
                 }}
               >
-                <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="font-mono text-xs font-normal text-muted-foreground tabular-nums sm:min-w-[100px]">
-                    {edu.year}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="mb-0.5 font-mono text-[13px] font-semibold tracking-[0.04em] text-foreground">
-                      {edu.institution}
-                    </h3>
-                    <p className="mb-0.5 font-inter text-sm font-normal text-foreground">
-                      {edu.degree}
+                <div className="font-mono text-[11px] font-normal tracking-[0.14em] text-muted-foreground/72 tabular-nums sm:pt-0.5">
+                  {edu.year}
+                </div>
+                <div className="min-w-0">
+                  <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground/62">
+                    {edu.level}
+                  </p>
+                  <h3 className="text-[15px] font-medium tracking-[0.01em] text-foreground sm:text-[16px]">
+                    {edu.institution}
+                  </h3>
+                  <p className="mt-2 font-inter text-[14px] leading-[1.75] text-muted-foreground/92">
+                    {edu.degree}
+                  </p>
+                  {edu.note && (
+                    <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground/58">
+                      {edu.note}
                     </p>
-                    <p className="font-inter text-sm font-normal text-muted-foreground">
-                      {edu.level}
-                    </p>
-                    {edu.note && (
-                      <p
-                        className="mt-3 font-mono text-xs font-normal tracking-[0.08em] text-muted-foreground"
-                        style={{ opacity: 0.7 }}
-                      >
-                        {edu.note}
-                      </p>
-                    )}
-                  </div>
+                  )}
                 </div>
               </m.div>
             ))}
@@ -831,7 +819,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         </div>
       </CollapsibleSection>
 
-      <div className="mx-auto max-w-[560px] px-4 sm:px-6 lg:px-0 flex justify-center py-4">
+      <div className="mx-auto max-w-[760px] px-4 sm:px-6 lg:px-0 flex justify-center py-6">
         <PixelDivider className="text-muted-foreground/35" />
       </div>
 
@@ -841,12 +829,12 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
         kind="contact"
         isOpen={sectionOpen.contact}
         className="px-4 sm:px-6 lg:px-0"
-        openClassName="pt-10 pb-16 sm:pb-24"
-        closedClassName="py-5"
-        contentClassName="mt-4"
+        openClassName="pt-12 pb-20 sm:pb-24"
+        closedClassName="py-6"
+        contentClassName="mt-6"
       >
-        <div className="mx-auto max-w-[560px]">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-5 sm:gap-y-2 sm:text-[15px]">
+        <div className="mx-auto max-w-[760px]">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-4 font-mono text-[14px] font-normal tracking-[0.02em] sm:gap-x-6 sm:gap-y-3 sm:text-[15px]">
             {contactSocialLinks.map((link) => (
               <a
                 key={link.label}

@@ -49,12 +49,12 @@ function PillTabs({ activeIndex, onSelect }: { activeIndex: number; onSelect: (i
     <div className="relative">
       <div
         ref={containerRef}
-        className="relative flex gap-1 rounded-full bg-muted/50 p-1"
+        className="relative flex gap-1 rounded-[6px] bg-muted/50 p-1"
         role="tablist"
       >
         <div
           suppressHydrationWarning
-          className="absolute top-1 bottom-1 rounded-full bg-foreground/10 shadow-sm"
+          className="absolute bottom-1 top-1 rounded-[4px] bg-foreground/10 shadow-sm"
           style={{
             width: indicator.width,
             transform: `translateX(${indicator.left}px)`,
@@ -68,7 +68,7 @@ function PillTabs({ activeIndex, onSelect }: { activeIndex: number; onSelect: (i
             role="tab"
             aria-selected={i === activeIndex}
             onClick={() => onSelect(i)}
-            className={`relative z-10 rounded-full px-4 py-2 font-mono text-[12px] tracking-[0.04em] transition-colors duration-200 ${
+            className={`relative z-10 rounded-[4px] px-4 py-2 font-mono text-[12px] tracking-[0.04em] transition-colors duration-200 ${
               i === activeIndex ? 'text-foreground' : 'text-muted-foreground hover:text-foreground/70'
             }`}
           >
@@ -93,7 +93,7 @@ function UnderlineTabs({ activeIndex, onSelect }: { activeIndex: number; onSelec
       >
         <div
           suppressHydrationWarning
-          className="absolute bottom-0 h-[2px] rounded-full bg-foreground"
+          className="absolute bottom-0 h-[2px] bg-foreground"
           style={{
             width: indicator.width,
             transform: `translateX(${indicator.left}px)`,

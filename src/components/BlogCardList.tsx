@@ -43,10 +43,10 @@ export default function BlogCardList({ posts }: { posts: BlogPost[] }) {
         >
           <Link
             href={`/blog/${post.slug}`}
-            className="blog-card group relative flex h-full min-h-[156px] flex-col overflow-hidden rounded-xl bg-card px-4 pb-4 pt-3.5 hover:-translate-y-2 hover:scale-[1.015] active:scale-[0.997]"
+            className="blog-card group relative flex h-full min-h-[156px] flex-col overflow-hidden rounded-[8px] bg-card px-4 pb-4 pt-3.5 hover:-translate-y-1 active:scale-[0.998]"
           >
             <div className="relative z-10 flex items-start gap-3">
-              <p className="inline-flex rounded-full bg-background/60 px-2.5 py-1 font-mono text-[10px] tracking-[0.06em] text-muted-foreground/70">
+              <p className="inline-flex rounded-[4px] border border-border/60 bg-background/60 px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-muted-foreground/70">
                 {formatDate(post.frontmatter.date)}
               </p>
             </div>
@@ -67,7 +67,7 @@ export default function BlogCardList({ posts }: { posts: BlogPost[] }) {
                 {post.frontmatter.tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-[10px] tracking-[0.04em] text-muted-foreground"
+                    className="inline-flex rounded-[4px] border border-border/60 bg-secondary/50 px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-muted-foreground"
                   >
                     {tag}
                   </span>

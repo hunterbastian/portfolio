@@ -67,9 +67,9 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
 
   return (
     <div className="relative">
-      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className={`group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}>
+      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className={`group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground ${hideLabel ? 'rounded-[10px]' : 'rounded-[8px]'}`}>
           <div
-            className={`project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-1.5 will-change-transform ${hideLabel ? 'rounded-[20px]' : 'rounded-xl'}`}
+            className={`project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-0.5 will-change-transform ${hideLabel ? 'rounded-[10px]' : 'rounded-[8px]'}`}
             style={{
               animationDelay: `${index * 80}ms`,
             }}
@@ -86,7 +86,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                   src={imgSrc}
                   alt={`Preview of ${frontmatter.title}`}
                   fill
-                  className={`object-cover ${index === 0 ? 'transition-[transform,filter]' : 'transition-[transform,opacity,filter]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  className={`object-cover ${index === 0 ? 'transition-[transform,filter]' : 'transition-[transform,opacity,filter]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015] group-hover:saturate-[0.96] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
                   sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
                   quality={80}
                   priority={index === 0}
@@ -109,19 +109,19 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                 />
               )}
 
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/8 transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-70" />
             </div>
 
             {!hideLabel && (
-              <div className="card-label-area relative z-[3] overflow-hidden px-2.5 pb-2 pt-2 sm:px-3.5 sm:pb-3 sm:pt-2.5" style={{ background: 'var(--card)' }}>
+              <div className="card-label-area relative z-[3] overflow-hidden px-4 pb-4 pt-4 sm:px-4 sm:pb-4 sm:pt-4" style={{ background: 'var(--card)' }}>
                 <h3
-                  className="relative z-10 block w-full truncate whitespace-nowrap text-[13px] font-semibold leading-tight text-foreground transition-colors duration-200"
+                  className="relative z-10 block w-full truncate whitespace-nowrap text-[13px] font-semibold leading-tight tracking-[0.01em] text-foreground transition-colors duration-200 sm:text-[14px]"
                   title={displayTitle}
                 >
                   {displayTitle}
                 </h3>
                 {categoryLabel && (
-                  <span className="relative z-10 badge badge-ghost mt-1.5 font-mono text-[9px] tracking-[0.06em] text-muted-foreground/60 h-auto py-0.5 px-1.5 min-h-0 border-border/40">
+                  <span className="relative z-10 mt-2.5 inline-flex rounded-[3px] border border-border/60 px-1.5 py-0.5 font-mono text-[9px] tracking-[0.1em] text-muted-foreground/62">
                     {categoryLabel}
                   </span>
                 )}

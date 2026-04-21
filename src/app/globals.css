@@ -87,7 +87,7 @@ html {
   --sky-spot-a: oklch(0.868 0.009 84.6 / 0.045);
   --sky-spot-b: oklch(0.893 0.006 84.6 / 0.035);
   --ink-underline: oklch(0.729 0.043 74.3);
-  --box-radius: 16px;
+  --box-radius: 8px;
 }
 
 /* Project cards — refined borders per mode */
@@ -100,52 +100,16 @@ html {
 }
 
 .project-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  opacity: 0;
-  background: linear-gradient(165deg, rgba(255,255,255,0.08) 0%, transparent 40%);
-  transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-
-.project-card:hover::after {
-  opacity: 1;
+  display: none;
 }
 
 /* Card label — accent tint + shimmer on hover */
 .card-label-area::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 0%, color-mix(in srgb, var(--accent) 12%, transparent) 100%);
-  opacity: 0;
-  transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
+  display: none;
 }
 
 .card-label-area::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 25%, rgba(255, 255, 255, 0.2) 46%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.2) 54%, transparent 75%);
-  transform: translateX(-120%);
-  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-
-.group:hover .card-label-area::before {
-  opacity: 1;
-}
-
-.group:hover .card-label-area::after {
-  transform: translateX(120%);
-}
-
-.dark .card-label-area::after {
-  background: linear-gradient(105deg, transparent 25%, rgba(255, 255, 255, 0.08) 46%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.08) 54%, transparent 75%);
+  display: none;
 }
 
 /* Section cards (experience, education) — subtle accent tint on hover */
@@ -178,7 +142,7 @@ html {
 
 /* Risograph / printed feel on card images — filter only, transform/opacity handled by Tailwind */
 .project-card:hover img {
-  filter: saturate(0.82) contrast(1.06) sepia(0.06);
+  filter: saturate(0.96) contrast(1.01);
 }
 
 .dark .project-card {
@@ -323,12 +287,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-bio .hero-bio-headline {
-  transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-bio:hover .hero-bio-headline {
   color: var(--foreground);
-  letter-spacing: 0.005em;
 }
 
 .hero-sky {
@@ -419,10 +382,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .section-heading {
   color: var(--muted-foreground);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 11px;
+}
+
+.section-heading-row {
+  padding-top: 0.2rem;
+}
+
+.section-heading-rule {
+  height: 1px;
+  flex: 1 1 auto;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.11) 0%, rgba(0, 0, 0, 0.06) 38%, transparent 100%);
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -524,9 +497,9 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (hover: hover) and (pointer: fine) {
   .hero-handwritten-preview:hover .hero-handwritten-text {
-    color: color-mix(in srgb, var(--foreground) 88%, var(--accent) 12%);
-    transform: translateY(-4px) scale(1.035);
-    text-shadow: 0 10px 22px rgba(23, 23, 23, 0.11);
+    color: color-mix(in srgb, var(--foreground) 86%, var(--accent) 14%);
+    transform: translateY(-1px);
+    text-shadow: none;
   }
   .hero-handwritten-preview:hover .hero-ink-underline {
     color: color-mix(in srgb, var(--foreground) 25%, transparent);
@@ -587,6 +560,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .dark .section-heading {
   color: var(--muted-foreground);
+}
+
+.dark .section-heading-rule {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.07) 38%, transparent 100%);
 }
 
 .dark img:not([aria-hidden]):not([data-icon]) {
@@ -724,63 +701,45 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Playground button — Brett Design Joy inspired */
 .playground-joy {
-  background: linear-gradient(135deg, var(--card) 0%, color-mix(in srgb, var(--accent) 8%, var(--card)) 100%);
+  background: var(--card);
   color: var(--foreground);
-  opacity: 0.7;
+  opacity: 0.78;
   border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
-  border-top: 1.5px solid color-mix(in srgb, var(--foreground) 14%, transparent);
   box-shadow:
     0 1px 3px -1px rgba(0, 0, 0, 0.06),
-    0 0 0 0 rgba(212, 146, 142, 0);
+    0 6px 18px -18px rgba(20, 16, 10, 0.18);
   transition: box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1),
-              background 400ms cubic-bezier(0.16, 1, 0.3, 1),
               border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
               opacity 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Shimmer sweep on hover */
 .playground-joy::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.2) 48%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.2) 52%, transparent 70%);
-  transform: translateX(-120%);
-  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.playground-joy:hover::before {
-  transform: translateX(120%);
+  display: none;
 }
 
 .playground-joy:hover {
   opacity: 1;
-  background: linear-gradient(135deg, var(--card) 0%, color-mix(in srgb, var(--accent) 16%, var(--card)) 100%);
-  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
   box-shadow:
-    0 2px 8px -2px rgba(212, 146, 142, 0.18),
-    0 12px 28px -8px rgba(212, 146, 142, 0.12);
+    0 2px 8px -2px rgba(0, 0, 0, 0.08),
+    0 12px 24px -18px rgba(20, 16, 10, 0.16);
 }
 
 .dark .playground-joy {
-  background: linear-gradient(135deg, var(--card) 0%, color-mix(in srgb, var(--accent) 6%, var(--card)) 100%);
+  background: var(--card);
   border-color: color-mix(in srgb, var(--foreground) 12%, transparent);
-  border-top-color: color-mix(in srgb, var(--foreground) 16%, transparent);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .dark .playground-joy::before {
-  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.08) 48%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.08) 52%, transparent 70%);
+  display: none;
 }
 
 .dark .playground-joy:hover {
-  background: linear-gradient(135deg, var(--card) 0%, color-mix(in srgb, var(--accent) 14%, var(--card)) 100%);
-  border-color: color-mix(in srgb, var(--accent) 22%, transparent);
+  border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
   box-shadow:
-    0 2px 8px -2px rgba(212, 146, 142, 0.14),
-    0 12px 28px -8px rgba(212, 146, 142, 0.1);
+    0 2px 8px -2px rgba(0, 0, 0, 0.24),
+    0 12px 24px -16px rgba(0, 0, 0, 0.32);
 }
 
 @keyframes playground-orbit-spin {
@@ -883,16 +842,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .top-meta-pill {
-  background: rgba(255, 255, 255, 0.45);
-  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.04);
+  background: rgba(var(--surface-paper-rgb), 0.2);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 8px 18px -22px rgba(20, 16, 10, 0.2);
 }
 
 .nav-scroll-pill {
-  padding: calc(var(--scroll-progress, 0) * 0.625rem) calc(var(--scroll-progress, 0) * 1.25rem);
-  backdrop-filter: blur(calc(var(--scroll-progress, 0) * 20px)) saturate(calc(1 + var(--scroll-progress, 0) * 0.18));
-  -webkit-backdrop-filter: blur(calc(var(--scroll-progress, 0) * 20px)) saturate(calc(1 + var(--scroll-progress, 0) * 0.18));
-  background: rgba(255, 255, 255, calc(var(--scroll-progress, 0) * 0.45));
-  box-shadow: 0px 0px 0px calc(var(--scroll-progress, 0) * 1px) rgba(0, 0, 0, calc(var(--scroll-progress, 0) * 0.04));
+  padding: 0 calc(var(--scroll-progress, 0) * 0.35rem);
+  backdrop-filter: blur(calc(var(--scroll-progress, 0) * 8px)) saturate(calc(1 + var(--scroll-progress, 0) * 0.06));
+  -webkit-backdrop-filter: blur(calc(var(--scroll-progress, 0) * 8px)) saturate(calc(1 + var(--scroll-progress, 0) * 0.06));
+  background: rgba(var(--surface-paper-rgb), calc(var(--scroll-progress, 0) * 0.18));
+  box-shadow:
+    0px 0px 0px calc(var(--scroll-progress, 0) * 1px) rgba(0, 0, 0, calc(var(--scroll-progress, 0) * 0.05)),
+    0px calc(var(--scroll-progress, 0) * 10px) calc(var(--scroll-progress, 0) * 18px) calc(var(--scroll-progress, 0) * -18px) rgba(20, 16, 10, calc(var(--scroll-progress, 0) * 0.18));
   transition: padding 0.6s cubic-bezier(0.16, 1, 0.3, 1),
               backdrop-filter 0.8s cubic-bezier(0.16, 1, 0.3, 1),
               -webkit-backdrop-filter 0.8s cubic-bezier(0.16, 1, 0.3, 1),
@@ -901,8 +864,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dark .top-meta-pill {
-  background: rgba(42, 44, 47, 0.55);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  background: rgba(var(--surface-paper-rgb), 0.16);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 8px 18px -20px rgba(0, 0, 0, 0.36);
 }
 
 /* Blog card — Design Joy inspired */
@@ -920,40 +885,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .blog-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, transparent 0%, color-mix(in srgb, var(--accent) 8%, transparent) 100%);
-  opacity: 0;
-  transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
+  display: none;
 }
 
 .blog-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(105deg, transparent 25%, rgba(255, 255, 255, 0.18) 48%, rgba(255, 255, 255, 0.22) 50%, rgba(255, 255, 255, 0.18) 52%, transparent 75%);
-  transform: translateX(-120%);
-  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
+  display: none;
 }
 
 .blog-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+  border-color: color-mix(in srgb, var(--foreground) 14%, transparent);
   box-shadow:
-    0 2px 8px -2px rgba(218, 138, 130, 0.15),
-    0 12px 28px -8px rgba(218, 138, 130, 0.1);
-}
-
-.blog-card:hover::before {
-  opacity: 1;
-}
-
-.blog-card:hover::after {
-  transform: translateX(120%);
+    0 2px 6px -2px rgba(0, 0, 0, 0.08),
+    0 10px 24px -14px rgba(20, 16, 10, 0.14);
 }
 
 .dark .blog-card {
@@ -1080,6 +1023,6 @@ button {
 /* shadcn base — radius only, colors come from :root above */
 @layer base {
   :root {
-    --radius: 1rem;
+    --radius: 0.5rem;
   }
 }

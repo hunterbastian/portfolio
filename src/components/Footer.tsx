@@ -94,7 +94,14 @@ export default function Footer() {
     >
       <div className="container mx-auto max-w-6xl">
         <div className="flex items-center justify-between py-1">
-          <span className="text-[10px] tracking-[0.1em] font-mono text-foreground/60">
+          <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.1em] font-mono text-foreground/60">
+            <span
+              className="inline-block size-[10px] rounded-full shrink-0"
+              style={{
+                background: 'radial-gradient(circle at 50% 50%, #ff5a2d 0%, #ff7a3a 28%, #f2a06a 58%, #e0a893 100%)',
+              }}
+              aria-hidden
+            />
             © {currentYear} Hunter Bastian
           </span>
           <span className="group/heart text-[10px] tracking-[0.1em] font-mono text-foreground/60 cursor-default">

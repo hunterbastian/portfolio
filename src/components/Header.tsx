@@ -83,7 +83,7 @@ export default function Header() {
               <span
                 className="inline-block size-5 rounded-full shrink-0"
                 style={{
-                  background: 'radial-gradient(circle at 45% 48%, #ff8c3c, #e8a060 50%, #ddb89a 80%, #e1b9a5)',
+                  background: 'radial-gradient(circle at 50% 50%, #ff5a2d 0%, #ff7a3a 28%, #f2a06a 58%, #e0a893 100%)',
                 }}
                 aria-hidden
               />

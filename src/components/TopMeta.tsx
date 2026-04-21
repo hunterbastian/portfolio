@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { AnimatePresence, m } from 'framer-motion'
@@ -23,10 +23,10 @@ function NavLink({ href, name, isActive }: { href: string; name: string; isActiv
   return (
     <Link
       href={href}
-      className={`flex items-center text-[10px] tracking-[0.1em] font-mono whitespace-nowrap underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`flex min-h-[28px] items-center text-[9px] tracking-[0.16em] font-mono whitespace-nowrap underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isActive
-          ? 'font-medium text-foreground/60 underline decoration-accent'
-          : 'text-muted-foreground/50 underline decoration-transparent hover:text-foreground/60 hover:decoration-accent'
+          ? 'font-medium text-foreground/74 underline decoration-foreground/18'
+          : 'text-muted-foreground/42 underline decoration-transparent hover:text-foreground/60 hover:decoration-foreground/18'
       }`}
     >
       {name}
@@ -109,9 +109,9 @@ export default function TopMeta() {
         style={{ background: 'linear-gradient(to bottom, var(--background) 0%, transparent 100%)' }}
       />
       {pathname === '/' && <CoordinateDisplay />}
-      {/* Desktop: top-right nav — pill fades in on scroll via CSS */}
+      {/* Desktop: top-right nav — quiet catalog header */}
       <div
-        className="fixed right-4 top-4 z-50 hidden items-center gap-4 rounded-full sm:right-6 sm:top-6 sm:flex nav-scroll-pill"
+        className="fixed right-4 top-4 z-50 hidden items-center gap-4 border-t border-border/55 pt-2 sm:right-6 sm:top-6 sm:flex nav-scroll-pill"
       >
         {PAGE_NAV.map((item) => (
           <NavLink key={item.href} href={item.href} name={item.name} isActive={isActive(item.href)} />
@@ -122,7 +122,7 @@ export default function TopMeta() {
       <button
         type="button"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="fixed right-4 top-4 z-50 flex items-center justify-center w-10 h-10 rounded-full backdrop-blur-xl text-foreground/70 active:scale-[0.96] transition-transform duration-200 sm:hidden top-meta-pill"
+        className="fixed right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-[8px] backdrop-blur-xl text-foreground/70 transition-transform duration-200 active:scale-[0.96] sm:hidden top-meta-pill"
         aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={mobileMenuOpen}
       >
@@ -151,7 +151,7 @@ export default function TopMeta() {
         <AnimatePresence>
           {mobileMenuOpen && (
             <m.nav
-              className="fixed right-4 top-16 z-50 rounded-xl backdrop-blur-xl px-5 py-3 top-meta-pill"
+              className="fixed right-4 top-16 z-50 rounded-[8px] backdrop-blur-xl px-5 py-3 top-meta-pill"
               initial={{ opacity: 0, y: -8, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -6, scale: 0.98 }}

@@ -85,15 +85,15 @@ interface CaseStudyDialState {
 
 const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
   pile: {
-    compactSpreadFactor: -0.12,
-    compactScale: 0.9,
-    compactGapX: -8,
-    compactGapY: -2,
+    compactSpreadFactor: 0.12,
+    compactScale: 0.985,
+    compactGapX: 18,
+    compactGapY: 22,
     stackPriority: 'default',
   },
   expanded: {
-    gapX: 20,
-    gapY: 24,
+    gapX: 28,
+    gapY: 32,
     scale: 1,
   },
   motion: {
@@ -136,7 +136,6 @@ const MOBILE_TILT_FACTOR = 0
 export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
   const [stage, setStage] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [isGridHovered, setIsGridHovered] = useState(false)
   const [supportsHover, setSupportsHover] = useState(false)
 
   const router = useRouter()
@@ -218,7 +217,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     return () => timers.forEach(clearTimeout)
   }, [initialLoadDelayMs, isGridInView, prefersReducedMotion])
 
-  const isExpandedLayout = !supportsHover || isGridHovered
+  const isExpandedLayout = true
   const layoutTransitionDuration = isExpandedLayout ? caseStudyDial.motion.expandMs : caseStudyDial.motion.collapseMs
   const layoutSpreadFactor = isExpandedLayout ? 1 : caseStudyDial.pile.compactSpreadFactor
   const gridColumnGap = isExpandedLayout ? caseStudyDial.expanded.gapX : caseStudyDial.pile.compactGapX
@@ -227,18 +226,8 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
   return (
     <m.div
       ref={gridRef}
-      className="mx-auto grid w-full max-w-[780px] grid-cols-1 gap-3 px-0 sm:grid-cols-2 sm:gap-0 sm:px-0"
-      onMouseEnter={() => {
-        if (supportsHover) {
-          setIsGridHovered(true)
-        }
-      }}
-      onMouseLeave={() => {
-        if (supportsHover) {
-          setIsGridHovered(false)
-          setHoveredIndex(null)
-        }
-      }}
+      className="mx-auto grid w-full max-w-[980px] grid-cols-1 gap-5 px-0 sm:grid-cols-2 sm:gap-0 sm:px-0"
+      onMouseLeave={() => supportsHover && setHoveredIndex(null)}
       initial={{ opacity: CARD_STAGGER_PANEL.finalOpacity, y: CARD_STAGGER_PANEL.finalY }}
       animate={{
         opacity: CARD_STAGGER_PANEL.finalOpacity,
@@ -302,12 +291,12 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                 }
               }}
             >
-              <Magnetic strength={0.28} range={130} onlyOnHover disableOnTouch>
+              <Magnetic strength={0.18} range={110} onlyOnHover disableOnTouch>
                 {project.frontmatter?.image ? (
                   <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
                 ) : (
-                  <div className="aspect-[16/9] w-full rounded-xl">
-                    <Skeleton className="h-full w-full rounded-xl" />
+                  <div className="aspect-[16/9] w-full rounded-[8px]">
+                    <Skeleton className="h-full w-full rounded-[8px]" />
                   </div>
                 )}
               </Magnetic>
@@ -375,12 +364,12 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               },
             }}
           >
-            <Magnetic strength={0.28} range={130} onlyOnHover disableOnTouch>
+            <Magnetic strength={0.18} range={110} onlyOnHover disableOnTouch>
               {project.frontmatter?.image ? (
                 <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
               ) : (
-                <div className="aspect-[16/9] w-full rounded-xl">
-                  <Skeleton className="h-full w-full rounded-xl" />
+                <div className="aspect-[16/9] w-full rounded-[8px]">
+                  <Skeleton className="h-full w-full rounded-[8px]" />
                 </div>
               )}
             </Magnetic>

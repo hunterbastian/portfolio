@@ -1,0 +1,190 @@
+---
+title: "Lumo"
+description: "A mindfulness app designed to help users find calm and refocus. Clean, minimal interface with a soft natural palette."
+category: "Mobile Design"
+tags: ["UI Design", "Mobile Design", "Wellness", "UX Research", "Figma"]
+image: "/images/optimized/projects/lumo.webp"
+demo: ""
+github: ""
+featured: false
+imageZoom: 1.4
+date: "2026-03-19"
+---
+
+<ScrollStage chapter="01" title="Overview">
+
+<BlurHighlight
+  highlightedBits={["calm", "simplicity", "presence over productivity"]}
+  highlightColor="hsla(90, 25%, 65%, 0.3)"
+  highlightDirection="left"
+  blurDuration={1}
+  highlightDelay={0.6}
+  highlightDuration={1.2}
+  viewportOptions={{ once: true, amount: 0.3 }}
+  className="font-inter text-[13px] leading-relaxed"
+>
+Lumo is a mindfulness app that helps you focus on what matters most. Reflect in a personal journal, track your mood, and set goals to aim towards — all in one calm, intentional space built around simplicity and presence over productivity.
+</BlurHighlight>
+
+<div className="mt-8 grid grid-cols-3 gap-3">
+  <MetricCard value="3" label="Platforms" suffix="" />
+  <MetricCard value="10" label="Screens" suffix="+" />
+  <MetricCard value="Figma" label="Tool" suffix="" />
+</div>
+
+<img src="/images/projects/lumo/cover.webp" alt="Lumo app — logo and intro screen mockup" />
+
+</ScrollStage>
+
+<ScrollStage chapter="02" title="The Problem">
+
+<ScrollReveal>
+
+Fitness and wellness apps feel noisy and competitive — reflection gets skipped. People want to get outside more, but cues and feedback loops are weak. It's hard to see whether outdoor time actually improves mood or energy because mood journaling lives in one app and fitness tracking in another.
+
+</ScrollReveal>
+
+<ScrollReveal delay={200}>
+
+### The Goal
+
+Design an intuitive interface that promotes consistency without overwhelming the user. Habit tracking meets wellness awareness in a peaceful, distraction-free environment. The experience should feel calming, intentional, and private.
+
+</ScrollReveal>
+
+<ScrollReveal delay={400}>
+
+Three pain points surfaced early:
+
+- Fitness apps **feel noisy and comparative**, killing motivation
+- Too many taps and permissions to start and end a simple session
+- **Mood journaling is separate from activity** — no clear correlation between what you do and how you feel
+
+</ScrollReveal>
+
+</ScrollStage>
+
+<ScrollStage chapter="03" title="Research & Direction">
+
+<ScrollReveal>
+
+### Competitive Analysis
+
+Looking at what other apps were doing helped give direction to where Lumo could stand out. **AllTrails** is a hiking app for tracking stats and finding new places. **How We Feel** is a mood tracking app. Taking inspiration from both, the goal was to make an app that could be reflective while you either hike or mood track — connecting activity to reflection in one place.
+
+</ScrollReveal>
+
+<ScrollReveal delay={200}>
+
+### Research Questions
+
+- How do users naturally reflect on their day or mental state?
+- What makes a mindfulness or journaling app feel calm and easy to use?
+- How do users prefer to track progress without feeling overwhelmed?
+
+</ScrollReveal>
+
+<ScrollReveal delay={400}>
+
+### Methodology
+
+Conducted usability testing using a low-fidelity prototype in Figma with a small group of family and friends. Participants were asked to complete tasks such as logging in, choosing a focus, journaling, and checking goals and milestones. Observed their interactions, recorded paths, noted confusion points, and collected feedback.
+
+</ScrollReveal>
+
+</ScrollStage>
+
+<ScrollStage chapter="04" title="Insights">
+
+<ScrollReveal>
+
+Three friction points discovered through usability testing shaped the final design.
+
+</ScrollReveal>
+
+<ScrollReveal delay={200}>
+
+<DesignDecision
+  chosen="Move notifications to Settings"
+  alternative="Prompt during onboarding"
+  reasoning="Users were being interrupted by notification permission prompts during app introduction, which broke focus. Moving notifications to a dedicated settings page promotes a smoother, less disruptive first experience."
+/>
+
+</ScrollReveal>
+
+<ScrollReveal delay={400}>
+
+<DesignDecision
+  chosen="Customizable tab order in Rewind"
+  alternative="Fixed default tab layout"
+  reasoning="Users couldn't change the order of Rewind items or tailor the experience. Adding drag-to-reorder with custom tabs gives users ownership over their daily review without adding complexity."
+/>
+
+</ScrollReveal>
+
+<ScrollReveal delay={600}>
+
+<DesignDecision
+  chosen="Add keyboard arrow for accessibility"
+  alternative="Standard keyboard without nav access"
+  reasoning="The keyboard covered important content and navigation, making it difficult for users to continue or exit. An arrow key gives quick access to the bottom navigation while the keyboard is open."
+/>
+
+</ScrollReveal>
+
+</ScrollStage>
+
+<ScrollStage chapter="05" title="Design System">
+
+<ScrollReveal>
+
+A 6-color palette and Swiza type scale kept the visual language calm and distraction-free across the whole app. Reusable components — hamburger overlay, nav bar, and back button — were built so every screen stayed structurally consistent without redesigning from scratch.
+
+</ScrollReveal>
+
+<img src="/images/projects/lumo/design-system.webp" alt="Lumo design system — color palette, typography, and components" />
+
+<ScrollReveal delay={200}>
+
+### Responsive Design
+
+- **Mobile first:** Single-column layout keeps the experience focused for on-the-go logging and reflection
+- **Tablet & desktop:** Expanded panels give users more breathing room to review and engage deeply at home
+
+Designed across 3 platforms including mobile, tablet, and desktop to explore how Lumo scales. Mapped 10 screens covering onboarding, journaling, focus mode, and settings. Kept fidelity intentionally low at the wireframe stage to prioritize flow and structure over visual polish.
+
+</ScrollReveal>
+
+<img src="/images/projects/lumo/responsive.webp" alt="Lumo responsive designs across mobile, tablet, and desktop" />
+
+</ScrollStage>
+
+<ScrollStage chapter="06" title="Final Design">
+
+<ScrollReveal>
+
+The high-fidelity prototype represents the final visual and interaction design for Lumo. It demonstrates key flows including improved graphics and refinement across Rewind, Focus, Journal, and Goals screens.
+
+</ScrollReveal>
+
+<img src="/images/projects/lumo/hifi-prototype.webp" alt="Lumo high-fidelity prototype — Rewind, Focus, Journal, and Goals screens" />
+
+</ScrollStage>
+
+<ScrollStage chapter="07" title="Reflection">
+
+<ScrollReveal>
+
+The direction I went with Lumo was solid, but looking back I could have pushed it further. One idea: Lumo could adapt an AI interface — using a model like Claude to proactively help with logging your mood and suggesting how to make your day more reflective. A conversational companion that meets you where you are instead of waiting for you to open an app.
+
+</ScrollReveal>
+
+<ScrollReveal delay={200}>
+
+### Core Insight
+
+Lumo's purpose serves as a companion for navigating the digital age — providing mood tracking, journaling, and goals in one calm space. Designing from scratch taught me how to balance user needs with constraints, and when to simplify a feature rather than build it out. The core insight driving every decision: **reflection is easier when it's tied to action.**
+
+</ScrollReveal>
+
+</ScrollStage>

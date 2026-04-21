@@ -108,7 +108,7 @@ export default function PlaygroundDraw() {
 
       {/* Tool tray */}
       <div
-        className="fixed bottom-5 left-1/2 z-30 -translate-x-1/2 flex items-end gap-1 rounded-xl bg-card/60 dark:bg-neutral-800/60 backdrop-blur-xl px-3 pt-2 pb-2 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-black/[0.04] dark:border-white/[0.06]"
+        className="fixed bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-end gap-1 rounded-[8px] border border-black/[0.05] bg-card/60 px-3 pb-2 pt-2 shadow-[0_2px_20px_rgba(0,0,0,0.08)] backdrop-blur-xl dark:border-white/[0.06] dark:bg-neutral-800/60"
       >
         {/* Pencil */}
         <button
@@ -139,7 +139,7 @@ export default function PlaygroundDraw() {
             <rect x="12" y="12" width="4" height="26" fill="#eedcc2" opacity="0.5" />
           </svg>
           {tool === 'pencil' && (
-            <span className="absolute -bottom-0.5 w-1 h-1 rounded-full bg-foreground/40" />
+            <span className="absolute -bottom-0.5 h-1 w-1 rounded-[1px] bg-foreground/40" />
           )}
         </button>
 
@@ -171,7 +171,7 @@ export default function PlaygroundDraw() {
             <line x1="10" y1="10" x2="22" y2="10" stroke="#e09aaa" strokeWidth="1" />
           </svg>
           {tool === 'eraser' && (
-            <span className="absolute -bottom-0.5 w-1 h-1 rounded-full bg-foreground/40" />
+            <span className="absolute -bottom-0.5 h-1 w-1 rounded-[1px] bg-foreground/40" />
           )}
         </button>
 
@@ -179,7 +179,7 @@ export default function PlaygroundDraw() {
         <button
           type="button"
           onClick={clearAll}
-          className="ml-1 flex items-center justify-center w-7 h-7 rounded-lg text-muted-foreground/60 hover:text-foreground/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="ml-1 flex h-7 w-7 items-center justify-center rounded-[6px] text-muted-foreground/60 transition-colors duration-150 hover:bg-black/[0.04] hover:text-foreground/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:hover:bg-white/[0.06]"
           aria-label="Clear drawing"
           title="Clear all"
         >

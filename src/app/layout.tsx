@@ -33,7 +33,7 @@ export const viewport = {
   viewportFit: 'cover',
 }
 
-const faviconVersion = '20260327'
+const faviconVersion = '20260418b'
 
 export const metadata: Metadata = {
   title: siteConfig.siteTitle,

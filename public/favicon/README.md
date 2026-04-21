@@ -19,6 +19,7 @@ node scripts/generate-favicons.mjs
 ```
 
 Uses `sharp` for PNGs and `magick` (ImageMagick) to pack the `.ico`. Also bump `faviconVersion` in `src/app/layout.tsx` so browsers refetch.
+The script also syncs the root `/public/favicon.ico` fallback used by browsers and the service worker.
 
 ## Usage
 

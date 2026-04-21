@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const root = path.resolve(import.meta.dirname, '..')
+const publicDir = path.join(root, 'public')
 const faviconDir = path.join(root, 'public/favicon')
 const source = path.join(faviconDir, 'favicon-source.svg')
 
@@ -37,6 +38,11 @@ const icoInputs = [16, 32, 48].map((s) => {
 execFileSync('magick', [...icoInputs, path.join(faviconDir, 'favicon.ico')], {
   stdio: 'inherit',
 })
+
+fs.copyFileSync(
+  path.join(faviconDir, 'favicon.ico'),
+  path.join(publicDir, 'favicon.ico')
+)
 
 fs.unlinkSync(path.join(faviconDir, '_tmp-48.png'))
 

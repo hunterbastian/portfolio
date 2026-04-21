@@ -52,67 +52,17 @@ const CARD_STAGGER_ITEM = {
   finalY: 0,
 }
 
-type StackPriority = 'default' | 'center' | 'left' | 'right'
+const GRID_COLUMN_GAP = 28
+const GRID_ROW_GAP = 32
+const HOVER_DIM_OPACITY = 0.88
+const HOVER_Z_OFFSET = 20
 
-interface CaseStudyDialState {
-  pile: {
-    compactSpreadFactor: number
-    compactScale: number
-    compactGapX: number
-    compactGapY: number
-    stackPriority: StackPriority
-  }
-  expanded: {
-    gapX: number
-    gapY: number
-    scale: number
-  }
-  motion: {
-    expandMs: number
-    collapseMs: number
-  }
-  hover: {
-    inactiveOpacity: number
-  }
-}
-
-const CASE_STUDY_DIAL_DEFAULTS: CaseStudyDialState = {
-  pile: {
-    compactSpreadFactor: 0.12,
-    compactScale: 0.985,
-    compactGapX: 18,
-    compactGapY: 22,
-    stackPriority: 'default',
-  },
-  expanded: {
-    gapX: 28,
-    gapY: 32,
-    scale: 1,
-  },
-  motion: {
-    expandMs: 800,
-    collapseMs: 550,
-  },
-  hover: {
-    inactiveOpacity: 0.88,
-  },
-}
-
-function getStackPriorityZIndex(index: number, total: number, stackPriority: StackPriority): number {
-  if (stackPriority === 'center') {
-    const center = (total - 1) / 2
-    return Math.round(total - Math.abs(index - center) * 2)
-  }
-
-  if (stackPriority === 'left') {
-    return total - index
-  }
-
-  if (stackPriority === 'right') {
-    return index + 1
-  }
-
-  return index + 1
+function GridCardSkeleton() {
+  return (
+    <div className="aspect-[16/9] w-full rounded-[8px]">
+      <Skeleton className="h-full w-full rounded-[8px]" />
+    </div>
+  )
 }
 
 export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
@@ -147,9 +97,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
       return 0
     })
   }, [projects])
-
-  const caseStudyDial = CASE_STUDY_DIAL_DEFAULTS
-
   const prefetchProject = useCallback((slug: string) => {
     if (prefetchedSlugsRef.current.has(slug)) {
       return
@@ -199,11 +146,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     return () => timers.forEach(clearTimeout)
   }, [initialLoadDelayMs, isGridInView, prefersReducedMotion])
 
-  const isExpandedLayout = true
-  const layoutTransitionDuration = isExpandedLayout ? caseStudyDial.motion.expandMs : caseStudyDial.motion.collapseMs
-  const gridColumnGap = isExpandedLayout ? caseStudyDial.expanded.gapX : caseStudyDial.pile.compactGapX
-  const gridRowGap = isExpandedLayout ? caseStudyDial.expanded.gapY : caseStudyDial.pile.compactGapY
-
   return (
     <m.div
       ref={gridRef}
@@ -213,8 +155,8 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
       animate={{
         opacity: CARD_STAGGER_PANEL.finalOpacity,
         y: CARD_STAGGER_PANEL.finalY,
-        columnGap: gridColumnGap,
-        rowGap: gridRowGap,
+        columnGap: GRID_COLUMN_GAP,
+        rowGap: GRID_ROW_GAP,
       }}
       transition={{
         opacity: {
@@ -226,25 +168,20 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
           ease: CARD_STAGGER_PANEL.ease,
         },
         columnGap: {
-          duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+          duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
           ease: CARD_STAGGER_PANEL.ease,
         },
         rowGap: {
-          duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
+          duration: motionDurationMs(CARD_STAGGER_TIMING.panelDuration, prefersReducedMotion),
           ease: CARD_STAGGER_PANEL.ease,
         },
       }}
     >
       {orderedProjects.map((project, index) => {
-        const compactX = 0
-        const compactRotate = 0
-        const targetX = 0
-        const targetRotate = 0
-        const targetScale = isExpandedLayout ? caseStudyDial.expanded.scale : caseStudyDial.pile.compactScale
         const isHovered = hoveredIndex === index
         const hasHoverTarget = hoveredIndex !== null
-        const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : caseStudyDial.hover.inactiveOpacity
-        const stackZIndex = getStackPriorityZIndex(index, orderedProjects.length, caseStudyDial.pile.stackPriority)
+        const cardOpacity = !supportsHover || !hasHoverTarget || isHovered ? 1 : HOVER_DIM_OPACITY
+        const stackZIndex = index + 1
 
         // First card renders as plain div for instant LCP paint (no Framer Motion hydration delay)
         if (index === 0) {
@@ -253,9 +190,8 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               key={project.slug}
               className="w-full transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               style={{
-                zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
+                zIndex: isHovered ? orderedProjects.length + HOVER_Z_OFFSET : stackZIndex,
                 opacity: cardOpacity,
-                transform: `translateX(${targetX}px) rotate(${targetRotate}deg) scale(${targetScale})`,
               }}
               onMouseEnter={() => {
                 prefetchProject(project.slug)
@@ -272,9 +208,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               {project.frontmatter?.image ? (
                 <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
               ) : (
-                <div className="aspect-[16/9] w-full rounded-[8px]">
-                  <Skeleton className="h-full w-full rounded-[8px]" />
-                </div>
+                <GridCardSkeleton />
               )}
             </div>
           )
@@ -285,7 +219,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             key={project.slug}
             className="w-full transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
             style={{
-              zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
+              zIndex: isHovered ? orderedProjects.length + HOVER_Z_OFFSET : stackZIndex,
             }}
             onMouseEnter={() => {
               prefetchProject(project.slug)
@@ -301,16 +235,10 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             initial={{
               opacity: CARD_STAGGER_ITEM.initialOpacity,
               y: CARD_STAGGER_ITEM.initialY,
-              x: compactX,
-              rotate: compactRotate,
-              scale: caseStudyDial.pile.compactScale,
             }}
             animate={{
               opacity: stage >= 2 ? cardOpacity : CARD_STAGGER_ITEM.initialOpacity,
               y: stage >= 2 ? CARD_STAGGER_ITEM.finalY : CARD_STAGGER_ITEM.initialY,
-              x: targetX,
-              rotate: targetRotate,
-              scale: targetScale,
             }}
             transition={{
               opacity: {
@@ -323,29 +251,12 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
                 delay: stage >= 2 ? motionDelayMs(index * CARD_STAGGER_TIMING.cardStagger, prefersReducedMotion) : 0,
                 ease: CARD_STAGGER_PANEL.ease,
               },
-              x: {
-                duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
-                delay: motionDelayMs(index * 50, prefersReducedMotion),
-                ease: CARD_STAGGER_PANEL.ease,
-              },
-              rotate: {
-                duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
-                delay: motionDelayMs(index * 50, prefersReducedMotion),
-                ease: CARD_STAGGER_PANEL.ease,
-              },
-              scale: {
-                duration: motionDurationMs(layoutTransitionDuration, prefersReducedMotion),
-                delay: motionDelayMs(index * 50, prefersReducedMotion),
-                ease: CARD_STAGGER_PANEL.ease,
-              },
             }}
           >
             {project.frontmatter?.image ? (
               <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
             ) : (
-              <div className="aspect-[16/9] w-full rounded-[8px]">
-                <Skeleton className="h-full w-full rounded-[8px]" />
-              </div>
+              <GridCardSkeleton />
             )}
           </m.div>
         )

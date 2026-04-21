@@ -121,8 +121,6 @@ const STAGGER_ITEM = {
   finalY: 0,            // resting item position
 }
 
-const [heroLede, heroBody] = homeHeroContent.intro.split('\n\n')
-
 function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
   const [stage, setStage] = useState(0)
 
@@ -518,7 +516,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
           >
             <p className="m-0 max-w-[38rem] text-pretty font-inter text-[14px] leading-[1.9] text-muted-foreground sm:text-[16px]">
               <TextReveal
-                text={heroLede}
+                text={homeHeroContent.lede}
                 as="span"
                 className="hero-bio-headline font-medium text-foreground/90"
                 trigger={heroTextStage >= 2}
@@ -529,7 +527,7 @@ export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
             </p>
             <p className="m-0 mt-4 max-w-[40rem] text-pretty font-inter text-[14px] leading-[1.85] text-muted-foreground sm:text-[15px]">
               <TextReveal
-                text={heroBody}
+                text={homeHeroContent.body}
                 as="span"
                 trigger={heroTextStage >= 2}
                 duration={0.5}

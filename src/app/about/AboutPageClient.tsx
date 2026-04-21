@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { m, useReducedMotion } from 'framer-motion'
 import { MOTION_SPRING_SNAPPY } from '@/lib/motion'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
@@ -10,12 +9,6 @@ import AnimatedDashedArrow from '@/components/AnimatedDashedArrow'
 import ResumeButton from '@/components/ResumeButton'
 import TextReveal from '@/components/TextReveal'
 import { useWebHaptics } from 'web-haptics/react'
-import dynamic from 'next/dynamic'
-
-const GitHubContributions = dynamic(() => import('@/components/GitHubContributions'), {
-  ssr: false,
-  loading: () => <div className="h-[120px]" />,
-})
 
 export default function AboutPageClient() {
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -46,7 +39,7 @@ export default function AboutPageClient() {
               />
             </div>
 
-            <h1 className="mt-8 font-mono text-[13px] font-medium tracking-[0.12em] uppercase text-foreground sm:text-sm">
+            <h1 className="mt-8 font-mono text-[12px] font-medium tracking-[0.1em] uppercase text-foreground">
               <TextReveal
                 text="Hunter Bastian"
                 as="span"
@@ -58,7 +51,7 @@ export default function AboutPageClient() {
               />
             </h1>
 
-            <p className="mt-5 text-[13px] leading-relaxed text-balance text-muted-foreground sm:text-sm">
+            <p className="mt-5 text-[14px] leading-relaxed text-balance text-muted-foreground">
               <TextReveal
                 text="Interaction design student at Utah Valley University. I design and build digital products with care and photograph the world in between."
                 as="span"
@@ -69,7 +62,7 @@ export default function AboutPageClient() {
               />
             </p>
 
-            <p className="mt-2.5 text-[13px] leading-relaxed text-balance text-muted-foreground sm:text-sm">
+            <p className="mt-2.5 text-[14px] leading-relaxed text-balance text-muted-foreground">
               <TextReveal
                 text="I also love photography and I own a Fujifilm X100VI, which has been my favorite item recently."
                 as="span"
@@ -85,7 +78,7 @@ export default function AboutPageClient() {
               <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
               <m.a
                 href="/#contact"
-                className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[10px] font-medium tracking-[0.08em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
                 onClick={() => haptic.trigger('light')}
                 initial="idle"
                 whileHover={prefersReducedMotion ? undefined : 'hover'}
@@ -109,7 +102,7 @@ export default function AboutPageClient() {
               <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
               <m.a
                 href="/cv"
-                className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[11px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[10px] font-medium tracking-[0.08em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
                 onClick={() => haptic.trigger('light')}
                 initial="idle"
                 whileHover={prefersReducedMotion ? undefined : 'hover'}
@@ -132,8 +125,6 @@ export default function AboutPageClient() {
               </Magnetic>
               <ResumeButton />
             </div>
-
-            <GitHubContributions />
           </div>
         </div>
       </div>

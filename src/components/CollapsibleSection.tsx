@@ -185,7 +185,7 @@ export default function CollapsibleSection({
       <div className="section-heading-row relative mx-auto flex min-h-6 w-full max-w-[980px] items-center gap-4">
         <m.h2
           ref={titleRef}
-          className="section-heading m-0 shrink-0 font-mono text-[10px] leading-none tracking-[0.12em]"
+          className="section-heading m-0 shrink-0 font-mono text-[10px] leading-none tracking-[0.1em]"
           initial={false}
           animate={{
             opacity: titleStage >= 1 ? 1 : 0,
@@ -214,7 +214,7 @@ export default function CollapsibleSection({
               <button
                 type="button"
                 onClick={onToggle}
-                className="m-0 inline-flex min-h-[44px] items-center cursor-pointer border-none bg-transparent p-0 font-mono text-[10px] uppercase tracking-[0.12em] transition-opacity duration-200 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:text-[10px]"
+                className="m-0 inline-flex min-h-[44px] items-center cursor-pointer border-none bg-transparent p-0 font-mono text-[10px] uppercase tracking-[0.1em] transition-opacity duration-200 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:text-[10px]"
                 aria-expanded={isOpen}
                 aria-controls={contentId}
               >

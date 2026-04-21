@@ -57,7 +57,7 @@ export default function BlogCardList({ posts }: { posts: BlogPost[] }) {
               {post.frontmatter.title}
             </h2>
             <p
-              className="relative z-10 mt-2 font-inter text-[12px] leading-relaxed text-muted-foreground"
+              className="relative z-10 mt-2 font-inter text-[14px] leading-relaxed text-muted-foreground"
               style={{ textWrap: 'pretty' }}
             >
               {post.frontmatter.description}
@@ -67,7 +67,7 @@ export default function BlogCardList({ posts }: { posts: BlogPost[] }) {
                 {post.frontmatter.tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex rounded-[4px] border border-border/60 bg-secondary/50 px-2.5 py-1 font-mono text-[9px] tracking-[0.08em] text-muted-foreground"
+                    className="inline-flex rounded-[4px] border border-border/60 bg-secondary/50 px-2.5 py-1 font-mono text-[9px] tracking-[0.08em] text-muted-foreground/70"
                   >
                     {tag}
                   </span>

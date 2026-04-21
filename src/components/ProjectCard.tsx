@@ -115,13 +115,13 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
             {!hideLabel && (
               <div className="card-label-area relative z-[3] overflow-hidden px-4 pb-4 pt-4 sm:px-4 sm:pb-4 sm:pt-4" style={{ background: 'var(--card)' }}>
                 <h3
-                  className="relative z-10 block w-full truncate whitespace-nowrap text-[12px] font-semibold leading-tight tracking-[0.01em] text-foreground transition-colors duration-200 sm:text-[13px]"
+                  className="relative z-10 block w-full truncate whitespace-nowrap text-[12px] font-semibold leading-tight tracking-[0.01em] text-foreground transition-colors duration-200"
                   title={displayTitle}
                 >
                   {displayTitle}
                 </h3>
                 {categoryLabel && (
-                  <span className="relative z-10 mt-2.5 inline-flex rounded-[3px] border border-border/60 px-1.5 py-0.5 font-mono text-[8px] tracking-[0.1em] text-muted-foreground/62">
+                  <span className="relative z-10 mt-2.5 inline-flex rounded-[3px] border border-border/60 px-1.5 py-0.5 font-mono text-[9px] tracking-[0.08em] text-muted-foreground/70">
                     {categoryLabel}
                   </span>
                 )}

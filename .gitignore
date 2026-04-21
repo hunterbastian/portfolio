@@ -45,3 +45,14 @@ Thumbs.db
 
 # Brainstorming mockups
 .superpowers/
+
+# Local agent / workspace metadata
+.agents/
+.claude/
+.context/
+.factory/
+.kiro/
+.windsurf/
+.codex/
+skills-lock.json
+docs/superpowers/

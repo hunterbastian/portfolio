@@ -33,7 +33,7 @@ export const viewport = {
   viewportFit: 'cover',
 }
 
-const faviconVersion = '20260418b'
+const faviconVersion = '20260420a'
 
 export const metadata: Metadata = {
   title: siteConfig.siteTitle,
@@ -93,7 +93,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
         <link rel="alternate" type="application/rss+xml" title="Hunter Bastian — Blog" href="/feed.xml" />
         <meta name="theme-color" content="#f2f1ef" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#232527" media="(prefers-color-scheme: dark)" />

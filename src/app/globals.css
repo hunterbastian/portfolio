@@ -43,7 +43,7 @@ html, body {
 
 html {
   scroll-behavior: auto;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -51,34 +51,30 @@ html {
  * ───────────────────────────────────────── */
 
 :root {
-  /* August palette — 白色 · 縹色 · 銀鼠 · 肉色
-   * Warm backgrounds (hue 84.6) / cool text (hue 243.0) / dusty rose accent (hue 26.0)
-   * Scale: background → card → secondary → muted → border (warm surfaces)
-   *        foreground → muted-fg → subtle-fg (cool text, darkest to lightest) */
-  --background: oklch(0.956 0.006 84.6);
-  --foreground: oklch(0.419 0.030 243.0);
-  --background-rgb: 242, 240, 236;
-  --card: oklch(0.965 0.006 84.6);
-  --card-foreground: oklch(0.419 0.030 243.0);
-  --primary: oklch(0.419 0.030 243.0);
-  --primary-foreground: oklch(0.956 0.006 84.6);
-  --secondary: oklch(0.926 0.007 80.7);
-  --secondary-foreground: oklch(0.419 0.030 243.0);
-  --muted: oklch(0.902 0.008 80.7);
-  --muted-foreground: oklch(0.55 0.020 243.0);
-  --subtle-foreground: oklch(0.65 0.012 243.0);
-  --accent: oklch(0.714 0.099 26.0);
-  --accent-foreground: oklch(0.419 0.030 243.0);
-  --accent-subtle: oklch(0.95 0.025 26.0);
-  --accent-muted: oklch(0.82 0.055 26.0);
-  --accent-blue: oklch(0.62 0.08 240);
-  --accent-green: oklch(0.55 0.09 145);
-  --border: oklch(0.868 0.009 84.6);
-  --input: oklch(0.868 0.009 84.6);
-  --ring: oklch(0.714 0.099 26.0);
-  --surface-warm-rgb: 212, 208, 200;
-  --surface-paper-rgb: 202, 198, 190;
-  --grain-rgb: 164, 160, 152;
+  --background: oklch(0.985 0.003 90);
+  --foreground: oklch(0.355 0.012 70);
+  --background-rgb: 249, 247, 242;
+  --card: oklch(0.99 0.002 90);
+  --card-foreground: oklch(0.355 0.012 70);
+  --primary: oklch(0.355 0.012 70);
+  --primary-foreground: oklch(0.985 0.003 90);
+  --secondary: oklch(0.965 0.004 90);
+  --secondary-foreground: oklch(0.355 0.012 70);
+  --muted: oklch(0.955 0.004 90);
+  --muted-foreground: oklch(0.54 0.01 70);
+  --subtle-foreground: oklch(0.68 0.01 70);
+  --accent: oklch(0.62 0.05 130);
+  --accent-foreground: oklch(0.985 0.003 90);
+  --accent-subtle: oklch(0.96 0.015 130);
+  --accent-muted: oklch(0.82 0.03 130);
+  --accent-blue: oklch(0.58 0.05 238);
+  --accent-green: oklch(0.56 0.06 145);
+  --border: oklch(0.885 0.006 90);
+  --input: oklch(0.885 0.006 90);
+  --ring: oklch(0.62 0.05 130);
+  --surface-warm-rgb: 232, 228, 219;
+  --surface-paper-rgb: 239, 236, 229;
+  --grain-rgb: 183, 177, 165;
   --header-frost-opacity: 0.66;
   --header-frost-highlight: 0.1;
   --header-frost-blur: 20px;
@@ -161,31 +157,30 @@ html {
 }
 
 .dark {
-  /* August palette dark — 縹色 deepened canvas, 白色 text, 肉色 accent */
-  --background: oklch(0.271 0.020 242.7);
-  --background-rgb: 30, 40, 48;
-  --card: oklch(0.296 0.019 245.3);
-  --card-foreground: oklch(0.898 0.008 80.7);
-  --foreground: oklch(0.898 0.008 80.7);
-  --primary: oklch(0.898 0.008 80.7);
-  --primary-foreground: oklch(0.271 0.020 242.7);
-  --secondary: oklch(0.325 0.023 253.6);
-  --secondary-foreground: oklch(0.898 0.008 80.7);
-  --muted: oklch(0.352 0.021 251.2);
-  --muted-foreground: oklch(0.647 0.009 248.0);
-  --subtle-foreground: oklch(0.50 0.010 248.0);
-  --accent: oklch(0.714 0.099 26.0);
-  --accent-foreground: oklch(0.271 0.020 242.7);
-  --accent-subtle: oklch(0.32 0.035 26.0);
-  --accent-muted: oklch(0.60 0.080 26.0);
-  --accent-blue: oklch(0.58 0.07 240);
-  --accent-green: oklch(0.50 0.08 145);
-  --border: oklch(0.336 0.019 245.2);
-  --input: oklch(0.336 0.019 245.2);
-  --ring: oklch(0.714 0.099 26.0);
-  --surface-warm-rgb: 34, 44, 52;
-  --surface-paper-rgb: 40, 50, 58;
-  --grain-rgb: 48, 58, 66;
+  --background: oklch(0.205 0.012 260);
+  --background-rgb: 23, 26, 31;
+  --card: oklch(0.235 0.012 260);
+  --card-foreground: oklch(0.92 0.004 90);
+  --foreground: oklch(0.92 0.004 90);
+  --primary: oklch(0.92 0.004 90);
+  --primary-foreground: oklch(0.205 0.012 260);
+  --secondary: oklch(0.275 0.012 260);
+  --secondary-foreground: oklch(0.92 0.004 90);
+  --muted: oklch(0.29 0.012 260);
+  --muted-foreground: oklch(0.68 0.01 90);
+  --subtle-foreground: oklch(0.58 0.01 90);
+  --accent: oklch(0.72 0.05 130);
+  --accent-foreground: oklch(0.205 0.012 260);
+  --accent-subtle: oklch(0.30 0.02 130);
+  --accent-muted: oklch(0.55 0.04 130);
+  --accent-blue: oklch(0.62 0.04 238);
+  --accent-green: oklch(0.60 0.05 145);
+  --border: oklch(0.33 0.012 260);
+  --input: oklch(0.33 0.012 260);
+  --ring: oklch(0.72 0.05 130);
+  --surface-warm-rgb: 32, 35, 40;
+  --surface-paper-rgb: 39, 42, 47;
+  --grain-rgb: 54, 58, 64;
   --header-frost-opacity: 0.88;
   --header-frost-highlight: 0.02;
   --sky-top: oklch(0.271 0.020 242.7 / 0.16);
@@ -202,12 +197,8 @@ html {
 
 body {
   background-color: var(--background);
-  background-image:
-    radial-gradient(110% 72% at 50% -8%, rgba(var(--surface-warm-rgb), 0.07), transparent 62%),
-    linear-gradient(180deg, rgba(var(--surface-paper-rgb), 0.025) 0%, rgba(var(--surface-paper-rgb), 0) 50%),
-    repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(var(--grain-rgb), 0.014) 2px, rgba(var(--grain-rgb), 0.014) 3px),
-    radial-gradient(circle at 1px 1px, rgba(var(--grain-rgb), 0.026) 0.6px, transparent 0.85px);
-  background-size: 100% 100%, 100% 100%, 100% 3px, 5px 5px;
+  background-image: linear-gradient(180deg, rgba(var(--surface-paper-rgb), 0.22) 0%, rgba(var(--surface-paper-rgb), 0) 36%);
+  background-size: 100% 100%;
   position: relative;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -871,50 +862,6 @@ h1, h2, h3, h4, h5, h6 {
     0 8px 18px -20px rgba(0, 0, 0, 0.36);
 }
 
-/* Blog card — Design Joy inspired */
-.blog-card {
-  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
-  border-top-width: 1.5px;
-  border-top-color: color-mix(in srgb, var(--foreground) 12%, transparent);
-  box-shadow:
-    0 1px 3px -1px rgba(0, 0, 0, 0.06),
-    0 2px 4px 0 rgba(0, 0, 0, 0.04);
-  transition: box-shadow 700ms cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 700ms cubic-bezier(0.22, 1, 0.36, 1),
-              transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform, box-shadow;
-}
-
-.blog-card::before {
-  display: none;
-}
-
-.blog-card::after {
-  display: none;
-}
-
-.blog-card:hover {
-  border-color: color-mix(in srgb, var(--foreground) 14%, transparent);
-  box-shadow:
-    0 2px 6px -2px rgba(0, 0, 0, 0.08),
-    0 10px 24px -14px rgba(20, 16, 10, 0.14);
-}
-
-.dark .blog-card {
-  border-color: color-mix(in srgb, var(--foreground) 10%, transparent);
-}
-
-.dark .blog-card::after {
-  background: linear-gradient(105deg, transparent 25%, rgba(255, 255, 255, 0.06) 48%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.06) 52%, transparent 75%);
-}
-
-.dark .blog-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 20%, transparent);
-  box-shadow:
-    0 2px 8px -2px rgba(218, 138, 130, 0.1),
-    0 12px 28px -8px rgba(218, 138, 130, 0.08);
-}
-
 .site-header-frosted {
   background-color: rgba(var(--background-rgb), var(--header-frost-opacity));
   -webkit-backdrop-filter: saturate(118%) blur(var(--header-frost-blur));
@@ -1026,4 +973,31 @@ button {
   :root {
     --radius: 0.5rem;
   }
+}
+
+/* Editorial redesign overrides */
+
+.window-sunlight,
+.window-sunlight-small,
+.body-glow,
+.site-header-frosted,
+.header-separator,
+.footer-separator,
+.top-meta-pill,
+.nav-scroll-pill {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.body-glow,
+.window-sunlight,
+.window-sunlight-small {
+  display: none;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+  color: inherit;
 }

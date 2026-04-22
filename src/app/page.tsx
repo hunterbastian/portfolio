@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
 import { getAllProjects } from '@/lib/projects'
 import AnimatedHomePage from '@/components/AnimatedHomePage'
-import ProjectGridClient from '@/components/ProjectGridClient'
-import { ProjectLoader } from '@/components/Loader'
 import ErrorBoundary from '@/components/ErrorBoundary'
-import { Suspense } from 'react'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 
 export const metadata: Metadata = {
@@ -30,19 +27,7 @@ export default function HomePage() {
 
   return (
     <ErrorBoundary>
-      <AnimatedHomePage>
-        <Suspense fallback={<ProjectLoader />}>
-          <ProjectGridClient projects={projects} initialLoadDelayMs={0} />
-        </Suspense>
-
-        {projects.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-lg text-muted-foreground">
-              No projects yet. Check back soon for exciting updates!
-            </p>
-          </div>
-        )}
-      </AnimatedHomePage>
+      <AnimatedHomePage projects={projects} />
     </ErrorBoundary>
   )
 }

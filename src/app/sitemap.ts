@@ -32,12 +32,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: resolveSiteUrl('/blog'),
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
       url: resolveSiteUrl('/archive'),
       lastModified: new Date(),
       changeFrequency: 'monthly',

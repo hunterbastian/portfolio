@@ -1,187 +1,89 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { AnimatePresence, m } from 'framer-motion'
-import { useScrambleText } from '@/lib/scramble'
-import { siteConfig } from '@/lib/site'
-import { MOTION_EASE_SOFT } from '@/lib/motion'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { Summer as PixelSun } from '@/components/pixel/glyphs'
 
-// Mobile: hamburger · Desktop: pill
 const PAGE_NAV = [
-  { name: 'HOME', href: '/' },
-  { name: 'ABOUT ME', href: '/about' },
-  { name: 'PLAYGROUND', href: '/archive' },
-  { name: 'BLOG', href: '/blog' },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Playground', href: '/archive' },
 ] as const
 
-const SCROLL_THRESHOLD = 100
-const SCROLL_RANGE = 280
-
-function NavLink({ href, name, isActive }: { href: string; name: string; isActive: boolean }) {
+function NavLink({ href, name, active }: { href: string; name: string; active: boolean }) {
   return (
     <Link
       href={href}
-      className={`flex min-h-[28px] items-center text-[9px] tracking-[0.12em] font-mono whitespace-nowrap underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        isActive
-          ? 'font-medium text-foreground/70 underline decoration-foreground/18'
-          : 'text-muted-foreground/70 underline decoration-transparent hover:text-foreground/70 hover:decoration-foreground/18'
+      className={`min-h-[40px] font-mono text-[0.76rem] tracking-[-0.01em] transition-[color,transform] duration-150 ${
+        active ? 'text-foreground' : 'text-muted-foreground hover:-translate-y-[1px] hover:text-foreground'
       }`}
     >
-      {name}
+      <span className="decoration-border underline underline-offset-[0.24em] transition-[text-decoration-color] duration-150 hover:decoration-foreground/60">
+        {name}
+      </span>
     </Link>
-  )
-}
-
-/**
- * Drives scroll-linked animations via CSS custom properties.
- * Sets --scroll-progress (0 → 1) on the returned ref element.
- * Zero React re-renders during scroll — all visual changes are CSS-driven.
- */
-function useScrollCSS() {
-  const ref = useRef<HTMLDivElement>(null)
-  const rafId = useRef(0)
-
-  useEffect(() => {
-    function update() {
-      if (!ref.current) return
-      const y = window.scrollY
-      const progress = y < SCROLL_THRESHOLD ? 0 : Math.min(1, (y - SCROLL_THRESHOLD) / SCROLL_RANGE)
-      ref.current.style.setProperty('--scroll-progress', String(progress))
-    }
-
-    function onScroll() {
-      cancelAnimationFrame(rafId.current)
-      rafId.current = requestAnimationFrame(update)
-    }
-
-    update()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      cancelAnimationFrame(rafId.current)
-    }
-  }, [])
-
-  return ref
-}
-
-function CoordinateDisplay() {
-  const coord = useScrambleText(siteConfig.siteCoordinates, true, 400)
-  const loc = useScrambleText(siteConfig.siteLocation, true, 600)
-
-  return (
-    <div
-      className="fixed left-4 top-4 z-50 hidden select-none cursor-default sm:left-6 sm:top-6 sm:block"
-      style={{ opacity: 'calc(1 - var(--scroll-progress, 0))' }}
-      onMouseEnter={() => { coord.scramble(); loc.scramble() }}
-    >
-      <p className="text-[9px] tracking-[0.08em] text-foreground/70 whitespace-nowrap font-mono tabular-nums leading-tight">
-        {coord.display}
-        <span className="ml-3 text-[9px] text-muted-foreground/70">{loc.display}</span>
-      </p>
-    </div>
   )
 }
 
 export default function TopMeta() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const scrollRef = useScrollCSS()
 
-  // Close menu on navigation
   useEffect(() => {
     setMobileMenuOpen(false)
   }, [pathname])
 
-  function isActive(href: string) {
-    if (href === '/') return pathname === '/'
-    if (href.startsWith('/#')) return false
-    return pathname.startsWith(href)
-  }
-
   return (
-    <div ref={scrollRef} style={{ '--scroll-progress': '0' } as React.CSSProperties}>
-      {/* Top-edge gradient so scrolling content fades out smoothly */}
-      <div
-        className="pointer-events-none fixed inset-x-0 top-0 z-40 hidden h-16 sm:block"
-        style={{ background: 'linear-gradient(to bottom, var(--background) 0%, transparent 100%)' }}
-      />
-      {pathname === '/' && <CoordinateDisplay />}
-      {/* Desktop: top-right nav — quiet catalog header */}
-      <div
-        className="fixed right-4 top-4 z-50 hidden items-center gap-4 border-t border-border/55 pt-2 sm:right-6 sm:top-6 sm:flex nav-scroll-pill"
-      >
-        {PAGE_NAV.map((item) => (
-          <NavLink key={item.href} href={item.href} name={item.name} isActive={isActive(item.href)} />
-        ))}
-      </div>
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-40 px-5 py-4 sm:px-8 sm:py-6">
+      <div className="pointer-events-auto mx-auto flex max-w-[48rem] items-start justify-between gap-6">
+        <Link
+          href="/"
+          className="min-h-[40px] inline-flex items-center gap-2 text-[0.9rem] tracking-[-0.03em] text-foreground/88 transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground"
+        >
+          <span>Hunter Bastian</span>
+          <span className="text-accent/85">
+            <PixelSun size={11} />
+          </span>
+        </Link>
 
-      {/* Mobile: top-right hamburger button */}
-      <button
-        type="button"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="fixed right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-[8px] backdrop-blur-xl text-foreground/70 transition-transform duration-200 active:scale-[0.96] sm:hidden top-meta-pill"
-        aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-        aria-expanded={mobileMenuOpen}
-      >
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
-          <line
-            x1="3" y1="5.5" x2="13" y2="5.5"
-            className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            style={{
-              transform: mobileMenuOpen ? 'translate(0.5px, 2.5px) rotate(45deg)' : 'none',
-              transformOrigin: '8px 8px',
-            }}
-          />
-          <line
-            x1="3" y1="10.5" x2="13" y2="10.5"
-            className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            style={{
-              transform: mobileMenuOpen ? 'translate(0.5px, -2.5px) rotate(-45deg)' : 'none',
-              transformOrigin: '8px 8px',
-            }}
-          />
-        </svg>
-      </button>
+        <nav className="hidden items-center gap-5 sm:flex">
+          {PAGE_NAV.map((item) => (
+            <NavLink
+              key={item.href}
+              href={item.href}
+              name={item.name}
+              active={item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)}
+            />
+          ))}
+        </nav>
 
-      {/* Mobile: dropdown menu */}
-      <div className="sm:hidden">
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <m.nav
-              className="fixed right-4 top-16 z-50 rounded-[8px] backdrop-blur-xl px-5 py-3 top-meta-pill"
-              initial={{ opacity: 0, y: -8, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -6, scale: 0.98 }}
-              transition={{ duration: 0.25, ease: MOTION_EASE_SOFT }}
-            >
-              <div className="flex flex-col gap-1">
-                {PAGE_NAV.map((item, i) => (
-                  <m.div
-                    key={item.href}
-                    initial={{ opacity: 0, x: -6 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.25, delay: i * 0.05, ease: MOTION_EASE_SOFT }}
-                  >
-                    <Link
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`block py-2.5 min-h-[44px] flex items-center text-[9px] tracking-[0.12em] uppercase transition-colors duration-200 ${
-                        isActive(item.href)
-                          ? 'text-foreground'
-                          : 'text-foreground/70 active:text-foreground'
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  </m.div>
-                ))}
-              </div>
-            </m.nav>
-          )}
-        </AnimatePresence>
+        <div className="sm:hidden">
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            className="min-h-[40px] font-mono text-[0.76rem] text-muted-foreground transition-colors duration-150 hover:text-foreground"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+          >
+            <span className="decoration-border underline underline-offset-[0.24em]">
+              Menu
+            </span>
+          </button>
+
+          {mobileMenuOpen ? (
+            <div className="mt-3 flex flex-col items-end gap-2 rounded-[14px] border border-border/80 bg-background/96 px-4 py-3 shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
+              {PAGE_NAV.map((item) => (
+                <NavLink
+                  key={item.href}
+                  href={item.href}
+                  name={item.name}
+                  active={item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)}
+                />
+              ))}
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   )

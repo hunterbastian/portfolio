@@ -4,8 +4,6 @@ import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
 import './viewport.css'
 import Footer from '@/components/Footer'
-import ProgressiveBlur from '@/components/ProgressiveBlur'
-import ScrollToTop from '@/components/ScrollToTop'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
 import SmoothScroll from '@/components/SmoothScroll'
@@ -14,11 +12,8 @@ import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
-import ProjectTransitionOverlay from '@/components/ProjectTransitionOverlay'
 import { Agentation } from 'agentation'
 // import { Measurer } from 'mesurer' // NOTE: breaks Next 16 dev (no 'use client'). See docs/superpowers/plans/2026-04-16-measurer-dev-break.md
-import SeasonalAccent from '@/components/SeasonalAccent'
-import { SoundProvider } from '@/lib/sounds/context'
 import TopMeta from '@/components/TopMeta'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
@@ -66,7 +61,7 @@ export const metadata: Metadata = {
     siteName: sitePortfolioName,
     images: [
       {
-        url: '/images/social/profile-preview.webp',
+        url: '/images/profilepicture.webp',
         width: 1200,
         height: 630,
         alt: `${siteConfig.brandName} - Designer & Developer Portfolio`,
@@ -78,7 +73,7 @@ export const metadata: Metadata = {
     title: siteConfig.siteTitle,
     description: siteConfig.siteDescription,
     creator: '@thestudioalpine',
-    images: ['/images/social/profile-preview.webp'],
+    images: ['/images/profilepicture.webp'],
   },
   alternates: {
     canonical: siteConfig.url,
@@ -94,7 +89,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <link rel="alternate" type="application/rss+xml" title="Hunter Bastian — Blog" href="/feed.xml" />
         <meta name="theme-color" content="#f2f1ef" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#232527" media="(prefers-color-scheme: dark)" />
 
@@ -162,25 +156,12 @@ export default function RootLayout({
         }} />
       </head>
       <body
-        className={`${GeistPixelSquare.className} ${GeistSans.variable} safe-area-padding text-foreground body-glow`}
+        className={`${GeistPixelSquare.className} ${GeistSans.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
-          backgroundAttachment: 'fixed',
         }}
       >
-        <div
-          aria-hidden
-          className="window-sunlight pointer-events-none fixed inset-0 z-[9999]"
-        />
-        <div
-          aria-hidden
-          className="window-sunlight-small pointer-events-none fixed z-[9999]"
-          style={{ top: '35%', right: '-5%', width: '45%', height: '40%' }}
-        />
         <MotionProvider>
-          <SoundProvider>
-          <SeasonalAccent />
-          <ProjectTransitionOverlay />
           <TopMeta />
           <SmoothScroll>
             <a
@@ -190,12 +171,10 @@ export default function RootLayout({
               Skip to content
             </a>
             <div className="min-h-screen flex flex-col">
-              <main id="main-content" role="main" className="flex-1">
+              <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
                 <PageTransition>{children}</PageTransition>
               </main>
-              <ProgressiveBlur />
               <Footer />
-              <ScrollToTop />
             </div>
             {telemetryConfig.enableSpeedInsights && (
               <SpeedInsights
@@ -203,8 +182,8 @@ export default function RootLayout({
               />
             )}
             {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
-            {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
-            {process.env.NODE_ENV === 'development' && <Agentation />}
+            {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_PERF_MONITOR === 'true' && <PerformanceMonitor />}
+            {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_AGENTATION === 'true' && <Agentation />}
             {/* {process.env.NODE_ENV === 'development' && <Measurer />} — breaks dev under Next 16 / Turbopack */}
 
             {/* Google Analytics - deferred to avoid blocking */}
@@ -236,7 +215,6 @@ export default function RootLayout({
               </Script>
             )}
           </SmoothScroll>
-          </SoundProvider>
         </MotionProvider>
       </body>
     </html>

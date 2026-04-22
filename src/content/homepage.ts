@@ -27,9 +27,9 @@ export interface HomeLinkItem {
 
 export const homeHeroContent = {
   headline: 'Hunter Bastian',
-  subtitle: 'Design Engineer, Utah',
+  subtitle: 'Utah, USA',
   intro:
-    '0 → 1 design engineer shaping interfaces, motion, and systems with restraint.\n\nInteraction Design student at UVU designing and building digital products with an emphasis on craft, clarity, and atmosphere.',
+    'I design and build digital products with a focus on calm interfaces, thoughtful motion, and visual restraint. I am studying Interaction Design at Utah Valley University, and I spend a lot of time making websites, taking photographs, and working on small creative experiments.',
   handwrittenNote: 'A little page on the internet all about me',
 } as const
 
@@ -109,7 +109,6 @@ export const educationItems: EducationItem[] = [
     institution: 'Columbus State Community College',
     degree: 'Graphic Design',
     level: "Associate's Degree",
-    note: 'TRANSFERRED TO UVU',
   },
   {
     year: '2021',

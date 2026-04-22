@@ -1,14 +1,9 @@
 'use client'
 
-import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
-import { Card } from '@/components/ui/card'
-
-const MotionCard = m.create(Card)
-import { Separator } from '@/components/ui/separator'
-import PixelDivider from '@/components/pixel/PixelDivider'
-import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
+import { useState, type ReactNode } from 'react'
 import {
   contactSocialLinks,
   creatingLinks,
@@ -16,843 +11,389 @@ import {
   experienceItems,
   homeHeroContent,
 } from '@/content/homepage'
-import { MOTION_EASE_SOFT, MOTION_SPRING_SNAPPY, MOTION_SPRING_BOUNCY, motionDelayMs, motionDurationMs } from '@/lib/motion'
-import { useIsInitialLoad } from '@/lib/initial-load'
-import CollapsibleSection from './CollapsibleSection'
-import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
-import TextReveal from './TextReveal'
-import { IconGamepad2, IconHandshake } from 'nucleo-pixel-essential'
-import { Sun, ArrowDown } from 'lucide-react'
-import { useWebHaptics } from 'web-haptics/react'
+import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
+import type { ProjectFrontmatter } from '@/types/project'
+
+interface Project {
+  slug: string
+  frontmatter: ProjectFrontmatter
+}
 
 interface AnimatedHomePageProps {
-  children: ReactNode
+  projects: Project[]
 }
 
-type SectionKey = 'creating' | 'caseStudies' | 'experience' | 'education' | 'contact'
-type SectionOpenState = Record<SectionKey, boolean>
-
-interface SectionNavigateDetail {
-  href: string
+interface EditorialItemProps {
+  eyebrow?: string
+  href?: string
+  external?: boolean
+  title: string
+  description: string
+  trailing?: string
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
+  previewImage?: string
+  previewAlt?: string
+  previewVisible?: boolean
+  underlineOnHover?: boolean
 }
 
-const SECTION_NAV_EVENT = 'hb:section-navigate'
-
-const DEFAULT_SECTION_OPEN_STATE: SectionOpenState = {
-  creating: true,
-  caseStudies: true,
-  experience: true,
-  education: true,
-  contact: true,
+interface ContactLinksProps {
 }
 
-const HREF_TO_SECTION_KEY: Record<string, SectionKey> = {
-  '#creating': 'creating',
-  '#case-studies': 'caseStudies',
-  '#experience': 'experience',
-  '#education': 'education',
-  '#contact': 'contact',
+function formatYear(date: string) {
+  return new Date(date).getFullYear().toString()
 }
 
-const INITIAL_SECTION_LOAD_DELAY = {
-  caseStudies: 0,
-  creating: 220,
-} as const
-
-const PRESENT_SUFFIX = ' - Present'
-
-function splitExperienceYear(year: string) {
-  if (!year.endsWith(PRESENT_SUFFIX)) {
-    return { primary: year, secondary: null as string | null }
-  }
-
-  return {
-    primary: `${year.slice(0, -PRESENT_SUFFIX.length)} -`,
-    secondary: 'Present',
-  }
+function getProjectRows(projects: Project[]) {
+  return projects.slice(0, 4)
 }
 
-/* ─────────────────────────────────────────────────────────
- * HERO ENTRANCE STORYBOARD
- *
- *    0ms   waiting for mount
- *   60ms   profile image fades in, scales 0.94 → 1
- *  100ms   text panel glides up y 12 → 0
- *  220ms   intro paragraph + handwritten note rise in
- * ───────────────────────────────────────────────────────── */
-
-const HERO_ENTRANCE = {
-  profileDelay: 40,     // profile appears first
-  textPanelDelay: 80,   // text panel follows shortly
-  textItemsDelay: 160,  // intro + note arrive last
-  duration: 320,        // snappier reveal
-}
-
-/* ─────────────────────────────────────────────────────────
- * SECTION STAGGER STORYBOARD
- *
- * Read top-to-bottom. Each `at` value is ms after section enters view.
- *
- *    0ms   waiting for section in-view + open
- *  100ms   panel fades in, y 12 → 0
- *  240ms   rows/items rise into place (staggered 70ms)
- * ───────────────────────────────────────────────────────── */
-
-const STAGGER_TIMING = {
-  panelAppear: 120,     // panel starts appearing
-  itemsAppear: 280,     // items begin staggered reveal
-  panelDuration: 420,   // slower panel transition
-  itemDuration: 460,    // each item transitions gently
-  itemStagger: 90,      // wider stagger — items breathe (間)
-}
-
-const STAGGER_PANEL = {
-  initialOpacity: 0,    // hidden before stage 1
-  finalOpacity: 1,      // visible at rest
-  initialY: 12,         // more travel for visible glide
-  finalY: 0,            // resting panel position
-  ease: MOTION_EASE_SOFT,
-}
-
-const STAGGER_ITEM = {
-  initialOpacity: 0,    // hidden item before stage 2
-  finalOpacity: 1,      // visible item at rest
-  initialY: 12,         // items rise from further down
-  finalY: 0,            // resting item position
-}
-
-const [heroLede, heroBody] = homeHeroContent.intro.split('\n\n')
-
-function useSectionStage(isOpen: boolean, isInView: boolean, prefersReducedMotion: boolean): number {
-  const [stage, setStage] = useState(0)
-
-  useEffect(() => {
-    if (!isOpen || !isInView) {
-      setStage(0)
-      return
-    }
-
-    if (prefersReducedMotion) {
-      setStage(2)
-      return
-    }
-
-    setStage(0)
-    const timers: Array<ReturnType<typeof setTimeout>> = []
-
-    timers.push(setTimeout(() => setStage(1), STAGGER_TIMING.panelAppear))
-    timers.push(setTimeout(() => setStage(2), STAGGER_TIMING.itemsAppear))
-
-    return () => timers.forEach(clearTimeout)
-  }, [isOpen, isInView, prefersReducedMotion])
-
-  return stage
-}
-
-type Breakpoint = 'mobile' | 'tablet' | 'desktop'
-
-function getBreakpoint(width: number): Breakpoint {
-  if (width >= 1024) return 'desktop'
-  if (width >= 640) return 'tablet'
-  return 'mobile'
-}
-
-// Detect viewport crossings between the homepage's three layout modes so the
-// resize feels acknowledged instead of snapping with no visual feedback.
-function useBreakpointChange() {
-  const [flash, setFlash] = useState(false)
-  const bpRef = useRef<Breakpoint | null>(null)
-
-  useEffect(() => {
-    const initial = getBreakpoint(window.innerWidth)
-    bpRef.current = initial
-
-    const observer = new ResizeObserver(([entry]) => {
-      const next = getBreakpoint(entry.contentRect.width)
-      if (bpRef.current !== null && next !== bpRef.current) {
-        bpRef.current = next
-        setFlash(true)
-        setTimeout(() => setFlash(false), 900)
-      } else {
-        bpRef.current = next
-      }
-    })
-
-    observer.observe(document.documentElement)
-    return () => observer.disconnect()
-  }, [])
-
-  return flash
-}
-
-// Keep the transition contextual. A light blur preserves the page underneath
-// better than a dark wash and stays aligned with the site's restrained palette.
-function CreatingLoader() {
-  const flash = useBreakpointChange()
+function Reveal({ children, delayMs = 0 }: { children: ReactNode; delayMs?: number }) {
   const prefersReducedMotion = useReducedMotion() ?? false
 
-  if (prefersReducedMotion) return null
-
   return (
-    <AnimatePresence>
-      {flash && (
-        <m.div
-          className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, ease: 'easeInOut' }}
-          style={{
-            background: 'rgba(var(--background-rgb), 0.16)',
-            backdropFilter: 'blur(14px) saturate(0.92)',
-            WebkitBackdropFilter: 'blur(14px) saturate(0.92)',
-          }}
-        >
-          <m.svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            initial={{ rotate: 0, opacity: 0, scale: 0.7 }}
-            animate={{ rotate: 360, opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{
-              rotate: { duration: 0.8, ease: 'linear', repeat: Infinity },
-              opacity: { duration: 0.18 },
-              scale: { duration: 0.22, ease: 'easeOut' },
-            }}
-          >
-            <circle
-              cx="16"
-              cy="16"
-              r="12"
-              stroke="var(--primary)"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeDasharray="56"
-              strokeDashoffset="40"
-              opacity="0.7"
-            />
-          </m.svg>
-        </m.div>
-      )}
-    </AnimatePresence>
-  )
-}
-
-const playgroundIconVariants = {
-  idle: { rotate: 0, scale: 1 },
-  hover: {
-    rotate: [0, -15, 10, -5, 0],
-    scale: 1.2,
-    transition: {
-      rotate: { duration: 0.5, ease: 'easeInOut' },
-      scale: MOTION_SPRING_BOUNCY,
-    },
-  },
-}
-
-function PlaygroundButton() {
-  const prefersReducedMotion = useReducedMotion() ?? false
-  const haptic = useWebHaptics()
-
-  return (
-    <m.a
-      href="/archive"
-      className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 min-h-[44px] text-[10px] font-medium tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-      aria-label="Open Playground"
-      title="Joy"
-      initial="idle"
-      whileHover={prefersReducedMotion ? undefined : 'hover'}
-      animate="idle"
-      whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
-      onClick={() => haptic.trigger('light')}
-      transition={MOTION_SPRING_SNAPPY}
-      variants={{ idle: { y: 0 }, hover: { y: -3 } }}
+    <m.div
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px 0px' }}
+      transition={{
+        duration: motionDurationMs(520, prefersReducedMotion),
+        delay: prefersReducedMotion ? 0 : delayMs / 1000,
+        ease: MOTION_EASE_SOFT,
+      }}
     >
-      <m.span
-        className="relative z-10"
-        variants={prefersReducedMotion ? undefined : playgroundIconVariants}
-      >
-        <IconGamepad2 size={13} aria-hidden />
-      </m.span>
-      <m.span
-        className="relative z-10"
-        variants={prefersReducedMotion ? undefined : {
-          idle: { letterSpacing: '0.06em' },
-          hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
-        }}
-      >
-        Playground
-      </m.span>
-    </m.a>
+      {children}
+    </m.div>
   )
 }
 
-export default function AnimatedHomePage({ children }: AnimatedHomePageProps) {
-  const isInitialLoad = useIsInitialLoad()
-  const [sectionOpen, setSectionOpen] = useState<SectionOpenState>(DEFAULT_SECTION_OPEN_STATE)
-  // Skip internal hero entrance on client-side nav — PageTransition handles it
-  const [heroTextStage, setHeroTextStage] = useState(2)
-  const [underlineRevealed, setUnderlineRevealed] = useState(false)
-  const haptic = useWebHaptics()
-  const prefersReducedMotion = useReducedMotion() ?? false
+function Section({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className="mx-auto max-w-[40rem] space-y-7">
+      <div className="space-y-3">
+        <div className="flex items-baseline gap-4 text-[0.85rem] tracking-[-0.02em] text-foreground/92">
+          <h2>{title}</h2>
+        </div>
+        <div className="h-px w-full bg-border/90" />
+      </div>
+      {children}
+    </section>
+  )
+}
 
-  const experiencePanelRef = useRef<HTMLDivElement>(null)
-  const educationPanelRef = useRef<HTMLDivElement>(null)
+function EditorialItem({
+  eyebrow,
+  href,
+  external = false,
+  title,
+  description,
+  trailing,
+  onMouseEnter,
+  onMouseLeave,
+  previewImage,
+  previewAlt,
+  previewVisible = false,
+  underlineOnHover = false,
+}: EditorialItemProps) {
+  const interactive = Boolean(href)
+  const content = (
+    <div
+      className={`group relative flex w-full items-start justify-between gap-6 rounded-[10px] px-3 py-3 transition-[transform,color,opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:-mx-3 sm:gap-10 ${
+        interactive ? 'hover:translate-x-[3px] hover:bg-foreground/[0.03]' : ''
+      }`}
+    >
+      <div className="min-w-0 space-y-1.5">
+        {eyebrow ? (
+          <p className="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-muted-foreground/70 transition-colors duration-300 group-hover:text-muted-foreground">
+            {eyebrow}
+          </p>
+        ) : null}
+        <p className="font-mono text-[1.02rem] leading-none tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-foreground/86">
+          <span
+            className={
+              underlineOnHover
+                ? 'inline-block bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]'
+                : 'inline-block'
+            }
+          >
+            {title}
+          </span>
+        </p>
+        <p className="max-w-[44rem] font-mono text-[0.96rem] leading-[1.65] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72">
+          {description}
+        </p>
+      </div>
+      {trailing ? (
+        <span className="shrink-0 pt-0.5 font-mono text-[0.84rem] text-muted-foreground/75 transition-[transform,color] duration-300 group-hover:translate-x-[2px] group-hover:text-foreground/72">
+          {trailing}
+        </span>
+      ) : null}
 
-  const isExperienceInView = useInView(experiencePanelRef, { once: true, margin: '-120px 0px -120px 0px' })
-  const isEducationInView = useInView(educationPanelRef, { once: true, margin: '-120px 0px -120px 0px' })
+      <AnimatePresence initial={false}>
+        {previewImage && previewVisible ? (
+          <m.div
+            className="pointer-events-none absolute left-[calc(100%+1.75rem)] top-1/2 z-20 hidden w-[220px] -translate-y-1/2 overflow-hidden rounded-[8px] border border-border/80 bg-card shadow-[0_18px_44px_rgba(15,23,42,0.12)] xl:block"
+            initial={{ opacity: 0, x: -10, scale: 0.975, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, x: -8, scale: 0.985, filter: 'blur(8px)' }}
+            transition={{
+              opacity: { duration: 0.28, ease: MOTION_EASE_SOFT },
+              x: { duration: 0.34, ease: MOTION_EASE_SOFT },
+              scale: { duration: 0.34, ease: MOTION_EASE_SOFT },
+              filter: { duration: 0.34, ease: MOTION_EASE_SOFT },
+            }}
+          >
+            <Image
+              src={previewImage}
+              alt={previewAlt ?? title}
+              width={440}
+              height={330}
+              className="h-auto w-full object-cover"
+              sizes="220px"
+              priority={false}
+            />
+            <div className="border-t border-border/80 px-4 py-3">
+              <p className="font-mono text-[0.84rem] text-foreground">{title}</p>
+            </div>
+          </m.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  )
 
-  const experienceStage = useSectionStage(sectionOpen.experience, isExperienceInView, prefersReducedMotion)
-  const educationStage = useSectionStage(sectionOpen.education, isEducationInView, prefersReducedMotion)
+  if (!href) return content
 
-  useEffect(() => {
-    if (isInitialLoad) return
-    if (prefersReducedMotion) {
-      setHeroTextStage(2)
-      return
-    }
-
-    setHeroTextStage(0)
-    const timers: Array<ReturnType<typeof setTimeout>> = []
-    timers.push(setTimeout(() => setHeroTextStage(1), HERO_ENTRANCE.textPanelDelay))
-    timers.push(setTimeout(() => setHeroTextStage(2), HERO_ENTRANCE.textItemsDelay))
-
-    return () => timers.forEach(clearTimeout)
-  }, [isInitialLoad, prefersReducedMotion])
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    const openSectionForHref = (href: string) => {
-      const sectionKey = HREF_TO_SECTION_KEY[href]
-      if (!sectionKey) {
-        return
-      }
-
-      setSectionOpen((prev) => {
-        if (prev[sectionKey]) {
-          return prev
-        }
-
-        return { ...prev, [sectionKey]: true }
-      })
-    }
-
-    const handleSectionNavigate = (event: Event) => {
-      const detail = (event as CustomEvent<SectionNavigateDetail>).detail
-      if (detail?.href) {
-        openSectionForHref(detail.href)
-      }
-    }
-
-    const handleHashChange = () => {
-      if (window.location.hash) {
-        openSectionForHref(window.location.hash)
-      }
-    }
-
-    window.addEventListener(SECTION_NAV_EVENT, handleSectionNavigate as EventListener)
-    window.addEventListener('hashchange', handleHashChange)
-
-    handleHashChange()
-
-    return () => {
-      window.removeEventListener(SECTION_NAV_EVENT, handleSectionNavigate as EventListener)
-      window.removeEventListener('hashchange', handleHashChange)
-    }
-  }, [])
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="block rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
+        {content}
+      </a>
+    )
+  }
 
   return (
-    <div className="relative isolate overflow-hidden">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[23rem] sm:h-[30rem]"
-      >
-        <div className="hero-sky" />
-      </div>
+    <Link
+      href={href}
+      className="block rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      {content}
+    </Link>
+  )
+}
 
-      <div className="container relative z-10 mx-auto max-w-7xl px-4 py-6 sm:py-8">
-      <div className="relative">
-      <CreatingLoader />
-      <section className={`relative pb-8 sm:pb-10 pt-20 sm:pt-28${isInitialLoad ? '' : ' animate-fade-in'}`} suppressHydrationWarning>
-        <div className="mx-auto max-w-[760px] hero-section relative z-10 px-4 sm:px-6 lg:px-0">
-          <m.a
-            href="/about"
-            className="hero-handwritten-preview cursor-pointer focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 inline-block mb-8"
-            initial="idle"
-            whileHover="hover"
-          >
-            <span className="hero-handwritten-text hero-handwritten-text--no-underline font-handscript">
-              <TextReveal
-                text={homeHeroContent.handwrittenNote}
-                as="span"
-                trigger={heroTextStage >= 1}
-                duration={0.5}
-                staggerDelay={0.06}
-                startDelay={0.1}
-                filter
-              />
-              <m.span
-                className="inline select-none ml-1.5"
-                onClick={() => haptic.trigger('soft')}
-                style={{ display: 'inline-flex', verticalAlign: 'text-top', position: 'relative', top: '-0.05em' }}
-                variants={{
-                  idle: {
-                    rotate: 0,
-                    scale: [null, 1.15, 1],
-                    filter: [null, 'drop-shadow(0 0 10px rgba(255, 200, 50, 0.7))', 'drop-shadow(0 0 0px transparent)'],
-                    transition: {
-                      rotate: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-                      scale: { duration: 0.6, times: [0, 0.3, 1], ease: 'easeOut' },
-                      filter: { duration: 0.8, times: [0, 0.25, 1], ease: 'easeOut' },
-                    },
-                  },
-                  hover: {
-                    rotate: 360,
-                    scale: 1.2,
-                    filter: 'drop-shadow(0 0 6px rgba(255, 200, 50, 0.5))',
-                    transition: { rotate: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }, scale: { type: 'spring', stiffness: 300, damping: 15 }, filter: { duration: 0.3 } },
-                  },
-                }}
-                aria-hidden
-              >
-                <Sun size={16} strokeWidth={2} className="text-accent" />
-              </m.span>
-              <m.svg
-                className="hero-ink-underline"
-                viewBox="0 0 200 6"
-                fill="none"
-                preserveAspectRatio="none"
-                aria-hidden
-              >
-                <m.path
-                  d="M1 3.5C20 2.2 40 4.8 60 3.1C80 1.4 100 4.6 120 3.3C140 2 160 4.2 180 3C190 2.4 197 3.8 199 3.2"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={underlineRevealed ? { pathLength: 1, opacity: 1 } : undefined}
-                  variants={underlineRevealed ? undefined : {
-                    idle: {
-                      pathLength: 0,
-                      opacity: 0,
-                    },
-                    hover: {
-                      pathLength: 1,
-                      opacity: 1,
-                      strokeWidth: [1, 1.5, 1],
-                      transition: {
-                        pathLength: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-                        opacity: { duration: 0.12 },
-                        strokeWidth: { duration: 0.8, ease: 'easeInOut' },
-                      },
-                    },
-                  }}
-                  onAnimationComplete={(variant) => {
-                    if (variant === 'hover') setUnderlineRevealed(true)
-                  }}
-                />
-              </m.svg>
-            </span>
-          </m.a>
-
-          <div className="grid items-start gap-8 md:grid-cols-[176px_minmax(0,1fr)] md:gap-12">
-            <m.div
-              className="flex items-start gap-3 sm:items-center sm:gap-4 md:flex-col md:items-start md:gap-5"
-              initial={isInitialLoad ? false : {
-                opacity: STAGGER_ITEM.initialOpacity,
-                y: STAGGER_ITEM.initialY,
-                scale: 0.94,
-                filter: 'blur(6px)',
-              }}
-              animate={{ opacity: STAGGER_ITEM.finalOpacity, y: STAGGER_ITEM.finalY, scale: 1, filter: 'blur(0px)' }}
-              transition={{
-                duration: motionDurationMs(HERO_ENTRANCE.duration, prefersReducedMotion),
-                delay: motionDelayMs(HERO_ENTRANCE.profileDelay, prefersReducedMotion),
-                ease: STAGGER_PANEL.ease,
-              }}
-            >
-              <div className="shrink-0 mask mask-squircle p-[2px] shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.03]" style={{ background: 'var(--border)' }}>
-                <Image
-                  src="/images/profilepicture.webp"
-                  alt="Hunter Bastian"
-                  width={108}
-                  height={108}
-                  className="h-20 w-20 mask mask-squircle object-cover sm:h-[92px] sm:w-[92px] md:h-[108px] md:w-[108px]"
-                  sizes="(min-width: 768px) 108px, 92px"
-                  priority
-                />
-              </div>
-              <div className="min-w-0">
-                <h1
-                  className="text-balance text-foreground font-mono font-semibold text-[14px] leading-[1.15] tracking-[0.02em]"
-                >
-                  {homeHeroContent.headline}
-                </h1>
-                <p className="mt-1 font-mono text-[10px] font-normal tracking-[0.12em] text-muted-foreground/70">
-                  {homeHeroContent.subtitle}
-                </p>
-              </div>
-            </m.div>
-
-            <m.div
-            className="hero-bio mt-0 mb-12"
-            initial={isInitialLoad ? false : {
-              opacity: STAGGER_PANEL.initialOpacity,
-              y: STAGGER_PANEL.initialY,
-              filter: 'blur(6px)',
-            }}
-            animate={{
-              opacity: heroTextStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
-              y: heroTextStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-              filter: heroTextStage >= 1 ? 'blur(0px)' : 'blur(6px)',
-            }}
-            transition={{
-              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
-              ease: STAGGER_PANEL.ease,
-            }}
-          >
-            <p className="m-0 max-w-[38rem] text-pretty font-inter text-[14px] leading-[1.9] text-muted-foreground sm:text-[16px]">
-              <TextReveal
-                text={heroLede}
-                as="span"
-                className="hero-bio-headline font-medium text-foreground/90"
-                trigger={heroTextStage >= 2}
-                duration={0.5}
-                staggerDelay={0.04}
-                startDelay={0.1}
-              />
-            </p>
-            <p className="m-0 mt-4 max-w-[40rem] text-pretty font-inter text-[14px] leading-[1.85] text-muted-foreground sm:text-[15px]">
-              <TextReveal
-                text={heroBody}
-                as="span"
-                trigger={heroTextStage >= 2}
-                duration={0.5}
-                staggerDelay={0.04}
-                startDelay={0.45}
-              />
-            </p>
-            <m.div
-              className="mt-7"
-              initial={isInitialLoad ? false : { opacity: 0, y: 8 }}
-              animate={{
-                opacity: heroTextStage >= 2 ? 1 : 0,
-                y: heroTextStage >= 2 ? 0 : 8,
-              }}
-              transition={{
-                duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
-                delay: motionDelayMs(200, prefersReducedMotion),
-                ease: STAGGER_PANEL.ease,
-              }}
-            >
-              <div className="inline-block">
-                <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
-                  <m.a
-                    href="#contact"
-                    className="playground-joy group/contact relative overflow-hidden inline-flex items-center gap-2 rounded-[8px] px-5 py-2.5 min-h-[44px] text-[10px] font-medium tracking-[0.1em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      haptic.trigger('light')
-                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-                    }}
-                    initial="idle"
-                    whileHover={prefersReducedMotion ? undefined : 'hover'}
-                    animate="idle"
-                    whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
-                    transition={MOTION_SPRING_SNAPPY}
-                    variants={{ idle: { y: 0 }, hover: { y: -3 } }}
-                  >
-                    <m.span
-                      className="relative z-10"
-                      variants={prefersReducedMotion ? undefined : {
-                        idle: { letterSpacing: '0.06em' },
-                        hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
-                      }}
-                    >
-                      Contact
-                    </m.span>
-                    <m.span
-                      className="relative z-10"
-                      variants={prefersReducedMotion ? undefined : {
-                        idle: { rotate: 0, scale: 1 },
-                        hover: {
-                          rotate: [0, -15, 10, -5, 0],
-                          scale: 1.2,
-                          transition: {
-                            rotate: { duration: 0.5, ease: 'easeInOut' },
-                            scale: MOTION_SPRING_BOUNCY,
-                          },
-                        },
-                      }}
-                    >
-                      <ArrowDown size={13} aria-hidden />
-                    </m.span>
-                  </m.a>
-                </Magnetic>
-              </div>
-            </m.div>
-            </m.div>
-          </div>
-
-        </div>
-      </section>
-
-      <CollapsibleSection
-        id="case-studies"
-        title="PROJECTS"
-        kind="work"
-        isOpen={sectionOpen.caseStudies}
-        initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.caseStudies}
-        skipContentStaging
-        className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-12"
-        closedClassName="py-6"
-        contentClassName="mt-6 px-0 pb-8 space-y-8"
-      >
-        <m.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px 0px' }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+function ContactLinks({}: ContactLinksProps) {
+  return (
+    <div className="flex flex-wrap gap-x-6 gap-y-3">
+      {contactSocialLinks.map((link) => (
+        <a
+          key={link.label}
+          href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noreferrer' : undefined}
+          className="min-h-[40px] font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
         >
-          <Card className="mx-auto max-w-[980px] px-0 sm:px-0 overflow-visible border-none bg-transparent shadow-none" size="sm">
-            {children}
-          </Card>
-        </m.div>
-        <div className="flex justify-start mx-auto max-w-[980px] pt-6">
-          <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
-            <PlaygroundButton />
-          </Magnetic>
-        </div>
-      </CollapsibleSection>
+          {link.label}
+        </a>
+      ))}
+    </div>
+  )
+}
 
-      <div className="mx-auto max-w-[760px] px-4 sm:px-6 lg:px-0 flex justify-center py-6">
-        <PixelDivider className="text-muted-foreground/35" />
-      </div>
+export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
+  const projectRows = getProjectRows(projects)
+  const introParagraphs = homeHeroContent.intro.split('\n\n')
+  const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null)
+  const playgroundGlowActive = hoveredProjectSlug === 'playground'
 
-      <CollapsibleSection
-        id="creating"
-        title="ENDEAVORS"
-        kind="games"
-        isOpen={sectionOpen.creating}
-        initialLoadDelayMs={INITIAL_SECTION_LOAD_DELAY.creating}
-        className="px-4 sm:px-6 lg:px-0 relative z-10"
-        openClassName="py-12"
-        closedClassName="py-6"
-        contentClassName="mt-6 pb-8"
-      >
-        <div className="mx-auto max-w-[760px] text-left">
-          <ul className="space-y-3">
-            {creatingLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  target={link.external ? '_blank' : undefined}
-                  rel={link.external ? 'noopener noreferrer' : undefined}
-                  className="group inline-flex items-center gap-2 text-sm tracking-[0.06em] text-muted-foreground transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent min-h-[44px]"
-                  aria-label={link.ariaLabel ?? link.label}
-                  title={link.title ?? link.label}
+  return (
+    <div className="px-5 pb-24 sm:px-8 sm:pb-32">
+      <div className="mx-auto max-w-[48rem] pt-20 sm:pt-28">
+        <Reveal>
+          <section className="space-y-8">
+            <div className="mx-auto max-w-[40rem] space-y-7">
+              <div className="space-y-4">
+                <div
+                  className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
+                  style={{ background: 'var(--border)' }}
                 >
-                  <span className="underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[text-decoration-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:decoration-accent">{link.label}</span>
-                  {link.iconType === 'handshake' && (
-                    <IconHandshake size={13} className="shrink-0 opacity-50 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:scale-110 group-hover:blur-[0.3px]" aria-hidden />
-                  )}
-                  {link.iconType === 'studio-alpine' && (
-                    <Image
-                      src="/images/optimized/studio-alpine-logo.webp"
-                      alt=""
-                      width={50}
-                      height={50}
-                      className="h-[35px] w-[35px] shrink-0 dark:invert -ml-1 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110 group-hover:rotate-3"
-                      aria-hidden
+                  <Image
+                    src="/images/profilepicture.webp"
+                    alt="Outdoor photograph of Hunter Bastian walking along a mountain road."
+                    width={75}
+                    height={75}
+                    priority
+                    className="mask mask-squircle object-cover img-inset-outline transition-[filter,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:brightness-[1.02]"
+                    sizes="75px"
+                  />
+                </div>
+
+                <div className="space-y-0.5">
+                  <p className="font-mono text-[1.05rem] tracking-[-0.03em] text-foreground/92">
+                    {homeHeroContent.headline}
+                  </p>
+                  <p className="font-mono text-[0.98rem] tracking-[-0.02em] text-muted-foreground">
+                    {homeHeroContent.subtitle}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-5">
+                {introParagraphs.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="max-w-[36rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem]"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section>
+        </Reveal>
+
+        <div className="mt-20 space-y-16 sm:mt-24 sm:space-y-20">
+          <Reveal delayMs={40}>
+            <Section title="Projects">
+              <div className="relative xl:max-w-[36rem]">
+                <AnimatePresence initial={false}>
+                  {playgroundGlowActive ? (
+                    <m.div
+                      className="pointer-events-none absolute left-[-54%] top-[60%] z-0 h-[22rem] w-[210%] opacity-90 blur-[58px]"
+                      initial={{ opacity: 0, scale: 0.94 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.97 }}
+                      transition={{
+                        opacity: { duration: 0.44, ease: MOTION_EASE_SOFT },
+                        scale: { duration: 0.62, ease: MOTION_EASE_SOFT },
+                      }}
+                      style={{
+                        background:
+                          'radial-gradient(ellipse at 24% 48%, rgba(255, 154, 64, 0.48) 0%, rgba(255, 170, 86, 0.28) 20%, rgba(255, 188, 118, 0.14) 36%, rgba(255, 212, 168, 0.05) 52%, transparent 72%), radial-gradient(ellipse at 42% 58%, rgba(255, 185, 120, 0.16) 0%, rgba(255, 205, 152, 0.08) 28%, transparent 56%)',
+                      }}
                     />
-                  )}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </CollapsibleSection>
-      </div>
+                  ) : null}
+                </AnimatePresence>
 
-      <div className="mx-auto max-w-[760px] px-4 sm:px-6 lg:px-0">
-        <Separator className="bg-border/40" />
-      </div>
-
-      <CollapsibleSection
-        id="experience"
-        title="EXPERIENCE"
-        kind="work"
-        isOpen={sectionOpen.experience}
-        className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-12"
-        closedClassName="py-6"
-        contentClassName="mt-6 pb-8"
-      >
-        <div className="mx-auto max-w-[760px]">
-          <MotionCard
-            ref={experiencePanelRef}
-            className="border-none bg-transparent p-0 shadow-none space-y-0 overflow-visible"
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
-            animate={{
-              opacity: experienceStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
-              y: experienceStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-            }}
-            transition={{
-              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
-              ease: STAGGER_PANEL.ease,
-            }}
-          >
-            {experienceItems.map((job, index) => {
-              const displayYear = splitExperienceYear(job.year)
-              return (
-                <m.div
-                  key={`${job.company}-${index}`}
-                  className="grid gap-4 border-t border-border/50 py-7 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-10 sm:py-8"
-                  initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                  animate={{
-                    opacity: experienceStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                    y: experienceStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                  }}
-                  transition={{
-                    duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                    delay: experienceStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
-                    ease: STAGGER_PANEL.ease,
-                  }}
-                >
-                  <div className="font-mono text-[10px] font-normal tracking-[0.12em] text-muted-foreground/70 tabular-nums sm:pt-0.5">
-                    <span className="block whitespace-nowrap">{displayYear.primary}</span>
-                    {displayYear.secondary && (
-                      <span className="mt-0.5 block whitespace-nowrap leading-tight text-muted-foreground/70">
-                        {displayYear.secondary}
-                      </span>
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/70">
-                      {job.title}
-                    </p>
-                    <h3 className="text-[14px] font-medium tracking-[0.01em] text-foreground">
-                      {job.company}
-                    </h3>
-                    <p className="mt-3 max-w-[36rem] font-inter text-[14px] leading-[1.8] text-muted-foreground">
-                      {job.description}
-                    </p>
-                  </div>
-                </m.div>
-              )
-            })}
-          </MotionCard>
-        </div>
-      </CollapsibleSection>
-
-      <div className="mx-auto max-w-[760px] px-4 sm:px-6 lg:px-0">
-        <Separator className="bg-border/40" />
-      </div>
-
-      <CollapsibleSection
-        id="education"
-        title="EDUCATION"
-        kind="writing"
-        isOpen={sectionOpen.education}
-        className="px-4 sm:px-6 lg:px-0"
-        openClassName="py-12"
-        closedClassName="py-6"
-        contentClassName="mt-6 pb-8"
-      >
-        <div className="mx-auto max-w-[760px]">
-          <MotionCard
-            ref={educationPanelRef}
-            className="border-none bg-transparent p-0 shadow-none space-y-0 overflow-visible"
-            initial={{ opacity: STAGGER_PANEL.initialOpacity, y: STAGGER_PANEL.initialY }}
-            animate={{
-              opacity: educationStage >= 1 ? STAGGER_PANEL.finalOpacity : STAGGER_PANEL.initialOpacity,
-              y: educationStage >= 1 ? STAGGER_PANEL.finalY : STAGGER_PANEL.initialY,
-            }}
-            transition={{
-              duration: motionDurationMs(STAGGER_TIMING.panelDuration, prefersReducedMotion),
-              ease: STAGGER_PANEL.ease,
-            }}
-          >
-            {educationItems.map((edu, index) => (
-              <m.div
-                key={edu.institution}
-                className="grid gap-4 border-t border-border/50 py-7 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-10 sm:py-8"
-                initial={{ opacity: STAGGER_ITEM.initialOpacity, y: STAGGER_ITEM.initialY }}
-                animate={{
-                  opacity: educationStage >= 2 ? STAGGER_ITEM.finalOpacity : STAGGER_ITEM.initialOpacity,
-                  y: educationStage >= 2 ? STAGGER_ITEM.finalY : STAGGER_ITEM.initialY,
-                }}
-                transition={{
-                  duration: motionDurationMs(STAGGER_TIMING.itemDuration, prefersReducedMotion),
-                  delay: educationStage >= 2 ? motionDelayMs(index * STAGGER_TIMING.itemStagger, prefersReducedMotion) : 0,
-                  ease: STAGGER_PANEL.ease,
-                }}
-              >
-                <div className="font-mono text-[10px] font-normal tracking-[0.12em] text-muted-foreground/70 tabular-nums sm:pt-0.5">
-                  {edu.year}
+                <div className="relative z-10 space-y-5">
+                {projectRows.map((project) => (
+                  <EditorialItem
+                    key={project.slug}
+                    href={`/projects/${project.slug}`}
+                    title={project.frontmatter.displayTitle || project.frontmatter.title}
+                    description={project.frontmatter.description}
+                    trailing={formatYear(project.frontmatter.date)}
+                    onMouseEnter={() => setHoveredProjectSlug(project.slug)}
+                    onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
+                    previewImage={project.frontmatter.image}
+                    previewAlt={project.frontmatter.displayTitle || project.frontmatter.title}
+                    previewVisible={hoveredProjectSlug === project.slug}
+                    underlineOnHover
+                  />
+                ))}
+                <EditorialItem
+                  href="/archive"
+                  title="Playground"
+                  description="Smaller creative coding experiments, prototypes, and side explorations that do not need the full case-study treatment."
+                  trailing="See more"
+                  onMouseEnter={() => setHoveredProjectSlug('playground')}
+                  onMouseLeave={() => setHoveredProjectSlug((current) => (current === 'playground' ? null : current))}
+                  underlineOnHover
+                />
                 </div>
-                <div className="min-w-0">
-                  <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/70">
-                    {edu.level}
-                  </p>
-                  <h3 className="text-[14px] font-medium tracking-[0.01em] text-foreground">
-                    {edu.institution}
-                  </h3>
-                  <p className="mt-2 font-inter text-[14px] leading-[1.75] text-muted-foreground">
-                    {edu.degree}
-                  </p>
-                  {edu.note && (
-                    <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/70">
-                      {edu.note}
-                    </p>
-                  )}
+              </div>
+            </Section>
+          </Reveal>
+
+          <Reveal delayMs={80}>
+            <Section title="Endeavors">
+              <div className="space-y-5">
+                {creatingLinks.map((link) => (
+                  <EditorialItem
+                    key={link.label}
+                    href={link.href}
+                    external={link.external}
+                    title={link.label}
+                    description={
+                      link.label === 'Studio Alpine'
+                        ? 'Photography, image-making, and visual experiments shaped outside of client work.'
+                        : 'Open for freelance and collaborative projects across design, interfaces, and creative web work.'
+                    }
+                    underlineOnHover
+                  />
+                ))}
+              </div>
+            </Section>
+          </Reveal>
+
+          <Reveal delayMs={120}>
+            <Section title="Experience">
+              <div className="space-y-5">
+                {experienceItems.map((item) => (
+                  <EditorialItem
+                    key={`${item.company}-${item.year}`}
+                    eyebrow={item.year}
+                    title={`${item.title} — ${item.company}`}
+                    description={item.description}
+                  />
+                ))}
+              </div>
+            </Section>
+          </Reveal>
+
+          <Reveal delayMs={160}>
+            <Section title="Education">
+              <div className="space-y-5">
+                {educationItems.map((item) => (
+                  <EditorialItem
+                    key={`${item.institution}-${item.year}`}
+                    eyebrow={item.year}
+                    title={`${item.degree} — ${item.institution}`}
+                    description={item.note ? `${item.level}. ${item.note}.` : item.level}
+                  />
+                ))}
+              </div>
+            </Section>
+          </Reveal>
+
+          <Reveal delayMs={200}>
+            <Section title="Contact">
+              <div className="relative space-y-6">
+                <div
+                  className="pointer-events-none absolute left-[-56%] top-[18%] z-0 h-[20rem] w-[215%] opacity-90 blur-[58px]"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse at 20% 78%, rgba(255, 154, 64, 0.46) 0%, rgba(255, 170, 86, 0.28) 22%, rgba(255, 188, 118, 0.14) 38%, rgba(255, 212, 168, 0.05) 54%, transparent 74%), radial-gradient(ellipse at 42% 64%, rgba(255, 185, 120, 0.14) 0%, rgba(255, 205, 152, 0.06) 28%, transparent 56%)',
+                  }}
+                />
+
+                <div className="relative z-10 space-y-6">
+                <p className="max-w-[38rem] font-mono text-[1rem] leading-[1.7] text-muted-foreground">
+                  If something here resonates, reach out.
+                </p>
+                <ContactLinks />
                 </div>
-              </m.div>
-            ))}
-          </MotionCard>
+              </div>
+            </Section>
+          </Reveal>
         </div>
-      </CollapsibleSection>
-
-      <div className="mx-auto max-w-[760px] px-4 sm:px-6 lg:px-0 flex justify-center py-6">
-        <PixelDivider className="text-muted-foreground/35" />
       </div>
 
-      <CollapsibleSection
-        id="contact"
-        title="CONTACT"
-        kind="contact"
-        isOpen={sectionOpen.contact}
-        className="px-4 sm:px-6 lg:px-0"
-        openClassName="pt-12 pb-20 sm:pb-24"
-        closedClassName="py-6"
-        contentClassName="mt-6"
-      >
-        <div className="mx-auto max-w-[760px]">
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-4 font-mono text-[12px] font-normal tracking-[0.02em] sm:gap-x-6 sm:gap-y-3 sm:text-[13px]">
-            {contactSocialLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noopener noreferrer' : undefined}
-                className="text-[12px] text-muted-foreground/70 underline decoration-muted-foreground/30 underline-offset-4 decoration-[1px] transition-[color,opacity,text-decoration-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:decoration-accent hover:-translate-y-[2px] hover:opacity-100 inline-flex items-center min-h-[44px] min-w-[44px] justify-center"
-                aria-label={link.label}
-                title={link.label}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </CollapsibleSection>
-
-      </div>
     </div>
   )
 }

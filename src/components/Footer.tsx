@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer className="px-5 pb-10 pt-20 sm:px-8 sm:pb-14">
-      <div className="mx-auto max-w-[48rem] border-t border-border/80 pt-5">
+      <div className="mx-auto max-w-[40rem] border-t border-border/80 pt-5">
         <div className="flex flex-col gap-2 text-[0.76rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p className="transition-colors duration-150 hover:text-foreground/78">© {currentYear} Hunter Bastian</p>
           <p className="font-mono transition-colors duration-150 hover:text-foreground/78 inline-flex items-center gap-2">

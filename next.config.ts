@@ -68,6 +68,34 @@ const nextConfig: NextConfig = {
   
   // Headers for optimal caching strategy
   async headers() {
+    const sharedHeaders = [
+      // API routes - No cache
+      {
+        source: '/api/:all*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store',
+          },
+        ],
+      },
+      // Security headers
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'geolocation=(), microphone=(), camera=(), interest-cohort=()' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+        ],
+      },
+    ]
+
+    if (process.env.NODE_ENV !== 'production') {
+      return sharedHeaders
+    }
+
     return [
       // HTML routes - edge cache with short TTL + SWR for faster repeat visits
       {
@@ -129,27 +157,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      // API routes - No cache
-      {
-        source: '/api/:all*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'no-store',
-          },
-        ],
-      },
-      // Security headers
-      {
-        source: '/:path*',
-        headers: [
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'geolocation=(), microphone=(), camera=(), interest-cohort=()' },
-          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
-        ],
-      },
+      ...sharedHeaders,
     ]
   },
 }

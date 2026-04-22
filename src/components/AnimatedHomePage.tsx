@@ -76,7 +76,7 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <section className="mx-auto max-w-[40rem] space-y-7">
+    <section className="space-y-7">
       <div className="space-y-3">
         <div className="flex items-baseline gap-4 text-[0.85rem] tracking-[-0.02em] text-foreground/92">
           <h2>{title}</h2>
@@ -223,10 +223,10 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
   return (
     <div className="px-5 pb-24 sm:px-8 sm:pb-32">
-      <div className="mx-auto max-w-[48rem] pt-20 sm:pt-28">
+      <div className="mx-auto max-w-[40rem] pt-20 sm:pt-28">
         <Reveal>
           <section className="space-y-8">
-            <div className="mx-auto max-w-[40rem] space-y-7">
+            <div className="space-y-7">
               <div className="space-y-4">
                 <div
                   className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
@@ -257,7 +257,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 {introParagraphs.map((paragraph) => (
                   <p
                     key={paragraph}
-                    className="max-w-[36rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem]"
+                    className="max-w-[35rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem]"
                   >
                     {paragraph}
                   </p>
@@ -270,7 +270,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
         <div className="mt-20 space-y-16 sm:mt-24 sm:space-y-20">
           <Reveal delayMs={40}>
             <Section title="Projects">
-              <div className="relative xl:max-w-[36rem]">
+              <div className="relative">
                 <AnimatePresence initial={false}>
                   {playgroundGlowActive ? (
                     <m.div

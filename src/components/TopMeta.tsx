@@ -36,7 +36,7 @@ export default function TopMeta() {
 
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-40 px-5 py-4 sm:px-8 sm:py-6">
-      <div className="pointer-events-auto mx-auto flex max-w-[48rem] items-start justify-between gap-6">
+      <div className="pointer-events-auto mx-auto flex max-w-[40rem] items-start justify-between gap-6">
         <Link
           href="/"
           className="min-h-[40px] inline-flex items-center gap-2 text-[0.9rem] tracking-[-0.03em] text-foreground/88 transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground"

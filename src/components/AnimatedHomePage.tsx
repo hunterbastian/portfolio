@@ -220,7 +220,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
   return (
     <div className="px-5 pb-24 sm:px-8 sm:pb-32">
-      <div className="mx-auto max-w-[40rem] pt-20 sm:pt-28">
+      <div className="mx-auto max-w-[36rem] pt-20 sm:pt-28">
         <Reveal>
           <section className="space-y-8">
             <div className="space-y-7">
@@ -254,7 +254,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 {introParagraphs.map((paragraph) => (
                   <p
                     key={paragraph}
-                    className="max-w-[35rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem]"
+                    className="max-w-[31rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem]"
                   >
                     {paragraph}
                   </p>

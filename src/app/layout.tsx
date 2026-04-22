@@ -156,6 +156,7 @@ export default function RootLayout({
         }} />
       </head>
       <body
+        suppressHydrationWarning
         className={`${GeistPixelSquare.className} ${GeistSans.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',

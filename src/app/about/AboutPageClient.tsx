@@ -26,7 +26,7 @@ export default function AboutPageClient() {
         </div>
 
         <div className="relative z-10 flex justify-center pb-32 pt-16 sm:pt-24">
-          <div className="flex max-w-[38rem] flex-col items-center text-center">
+          <div className="flex max-w-[42rem] flex-col items-center text-center">
             {/* --- Profile --- */}
             <div className="mask mask-squircle p-[2px] shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.06]" style={{ background: 'var(--border)' }}>
               <Image
@@ -51,7 +51,7 @@ export default function AboutPageClient() {
               />
             </h1>
 
-            <p className="mt-5 max-w-[38rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-muted-foreground">
+            <p className="mt-5 max-w-[40rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-muted-foreground">
               <TextReveal
                 text="Interaction design student at Utah Valley University. I design and build digital products with care, photograph the world in between, and spend a lot of time shooting with my Fujifilm X100VI."
                 as="span"

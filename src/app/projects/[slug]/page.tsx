@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
-import Link from 'next/link'
 import { getAllProjects, getProjectBySlug } from '@/lib/projects'
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'

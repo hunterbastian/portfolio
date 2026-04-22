@@ -193,7 +193,6 @@ const ShaderPlane: React.FC<ShaderPlaneProps> = ({
       u_waveWidth: { value: waveWidth },
       u_scale: { value: scale },
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

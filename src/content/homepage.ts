@@ -73,7 +73,7 @@ export const experienceItems: ExperienceItem[] = [
     year: '2024 - Present',
     company: 'Catapult',
     title: 'Video Producer',
-    description: 'Produced and edit marketing and product videos for Catapult.',
+    description: 'Produced and edited marketing and product videos for Catapult.',
   },
   {
     year: '2024 - Present',
@@ -90,7 +90,7 @@ export const experienceItems: ExperienceItem[] = [
   },
   {
     year: '2017',
-    company: 'Clutch.',
+    company: 'Clutch',
     title: 'Digital Design Intern',
     description:
       'At Clutch, I helped with design branding and further improved my knowledge about the UX design process.',

@@ -20,8 +20,8 @@ export default function AboutPageClient() {
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.15] dark:opacity-[0.08] about-page-glow"
         aria-hidden="true"
       />
-      <div className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mb-10 sm:mb-14 flex justify-start pt-4 sm:pt-6">
+      <div className="relative z-10 mx-auto max-w-[40rem] px-5 sm:px-8">
+        <div className="mb-10 flex justify-start pt-4 sm:mb-14 sm:pt-6">
           <BreadcrumbPill href="/" parentLabel="Home" currentLabel="About" />
         </div>
 

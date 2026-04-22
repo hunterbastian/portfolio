@@ -1,7 +1,6 @@
 'use client'
 
 import { createElement, useEffect } from 'react'
-import ArcSigilLoader from './ArcSigilLoader'
 import UnicodeLoader from './UnicodeLoader'
 
 // LDRS loader types

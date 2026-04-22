@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import ArcSigilLoader from '@/components/ArcSigilLoader'
-import { siteConfig, sitePortfolioName } from '@/lib/site'
+import { sitePortfolioName } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: `Logo | ${sitePortfolioName}`,

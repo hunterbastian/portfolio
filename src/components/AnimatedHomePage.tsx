@@ -38,9 +38,6 @@ interface EditorialItemProps {
   underlineOnHover?: boolean
 }
 
-interface ContactLinksProps {
-}
-
 function formatYear(date: string) {
   return new Date(date).getFullYear().toString()
 }
@@ -197,7 +194,7 @@ function EditorialItem({
   )
 }
 
-function ContactLinks({}: ContactLinksProps) {
+function ContactLinks() {
   return (
     <div className="flex flex-wrap gap-x-6 gap-y-3">
       {contactSocialLinks.map((link) => (

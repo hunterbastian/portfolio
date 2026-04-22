@@ -47,7 +47,7 @@ export default function ProjectTransitionOverlay() {
       setPhase('hold')
       phaseRef.current = 'hold'
     }
-  }, [transition?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [transition?.id])
 
   // Start flying when target rect arrives
   useEffect(() => {
@@ -72,7 +72,7 @@ export default function ProjectTransitionOverlay() {
       }, HOLD_TIMEOUT_MS)
       return () => clearTimeout(timer)
     }
-  }, [transition?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [transition?.id])
 
   // Clear if user navigates away from the target page
   useEffect(() => {

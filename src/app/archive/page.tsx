@@ -31,7 +31,7 @@ export default function ArchivePage() {
     <div className="relative h-[100dvh]">
       {/* Breadcrumb — matches About page positioning */}
       <div className="absolute top-0 left-0 right-0 z-30">
-        <div className="container mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6">
+        <div className="mx-auto max-w-[40rem] px-5 pt-4 sm:px-8 sm:pt-6">
           <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Playground" />
         </div>
       </div>

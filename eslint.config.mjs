@@ -57,7 +57,7 @@ export default [
 
   // Node.js scripts
   {
-    files: ["scripts/**/*.js"],
+    files: ["scripts/**/*.{js,mjs,cjs}"],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -87,6 +87,9 @@ export default [
     ignores: [
       "node_modules/**",
       ".next/**",
+      ".agents/**",
+      ".claude/**",
+      ".codex-tmp/**",
       "out/**",
       "build/**",
     ],

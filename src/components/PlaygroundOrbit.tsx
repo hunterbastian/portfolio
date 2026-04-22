@@ -54,25 +54,6 @@ function useOrbitRadius() {
   return radius
 }
 
-function LiveDemoPill({ title, href }: { title: string; href: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mt-1.5 flex items-center justify-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/[0.08] px-3 py-1 text-[10px] font-medium tracking-[0.04em] backdrop-blur-md shadow-[0_0_8px_rgba(52,211,153,0.1)] transition-[background-color,box-shadow,transform] duration-200 hover:bg-emerald-400/[0.14] hover:shadow-[0_0_12px_rgba(52,211,153,0.18)] hover:-translate-y-0.5"
-      aria-label={`Live demo for ${title}`}
-    >
-      <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
-        <span className="absolute inset-[-2px] rounded-full bg-emerald-400/20" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.5)]" />
-      </span>
-      <span className="font-mono lowercase text-foreground">live demo</span>
-    </a>
-  )
-}
-
 function CenterLabel() {
   return (
     <m.div

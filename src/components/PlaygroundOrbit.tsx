@@ -8,12 +8,14 @@ import ProjectCard from '@/components/ProjectCard'
 
 interface PlaygroundOrbitProps {
   projects: Project[]
+  radiusDesktop?: number
+  radiusLarge?: number
 }
 
 const NORMAL_SPEED = 0.03
 const SLOW_SPEED = 0.008
-const ORBIT_RADIUS_DESKTOP = 300
-const ORBIT_RADIUS_LARGE = 360
+const DEFAULT_ORBIT_RADIUS_DESKTOP = 300
+const DEFAULT_ORBIT_RADIUS_LARGE = 360
 
 /* ─────────────────────────────────────────────────────────
  * ENTRANCE STORYBOARD
@@ -39,17 +41,17 @@ function cardTilt(index: number) {
 }
 
 /** Responsive orbit radius */
-function useOrbitRadius() {
-  const [radius, setRadius] = useState(ORBIT_RADIUS_DESKTOP)
+function useOrbitRadius(radiusDesktop: number, radiusLarge: number) {
+  const [radius, setRadius] = useState(radiusDesktop)
 
   useEffect(() => {
     function update() {
-      setRadius(window.innerWidth >= 1280 ? ORBIT_RADIUS_LARGE : ORBIT_RADIUS_DESKTOP)
+      setRadius(window.innerWidth >= 1280 ? radiusLarge : radiusDesktop)
     }
     update()
     window.addEventListener('resize', update)
     return () => window.removeEventListener('resize', update)
-  }, [])
+  }, [radiusDesktop, radiusLarge])
 
   return radius
 }
@@ -203,14 +205,18 @@ function OrbitCard({
   )
 }
 
-export default function PlaygroundOrbit({ projects }: PlaygroundOrbitProps) {
+export default function PlaygroundOrbit({
+  projects,
+  radiusDesktop = DEFAULT_ORBIT_RADIUS_DESKTOP,
+  radiusLarge = DEFAULT_ORBIT_RADIUS_LARGE,
+}: PlaygroundOrbitProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [orbitActive, setOrbitActive] = useState(false)
   const prefersReducedMotion = useReducedMotion() ?? false
   const count = projects.length
   const rotation = useMotionValue(0)
   const speedRef = useRef(0)
-  const orbitRadius = useOrbitRadius()
+  const orbitRadius = useOrbitRadius(radiusDesktop, radiusLarge)
 
   useEffect(() => {
     const entranceDuration = (ENTRANCE.cardsDelay + count * ENTRANCE.cardStagger + ENTRANCE.cardDuration) * 1000

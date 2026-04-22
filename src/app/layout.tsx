@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
+import { GeistMono } from 'geist/font/mono'
 import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
 import './viewport.css'
@@ -17,7 +17,7 @@ import { Agentation } from 'agentation'
 import TopMeta from '@/components/TopMeta'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
-// Geist Pixel Square — used for all non-paragraph text (headings, nav, labels, buttons)
+// Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
 
 
 export const viewport = {
@@ -157,7 +157,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${GeistPixelSquare.className} ${GeistSans.variable} safe-area-padding text-foreground`}
+        className={`${GeistMono.className} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}
@@ -184,7 +184,7 @@ export default function RootLayout({
             )}
             {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
             {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_PERF_MONITOR === 'true' && <PerformanceMonitor />}
-            {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_AGENTATION === 'true' && <Agentation />}
+            {process.env.NODE_ENV === 'development' && <Agentation />}
             {/* {process.env.NODE_ENV === 'development' && <Measurer />} — breaks dev under Next 16 / Turbopack */}
 
             {/* Google Analytics - deferred to avoid blocking */}

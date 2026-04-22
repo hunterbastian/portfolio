@@ -25,11 +25,13 @@ interface AnimatedHomePageProps {
 
 interface EditorialItemProps {
   eyebrow?: string
+  eyebrowClassName?: string
   href?: string
   external?: boolean
   title: string
   description: string
   trailing?: string
+  titleFontClassName?: string
   onMouseEnter?: () => void
   onMouseLeave?: () => void
   previewImage?: string
@@ -87,11 +89,13 @@ function Section({
 
 function EditorialItem({
   eyebrow,
+  eyebrowClassName,
   href,
   external = false,
   title,
   description,
   trailing,
+  titleFontClassName,
   onMouseEnter,
   onMouseLeave,
   previewImage,
@@ -108,16 +112,16 @@ function EditorialItem({
     >
       <div className="min-w-0 space-y-1.5">
         {eyebrow ? (
-          <p className="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-muted-foreground/70 transition-colors duration-300 group-hover:text-muted-foreground">
+          <p className={`${eyebrowClassName ?? 'font-mono text-muted-foreground/70 group-hover:text-muted-foreground'} text-[0.66rem] uppercase tracking-[0.12em] transition-colors duration-300`}>
             {eyebrow}
           </p>
         ) : null}
-        <p className="font-mono text-[1.02rem] leading-none tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-foreground/86">
+        <p className={`${titleFontClassName ?? 'font-mono'} text-[1.02rem] leading-none tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-foreground/86`}>
           <span
             className={
               underlineOnHover
-                ? 'inline-block bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]'
-                : 'inline-block'
+                ? `${titleFontClassName ?? ''} inline-block bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]`
+                : `${titleFontClassName ?? ''} inline-block`
             }
           >
             {title}
@@ -241,10 +245,10 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 </div>
 
                 <div className="space-y-0.5">
-                  <p className="font-mono text-[1.05rem] tracking-[-0.03em] text-foreground/92">
+                  <p className="font-header text-[1.05rem] tracking-[-0.03em] text-foreground/92">
                     {homeHeroContent.headline}
                   </p>
-                  <p className="font-mono text-[0.98rem] tracking-[-0.02em] text-muted-foreground">
+                  <p className="font-header text-[0.98rem] tracking-[-0.02em] text-muted-foreground">
                     {homeHeroContent.subtitle}
                   </p>
                 </div>
@@ -254,7 +258,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 {introParagraphs.map((paragraph) => (
                   <p
                     key={paragraph}
-                    className="max-w-[31rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem]"
+                    className="max-w-[31rem] font-header text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem]"
                   >
                     {paragraph}
                   </p>
@@ -295,6 +299,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     title={project.frontmatter.displayTitle || project.frontmatter.title}
                     description={project.frontmatter.description}
                     trailing={formatYear(project.frontmatter.date)}
+                    titleFontClassName="font-header"
                     onMouseEnter={() => setHoveredProjectSlug(project.slug)}
                     onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
                     previewImage={project.frontmatter.image}
@@ -308,6 +313,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   title="Playground"
                   description="Smaller creative coding experiments, prototypes, and side explorations that do not need the full case-study treatment."
                   trailing="See more"
+                  titleFontClassName="font-header"
                   onMouseEnter={() => setHoveredProjectSlug('playground')}
                   onMouseLeave={() => setHoveredProjectSlug((current) => (current === 'playground' ? null : current))}
                   underlineOnHover
@@ -345,6 +351,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   <EditorialItem
                     key={`${item.company}-${item.year}`}
                     eyebrow={item.year}
+                    eyebrowClassName="font-mono text-muted-foreground/45 group-hover:text-muted-foreground/58"
                     title={`${item.title} — ${item.company}`}
                     description={item.description}
                   />

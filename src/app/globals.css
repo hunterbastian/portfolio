@@ -211,9 +211,8 @@ body {
   backface-visibility: hidden;
 }
 
-/* Paragraph / body-copy text uses Geist Sans; everything else inherits Geist Mono from <body> */
+/* Body copy inherits the site-wide Geist Mono stack; keep pretty wrapping for readability. */
 p, li, dd, blockquote, figcaption {
-  font-family: var(--font-geist-sans), 'Geist Sans', system-ui, -apple-system, sans-serif;
   text-wrap: pretty;
 }
 

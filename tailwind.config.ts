@@ -11,9 +11,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'mono': ['var(--font-geist-pixel-square)', 'Geist Pixel Square', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        'sans': ['var(--font-geist-sans)', 'Geist Sans', 'system-ui', '-apple-system', 'sans-serif'],
-        'inter': ['var(--font-geist-sans)', 'Geist Sans', 'system-ui', 'sans-serif'],
+        'mono': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'sans': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'inter': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'header': ['var(--font-geist-pixel-square)', 'Geist Pixel Square', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       screens: {
         'xs': '375px',      // Extra small phones

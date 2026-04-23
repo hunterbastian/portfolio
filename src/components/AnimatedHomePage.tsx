@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { useState, type ReactNode } from 'react'
+import { useWebHaptics } from 'web-haptics/react'
 import {
   contactSocialLinks,
   creatingLinks,
@@ -11,6 +12,7 @@ import {
   experienceItems,
   homeHeroContent,
 } from '@/content/homepage'
+import ResumeModal from '@/components/ResumeModal'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 import type { ProjectFrontmatter } from '@/types/project'
 
@@ -34,9 +36,8 @@ interface EditorialItemProps {
   titleFontClassName?: string
   onMouseEnter?: () => void
   onMouseLeave?: () => void
-  previewImage?: string
-  previewAlt?: string
-  previewVisible?: boolean
+  thumbnailImage?: string
+  thumbnailAlt?: string
   underlineOnHover?: boolean
 }
 
@@ -98,74 +99,57 @@ function EditorialItem({
   titleFontClassName,
   onMouseEnter,
   onMouseLeave,
-  previewImage,
-  previewAlt,
-  previewVisible = false,
+  thumbnailImage,
+  thumbnailAlt,
   underlineOnHover = false,
 }: EditorialItemProps) {
   const interactive = Boolean(href)
   const content = (
     <div
-      className={`group relative flex w-full items-start justify-between gap-6 rounded-[10px] px-3 py-3 transition-[transform,color,opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:-mx-3 sm:gap-10 ${
+      className={`group relative flex w-full items-start justify-between gap-6 px-3 py-3 transition-[transform,color,opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:-mx-3 sm:gap-10 ${
         interactive ? 'hover:translate-x-[3px] hover:bg-foreground/[0.03]' : ''
       }`}
     >
-      <div className="min-w-0 space-y-1.5">
-        {eyebrow ? (
-          <p className={`${eyebrowClassName ?? 'font-mono text-muted-foreground/70 group-hover:text-muted-foreground'} text-[0.66rem] uppercase tracking-[0.12em] transition-colors duration-300`}>
-            {eyebrow}
-          </p>
+      <div className="flex min-w-0 items-start gap-4 sm:gap-6">
+        {thumbnailImage ? (
+          <div className="relative mt-0.5 h-[72px] w-[72px] shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] sm:h-[84px] sm:w-[84px]">
+            <Image
+              src={thumbnailImage}
+              alt={thumbnailAlt ?? title}
+              fill
+              className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015]"
+              sizes="(min-width: 640px) 84px, 72px"
+            />
+          </div>
         ) : null}
-        <p className={`${titleFontClassName ?? 'font-mono'} text-[1.02rem] leading-none tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-foreground/86`}>
-          <span
-            className={
-              underlineOnHover
-                ? `${titleFontClassName ?? ''} inline-block bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]`
-                : `${titleFontClassName ?? ''} inline-block`
-            }
-          >
-            {title}
-          </span>
-        </p>
-        <p className="max-w-[44rem] font-mono text-[0.96rem] leading-[1.65] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72">
-          {description}
-        </p>
+
+        <div className="min-w-0 space-y-1.5">
+          {eyebrow ? (
+            <p className={`${eyebrowClassName ?? 'font-mono text-muted-foreground/70 group-hover:text-muted-foreground'} text-[0.66rem] uppercase tracking-[0.12em] transition-colors duration-300`}>
+              {eyebrow}
+            </p>
+          ) : null}
+          <p className={`${titleFontClassName ?? 'font-mono'} text-[1.02rem] leading-none tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-foreground/86`}>
+            <span
+              className={
+                underlineOnHover
+                  ? `${titleFontClassName ?? ''} inline-block bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]`
+                  : `${titleFontClassName ?? ''} inline-block`
+              }
+            >
+              {title}
+            </span>
+          </p>
+          <p className="max-w-[44rem] font-mono text-[0.96rem] leading-[1.65] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72">
+            {description}
+          </p>
+        </div>
       </div>
       {trailing ? (
         <span className="shrink-0 pt-0.5 font-mono text-[0.84rem] text-muted-foreground/75 transition-[transform,color] duration-300 group-hover:translate-x-[2px] group-hover:text-foreground/72">
           {trailing}
         </span>
       ) : null}
-
-      <AnimatePresence initial={false}>
-        {previewImage && previewVisible ? (
-          <m.div
-            className="pointer-events-none absolute left-[calc(100%+1.75rem)] top-1/2 z-20 hidden w-[220px] -translate-y-1/2 overflow-hidden rounded-[8px] border border-border/80 bg-card shadow-[0_18px_44px_rgba(15,23,42,0.12)] xl:block"
-            initial={{ opacity: 0, x: -10, scale: 0.975, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, x: -8, scale: 0.985, filter: 'blur(8px)' }}
-            transition={{
-              opacity: { duration: 0.28, ease: MOTION_EASE_SOFT },
-              x: { duration: 0.34, ease: MOTION_EASE_SOFT },
-              scale: { duration: 0.34, ease: MOTION_EASE_SOFT },
-              filter: { duration: 0.34, ease: MOTION_EASE_SOFT },
-            }}
-          >
-            <Image
-              src={previewImage}
-              alt={previewAlt ?? title}
-              width={440}
-              height={330}
-              className="h-auto w-full object-cover"
-              sizes="220px"
-              priority={false}
-            />
-            <div className="border-t border-border/80 px-4 py-3">
-              <p className="font-mono text-[0.84rem] text-foreground">{title}</p>
-            </div>
-          </m.div>
-        ) : null}
-      </AnimatePresence>
     </div>
   )
 
@@ -177,7 +161,7 @@ function EditorialItem({
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="block rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        className="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
@@ -189,7 +173,7 @@ function EditorialItem({
   return (
     <Link
       href={href}
-      className="block rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+      className="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -200,14 +184,14 @@ function EditorialItem({
 
 function ContactLinks() {
   return (
-    <div className="flex flex-wrap gap-x-6 gap-y-3">
+    <div className="flex flex-wrap gap-x-4 gap-y-3 sm:gap-x-5">
       {contactSocialLinks.map((link) => (
         <a
           key={link.label}
           href={link.href}
           target={link.external ? '_blank' : undefined}
           rel={link.external ? 'noreferrer' : undefined}
-          className="min-h-[40px] font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          className="min-h-[40px] font-mono text-[0.92rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.94rem]"
         >
           {link.label}
         </a>
@@ -220,7 +204,9 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const projectRows = getProjectRows(projects)
   const introParagraphs = homeHeroContent.intro.split('\n\n')
   const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null)
+  const [resumeOpen, setResumeOpen] = useState(false)
   const playgroundGlowActive = hoveredProjectSlug === 'playground'
+  const haptic = useWebHaptics()
 
   return (
     <div className="px-5 pb-24 sm:px-8 sm:pb-32">
@@ -264,6 +250,33 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   </p>
                 ))}
               </div>
+
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 sm:gap-x-5">
+                <Link
+                  href="/#contact"
+                  className="min-h-[40px] font-header text-[0.68rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  onClick={() => haptic.trigger('light')}
+                >
+                  Contact
+                </Link>
+                <Link
+                  href="/cv"
+                  className="min-h-[40px] font-header text-[0.68rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  onClick={() => haptic.trigger('light')}
+                >
+                  View CV
+                </Link>
+                <button
+                  type="button"
+                  className="min-h-[40px] font-header text-[0.68rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  onClick={() => {
+                    haptic.trigger('light')
+                    setResumeOpen(true)
+                  }}
+                >
+                  Resume
+                </button>
+              </div>
             </div>
           </section>
         </Reveal>
@@ -300,11 +313,8 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     description={project.frontmatter.description}
                     trailing={formatYear(project.frontmatter.date)}
                     titleFontClassName="font-header"
-                    onMouseEnter={() => setHoveredProjectSlug(project.slug)}
-                    onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
-                    previewImage={project.frontmatter.image}
-                    previewAlt={project.frontmatter.displayTitle || project.frontmatter.title}
-                    previewVisible={hoveredProjectSlug === project.slug}
+                    thumbnailImage={project.frontmatter.image}
+                    thumbnailAlt={project.frontmatter.displayTitle || project.frontmatter.title}
                     underlineOnHover
                   />
                 ))}
@@ -316,6 +326,8 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   titleFontClassName="font-header"
                   onMouseEnter={() => setHoveredProjectSlug('playground')}
                   onMouseLeave={() => setHoveredProjectSlug((current) => (current === 'playground' ? null : current))}
+                  thumbnailImage="/images/optimized/projects/path.webp"
+                  thumbnailAlt="Playground experiments preview"
                   underlineOnHover
                 />
                 </div>
@@ -398,6 +410,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
         </div>
       </div>
 
+      <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
     </div>
   )
 }

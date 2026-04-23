@@ -67,9 +67,9 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
 
   return (
     <div className="relative">
-      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className={`group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground ${hideLabel ? 'rounded-[10px]' : 'rounded-[8px]'}`}>
+      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className="group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">
           <div
-            className={`project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-0.5 will-change-transform ${hideLabel ? 'rounded-[10px]' : 'rounded-[8px]'}`}
+            className="project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-0.5 will-change-transform"
             style={{
               animationDelay: `${index * 80}ms`,
             }}
@@ -121,7 +121,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                   {displayTitle}
                 </h3>
                 {categoryLabel && (
-                  <span className="relative z-10 mt-2.5 inline-flex rounded-[3px] border border-border/60 px-1.5 py-0.5 font-mono text-[9px] tracking-[0.08em] text-muted-foreground/70">
+                  <span className="relative z-10 mt-2.5 inline-flex border border-border/60 px-1.5 py-0.5 font-mono text-[9px] tracking-[0.08em] text-muted-foreground/70">
                     {categoryLabel}
                   </span>
                 )}
@@ -134,7 +134,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
           href={frontmatter.demo}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 rounded-[3px] bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[9px] font-medium tracking-[0.04em] text-primary shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-background/95"
+          className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[9px] font-medium tracking-[0.04em] text-primary shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-background/95"
           aria-label={`Live demo for ${displayTitle}`}
         >
           <span className="relative flex h-2 w-2">

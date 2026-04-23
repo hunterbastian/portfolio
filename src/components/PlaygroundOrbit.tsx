@@ -210,6 +210,7 @@ export default function PlaygroundOrbit({
   radiusDesktop = DEFAULT_ORBIT_RADIUS_DESKTOP,
   radiusLarge = DEFAULT_ORBIT_RADIUS_LARGE,
 }: PlaygroundOrbitProps) {
+  const [mounted, setMounted] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [orbitActive, setOrbitActive] = useState(false)
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -217,6 +218,10 @@ export default function PlaygroundOrbit({
   const rotation = useMotionValue(0)
   const speedRef = useRef(0)
   const orbitRadius = useOrbitRadius(radiusDesktop, radiusLarge)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const entranceDuration = (ENTRANCE.cardsDelay + count * ENTRANCE.cardStagger + ENTRANCE.cardDuration) * 1000
@@ -249,7 +254,7 @@ export default function PlaygroundOrbit({
         </div>
 
         {/* Orbit cards — each positioned independently via useTransform */}
-        {projects.map((project, index) => {
+        {mounted ? projects.map((project, index) => {
           const baseAngle = (index / count) * 360
           const tilt = cardTilt(index)
           const isHovered = hoveredIndex === index
@@ -270,7 +275,7 @@ export default function PlaygroundOrbit({
               onHoverEnd={handleHoverEnd}
             />
           )
-        })}
+        }) : null}
       </div>
     </div>
   )

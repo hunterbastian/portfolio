@@ -64,7 +64,7 @@ export default function ArchivePage() {
 
               <div className="pt-8">
                 <div className="mx-auto max-w-[44rem]">
-                  <div className="relative h-[28rem] overflow-hidden rounded-[12px] border border-border/80 bg-card/[0.28] shadow-[0_10px_30px_rgba(15,23,42,0.04)] sm:h-[32rem]">
+                  <div className="relative h-[28rem] overflow-hidden border border-border/80 bg-card/[0.28] shadow-[0_10px_30px_rgba(15,23,42,0.04)] sm:h-[32rem]">
                     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_48%)]" />
                     <div className="relative z-10 h-full">
                       <PlaygroundOrbit

@@ -74,7 +74,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 </a>
               </div>
 
-              <div className="relative overflow-hidden rounded-[3px] mb-12">
+              <div className="relative mb-12 overflow-hidden">
                 <iframe
                   src="/api/resume/file"
                   className="w-full h-screen border-0"
@@ -84,7 +84,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               <div className="mt-8 border-t border-border pt-6">
                 <p className="text-center text-xs text-foreground">
-                  Press <kbd className="rounded bg-secondary px-2 py-1 text-xs font-mono text-foreground">Esc</kbd> to close
+                  Press <kbd className="bg-secondary px-2 py-1 text-xs font-mono text-foreground">Esc</kbd> to close
                 </p>
               </div>
             </article>

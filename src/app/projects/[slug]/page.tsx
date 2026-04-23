@@ -168,7 +168,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </header>
           }
           image={
-            <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden rounded-[3px] img-inset-outline shadow-card">
+            <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden img-inset-outline shadow-card">
               <Image
                 src={frontmatter.image}
                 alt={frontmatter.title}
@@ -190,7 +190,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div className="group flex items-center gap-2 font-inter text-[13px] text-muted-foreground">
                 <IconTag size={12} className="shrink-0 opacity-50 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-[-6deg] group-hover:scale-110" aria-hidden />
                 <span className="font-medium">Category:</span>
-                <span className="bg-accent/10 text-accent px-3 py-1.5 rounded-[3px] sm:py-1">
+                <span className="bg-accent/10 text-accent px-3 py-1.5 sm:py-1">
                   {frontmatter.category}
                 </span>
               </div>

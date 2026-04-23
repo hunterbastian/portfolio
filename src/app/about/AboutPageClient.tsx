@@ -1,17 +1,15 @@
 'use client'
 
 import Image from 'next/image'
-import { m, useReducedMotion } from 'framer-motion'
-import { MOTION_SPRING_SNAPPY } from '@/lib/motion'
+import Link from 'next/link'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
-import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
-import AnimatedDashedArrow from '@/components/AnimatedDashedArrow'
-import ResumeButton from '@/components/ResumeButton'
+import ResumeModal from '@/components/ResumeModal'
 import TextReveal from '@/components/TextReveal'
+import { useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 
 export default function AboutPageClient() {
-  const prefersReducedMotion = useReducedMotion() ?? false
+  const [resumeOpen, setResumeOpen] = useState(false)
   const haptic = useWebHaptics()
 
   return (
@@ -63,57 +61,33 @@ export default function AboutPageClient() {
             </p>
 
             {/* --- Actions --- */}
-            <div className="mt-8 flex items-center gap-4">
-              <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
-              <m.a
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              <Link
                 href="/#contact"
-                className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[10px] font-medium tracking-[0.08em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="min-h-[40px] font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                 onClick={() => haptic.trigger('light')}
-                initial="idle"
-                whileHover={prefersReducedMotion ? undefined : 'hover'}
-                animate="idle"
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
-                transition={MOTION_SPRING_SNAPPY}
-                variants={{ idle: { y: 0 }, hover: { y: -3 } }}
               >
-                <m.span
-                  className="relative z-10"
-                  variants={prefersReducedMotion ? undefined : {
-                    idle: { letterSpacing: '0.06em' },
-                    hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
-                  }}
-                >
-                  Contact
-                </m.span>
-                <AnimatedDashedArrow size={14} />
-              </m.a>
-              </Magnetic>
-              <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
-              <m.a
+                Contact
+              </Link>
+              <Link
                 href="/cv"
-                className="playground-joy group relative overflow-hidden inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[10px] font-medium tracking-[0.08em] uppercase focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="min-h-[40px] font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                 onClick={() => haptic.trigger('light')}
-                initial="idle"
-                whileHover={prefersReducedMotion ? undefined : 'hover'}
-                animate="idle"
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
-                transition={MOTION_SPRING_SNAPPY}
-                variants={{ idle: { y: 0 }, hover: { y: -3 } }}
               >
-                <m.span
-                  className="relative z-10"
-                  variants={prefersReducedMotion ? undefined : {
-                    idle: { letterSpacing: '0.06em' },
-                    hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
-                  }}
-                >
-                  View CV
-                </m.span>
-                <AnimatedDashedArrow size={14} />
-              </m.a>
-              </Magnetic>
-              <ResumeButton />
+                View CV
+              </Link>
+              <button
+                type="button"
+                className="min-h-[40px] font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                onClick={() => {
+                  haptic.trigger('light')
+                  setResumeOpen(true)
+                }}
+              >
+                Resume
+              </button>
             </div>
+            <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
           </div>
         </div>
       </div>

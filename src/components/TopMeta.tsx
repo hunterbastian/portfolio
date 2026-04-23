@@ -7,7 +7,6 @@ import { Summer as PixelSun } from '@/components/pixel/glyphs'
 
 const PAGE_NAV = [
   { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
   { name: 'Playground', href: '/archive' },
 ] as const
 

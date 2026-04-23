@@ -216,7 +216,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <div className="space-y-7">
               <div className="space-y-4">
                 <div
-                  className="w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
+                  className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
                   style={{ background: 'var(--border)' }}
                 >
                   <Image
@@ -225,7 +225,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     width={75}
                     height={75}
                     priority
-                    className="object-cover img-inset-outline transition-[filter,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:brightness-[1.02]"
+                    className="mask mask-squircle object-cover img-inset-outline transition-[filter,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:brightness-[1.02]"
                     sizes="75px"
                   />
                 </div>

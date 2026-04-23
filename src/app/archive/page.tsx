@@ -3,6 +3,35 @@ import BreadcrumbPill from '@/components/BreadcrumbPill'
 import PlaygroundOrbit from '@/components/PlaygroundOrbit'
 import { getArchivedProjects } from '@/lib/projects'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
+import type { Project } from '@/types/project'
+
+const PREFERRED_ORBIT_ORDER = [
+  'path',
+  'sky-farm',
+  'constellation',
+  'little-lands',
+  'obsidian-vault',
+  'grand-teton-wallet',
+  'mountain',
+  'sunset-graphic',
+  'iceland-graphics',
+  'iceland-logo',
+] as const
+
+function sortArchivedForOrbit(projects: Project[]): Project[] {
+  const rank = new Map<string, number>(PREFERRED_ORBIT_ORDER.map((slug, index) => [slug, index]))
+
+  return [...projects].sort((a, b) => {
+    const aRank = rank.get(a.slug) ?? Number.MAX_SAFE_INTEGER
+    const bRank = rank.get(b.slug) ?? Number.MAX_SAFE_INTEGER
+
+    if (aRank !== bRank) {
+      return aRank - bRank
+    }
+
+    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+  })
+}
 
 export const metadata: Metadata = {
   title: `Playground | ${sitePortfolioName}`,
@@ -23,7 +52,7 @@ export const metadata: Metadata = {
 }
 
 export default function ArchivePage() {
-  const archivedProjects = getArchivedProjects()
+  const archivedProjects = sortArchivedForOrbit(getArchivedProjects())
 
   return (
     <div className="relative min-h-screen px-5 pb-24 sm:px-8 sm:pb-32">
@@ -63,21 +92,24 @@ export default function ArchivePage() {
               </div>
 
               <div className="pt-8">
-                <div className="mx-auto max-w-[44rem]">
-                  <div className="relative h-[28rem] overflow-hidden border border-border/80 bg-card/[0.28] shadow-[0_10px_30px_rgba(15,23,42,0.04)] sm:h-[32rem]">
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),transparent_48%)]" />
+                <div className="mx-auto max-w-[36rem]">
+                  <div className="playground-meadow relative h-[29rem] overflow-hidden sm:h-[32rem]">
+                    <div className="playground-meadow-sky pointer-events-none" />
+                    <div className="playground-meadow-cloud playground-meadow-cloud-a pointer-events-none opacity-80" />
+                    <div className="playground-meadow-cloud playground-meadow-cloud-b pointer-events-none opacity-70" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[34%] bg-[radial-gradient(90%_80%_at_50%_100%,rgba(255,244,227,0.82),transparent_75%)]" />
                     <div className="relative z-10 h-full">
                       <PlaygroundOrbit
                         projects={archivedProjects}
-                        radiusDesktop={160}
-                        radiusLarge={190}
+                        radiusDesktop={172}
+                        radiusLarge={194}
                       />
                     </div>
                   </div>
                 </div>
 
                 <p className="mx-auto mt-5 max-w-[28rem] text-center font-mono text-[0.9rem] leading-[1.65] text-muted-foreground">
-                  A rotating field of smaller experiments. Hover around, then open any card to see the full project.
+                  A rotating field of smaller experiments, sketches, and one-off ideas. Hover around, then open any card to see the full project.
                 </p>
               </div>
             </section>

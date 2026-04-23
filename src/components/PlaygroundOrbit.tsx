@@ -12,8 +12,8 @@ interface PlaygroundOrbitProps {
   radiusLarge?: number
 }
 
-const NORMAL_SPEED = 0.03
-const SLOW_SPEED = 0.008
+const NORMAL_SPEED = 0.018
+const SLOW_SPEED = 0.0035
 const DEFAULT_ORBIT_RADIUS_DESKTOP = 300
 const DEFAULT_ORBIT_RADIUS_LARGE = 360
 
@@ -54,6 +54,13 @@ function useOrbitRadius(radiusDesktop: number, radiusLarge: number) {
   }, [radiusDesktop, radiusLarge])
 
   return radius
+}
+
+function getOrbitCardSize(count: number) {
+  if (count >= 9) return 112
+  if (count >= 7) return 120
+  if (count >= 5) return 132
+  return 144
 }
 
 function CenterLabel() {
@@ -125,6 +132,7 @@ function OrbitCard({
   hasHoverTarget,
   rotation,
   orbitRadius,
+  cardSize,
   prefersReducedMotion,
   onHoverStart,
   onHoverEnd,
@@ -137,6 +145,7 @@ function OrbitCard({
   hasHoverTarget: boolean
   rotation: ReturnType<typeof useMotionValue<number>>
   orbitRadius: number
+  cardSize: number
   prefersReducedMotion: boolean
   onHoverStart: () => void
   onHoverEnd: () => void
@@ -149,17 +158,29 @@ function OrbitCard({
     const rad = ((baseAngle + r) * Math.PI) / 180
     return -Math.cos(rad) * orbitRadius
   })
+  const depth = useTransform(rotation, (r) => {
+    const rad = ((baseAngle + r) * Math.PI) / 180
+    return (1 - Math.cos(rad)) / 2
+  })
+  const cardScale = useTransform(depth, (value) => 0.88 + value * 0.12)
+  const cardOpacity = useTransform(depth, (value) => 0.58 + value * 0.42)
+  const cardBrightness = useTransform(depth, (value) => 0.82 + value * 0.18)
+  const zIndex = useTransform(depth, (value) => 1 + Math.round(value * 20))
 
   return (
     <m.div
-      className="absolute w-[144px]"
+      className="absolute will-change-transform"
       style={{
         left: '50%',
         top: '50%',
         x,
         y,
-        marginLeft: -72,
-        marginTop: -72,
+        width: cardSize,
+        marginLeft: -cardSize / 2,
+        marginTop: -cardSize / 2,
+        scale: cardScale,
+        opacity: cardOpacity,
+        zIndex,
       }}
       initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8, filter: 'blur(6px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
@@ -169,11 +190,14 @@ function OrbitCard({
         ease: ENTRANCE.ease,
       }}
     >
-      <div
-        className="transition-[transform,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+      <m.div
+        className="will-change-transform transition-[transform,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
-          transform: `rotate(${tilt}deg) scale(${isHovered ? 1.06 : 1})`,
-          filter: hasHoverTarget && !isHovered ? 'brightness(0.88) saturate(0.75)' : 'none',
+          rotate: tilt,
+          scale: isHovered ? 1.06 : 1,
+          filter: hasHoverTarget && !isHovered
+            ? 'brightness(0.82) saturate(0.68)'
+            : cardBrightness,
         }}
         onMouseEnter={onHoverStart}
         onMouseLeave={onHoverEnd}
@@ -200,7 +224,7 @@ function OrbitCard({
             </m.div>
           )}
         </AnimatePresence>
-      </div>
+      </m.div>
     </m.div>
   )
 }
@@ -218,6 +242,7 @@ export default function PlaygroundOrbit({
   const rotation = useMotionValue(0)
   const speedRef = useRef(0)
   const orbitRadius = useOrbitRadius(radiusDesktop, radiusLarge)
+  const cardSize = getOrbitCardSize(count)
 
   useEffect(() => {
     setMounted(true)
@@ -270,6 +295,7 @@ export default function PlaygroundOrbit({
               hasHoverTarget={hoveredIndex !== null}
               rotation={rotation}
               orbitRadius={orbitRadius}
+              cardSize={cardSize}
               prefersReducedMotion={prefersReducedMotion}
               onHoverStart={() => handleHoverStart(index)}
               onHoverEnd={handleHoverEnd}

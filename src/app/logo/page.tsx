@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function LogoPage() {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-[560px] flex-col items-center justify-center px-6 py-12">
-      <div className="nord-panel rounded-[3px] w-full max-w-[560px] p-8 text-center">
+      <div className="nord-panel w-full max-w-[560px] p-8 text-center">
         <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Studio Alpine</p>
         <h1 className="mt-3 font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-xl">
           Loader Logo Export

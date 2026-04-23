@@ -126,7 +126,7 @@ export default function TopMeta() {
           </button>
 
           {mobileMenuOpen ? (
-            <div className="mt-3 flex flex-col items-end gap-2 rounded-[14px] border border-border/80 bg-background/96 px-4 py-3 shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
+            <div className="mt-3 flex flex-col items-end gap-2 border border-border/80 bg-background/96 px-4 py-3 shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
               {PAGE_NAV.map((item) => (
                 <NavLink
                   key={item.href}

@@ -49,12 +49,12 @@ function PillTabs({ activeIndex, onSelect }: { activeIndex: number; onSelect: (i
     <div className="relative">
       <div
         ref={containerRef}
-        className="relative flex gap-1 rounded-[6px] bg-muted/50 p-1"
+        className="relative flex gap-1 bg-muted/50 p-1"
         role="tablist"
       >
         <div
           suppressHydrationWarning
-          className="absolute bottom-1 top-1 rounded-[4px] bg-foreground/10 shadow-sm"
+          className="absolute bottom-1 top-1 bg-foreground/10 shadow-sm"
           style={{
             width: indicator.width,
             transform: `translateX(${indicator.left}px)`,
@@ -68,7 +68,7 @@ function PillTabs({ activeIndex, onSelect }: { activeIndex: number; onSelect: (i
             role="tab"
             aria-selected={i === activeIndex}
             onClick={() => onSelect(i)}
-            className={`relative z-10 rounded-[4px] px-4 py-2 font-mono text-[12px] tracking-[0.04em] transition-colors duration-200 ${
+            className={`relative z-10 px-4 py-2 font-mono text-[12px] tracking-[0.04em] transition-colors duration-200 ${
               i === activeIndex ? 'text-foreground' : 'text-muted-foreground hover:text-foreground/70'
             }`}
           >
@@ -146,7 +146,7 @@ export default function LiquidTabs() {
         <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
           Pill variant
         </p>
-        <div className="rounded-[3px] border border-border bg-card/50 p-5">
+        <div className="border border-border bg-card/50 p-5">
           <PillTabs activeIndex={pillIndex} onSelect={setPillIndex} />
           <div className="relative mt-2">
             {TABS.map((tab, i) => (
@@ -160,7 +160,7 @@ export default function LiquidTabs() {
         <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.1em] text-muted-foreground">
           Underline variant
         </p>
-        <div className="rounded-[3px] border border-border bg-card/50 p-5">
+        <div className="border border-border bg-card/50 p-5">
           <UnderlineTabs activeIndex={underlineIndex} onSelect={setUnderlineIndex} />
           <div className="relative mt-2">
             {TABS.map((tab, i) => (

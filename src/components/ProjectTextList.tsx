@@ -113,7 +113,7 @@ export default function ProjectTextList({ projects }: ProjectTextListProps) {
       <AnimatePresence>
         {hoveredProject?.frontmatter.image && (
           <m.div
-            className="pointer-events-none fixed z-50 overflow-hidden rounded-lg shadow-lg"
+            className="pointer-events-none fixed z-50 overflow-hidden shadow-lg"
             style={{
               x: springX,
               y: springY,

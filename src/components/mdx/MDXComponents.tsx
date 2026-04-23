@@ -77,7 +77,7 @@ export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, he
       alt={alt}
       width={width}
       height={height}
-      className="w-full rounded-[3px] shadow-lg"
+      className="w-full shadow-lg"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
       priority={false}
       {...props}
@@ -90,7 +90,7 @@ export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = ({ c
     <video
       controls
       playsInline
-      className={`w-full rounded-[3px] shadow-lg ${className}`}
+      className={`w-full shadow-lg ${className}`}
       {...props}
     />
   </div>

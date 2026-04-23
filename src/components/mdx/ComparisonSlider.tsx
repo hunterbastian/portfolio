@@ -34,7 +34,7 @@ export default function ComparisonSlider({
 
   return (
     <figure className="my-10">
-      <div className="relative w-full overflow-hidden rounded-[3px] border border-border bg-card/80 shadow-sm">
+      <div className="relative w-full overflow-hidden border border-border bg-card/80 shadow-sm">
         <div className="relative aspect-[16/10] w-full">
           <Image
             src={beforeSrc}
@@ -74,10 +74,10 @@ export default function ComparisonSlider({
           />
 
           <div className="pointer-events-none absolute inset-x-3 top-3 z-10 flex items-center justify-between">
-            <span className="rounded-[3px] border border-border bg-background/75 px-2 py-1 text-[10px] font-inter uppercase tracking-[0.12em] text-foreground">
+            <span className="border border-border bg-background/75 px-2 py-1 text-[10px] font-inter uppercase tracking-[0.12em] text-foreground">
               {afterLabel}
             </span>
-            <span className="rounded-[3px] border border-border bg-background/75 px-2 py-1 text-[10px] font-inter uppercase tracking-[0.12em] text-foreground">
+            <span className="border border-border bg-background/75 px-2 py-1 text-[10px] font-inter uppercase tracking-[0.12em] text-foreground">
               {beforeLabel}
             </span>
           </div>

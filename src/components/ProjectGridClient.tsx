@@ -272,8 +272,8 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
               {project.frontmatter?.image ? (
                 <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
               ) : (
-                <div className="aspect-[16/9] w-full rounded-[8px]">
-                  <Skeleton className="h-full w-full rounded-[8px]" />
+                <div className="aspect-[16/9] w-full">
+                  <Skeleton className="h-full w-full" />
                 </div>
               )}
             </div>
@@ -343,8 +343,8 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
             {project.frontmatter?.image ? (
               <ProjectCard slug={project.slug} frontmatter={project.frontmatter} index={index} />
             ) : (
-              <div className="aspect-[16/9] w-full rounded-[8px]">
-                <Skeleton className="h-full w-full rounded-[8px]" />
+              <div className="aspect-[16/9] w-full">
+                <Skeleton className="h-full w-full" />
               </div>
             )}
           </m.div>

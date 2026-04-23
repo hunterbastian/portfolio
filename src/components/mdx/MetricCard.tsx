@@ -71,7 +71,7 @@ export default function MetricCard({
   return (
     <m.div
       ref={ref}
-      className="inline-flex flex-col items-center rounded-[3px] px-6 py-5 text-center shadow-card-subtle"
+      className="inline-flex flex-col items-center px-6 py-5 text-center shadow-card-subtle"
       style={{ background: 'var(--card)' }}
       initial={{ opacity: 0, y: 12 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}

@@ -28,7 +28,7 @@ export default function LiveDemo({
   return (
     <figure ref={ref} className="not-prose my-10">
       <m.div
-        className="overflow-hidden rounded-[3px] border border-border shadow-card"
+        className="overflow-hidden border border-border shadow-card"
         initial={{ opacity: 0, y: 16 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         transition={{

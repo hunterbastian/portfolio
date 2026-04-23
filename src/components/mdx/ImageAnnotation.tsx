@@ -55,7 +55,7 @@ export default function ImageAnnotation({
   return (
     <figure className="my-8">
       <div
-        className="relative w-full overflow-hidden rounded-[3px] shadow-card"
+        className="relative w-full overflow-hidden shadow-card"
         style={{ aspectRatio: aspect }}
       >
         <Image
@@ -116,7 +116,7 @@ export default function ImageAnnotation({
                       duration: motionDurationMs(TOOLTIP_MS, prefersReducedMotion),
                       ease: MOTION_EASE_SOFT,
                     }}
-                    className="absolute z-20 mt-2 w-52 rounded-[3px] border border-border bg-background/95 px-3 py-2.5 shadow-lg backdrop-blur-sm sm:w-60"
+                    className="absolute z-20 mt-2 w-52 border border-border bg-background/95 px-3 py-2.5 shadow-lg backdrop-blur-sm sm:w-60"
                     style={{
                       top: '100%',
                       ...(alignRight

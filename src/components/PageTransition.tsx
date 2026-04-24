@@ -11,19 +11,19 @@ import { useIsInitialLoad } from '@/lib/initial-load'
  *
  * Read top-to-bottom. Each `at` value is ms after route swap.
  *
- *    0ms   previous page fades out + drifts up, blur 0 → 3px
- *  340ms   old page gone
- *   80ms   new page container slides up y 18 → 0, blur 4 → 0
- *  200ms   new page children rise into place (staggered 70ms)
+ *    0ms   previous page fades out + drifts up
+ *  300ms   old page gone
+ *   80ms   new page container slides up y 18 → 0
+ *  160ms   new page children rise into place
  * ───────────────────────────────────────────────────────── */
 
 const TIMING = {
-  oldFadeDuration: 450,   // gentle fade-out — unhurried exit
+  oldFadeDuration: 300,   // gentle fade-out
   newContentDelay: 100,   // breathing room before new page arrives
-  newSlideDuration: 700,  // slow editorial entrance
-  childStartDelay: 140,   // let container settle before children reveal
-  childStagger: 70,       // wider cascade — each child gets its moment
-  childDuration: 550,     // each child fades in gently
+  newSlideDuration: 420,
+  childStartDelay: 80,    // let container start moving before children reveal
+  childStagger: 40,
+  childDuration: 360,
 }
 
 /** Exported for shared-element transition measurement offset */
@@ -36,9 +36,6 @@ const PAGE = {
   finalOpacity: 1,
   exitOpacity: 0,
   exitY: -8,              // exits upward — feels like turning a page
-  initialBlur: 'blur(4px)',
-  finalBlur: 'blur(0px)',
-  exitBlur: 'blur(3px)',
 }
 
 /** Exported for shared-element transition measurement offset */
@@ -97,17 +94,14 @@ function RouteScene({ children, prefersReducedMotion, isInitialLoad, timing, off
       initial={isInitialLoad ? false : {
         opacity: PAGE.initialOpacity,
         y: offsets.pageY,
-        filter: PAGE.initialBlur,
       }}
       animate={{
         opacity: stage >= 1 ? PAGE.finalOpacity : PAGE.initialOpacity,
         y: stage >= 1 ? PAGE.finalY : offsets.pageY,
-        filter: stage >= 1 ? PAGE.finalBlur : PAGE.initialBlur,
       }}
       transition={{
         duration: motionDurationMs(timing.newSlideDuration, prefersReducedMotion),
         ease: MOTION_EASE_SOFT,
-        filter: { duration: motionDurationMs(timing.newSlideDuration * 0.65, prefersReducedMotion) },
       }}
       className="will-change-transform"
     >
@@ -145,7 +139,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
     <AnimatePresence mode="wait" initial={false}>
       <m.div
         key={pathname}
-        exit={{ opacity: PAGE.exitOpacity, y: PAGE.exitY, filter: PAGE.exitBlur }}
+        exit={{ opacity: PAGE.exitOpacity, y: PAGE.exitY }}
         transition={{
           duration: motionDurationMs(TIMING.oldFadeDuration, prefersReducedMotion),
           ease: MOTION_EASE_EXIT,

@@ -69,7 +69,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
     <div className="relative">
       <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className="group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">
           <div
-            className="project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-0.5 will-change-transform"
+            className="project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-0.5"
             style={{
               animationDelay: `${index * 80}ms`,
             }}

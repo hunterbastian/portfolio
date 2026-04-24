@@ -14,7 +14,7 @@ function NavLink({ href, name, active }: { href: string; name: string; active: b
   return (
     <Link
       href={href}
-      className={`min-h-[40px] font-header text-[0.76rem] tracking-[-0.01em] transition-[color,transform] duration-150 ${
+      className={`inline-flex min-h-[40px] items-center font-header text-[0.76rem] tracking-[-0.01em] transition-[color,transform] duration-150 ${
         active ? 'text-foreground' : 'text-muted-foreground hover:-translate-y-[1px] hover:text-foreground'
       }`}
     >
@@ -29,7 +29,8 @@ export default function TopMeta() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [headerHidden, setHeaderHidden] = useState(false)
-  const [headerHovered, setHeaderHovered] = useState(false)
+  const [brandHovered, setBrandHovered] = useState(false)
+  const [navHovered, setNavHovered] = useState(false)
   const lastScrollY = useRef(0)
 
   useEffect(() => {
@@ -78,22 +79,32 @@ export default function TopMeta() {
     >
       <div
         className="pointer-events-auto relative mx-auto flex max-w-[36rem] items-center justify-between gap-6"
-        onMouseEnter={() => setHeaderHovered(true)}
-        onMouseLeave={() => setHeaderHovered(false)}
       >
         <div
           aria-hidden
-          className={`pointer-events-none absolute left-[-34%] top-[-120%] h-[13rem] w-[92%] rounded-full blur-[48px] transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            headerHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+          className={`pointer-events-none absolute left-[-10%] top-[-120%] h-[12rem] w-[42%] rounded-full blur-[48px] transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            brandHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
           }`}
           style={{
             background:
-              'radial-gradient(ellipse at 35% 48%, rgba(255, 154, 64, 0.34) 0%, rgba(255, 170, 86, 0.2) 24%, rgba(255, 188, 118, 0.1) 42%, rgba(255, 212, 168, 0.04) 58%, transparent 76%)',
+              'radial-gradient(ellipse at 28% 48%, rgba(255, 154, 64, 0.34) 0%, rgba(255, 170, 86, 0.2) 24%, rgba(255, 188, 118, 0.1) 42%, rgba(255, 212, 168, 0.04) 58%, transparent 76%)',
+          }}
+        />
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute right-[-8%] top-[-120%] h-[12rem] w-[38%] rounded-full blur-[48px] transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            navHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+          }`}
+          style={{
+            background:
+              'radial-gradient(ellipse at 72% 48%, rgba(255, 154, 64, 0.34) 0%, rgba(255, 170, 86, 0.2) 24%, rgba(255, 188, 118, 0.1) 42%, rgba(255, 212, 168, 0.04) 58%, transparent 76%)',
           }}
         />
         <Link
           href="/"
-          className="min-h-[40px] inline-flex items-center gap-2 font-header text-[0.9rem] tracking-[-0.03em] text-foreground/88 transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground"
+          className="inline-flex min-h-[40px] items-center gap-2 leading-none font-header text-[0.9rem] tracking-[-0.03em] text-foreground/88 transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground"
+          onMouseEnter={() => setBrandHovered(true)}
+          onMouseLeave={() => setBrandHovered(false)}
         >
           <span>Hunter Bastian</span>
           <span className="text-accent/85">
@@ -101,7 +112,11 @@ export default function TopMeta() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-5 sm:flex">
+        <nav
+          className="hidden items-center gap-5 sm:flex"
+          onMouseEnter={() => setNavHovered(true)}
+          onMouseLeave={() => setNavHovered(false)}
+        >
           {PAGE_NAV.map((item) => (
             <NavLink
               key={item.href}

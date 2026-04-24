@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
-import { useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import {
   contactSocialLinks,
@@ -47,6 +47,10 @@ function formatYear(date: string) {
 
 function getProjectRows(projects: Project[]) {
   return projects.slice(0, 4)
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max)
 }
 
 function Reveal({ children, delayMs = 0 }: { children: ReactNode; delayMs?: number }) {
@@ -205,8 +209,58 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const introParagraphs = homeHeroContent.intro.split('\n\n')
   const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null)
   const [resumeOpen, setResumeOpen] = useState(false)
+  const contactGlowRef = useRef<HTMLDivElement | null>(null)
+  const contactGlowBoundsRef = useRef<DOMRect | null>(null)
+  const contactGlowFrameRef = useRef<number | null>(null)
+  const contactGlowPointerRef = useRef({ x: 0, y: 0 })
   const playgroundGlowActive = hoveredProjectSlug === 'playground'
   const haptic = useWebHaptics()
+
+  useEffect(() => {
+    return () => {
+      if (contactGlowFrameRef.current !== null) {
+        window.cancelAnimationFrame(contactGlowFrameRef.current)
+      }
+    }
+  }, [])
+
+  const writeContactGlowPosition = () => {
+    const glow = contactGlowRef.current
+    if (!glow) return
+
+    const { x, y } = contactGlowPointerRef.current
+    glow.style.setProperty('--contact-glow-cursor-x', `${clamp(x * 42, -42, 42)}px`)
+    glow.style.setProperty('--contact-glow-cursor-y', `${clamp(y * 18, -18, 18)}px`)
+    contactGlowFrameRef.current = null
+  }
+
+  const trackContactGlowBounds = (event: PointerEvent<HTMLDivElement>) => {
+    contactGlowBoundsRef.current = event.currentTarget.getBoundingClientRect()
+  }
+
+  const updateContactGlow = (event: PointerEvent<HTMLDivElement>) => {
+    const rect = contactGlowBoundsRef.current ?? event.currentTarget.getBoundingClientRect()
+    contactGlowBoundsRef.current = rect
+
+    contactGlowPointerRef.current = {
+      x: (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2),
+      y: (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2),
+    }
+
+    if (contactGlowFrameRef.current === null) {
+      contactGlowFrameRef.current = window.requestAnimationFrame(writeContactGlowPosition)
+    }
+  }
+
+  const resetContactGlow = () => {
+    const glow = contactGlowRef.current
+    if (!glow) return
+
+    contactGlowBoundsRef.current = null
+    contactGlowPointerRef.current = { x: 0, y: 0 }
+    glow.style.setProperty('--contact-glow-cursor-x', '0px')
+    glow.style.setProperty('--contact-glow-cursor-y', '0px')
+  }
 
   return (
     <div className="px-5 pb-24 sm:px-8 sm:pb-32">
@@ -254,27 +308,33 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 sm:gap-x-5">
                 <Link
                   href="/#contact"
-                  className="min-h-[40px] font-header text-[0.68rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.68rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
                   onClick={() => haptic.trigger('light')}
                 >
-                  Contact
+                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-200 group-hover:bg-[length:100%_1px] group-focus-visible:bg-[length:100%_1px]">
+                    Contact
+                  </span>
                 </Link>
                 <Link
                   href="/cv"
-                  className="min-h-[40px] font-header text-[0.68rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.68rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
                   onClick={() => haptic.trigger('light')}
                 >
-                  View CV
+                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-200 group-hover:bg-[length:100%_1px] group-focus-visible:bg-[length:100%_1px]">
+                    View CV
+                  </span>
                 </Link>
                 <button
                   type="button"
-                  className="min-h-[40px] font-header text-[0.68rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.68rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
                   onClick={() => {
                     haptic.trigger('light')
                     setResumeOpen(true)
                   }}
                 >
-                  Resume
+                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-200 group-hover:bg-[length:100%_1px] group-focus-visible:bg-[length:100%_1px]">
+                    Resume
+                  </span>
                 </button>
               </div>
             </div>
@@ -389,12 +449,18 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
           <Reveal delayMs={200}>
             <Section title="Contact">
-              <div className="relative space-y-6">
+              <div
+                className="relative space-y-6"
+                onPointerEnter={trackContactGlowBounds}
+                onPointerMove={updateContactGlow}
+                onPointerLeave={resetContactGlow}
+              >
                 <div
-                  className="pointer-events-none absolute left-[-56%] top-[18%] z-0 h-[20rem] w-[215%] opacity-90 blur-[58px]"
+                  ref={contactGlowRef}
+                  className="pointer-events-none absolute left-[-56%] top-[18%] z-0 h-[20rem] w-[215%] opacity-90 blur-[58px] animated-contact-glow"
                   style={{
                     background:
-                      'radial-gradient(ellipse at 20% 78%, rgba(255, 154, 64, 0.46) 0%, rgba(255, 170, 86, 0.28) 22%, rgba(255, 188, 118, 0.14) 38%, rgba(255, 212, 168, 0.05) 54%, transparent 74%), radial-gradient(ellipse at 42% 64%, rgba(255, 185, 120, 0.14) 0%, rgba(255, 205, 152, 0.06) 28%, transparent 56%)',
+                      'radial-gradient(ellipse at 20% 78%, rgba(255, 154, 64, 0.3) 0%, rgba(232, 96, 86, 0.08) 18%, rgba(255, 170, 86, 0.18) 32%, rgba(255, 188, 118, 0.1) 46%, rgba(255, 212, 168, 0.04) 58%, transparent 78%), radial-gradient(ellipse at 42% 64%, rgba(255, 185, 120, 0.08) 0%, rgba(215, 92, 92, 0.035) 24%, rgba(255, 205, 152, 0.04) 36%, transparent 60%)',
                   }}
                 />
 

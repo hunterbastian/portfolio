@@ -656,50 +656,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.playground-meadow {
-  background:
-    radial-gradient(circle at 18% 16%, rgba(255, 248, 232, 0.9), transparent 18%),
-    radial-gradient(circle at 81% 11%, rgba(255, 251, 240, 0.88), transparent 15%),
-    linear-gradient(180deg, #f2f4f6 0%, #e1edf3 52%, #bad5e3 100%);
-  border: 1px solid color-mix(in srgb, var(--foreground) 10%, white 90%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.68),
-    0 20px 60px rgba(78, 109, 121, 0.12);
-}
-
-.playground-meadow-sky {
-  position: absolute;
-  inset: 0 0 auto;
-  height: 42%;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(255, 252, 244, 0.75), transparent 56%),
-    linear-gradient(180deg, rgba(255, 250, 242, 0.62) 0%, rgba(255, 250, 242, 0) 100%);
-}
-
-.playground-meadow-cloud {
-  position: absolute;
-  border-radius: 999px;
-  background: rgba(255, 252, 248, 0.72);
-  filter: blur(0.3px);
-  box-shadow:
-    2rem 0.35rem 0 -0.35rem rgba(255, 252, 248, 0.65),
-    4.35rem -0.1rem 0 -0.45rem rgba(255, 252, 248, 0.68);
-}
-
-.playground-meadow-cloud-a {
-  top: 4.5rem;
-  left: 9%;
-  width: 5rem;
-  height: 1.6rem;
-}
-
-.playground-meadow-cloud-b {
-  top: 6.5rem;
-  right: 13%;
-  width: 4.5rem;
-  height: 1.45rem;
-}
-
 .playground-field-kicker {
   margin: 0 0 0.45rem;
   font-size: 0.72rem;
@@ -793,10 +749,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 640px) {
-  .playground-meadow {
-    padding-bottom: 8rem;
-  }
-
   .playground-field-title {
     max-width: none;
   }

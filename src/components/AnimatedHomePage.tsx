@@ -25,6 +25,13 @@ interface AnimatedHomePageProps {
   projects: Project[]
 }
 
+const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
+  lumo: 'Mindfulness app for calm reflection.',
+  'middle-earth-journey': 'Interactive Tolkien map experience.',
+  'wander-utah': 'National parks trip-planning app.',
+  'porsche-app': 'Simplified Porsche browsing concept.',
+}
+
 interface EditorialItemProps {
   eyebrow?: string
   eyebrowClassName?: string
@@ -47,6 +54,10 @@ function formatYear(date: string) {
 
 function getProjectRows(projects: Project[]) {
   return projects.slice(0, 4)
+}
+
+function getHomeProjectDescription(project: Project) {
+  return HOME_PROJECT_DESCRIPTIONS[project.slug] ?? project.frontmatter.description
 }
 
 function clamp(value: number, min: number, max: number) {
@@ -137,7 +148,7 @@ function EditorialItem({
             <span
               className={
                 underlineOnHover
-                  ? `${titleFontClassName ?? ''} inline-block bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]`
+                  ? `${titleFontClassName ?? ''} inline-block underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current`
                   : `${titleFontClassName ?? ''} inline-block`
               }
             >
@@ -269,19 +280,37 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
           <section className="space-y-8">
             <div className="space-y-7">
               <div className="space-y-4">
-                <div
-                  className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
-                  style={{ background: 'var(--border)' }}
-                >
-                  <Image
-                    src="/images/profilepicture.webp"
-                    alt="Outdoor photograph of Hunter Bastian walking along a mountain road."
-                    width={75}
-                    height={75}
-                    priority
-                    className="mask mask-squircle object-cover img-inset-outline transition-[filter,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:brightness-[1.02]"
-                    sizes="75px"
+                <div className="group relative isolate w-fit">
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:scale-100 dark:hidden"
+                    style={{
+                      background:
+                        'radial-gradient(ellipse at 48% 52%, rgba(255, 76, 56, 0.48) 0%, rgba(255, 106, 42, 0.36) 30%, rgba(255, 148, 74, 0.2) 56%, transparent 80%)',
+                    }}
                   />
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -inset-10 -z-10 hidden rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:scale-100 dark:block"
+                    style={{
+                      background:
+                        'radial-gradient(ellipse at 48% 52%, rgba(255, 76, 48, 0.34) 0%, rgba(255, 111, 36, 0.25) 34%, rgba(255, 160, 78, 0.13) 60%, transparent 82%)',
+                    }}
+                  />
+                  <div
+                    className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
+                    style={{ background: 'var(--border)' }}
+                  >
+                    <Image
+                      src="/images/profilepicture.webp"
+                      alt="Outdoor photograph of Hunter Bastian walking along a mountain road."
+                      width={75}
+                      height={75}
+                      priority
+                      className="mask mask-squircle object-cover img-inset-outline transition-[filter,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] hover:brightness-[1.02]"
+                      sizes="75px"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-0.5">
@@ -308,31 +337,31 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 sm:gap-x-5">
                 <Link
                   href="/#contact"
-                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.68rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
                   onClick={() => haptic.trigger('light')}
                 >
-                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-200 group-hover:bg-[length:100%_1px] group-focus-visible:bg-[length:100%_1px]">
+                  <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
                     Contact
                   </span>
                 </Link>
                 <Link
                   href="/cv"
-                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.68rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
                   onClick={() => haptic.trigger('light')}
                 >
-                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-200 group-hover:bg-[length:100%_1px] group-focus-visible:bg-[length:100%_1px]">
+                  <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
                     View CV
                   </span>
                 </Link>
                 <button
                   type="button"
-                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.68rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.7rem]"
+                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
                   onClick={() => {
                     haptic.trigger('light')
                     setResumeOpen(true)
                   }}
                 >
-                  <span className="bg-[linear-gradient(currentColor,currentColor)] bg-no-repeat bg-[length:0%_1px] bg-[position:0_100%] transition-[background-size] duration-200 group-hover:bg-[length:100%_1px] group-focus-visible:bg-[length:100%_1px]">
+                  <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
                     Resume
                   </span>
                 </button>
@@ -370,7 +399,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     key={project.slug}
                     href={`/projects/${project.slug}`}
                     title={project.frontmatter.displayTitle || project.frontmatter.title}
-                    description={project.frontmatter.description}
+                    description={getHomeProjectDescription(project)}
                     trailing={formatYear(project.frontmatter.date)}
                     titleFontClassName="font-header"
                     thumbnailImage={project.frontmatter.image}
@@ -381,7 +410,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 <EditorialItem
                   href="/archive"
                   title="Playground"
-                  description="Smaller creative coding experiments, prototypes, and side explorations that do not need the full case-study treatment."
+                  description="Small experiments and prototypes."
                   trailing="See more"
                   titleFontClassName="font-header"
                   onMouseEnter={() => setHoveredProjectSlug('playground')}
@@ -465,10 +494,10 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 />
 
                 <div className="relative z-10 space-y-6">
-                <p className="max-w-[38rem] font-mono text-[1rem] leading-[1.7] text-muted-foreground">
-                  If something here resonates, reach out.
-                </p>
-                <ContactLinks />
+                  <ContactLinks />
+                  <p className="max-w-[38rem] font-mono text-[1rem] leading-[1.7] text-muted-foreground">
+                    If something here resonates, reach out.
+                  </p>
                 </div>
               </div>
             </Section>

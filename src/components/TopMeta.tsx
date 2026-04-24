@@ -87,7 +87,7 @@ export default function TopMeta() {
           }`}
           style={{
             background:
-              'radial-gradient(ellipse at 28% 48%, rgba(255, 154, 64, 0.34) 0%, rgba(255, 170, 86, 0.2) 24%, rgba(255, 188, 118, 0.1) 42%, rgba(255, 212, 168, 0.04) 58%, transparent 76%)',
+              'radial-gradient(ellipse at 28% 48%, rgba(255, 78, 56, 0.48) 0%, rgba(255, 111, 42, 0.34) 24%, rgba(255, 150, 66, 0.18) 44%, rgba(255, 198, 126, 0.07) 62%, transparent 78%)',
           }}
         />
         <div

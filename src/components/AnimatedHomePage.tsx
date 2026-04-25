@@ -121,11 +121,11 @@ function EditorialItem({
   const interactive = Boolean(href)
   const content = (
     <div
-      className={`group relative flex w-full items-start justify-between gap-6 px-3 py-3 transition-[transform,color,opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:-mx-3 sm:gap-10 ${
-        interactive ? 'hover:translate-x-[3px] hover:bg-foreground/[0.03]' : ''
+      className={`group relative flex w-full items-start justify-between gap-4 px-0 py-3 transition-[transform,color,opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:-mx-3 sm:gap-10 sm:px-3 ${
+        interactive ? 'sm:hover:translate-x-[3px] sm:hover:bg-foreground/[0.03]' : ''
       }`}
     >
-      <div className="flex min-w-0 items-start gap-4 sm:gap-6">
+      <div className="flex min-w-0 flex-1 items-start gap-3.5 sm:gap-6">
         {thumbnailImage ? (
           <div className="relative mt-0.5 h-[72px] w-[72px] shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] sm:h-[84px] sm:w-[84px]">
             <Image
@@ -138,30 +138,37 @@ function EditorialItem({
           </div>
         ) : null}
 
-        <div className="min-w-0 space-y-1.5">
+        <div className="min-w-0 flex-1 space-y-1.5">
           {eyebrow ? (
             <p className={`${eyebrowClassName ?? 'font-mono text-muted-foreground/70 group-hover:text-muted-foreground'} text-[0.66rem] uppercase tracking-[0.12em] transition-colors duration-300`}>
               {eyebrow}
             </p>
           ) : null}
-          <p className={`${titleFontClassName ?? 'font-mono'} text-[1.02rem] leading-none tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-foreground/86`}>
-            <span
-              className={
-                underlineOnHover
-                  ? `${titleFontClassName ?? ''} inline-block underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current`
-                  : `${titleFontClassName ?? ''} inline-block`
-              }
-            >
-              {title}
-            </span>
-          </p>
-          <p className="max-w-[44rem] font-mono text-[0.96rem] leading-[1.65] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72">
+          <div className="flex min-w-0 items-baseline justify-between gap-3">
+            <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 text-[1rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-foreground/86 sm:text-[1.02rem] sm:leading-none`}>
+              <span
+                className={
+                  underlineOnHover
+                    ? `${titleFontClassName ?? ''} inline underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current`
+                    : `${titleFontClassName ?? ''} inline`
+                }
+              >
+                {title}
+              </span>
+            </p>
+            {trailing ? (
+              <span className="shrink-0 font-mono text-[0.72rem] text-muted-foreground/70 sm:hidden">
+                {trailing}
+              </span>
+            ) : null}
+          </div>
+          <p className="max-w-[44rem] font-mono text-[0.9rem] leading-[1.58] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72 sm:text-[0.96rem] sm:leading-[1.65]">
             {description}
           </p>
         </div>
       </div>
       {trailing ? (
-        <span className="shrink-0 pt-0.5 font-mono text-[0.84rem] text-muted-foreground/75 transition-[transform,color] duration-300 group-hover:translate-x-[2px] group-hover:text-foreground/72">
+        <span className="hidden shrink-0 pt-0.5 font-mono text-[0.84rem] text-muted-foreground/75 transition-[transform,color] duration-300 group-hover:translate-x-[2px] group-hover:text-foreground/72 sm:block">
           {trailing}
         </span>
       ) : null}

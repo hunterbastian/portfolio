@@ -82,9 +82,9 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
 
   return (
-    <div className="flex h-full flex-col items-center justify-center md:hidden">
+    <div className="flex flex-col items-center md:hidden">
       <m.div
-        className="mb-8 text-center"
+        className="mb-6 text-center"
         initial={prefersReducedMotion ? false : { opacity: 0, y: 8, filter: 'blur(4px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.5, delay: 0.1, ease: ENTRANCE.ease }}
@@ -94,13 +94,13 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
         </p>
       </m.div>
 
-      <div className="flex w-full snap-x snap-mandatory gap-5 overflow-x-auto px-[calc(50%-100px)] pb-4 scrollbar-hide">
+      <div className="grid w-full grid-cols-2 gap-x-3 gap-y-5 pb-5 pt-1">
         {projects.map((project, index) => {
           const tilt = cardTilt(index)
           return (
             <m.div
               key={project.slug}
-              className="w-[200px] shrink-0 snap-center"
+              className="min-w-0"
               style={{ transform: `rotate(${tilt}deg)` }}
               initial={prefersReducedMotion ? false : { opacity: 0, y: 16, filter: 'blur(6px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}

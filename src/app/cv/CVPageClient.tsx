@@ -74,7 +74,7 @@ export default function CVPageClient() {
             </div>
             <button
               onClick={() => window.print()}
-              className="print:hidden ml-4 inline-flex min-h-[44px] shrink-0 items-center border border-border bg-card px-4 py-2 text-[11px] font-mono tracking-wide text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="print:hidden ml-4 inline-flex min-h-[40px] shrink-0 items-center border border-border bg-card px-3 py-1.5 text-[10px] font-mono tracking-[0.12em] text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
               aria-label="Print or save as PDF"
             >
               Print
@@ -108,21 +108,21 @@ export default function CVPageClient() {
             {experienceItems.map((item, i) => (
               <m.div
                 key={`${item.company}-${item.year}`}
-                className="group grid grid-cols-[1fr_auto] gap-x-4 items-baseline"
+                className="group grid gap-y-1 sm:grid-cols-[1fr_auto] sm:gap-x-4 sm:items-baseline"
                 variants={itemVariants}
                 custom={i}
                 initial="hidden"
                 animate="visible"
               >
                 <div>
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                     <span className="text-[13px] font-medium text-foreground">{item.company}</span>
                     <span className="text-[11px] text-muted-foreground/60">·</span>
                     <span className="text-[12px] text-muted-foreground">{item.title}</span>
                   </div>
                   <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground/70">{item.description}</p>
                 </div>
-                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap">{item.year}</span>
+                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap sm:justify-self-end">{item.year}</span>
               </m.div>
             ))}
           </div>
@@ -137,14 +137,14 @@ export default function CVPageClient() {
             {educationItems.map((item, i) => (
               <m.div
                 key={`${item.institution}-${item.year}`}
-                className="group grid grid-cols-[1fr_auto] gap-x-4 items-baseline"
+                className="group grid gap-y-1 sm:grid-cols-[1fr_auto] sm:gap-x-4 sm:items-baseline"
                 variants={itemVariants}
                 custom={i + experienceItems.length}
                 initial="hidden"
                 animate="visible"
               >
                 <div>
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                     <span className="text-[13px] font-medium text-foreground">{item.institution}</span>
                     <span className="text-[11px] text-muted-foreground/60">·</span>
                     <span className="text-[12px] text-muted-foreground">{item.degree}</span>
@@ -154,7 +154,7 @@ export default function CVPageClient() {
                     {item.note && <span className="ml-2 font-mono text-[10px] tracking-wider text-accent/80 uppercase">{item.note}</span>}
                   </p>
                 </div>
-                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap">{item.year}</span>
+                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap sm:justify-self-end">{item.year}</span>
               </m.div>
             ))}
           </div>

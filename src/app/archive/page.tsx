@@ -78,10 +78,10 @@ export default function ArchivePage() {
               </p>
             </div>
           ) : (
-            <section className="pt-14">
+            <section className="pt-10 sm:pt-14">
               <div>
-                <div className="mx-[calc(50%-50vw)] max-w-none sm:mx-[-4rem] lg:mx-[-6rem]">
-                  <div className="relative h-[29rem] overflow-visible sm:h-[32rem] md:h-[39rem] xl:h-[43rem]">
+                <div className="mx-0 max-w-none sm:mx-[-4rem] lg:mx-[-6rem]">
+                  <div className="relative overflow-visible py-2 sm:py-0 md:h-[39rem] lg:h-[41rem] xl:h-[43rem]">
                     <div className="relative z-10 h-full">
                       <PlaygroundOrbit
                         projects={archivedProjects}

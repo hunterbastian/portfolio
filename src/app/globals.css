@@ -230,6 +230,64 @@ h1, h2, h3, h4, h5, h6 {
   animation: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+.dot-matrix-loader {
+  color: color-mix(in srgb, var(--foreground) 88%, var(--accent) 12%);
+  display: grid;
+  gap: var(--dotmatrix-gap);
+  grid-template-columns: repeat(5, var(--dotmatrix-dot-size));
+  grid-template-rows: repeat(5, var(--dotmatrix-dot-size));
+  height: var(--dotmatrix-size);
+  width: var(--dotmatrix-size);
+}
+
+.dot-matrix-loader__dot {
+  animation: dot-matrix-core-spiral 1.55s linear infinite;
+  animation-delay: calc(var(--dotmatrix-order) * 62ms);
+  background: currentColor;
+  border-radius: 999px;
+  box-shadow: 0 0 10px color-mix(in srgb, currentColor 18%, transparent);
+  display: block;
+  height: var(--dotmatrix-dot-size);
+  transform-origin: center;
+  width: var(--dotmatrix-dot-size);
+  will-change: opacity;
+}
+
+@keyframes dot-matrix-core-spiral {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  16% {
+    opacity: 0.68;
+  }
+
+  24% {
+    opacity: 0.4;
+  }
+
+  32% {
+    opacity: 0.24;
+  }
+
+  40% {
+    opacity: 0.12;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-matrix-loader__dot {
+    animation: none;
+    transition: none;
+    will-change: auto;
+  }
+}
+
 
 /* ─────────────────────────────────────────────────────────
  * HERO TYPOGRAPHY — clean, no effects

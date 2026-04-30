@@ -1,5 +1,5 @@
-import UnicodeLoader from '@/components/UnicodeLoader'
+import DotMatrixLoader from '@/components/DotMatrixLoader'
 
 export default function Loading() {
-  return <UnicodeLoader />
+  return <DotMatrixLoader />
 }

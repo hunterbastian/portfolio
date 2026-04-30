@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
-import UnicodeLoader from './UnicodeLoader'
+import DotMatrixLoader from './DotMatrixLoader'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 interface LoadingScreenProps {
@@ -35,7 +35,7 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: MOTION_EASE_SOFT }}
           >
-            <UnicodeLoader />
+            <DotMatrixLoader />
           </m.div>
         ) : (
           <m.div

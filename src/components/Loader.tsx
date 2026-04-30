@@ -1,7 +1,7 @@
 'use client'
 
 import { createElement, useEffect } from 'react'
-import UnicodeLoader from './UnicodeLoader'
+import DotMatrixLoader from './DotMatrixLoader'
 
 // LDRS loader types
 type LoaderType = 
@@ -135,13 +135,13 @@ export default function Loader({
 
 // Specialized loaders for common use cases
 export function PortfolioLoader({ className = '' }: { className?: string }) {
-  return <UnicodeLoader className={className} />
+  return <DotMatrixLoader className={className} />
 }
 
 export function ProjectLoader({ className = '' }: { className?: string }) {
-  return <UnicodeLoader className={className} />
+  return <DotMatrixLoader className={className} />
 }
 
 export function InlineLoader({ className = '' }: { className?: string }) {
-  return <UnicodeLoader className={className} />
+  return <DotMatrixLoader className={className} dotSize={3} fullscreen={false} size={24} />
 }

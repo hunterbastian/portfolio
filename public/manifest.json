@@ -9,13 +9,13 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon/favicon-192x192.png?v=20260420a",
+      "src": "/favicon/favicon-192x192.png?v=20260425c",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable any"
     },
     {
-      "src": "/favicon/favicon-512x512.png?v=20260420a",
+      "src": "/favicon/favicon-512x512.png?v=20260425c",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"

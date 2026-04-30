@@ -4,7 +4,7 @@ All favicon and app icon files for the portfolio website.
 
 ## Files
 
-- `favicon-source.svg` — single source of truth (radial sunset gradient)
+- `favicon-source.svg` — single source of truth (circular pastel sunset gradient)
 - `favicon.ico` — 16/32/48 combined
 - `favicon-16x16.png`, `favicon-32x32.png` — standard PNG favicons
 - `favicon-192x192.png`, `favicon-512x512.png` — Android / PWA / high-res

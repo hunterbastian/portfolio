@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Summer as PixelSun } from '@/components/pixel/glyphs'
+import Image from 'next/image'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -52,9 +52,14 @@ export default function Footer() {
         <div className="flex flex-col gap-2 text-[0.76rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p className="font-header transition-colors duration-150 hover:text-foreground/78">© {currentYear} Hunter Bastian</p>
           <p className="font-header transition-colors duration-150 hover:text-foreground/78 inline-flex items-center gap-2">
-            <span aria-hidden className="inline-flex text-accent/85 leading-none">
-              <PixelSun size={11} />
-            </span>
+            <Image
+              src="/favicon/favicon-32x32.png"
+              alt=""
+              width={16}
+              height={16}
+              aria-hidden="true"
+              className="size-3.5 rounded-full shadow-[0_0_10px_rgba(234,97,174,0.2)]"
+            />
             <span>Made with care in Utah.</span>
           </p>
         </div>

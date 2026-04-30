@@ -26,13 +26,13 @@ export default function GlobalError({ error, reset }: { error: Error; reset: () 
         <div className="mt-8 flex items-center justify-center gap-6">
           <button
             onClick={() => reset()}
-            className="font-mono text-[12px] tracking-[0.06em] text-foreground hover:text-muted-foreground transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex min-h-[40px] origin-center touch-manipulation items-center font-mono text-[12px] tracking-[0.06em] text-foreground transition-[color,transform] duration-150 hover:text-muted-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Try again
           </button>
           <Link
             href="/"
-            className="text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="inline-flex min-h-[40px] origin-center touch-manipulation items-center text-xs tracking-[0.08em] uppercase text-muted-foreground transition-[color,transform] duration-150 hover:text-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             style={{ fontFamily: 'inherit' }}
           >
             Go Home
@@ -42,4 +42,3 @@ export default function GlobalError({ error, reset }: { error: Error; reset: () 
     </div>
   )
 }
-

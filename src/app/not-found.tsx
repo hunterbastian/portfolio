@@ -59,14 +59,14 @@ export default function NotFound() {
         >
           <Link
             href="/"
-            className="group inline-flex items-center gap-1.5 font-mono text-[12px] tracking-[0.06em] text-foreground hover:text-accent transition-colors duration-200 active:scale-[0.96]"
+            className="group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-1.5 font-mono text-[12px] tracking-[0.06em] text-foreground transition-[color,transform] duration-150 hover:text-accent active:translate-y-0 active:scale-[0.96]"
           >
             <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1" aria-hidden />
             Home
           </Link>
           <Link
             href="/#contact"
-            className="text-xs tracking-[0.08em] uppercase text-muted-foreground hover:text-accent transition-colors duration-200 active:scale-[0.96]"
+            className="inline-flex min-h-[40px] origin-center touch-manipulation items-center text-xs tracking-[0.08em] uppercase text-muted-foreground transition-[color,transform] duration-150 hover:text-accent active:translate-y-0 active:scale-[0.96]"
             style={{ fontFamily: 'inherit' }}
           >
             Contact

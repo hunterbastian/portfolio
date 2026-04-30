@@ -7,6 +7,7 @@ import ResumeModal from '@/components/ResumeModal'
 import TextReveal from '@/components/TextReveal'
 import { useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
+import { showJoyToast } from '@/lib/joy'
 
 export default function AboutPageClient() {
   const [resumeOpen, setResumeOpen] = useState(false)
@@ -64,23 +65,30 @@ export default function AboutPageClient() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               <Link
                 href="/#contact"
-                className="min-h-[40px] font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                onClick={() => haptic.trigger('light')}
+                className="min-h-[40px] origin-center touch-manipulation font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                onClick={() => {
+                  haptic.trigger('light')
+                  showJoyToast('Say hi')
+                }}
               >
                 Contact
               </Link>
               <Link
                 href="/cv"
-                className="min-h-[40px] font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                onClick={() => haptic.trigger('light')}
+                className="min-h-[40px] origin-center touch-manipulation font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                onClick={() => {
+                  haptic.trigger('light')
+                  showJoyToast('Opening CV')
+                }}
               >
                 View CV
               </Link>
               <button
                 type="button"
-                className="min-h-[40px] font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                className="min-h-[40px] origin-center touch-manipulation font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                 onClick={() => {
                   haptic.trigger('light')
+                  showJoyToast('Resume opened')
                   setResumeOpen(true)
                 }}
               >

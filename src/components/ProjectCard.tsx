@@ -7,6 +7,7 @@ import { ProjectFrontmatter } from '@/types/project'
 import { startProjectTransition } from '@/lib/project-transition'
 import { useWebHaptics } from 'web-haptics/react'
 import { useSound } from '@/lib/sounds/context'
+import { showJoyToast } from '@/lib/joy'
 
 interface ProjectCardProps {
   slug: string
@@ -54,6 +55,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
 
   const handleTransitionClick = useCallback(() => {
     haptic.trigger('medium')
+    showJoyToast('Opening project')
     if (imageRef.current) {
       const rect = imageRef.current.getBoundingClientRect()
       startProjectTransition(slug, imgSrc, {
@@ -67,9 +69,9 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
 
   return (
     <div className="relative">
-      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className="group block h-full w-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">
+      <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className="group block h-full w-full touch-manipulation focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">
           <div
-            className="project-card relative isolate overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-[0.998] touch-manipulation hover:-translate-y-0.5"
+            className="project-card relative isolate origin-center overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.96]"
             style={{
               animationDelay: `${index * 80}ms`,
             }}

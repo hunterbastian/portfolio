@@ -12,6 +12,8 @@ import { useSound } from '@/lib/sounds/context'
 import SoundToggle from '@/components/SoundToggle'
 import { Spring, Summer, Autumn, Winter } from '@/components/pixel/glyphs'
 import type { ComponentType, SVGProps } from 'react'
+import { useWebHaptics } from 'web-haptics/react'
+import { showJoyToast } from '@/lib/joy'
 
 type GlyphComponent = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>
 
@@ -60,6 +62,7 @@ export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   const showCoordinates = true
   const { play } = useSound()
+  const haptic = useWebHaptics()
 
   useEffect(() => {
     setShowMobileMenu(false)
@@ -76,7 +79,11 @@ export default function Header() {
           <div className="flex items-start gap-4">
             <Link
               href="/"
-              className="group flex min-h-[44px] items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="group flex min-h-[44px] origin-center touch-manipulation items-center gap-2 transition-transform duration-150 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              onClick={() => {
+                haptic.trigger('light')
+                showJoyToast('Opening home')
+              }}
               aria-label="Home"
             >
               <span
@@ -114,16 +121,24 @@ export default function Header() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => play('click')}
-                      className="text-[10px] tracking-[0.1em] font-mono transition-colors duration-150 underline-offset-4 decoration-transparent hover:decoration-accent text-foreground/60 hover:text-accent hover:underline leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      onClick={() => {
+                        haptic.trigger('light')
+                        play('click')
+                        showJoyToast(`Opening ${item.name.toLowerCase()}`)
+                      }}
+                      className="inline-flex min-h-[44px] origin-center touch-manipulation items-center text-[10px] font-mono leading-tight tracking-[0.1em] text-foreground/60 decoration-transparent underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-accent hover:underline hover:decoration-accent active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     >
                       {item.name}
                     </a>
                   ) : (
                     <Link
                       href={item.href}
-                      onClick={() => play('click')}
-                      className={`relative text-[10px] tracking-[0.1em] font-mono transition-colors duration-150 underline-offset-4 decoration-transparent hover:decoration-accent leading-tight inline-flex items-center min-h-[44px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                      onClick={() => {
+                        haptic.trigger('light')
+                        play('click')
+                        showJoyToast(`Opening ${item.name.toLowerCase()}`)
+                      }}
+                      className={`relative inline-flex min-h-[44px] origin-center touch-manipulation items-center text-[10px] font-mono leading-tight tracking-[0.1em] decoration-transparent underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:decoration-accent active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
                         pathname === item.href
                           ? 'text-foreground underline decoration-accent'
                           : 'text-foreground/60 hover:text-accent hover:underline'
@@ -141,8 +156,11 @@ export default function Header() {
             <SoundToggle />
             <button
               type="button"
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-              className="flex items-center justify-center w-11 h-11 text-muted-foreground hover:text-foreground transition-[color,transform] duration-200 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:hidden"
+              onClick={() => {
+                haptic.trigger('light')
+                setShowMobileMenu(!showMobileMenu)
+              }}
+              className="flex h-11 w-11 origin-center touch-manipulation items-center justify-center text-muted-foreground transition-[color,transform] duration-200 hover:text-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:hidden"
               aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
               aria-expanded={showMobileMenu}
             >
@@ -186,8 +204,8 @@ export default function Header() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => { play('click'); setShowMobileMenu(false) }}
-                      className="block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent text-muted-foreground hover:text-accent hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      onClick={() => { haptic.trigger('light'); play('click'); showJoyToast(`Opening ${item.name.toLowerCase()}`); setShowMobileMenu(false) }}
+                      className="flex min-h-[44px] origin-center touch-manipulation items-center py-3 text-xs uppercase tracking-[0.14em] text-muted-foreground decoration-transparent underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-accent hover:underline hover:decoration-accent active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                       style={{ fontFamily: 'inherit' }}
                     >
                       {item.name}
@@ -195,8 +213,8 @@ export default function Header() {
                   ) : (
                     <Link
                       href={item.href}
-                      onClick={() => { play('click'); setShowMobileMenu(false) }}
-                      className={`block py-3 min-h-[44px] flex items-center text-xs tracking-[0.14em] uppercase transition-colors duration-200 underline-offset-4 decoration-transparent hover:decoration-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                      onClick={() => { haptic.trigger('light'); play('click'); showJoyToast(`Opening ${item.name.toLowerCase()}`); setShowMobileMenu(false) }}
+                      className={`flex min-h-[44px] origin-center touch-manipulation items-center py-3 text-xs uppercase tracking-[0.14em] decoration-transparent underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:decoration-accent active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
                         pathname === item.href ? 'text-foreground underline decoration-accent' : 'text-muted-foreground hover:text-accent hover:underline'
                       }`}
                       style={{ fontFamily: 'inherit' }}

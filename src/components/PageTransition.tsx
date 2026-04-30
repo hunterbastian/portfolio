@@ -11,38 +11,38 @@ import { useIsInitialLoad } from '@/lib/initial-load'
  *
  * Read top-to-bottom. Each `at` value is ms after route swap.
  *
- *    0ms   previous page fades out + drifts up
- *  300ms   old page gone
- *   80ms   new page container slides up y 18 → 0
- *  160ms   new page children rise into place
+ *    0ms   previous page fades out + drifts up slightly
+ *  140ms   old page gone
+ *   24ms   new page container settles y 6 → 0
+ *   44ms   new page children settle y 4 → 0
  * ───────────────────────────────────────────────────────── */
 
 const TIMING = {
-  oldFadeDuration: 300,   // gentle fade-out
-  newContentDelay: 100,   // breathing room before new page arrives
-  newSlideDuration: 420,
-  childStartDelay: 80,    // let container start moving before children reveal
-  childStagger: 40,
-  childDuration: 360,
+  oldFadeDuration: 140,
+  newContentDelay: 24,
+  newSlideDuration: 220,
+  childStartDelay: 20,
+  childStagger: 0,
+  childDuration: 200,
 }
 
 /** Exported for shared-element transition measurement offset */
-export const PAGE_ENTRANCE_INITIAL_Y = 18
+export const PAGE_ENTRANCE_INITIAL_Y = 6
 
 const PAGE = {
-  initialY: PAGE_ENTRANCE_INITIAL_Y, // more travel distance for a visible glide
+  initialY: PAGE_ENTRANCE_INITIAL_Y,
   finalY: 0,
   initialOpacity: 0,
   finalOpacity: 1,
   exitOpacity: 0,
-  exitY: -8,              // exits upward — feels like turning a page
+  exitY: -4,
 }
 
 /** Exported for shared-element transition measurement offset */
-export const CHILD_ENTRANCE_INITIAL_Y = 14
+export const CHILD_ENTRANCE_INITIAL_Y = 4
 
 const CHILD = {
-  initialY: CHILD_ENTRANCE_INITIAL_Y, // children rise more — noticeable but not dramatic
+  initialY: CHILD_ENTRANCE_INITIAL_Y,
   finalY: 0,
   initialOpacity: 0,
   finalOpacity: 1,

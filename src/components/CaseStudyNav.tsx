@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
+import { useWebHaptics } from 'web-haptics/react'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 
 interface Chapter {
@@ -13,6 +14,7 @@ export default function CaseStudyNav() {
   const [chapters, setChapters] = useState<Chapter[]>([])
   const [activeChapter, setActiveChapter] = useState('')
   const prefersReducedMotion = useReducedMotion() ?? false
+  const haptic = useWebHaptics()
 
   // Discover chapters from [data-chapter] elements
   useEffect(() => {
@@ -65,10 +67,11 @@ export default function CaseStudyNav() {
               key={chapter.id}
               type="button"
               onClick={() => {
+                haptic.trigger('light')
                 const el = document.querySelector(`[data-chapter="${chapter.id}"]`)
                 el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }}
-              className="group flex items-center gap-2 text-left focus-visible:outline-none"
+              className="group flex min-h-[40px] origin-center touch-manipulation items-center gap-2 text-left transition-transform duration-150 active:translate-y-0 active:scale-[0.96] focus-visible:outline-none"
               aria-current={isActive ? 'step' : undefined}
               aria-label={`Chapter ${chapter.id}: ${chapter.title}`}
             >

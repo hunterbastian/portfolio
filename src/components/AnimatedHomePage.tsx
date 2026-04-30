@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
-import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type MouseEvent, type PointerEvent, type ReactNode } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import {
   contactSocialLinks,
@@ -13,6 +13,7 @@ import {
   homeHeroContent,
 } from '@/content/homepage'
 import ResumeModal from '@/components/ResumeModal'
+import { showJoyToast } from '@/lib/joy'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 import type { ProjectFrontmatter } from '@/types/project'
 
@@ -45,6 +46,21 @@ const PROJECT_GLOW_GRADIENTS: Record<string, string> = {
     'radial-gradient(ellipse at 24% 48%, rgba(255, 75, 0, 0.36) 0%, rgba(255, 154, 64, 0.2) 20%, rgba(255, 188, 118, 0.1) 36%, rgba(255, 212, 168, 0.04) 52%, transparent 72%), radial-gradient(ellipse at 42% 58%, rgba(255, 185, 120, 0.13) 0%, rgba(255, 205, 152, 0.065) 28%, transparent 56%)',
 }
 
+const PROJECT_ACCENTS: Record<string, string> = {
+  lumo: '#f8c639',
+  'middle-earth-journey': '#235480',
+  'wander-utah': '#8fa655',
+  'porsche-app': '#e23d28',
+  playground: '#ff4b00',
+}
+
+type EditorialAccentStyle = CSSProperties & {
+  '--editorial-accent': string
+  '--editorial-accent-bg': string
+  '--editorial-accent-border': string
+  '--editorial-accent-shadow': string
+}
+
 interface EditorialItemProps {
   eyebrow?: string
   eyebrowClassName?: string
@@ -59,6 +75,8 @@ interface EditorialItemProps {
   thumbnailImage?: string
   thumbnailAlt?: string
   underlineOnHover?: boolean
+  hoverAccentColor?: string
+  toastMessage?: string
 }
 
 function formatYear(date: string) {
@@ -97,15 +115,17 @@ function Reveal({ children, delayMs = 0 }: { children: ReactNode; delayMs?: numb
 }
 
 function Section({
+  id,
   title,
   children,
 }: {
+  id?: string
   title: string
   children: React.ReactNode
 }) {
   return (
-    <section className="space-y-7">
-      <div className="space-y-3">
+    <section id={id} className="scroll-mt-24 space-y-5 sm:space-y-7">
+      <div className="space-y-2.5 sm:space-y-3">
         <div className="flex items-baseline gap-4 text-[0.85rem] tracking-[-0.02em] text-foreground/92">
           <h2>{title}</h2>
         </div>
@@ -130,22 +150,32 @@ function EditorialItem({
   thumbnailImage,
   thumbnailAlt,
   underlineOnHover = false,
+  hoverAccentColor = '#ff4b00',
+  toastMessage,
 }: EditorialItemProps) {
   const interactive = Boolean(href)
+  const haptic = useWebHaptics()
+  const accentStyle: EditorialAccentStyle = {
+    '--editorial-accent': hoverAccentColor,
+    '--editorial-accent-bg': `color-mix(in srgb, ${hoverAccentColor} 7%, transparent)`,
+    '--editorial-accent-border': `color-mix(in srgb, ${hoverAccentColor} 46%, var(--border))`,
+    '--editorial-accent-shadow': `color-mix(in srgb, ${hoverAccentColor} 22%, transparent)`,
+  }
   const content = (
     <div
-      className={`group relative flex w-full items-start justify-between gap-4 px-0 py-3 transition-[transform,color,opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:-mx-3 sm:gap-10 sm:px-3 ${
-        interactive ? 'sm:hover:translate-x-[3px] sm:hover:bg-foreground/[0.03]' : ''
+      className={`group relative flex w-full origin-center items-start justify-between gap-3.5 px-0 py-2.5 transition-[transform,color,opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:-mx-3 sm:gap-10 sm:px-3 sm:py-3 ${
+        interactive ? 'cursor-pointer touch-manipulation active:translate-y-0 active:scale-[0.96] sm:hover:translate-x-[3px] sm:hover:bg-[var(--editorial-accent-bg)]' : ''
       }`}
+      style={accentStyle}
     >
-      <div className="flex min-w-0 flex-1 items-start gap-3.5 sm:gap-6">
+      <div className="flex min-w-0 flex-1 items-start gap-3 sm:gap-6">
         {thumbnailImage ? (
-          <div className="relative mt-0.5 h-[72px] w-[72px] shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] sm:h-[84px] sm:w-[84px]">
+          <div className="relative mt-0.5 h-[64px] w-[64px] shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] transition-[transform,border-color,box-shadow,filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[1px] group-hover:border-[var(--editorial-accent-border)] group-hover:shadow-[0_12px_28px_-18px_var(--editorial-accent-shadow)] group-active:translate-y-0 group-active:scale-[0.96] group-active:brightness-[0.98] sm:h-[84px] sm:w-[84px]">
             <Image
               src={thumbnailImage}
               alt={thumbnailAlt ?? title}
               fill
-              className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015]"
+              className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.018] group-active:scale-[1.01]"
               sizes="(min-width: 640px) 84px, 72px"
             />
           </div>
@@ -158,11 +188,11 @@ function EditorialItem({
             </p>
           ) : null}
           <div className="flex min-w-0 items-baseline justify-between gap-3">
-            <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 text-[1rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 ${underlineOnHover ? 'group-hover:text-[#ff4b00]' : 'group-hover:text-foreground/86'} sm:text-[1.02rem] sm:leading-none`}>
+            <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 text-[1rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 ${underlineOnHover ? 'group-hover:text-[var(--editorial-accent)]' : 'group-hover:text-foreground/86'} sm:text-[1.02rem] sm:leading-none`}>
               <span
                 className={
                   underlineOnHover
-                    ? `${titleFontClassName ?? ''} inline underline decoration-border underline-offset-[0.2em] transition-[text-decoration-color] duration-300 group-hover:decoration-[#ff4b00]/70`
+                    ? `${titleFontClassName ?? ''} inline underline decoration-border underline-offset-[0.2em] transition-[text-decoration-color] duration-300 group-hover:decoration-[var(--editorial-accent)]`
                     : `${titleFontClassName ?? ''} inline`
                 }
               >
@@ -170,18 +200,18 @@ function EditorialItem({
               </span>
             </p>
             {trailing ? (
-              <span className="shrink-0 font-mono text-[0.72rem] text-muted-foreground/70 sm:hidden">
+              <span className="shrink-0 font-mono text-[0.72rem] text-muted-foreground/70 transition-colors duration-300 group-hover:text-[var(--editorial-accent)] sm:hidden">
                 {trailing}
               </span>
             ) : null}
           </div>
-          <p className="max-w-[44rem] font-mono text-[0.9rem] leading-[1.58] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72 sm:text-[0.96rem] sm:leading-[1.65]">
+          <p className="max-w-[44rem] font-mono text-[0.86rem] leading-[1.5] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72 sm:text-[0.96rem] sm:leading-[1.65]">
             {description}
           </p>
         </div>
       </div>
       {trailing ? (
-        <span className="hidden shrink-0 pt-0.5 font-mono text-[0.84rem] text-muted-foreground/75 transition-[transform,color] duration-300 group-hover:translate-x-[2px] group-hover:text-foreground/72 sm:block">
+        <span className="hidden shrink-0 pt-0.5 font-mono text-[0.84rem] text-muted-foreground/75 transition-[transform,color] duration-300 group-hover:translate-x-[2px] group-hover:text-[var(--editorial-accent)] sm:block">
           {trailing}
         </span>
       ) : null}
@@ -196,9 +226,13 @@ function EditorialItem({
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        className="block rounded-[2px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        onClick={() => {
+          haptic.trigger('light')
+          showJoyToast(toastMessage ?? `Opening ${title}`)
+        }}
       >
         {content}
       </a>
@@ -208,9 +242,13 @@ function EditorialItem({
   return (
     <Link
       href={href}
-      className="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+      className="block rounded-[2px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onClick={() => {
+        haptic.trigger('light')
+        showJoyToast(toastMessage ?? `Opening ${title}`)
+      }}
     >
       {content}
     </Link>
@@ -218,6 +256,27 @@ function EditorialItem({
 }
 
 function ContactLinks() {
+  const haptic = useWebHaptics()
+
+  const handleContactClick = async (event: MouseEvent<HTMLAnchorElement>, link: (typeof contactSocialLinks)[number]) => {
+    haptic.trigger('light')
+
+    if (link.label !== 'Email') {
+      showJoyToast(`Opening ${link.label}`)
+      return
+    }
+
+    event.preventDefault()
+
+    try {
+      await navigator.clipboard.writeText(link.href.replace('mailto:', ''))
+      showJoyToast('Email copied')
+    } catch {
+      window.location.href = link.href
+      showJoyToast('Opening email')
+    }
+  }
+
   return (
     <div className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-3.5">
       {contactSocialLinks.map((link) => (
@@ -226,9 +285,13 @@ function ContactLinks() {
           href={link.href}
           target={link.external ? '_blank' : undefined}
           rel={link.external ? 'noreferrer' : undefined}
-          className="min-h-[40px] w-fit font-mono text-[0.92rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-[#ff4b00] hover:decoration-[#ff4b00]/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.94rem]"
+          className="group/peek relative min-h-[40px] w-fit origin-center touch-manipulation font-mono text-[0.92rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-[#ff4b00] hover:decoration-[#ff4b00]/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.94rem]"
+          onClick={(event) => void handleContactClick(event, link)}
         >
           {link.label}
+          <span className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0">
+            {link.label === 'Email' ? 'Copy email' : `Open ${link.label}`}
+          </span>
         </a>
       ))}
     </div>
@@ -240,6 +303,8 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const introParagraphs = homeHeroContent.intro.split('\n\n')
   const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null)
   const [resumeOpen, setResumeOpen] = useState(false)
+  const [heroGlowActive, setHeroGlowActive] = useState(false)
+  const [contactGlowActive, setContactGlowActive] = useState(false)
   const heroGlowRef = useRef<HTMLDivElement | null>(null)
   const heroGrainRef = useRef<HTMLDivElement | null>(null)
   const heroGlowBoundsRef = useRef<DOMRect | null>(null)
@@ -249,7 +314,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const contactGlowBoundsRef = useRef<DOMRect | null>(null)
   const contactGlowFrameRef = useRef<number | null>(null)
   const contactGlowPointerRef = useRef({ x: 0, y: 0 })
-  const activeProjectGlow = hoveredProjectSlug ? PROJECT_GLOW_GRADIENTS[hoveredProjectSlug] : null
   const haptic = useWebHaptics()
 
   useEffect(() => {
@@ -272,19 +336,20 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
     const glowY = clamp(y * 10, -10, 10)
 
     if (glow) {
-      glow.style.setProperty('--tw-translate-x', `calc(-50% + ${glowX}px)`)
-      glow.style.setProperty('--tw-translate-y', `${glowY}px`)
+      glow.style.setProperty('--hero-glow-cursor-x', `${glowX}px`)
+      glow.style.setProperty('--hero-glow-cursor-y', `${glowY}px`)
     }
 
     if (grain) {
-      grain.style.setProperty('--tw-translate-x', `calc(-50% + ${glowX * 0.55}px)`)
-      grain.style.setProperty('--tw-translate-y', `${glowY * 0.55}px`)
+      grain.style.setProperty('--hero-grain-cursor-x', `${glowX * 0.55}px`)
+      grain.style.setProperty('--hero-grain-cursor-y', `${glowY * 0.55}px`)
     }
 
     heroGlowFrameRef.current = null
   }
 
   const trackHeroGlowBounds = (event: PointerEvent<HTMLElement>) => {
+    setHeroGlowActive(true)
     heroGlowBoundsRef.current = event.currentTarget.getBoundingClientRect()
   }
 
@@ -308,15 +373,16 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
     heroGlowBoundsRef.current = null
     heroGlowPointerRef.current = { x: 0, y: 0 }
+    setHeroGlowActive(false)
 
     if (glow) {
-      glow.style.setProperty('--tw-translate-x', '-50%')
-      glow.style.setProperty('--tw-translate-y', '0px')
+      glow.style.setProperty('--hero-glow-cursor-x', '0px')
+      glow.style.setProperty('--hero-glow-cursor-y', '0px')
     }
 
     if (grain) {
-      grain.style.setProperty('--tw-translate-x', '-50%')
-      grain.style.setProperty('--tw-translate-y', '0px')
+      grain.style.setProperty('--hero-grain-cursor-x', '0px')
+      grain.style.setProperty('--hero-grain-cursor-y', '0px')
     }
   }
 
@@ -331,6 +397,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   }
 
   const trackContactGlowBounds = (event: PointerEvent<HTMLDivElement>) => {
+    setContactGlowActive(true)
     contactGlowBoundsRef.current = event.currentTarget.getBoundingClientRect()
   }
 
@@ -354,16 +421,17 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
     contactGlowBoundsRef.current = null
     contactGlowPointerRef.current = { x: 0, y: 0 }
+    setContactGlowActive(false)
     glow.style.setProperty('--contact-glow-cursor-x', '0px')
     glow.style.setProperty('--contact-glow-cursor-y', '0px')
   }
 
   return (
-    <div className="px-5 pb-24 sm:px-8 sm:pb-32">
-      <div className="mx-auto max-w-[36rem] pt-20 sm:pt-28">
+    <div className="px-5 pb-[4.5rem] sm:px-8 sm:pb-32">
+      <div className="mx-auto max-w-[36rem] pt-16 sm:pt-28">
         <Reveal>
           <section
-            className="relative isolate space-y-8"
+            className="relative isolate space-y-7 sm:space-y-8"
             onPointerEnter={trackHeroGlowBounds}
             onPointerMove={updateHeroGlow}
             onPointerLeave={resetHeroGlow}
@@ -371,7 +439,9 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <div
               ref={heroGlowRef}
               aria-hidden="true"
-              className="pointer-events-none absolute left-[calc(50%+5rem)] -top-24 -z-10 h-[32rem] w-[calc(100vw+8rem)] -translate-x-1/2 overflow-hidden opacity-[0.34] blur-xl transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:left-[calc(50%+7rem)] sm:-top-28 sm:h-[34rem] sm:w-[calc(100vw+12rem)] sm:opacity-[0.38] dark:opacity-[0.24]"
+              className={`animated-hero-glow pointer-events-none absolute left-[calc(50%+5rem)] -top-24 -z-10 h-[32rem] w-[calc(100vw+8rem)] overflow-hidden opacity-[0.34] blur-xl transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:left-[calc(50%+7rem)] sm:-top-28 sm:h-[34rem] sm:w-[calc(100vw+12rem)] sm:opacity-[0.38] dark:opacity-[0.24] ${
+                heroGlowActive ? 'is-active' : ''
+              }`}
               style={{
                 maskImage:
                   'radial-gradient(ellipse 58% 44% at 50% 42%, black 0%, rgba(0, 0, 0, 0.72) 32%, rgba(0, 0, 0, 0.22) 58%, transparent 82%)',
@@ -400,7 +470,9 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <div
               ref={heroGrainRef}
               aria-hidden="true"
-              className="pointer-events-none absolute left-[calc(50%+5rem)] -top-20 -z-10 h-[32rem] w-[calc(100vw+10rem)] -translate-x-1/2 opacity-[0.05] mix-blend-multiply transition-transform duration-[1800ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:left-[calc(50%+7rem)] sm:-top-24 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] dark:opacity-[0.036] dark:mix-blend-screen"
+              className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+5rem)] -top-20 -z-10 h-[32rem] w-[calc(100vw+10rem)] opacity-[0.05] mix-blend-multiply transition-transform duration-[1800ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:left-[calc(50%+7rem)] sm:-top-24 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] dark:opacity-[0.036] dark:mix-blend-screen ${
+                heroGlowActive ? 'is-active' : ''
+              }`}
               style={{
                 backgroundImage: "url('/images/hero-grain.svg')",
                 backgroundSize: '260px 260px',
@@ -411,8 +483,8 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
               }}
             />
 
-            <div className="relative z-10 space-y-7">
-              <div className="space-y-4">
+            <div className="relative z-10 space-y-6 sm:space-y-7">
+              <div className="space-y-3.5 sm:space-y-4">
                 <div className="group relative isolate w-fit">
                   <span
                     aria-hidden="true"
@@ -431,7 +503,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     }}
                   />
                   <div
-                    className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
+                    className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[2px] hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
                     style={{ background: 'var(--border)' }}
                   >
                     <Image
@@ -456,11 +528,11 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 </div>
               </div>
 
-              <div className="space-y-5">
+              <div className="space-y-4 sm:space-y-5">
                 {introParagraphs.map((paragraph) => (
                   <p
                     key={paragraph}
-                    className="max-w-[31rem] font-header text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem]"
+                    className="max-w-[31rem] font-header text-[1rem] leading-[1.62] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem] sm:leading-[1.72]"
                   >
                     {paragraph}
                   </p>
@@ -470,32 +542,48 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 sm:gap-x-5">
                 <Link
                   href="/#contact"
-                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
-                  onClick={() => haptic.trigger('light')}
+                  className="group group/peek relative inline-flex min-h-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
+                  onClick={() => {
+                    haptic.trigger('light')
+                    showJoyToast('Say hi')
+                  }}
                 >
                   <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
                     Contact
                   </span>
+                  <span className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0">
+                    Say hi
+                  </span>
                 </Link>
                 <Link
                   href="/cv"
-                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
-                  onClick={() => haptic.trigger('light')}
+                  className="group group/peek relative inline-flex min-h-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
+                  onClick={() => {
+                    haptic.trigger('light')
+                    showJoyToast('Opening CV')
+                  }}
                 >
                   <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
                     View CV
                   </span>
+                  <span className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0">
+                    Open CV
+                  </span>
                 </Link>
                 <button
                   type="button"
-                  className="group inline-flex min-h-[40px] items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
+                  className="group group/peek relative inline-flex min-h-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
                   onClick={() => {
                     haptic.trigger('light')
+                    showJoyToast('Resume opened')
                     setResumeOpen(true)
                   }}
                 >
                   <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
                     Resume
+                  </span>
+                  <span className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0">
+                    Preview resume
                   </span>
                 </button>
               </div>
@@ -503,57 +591,83 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
           </section>
         </Reveal>
 
-        <div className="mt-20 space-y-16 sm:mt-24 sm:space-y-20">
+        <div className="mt-14 space-y-12 sm:mt-24 sm:space-y-20">
           <Reveal delayMs={40}>
-            <Section title="Projects">
+            <Section id="projects" title="Projects">
               <div className="relative">
-                <AnimatePresence initial={false}>
-                  {activeProjectGlow ? (
-                    <m.div
-                      key={hoveredProjectSlug}
-                      className="pointer-events-none absolute left-[-54%] top-[60%] z-0 h-[22rem] w-[210%] opacity-[0.72] blur-[58px]"
-                      initial={{ opacity: 0, scale: 0.94 }}
-                      animate={{ opacity: 0.72, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.97 }}
-                      transition={{
-                        opacity: { duration: 0.44, ease: MOTION_EASE_SOFT },
-                        scale: { duration: 0.62, ease: MOTION_EASE_SOFT },
-                      }}
-                      style={{
-                        background: activeProjectGlow,
-                      }}
-                    />
-                  ) : null}
-                </AnimatePresence>
-
-                <div className="relative z-10 space-y-5">
-                {projectRows.map((project) => (
-                  <EditorialItem
-                    key={project.slug}
-                    href={`/projects/${project.slug}`}
-                    title={project.frontmatter.displayTitle || project.frontmatter.title}
-                    description={getHomeProjectDescription(project)}
-                    trailing={formatYear(project.frontmatter.date)}
-                    titleFontClassName="font-header"
-                    onMouseEnter={() => setHoveredProjectSlug(project.slug)}
-                    onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
-                    thumbnailImage={project.frontmatter.image}
-                    thumbnailAlt={project.frontmatter.displayTitle || project.frontmatter.title}
-                    underlineOnHover
-                  />
-                ))}
-                <EditorialItem
-                  href="/archive"
-                  title="Playground"
-                  description="Small experiments and prototypes."
-                  trailing="See more"
-                  titleFontClassName="font-header"
-                  onMouseEnter={() => setHoveredProjectSlug('playground')}
-                  onMouseLeave={() => setHoveredProjectSlug((current) => (current === 'playground' ? null : current))}
-                  thumbnailImage="/images/optimized/projects/path.webp"
-                  thumbnailAlt="Playground experiments preview"
-                  underlineOnHover
-                />
+                <div className="relative z-10 space-y-3.5 sm:space-y-5">
+                  {projectRows.map((project) => (
+                    <div key={project.slug} className="relative isolate">
+                      <AnimatePresence initial={false}>
+                        {hoveredProjectSlug === project.slug ? (
+                          <m.div
+                            className="pointer-events-none absolute left-[-54%] top-[-3.6rem] z-0 h-[13rem] w-[210%] opacity-[0.72] blur-[58px]"
+                            initial={{ opacity: 0, scale: 0.96 }}
+                            animate={{ opacity: 0.72, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.98 }}
+                            transition={{
+                              opacity: { duration: 0.34, ease: MOTION_EASE_SOFT },
+                              scale: { duration: 0.5, ease: MOTION_EASE_SOFT },
+                            }}
+                            style={{
+                              background: PROJECT_GLOW_GRADIENTS[project.slug],
+                            }}
+                          />
+                        ) : null}
+                      </AnimatePresence>
+                      <div className="relative z-10">
+                        <EditorialItem
+                          href={`/projects/${project.slug}`}
+                          title={project.frontmatter.displayTitle || project.frontmatter.title}
+                          description={getHomeProjectDescription(project)}
+                          trailing={formatYear(project.frontmatter.date)}
+                          titleFontClassName="font-header"
+                          onMouseEnter={() => setHoveredProjectSlug(project.slug)}
+                          onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
+                          thumbnailImage={project.frontmatter.image}
+                          thumbnailAlt={project.frontmatter.displayTitle || project.frontmatter.title}
+                          underlineOnHover
+                          hoverAccentColor={PROJECT_ACCENTS[project.slug] ?? '#ff4b00'}
+                          toastMessage="Opening project"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <div className="relative isolate">
+                    <AnimatePresence initial={false}>
+                      {hoveredProjectSlug === 'playground' ? (
+                        <m.div
+                          className="pointer-events-none absolute left-[-54%] top-[-3.6rem] z-0 h-[13rem] w-[210%] opacity-[0.72] blur-[58px]"
+                          initial={{ opacity: 0, scale: 0.96 }}
+                          animate={{ opacity: 0.72, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.98 }}
+                          transition={{
+                            opacity: { duration: 0.34, ease: MOTION_EASE_SOFT },
+                            scale: { duration: 0.5, ease: MOTION_EASE_SOFT },
+                          }}
+                          style={{
+                            background: PROJECT_GLOW_GRADIENTS.playground,
+                          }}
+                        />
+                      ) : null}
+                    </AnimatePresence>
+                    <div className="relative z-10">
+                      <EditorialItem
+                        href="/archive"
+                        title="Playground"
+                        description="Small experiments and prototypes."
+                        trailing="See more"
+                        titleFontClassName="font-header"
+                        onMouseEnter={() => setHoveredProjectSlug('playground')}
+                        onMouseLeave={() => setHoveredProjectSlug((current) => (current === 'playground' ? null : current))}
+                        thumbnailImage="/images/optimized/projects/path.webp"
+                        thumbnailAlt="Playground experiments preview"
+                        underlineOnHover
+                        hoverAccentColor={PROJECT_ACCENTS.playground}
+                        toastMessage="Opening playground"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </Section>
@@ -561,7 +675,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
           <Reveal delayMs={80}>
             <Section title="Endeavors">
-              <div className="space-y-5">
+              <div className="space-y-3.5 sm:space-y-5">
                 {creatingLinks.map((link) => (
                   <EditorialItem
                     key={link.label}
@@ -582,7 +696,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
           <Reveal delayMs={120}>
             <Section title="Experience">
-              <div className="space-y-5">
+              <div className="space-y-3.5 sm:space-y-5">
                 {experienceItems.map((item) => (
                   <EditorialItem
                     key={`${item.company}-${item.year}`}
@@ -598,7 +712,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
           <Reveal delayMs={160}>
             <Section title="Education">
-              <div className="space-y-5">
+              <div className="space-y-3.5 sm:space-y-5">
                 {educationItems.map((item) => (
                   <EditorialItem
                     key={`${item.institution}-${item.year}`}
@@ -612,24 +726,26 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
           </Reveal>
 
           <Reveal delayMs={200}>
-            <Section title="Contact">
+            <Section id="contact" title="Contact">
               <div
-                className="relative space-y-6"
+                className="relative space-y-[1.125rem] sm:space-y-6"
                 onPointerEnter={trackContactGlowBounds}
                 onPointerMove={updateContactGlow}
                 onPointerLeave={resetContactGlow}
               >
                 <div
                   ref={contactGlowRef}
-                  className="pointer-events-none absolute left-[-56%] top-[18%] z-0 h-[20rem] w-[215%] opacity-90 blur-[58px] animated-contact-glow"
+                  className={`animated-contact-glow pointer-events-none absolute left-[-56%] top-[18%] z-0 h-[20rem] w-[215%] opacity-90 blur-[58px] ${
+                    contactGlowActive ? 'is-active' : ''
+                  }`}
                   style={{
                     background:
                       'radial-gradient(ellipse at 20% 78%, rgba(255, 154, 64, 0.3) 0%, rgba(232, 96, 86, 0.08) 18%, rgba(255, 170, 86, 0.18) 32%, rgba(255, 188, 118, 0.1) 46%, rgba(255, 212, 168, 0.04) 58%, transparent 78%), radial-gradient(ellipse at 42% 64%, rgba(255, 185, 120, 0.08) 0%, rgba(215, 92, 92, 0.035) 24%, rgba(255, 205, 152, 0.04) 36%, transparent 60%)',
                   }}
                 />
 
-                <div className="relative z-10 space-y-6">
-                  <p className="max-w-[38rem] font-mono text-[1rem] leading-[1.7] text-muted-foreground">
+                <div className="relative z-10 space-y-[1.125rem] sm:space-y-6">
+                  <p className="max-w-[38rem] font-mono text-[0.92rem] leading-[1.58] text-muted-foreground sm:text-[1rem] sm:leading-[1.7]">
                     If something here resonates, reach out.
                   </p>
                   <ContactLinks />

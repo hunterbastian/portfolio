@@ -74,7 +74,7 @@ export default function CVPageClient() {
             </div>
             <button
               onClick={() => window.print()}
-              className="print:hidden ml-4 inline-flex min-h-[40px] shrink-0 items-center border border-border bg-card px-3 py-1.5 text-[10px] font-mono tracking-[0.12em] text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="print:hidden ml-4 inline-flex min-h-[40px] origin-center touch-manipulation shrink-0 items-center border border-border bg-card px-3 py-1.5 text-[10px] font-mono tracking-[0.12em] text-muted-foreground transition-[color,transform,border-color] duration-150 hover:border-foreground/20 hover:text-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
               aria-label="Print or save as PDF"
             >
               Print
@@ -85,15 +85,15 @@ export default function CVPageClient() {
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-mono tracking-wide text-muted-foreground/70">
             <span>Utah, USA</span>
             <span className="text-border">·</span>
-            <a href="mailto:hunterbastianux@gmail.com" className="underline-offset-4 hover:text-foreground hover:underline transition-colors">
+            <a href="mailto:hunterbastianux@gmail.com" className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]">
               hunterbastianux@gmail.com
             </a>
             <span className="text-border">·</span>
-            <a href="https://hunterbastian.com" className="underline-offset-4 hover:text-foreground hover:underline transition-colors print:no-underline">
+            <a href="https://hunterbastian.com" className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96] print:no-underline">
               hunterbastian.com
             </a>
             <span className="text-border">·</span>
-            <a href="https://linkedin.com/in/hunterbastian" className="underline-offset-4 hover:text-foreground hover:underline transition-colors">
+            <a href="https://linkedin.com/in/hunterbastian" className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]">
               LinkedIn
             </a>
           </div>

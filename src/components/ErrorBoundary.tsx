@@ -37,10 +37,10 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
           <h2 className="text-2xl font-semibold mb-3">Something went wrong</h2>
           <p className="text-muted-foreground mb-6">Please try again. If the issue persists, contact me.</p>
           <div className="flex items-center justify-center gap-3">
-            <button onClick={this.handleReset} className="px-4 py-2 rounded bg-primary text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            <button onClick={this.handleReset} className="min-h-[40px] origin-center touch-manipulation rounded bg-primary px-4 py-2 text-primary-foreground transition-transform duration-150 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
               Try again
             </button>
-            <Link href="/" className="px-4 py-2 rounded border">Go Home</Link>
+            <Link href="/" className="inline-flex min-h-[40px] origin-center touch-manipulation items-center rounded border px-4 py-2 transition-transform duration-150 active:translate-y-0 active:scale-[0.96]">Go Home</Link>
           </div>
         </div>
       )
@@ -48,4 +48,3 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
     return this.props.children
   }
 }
-

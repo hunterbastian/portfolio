@@ -15,6 +15,7 @@ import MotionProvider from '@/components/MotionProvider'
 import { Agentation } from 'agentation'
 // import { Measurer } from 'mesurer' // NOTE: breaks Next 16 dev (no 'use client'). See docs/superpowers/plans/2026-04-16-measurer-dev-break.md
 import TopMeta from '@/components/TopMeta'
+import JoyfulLayer from '@/components/JoyfulLayer'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
 // Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
@@ -216,6 +217,7 @@ export default function RootLayout({
               </Script>
             )}
           </SmoothScroll>
+          <JoyfulLayer />
         </MotionProvider>
       </body>
     </html>

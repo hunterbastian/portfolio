@@ -32,6 +32,19 @@ const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
   'porsche-app': 'Simplified Porsche browsing concept.',
 }
 
+const PROJECT_GLOW_GRADIENTS: Record<string, string> = {
+  lumo:
+    'radial-gradient(ellipse at 22% 48%, rgba(248, 198, 57, 0.34) 0%, rgba(255, 212, 80, 0.2) 22%, rgba(255, 236, 148, 0.08) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(255, 75, 0, 0.13) 0%, rgba(255, 154, 64, 0.06) 30%, transparent 58%)',
+  'middle-earth-journey':
+    'radial-gradient(ellipse at 24% 48%, rgba(35, 84, 128, 0.3) 0%, rgba(66, 116, 156, 0.17) 24%, rgba(156, 182, 196, 0.08) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(226, 61, 40, 0.11) 0%, rgba(226, 61, 40, 0.045) 28%, transparent 56%)',
+  'wander-utah':
+    'radial-gradient(ellipse at 24% 48%, rgba(255, 75, 0, 0.3) 0%, rgba(255, 116, 36, 0.17) 23%, rgba(255, 186, 105, 0.08) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(143, 166, 85, 0.13) 0%, rgba(143, 166, 85, 0.055) 28%, transparent 56%)',
+  'porsche-app':
+    'radial-gradient(ellipse at 24% 48%, rgba(226, 61, 40, 0.28) 0%, rgba(226, 61, 40, 0.16) 23%, rgba(242, 170, 150, 0.075) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(42, 42, 44, 0.16) 0%, rgba(42, 42, 44, 0.055) 28%, transparent 56%)',
+  playground:
+    'radial-gradient(ellipse at 24% 48%, rgba(255, 75, 0, 0.36) 0%, rgba(255, 154, 64, 0.2) 20%, rgba(255, 188, 118, 0.1) 36%, rgba(255, 212, 168, 0.04) 52%, transparent 72%), radial-gradient(ellipse at 42% 58%, rgba(255, 185, 120, 0.13) 0%, rgba(255, 205, 152, 0.065) 28%, transparent 56%)',
+}
+
 interface EditorialItemProps {
   eyebrow?: string
   eyebrowClassName?: string
@@ -145,11 +158,11 @@ function EditorialItem({
             </p>
           ) : null}
           <div className="flex min-w-0 items-baseline justify-between gap-3">
-            <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 text-[1rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-foreground/86 sm:text-[1.02rem] sm:leading-none`}>
+            <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 text-[1rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 ${underlineOnHover ? 'group-hover:text-[#ff4b00]' : 'group-hover:text-foreground/86'} sm:text-[1.02rem] sm:leading-none`}>
               <span
                 className={
                   underlineOnHover
-                    ? `${titleFontClassName ?? ''} inline underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current`
+                    ? `${titleFontClassName ?? ''} inline underline decoration-border underline-offset-[0.2em] transition-[text-decoration-color] duration-300 group-hover:decoration-[#ff4b00]/70`
                     : `${titleFontClassName ?? ''} inline`
                 }
               >
@@ -206,14 +219,14 @@ function EditorialItem({
 
 function ContactLinks() {
   return (
-    <div className="flex flex-wrap gap-x-4 gap-y-3 sm:gap-x-5">
+    <div className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-3.5">
       {contactSocialLinks.map((link) => (
         <a
           key={link.label}
           href={link.href}
           target={link.external ? '_blank' : undefined}
           rel={link.external ? 'noreferrer' : undefined}
-          className="min-h-[40px] font-mono text-[0.92rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.94rem]"
+          className="min-h-[40px] w-fit font-mono text-[0.92rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-[#ff4b00] hover:decoration-[#ff4b00]/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.94rem]"
         >
           {link.label}
         </a>
@@ -231,7 +244,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const contactGlowBoundsRef = useRef<DOMRect | null>(null)
   const contactGlowFrameRef = useRef<number | null>(null)
   const contactGlowPointerRef = useRef({ x: 0, y: 0 })
-  const playgroundGlowActive = hoveredProjectSlug === 'playground'
+  const activeProjectGlow = hoveredProjectSlug ? PROJECT_GLOW_GRADIENTS[hoveredProjectSlug] : null
   const haptic = useWebHaptics()
 
   useEffect(() => {
@@ -284,8 +297,49 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
     <div className="px-5 pb-24 sm:px-8 sm:pb-32">
       <div className="mx-auto max-w-[36rem] pt-20 sm:pt-28">
         <Reveal>
-          <section className="space-y-8">
-            <div className="space-y-7">
+          <section className="relative isolate space-y-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-[calc(50%+5rem)] -top-24 -z-10 h-[32rem] w-[calc(100vw+8rem)] -translate-x-1/2 overflow-hidden opacity-[0.34] blur-xl sm:left-[calc(50%+7rem)] sm:-top-28 sm:h-[34rem] sm:w-[calc(100vw+12rem)] sm:opacity-[0.38] dark:opacity-[0.24]"
+              style={{
+                maskImage:
+                  'radial-gradient(ellipse 58% 44% at 50% 42%, black 0%, rgba(0, 0, 0, 0.72) 32%, rgba(0, 0, 0, 0.22) 58%, transparent 82%)',
+                WebkitMaskImage:
+                  'radial-gradient(ellipse 58% 44% at 50% 42%, black 0%, rgba(0, 0, 0, 0.72) 32%, rgba(0, 0, 0, 0.22) 58%, transparent 82%)',
+              }}
+            >
+              <Image
+                src="/images/grainient-lightglow-01.jpg"
+                alt=""
+                fill
+                priority
+                className="scale-[1.04] object-cover object-[50%_48%] sepia-[0.36] saturate-[1.18] hue-rotate-[326deg] brightness-[1.08] contrast-[0.92] mix-blend-multiply dark:mix-blend-screen"
+                sizes="100vw"
+              />
+              <div
+                className="absolute inset-0 dark:mix-blend-screen"
+                style={{
+                  background:
+                    'radial-gradient(ellipse at 46% 48%, rgba(255, 72, 0, 0.88) 0%, rgba(255, 92, 10, 0.64) 34%, rgba(255, 156, 58, 0.26) 62%, transparent 84%)',
+                }}
+              />
+              <div className="absolute inset-0 bg-background/14 dark:bg-background/42" />
+            </div>
+
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-[calc(50%+5rem)] -top-20 -z-10 h-[32rem] w-[calc(100vw+10rem)] -translate-x-1/2 opacity-[0.05] mix-blend-multiply sm:left-[calc(50%+7rem)] sm:-top-24 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] dark:opacity-[0.036] dark:mix-blend-screen"
+              style={{
+                backgroundImage: "url('/images/hero-grain.svg')",
+                backgroundSize: '260px 260px',
+                maskImage:
+                  'radial-gradient(ellipse 60% 48% at 50% 42%, rgba(0, 0, 0, 0.64) 0%, rgba(0, 0, 0, 0.32) 48%, transparent 78%)',
+                WebkitMaskImage:
+                  'radial-gradient(ellipse 60% 48% at 50% 42%, rgba(0, 0, 0, 0.64) 0%, rgba(0, 0, 0, 0.32) 48%, transparent 78%)',
+              }}
+            />
+
+            <div className="relative z-10 space-y-7">
               <div className="space-y-4">
                 <div className="group relative isolate w-fit">
                   <span
@@ -293,7 +347,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:scale-100 dark:hidden"
                     style={{
                       background:
-                        'radial-gradient(ellipse at 48% 52%, rgba(255, 76, 56, 0.48) 0%, rgba(255, 106, 42, 0.36) 30%, rgba(255, 148, 74, 0.2) 56%, transparent 80%)',
+                        'radial-gradient(ellipse at 48% 52%, rgba(255, 72, 0, 0.56) 0%, rgba(255, 103, 16, 0.42) 32%, rgba(255, 178, 66, 0.22) 58%, transparent 80%)',
                     }}
                   />
                   <span
@@ -301,7 +355,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     className="pointer-events-none absolute -inset-10 -z-10 hidden rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:scale-100 dark:block"
                     style={{
                       background:
-                        'radial-gradient(ellipse at 48% 52%, rgba(255, 76, 48, 0.34) 0%, rgba(255, 111, 36, 0.25) 34%, rgba(255, 160, 78, 0.13) 60%, transparent 82%)',
+                        'radial-gradient(ellipse at 48% 52%, rgba(255, 78, 0, 0.4) 0%, rgba(255, 114, 18, 0.3) 34%, rgba(255, 178, 66, 0.16) 60%, transparent 82%)',
                     }}
                   />
                   <div
@@ -382,19 +436,19 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <Section title="Projects">
               <div className="relative">
                 <AnimatePresence initial={false}>
-                  {playgroundGlowActive ? (
+                  {activeProjectGlow ? (
                     <m.div
-                      className="pointer-events-none absolute left-[-54%] top-[60%] z-0 h-[22rem] w-[210%] opacity-90 blur-[58px]"
+                      key={hoveredProjectSlug}
+                      className="pointer-events-none absolute left-[-54%] top-[60%] z-0 h-[22rem] w-[210%] opacity-[0.72] blur-[58px]"
                       initial={{ opacity: 0, scale: 0.94 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      animate={{ opacity: 0.72, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.97 }}
                       transition={{
                         opacity: { duration: 0.44, ease: MOTION_EASE_SOFT },
                         scale: { duration: 0.62, ease: MOTION_EASE_SOFT },
                       }}
                       style={{
-                        background:
-                          'radial-gradient(ellipse at 24% 48%, rgba(255, 154, 64, 0.48) 0%, rgba(255, 170, 86, 0.28) 20%, rgba(255, 188, 118, 0.14) 36%, rgba(255, 212, 168, 0.05) 52%, transparent 72%), radial-gradient(ellipse at 42% 58%, rgba(255, 185, 120, 0.16) 0%, rgba(255, 205, 152, 0.08) 28%, transparent 56%)',
+                        background: activeProjectGlow,
                       }}
                     />
                   ) : null}
@@ -409,6 +463,8 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     description={getHomeProjectDescription(project)}
                     trailing={formatYear(project.frontmatter.date)}
                     titleFontClassName="font-header"
+                    onMouseEnter={() => setHoveredProjectSlug(project.slug)}
+                    onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
                     thumbnailImage={project.frontmatter.image}
                     thumbnailAlt={project.frontmatter.displayTitle || project.frontmatter.title}
                     underlineOnHover

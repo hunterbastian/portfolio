@@ -31,6 +31,15 @@ yarn-error.log*
 # Output artifacts
 /output/
 
+# Local QA captures/reports
+.codex-tmp/
+.playwright-mcp/
+lighthouse-report*.html
+lighthouse-report*.json
+archive-orbit-*.png
+home-profile-hover-glow*.png
+home-topmeta-brand-sunset-glow.png
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts

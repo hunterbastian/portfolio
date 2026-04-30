@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import PlaygroundOrbit from '@/components/PlaygroundOrbit'
 import { getArchivedProjects } from '@/lib/projects'
-import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
+import { resolveSiteUrl, siteConfig } from '@/lib/site'
 import type { Project } from '@/types/project'
 
 const PREFERRED_ORBIT_ORDER = [
@@ -33,14 +33,16 @@ function sortArchivedForOrbit(projects: Project[]): Project[] {
 }
 
 export const metadata: Metadata = {
-  title: `Playground | ${sitePortfolioName}`,
+  title: {
+    absolute: 'Playground - Hunter Bastian',
+  },
   description: `Browse side projects and experiments by ${siteConfig.brandName}. A collection of explorations in UI/UX design, web development, and branding.`,
   robots: {
     index: false,
     follow: true,
   },
   openGraph: {
-    title: `Playground - ${siteConfig.brandName}`,
+    title: 'Playground - Hunter Bastian',
     description: 'Browse side projects and experiments.',
     url: resolveSiteUrl('/archive'),
     type: 'website',

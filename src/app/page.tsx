@@ -5,7 +5,9 @@ import ErrorBoundary from '@/components/ErrorBoundary'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: siteConfig.siteTitle,
+  title: {
+    absolute: siteConfig.siteTitle,
+  },
   description: 'Hunter Bastian — design engineer, creative coder, and photographer based in Utah. Case studies, experiments, and side projects in UI design, web development, and interactive media.',
   alternates: {
     canonical: resolveSiteUrl('/'),

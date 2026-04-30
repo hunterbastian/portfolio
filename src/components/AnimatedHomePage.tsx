@@ -240,6 +240,11 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const introParagraphs = homeHeroContent.intro.split('\n\n')
   const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null)
   const [resumeOpen, setResumeOpen] = useState(false)
+  const heroGlowRef = useRef<HTMLDivElement | null>(null)
+  const heroGrainRef = useRef<HTMLDivElement | null>(null)
+  const heroGlowBoundsRef = useRef<DOMRect | null>(null)
+  const heroGlowFrameRef = useRef<number | null>(null)
+  const heroGlowPointerRef = useRef({ x: 0, y: 0 })
   const contactGlowRef = useRef<HTMLDivElement | null>(null)
   const contactGlowBoundsRef = useRef<DOMRect | null>(null)
   const contactGlowFrameRef = useRef<number | null>(null)
@@ -249,11 +254,71 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
   useEffect(() => {
     return () => {
+      if (heroGlowFrameRef.current !== null) {
+        window.cancelAnimationFrame(heroGlowFrameRef.current)
+      }
+
       if (contactGlowFrameRef.current !== null) {
         window.cancelAnimationFrame(contactGlowFrameRef.current)
       }
     }
   }, [])
+
+  const writeHeroGlowPosition = () => {
+    const glow = heroGlowRef.current
+    const grain = heroGrainRef.current
+    const { x, y } = heroGlowPointerRef.current
+    const glowX = clamp(x * 20, -20, 20)
+    const glowY = clamp(y * 10, -10, 10)
+
+    if (glow) {
+      glow.style.setProperty('--tw-translate-x', `calc(-50% + ${glowX}px)`)
+      glow.style.setProperty('--tw-translate-y', `${glowY}px`)
+    }
+
+    if (grain) {
+      grain.style.setProperty('--tw-translate-x', `calc(-50% + ${glowX * 0.55}px)`)
+      grain.style.setProperty('--tw-translate-y', `${glowY * 0.55}px`)
+    }
+
+    heroGlowFrameRef.current = null
+  }
+
+  const trackHeroGlowBounds = (event: PointerEvent<HTMLElement>) => {
+    heroGlowBoundsRef.current = event.currentTarget.getBoundingClientRect()
+  }
+
+  const updateHeroGlow = (event: PointerEvent<HTMLElement>) => {
+    const rect = heroGlowBoundsRef.current ?? event.currentTarget.getBoundingClientRect()
+    heroGlowBoundsRef.current = rect
+
+    heroGlowPointerRef.current = {
+      x: (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2),
+      y: (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2),
+    }
+
+    if (heroGlowFrameRef.current === null) {
+      heroGlowFrameRef.current = window.requestAnimationFrame(writeHeroGlowPosition)
+    }
+  }
+
+  const resetHeroGlow = () => {
+    const glow = heroGlowRef.current
+    const grain = heroGrainRef.current
+
+    heroGlowBoundsRef.current = null
+    heroGlowPointerRef.current = { x: 0, y: 0 }
+
+    if (glow) {
+      glow.style.setProperty('--tw-translate-x', '-50%')
+      glow.style.setProperty('--tw-translate-y', '0px')
+    }
+
+    if (grain) {
+      grain.style.setProperty('--tw-translate-x', '-50%')
+      grain.style.setProperty('--tw-translate-y', '0px')
+    }
+  }
 
   const writeContactGlowPosition = () => {
     const glow = contactGlowRef.current
@@ -297,10 +362,16 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
     <div className="px-5 pb-24 sm:px-8 sm:pb-32">
       <div className="mx-auto max-w-[36rem] pt-20 sm:pt-28">
         <Reveal>
-          <section className="relative isolate space-y-8">
+          <section
+            className="relative isolate space-y-8"
+            onPointerEnter={trackHeroGlowBounds}
+            onPointerMove={updateHeroGlow}
+            onPointerLeave={resetHeroGlow}
+          >
             <div
+              ref={heroGlowRef}
               aria-hidden="true"
-              className="pointer-events-none absolute left-[calc(50%+5rem)] -top-24 -z-10 h-[32rem] w-[calc(100vw+8rem)] -translate-x-1/2 overflow-hidden opacity-[0.34] blur-xl sm:left-[calc(50%+7rem)] sm:-top-28 sm:h-[34rem] sm:w-[calc(100vw+12rem)] sm:opacity-[0.38] dark:opacity-[0.24]"
+              className="pointer-events-none absolute left-[calc(50%+5rem)] -top-24 -z-10 h-[32rem] w-[calc(100vw+8rem)] -translate-x-1/2 overflow-hidden opacity-[0.34] blur-xl transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:left-[calc(50%+7rem)] sm:-top-28 sm:h-[34rem] sm:w-[calc(100vw+12rem)] sm:opacity-[0.38] dark:opacity-[0.24]"
               style={{
                 maskImage:
                   'radial-gradient(ellipse 58% 44% at 50% 42%, black 0%, rgba(0, 0, 0, 0.72) 32%, rgba(0, 0, 0, 0.22) 58%, transparent 82%)',
@@ -327,8 +398,9 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             </div>
 
             <div
+              ref={heroGrainRef}
               aria-hidden="true"
-              className="pointer-events-none absolute left-[calc(50%+5rem)] -top-20 -z-10 h-[32rem] w-[calc(100vw+10rem)] -translate-x-1/2 opacity-[0.05] mix-blend-multiply sm:left-[calc(50%+7rem)] sm:-top-24 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] dark:opacity-[0.036] dark:mix-blend-screen"
+              className="pointer-events-none absolute left-[calc(50%+5rem)] -top-20 -z-10 h-[32rem] w-[calc(100vw+10rem)] -translate-x-1/2 opacity-[0.05] mix-blend-multiply transition-transform duration-[1800ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:left-[calc(50%+7rem)] sm:-top-24 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] dark:opacity-[0.036] dark:mix-blend-screen"
               style={{
                 backgroundImage: "url('/images/hero-grain.svg')",
                 backgroundSize: '260px 260px',
@@ -557,10 +629,10 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 />
 
                 <div className="relative z-10 space-y-6">
-                  <ContactLinks />
                   <p className="max-w-[38rem] font-mono text-[1rem] leading-[1.7] text-muted-foreground">
                     If something here resonates, reach out.
                   </p>
+                  <ContactLinks />
                 </div>
               </div>
             </Section>

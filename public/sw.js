@@ -1,5 +1,5 @@
-// Service Worker for Portfolio - Assets only, fresh HTML always
-const CACHE_NAME = 'portfolio-assets-v10'
+// Service Worker for Portfolio - media assets only, fresh HTML/code always
+const CACHE_NAME = 'portfolio-assets-v13'
 const STATIC_ASSETS = [
   '/offline.html',
   '/favicon.ico',
@@ -53,21 +53,9 @@ self.addEventListener('fetch', event => {
   const isStaticAsset = event.request.url.match(/\.(png|jpg|jpeg|gif|svg|ico|webp|avif|woff|woff2)$/)
 
   if (isNextStatic || isCodeAsset) {
-    // Stale-while-revalidate for JS/CSS and Next chunks: instant cache hit + background refresh
+    // Code chunks must stay in lockstep with fresh HTML to avoid hydration/version mismatches.
     event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        const networkFetch = fetch(event.request)
-          .then((response) => {
-            if (response && response.status === 200) {
-              const responseToCache = response.clone()
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache))
-            }
-            return response
-          })
-          .catch(() => cachedResponse)
-
-        return cachedResponse || networkFetch
-      })
+      fetch(event.request).catch(() => caches.match(event.request))
     )
   } else if (isStaticAsset) {
     // Cache first for static media/fonts

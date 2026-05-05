@@ -27,6 +27,7 @@ interface AnimatedHomePageProps {
 }
 
 const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
+  'mentalhealth-minisite': 'Student support minisite for finding help quickly.',
   lumo: 'Mindfulness app for calm reflection.',
   'middle-earth-journey': 'Interactive Tolkien map experience.',
   'wander-utah': 'National parks trip-planning app.',
@@ -34,6 +35,8 @@ const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
 }
 
 const PROJECT_GLOW_GRADIENTS: Record<string, string> = {
+  'mentalhealth-minisite':
+    'radial-gradient(ellipse at 22% 48%, rgba(47, 125, 115, 0.28) 0%, rgba(84, 156, 143, 0.16) 24%, rgba(166, 214, 204, 0.08) 43%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(80, 112, 196, 0.12) 0%, rgba(80, 112, 196, 0.05) 30%, transparent 58%)',
   lumo:
     'radial-gradient(ellipse at 22% 48%, rgba(248, 198, 57, 0.34) 0%, rgba(255, 212, 80, 0.2) 22%, rgba(255, 236, 148, 0.08) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(255, 75, 0, 0.13) 0%, rgba(255, 154, 64, 0.06) 30%, transparent 58%)',
   'middle-earth-journey':
@@ -47,6 +50,7 @@ const PROJECT_GLOW_GRADIENTS: Record<string, string> = {
 }
 
 const PROJECT_ACCENTS: Record<string, string> = {
+  'mentalhealth-minisite': '#2f7d73',
   lumo: '#f8c639',
   'middle-earth-journey': '#235480',
   'wander-utah': '#8fa655',
@@ -84,7 +88,7 @@ function formatYear(date: string) {
 }
 
 function getProjectRows(projects: Project[]) {
-  return projects.slice(0, 4)
+  return projects.slice(0, 5)
 }
 
 function getHomeProjectDescription(project: Project) {

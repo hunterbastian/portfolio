@@ -1,0 +1,63 @@
+---
+title: "Mental Health Mini Site"
+description: "A single-page resource hub that gives UVU students a clear starting point for urgent help, counseling, accommodations, and wellness support."
+category: "Web Design"
+tags: ["Web Design", "Next.js", "TypeScript", "Accessibility", "Student Support"]
+image: "/images/optimized/projects/mentalhealth-minisite.webp"
+demo: ""
+github: ""
+featured: false
+date: "2026-05-05"
+---
+
+<ScrollStage chapter="01" title="Overview">
+
+Mental Health Mini Site is a focused UVU student support minisite for people who need help but may not know where to start. The page puts emergency contacts first, then guides users into a searchable directory for counseling, accommodations, wellness, and referral resources.
+
+<div className="flex flex-wrap gap-3 justify-center my-8">
+<MetricCard value="1" label="page resource hub" />
+<MetricCard value="3" label="support paths" />
+<MetricCard value="Next.js" label="stack" />
+</div>
+
+</ScrollStage>
+
+<ScrollStage chapter="02" title="Problem">
+
+When someone is stressed, overloaded, or trying to help another student, a long list of links is hard to use. The goal was to turn scattered support options into a page that answers one question quickly: what should I do next?
+
+The design prioritizes urgent safety actions before general browsing, then lets students filter by category, timing, and practical next step. It is built for scanning, keyboard use, and low-friction access to official UVU resources.
+
+</ScrollStage>
+
+<ScrollStage chapter="03" title="Design Decisions">
+
+<DesignDecision
+  question="How should the page organize sensitive support content?"
+  chosen={0}
+  options='[{"label":"Urgent contacts first","description":"Safety resources stay above the directory so a user in immediate need does not have to search or interpret categories before acting."},{"label":"Alphabetical directory first","description":"A neutral directory is easier to maintain, but it treats emergency support like every other link and slows down the most critical path."}]'
+/>
+
+<DesignDecision
+  question="What should the visual tone be?"
+  chosen={0}
+  options='[{"label":"Quiet institutional clarity","description":"Soft neutral surfaces, restrained color, and clear cards make the page feel calm without turning a serious support page into a wellness brand."},{"label":"Expressive campaign page","description":"More memorable visually, but heavier imagery and oversized messaging would compete with the practical job of finding help."}]'
+/>
+
+</ScrollStage>
+
+<ScrollStage chapter="04" title="Build">
+
+The site is a TypeScript and Next.js 16 build with Tailwind CSS and Motion. Resource data lives in a typed local data file, while the directory component handles search, category filtering, urgency filtering, empty states, and safe external actions.
+
+The implementation also includes keyboard-friendly controls, skip navigation, readable spacing at mobile sizes, and source-verification notes so the support links can be checked and maintained over time.
+
+</ScrollStage>
+
+<ScrollStage chapter="05" title="Outcome">
+
+The final result is a compact support minisite with one clear first screen, one searchable directory, and a visual system that stays calm while still making urgent actions visible.
+
+<img src="/images/projects/mentalhealth-minisite.jpg" alt="Mental Health Mini Site shown on a laptop mockup" />
+
+</ScrollStage>

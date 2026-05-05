@@ -186,6 +186,31 @@ export default function RootLayout({
             {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
             {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_PERF_MONITOR === 'true' && <PerformanceMonitor />}
             {process.env.NODE_ENV === 'development' && <Agentation />}
+            {process.env.NODE_ENV === 'development' && (
+              <Script id="sw-dev-reset" strategy="afterInteractive">
+                {`
+                  if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations()
+                      .then(function(registrations) {
+                        return Promise.all(registrations.map(function(registration) {
+                          return registration.unregister();
+                        }));
+                      })
+                      .catch(function() {});
+                  }
+
+                  if ('caches' in window) {
+                    caches.keys()
+                      .then(function(cacheNames) {
+                        return Promise.all(cacheNames.map(function(cacheName) {
+                          return caches.delete(cacheName);
+                        }));
+                      })
+                      .catch(function() {});
+                  }
+                `}
+              </Script>
+            )}
             {/* {process.env.NODE_ENV === 'development' && <Measurer />} — breaks dev under Next 16 / Turbopack */}
 
             {/* Google Analytics - deferred to avoid blocking */}

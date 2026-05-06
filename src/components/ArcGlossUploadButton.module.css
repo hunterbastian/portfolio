@@ -1,0 +1,495 @@
+.stage {
+  align-items: center;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.72), transparent 38%),
+    linear-gradient(180deg, #fbf8f3 0%, #f7f4ef 46%, #f1ece4 100%);
+  display: grid;
+  justify-items: center;
+  min-height: 100%;
+  overflow: hidden;
+  padding: clamp(2rem, 7vw, 6rem);
+  width: 100%;
+}
+
+.fullViewport {
+  min-height: 100vh;
+}
+
+.stage[data-surface='transparent'] {
+  background: transparent;
+}
+
+.button {
+  --arc-button-size: clamp(16.25rem, 24vw, 20rem);
+  --arc-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  align-items: center;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.45), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.46), rgba(255, 255, 255, 0.12) 44%, rgba(204, 191, 178, 0.2));
+  border: 0;
+  border-radius: 50%;
+  box-shadow:
+    0 48px 94px -60px rgba(44, 34, 28, 0.7),
+    0 20px 40px -32px rgba(60, 48, 40, 0.58),
+    inset 0 1px 1px rgba(255, 255, 255, 0.72),
+    inset 0 -22px 48px rgba(99, 77, 64, 0.11);
+  color: #fffaf2;
+  cursor: pointer;
+  display: grid;
+  height: var(--arc-button-size);
+  isolation: isolate;
+  justify-items: center;
+  padding: 0;
+  position: relative;
+  transform: translate3d(0, 0, 0);
+  transition-duration: 220ms;
+  transition-property: box-shadow, filter, transform;
+  transition-timing-function: var(--arc-ease);
+  width: var(--arc-button-size);
+}
+
+.button::before,
+.button::after {
+  border-radius: inherit;
+  content: '';
+  pointer-events: none;
+  position: absolute;
+}
+
+.button::before {
+  background:
+    radial-gradient(circle at 37% 33%, rgba(255, 191, 152, 0.3), transparent 34%),
+    radial-gradient(circle at 63% 62%, rgba(143, 175, 242, 0.2), transparent 42%),
+    conic-gradient(
+      from 208deg,
+      rgba(255, 198, 160, 0.34),
+      rgba(244, 148, 166, 0.3),
+      rgba(178, 151, 226, 0.26),
+      rgba(133, 176, 238, 0.24),
+      rgba(255, 198, 160, 0.34)
+    );
+  filter: blur(26px);
+  inset: -1.72rem;
+  opacity: 0.38;
+  transform: scale(0.98);
+  transition-duration: 240ms;
+  transition-property: filter, opacity, transform;
+  transition-timing-function: var(--arc-ease);
+  z-index: -2;
+}
+
+.button::after {
+  background: conic-gradient(
+    from 222deg,
+    rgba(255, 203, 170, 0.74),
+    rgba(246, 154, 183, 0.58),
+    rgba(183, 158, 232, 0.54),
+    rgba(137, 184, 239, 0.55),
+    rgba(255, 220, 184, 0.74),
+    rgba(255, 203, 170, 0.74)
+  );
+  filter: blur(2.8px) saturate(1.02);
+  inset: -0.26rem;
+  opacity: 0.66;
+  padding: 0.14rem;
+  transition-duration: 220ms;
+  transition-property: filter, opacity, transform;
+  transition-timing-function: var(--arc-ease);
+  z-index: -1;
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.bezel {
+  background:
+    radial-gradient(circle at 45% 9%, rgba(255, 255, 255, 0.82), transparent 25%),
+    radial-gradient(circle at 76% 84%, rgba(149, 172, 217, 0.12), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.14) 48%, rgba(210, 195, 181, 0.16));
+  border-radius: inherit;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.68),
+    inset 0 -1px 0 rgba(92, 75, 66, 0.12),
+    inset 0 -28px 52px rgba(97, 75, 62, 0.1);
+  inset: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 0;
+}
+
+.bezel::before,
+.bezel::after {
+  border-radius: inherit;
+  content: '';
+  pointer-events: none;
+  position: absolute;
+}
+
+.bezel::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.44), transparent 68%);
+  height: 35%;
+  left: 14%;
+  opacity: 0.5;
+  right: 14%;
+  top: 5%;
+}
+
+.bezel::after {
+  box-shadow: inset 0 -18px 34px rgba(77, 62, 52, 0.11);
+  inset: 0;
+}
+
+.recess {
+  background:
+    linear-gradient(135deg, rgba(9, 9, 8, 0.86), rgba(64, 53, 45, 0.34) 44%, rgba(255, 255, 255, 0.08) 100%);
+  border-radius: inherit;
+  box-shadow:
+    inset 0 8px 18px rgba(0, 0, 0, 0.68),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.16);
+  inset: clamp(0.88rem, 1.35vw, 1.12rem);
+  position: absolute;
+  z-index: 1;
+}
+
+.face {
+  align-items: center;
+  background:
+    radial-gradient(ellipse at 41% 18%, rgba(246, 224, 202, 0.3), rgba(143, 118, 97, 0.14) 25%, transparent 47%),
+    radial-gradient(circle at 66% 18%, rgba(255, 255, 255, 0.08), transparent 31%),
+    linear-gradient(145deg, #5c5248 0%, #2b2925 31%, #11100e 67%, #050505 100%);
+  border-radius: inherit;
+  box-shadow:
+    0 15px 30px -24px rgba(0, 0, 0, 0.84),
+    inset 15px 17px 32px rgba(255, 247, 235, 0.08),
+    inset -24px -30px 46px rgba(0, 0, 0, 0.8),
+    inset 0 2px 2px rgba(255, 255, 255, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.055);
+  display: grid;
+  inset: clamp(1.55rem, 2.3vw, 2rem);
+  justify-items: center;
+  overflow: hidden;
+  position: absolute;
+  transition-duration: 180ms;
+  transition-property: filter, transform;
+  transition-timing-function: var(--arc-ease);
+  z-index: 2;
+}
+
+.face::before,
+.face::after {
+  border-radius: inherit;
+  content: '';
+  pointer-events: none;
+  position: absolute;
+}
+
+.face::before {
+  background:
+    radial-gradient(ellipse at 50% 16%, rgba(255, 246, 235, 0.42), rgba(226, 194, 164, 0.18) 31%, transparent 67%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 72%);
+  filter: blur(2.5px);
+  height: 38%;
+  left: 18%;
+  opacity: 0.7;
+  right: 18%;
+  top: 6%;
+  transform: translateY(0) scale(1);
+  transition-duration: 220ms;
+  transition-property: opacity, transform;
+  transition-timing-function: var(--arc-ease);
+}
+
+.face::after {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 -48px 52px rgba(0, 0, 0, 0.34);
+  inset: 0;
+}
+
+.arrow {
+  color: #fffaf2;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.34));
+  height: 29%;
+  position: relative;
+  transform: translateY(2%);
+  transition-duration: 180ms;
+  transition-property: filter, transform;
+  transition-timing-function: var(--arc-ease);
+  width: 29%;
+  z-index: 3;
+}
+
+.button:not(:disabled):hover {
+  box-shadow:
+    0 52px 96px -58px rgba(44, 34, 28, 0.78),
+    0 22px 40px -30px rgba(60, 48, 40, 0.62),
+    inset 0 1px 1px rgba(255, 255, 255, 0.78),
+    inset 0 -24px 48px rgba(99, 77, 64, 0.12);
+  transform: translate3d(0, -4px, 0);
+}
+
+.button:not(:disabled):hover::before {
+  filter: blur(26px);
+  opacity: 0.56;
+  transform: scale(1.02);
+}
+
+.button:not(:disabled):hover::after {
+  filter: blur(3px) saturate(1.1);
+  opacity: 0.8;
+  transform: scale(1.01);
+}
+
+.button:not(:disabled):hover .face::before {
+  opacity: 0.92;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.button:not(:disabled):hover .arrow {
+  filter: drop-shadow(0 3px 9px rgba(0, 0, 0, 0.34));
+  transform: translateY(-3%) scale(1.02);
+}
+
+.button:not(:disabled):active {
+  box-shadow:
+    0 30px 70px -56px rgba(44, 34, 28, 0.68),
+    0 12px 26px -26px rgba(60, 48, 40, 0.52),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -20px 42px rgba(78, 58, 50, 0.16);
+  transform: translate3d(0, -1px, 0) scale(0.985);
+}
+
+.button:not(:disabled):active::before {
+  filter: blur(18px);
+  opacity: 0.34;
+  transform: scale(0.98);
+}
+
+.button:not(:disabled):active::after {
+  filter: blur(4px) saturate(0.95);
+  opacity: 0.58;
+  transform: scale(0.985);
+}
+
+.button:not(:disabled):active .face {
+  filter: brightness(0.88) contrast(1.04);
+  transform: scale(0.993);
+}
+
+.button:not(:disabled):active .arrow {
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.32));
+  transform: translateY(3%) scale(0.985);
+}
+
+.button:focus-visible {
+  outline: 2px solid rgba(102, 126, 172, 0.54);
+  outline-offset: 0.8rem;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.18) opacity(0.72);
+  transform: none;
+}
+
+.compactButton {
+  --arc-button-size: 4.28rem;
+
+  background:
+    radial-gradient(circle at 31% 22%, rgba(255, 255, 255, 0.98), transparent 19%),
+    radial-gradient(circle at 54% 68%, rgba(255, 248, 239, 0.64), rgba(255, 255, 255, 0.36) 58%, rgba(255, 255, 255, 0.18)),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.56) 50%, rgba(235, 229, 221, 0.16));
+  box-shadow:
+    0 31px 44px -30px rgba(93, 69, 48, 0.46),
+    0 12px 22px -18px rgba(85, 62, 45, 0.32),
+    0 0 0 0.5px rgba(255, 255, 255, 0.84),
+    inset 0 1px 2px rgba(255, 255, 255, 0.98),
+    inset 0 -14px 30px rgba(145, 111, 77, 0.06);
+  color: rgba(65, 62, 57, 0.88);
+}
+
+.compactButton::before {
+  background:
+    radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.82), transparent 38%),
+    radial-gradient(circle at 55% 82%, rgba(255, 232, 190, 0.5), transparent 55%);
+  filter: blur(16px);
+  inset: -0.48rem;
+  opacity: 0.62;
+}
+
+.compactButton::after {
+  background:
+    conic-gradient(
+      from 190deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(255, 251, 244, 0.54),
+      rgba(192, 173, 153, 0.18),
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 246, 232, 0.5),
+      rgba(255, 255, 255, 0.98)
+    );
+  filter: blur(0.28px) saturate(1.06);
+  inset: -0.045rem;
+  opacity: 0.98;
+  padding: 0.07rem;
+}
+
+.compactButton .bezel {
+  background:
+    radial-gradient(circle at 31% 17%, rgba(255, 255, 255, 0.98), transparent 23%),
+    radial-gradient(circle at 58% 78%, rgba(255, 235, 205, 0.18), transparent 49%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.32) 54%, rgba(214, 204, 192, 0.08));
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.96),
+    inset 0 -1px 1px rgba(96, 74, 55, 0.055),
+    inset 0 -15px 28px rgba(156, 111, 74, 0.045);
+}
+
+.compactButton .bezel::before {
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.18) 46%, transparent 72%);
+  filter: blur(0.35px);
+  height: 32%;
+  left: 15%;
+  opacity: 0.74;
+  right: 36%;
+  top: 7%;
+}
+
+.compactButton .recess {
+  background:
+    radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.44), rgba(255, 249, 242, 0.18) 64%, rgba(180, 151, 122, 0.045)),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.2));
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.76),
+    inset 0 -9px 18px rgba(151, 112, 74, 0.045),
+    0 1px 1px rgba(255, 255, 255, 0.7);
+  inset: 0.26rem;
+}
+
+.compactButton .face {
+  background:
+    radial-gradient(ellipse at 31% 17%, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.16) 26%, transparent 43%),
+    radial-gradient(circle at 56% 76%, rgba(255, 232, 200, 0.12), transparent 56%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.66), rgba(255, 252, 248, 0.25) 58%, rgba(232, 225, 216, 0.1));
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.86),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.58),
+    inset 0 -12px 22px rgba(138, 98, 63, 0.04);
+  inset: 0.39rem;
+}
+
+.compactButton .face::before {
+  background:
+    radial-gradient(ellipse at 35% 20%, rgba(255, 255, 255, 0.9), rgba(255, 250, 239, 0.22) 34%, transparent 70%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.3), transparent 64%);
+  filter: blur(0.7px);
+  height: 42%;
+  left: 12%;
+  opacity: 0.72;
+  right: 34%;
+  top: 5%;
+}
+
+.compactButton .face::after {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.46),
+    inset 0 -18px 24px rgba(127, 88, 55, 0.035);
+}
+
+.compactButton .arrow {
+  color: rgba(58, 56, 51, 0.9);
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.28))
+    drop-shadow(0 5px 8px rgba(72, 58, 42, 0.22));
+  height: 49%;
+  transform: translateY(0);
+  width: 49%;
+}
+
+.compactButton:not(:disabled):hover {
+  box-shadow:
+    0 0 28px -14px rgba(255, 223, 171, 0.74),
+    0 25px 40px -27px rgba(93, 69, 48, 0.58),
+    0 8px 18px -14px rgba(85, 62, 45, 0.4),
+    0 0 0 0.5px rgba(255, 255, 255, 0.78),
+    inset 0 1px 1px rgba(255, 255, 255, 0.94),
+    inset 0 -11px 24px rgba(145, 111, 77, 0.12);
+  transform: translate3d(0, -2px, 0);
+}
+
+.compactButton:not(:disabled):hover::before {
+  filter: blur(15px);
+  opacity: 0.68;
+  transform: scale(1.04);
+}
+
+.compactButton:not(:disabled):hover::after {
+  filter: blur(0.25px) saturate(1.08);
+  opacity: 1;
+  transform: scale(1.012);
+}
+
+.compactButton:not(:disabled):hover .arrow {
+  color: rgba(54, 51, 47, 0.86);
+  transform: translateY(-6%) scale(1.03);
+}
+
+.compactButton:not(:disabled):active {
+  box-shadow:
+    0 0 22px -10px rgba(255, 218, 156, 0.78),
+    0 14px 28px -24px rgba(93, 69, 48, 0.48),
+    inset 0 1px 1px rgba(255, 255, 255, 0.72),
+    inset 0 -8px 18px rgba(145, 111, 77, 0.14);
+  transform: translate3d(0, 0, 0) scale(0.96);
+}
+
+.compactButton:not(:disabled):active::before {
+  filter: blur(10px);
+  opacity: 0.52;
+  transform: scale(0.99);
+}
+
+.compactButton:not(:disabled):active::after {
+  filter: blur(0.4px) saturate(1.06);
+  opacity: 0.9;
+  transform: scale(0.99);
+}
+
+.compactButton:not(:disabled):active .arrow {
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.24))
+    drop-shadow(0 2px 4px rgba(77, 62, 44, 0.16));
+  transform: translateY(2%) scale(0.96);
+}
+
+@media (max-width: 640px) {
+  .button {
+    --arc-button-size: clamp(14.5rem, 74vw, 18rem);
+  }
+
+  .compactButton {
+    --arc-button-size: 4rem;
+  }
+
+  .stage {
+    padding: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button::before,
+  .button::after,
+  .face,
+  .face::before {
+    transition: none;
+  }
+}

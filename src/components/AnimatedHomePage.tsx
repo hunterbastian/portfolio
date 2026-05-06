@@ -3,7 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
-import { useEffect, useRef, useState, type CSSProperties, type MouseEvent, type PointerEvent, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from 'react'
+import { ArrowUpRight, Mail } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
 import {
   contactSocialLinks,
@@ -261,43 +262,62 @@ function EditorialItem({
 
 function ContactLinks() {
   const haptic = useWebHaptics()
+  const emailLink = contactSocialLinks.find((link) => link.label === 'Email')
+  const socialLinks = contactSocialLinks.filter((link) => link.label !== 'Email')
+  const emailAddress = emailLink?.href.replace(/^mailto:/, '').split('?')[0] ?? ''
 
-  const handleContactClick = async (event: MouseEvent<HTMLAnchorElement>, link: (typeof contactSocialLinks)[number]) => {
+  const handleContactClick = (link: (typeof contactSocialLinks)[number]) => {
     haptic.trigger('light')
-
-    if (link.label !== 'Email') {
-      showJoyToast(`Opening ${link.label}`)
-      return
-    }
-
-    event.preventDefault()
-
-    try {
-      await navigator.clipboard.writeText(link.href.replace('mailto:', ''))
-      showJoyToast('Email copied')
-    } catch {
-      window.location.href = link.href
-      showJoyToast('Opening email')
-    }
+    showJoyToast(link.label === 'Email' ? 'Opening email' : `Opening ${link.label}`)
   }
 
   return (
-    <div className="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-3.5">
-      {contactSocialLinks.map((link) => (
+    <div className="space-y-4">
+      {emailLink ? (
         <a
-          key={link.label}
-          href={link.href}
-          target={link.external ? '_blank' : undefined}
-          rel={link.external ? 'noreferrer' : undefined}
-          className="group/peek relative min-h-[40px] w-fit origin-center touch-manipulation font-mono text-[0.92rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-[#ff4b00] hover:decoration-[#ff4b00]/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.94rem]"
-          onClick={(event) => void handleContactClick(event, link)}
+          href={emailLink.href}
+          aria-label={`Email me directly at ${emailAddress}`}
+          className="group/email-card relative flex min-h-[5.95rem] w-full origin-center touch-manipulation items-center gap-3.5 overflow-hidden rounded-[9px] bg-[rgba(255,252,248,0.68)] px-4 py-3.5 pr-12 text-left shadow-[inset_0_0_0_1px_rgba(43,39,34,0.075),inset_0_1px_0_rgba(255,255,255,0.9),0_18px_42px_-34px_rgba(43,39,34,0.42),0_1px_3px_rgba(43,39,34,0.045)] backdrop-blur-[2px] transition-[transform,box-shadow,color,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[1px] hover:bg-[rgba(255,252,248,0.78)] hover:text-[#ff4b00] hover:shadow-[inset_0_0_0_1px_rgba(255,75,0,0.13),inset_0_1px_0_rgba(255,255,255,0.95),0_20px_46px_-34px_rgba(255,75,0,0.34),0_2px_8px_-6px_rgba(43,39,34,0.18)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-[5.875rem] sm:gap-4 sm:px-6 sm:pr-16"
+          onClick={() => handleContactClick(emailLink)}
         >
-          {link.label}
-          <span className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0">
-            {link.label === 'Email' ? 'Copy email' : `Open ${link.label}`}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_26%_0%,rgba(255,255,255,0.86),rgba(255,255,255,0)_55%),radial-gradient(ellipse_at_82%_95%,rgba(255,184,116,0.14),rgba(255,184,116,0)_62%)]"
+          />
+          <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center text-foreground/50 transition-colors duration-200 group-hover/email-card:text-[#ff4b00]/70 sm:h-11 sm:w-11">
+            <Mail aria-hidden="true" strokeWidth={1.55} className="h-[1.85rem] w-[1.85rem] sm:h-8 sm:w-8" />
+          </span>
+          <span className="relative z-10 min-w-0 flex-1 space-y-1.5">
+            <span className="block font-mono text-[0.81rem] leading-none text-muted-foreground/68 sm:text-[0.86rem]">
+              Email me directly
+            </span>
+            <span className="block font-mono text-[0.98rem] leading-[1.16] text-foreground [overflow-wrap:anywhere] sm:text-[1.12rem]">
+              {emailAddress}
+            </span>
+          </span>
+          <span className="absolute right-4 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center text-foreground/64 transition-[transform,color] duration-200 group-hover/email-card:translate-x-0.5 group-hover/email-card:text-[#ff4b00] sm:right-5">
+            <ArrowUpRight aria-hidden="true" strokeWidth={1.7} className="h-[1.05rem] w-[1.05rem]" />
           </span>
         </a>
-      ))}
+      ) : null}
+
+      <div className="grid grid-cols-2 gap-x-7 gap-y-2 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-3.5">
+        {socialLinks.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noreferrer' : undefined}
+            className="group/peek relative inline-flex min-h-[40px] min-w-[40px] origin-center touch-manipulation items-center font-mono text-[0.9rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-[#ff4b00] hover:decoration-[#ff4b00]/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.94rem]"
+            onClick={() => handleContactClick(link)}
+          >
+            {link.label}
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 hidden -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0 sm:block">
+              {`Open ${link.label}`}
+            </span>
+          </a>
+        ))}
+      </div>
     </div>
   )
 }

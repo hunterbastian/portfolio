@@ -123,10 +123,12 @@ function Section({
   id,
   title,
   children,
+  rule = true,
 }: {
   id?: string
   title: string
   children: React.ReactNode
+  rule?: boolean
 }) {
   return (
     <section id={id} className="scroll-mt-24 space-y-5 sm:space-y-7">
@@ -134,7 +136,7 @@ function Section({
         <div className="flex items-baseline gap-4 text-[0.85rem] tracking-[-0.02em] text-foreground/92">
           <h2>{title}</h2>
         </div>
-        <div className="h-px w-full bg-border/90" />
+        {rule ? <div className="h-px w-full bg-border/90" /> : null}
       </div>
       {children}
     </section>
@@ -272,43 +274,43 @@ function ContactLinks() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-[3.25rem] sm:space-y-[4.5rem]">
       {emailLink ? (
         <a
           href={emailLink.href}
           aria-label={`Email me directly at ${emailAddress}`}
-          className="group/email-card relative flex min-h-[5.95rem] w-full origin-center touch-manipulation items-center gap-3.5 overflow-hidden rounded-[9px] bg-[rgba(255,252,248,0.68)] px-4 py-3.5 pr-12 text-left shadow-[inset_0_0_0_1px_rgba(43,39,34,0.075),inset_0_1px_0_rgba(255,255,255,0.9),0_18px_42px_-34px_rgba(43,39,34,0.42),0_1px_3px_rgba(43,39,34,0.045)] backdrop-blur-[2px] transition-[transform,box-shadow,color,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[1px] hover:bg-[rgba(255,252,248,0.78)] hover:text-[#ff4b00] hover:shadow-[inset_0_0_0_1px_rgba(255,75,0,0.13),inset_0_1px_0_rgba(255,255,255,0.95),0_20px_46px_-34px_rgba(255,75,0,0.34),0_2px_8px_-6px_rgba(43,39,34,0.18)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-[5.875rem] sm:gap-4 sm:px-6 sm:pr-16"
+          className="group/email-card relative flex min-h-[6.45rem] w-full max-w-[35.25rem] origin-center touch-manipulation items-center gap-4 overflow-hidden rounded-[10px] bg-[#fffaf4] px-4 py-4 pr-12 text-left shadow-[inset_0_0_0_1px_rgba(43,39,34,0.095),inset_0_1px_0_rgba(255,255,255,0.92),0_22px_42px_-32px_rgba(43,39,34,0.55),0_9px_24px_-24px_rgba(255,114,46,0.52),0_1px_3px_rgba(43,39,34,0.06)] transition-[transform,box-shadow,color,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[1px] hover:bg-[#fff8f1] hover:text-[#ff4b00] hover:shadow-[inset_0_0_0_1px_rgba(255,75,0,0.16),inset_0_1px_0_rgba(255,255,255,0.95),0_24px_46px_-32px_rgba(255,97,22,0.42),0_10px_24px_-24px_rgba(43,39,34,0.36),0_2px_8px_-7px_rgba(43,39,34,0.2)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-[6.7rem] sm:gap-5 sm:px-6 sm:py-5 sm:pr-16"
           onClick={() => handleContactClick(emailLink)}
         >
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_26%_0%,rgba(255,255,255,0.86),rgba(255,255,255,0)_55%),radial-gradient(ellipse_at_82%_95%,rgba(255,184,116,0.14),rgba(255,184,116,0)_62%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgba(255,255,255,0.72),rgba(255,255,255,0)_58%),linear-gradient(180deg,rgba(255,255,255,0.38),rgba(255,239,226,0.18))]"
           />
-          <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center text-foreground/50 transition-colors duration-200 group-hover/email-card:text-[#ff4b00]/70 sm:h-11 sm:w-11">
-            <Mail aria-hidden="true" strokeWidth={1.55} className="h-[1.85rem] w-[1.85rem] sm:h-8 sm:w-8" />
+          <span className="relative z-10 flex h-[3.55rem] w-[3.55rem] shrink-0 items-center justify-center rounded-[8px] bg-[#fffdfa] text-foreground/86 shadow-[inset_0_0_0_1px_rgba(43,39,34,0.1),inset_0_1px_0_rgba(255,255,255,0.96),0_8px_18px_-16px_rgba(43,39,34,0.5)] transition-[box-shadow,color,transform] duration-200 group-hover/email-card:text-[#ff4b00] group-hover/email-card:shadow-[inset_0_0_0_1px_rgba(255,75,0,0.2),inset_0_1px_0_rgba(255,255,255,0.96),0_10px_20px_-16px_rgba(255,75,0,0.48)] sm:h-[3.75rem] sm:w-[3.75rem]">
+            <Mail aria-hidden="true" strokeWidth={1.55} className="h-[1.6rem] w-[1.6rem] sm:h-[1.7rem] sm:w-[1.7rem]" />
           </span>
           <span className="relative z-10 min-w-0 flex-1 space-y-1.5">
-            <span className="block font-mono text-[0.81rem] leading-none text-muted-foreground/68 sm:text-[0.86rem]">
+            <span className="block font-mono text-[0.76rem] leading-none text-muted-foreground/78 sm:text-[0.78rem]">
               Email me directly
             </span>
-            <span className="block font-mono text-[0.98rem] leading-[1.16] text-foreground [overflow-wrap:anywhere] sm:text-[1.12rem]">
+            <span className="block font-mono text-[0.98rem] leading-[1.22] tracking-[-0.015em] text-foreground [overflow-wrap:anywhere] sm:text-[1.08rem]">
               {emailAddress}
             </span>
           </span>
-          <span className="absolute right-4 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center text-foreground/64 transition-[transform,color] duration-200 group-hover/email-card:translate-x-0.5 group-hover/email-card:text-[#ff4b00] sm:right-5">
+          <span className="absolute right-3.5 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center text-foreground/78 transition-[transform,color] duration-200 group-hover/email-card:translate-x-0.5 group-hover/email-card:-translate-y-[calc(50%+1px)] group-hover/email-card:text-[#ff4b00] sm:right-5">
             <ArrowUpRight aria-hidden="true" strokeWidth={1.7} className="h-[1.05rem] w-[1.05rem]" />
           </span>
         </a>
       ) : null}
 
-      <div className="grid grid-cols-2 gap-x-7 gap-y-2 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-3.5">
+      <div className="grid grid-cols-2 gap-x-8 gap-y-6 sm:w-[42rem] sm:max-w-[calc(100vw-2.5rem)] sm:grid-cols-4 sm:gap-x-9 sm:gap-y-10">
         {socialLinks.map((link) => (
           <a
             key={link.label}
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noreferrer' : undefined}
-            className="group/peek relative inline-flex min-h-[40px] min-w-[40px] origin-center touch-manipulation items-center font-mono text-[0.9rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-[#ff4b00] hover:decoration-[#ff4b00]/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.94rem]"
+            className="group/peek relative inline-flex min-h-[40px] min-w-[40px] origin-center touch-manipulation items-center justify-start font-mono text-[0.94rem] leading-none text-foreground decoration-border underline decoration-[0.075em] underline-offset-[0.22em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-[#ff4b00] hover:decoration-[#ff4b00]/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.98rem]"
             onClick={() => handleContactClick(link)}
           >
             {link.label}
@@ -750,25 +752,25 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
           </Reveal>
 
           <Reveal delayMs={200}>
-            <Section id="contact" title="Contact">
+            <Section id="contact" title="Contact" rule={false}>
               <div
-                className="relative space-y-[1.125rem] sm:space-y-6"
+                className="relative space-y-5 sm:space-y-7"
                 onPointerEnter={trackContactGlowBounds}
                 onPointerMove={updateContactGlow}
                 onPointerLeave={resetContactGlow}
               >
                 <div
                   ref={contactGlowRef}
-                  className={`animated-contact-glow pointer-events-none absolute left-[-56%] top-[18%] z-0 h-[20rem] w-[215%] opacity-90 blur-[58px] ${
+                  className={`animated-contact-glow pointer-events-none absolute left-[-52%] top-[16%] z-0 h-[20rem] w-[210%] opacity-80 blur-[60px] ${
                     contactGlowActive ? 'is-active' : ''
                   }`}
                   style={{
                     background:
-                      'radial-gradient(ellipse at 20% 78%, rgba(255, 154, 64, 0.3) 0%, rgba(232, 96, 86, 0.08) 18%, rgba(255, 170, 86, 0.18) 32%, rgba(255, 188, 118, 0.1) 46%, rgba(255, 212, 168, 0.04) 58%, transparent 78%), radial-gradient(ellipse at 42% 64%, rgba(255, 185, 120, 0.08) 0%, rgba(215, 92, 92, 0.035) 24%, rgba(255, 205, 152, 0.04) 36%, transparent 60%)',
+                      'radial-gradient(ellipse at 20% 76%, rgba(255, 154, 64, 0.22) 0%, rgba(232, 96, 86, 0.055) 18%, rgba(255, 170, 86, 0.13) 32%, rgba(255, 188, 118, 0.075) 46%, rgba(255, 212, 168, 0.035) 58%, transparent 78%), radial-gradient(ellipse at 42% 64%, rgba(255, 185, 120, 0.06) 0%, rgba(215, 92, 92, 0.025) 24%, rgba(255, 205, 152, 0.035) 36%, transparent 60%)',
                   }}
                 />
 
-                <div className="relative z-10 space-y-[1.125rem] sm:space-y-6">
+                <div className="relative z-10 space-y-8 sm:space-y-11">
                   <p className="max-w-[38rem] font-mono text-[0.92rem] leading-[1.58] text-muted-foreground sm:text-[1rem] sm:leading-[1.7]">
                     If something here resonates, reach out.
                   </p>

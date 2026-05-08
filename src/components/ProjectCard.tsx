@@ -8,6 +8,7 @@ import { startProjectTransition } from '@/lib/project-transition'
 import { useWebHaptics } from 'web-haptics/react'
 import { useSound } from '@/lib/sounds/context'
 import { showJoyToast } from '@/lib/joy'
+import { analytics } from '@/lib/analytics'
 
 interface ProjectCardProps {
   slug: string
@@ -15,6 +16,7 @@ interface ProjectCardProps {
   index: number
   hideLiveBadge?: boolean
   hideLabel?: boolean
+  priorityImage?: boolean
 }
 
 function formatCategoryLabel(category?: string): string {
@@ -33,9 +35,10 @@ function formatCategoryLabel(category?: string): string {
   return map[category] ?? category.toUpperCase()
 }
 
-function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLabel }: ProjectCardProps) {
+function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLabel, priorityImage }: ProjectCardProps) {
   const [imgSrc, setImgSrc] = useState(frontmatter.image)
-  const [imgLoaded, setImgLoaded] = useState(index === 0)
+  const shouldPrioritizeImage = index === 0 || priorityImage === true
+  const [imgLoaded, setImgLoaded] = useState(shouldPrioritizeImage)
   const imageRef = useRef<HTMLDivElement>(null)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const categoryLabel = formatCategoryLabel(frontmatter.category)
@@ -55,6 +58,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
 
   const handleTransitionClick = useCallback(() => {
     haptic.trigger('medium')
+    analytics.projectClick(slug, displayTitle)
     showJoyToast('Opening project')
     if (imageRef.current) {
       const rect = imageRef.current.getBoundingClientRect()
@@ -65,7 +69,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
         height: rect.height,
       })
     }
-  }, [slug, imgSrc, haptic])
+  }, [displayTitle, slug, imgSrc, haptic])
 
   return (
     <div className="relative">
@@ -91,9 +95,9 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                   className={`object-cover ${index === 0 ? 'transition-[transform,filter]' : 'transition-[transform,opacity,filter]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015] group-hover:saturate-[0.96] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
                   sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
                   quality={80}
-                  priority={index === 0}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchPriority={index === 0 ? 'high' : 'low'}
+                  priority={shouldPrioritizeImage}
+                  loading={shouldPrioritizeImage ? 'eager' : 'lazy'}
+                  fetchPriority={shouldPrioritizeImage ? 'high' : 'low'}
                   onLoad={onLoad}
                   onError={() => setImgSrc('/images/placeholder.svg')}
                 />
@@ -138,6 +142,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
           rel="noopener noreferrer"
           className="absolute top-2 right-2 z-10 inline-flex items-center gap-1 bg-background/80 backdrop-blur-sm px-2 py-0.5 text-[9px] font-medium tracking-[0.04em] text-primary shadow-card transition-[background-color,box-shadow] duration-200 hover:bg-background/95"
           aria-label={`Live demo for ${displayTitle}`}
+          onClick={() => analytics.externalLink(frontmatter.demo ?? '', 'demo')}
         >
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />

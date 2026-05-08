@@ -16,6 +16,7 @@ import {
 import ResumeModal from '@/components/ResumeModal'
 import { showJoyToast } from '@/lib/joy'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
+import { analytics } from '@/lib/analytics'
 import type { ProjectFrontmatter } from '@/types/project'
 
 interface Project {
@@ -82,6 +83,7 @@ interface EditorialItemProps {
   underlineOnHover?: boolean
   hoverAccentColor?: string
   toastMessage?: string
+  tracking?: () => void
 }
 
 function formatYear(date: string) {
@@ -159,6 +161,7 @@ function EditorialItem({
   underlineOnHover = false,
   hoverAccentColor = '#ff4b00',
   toastMessage,
+  tracking,
 }: EditorialItemProps) {
   const interactive = Boolean(href)
   const haptic = useWebHaptics()
@@ -238,6 +241,7 @@ function EditorialItem({
         onMouseLeave={onMouseLeave}
         onClick={() => {
           haptic.trigger('light')
+          tracking?.()
           showJoyToast(toastMessage ?? `Opening ${title}`)
         }}
       >
@@ -254,6 +258,7 @@ function EditorialItem({
       onMouseLeave={onMouseLeave}
       onClick={() => {
         haptic.trigger('light')
+        tracking?.()
         showJoyToast(toastMessage ?? `Opening ${title}`)
       }}
     >
@@ -270,6 +275,7 @@ function ContactLinks() {
 
   const handleContactClick = (link: (typeof contactSocialLinks)[number]) => {
     haptic.trigger('light')
+    analytics.externalLink(link.href, link.label.toLowerCase())
     showJoyToast(link.label === 'Email' ? 'Opening email' : `Opening ${link.label}`)
   }
 
@@ -457,7 +463,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
       <div className="mx-auto max-w-[36rem] pt-16 sm:pt-28">
         <Reveal>
           <section
-            className="relative isolate space-y-7 sm:space-y-8"
+            className="relative isolate space-y-7 sm:min-h-[20.5rem] sm:space-y-8"
             onPointerEnter={trackHeroGlowBounds}
             onPointerMove={updateHeroGlow}
             onPointerLeave={resetHeroGlow}
@@ -571,6 +577,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   className="group group/peek relative inline-flex min-h-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
                   onClick={() => {
                     haptic.trigger('light')
+                    analytics.navigationClick('contact')
                     showJoyToast('Say hi')
                   }}
                 >
@@ -586,6 +593,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   className="group group/peek relative inline-flex min-h-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
                   onClick={() => {
                     haptic.trigger('light')
+                    analytics.navigationClick('cv')
                     showJoyToast('Opening CV')
                   }}
                 >
@@ -655,6 +663,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                           underlineOnHover
                           hoverAccentColor={PROJECT_ACCENTS[project.slug] ?? '#ff4b00'}
                           toastMessage="Opening project"
+                          tracking={() => analytics.projectClick(project.slug, project.frontmatter.displayTitle || project.frontmatter.title)}
                         />
                       </div>
                     </div>
@@ -691,6 +700,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                         underlineOnHover
                         hoverAccentColor={PROJECT_ACCENTS.playground}
                         toastMessage="Opening playground"
+                        tracking={() => analytics.navigationClick('archive')}
                       />
                     </div>
                   </div>
@@ -714,6 +724,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                         : 'Open for freelance and collaborative projects across design, interfaces, and creative web work.'
                     }
                     underlineOnHover
+                    tracking={() => analytics.externalLink(link.href, link.label.toLowerCase())}
                   />
                 ))}
               </div>

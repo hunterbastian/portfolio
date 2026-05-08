@@ -6,6 +6,7 @@ import { AnimatePresence, m, useMotionValue, useSpring } from 'framer-motion'
 import Image from 'next/image'
 import { MOTION_EASE_SOFT, MOTION_SPRING_SNAPPY } from '@/lib/motion'
 import { ProjectFrontmatter } from '@/types/project'
+import { analytics } from '@/lib/analytics'
 
 interface Project {
   slug: string
@@ -71,7 +72,10 @@ export default function ProjectTextList({ projects }: ProjectTextListProps) {
             <m.button
               key={project.slug}
               type="button"
-              onClick={() => router.push(`/projects/${project.slug}`)}
+              onClick={() => {
+                analytics.projectClick(project.slug, title)
+                router.push(`/projects/${project.slug}`)
+              }}
               onMouseEnter={() => setHoveredSlug(project.slug)}
               onMouseLeave={() => setHoveredSlug(null)}
               className="group relative flex w-full items-center justify-between border-b border-border px-1 py-4 text-left transition-[color,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:py-5"

@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
 import { showJoyToast } from '@/lib/joy'
+import { analytics } from '@/lib/analytics'
 
 const PAGE_NAV = [
   { name: 'Home', href: '/', peek: 'Go home', toast: 'Opening home' },
@@ -23,6 +24,7 @@ function NavLink({ href, name, active, peek, toast }: { href: string; name: stri
       }`}
       onClick={() => {
         haptic.trigger('light')
+        analytics.navigationClick(name.toLowerCase())
         showJoyToast(toast)
       }}
     >
@@ -119,6 +121,7 @@ export default function TopMeta() {
           onMouseLeave={() => setBrandHovered(false)}
           onClick={() => {
             haptic.trigger('light')
+            analytics.navigationClick('home')
             showJoyToast('Opening home')
           }}
         >
@@ -132,7 +135,7 @@ export default function TopMeta() {
         </Link>
 
         <nav
-          className="hidden items-center gap-5 sm:flex"
+          className="hidden w-[16.5rem] items-center justify-end gap-5 sm:flex"
           onMouseEnter={() => setNavHovered(true)}
           onMouseLeave={() => setNavHovered(false)}
         >

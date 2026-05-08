@@ -1,0 +1,45 @@
+# Dependencies and build output
+node_modules/
+.next/
+out/
+build/
+coverage/
+test-results/
+*.tsbuildinfo
+
+# Local environment and Vercel metadata
+.env*
+.vercel/
+
+# Local QA captures and reports
+output/
+.codex-tmp/
+.playwright-mcp/
+lighthouse-report*.html
+lighthouse-report*.json
+archive-orbit-*.png
+home-profile-hover-glow*.png
+home-topmeta-brand-sunset-glow.png
+portfolio-*.png
+launcher-*.png
+playground-*.png
+
+# Local agent and workspace metadata
+.agents/
+.claude/
+.codex/
+.context/
+.factory/
+.kiro/
+.superpowers/
+.windsurf/
+docs/superpowers/
+skills-lock.json
+
+# Editor and OS files
+.git/
+.gstack/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

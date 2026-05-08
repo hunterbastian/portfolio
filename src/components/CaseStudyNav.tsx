@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
 import { useWebHaptics } from 'web-haptics/react'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
+import { analytics } from '@/lib/analytics'
 
 interface Chapter {
   id: string
@@ -68,6 +69,7 @@ export default function CaseStudyNav() {
               type="button"
               onClick={() => {
                 haptic.trigger('light')
+                analytics.navigationClick(`chapter_${chapter.id}`)
                 const el = document.querySelector(`[data-chapter="${chapter.id}"]`)
                 el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }}

@@ -10,6 +10,7 @@ import ScrollReveal from './ScrollReveal'
 import { BlurHighlight } from '@/components/react-bits/blur-highlight'
 import ScrollStage from './ScrollStage'
 import LiveDemo from './LiveDemo'
+import TrackedExternalLink from '@/components/TrackedExternalLink'
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>
 type ParagraphProps = React.HTMLAttributes<HTMLParagraphElement>
@@ -57,9 +58,9 @@ export const A: React.FC<AnchorProps> = ({ href = '', children, ...props }) => {
   const isExternal = /^https?:\/\//.test(href)
   if (isExternal) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4" {...props}>
+      <TrackedExternalLink href={href} className="text-primary underline underline-offset-4" {...props}>
         {children}
-      </a>
+      </TrackedExternalLink>
     )
   }
   const linkProps = props as InternalLinkProps

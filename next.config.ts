@@ -1,8 +1,13 @@
 import type { NextConfig } from 'next'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import createMDX from '@next/mdx'
+import bundleAnalyzer from '@next/bundle-analyzer'
+
+const configDir = path.dirname(fileURLToPath(import.meta.url))
 
 // Bundle analyzer for development
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
 
@@ -41,7 +46,7 @@ const nextConfig: NextConfig = {
   
   // Turbopack configuration (moved from experimental.turbo)
   turbopack: {
-    root: __dirname,
+    root: configDir,
     resolveAlias: {
       // Optimize common libraries
       'react': 'react',
@@ -104,16 +109,6 @@ const nextConfig: NextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=0, s-maxage=60, stale-while-revalidate=600',
-          },
-        ],
-      },
-      // Static JS/CSS assets - Long-term immutable cache
-      {
-        source: '/_next/static/:all*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
           },
         ],
       },

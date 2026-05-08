@@ -8,6 +8,32 @@ type AnalyticsPayload = Record<string, AnalyticsValue | undefined>
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>
+    gtag?: (command: string, eventName: string, payload?: Record<string, AnalyticsValue>) => void
+  }
+}
+
+function normalizeTrackedUrl(url: string): string {
+  if (url.startsWith('mailto:')) {
+    return url.split('?')[0] ?? url
+  }
+
+  try {
+    const parsed = new URL(url, typeof window !== 'undefined' ? window.location.origin : 'https://hunterbastian.com')
+    return `${parsed.origin}${parsed.pathname}`
+  } catch {
+    return url.split('?')[0] ?? url
+  }
+}
+
+function inferPlatform(url: string): string {
+  if (url.startsWith('mailto:')) return 'email'
+
+  try {
+    return new URL(url, typeof window !== 'undefined' ? window.location.origin : 'https://hunterbastian.com')
+      .hostname
+      .replace(/^www\./, '')
+  } catch {
+    return 'unknown'
   }
 }
 
@@ -22,11 +48,15 @@ function trackEvent(eventName: string, payload: AnalyticsPayload = {}): void {
 
   track(eventName, cleanPayload)
 
-  if (typeof window !== 'undefined' && Array.isArray(window.dataLayer)) {
-    window.dataLayer.push({
-      event: eventName,
-      ...cleanPayload,
-    })
+  if (typeof window !== 'undefined') {
+    window.gtag?.('event', eventName, cleanPayload)
+
+    if (Array.isArray(window.dataLayer)) {
+      window.dataLayer.push({
+        event: eventName,
+        ...cleanPayload,
+      })
+    }
   }
 }
 
@@ -52,6 +82,16 @@ export const analytics = {
   },
 
   /**
+   * Track project clicks before navigation
+   */
+  projectClick: (projectSlug: string, projectTitle: string) => {
+    trackEvent('project_click', {
+      slug: projectSlug,
+      title: projectTitle,
+    })
+  },
+
+  /**
    * Track navigation clicks
    */
   navigationClick: (section: string) => {
@@ -63,7 +103,7 @@ export const analytics = {
   /**
    * Track resume downloads/views
    */
-  resumeAction: (action: 'view' | 'download') => {
+  resumeAction: (action: 'view' | 'download' | 'print') => {
     trackEvent('resume_action', {
       action,
     })
@@ -74,8 +114,8 @@ export const analytics = {
    */
   externalLink: (url: string, platform?: string) => {
     trackEvent('external_link', {
-      url,
-      platform: platform || 'unknown',
+      url: normalizeTrackedUrl(url),
+      platform: platform || inferPlatform(url),
     })
   },
 

@@ -9,6 +9,7 @@ import {
   setProjectTransitionTarget,
 } from '@/lib/project-transition'
 import { PAGE_ENTRANCE_INITIAL_Y, CHILD_ENTRANCE_INITIAL_Y } from '@/components/PageTransition'
+import { analytics } from '@/lib/analytics'
 
 /* ─────────────────────────────────────────────────────────
  * PROJECT DETAIL STORYBOARD
@@ -48,6 +49,7 @@ interface ProjectDetailContentProps {
   links: ReactNode | null
   content: ReactNode
   slug?: string
+  projectTitle?: string
 }
 
 export default function ProjectDetailContent({
@@ -58,6 +60,7 @@ export default function ProjectDetailContent({
   links,
   content,
   slug,
+  projectTitle,
 }: ProjectDetailContentProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
   const [stage, setStage] = useState(0)
@@ -70,6 +73,12 @@ export default function ProjectDetailContent({
   )
   // Active = transition matches this slug and overlay hasn't started fading out
   const isTransitionActive = transition != null && transition.slug === slug && !transition.completing
+
+  useEffect(() => {
+    if (!slug || !projectTitle) return
+
+    analytics.projectView(slug, projectTitle)
+  }, [projectTitle, slug])
 
   // Measure the hero image position and feed it to the overlay.
   // useLayoutEffect fires before paint, so the overlay gets the target immediately.

@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
 import TextReveal from '@/components/TextReveal'
@@ -7,6 +8,7 @@ import * as Glyphs from '@/components/pixel/glyphs'
 import { experienceItems, educationItems } from '@/content/homepage'
 import { siteConfig } from '@/lib/site'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
+import { analytics } from '@/lib/analytics'
 
 const STAGGER_DELAY = 0.06
 
@@ -39,6 +41,10 @@ function Divider() {
 
 export default function CVPageClient() {
   const prefersReducedMotion = useReducedMotion() ?? false
+
+  useEffect(() => {
+    analytics.resumeAction('view')
+  }, [])
 
   const itemVariants = {
     hidden: { opacity: 0, y: 8 },
@@ -73,7 +79,10 @@ export default function CVPageClient() {
               </p>
             </div>
             <button
-              onClick={() => window.print()}
+              onClick={() => {
+                analytics.resumeAction('print')
+                window.print()
+              }}
               className="print:hidden ml-4 inline-flex min-h-[40px] origin-center touch-manipulation shrink-0 items-center border border-border bg-card px-3 py-1.5 text-[10px] font-mono tracking-[0.12em] text-muted-foreground transition-[color,transform,border-color] duration-150 hover:border-foreground/20 hover:text-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
               aria-label="Print or save as PDF"
             >
@@ -85,15 +94,27 @@ export default function CVPageClient() {
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-mono tracking-wide text-muted-foreground/70">
             <span>Utah, USA</span>
             <span className="text-border">·</span>
-            <a href="mailto:hunterbastianux@gmail.com" className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]">
+            <a
+              href="mailto:hunterbastianux@gmail.com"
+              className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]"
+              onClick={() => analytics.externalLink('mailto:hunterbastianux@gmail.com', 'email')}
+            >
               hunterbastianux@gmail.com
             </a>
             <span className="text-border">·</span>
-            <a href="https://hunterbastian.com" className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96] print:no-underline">
+            <a
+              href="https://hunterbastian.com"
+              className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96] print:no-underline"
+              onClick={() => analytics.navigationClick('portfolio_link')}
+            >
               hunterbastian.com
             </a>
             <span className="text-border">·</span>
-            <a href="https://linkedin.com/in/hunterbastian" className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]">
+            <a
+              href="https://linkedin.com/in/hunterbastian"
+              className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]"
+              onClick={() => analytics.externalLink('https://linkedin.com/in/hunterbastian', 'linkedin')}
+            >
               LinkedIn
             </a>
           </div>

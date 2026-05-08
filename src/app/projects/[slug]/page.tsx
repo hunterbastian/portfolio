@@ -10,6 +10,8 @@ import BreadcrumbPill from '@/components/BreadcrumbPill'
 import ProjectDetailContent from '@/components/ProjectDetailContent'
 import CaseStudyNav from '@/components/CaseStudyNav'
 import SectionMarker, { categoryToKind } from '@/components/pixel/SectionMarker'
+import TrackedExternalLink from '@/components/TrackedExternalLink'
+import ProjectContactCTA from '@/components/ProjectContactCTA'
 
 function resolveImageUrl(image: string): string {
   return image.startsWith('/') ? resolveSiteUrl(image) : image
@@ -59,7 +61,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   return {
     title: `${title} | ${sitePortfolioName}`,
     description,
-    keywords: [title, category, ...(tags || []), siteConfig.brandName, 'portfolio', 'case study'],
+    keywords: [title, category, ...(tags || []), siteConfig.personName, 'portfolio', 'case study'],
     openGraph: {
       type: 'article',
       title: `${title} - Case Study`,
@@ -75,7 +77,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
         },
       ],
       publishedTime: date,
-      authors: [siteConfig.brandName],
+      authors: [siteConfig.personName],
       tags,
     },
     twitter: {
@@ -116,12 +118,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       dateModified: frontmatter.date,
       author: {
         '@type': 'Person',
-        name: siteConfig.brandName,
+        name: siteConfig.personName,
         url: siteConfig.url,
       },
       publisher: {
         '@type': 'Person',
-        name: siteConfig.brandName,
+        name: siteConfig.personName,
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
@@ -160,6 +162,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <CaseStudyNav />
         <ProjectDetailContent
           slug={slug}
+          projectTitle={displayTitle}
           header={
             <header className="mb-8 flex flex-col items-center text-center">
               <SectionMarker kind={categoryToKind(frontmatter.category)} label={frontmatter.category} className="mb-3" />
@@ -200,50 +203,50 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             (frontmatter.github || frontmatter.demo || frontmatter.figjam) ? (
               <div className="mb-12 flex flex-wrap gap-3">
                 {frontmatter.github && (
-                  <a
+                  <TrackedExternalLink
                     href={frontmatter.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    platform="github"
                     className="group inline-flex items-center gap-2 font-inter text-[13px] font-medium text-primary transition-[color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:-translate-y-[2px]"
                   >
                     <svg className="w-5 h-5 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                     </svg>
                     View on GitHub
-                  </a>
+                  </TrackedExternalLink>
                 )}
                 {frontmatter.demo && (
-                  <a
+                  <TrackedExternalLink
                     href={frontmatter.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    platform="demo"
                     className="group inline-flex items-center gap-2 font-inter text-[13px] font-medium text-primary transition-[color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:-translate-y-[2px]"
                   >
                     <svg className="w-5 h-5 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[1px] group-hover:translate-x-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                     Live Demo
-                  </a>
+                  </TrackedExternalLink>
                 )}
                 {frontmatter.figjam && (
-                  <a
+                  <TrackedExternalLink
                     href={frontmatter.figjam}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    platform="figjam"
                     className="group inline-flex items-center gap-2 font-inter text-[13px] font-medium text-primary transition-[color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:-translate-y-[2px]"
                   >
                     <svg className="w-5 h-5 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                     View Slides
-                  </a>
+                  </TrackedExternalLink>
                 )}
               </div>
             ) : null
           }
           content={
-            <div className="prose dark:prose-invert max-w-none font-inter text-[13px] [&_li]:font-inter [&_ol]:font-inter [&_p]:font-inter [&_p]:text-[13px] [&_ul]:font-inter [&_li]:text-[13px] [&_h2]:font-mono [&_h3]:font-mono [&_h4]:font-mono">
-              <MDXRemote source={content} components={mdxComponents} />
+            <div>
+              <div className="prose dark:prose-invert max-w-none font-inter text-[13px] [&_li]:font-inter [&_ol]:font-inter [&_p]:font-inter [&_p]:text-[13px] [&_ul]:font-inter [&_li]:text-[13px] [&_h2]:font-mono [&_h3]:font-mono [&_h4]:font-mono">
+                <MDXRemote source={content} components={mdxComponents} />
+              </div>
+              <ProjectContactCTA projectTitle={displayTitle} />
             </div>
           }
         />

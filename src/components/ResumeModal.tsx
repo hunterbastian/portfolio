@@ -4,6 +4,7 @@ import { AnimatePresence, m } from 'framer-motion'
 import { useCallback, useEffect } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { showJoyToast } from '@/lib/joy'
+import { analytics } from '@/lib/analytics'
 import IconArrowBackUp from './IconArrowBackUp'
 
 interface ResumeModalProps {
@@ -19,6 +20,12 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
     showJoyToast('Resume closed')
     onClose()
   }, [haptic, onClose])
+
+  useEffect(() => {
+    if (isOpen) {
+      analytics.resumeAction('view')
+    }
+  }, [isOpen])
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -72,12 +79,32 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 <h1 className="font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">Resume</h1>
               </div>
 
+              <div className="mb-6 grid grid-cols-2 gap-2 font-mono sm:grid-cols-4">
+                {[
+                  ['File', 'PDF available'],
+                  ['Access', 'Public'],
+                  ['Close', 'Esc anytime'],
+                  ['Download', 'You choose'],
+                ].map(([label, value]) => (
+                  <div key={label} className="min-h-[48px] border border-border/65 bg-background/55 px-2.5 py-2">
+                    <span className="flex items-center gap-1.5 text-[0.62rem] uppercase tracking-[0.1em] text-muted-foreground/62">
+                      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#ff4b00]/55" />
+                      {label}
+                    </span>
+                    <span className="mt-1 block text-[0.72rem] leading-tight text-foreground/82">
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
               <div className="mb-12 flex gap-4">
                 <a
                   href="/api/resume/file?download=1"
                   className="inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 text-sm font-medium text-primary transition-[color,transform] duration-150 hover:text-primary/80 active:translate-y-0 active:scale-[0.96]"
                   onClick={() => {
                     haptic.trigger('light')
+                    analytics.resumeAction('download')
                     showJoyToast('Downloading resume')
                   }}
                 >

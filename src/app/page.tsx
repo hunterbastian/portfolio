@@ -2,22 +2,39 @@ import type { Metadata } from 'next'
 import { getAllProjects } from '@/lib/projects'
 import AnimatedHomePage from '@/components/AnimatedHomePage'
 import ErrorBoundary from '@/components/ErrorBoundary'
-import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
+import { resolveSiteUrl, siteConfig } from '@/lib/site'
+
+const previewTitle = siteConfig.personName
+const previewDescription = siteConfig.siteLocation
 
 export const metadata: Metadata = {
   title: {
-    absolute: siteConfig.siteTitle,
+    absolute: previewTitle,
   },
-  description: 'Hunter Bastian — design engineer, creative coder, and photographer based in Utah. Case studies, experiments, and side projects in UI design, web development, and interactive media.',
+  description: previewDescription,
   alternates: {
     canonical: resolveSiteUrl('/'),
   },
   openGraph: {
-    title: siteConfig.siteTitle,
-    description: `${siteConfig.brandName} — design engineer, creative coder, and photographer based in Utah.`,
+    title: previewTitle,
+    description: previewDescription,
     url: resolveSiteUrl('/'),
-    siteName: sitePortfolioName,
+    siteName: previewTitle,
     type: 'website',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: `${previewTitle} ${previewDescription}`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: previewTitle,
+    description: previewDescription,
+    images: ['/opengraph-image'],
   },
 }
 

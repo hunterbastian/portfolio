@@ -1,9 +1,14 @@
 // Service Worker for Portfolio - media assets only, fresh HTML/code always
-const CACHE_NAME = 'portfolio-assets-v13'
+const CACHE_NAME = 'portfolio-assets-v14'
 const STATIC_ASSETS = [
   '/offline.html',
   '/favicon.ico',
+  '/favicon/favicon.svg',
+  '/favicon/favicon.ico',
+  '/favicon/favicon-16x16.png',
   '/favicon/favicon-32x32.png',
+  '/favicon/favicon-192x192.png',
+  '/favicon/favicon-512x512.png',
   '/favicon/apple-touch-icon.png',
   '/images/profilepicture.webp',
   '/images/projects/brand-identity-system.svg'
@@ -14,7 +19,6 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Caching static assets')
         return cache.addAll(STATIC_ASSETS)
       })
       .then(() => self.skipWaiting())

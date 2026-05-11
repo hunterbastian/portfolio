@@ -101,8 +101,27 @@ export const educationItems: EducationItem[] = [
   {
     year: '2023 - 2027',
     institution: 'Utah Valley University',
-    degree: 'Interaction Design',
+    degree: 'B.S. Interaction Design',
     level: "Bachelor's Degree",
+    note: "ProdUX at UVU · Dean's List Fall 2024",
+  },
+  {
+    year: '2026',
+    institution: 'Replit',
+    degree: 'Platform Builder',
+    level: 'Certification',
+  },
+  {
+    year: '2026',
+    institution: 'Google',
+    degree: 'Google Analytics 4 Certification',
+    level: 'Certification',
+  },
+  {
+    year: '2022',
+    institution: 'Google',
+    degree: 'Foundations of User Experience Design',
+    level: 'Certification',
   },
   {
     year: '2021',

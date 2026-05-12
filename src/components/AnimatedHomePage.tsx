@@ -547,32 +547,45 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
           </Reveal>
 
           <Reveal delayMs={200}>
-            <Section id="contact" title="Contact" rule={false}>
+            <section id="contact" className="scroll-mt-24">
               <div
-                className="relative space-y-5 sm:space-y-7"
+                className="contact-aqua-stage relative left-1/2 isolate w-[min(92vw,82rem)] -translate-x-1/2 overflow-hidden px-5 py-14 sm:px-12 sm:py-20"
                 onPointerEnter={trackContactGlowBounds}
                 onPointerMove={updateContactGlow}
                 onPointerLeave={resetContactGlow}
               >
                 <div
                   ref={contactGlowRef}
-                  className={`animated-contact-glow pointer-events-none absolute left-[-18%] top-[18%] z-0 h-[18rem] w-[136%] opacity-25 blur-[48px] sm:left-[-52%] sm:top-[16%] sm:h-[20rem] sm:w-[210%] sm:opacity-30 sm:blur-[64px] ${
+                  className={`animated-contact-glow pointer-events-none absolute left-[-20%] top-[14%] z-0 h-[22rem] w-[140%] opacity-30 blur-[58px] sm:left-[-46%] sm:top-[10%] sm:h-[28rem] sm:w-[190%] sm:opacity-35 sm:blur-[76px] ${
                     contactGlowActive ? 'is-active' : ''
                   }`}
                   style={{
                     background:
-                      'radial-gradient(ellipse at 20% 76%, color-mix(in srgb, var(--contact-accent) 10%, transparent) 0%, color-mix(in srgb, var(--contact-accent) 4%, transparent) 28%, color-mix(in srgb, var(--contact-accent-soft) 12%, transparent) 46%, transparent 76%)',
+                      'radial-gradient(ellipse at 50% 56%, rgba(211,228,247,0.36) 0%, rgba(222,235,249,0.22) 34%, transparent 72%), radial-gradient(ellipse at 18% 34%, rgba(255,255,255,0.5) 0%, transparent 50%)',
                   }}
                 />
 
-                <div className="relative z-10 space-y-6 sm:space-y-11">
-                  <p className="mx-auto max-w-[38rem] text-center font-mono text-[0.88rem] leading-[1.55] text-muted-foreground sm:text-[1rem] sm:leading-[1.7]">
-                    If something here resonates, reach out.
-                  </p>
-                  <ContactLinks />
+                <div className="relative z-10 mx-auto max-w-[47rem] text-center">
+                  <div className="space-y-4 sm:space-y-5">
+                    <span className="contact-aqua-badge mx-auto inline-flex min-h-[32px] items-center rounded-full px-5 font-header text-[0.78rem] font-normal leading-none text-muted-foreground/82 sm:text-[0.86rem]">
+                      Let&apos;s work together
+                    </span>
+                    <div className="space-y-3 sm:space-y-4">
+                      <h2 className="font-mono text-[2.35rem] font-normal leading-[0.98] tracking-[-0.055em] text-foreground/94 sm:text-[4rem]">
+                        Ideas. Design. Impact.
+                      </h2>
+                      <p className="mx-auto max-w-[31rem] font-mono text-[0.98rem] leading-[1.55] tracking-[-0.02em] text-muted-foreground/72 sm:text-[1.12rem] sm:leading-[1.62]">
+                        If something here resonates, reach out.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-9 sm:mt-11">
+                    <ContactLinks />
+                  </div>
                 </div>
               </div>
-            </Section>
+            </section>
           </Reveal>
         </div>
       </div>

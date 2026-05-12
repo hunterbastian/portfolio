@@ -1259,30 +1259,81 @@ button {
   animation: hb-section-cloud-shadow 1050ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-shadow-delay, 0ms) both;
 }
 
+.contact-aqua-stage {
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.76) 42%, transparent 76%),
+    radial-gradient(ellipse at 50% 100%, rgba(211, 229, 248, 0.34) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(248, 250, 252, 0.58));
+  border-radius: 1.85rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.52),
+    0 0 0 1px rgba(78, 104, 134, 0.045),
+    0 30px 64px -56px rgba(var(--aqua-shadow-rgb), 0.5),
+    0 0 80px -62px rgba(77, 147, 230, 0.58);
+}
+
+.contact-aqua-stage::before {
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(96, 158, 232, 0.12) 3%, transparent 11%, transparent 89%, rgba(96, 158, 232, 0.12) 97%, transparent 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.68), transparent 42%);
+  content: "";
+  inset: 0;
+  opacity: 0.72;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.contact-aqua-stage::after {
+  background: radial-gradient(ellipse at 50% 100%, rgba(133, 181, 236, 0.28) 0%, transparent 68%);
+  bottom: -3rem;
+  content: "";
+  height: 8rem;
+  left: 6%;
+  opacity: 0.76;
+  pointer-events: none;
+  position: absolute;
+  right: 6%;
+  z-index: 0;
+}
+
+.contact-aqua-badge {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(243, 247, 251, 0.46));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 -1px 0 rgba(80, 103, 130, 0.035),
+    0 0 0 1px rgba(80, 103, 130, 0.07),
+    0 12px 26px -24px rgba(var(--aqua-shadow-rgb), 0.34);
+}
+
 .aqua-contact-button {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(230, 232, 232, 0.82) 44%, rgba(178, 181, 181, 0.74) 100%);
-  border-radius: 1.55rem;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 244, 246, 0.92) 43%, rgba(211, 218, 224, 0.72) 100%);
+  border-radius: 1.72rem;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.96),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.62),
-    inset 0 -9px 14px rgba(82, 86, 90, 0.18),
-    0 0 0 1px rgba(var(--aqua-rim-rgb), 0.18),
-    0 6px 9px -7px rgba(var(--aqua-shadow-rgb), 0.42),
-    0 16px 30px -23px rgba(var(--aqua-shadow-rgb), 0.54);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.76),
+    inset 0 -12px 18px rgba(72, 87, 101, 0.14),
+    0 0 0 1px rgba(86, 137, 194, 0.22),
+    0 7px 10px -7px rgba(var(--aqua-shadow-rgb), 0.42),
+    0 18px 34px -24px rgba(var(--aqua-shadow-rgb), 0.52);
 }
 
 .aqua-contact-button::before {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(154, 184, 216, 0.42) 18%, rgba(255, 255, 255, 0.72) 44%, rgba(44, 67, 91, 0.58) 100%);
-  border-radius: calc(1.55rem + 5px);
+    linear-gradient(90deg, rgba(37, 103, 197, 0.46) 0%, rgba(255, 255, 255, 0.82) 7%, rgba(255, 255, 255, 0.72) 50%, rgba(255, 255, 255, 0.82) 93%, rgba(21, 103, 211, 0.56) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(153, 198, 247, 0.36) 18%, rgba(255, 255, 255, 0.78) 45%, rgba(32, 57, 84, 0.46) 100%);
+  border-radius: calc(1.72rem + 6px);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.68),
-    0 0 0 2px rgba(var(--aqua-rim-rgb), 0.16),
-    0 2px 4px rgba(255, 255, 255, 0.72),
-    0 14px 24px -18px rgba(var(--aqua-shadow-rgb), 0.7);
+    0 0 0 1px rgba(255, 255, 255, 0.82),
+    0 0 0 2px rgba(50, 118, 209, 0.24),
+    0 0 12px -7px rgba(55, 130, 225, 0.72),
+    0 3px 4px rgba(255, 255, 255, 0.76),
+    0 15px 24px -17px rgba(var(--aqua-shadow-rgb), 0.72);
   content: "";
-  inset: -5px;
+  inset: -6px;
   pointer-events: none;
   position: absolute;
   transform: translate3d(0, 0, 0);
@@ -1295,14 +1346,14 @@ button {
 
 .aqua-contact-button::after {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.5) 17%, rgba(255, 255, 255, 0.12) 36%, rgba(65, 68, 72, 0.1) 100%);
-  border-radius: 1.08rem;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.7) 20%, rgba(255, 255, 255, 0.2) 42%, rgba(58, 68, 78, 0.1) 100%);
+  border-radius: 1.24rem;
   box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.96),
-    inset 0 -6px 12px rgba(82, 86, 90, 0.15);
+    inset 0 1px 3px rgba(255, 255, 255, 0.98),
+    inset 0 -9px 16px rgba(50, 59, 68, 0.13);
   content: "";
-  inset: 0.48rem 0.82rem 0.58rem;
-  opacity: 0.92;
+  inset: 0.52rem 0.88rem 0.68rem;
+  opacity: 0.96;
   pointer-events: none;
   position: absolute;
   transform: translate3d(0, 0, 0);
@@ -1315,27 +1366,28 @@ button {
 
 .aqua-contact-button:hover,
 .aqua-contact-button:focus-visible {
-  filter: brightness(1.008) saturate(1.015);
+  filter: brightness(1.014) saturate(1.035);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.68),
-    inset 0 -9px 14px rgba(82, 86, 90, 0.15),
-    0 0 0 1px rgba(var(--aqua-rim-rgb), 0.25),
-    0 7px 10px -7px rgba(var(--aqua-shadow-rgb), 0.4),
-    0 17px 32px -23px rgba(var(--aqua-shadow-rgb), 0.52);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.82),
+    inset 0 -12px 18px rgba(72, 87, 101, 0.11),
+    0 0 0 1px rgba(62, 127, 218, 0.32),
+    0 8px 11px -7px rgba(var(--aqua-shadow-rgb), 0.42),
+    0 19px 36px -24px rgba(var(--aqua-shadow-rgb), 0.52);
   transform: translate3d(0, -1px, 0);
 }
 
 .aqua-contact-button:hover::before,
 .aqua-contact-button:focus-visible::before {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(171, 202, 233, 0.48) 18%, rgba(255, 255, 255, 0.78) 44%, rgba(50, 75, 101, 0.62) 100%);
+    linear-gradient(90deg, rgba(36, 109, 213, 0.6) 0%, rgba(255, 255, 255, 0.88) 7%, rgba(255, 255, 255, 0.78) 50%, rgba(255, 255, 255, 0.88) 93%, rgba(14, 112, 230, 0.68) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(168, 211, 255, 0.48) 18%, rgba(255, 255, 255, 0.84) 45%, rgba(35, 64, 96, 0.52) 100%);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.82),
-    0 0 0 2px rgba(var(--aqua-rim-rgb), 0.25),
-    0 0 0 3px rgba(169, 203, 232, 0.12),
-    0 2px 4px rgba(255, 255, 255, 0.76),
-    0 15px 24px -19px rgba(var(--aqua-shadow-rgb), 0.68);
+    0 0 0 1px rgba(255, 255, 255, 0.88),
+    0 0 0 2px rgba(44, 122, 222, 0.34),
+    0 0 14px -6px rgba(52, 136, 235, 0.82),
+    0 2px 4px rgba(255, 255, 255, 0.78),
+    0 16px 26px -18px rgba(var(--aqua-shadow-rgb), 0.68);
 }
 
 .aqua-contact-button:hover::after,
@@ -1349,20 +1401,21 @@ button {
   box-shadow:
     inset 0 2px 4px rgba(48, 54, 60, 0.2),
     inset 0 0 0 1px rgba(255, 255, 255, 0.54),
-    inset 0 -5px 10px rgba(82, 86, 90, 0.12),
-    0 0 0 1px rgba(var(--aqua-rim-rgb), 0.16),
-    0 3px 7px -7px rgba(var(--aqua-shadow-rgb), 0.36),
+    inset 0 -6px 11px rgba(72, 87, 101, 0.12),
+    0 0 0 1px rgba(62, 127, 218, 0.18),
+    0 3px 7px -7px rgba(var(--aqua-shadow-rgb), 0.46),
     0 9px 20px -20px rgba(var(--aqua-shadow-rgb), 0.48);
   transform: translate3d(0, 1px, 0) scale(0.96);
 }
 
 .aqua-contact-button:active::before {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.66) 0%, rgba(133, 162, 194, 0.34) 20%, rgba(236, 240, 242, 0.58) 44%, rgba(38, 58, 78, 0.52) 100%);
+    linear-gradient(90deg, rgba(30, 87, 166, 0.48) 0%, rgba(246, 250, 255, 0.74) 7%, rgba(246, 250, 255, 0.68) 50%, rgba(246, 250, 255, 0.74) 93%, rgba(24, 96, 192, 0.54) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(132, 167, 203, 0.34) 20%, rgba(238, 242, 244, 0.58) 44%, rgba(36, 58, 80, 0.48) 100%);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.54),
-    0 0 0 2px rgba(var(--aqua-rim-rgb), 0.14),
-    0 6px 14px -14px rgba(var(--aqua-shadow-rgb), 0.6);
+    0 0 0 2px rgba(44, 122, 222, 0.18),
+    0 6px 14px -14px rgba(var(--aqua-shadow-rgb), 0.58);
   transform: translate3d(0, 1px, 0) scale(0.992);
 }
 
@@ -1370,7 +1423,7 @@ button {
   opacity: 0.76;
   box-shadow:
     inset 0 2px 4px rgba(48, 54, 60, 0.18),
-    inset 0 -3px 8px rgba(82, 86, 90, 0.11);
+    inset 0 -4px 9px rgba(72, 87, 101, 0.1);
   transform: translate3d(0, 2px, 0) scaleY(0.97);
 }
 
@@ -1416,11 +1469,11 @@ button {
 .nature-link-glint {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0)),
-    color-mix(in srgb, var(--contact-accent) 58%, transparent);
+    rgba(151, 177, 204, 0.44);
   border-radius: 1px;
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--background) 76%, transparent),
-    0 0 5px color-mix(in srgb, var(--contact-accent) 14%, transparent);
+    0 0 5px rgba(151, 177, 204, 0.1);
   height: 0.22rem;
   opacity: 0;
   pointer-events: none;
@@ -1446,8 +1499,8 @@ button {
 
 .group\/social-link::before {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, transparent 58%),
-    linear-gradient(90deg, color-mix(in srgb, var(--contact-accent) 8%, transparent) 0%, transparent 42%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.54) 0%, transparent 58%),
+    linear-gradient(90deg, rgba(169, 198, 227, 0.1) 0%, transparent 46%);
   border-radius: inherit;
   content: "";
   inset: 0;
@@ -1464,7 +1517,7 @@ button {
 
 .group\/social-link:hover::before,
 .group\/social-link:focus-visible::before {
-  opacity: 0.72;
+  opacity: 0.56;
   transform: translate3d(0, 0, 0);
 }
 

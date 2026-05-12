@@ -4,6 +4,11 @@ import { track } from '@vercel/analytics/react'
 
 type AnalyticsValue = string | number | boolean
 type AnalyticsPayload = Record<string, AnalyticsValue | undefined>
+type AnalyticsContext = {
+  source?: string
+  projectSlug?: string
+  projectTitle?: string
+}
 
 declare global {
   interface Window {
@@ -41,6 +46,16 @@ function sanitizePayload(payload: AnalyticsPayload): Record<string, AnalyticsVal
   return Object.fromEntries(
     Object.entries(payload).filter(([, value]) => value !== undefined)
   ) as Record<string, AnalyticsValue>
+}
+
+function normalizeContext(context?: AnalyticsContext): AnalyticsPayload {
+  if (!context) return {}
+
+  return {
+    source: context.source,
+    project_slug: context.projectSlug,
+    project_title: context.projectTitle,
+  }
 }
 
 function trackEvent(eventName: string, payload: AnalyticsPayload = {}): void {
@@ -84,38 +99,42 @@ export const analytics = {
   /**
    * Track project clicks before navigation
    */
-  projectClick: (projectSlug: string, projectTitle: string) => {
+  projectClick: (projectSlug: string, projectTitle: string, context?: AnalyticsContext) => {
     trackEvent('project_click', {
       slug: projectSlug,
       title: projectTitle,
+      ...normalizeContext(context),
     })
   },
 
   /**
    * Track navigation clicks
    */
-  navigationClick: (section: string) => {
+  navigationClick: (section: string, context?: AnalyticsContext) => {
     trackEvent('navigation_click', {
       section,
+      ...normalizeContext(context),
     })
   },
 
   /**
    * Track resume downloads/views
    */
-  resumeAction: (action: 'view' | 'download' | 'print') => {
+  resumeAction: (action: 'view' | 'download' | 'print', context?: AnalyticsContext) => {
     trackEvent('resume_action', {
       action,
+      ...normalizeContext(context),
     })
   },
 
   /**
    * Track external link clicks
    */
-  externalLink: (url: string, platform?: string) => {
+  externalLink: (url: string, platform?: string, context?: AnalyticsContext) => {
     trackEvent('external_link', {
       url: normalizeTrackedUrl(url),
       platform: platform || inferPlatform(url),
+      ...normalizeContext(context),
     })
   },
 

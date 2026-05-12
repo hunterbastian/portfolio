@@ -2,6 +2,11 @@
 
 import { useEffect } from 'react'
 
+type LayoutShiftPerformanceEntry = PerformanceEntry & {
+  hadRecentInput: boolean
+  value: number
+}
+
 export default function PerformanceMonitor() {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'development') return
@@ -17,7 +22,7 @@ export default function PerformanceMonitor() {
           console.log('FID:', firstInputEntry.processingStart - firstInputEntry.startTime)
         }
         if (entry.entryType === 'layout-shift') {
-          const layoutShiftEntry = entry as LayoutShift
+          const layoutShiftEntry = entry as LayoutShiftPerformanceEntry
           if (!layoutShiftEntry.hadRecentInput) {
             console.log('CLS:', layoutShiftEntry.value)
           }

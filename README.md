@@ -36,16 +36,16 @@ npm run lighthouse
 Add these optional values to `.env.local`:
 
 ```bash
-RESUME_PASSWORD=your-password
-NEXT_PUBLIC_GTM_ID=GTM-XXXXXXXX
-NEXT_PUBLIC_ENABLE_GTM=true
 NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS=true
 NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS=true
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_ENABLE_GA=false
 ```
 
-- `RESUME_PASSWORD` locks the resume file endpoint (`/api/resume/file`) until unlocked.
-- `NEXT_PUBLIC_GTM_ID` overrides the GTM container ID used in production.
-- `NEXT_PUBLIC_ENABLE_GTM`, `NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS`, and `NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS` can be set to `true`/`false` to control telemetry loading in production.
+- The resume PDF is public through `/api/resume/file`; no password is required.
+- `NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS` controls Vercel Web Analytics in production on Vercel; it defaults to enabled.
+- `NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS` controls Vercel Speed Insights in production on Vercel; it defaults to enabled.
+- `NEXT_PUBLIC_GA_ID` and `NEXT_PUBLIC_ENABLE_GA=true` opt into Google Analytics. GA is off by default because Vercel is the primary analytics path.
 
 ## Project Layout
 

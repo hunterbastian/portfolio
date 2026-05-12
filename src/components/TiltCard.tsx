@@ -6,6 +6,7 @@ import {
   useMotionValue,
   useSpring,
   useReducedMotion,
+  type HTMLMotionProps,
 } from 'framer-motion'
 
 const TILT_SPRING = { stiffness: 240, damping: 30 }
@@ -17,12 +18,9 @@ interface TiltCardProps {
   style?: CSSProperties
   maxTilt?: number
   perspective?: number
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  initial?: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  animate?: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  transition?: any
+  initial?: HTMLMotionProps<'div'>['initial']
+  animate?: HTMLMotionProps<'div'>['animate']
+  transition?: HTMLMotionProps<'div'>['transition']
 }
 
 export default function TiltCard({

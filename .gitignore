@@ -5,6 +5,7 @@ node_modules/
 
 # Testing
 /coverage
+/test-results/
 
 # Next.js
 /.next/
@@ -39,6 +40,7 @@ lighthouse-report*.json
 archive-orbit-*.png
 home-profile-hover-glow*.png
 home-topmeta-brand-sunset-glow.png
+portfolio-*.png
 
 # TypeScript
 *.tsbuildinfo

@@ -58,7 +58,7 @@ function PillTabs({ activeIndex, onSelect }: { activeIndex: number; onSelect: (i
           style={{
             width: indicator.width,
             transform: `translateX(${indicator.left}px)`,
-            transition: 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1), width 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+            transition: 'transform 500ms var(--resize-ease), width var(--resize-dur) var(--resize-ease)',
           }}
         />
         {TABS.map((tab, i) => (
@@ -97,7 +97,7 @@ function UnderlineTabs({ activeIndex, onSelect }: { activeIndex: number; onSelec
           style={{
             width: indicator.width,
             transform: `translateX(${indicator.left}px)`,
-            transition: 'transform 500ms cubic-bezier(0.16, 1, 0.3, 1), width 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+            transition: 'transform 500ms var(--resize-ease), width var(--resize-dur) var(--resize-ease)',
           }}
         />
         {TABS.map((tab, i) => (

@@ -142,7 +142,7 @@ Light-by-default, warm neutral palette. August palette (白色 · 縹色 · 銀�
 
 ## Deployment
 
-Vercel, auto-deploys from `master` branch. Set `RESUME_PASSWORD` and `NEXT_PUBLIC_GTM_ID` in Vercel environment variables.
+Vercel, auto-deploys from `master` branch. Set `NEXT_PUBLIC_GTM_ID` in Vercel environment variables when needed.
 
 ## Git
 

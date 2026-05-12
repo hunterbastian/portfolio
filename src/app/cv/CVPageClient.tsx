@@ -64,7 +64,7 @@ export default function CVPageClient() {
       <div className="relative z-10 container mx-auto max-w-2xl px-4 sm:px-6">
         {/* Breadcrumb — hidden in print */}
         <div className="mb-10 sm:mb-14 flex justify-start pt-4 sm:pt-6 print:hidden">
-          <BreadcrumbPill href="/" parentLabel="Home" currentLabel="CV" />
+          <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Resume" />
         </div>
 
         {/* Header */}

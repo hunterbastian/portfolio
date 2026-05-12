@@ -89,8 +89,8 @@ architecture = [
     'src/app/projects/[slug]/page.tsx loads one project and renders MDX with next-mdx-remote; '
     'src/app/archive/page.tsx renders archived projects.',
     'UI/component layer: AnimatedHomePage, ProjectGridClient, ProjectCard, Header/Footer, and ResumeModal compose the interactive front end.',
-    'Resume service flow: /api/resume/status, /api/resume/unlock, and /api/resume/file use src/lib/resumeAuth.ts '
-    'to issue and verify signed cookie tokens before returning private/resume/Hunter Bastian Resume.pdf.',
+    'Resume service flow: /api/resume/file returns private/resume/Hunter Bastian Resume.pdf publicly, '
+    'with inline viewing by default and attachment download when requested.',
     'Platform/performance layer: Next.js config enables MDX, image optimization, standalone output, cache/security headers, and optional bundle analysis.',
     'Not found in repo: database, message queue/background workers, or third-party API integrations beyond Vercel analytics/speed insights.',
 ]
@@ -102,7 +102,6 @@ story.append(Paragraph('How to run (minimal)', style_heading))
 run_steps = [
     'Use Node.js >= 18.17.0.',
     'Install dependencies: npm install',
-    'Optional: set RESUME_PASSWORD in .env.local to lock resume access (fallback default exists in code).',
     'Start dev server: npm run dev',
     'Open http://127.0.0.1:3000',
 ]

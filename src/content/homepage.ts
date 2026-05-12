@@ -30,6 +30,7 @@ export const homeHeroContent = {
   subtitle: 'Lehi, Utah',
   intro:
     'I design and build digital products with a focus on calm interfaces, thoughtful motion, and visual restraint. I am studying Interaction Design at Utah Valley University.',
+  motionLine: 'transition: all 0.2s ease is what is standing between you and it.',
   handwrittenNote: 'A little page on the internet all about me',
 } as const
 

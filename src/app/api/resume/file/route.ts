@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `${dispositionType}; filename="Hunter_Bastian_Resume.pdf"`,
-      'Cache-Control': 'private, no-store, max-age=0',
+      'Cache-Control': 'public, max-age=3600, must-revalidate',
     },
   })
 }

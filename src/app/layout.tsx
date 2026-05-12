@@ -13,9 +13,10 @@ import Script from 'next/script'
 import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
 import { Agentation } from 'agentation'
-// import { Measurer } from 'mesurer' // NOTE: breaks Next 16 dev (no 'use client'). See docs/superpowers/plans/2026-04-16-measurer-dev-break.md
 import TopMeta from '@/components/TopMeta'
 import JoyfulLayer from '@/components/JoyfulLayer'
+import ScrollToTop from '@/components/ScrollToTop'
+import { getAllProjects } from '@/lib/projects'
 import { siteConfig, sitePortfolioName } from '@/lib/site'
 import { telemetryConfig } from '@/lib/telemetry'
 // Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
@@ -29,26 +30,34 @@ export const viewport = {
   viewportFit: 'cover',
 }
 
-const faviconVersion = '20260425c'
+const faviconVersion = siteConfig.faviconVersion
 
 export const metadata: Metadata = {
   title: siteConfig.siteTitle,
+  applicationName: siteConfig.appName,
   description: siteConfig.siteDescription,
   keywords: ['Hunter Bastian', 'design engineer', 'portfolio', 'interaction design', 'UI design', 'web development', 'React', 'Next.js', 'Three.js', 'photographer', 'Utah', 'UVU'],
-  authors: [{ name: siteConfig.brandName }],
-  creator: siteConfig.brandName,
+  authors: [{ name: siteConfig.personName, url: siteConfig.url }],
+  creator: siteConfig.personName,
+  publisher: siteConfig.studioName,
   metadataBase: new URL(siteConfig.url),
 
   icons: {
     icon: [
+      { url: `/favicon/favicon.svg?v=${faviconVersion}`, sizes: 'any', type: 'image/svg+xml' },
+      { url: `/favicon.ico?v=${faviconVersion}`, sizes: 'any' },
       { url: `/favicon/favicon-16x16.png?v=${faviconVersion}`, sizes: '16x16', type: 'image/png' },
       { url: `/favicon/favicon-32x32.png?v=${faviconVersion}`, sizes: '32x32', type: 'image/png' },
       { url: `/favicon/favicon.ico?v=${faviconVersion}`, sizes: 'any' },
+    ],
+    shortcut: [
+      { url: `/favicon.ico?v=${faviconVersion}` },
     ],
     apple: [
       { url: `/favicon/apple-touch-icon.png?v=${faviconVersion}`, sizes: '180x180', type: 'image/png' },
     ],
     other: [
+      { rel: 'mask-icon', url: `/favicon/favicon.svg?v=${faviconVersion}`, color: siteConfig.themeColorDark },
       { url: `/favicon/favicon-192x192.png?v=${faviconVersion}`, sizes: '192x192', type: 'image/png' },
       { url: `/favicon/favicon-512x512.png?v=${faviconVersion}`, sizes: '512x512', type: 'image/png' },
     ],
@@ -62,10 +71,10 @@ export const metadata: Metadata = {
     siteName: sitePortfolioName,
     images: [
       {
-        url: '/images/profilepicture.webp',
+        url: siteConfig.defaultOgImage,
         width: 1200,
         height: 630,
-        alt: `${siteConfig.brandName} - Designer & Developer Portfolio`,
+        alt: `${siteConfig.appName} - design engineer portfolio`,
       },
     ],
   },
@@ -74,7 +83,7 @@ export const metadata: Metadata = {
     title: siteConfig.siteTitle,
     description: siteConfig.siteDescription,
     creator: '@thestudioalpine',
-    images: ['/images/profilepicture.webp'],
+    images: [siteConfig.defaultOgImage],
   },
   alternates: {
     canonical: siteConfig.url,
@@ -86,12 +95,21 @@ export default function RootLayout({
 }: {
   children: ReactNode
 }) {
+  const launcherProjects = getAllProjects().map((project) => ({
+    slug: project.slug,
+    title: project.frontmatter.displayTitle || project.frontmatter.title,
+    description: project.frontmatter.description,
+    category: project.frontmatter.category,
+    tags: project.frontmatter.tags,
+    date: project.frontmatter.date,
+  }))
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <meta name="theme-color" content="#f2f1ef" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#232527" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content={siteConfig.themeColorLight} media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content={siteConfig.themeColorDark} media="(prefers-color-scheme: dark)" />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
@@ -107,7 +125,7 @@ export default function RootLayout({
                 '@context': 'https://schema.org',
                 '@type': 'Person',
                 '@id': `${siteConfig.url}/#person`,
-                name: 'Hunter Bastian',
+                name: siteConfig.personName,
                 url: siteConfig.url,
                 jobTitle: 'Design Engineer',
                 description: siteConfig.siteDescription,
@@ -125,10 +143,10 @@ export default function RootLayout({
                 '@context': 'https://schema.org',
                 '@type': 'Organization',
                 '@id': `${siteConfig.url}/#organization`,
-                name: 'Studio Alpine',
+                name: siteConfig.studioName,
                 url: 'https://instagram.com/studio.alpine',
                 logo: `${siteConfig.url}/images/optimized/studio-alpine-logo.webp`,
-                description: 'Photography and design studio founded by Hunter Bastian.',
+                description: `Photography and design studio founded by ${siteConfig.personName}.`,
                 founder: { '@id': `${siteConfig.url}/#person` },
                 foundingDate: '2026',
                 sameAs: [
@@ -140,8 +158,9 @@ export default function RootLayout({
           }}
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="HB Portfolio" />
+        <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
         
         {/* Resource Hints - Optimized for performance */}
         {telemetryConfig.enableSpeedInsights && (
@@ -211,7 +230,6 @@ export default function RootLayout({
                 `}
               </Script>
             )}
-            {/* {process.env.NODE_ENV === 'development' && <Measurer />} — breaks dev under Next 16 / Turbopack */}
 
             {/* Google Analytics - deferred to avoid blocking */}
             {telemetryConfig.enableGa && telemetryConfig.gaId && (
@@ -242,7 +260,8 @@ export default function RootLayout({
               </Script>
             )}
           </SmoothScroll>
-          <JoyfulLayer />
+          <JoyfulLayer projects={launcherProjects} />
+          <ScrollToTop />
         </MotionProvider>
       </body>
     </html>

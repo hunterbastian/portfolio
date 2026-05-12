@@ -55,7 +55,7 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
               fontWeight: 500,
             }}
           >
-            {siteConfig.brandName}
+            {siteConfig.personName}
           </span>
         </div>
 

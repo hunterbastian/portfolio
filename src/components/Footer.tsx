@@ -1,12 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import { Summer as PixelSun } from '@/components/pixel/glyphs'
+import { homeHeroContent } from '@/content/homepage'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [footerHidden, setFooterHidden] = useState(false)
+  const [sparkleActive, setSparkleActive] = useState(false)
   const lastScrollY = useRef(0)
+  const footerRef = useRef<HTMLElement | null>(null)
+  const hasSparkledRef = useRef(false)
+  const sparkleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     let ticking = false
@@ -42,24 +47,55 @@ export default function Footer() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const footer = footerRef.current
+    if (!footer) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (!entry?.isIntersecting || hasSparkledRef.current) return
+
+        hasSparkledRef.current = true
+        setSparkleActive(true)
+        sparkleTimerRef.current = setTimeout(() => {
+          setSparkleActive(false)
+        }, 1300)
+      },
+      { threshold: 0.35 },
+    )
+
+    observer.observe(footer)
+
+    return () => {
+      observer.disconnect()
+      if (sparkleTimerRef.current) {
+        clearTimeout(sparkleTimerRef.current)
+      }
+    }
+  }, [])
+
   return (
     <footer
-      className={`px-5 pb-10 pt-20 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-8 sm:pb-14 ${
+      ref={footerRef}
+      className={`px-5 pb-10 pt-12 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-8 sm:pb-14 sm:pt-20 ${
         footerHidden ? 'pointer-events-none translate-y-6 opacity-0' : 'translate-y-0 opacity-100'
       }`}
     >
       <div className="mx-auto max-w-[36rem] border-t border-border/80 pt-5">
-        <div className="flex flex-col gap-2 text-[0.76rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-header transition-colors duration-150 hover:text-foreground/78">© {currentYear} Hunter Bastian</p>
-          <p className="font-header transition-colors duration-150 hover:text-foreground/78 inline-flex items-center gap-2">
-            <Image
-              src="/favicon/favicon-32x32.png"
-              alt=""
-              width={16}
-              height={16}
-              aria-hidden="true"
-              className="size-3.5 rounded-full shadow-[0_0_10px_rgba(234,97,174,0.2)]"
-            />
+        <div className="flex flex-col gap-3 text-[0.76rem] text-muted-foreground sm:flex-row sm:items-start sm:justify-between">
+          <div className="space-y-1.5">
+            <p className="font-header transition-colors duration-150 hover:text-foreground/78">© {currentYear} Hunter Bastian</p>
+            <p className="max-w-[22rem] font-mono text-[0.62rem] leading-[1.55] text-muted-foreground/58">
+              {homeHeroContent.motionLine}
+            </p>
+          </div>
+          <p className="footer-made-line inline-flex items-center gap-2 font-header transition-colors duration-150 hover:text-foreground/78">
+            <span aria-hidden="true" className="footer-pixel-sun-shell">
+              <span className={`footer-pixel-sun transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${sparkleActive ? 'animate-hb-sun-blink' : ''}`}>
+                <PixelSun size={12} />
+              </span>
+            </span>
             <span>Made with care in Utah.</span>
           </p>
         </div>

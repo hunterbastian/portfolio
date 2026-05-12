@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
-import { getAllProjects, getProjectBySlug } from '@/lib/projects'
+import { getAllProjects, getArchivedProjects, getProjectBySlug } from '@/lib/projects'
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import mdxComponents from '@/components/mdx/MDXComponents'
@@ -12,6 +12,8 @@ import CaseStudyNav from '@/components/CaseStudyNav'
 import SectionMarker, { categoryToKind } from '@/components/pixel/SectionMarker'
 import TrackedExternalLink from '@/components/TrackedExternalLink'
 import ProjectContactCTA from '@/components/ProjectContactCTA'
+import ProjectEndNav from '@/components/ProjectEndNav'
+import { getProjectEndNavigation } from '@/lib/project-navigation'
 
 function resolveImageUrl(image: string): string {
   return image.startsWith('/') ? resolveSiteUrl(image) : image
@@ -106,6 +108,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const imageUrl = resolveImageUrl(frontmatter.image)
   const displayTitle = frontmatter.displayTitle ?? frontmatter.title
   const formattedDate = formatProjectDate(frontmatter.date)
+  const projectCollection = isPlayground ? getArchivedProjects() : getAllProjects()
+  const projectEndNavigation = getProjectEndNavigation(projectCollection, project)
 
   const jsonLd = [
     {
@@ -206,6 +210,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   <TrackedExternalLink
                     href={frontmatter.github}
                     platform="github"
+                    trackingSource="project_links"
+                    projectSlug={slug}
+                    projectTitle={displayTitle}
                     className="group inline-flex items-center gap-2 font-inter text-[13px] font-medium text-primary transition-[color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:-translate-y-[2px]"
                   >
                     <svg className="w-5 h-5 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
@@ -218,6 +225,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   <TrackedExternalLink
                     href={frontmatter.demo}
                     platform="demo"
+                    trackingSource="project_links"
+                    projectSlug={slug}
+                    projectTitle={displayTitle}
                     className="group inline-flex items-center gap-2 font-inter text-[13px] font-medium text-primary transition-[color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:-translate-y-[2px]"
                   >
                     <svg className="w-5 h-5 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[1px] group-hover:translate-x-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,6 +240,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   <TrackedExternalLink
                     href={frontmatter.figjam}
                     platform="figjam"
+                    trackingSource="project_links"
+                    projectSlug={slug}
+                    projectTitle={displayTitle}
                     className="group inline-flex items-center gap-2 font-inter text-[13px] font-medium text-primary transition-[color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-accent hover:-translate-y-[2px]"
                   >
                     <svg className="w-5 h-5 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -246,7 +259,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div className="prose dark:prose-invert max-w-none font-inter text-[13px] [&_li]:font-inter [&_ol]:font-inter [&_p]:font-inter [&_p]:text-[13px] [&_ul]:font-inter [&_li]:text-[13px] [&_h2]:font-mono [&_h3]:font-mono [&_h4]:font-mono">
                 <MDXRemote source={content} components={mdxComponents} />
               </div>
-              <ProjectContactCTA projectTitle={displayTitle} />
+              <ProjectContactCTA projectSlug={slug} projectTitle={displayTitle} />
+              <ProjectEndNav
+                currentSlug={slug}
+                currentTitle={displayTitle}
+                nextProject={projectEndNavigation.nextProject}
+                relatedProject={projectEndNavigation.relatedProject}
+              />
             </div>
           }
         />

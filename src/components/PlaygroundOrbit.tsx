@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
-import { AnimatePresence, m, useMotionValue, useTransform, useAnimationFrame, useReducedMotion } from 'framer-motion'
-import type { Project } from '@/types/project'
-import { MOTION_EASE_SOFT } from '@/lib/motion'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, m, useAnimationFrame, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
 import ProjectCard from '@/components/ProjectCard'
+import { MOTION_EASE_SOFT } from '@/lib/motion'
+import type { Project } from '@/types/project'
 
 interface PlaygroundOrbitProps {
   projects: Project[]
@@ -17,40 +17,36 @@ const SLOW_SPEED = 0.0035
 const DEFAULT_ORBIT_RADIUS_DESKTOP = 300
 const DEFAULT_ORBIT_RADIUS_LARGE = 360
 
-/* ─────────────────────────────────────────────────────────
- * ENTRANCE STORYBOARD
- *
- *    0ms   waiting for mount
- *  300ms   center label fades in from blur
- *  600ms   cards begin staggered reveal (120ms each)
- *          each card: blur(6px) + scale(0.8) → clear + scale(1)
- *  ~2.4s   orbit rotation begins smoothly
- * ───────────────────────────────────────────────────────── */
-
 const ENTRANCE = {
-  centerDelay: 0.3,
-  cardsDelay: 0.6,
-  cardStagger: 0.12,
-  cardDuration: 0.7,
+  centerDelay: 0.24,
+  cardsDelay: 0.38,
+  cardStagger: 0.1,
+  cardDuration: 0.58,
   ease: MOTION_EASE_SOFT,
 }
 
-/** Tilts alternate between -3°, 0°, 3° for a subtle scattered feel */
 function cardTilt(index: number) {
   return ((index % 3) - 1) * 3
 }
 
-/** Responsive orbit radius */
 function useOrbitRadius(radiusDesktop: number, radiusLarge: number) {
   const [radius, setRadius] = useState(radiusDesktop)
 
   useEffect(() => {
     function update() {
-      setRadius(window.innerWidth >= 1280 ? radiusLarge : radiusDesktop)
+      const widthRadius = window.innerWidth >= 1280 ? radiusLarge : radiusDesktop
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight
+      const heightRadius = viewportHeight < 780 ? 198 : viewportHeight < 860 ? 214 : widthRadius
+
+      setRadius(Math.min(widthRadius, heightRadius))
     }
     update()
     window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
+    window.visualViewport?.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('resize', update)
+      window.visualViewport?.removeEventListener('resize', update)
+    }
   }, [radiusDesktop, radiusLarge])
 
   return radius
@@ -66,12 +62,12 @@ function getOrbitCardSize(count: number) {
 function CenterLabel() {
   return (
     <m.div
-      className="text-center flex flex-col items-center"
+      className="flex flex-col items-center text-center"
       initial={{ opacity: 0, scale: 0.96, filter: 'blur(4px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-      transition={{ duration: 0.5, delay: ENTRANCE.centerDelay, ease: ENTRANCE.ease }}
+      transition={{ duration: 0.48, delay: ENTRANCE.centerDelay, ease: ENTRANCE.ease }}
     >
-      <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/50">
+      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground/50">
         <span className="font-medium">Playground</span>
       </p>
     </m.div>
@@ -87,9 +83,9 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
         className="mb-6 text-center"
         initial={prefersReducedMotion ? false : { opacity: 0, y: 8, filter: 'blur(4px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 0.5, delay: 0.1, ease: ENTRANCE.ease }}
+        transition={{ duration: 0.48, delay: 0.1, ease: ENTRANCE.ease }}
       >
-        <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground/50">
+        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground/50">
           Playground
         </p>
       </m.div>
@@ -97,6 +93,7 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
       <div className="grid w-full grid-cols-2 gap-x-3 gap-y-5 pb-5 pt-1">
         {projects.map((project, index) => {
           const tilt = cardTilt(index)
+
           return (
             <m.div
               key={project.slug}
@@ -114,6 +111,7 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
                 slug={project.slug}
                 frontmatter={project.frontmatter}
                 index={index}
+                priorityImage={index < 4}
               />
             </m.div>
           )
@@ -180,7 +178,7 @@ function OrbitCard({
         marginTop: -cardSize / 2,
         scale: cardScale,
         opacity: cardOpacity,
-        zIndex,
+        zIndex: isHovered ? 40 : zIndex,
       }}
       initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8, filter: 'blur(6px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
@@ -191,16 +189,25 @@ function OrbitCard({
       }}
     >
       <m.div
-        className="will-change-transform transition-[transform,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="will-change-transform transition-[filter,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{
           rotate: tilt,
-          scale: isHovered ? 1.06 : 1,
+          scale: isHovered ? 1.2 : 1,
           filter: hasHoverTarget && !isHovered
-            ? 'brightness(0.82) saturate(0.68)'
-            : cardBrightness,
+            ? 'brightness(0.78) saturate(0.62)'
+            : isHovered
+              ? 'brightness(1.12) saturate(1.08) contrast(1.03)'
+              : cardBrightness,
         }}
         onMouseEnter={onHoverStart}
         onMouseLeave={onHoverEnd}
+        onFocus={onHoverStart}
+        onBlur={(event) => {
+          const nextTarget = event.relatedTarget instanceof Node ? event.relatedTarget : null
+          if (!event.currentTarget.contains(nextTarget)) {
+            onHoverEnd()
+          }
+        }}
       >
         <ProjectCard
           slug={project.slug}
@@ -208,17 +215,18 @@ function OrbitCard({
           index={index}
           hideLiveBadge
           hideLabel
+          priorityImage={index < 4}
         />
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {isHovered && (
             <m.div
               className="mt-1 text-center"
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
+              initial={{ opacity: 0, y: -4, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -4, filter: 'blur(4px)' }}
               transition={{ duration: 0.2, ease: ENTRANCE.ease }}
             >
-              <p className="font-mono text-[9px] tracking-[0.06em] text-muted-foreground/50 truncate">
+              <p className="truncate font-mono text-[9px] tracking-[0.06em] text-muted-foreground/50">
                 {project.frontmatter.title}
               </p>
             </m.div>
@@ -268,40 +276,38 @@ export default function PlaygroundOrbit({
 
   return (
     <div className="h-full">
-      {/* Mobile: horizontal snap carousel */}
       <MobilePlayground projects={projects} />
 
-      {/* Desktop: rotating orbit */}
-      <div className="hidden md:block h-full relative">
-        {/* Center label — absolutely centered independent of orbit */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+      <div className="relative hidden h-full md:block">
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
           <CenterLabel />
         </div>
 
-        {/* Orbit cards — each positioned independently via useTransform */}
-        {mounted ? projects.map((project, index) => {
-          const baseAngle = (index / count) * 360
-          const tilt = cardTilt(index)
-          const isHovered = hoveredIndex === index
+        {mounted
+          ? projects.map((project, index) => {
+              const baseAngle = (index / count) * 360
+              const tilt = cardTilt(index)
+              const isHovered = hoveredIndex === index
 
-          return (
-            <OrbitCard
-              key={project.slug}
-              project={project}
-              index={index}
-              baseAngle={baseAngle}
-              tilt={tilt}
-              isHovered={isHovered}
-              hasHoverTarget={hoveredIndex !== null}
-              rotation={rotation}
-              orbitRadius={orbitRadius}
-              cardSize={cardSize}
-              prefersReducedMotion={prefersReducedMotion}
-              onHoverStart={() => handleHoverStart(index)}
-              onHoverEnd={handleHoverEnd}
-            />
-          )
-        }) : null}
+              return (
+                <OrbitCard
+                  key={project.slug}
+                  project={project}
+                  index={index}
+                  baseAngle={baseAngle}
+                  tilt={tilt}
+                  isHovered={isHovered}
+                  hasHoverTarget={hoveredIndex !== null}
+                  rotation={rotation}
+                  orbitRadius={orbitRadius}
+                  cardSize={cardSize}
+                  prefersReducedMotion={prefersReducedMotion}
+                  onHoverStart={() => handleHoverStart(index)}
+                  onHoverEnd={handleHoverEnd}
+                />
+              )
+            })
+          : null}
       </div>
     </div>
   )

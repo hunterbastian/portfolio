@@ -8,11 +8,17 @@ import { showJoyToast } from '@/lib/joy'
 import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
 
 interface ProjectContactCTAProps {
+  projectSlug: string
   projectTitle: string
 }
 
-export default function ProjectContactCTA({ projectTitle }: ProjectContactCTAProps) {
+export default function ProjectContactCTA({ projectSlug, projectTitle }: ProjectContactCTAProps) {
   const haptic = useWebHaptics()
+  const analyticsContext = {
+    source: 'project_cta',
+    projectSlug,
+    projectTitle,
+  }
 
   return (
     <section
@@ -42,8 +48,8 @@ export default function ProjectContactCTA({ projectTitle }: ProjectContactCTAPro
             className="group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 border border-border/75 bg-background px-3 py-2 font-mono text-[0.72rem] text-foreground shadow-card-subtle transition-[border-color,box-shadow,transform] duration-150 hover:-translate-y-[1px] hover:border-foreground/20 hover:shadow-card active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             onClick={() => {
               haptic.trigger('light')
-              analytics.navigationClick('project_cta_resume')
-              showJoyToast('Opening CV')
+              analytics.navigationClick('project_cta_resume', analyticsContext)
+              showJoyToast('Opening resume')
             }}
           >
             <FileText
@@ -59,7 +65,7 @@ export default function ProjectContactCTA({ projectTitle }: ProjectContactCTAPro
             className="group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 border border-border/75 bg-background px-3 py-2 font-mono text-[0.72rem] text-foreground shadow-card-subtle transition-[border-color,box-shadow,transform] duration-150 hover:-translate-y-[1px] hover:border-foreground/20 hover:shadow-card active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             onClick={() => {
               haptic.trigger('light')
-              analytics.externalLink(siteProjectInquiryHref, 'email')
+              analytics.externalLink(siteProjectInquiryHref, 'email', analyticsContext)
               showJoyToast('Opening email')
             }}
           >

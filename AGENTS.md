@@ -24,11 +24,11 @@ npm run lighthouse
 
 ## Environment Variables
 
-- `RESUME_PASSWORD`: Locks the resume modal; used by `/api/resume/file` after unlock.
-- `NEXT_PUBLIC_GTM_ID`: Optional GTM container ID override (defaults to `GTM-5XJBDKM9`).
-- `NEXT_PUBLIC_ENABLE_GTM`: Set `true`/`false` to enable GTM in production.
-- `NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS`: Set `true`/`false` to enable Vercel Analytics in production.
-- `NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS`: Set `true`/`false` to enable Vercel Speed Insights in production.
+- The resume PDF is public through `/api/resume/file`; no password environment variable is required.
+- `NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS`: Set `true`/`false` to control Vercel Web Analytics in production on Vercel; defaults to `true`.
+- `NEXT_PUBLIC_ENABLE_SPEED_INSIGHTS`: Set `true`/`false` to control Vercel Speed Insights in production on Vercel; defaults to `true`.
+- `NEXT_PUBLIC_GA_ID`: Optional Google Analytics measurement ID.
+- `NEXT_PUBLIC_ENABLE_GA`: Set `true` to enable Google Analytics in production when `NEXT_PUBLIC_GA_ID` is present; defaults to `false`.
 
 ## Notes
 

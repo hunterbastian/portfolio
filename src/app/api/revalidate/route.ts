@@ -6,6 +6,21 @@ interface RevalidateBody {
   secret?: string
 }
 
+const ALLOWED_REVALIDATE_PATHS = [
+  '/',
+  '/about',
+  '/archive',
+  '/cv',
+  '/logo',
+  '/opengraph-image',
+  '/robots.txt',
+  '/sitemap.xml',
+]
+
+function isAllowedRevalidatePath(path: string): boolean {
+  return ALLOWED_REVALIDATE_PATHS.includes(path) || /^\/projects\/[a-z0-9-]+(?:\/opengraph-image)?$/.test(path)
+}
+
 export async function POST(request: Request) {
   const expectedSecret = process.env.REVALIDATE_SECRET
   if (!expectedSecret) {
@@ -30,6 +45,13 @@ export async function POST(request: Request) {
   if (!path || !path.startsWith('/')) {
     return NextResponse.json(
       { error: 'Path is required and must start with /.' },
+      { status: 400 },
+    )
+  }
+
+  if (!isAllowedRevalidatePath(path)) {
+    return NextResponse.json(
+      { error: 'Path is not allowed for revalidation.' },
       { status: 400 },
     )
   }

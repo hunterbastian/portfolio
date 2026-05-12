@@ -1,13 +1,7 @@
 # Resume Folder
 
-The live resume PDF is now protected behind `/api/resume/*` routes and is no longer served directly from `public/`.
+The live resume PDF is served publicly through `/api/resume/file` and is no longer served directly from `public/`.
 
-## Where the protected file lives
+## Where the file lives
 
 - `private/resume/Hunter Bastian Resume.pdf`
-
-## Required environment variable
-
-- `RESUME_PASSWORD=your-password`
-
-Without `RESUME_PASSWORD`, the resume modal will show as unavailable.

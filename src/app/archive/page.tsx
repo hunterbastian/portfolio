@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import PlaygroundOrbit from '@/components/PlaygroundOrbit'
 import { getArchivedProjects } from '@/lib/projects'
-import { resolveSiteUrl, siteConfig } from '@/lib/site'
+import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
 import type { Project } from '@/types/project'
 
 const PREFERRED_ORBIT_ORDER = [
@@ -16,6 +16,9 @@ const PREFERRED_ORBIT_ORDER = [
   'iceland-graphics',
   'iceland-logo',
 ] as const
+
+const archiveTitle = `Playground | ${sitePortfolioName}`
+const archiveDescription = `Browse side projects and experiments by ${siteConfig.personName}. A collection of explorations in UI/UX design, web development, and branding.`
 
 function sortArchivedForOrbit(projects: Project[]): Project[] {
   const rank = new Map<string, number>(PREFERRED_ORBIT_ORDER.map((slug, index) => [slug, index]))
@@ -34,18 +37,33 @@ function sortArchivedForOrbit(projects: Project[]): Project[] {
 
 export const metadata: Metadata = {
   title: {
-    absolute: 'Playground - Hunter Bastian',
+    absolute: archiveTitle,
   },
-  description: `Browse side projects and experiments by ${siteConfig.brandName}. A collection of explorations in UI/UX design, web development, and branding.`,
+  description: archiveDescription,
   robots: {
     index: false,
     follow: true,
   },
   openGraph: {
-    title: 'Playground - Hunter Bastian',
-    description: 'Browse side projects and experiments.',
+    title: archiveTitle,
+    description: archiveDescription,
     url: resolveSiteUrl('/archive'),
+    siteName: sitePortfolioName,
     type: 'website',
+    images: [
+      {
+        url: siteConfig.defaultOgImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.appName,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: archiveTitle,
+    description: archiveDescription,
+    images: [siteConfig.defaultOgImage],
   },
   alternates: {
     canonical: resolveSiteUrl('/archive'),
@@ -67,9 +85,6 @@ export default function ArchivePage() {
           <div className="space-y-4">
             <p className="font-mono text-[1rem] tracking-[-0.03em] text-foreground/92">
               Playground
-            </p>
-            <p className="max-w-[31rem] font-mono text-[1rem] leading-[1.72] tracking-[-0.02em] text-foreground/84">
-              Smaller creative coding experiments, visual studies, and side explorations.
             </p>
           </div>
 

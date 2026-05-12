@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
-import { homeHeroContent } from '@/content/homepage'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -86,9 +85,6 @@ export default function Footer() {
         <div className="flex flex-col gap-3 text-[0.76rem] text-muted-foreground sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-1.5">
             <p className="font-header transition-colors duration-150 hover:text-foreground/78">© {currentYear} Hunter Bastian</p>
-            <p className="max-w-[22rem] font-mono text-[0.62rem] leading-[1.55] text-muted-foreground/58">
-              {homeHeroContent.motionLine}
-            </p>
           </div>
           <p className="footer-made-line inline-flex items-center gap-2 font-header transition-colors duration-150 hover:text-foreground/78">
             <span aria-hidden="true" className="footer-pixel-sun-shell">

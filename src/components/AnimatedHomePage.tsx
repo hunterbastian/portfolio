@@ -333,12 +333,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     {paragraph}
                   </p>
                 ))}
-                <p className="max-w-[30rem] font-mono text-[0.66rem] leading-[1.7] text-muted-foreground/62 sm:text-[0.7rem]">
-                  <code className="rounded-[4px] border border-border/62 bg-background/52 px-1.5 py-0.5 text-foreground/76">
-                    transition: all 0.2s ease
-                  </code>{' '}
-                  is what is standing between you and it.
-                </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 sm:gap-x-5 sm:gap-y-2.5">
@@ -368,7 +362,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   }}
                 >
                   <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
-                    View Resume
+                    Resume
                   </span>
                   <span aria-hidden="true" className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 hidden -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0 sm:block">
                     Open resume
@@ -379,12 +373,13 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   className="group group/peek relative inline-flex min-h-[40px] min-w-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
                   onClick={() => {
                     haptic.trigger('light')
-                    showJoyToast('Resume opened')
+                    analytics.resumeAction('view', { source: 'home_hero' })
+                    showJoyToast('Previewing resume')
                     setResumeOpen(true)
                   }}
                 >
                   <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
-                    Resume
+                    Preview
                   </span>
                   <span aria-hidden="true" className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 hidden -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0 sm:block">
                     Preview resume
@@ -407,7 +402,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                       </span>
                       <button
                         type="button"
-                        className="min-h-[32px] origin-center touch-manipulation text-foreground underline decoration-border underline-offset-[0.22em] transition-[color,transform,text-decoration-color] duration-150 hover:text-[#ff4b00] hover:decoration-[#ff4b00]/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                        className="min-h-[32px] origin-center touch-manipulation text-foreground underline decoration-border underline-offset-[0.22em] transition-[color,transform,text-decoration-color] duration-150 hover:text-[var(--contact-accent)] hover:decoration-[color-mix(in_srgb,var(--contact-accent)_64%,transparent)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                         onClick={() => {
                           haptic.trigger('light')
                           analytics.navigationClick('work_filter_all')
@@ -561,12 +556,12 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
               >
                 <div
                   ref={contactGlowRef}
-                  className={`animated-contact-glow pointer-events-none absolute left-[-18%] top-[18%] z-0 h-[18rem] w-[136%] opacity-70 blur-[44px] sm:left-[-52%] sm:top-[16%] sm:h-[20rem] sm:w-[210%] sm:opacity-80 sm:blur-[60px] ${
+                  className={`animated-contact-glow pointer-events-none absolute left-[-18%] top-[18%] z-0 h-[18rem] w-[136%] opacity-25 blur-[48px] sm:left-[-52%] sm:top-[16%] sm:h-[20rem] sm:w-[210%] sm:opacity-30 sm:blur-[64px] ${
                     contactGlowActive ? 'is-active' : ''
                   }`}
                   style={{
                     background:
-                      'radial-gradient(ellipse at 20% 76%, rgba(255, 154, 64, 0.22) 0%, rgba(232, 96, 86, 0.055) 18%, rgba(255, 170, 86, 0.13) 32%, rgba(255, 188, 118, 0.075) 46%, rgba(255, 212, 168, 0.035) 58%, transparent 78%), radial-gradient(ellipse at 42% 64%, rgba(255, 185, 120, 0.06) 0%, rgba(215, 92, 92, 0.025) 24%, rgba(255, 205, 152, 0.035) 36%, transparent 60%)',
+                      'radial-gradient(ellipse at 20% 76%, color-mix(in srgb, var(--contact-accent) 10%, transparent) 0%, color-mix(in srgb, var(--contact-accent) 4%, transparent) 28%, color-mix(in srgb, var(--contact-accent-soft) 12%, transparent) 46%, transparent 76%)',
                   }}
                 />
 

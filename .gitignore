@@ -41,6 +41,9 @@ archive-orbit-*.png
 home-profile-hover-glow*.png
 home-topmeta-brand-sunset-glow.png
 portfolio-*.png
+contact-social-*.png
+impeccable-*.png
+muji-*.png
 
 # TypeScript
 *.tsbuildinfo

@@ -312,19 +312,13 @@
     inset 0 7px 15px rgba(255, 255, 255, 0.58),
     inset 0 -8px 16px rgba(202, 192, 176, 0.23),
     0 0 0 1px rgba(75, 65, 50, 0.08),
-    0 5px 0 -3px rgba(215, 207, 194, 0.9),
     0 16px 28px -22px rgba(38, 34, 29, 0.7),
     0 24px 54px -34px rgba(83, 73, 58, 0.5);
   color: rgba(64, 61, 56, 0.94);
 }
 
 .compactButton::before {
-  background:
-    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.76), transparent 40%),
-    radial-gradient(circle at 54% 78%, rgba(255, 231, 189, 0.42), transparent 58%);
-  filter: blur(14px);
-  inset: -0.34rem;
-  opacity: 0.52;
+  display: none;
 }
 
 .compactButton::after {
@@ -414,16 +408,13 @@
     inset 0 8px 16px rgba(255, 255, 255, 0.64),
     inset 0 -9px 17px rgba(202, 192, 176, 0.28),
     0 0 0 1px rgba(75, 65, 50, 0.1),
-    0 6px 0 -3px rgba(215, 207, 194, 0.95),
     0 18px 32px -22px rgba(38, 34, 29, 0.75),
     0 30px 62px -38px rgba(83, 73, 58, 0.58);
   transform: translate3d(0, -1px, 0);
 }
 
 .compactButton:not(:disabled):hover::before {
-  filter: blur(15px);
-  opacity: 0.68;
-  transform: scale(1.04);
+  display: none;
 }
 
 .compactButton:not(:disabled):hover::after {
@@ -449,9 +440,7 @@
 }
 
 .compactButton:not(:disabled):active::before {
-  filter: blur(10px);
-  opacity: 0.52;
-  transform: scale(0.99);
+  display: none;
 }
 
 .compactButton:not(:disabled):active::after {

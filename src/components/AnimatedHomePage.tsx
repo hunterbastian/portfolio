@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { AnimatePresence, m } from 'framer-motion'
 import { useEffect, useRef, useState, type PointerEvent } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
@@ -14,6 +13,7 @@ import {
 import { ContactLinks } from '@/components/home/ContactLinks'
 import { EditorialItem } from '@/components/home/EditorialItem'
 import { Reveal, Section } from '@/components/home/HomeSection'
+import { PeekAction } from '@/components/PeekAction'
 import ResumeModal from '@/components/ResumeModal'
 import { showJoyToast } from '@/lib/joy'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
@@ -44,17 +44,12 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const [resumeOpen, setResumeOpen] = useState(false)
   const [workFilter, setWorkFilter] = useState<WorkFilter>('all')
   const [heroGlowActive, setHeroGlowActive] = useState(false)
-  const [contactGlowActive, setContactGlowActive] = useState(false)
   const heroGlowRef = useRef<HTMLDivElement | null>(null)
   const heroGrainRef = useRef<HTMLDivElement | null>(null)
   const heroGlowBoundsRef = useRef<DOMRect | null>(null)
   const heroGlowFrameRef = useRef<number | null>(null)
   const heroGlowPointerRef = useRef({ x: 0, y: 0 })
   const heroGlowCurrentRef = useRef({ x: 0, y: 0 })
-  const contactGlowRef = useRef<HTMLDivElement | null>(null)
-  const contactGlowBoundsRef = useRef<DOMRect | null>(null)
-  const contactGlowFrameRef = useRef<number | null>(null)
-  const contactGlowPointerRef = useRef({ x: 0, y: 0 })
   const haptic = useWebHaptics()
   const projectRows = getProjectRows(projects, workFilter)
 
@@ -80,10 +75,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
     return () => {
       if (heroGlowFrameRef.current !== null) {
         window.cancelAnimationFrame(heroGlowFrameRef.current)
-      }
-
-      if (contactGlowFrameRef.current !== null) {
-        window.cancelAnimationFrame(contactGlowFrameRef.current)
       }
     }
   }, [])
@@ -167,46 +158,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
     heroGlowPointerRef.current = { x: 0, y: 0 }
     setHeroGlowActive(false)
     scheduleHeroGlowPosition()
-  }
-
-  const writeContactGlowPosition = () => {
-    const glow = contactGlowRef.current
-    if (!glow) return
-
-    const { x, y } = contactGlowPointerRef.current
-    glow.style.setProperty('--contact-glow-cursor-x', `${clamp(x * 42, -42, 42)}px`)
-    glow.style.setProperty('--contact-glow-cursor-y', `${clamp(y * 18, -18, 18)}px`)
-    contactGlowFrameRef.current = null
-  }
-
-  const trackContactGlowBounds = (event: PointerEvent<HTMLDivElement>) => {
-    setContactGlowActive(true)
-    contactGlowBoundsRef.current = event.currentTarget.getBoundingClientRect()
-  }
-
-  const updateContactGlow = (event: PointerEvent<HTMLDivElement>) => {
-    const rect = contactGlowBoundsRef.current ?? event.currentTarget.getBoundingClientRect()
-    contactGlowBoundsRef.current = rect
-
-    contactGlowPointerRef.current = {
-      x: (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2),
-      y: (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2),
-    }
-
-    if (contactGlowFrameRef.current === null) {
-      contactGlowFrameRef.current = window.requestAnimationFrame(writeContactGlowPosition)
-    }
-  }
-
-  const resetContactGlow = () => {
-    const glow = contactGlowRef.current
-    if (!glow) return
-
-    contactGlowBoundsRef.current = null
-    contactGlowPointerRef.current = { x: 0, y: 0 }
-    setContactGlowActive(false)
-    glow.style.setProperty('--contact-glow-cursor-x', '0px')
-    glow.style.setProperty('--contact-glow-cursor-y', '0px')
   }
 
   return (
@@ -336,41 +287,36 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
               </div>
 
               <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 sm:gap-x-5 sm:gap-y-2.5">
-                <Link
+                <PeekAction
                   href="/#contact"
-                  className="group group/peek relative inline-flex min-h-[40px] min-w-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
+                  peek="Say hi"
+                  className="text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]"
+                  labelClassName="underline decoration-transparent underline-offset-[0.2em] group-hover/peek:decoration-current group-focus-visible/peek:decoration-current"
                   onClick={() => {
                     haptic.trigger('light')
                     analytics.navigationClick('contact')
                     showJoyToast('Say hi')
                   }}
                 >
-                  <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
-                    Contact
-                  </span>
-                  <span aria-hidden="true" className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 hidden -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0 sm:block">
-                    Say hi
-                  </span>
-                </Link>
-                <Link
+                  Contact
+                </PeekAction>
+                <PeekAction
                   href="/cv"
-                  className="group group/peek relative inline-flex min-h-[40px] min-w-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
+                  peek="Open resume"
+                  className="text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]"
+                  labelClassName="underline decoration-transparent underline-offset-[0.2em] group-hover/peek:decoration-current group-focus-visible/peek:decoration-current"
                   onClick={() => {
                     haptic.trigger('light')
                     analytics.navigationClick('resume')
                     showJoyToast('Opening resume')
                   }}
                 >
-                  <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
-                    Resume
-                  </span>
-                  <span aria-hidden="true" className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 hidden -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0 sm:block">
-                    Open resume
-                  </span>
-                </Link>
-                <button
-                  type="button"
-                  className="group group/peek relative inline-flex min-h-[40px] min-w-[40px] origin-center touch-manipulation items-center leading-none font-header text-[0.74rem] text-foreground transition-[color,transform] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.78rem]"
+                  Resume
+                </PeekAction>
+                <PeekAction
+                  peek="Preview resume"
+                  className="text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]"
+                  labelClassName="underline decoration-transparent underline-offset-[0.2em] group-hover/peek:decoration-current group-focus-visible/peek:decoration-current"
                   onClick={() => {
                     haptic.trigger('light')
                     analytics.resumeAction('view', { source: 'home_hero' })
@@ -378,13 +324,8 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     setResumeOpen(true)
                   }}
                 >
-                  <span className="underline decoration-transparent underline-offset-[0.2em] group-hover:decoration-current group-focus-visible:decoration-current">
-                    Preview
-                  </span>
-                  <span aria-hidden="true" className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 hidden -translate-x-1/2 translate-y-1 whitespace-nowrap border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0 sm:block">
-                    Preview resume
-                  </span>
-                </button>
+                  Resume
+                </PeekAction>
               </div>
             </div>
           </section>
@@ -402,7 +343,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                       </span>
                       <button
                         type="button"
-                        className="min-h-[32px] origin-center touch-manipulation text-foreground underline decoration-border underline-offset-[0.22em] transition-[color,transform,text-decoration-color] duration-150 hover:text-[var(--contact-accent)] hover:decoration-[color-mix(in_srgb,var(--contact-accent)_64%,transparent)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                        className="min-h-[40px] min-w-[40px] origin-center touch-manipulation text-foreground underline decoration-border underline-offset-[0.22em] transition-[color,transform,text-decoration-color] duration-150 hover:text-[var(--contact-accent)] hover:decoration-[color-mix(in_srgb,var(--contact-accent)_64%,transparent)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                         onClick={() => {
                           haptic.trigger('light')
                           analytics.navigationClick('work_filter_all')
@@ -547,45 +488,16 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
           </Reveal>
 
           <Reveal delayMs={200}>
-            <section id="contact" className="scroll-mt-24">
-              <div
-                className="contact-aqua-stage relative left-1/2 isolate w-[min(92vw,82rem)] -translate-x-1/2 overflow-hidden px-5 py-14 sm:px-12 sm:py-20"
-                onPointerEnter={trackContactGlowBounds}
-                onPointerMove={updateContactGlow}
-                onPointerLeave={resetContactGlow}
-              >
-                <div
-                  ref={contactGlowRef}
-                  className={`animated-contact-glow pointer-events-none absolute left-[-20%] top-[14%] z-0 h-[22rem] w-[140%] opacity-30 blur-[58px] sm:left-[-46%] sm:top-[10%] sm:h-[28rem] sm:w-[190%] sm:opacity-35 sm:blur-[76px] ${
-                    contactGlowActive ? 'is-active' : ''
-                  }`}
-                  style={{
-                    background:
-                      'radial-gradient(ellipse at 50% 56%, rgba(211,228,247,0.36) 0%, rgba(222,235,249,0.22) 34%, transparent 72%), radial-gradient(ellipse at 18% 34%, rgba(255,255,255,0.5) 0%, transparent 50%)',
-                  }}
-                />
-
-                <div className="relative z-10 mx-auto max-w-[47rem] text-center">
-                  <div className="space-y-4 sm:space-y-5">
-                    <span className="contact-aqua-badge mx-auto inline-flex min-h-[32px] items-center rounded-full px-5 font-header text-[0.78rem] font-normal leading-none text-muted-foreground/82 sm:text-[0.86rem]">
-                      Let&apos;s work together
-                    </span>
-                    <div className="space-y-3 sm:space-y-4">
-                      <h2 className="font-mono text-[2.35rem] font-normal leading-[0.98] tracking-[-0.055em] text-foreground/94 sm:text-[4rem]">
-                        Ideas. Design. Impact.
-                      </h2>
-                      <p className="mx-auto max-w-[31rem] font-mono text-[0.98rem] leading-[1.55] tracking-[-0.02em] text-muted-foreground/72 sm:text-[1.12rem] sm:leading-[1.62]">
-                        If something here resonates, reach out.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-9 sm:mt-11">
-                    <ContactLinks />
-                  </div>
+            <Section id="contact" title="Contact">
+              <div className="space-y-5 sm:space-y-7">
+                <div className="space-y-2">
+                  <p className="max-w-[31rem] font-mono text-[0.9rem] leading-[1.58] text-muted-foreground sm:text-[0.96rem] sm:leading-[1.65]">
+                    If something here resonates, reach out.
+                  </p>
                 </div>
+                <ContactLinks />
               </div>
-            </section>
+            </Section>
           </Reveal>
         </div>
       </div>

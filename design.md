@@ -6,15 +6,15 @@ This is the single source of truth for the visual design language of the portfol
 
 ## Philosophy
 
-Warm minimal, Japandi-evolved. When in doubt, do less. The site should feel like a well-made tool — precise, warm, and quiet. No gradients for decoration. No heavy effects. Let typography, spacing, and composition create hierarchy.
+Warm minimal, editorial, and lightly tactile. When in doubt, do less. The site should feel like a well-made tool — precise, warm, and quiet. Ambient gradients, glass, and glow are allowed only when they are named system surfaces with a clear job: hero atmosphere, hover feedback, or launchpad depth. Let typography, spacing, imagery, and composition carry most hierarchy.
 
 Light mode by default. Dark mode as an intentional alternative, not an afterthought.
 
 **Core risks (what makes this site memorable):**
-1. **Pixel font identity** — Geist Pixel Square as the primary structural typeface. Nobody in the designer portfolio space does this. It's unexpected, technical, retro-futuristic.
-2. **Dusty rose as the only accent** — warm, personal, unmistakable.
-3. **Seasonal accent colors** — the accent color shifts with the season. The site feels alive, like a handmade thing someone tends.
-4. **Sound design** — subtle, opt-in micro-sounds on key interactions. Multi-sensory craft.
+1. **Mono editorial identity** — Geist Mono is the readable structural base; Geist Pixel Square appears through `font-header` for brand, hero, labels, and compact interface moments.
+2. **Restrained accent system** — `--accent` stays quiet and sparse, while project-specific hover glows are documented exceptions.
+3. **Tactile utility surfaces** — Launchpad, resume preview, and contact actions should feel crafted without turning the whole site into glassmorphism.
+4. **Sound and haptics** — subtle, opt-in micro-sounds and haptics on key interactions. Multi-sensory craft, never required for comprehension.
 
 ---
 
@@ -54,9 +54,9 @@ Warm neutral palette. No pure white, no pure black. Colors defined as CSS custom
 | `--ring`           | `#da8a82`  | Focus indicators               |
 | `--ink-underline`  | `#b8a48a`  | Hero handscript ink underline   |
 
-### Seasonal Accent Colors
+### Accent Modes
 
-The accent color rotates with the season. The `Header.tsx` seasonal indicator ("Spring", "Summer", etc.) already detects the current season. The accent should match:
+The shipped site uses a quiet green accent in `globals.css` and project-specific hover accent colors in `home-projects.ts`. Seasonal accent helpers exist in `src/lib/season.ts`; if seasonal accent rotation is re-enabled, mount one provider that sets `--accent` and `--ring` together so the visual and focus systems stay aligned.
 
 | Season  | Accent hex | Name          | Mood                        |
 |---------|-----------|---------------|-----------------------------|
@@ -65,7 +65,7 @@ The accent color rotates with the season. The `Header.tsx` seasonal indicator ("
 | Autumn  | `#b57a5d` | Burnt sienna  | Earthy, rich, grounded      |
 | Winter  | `#7a8b96` | Slate blue    | Cool, quiet, reflective     |
 
-Implementation: set `--accent` and `--ring` based on the detected season in `globals.css` or via JS on page load. Dark mode uses the same seasonal accent.
+Implementation rule: all accent changes must flow through CSS custom properties, not one-off hex values inside components. Hard-coded exception colors are allowed only for generated assets, social previews, or carefully named local effects.
 
 ### Principles
 
@@ -85,16 +85,16 @@ Two-font system plus a handwritten accent. Each font has a specific role.
 
 | Font                   | Role                          | Usage                                                    |
 |------------------------|-------------------------------|----------------------------------------------------------|
-| **Geist Pixel Square** | Identity / structure          | Headings, nav, labels, buttons, section titles, project titles, dates, metadata |
-| **Geist Sans**         | Readability / body            | Paragraphs, descriptions, hero intro, experience details, MDX prose, lists |
+| **Geist Mono**         | Readability / system text     | Body, project descriptions, metadata, contact copy, MDX prose, lists |
+| **Geist Pixel Square** | Identity / compact structure  | TopMeta brand, hero name/location, text actions, project titles, badges, selected labels |
 | **HB Handscript**      | Handwritten accent            | Hero handwritten note only                               |
 
 ### Rules
 
-- **Geist Pixel Square** is the default `<body>` font. Everything inherits pixel unless overridden
-- **Geist Sans** is applied via CSS to `p`, `li`, `dd`, `blockquote`, `figcaption` elements
-- MDX headings (`h2`/`h3`/`h4`) stay pixel even inside Geist Sans prose sections
-- Project detail pages: pixel for title + date, Geist Sans at `13px` for everything else
+- **Geist Mono** is the default `<body>` font. Tailwind `font-mono`, `font-sans`, and `font-inter` currently resolve to Geist Mono.
+- **Geist Pixel Square** is opt-in through `font-header`. Use it for compact identity moments, not long paragraphs unless intentionally matching the shipped homepage voice.
+- MDX headings (`h2`/`h3`/`h4`) may stay pixel/structural, but body prose should remain highly readable.
+- Project detail pages: mono body at `13px`; project titles and compact metadata may use structural treatments.
 - Never use pixel for paragraph-length text — it's for identity, not reading
 - Headings use `text-wrap: balance` to prevent orphans
 - Body copy uses `text-wrap: pretty`
@@ -118,7 +118,7 @@ Fluid typography via `clamp()` in Tailwind config:
 ### Section Headings
 
 All section headings (Projects, Endeavors, Experience, etc.) are styled as:
-- `12px` uppercase, `letter-spacing: 0.04em`, `font-weight: 500`
+- Compact title case, around `0.85rem`, with tight tracking
 - Color: `--muted-foreground`
 - Plain text — no interactive buttons, no collapse toggles
 
@@ -165,13 +165,13 @@ box-shadow:
 - Transition shadows with `transition-[box-shadow]`
 - Cards get a subtle light-gradient `::after` overlay on hover (165deg angle)
 - Dark mode uses `inset` shadows with white at low opacity for inner edge definition
-- `--box-radius: 16px` for all surfaces (unified via Tailwind `borderRadius` override)
+- `--box-radius: 8px` is the default surface radius. Use larger radii only for explicit variants such as circular avatars, rounded badges, or Launchpad.
 
 ---
 
 ## Border Radius
 
-All radii are unified to `--box-radius: 16px` via the Tailwind config. Every Tailwind radius utility (`rounded-sm` through `rounded-3xl`) maps to this single value.
+All standard radii are unified to `--box-radius: 8px` via the Tailwind config. Every Tailwind radius utility (`rounded-sm` through `rounded-3xl`) maps to this single value unless an arbitrary class documents a deliberate exception.
 
 **Concentric radius rule**: Outer radius = inner radius + padding. Nested elements must calculate their radius relative to their parent to avoid visual mismatch.
 
@@ -215,6 +215,58 @@ Spring-first animation system. Constants in `src/lib/motion.ts`.
 ### Reduced Motion
 
 All motion respects `prefers-reduced-motion: reduce`. Transitions are disabled. No animation should be the only way to convey information.
+
+---
+
+## Touch and Component Sizing
+
+Interactive sizing follows a mobile-first floor, even when the visible text is small.
+
+| Pattern | Desktop target | Mobile target | Notes |
+|---------|----------------|---------------|-------|
+| Text actions / peek links | `min-height: 40px`, `min-width: 40px` | `min-height: 40px`, `min-width: 40px` | Use `PeekAction` for homepage text actions, top nav links, mobile menu text, and launchpad text actions. |
+| Icon buttons | `40px` square minimum | `44px` square preferred | Use 44px when the control is isolated or primary on mobile. |
+| Contact email CTA | `54-62px` height | `54px` minimum | A single compact glossy pill is allowed here, but Contact still belongs inside the homepage editorial rhythm, not a separate conversion panel. |
+| Social/action links | `40px` minimum row height | `40px` minimum row height | Labels may be compact, but the row remains thumb-friendly. |
+| Inline utility buttons | `40px` minimum height | `40px` minimum height | Filter controls such as `Clear` must not drop below the shared floor. |
+
+Rules:
+- Do not make a mobile-only text action smaller than 40px high just because the label is visually tiny.
+- If a label needs to look compact, keep the visible typography small and enlarge the hit area with padding or `min-*` utilities.
+- Never overlap invisible hit areas; extra target size must remain inside the component's own layout box.
+- Preserve `active:scale-[0.96]` on pressable controls unless the control is static or repeated at very high frequency.
+
+---
+
+## Copywriting
+
+Copy is part of the design system. The site voice is direct, compact, warm, and specific.
+
+### Project Descriptions
+
+- One sentence fragment, usually 4-9 words.
+- Lead with the artifact or user value, not internal process.
+- Prefer concrete nouns: `Student support minisite`, `Mindfulness app`, `National parks trip-planning app`.
+- Avoid inflated claims such as "revolutionary", "beautiful", "world-class", or generic "digital experience".
+
+### CTA Labels
+
+- Use short visible labels: `Contact`, `Resume`, `Preview`, `Launchpad`.
+- Use peek/tooltips to clarify action: `Say hi`, `Open resume`, `Preview resume`, `Open experiments`.
+- Resume language is always `Resume` in visible UI; `/cv` may stay as the route.
+- Contact language should feel human and low-pressure: `Let's work together`, `Connect with me`, `If something here resonates, reach out.`
+
+### Toasts and Feedback
+
+- Toasts confirm the action in present-tense language: `Opening resume`, `Previewing resume`, `Showing all work`.
+- Toasts should be short enough to read at a glance.
+- Do not use toasts for decorative commentary or instructions.
+
+### Empty and Error States
+
+- Say what happened, then provide the next action.
+- Avoid blame and avoid clever copy.
+- Keep error copy as calm as the rest of the site.
 
 ---
 
@@ -282,17 +334,18 @@ Icons receive group-hover effects (scale, rotate, translate) via parent `group` 
 
 ### Header
 
-- Frosted glass effect: `backdrop-filter: saturate(118%) blur(20px)`
-- Vertical nav layout with emphasis/subdued sizing states
-- Nav links: `8px` base, `10px` for active emphasis, `7px` for subdued
-- Separator uses box-shadow (not border) for hairline rendering
+- The live header is `TopMeta.tsx`; do not use the stale `Header.tsx` pattern.
+- Header width aligns to the homepage content column (`max-w-[36rem]`).
+- Nav, brand, menu, and launchpad text actions use `PeekAction` for shared touch target, press scale, tooltip, and underline behavior.
+- Separator is a quiet `border-b border-border/72`.
+- Launchpad is the one intentionally tactile pill in the header; keep its depth treatment local to `.launcher-depth-pill`.
 
 ---
 
 ## Accessibility
 
 - All interactive elements must have `focus-visible` indicators (ring or outline)
-- Focus ring color: `--ring` token (seasonal accent)
+- Focus ring color: `--ring` token
 - `ResumeModal` uses `role="dialog"` + `aria-modal`
 - Error messages use `text-destructive` color
 - Dark mode backgrounds never use pure black — preserves readability
@@ -304,17 +357,17 @@ Icons receive group-hover effects (scale, rotate, translate) via parent `group` 
 
 ## Background
 
-The site background is not flat — it has three subtle layers:
+The site background is not flat, but it stays quiet. The shipped system has three broad layers:
 
-1. **Warm radial gradient** — very faint warmth from center-top
-2. **Linear paper gradient** — barely visible top-down wash
-3. **Grain texture** — `5px` repeating dot pattern at near-invisible opacity
+1. **Warm paper canvas** — `--background` plus a subtle body linear wash
+2. **Hero atmosphere** — `grainient-lightglow-01.jpg`, radial masks, and a low-opacity grain layer behind the intro
+3. **Section atmosphere** — painterly washes and hover glows that stay behind content
 
 This creates a "paper" feel without being heavy. Dark mode uses the same structure with dark values.
 
-### Hero Sky
+### Hero Atmosphere
 
-The hero section has its own sky gradient overlay with two radial spot highlights. Both modes defined in `.hero-sky`.
+The hero glow is the primary atmospheric exception to the "quiet surface" rule. Contact stays inside the standard section system; its email action may use one glossy pill, while surrounding copy and social links remain quiet.
 
 ---
 
@@ -323,12 +376,12 @@ The hero section has its own sky gradient overlay with two radial spot highlight
 Toggled via `.dark` class on `<html>`, responds to `prefers-color-scheme`. Not a simple inversion — every token is hand-tuned.
 
 Key differences from light:
-- Frost panels use darker rgba backgrounds
+- Tactile/glass surfaces use darker rgba backgrounds
 - Card shadows are deeper and darker
 - Images dimmed to `brightness(0.92)`
-- Selection color uses seasonal accent
+- Selection color uses the accent system
 - Inset shadows use `rgba(255,255,255,0.04)` for subtle inner edge
-- Header frost opacity increases from `0.66` to `0.88`
+- Header and launcher contrast are tuned separately from the body canvas
 
 ---
 
@@ -344,7 +397,7 @@ Key differences from light:
 
 ## What This Site Is Not
 
-- Not flashy. No neon, no glassmorphism, no bouncing elements
+- Not flashy. No neon, no default glassmorphism, no bouncing elements
 - Not trendy for trend's sake. If something is removed, it was intentional
 - Not a template. Every detail is considered. If it looks default, revisit it
 - Not silent forever. Sound is part of the craft, but always respectful

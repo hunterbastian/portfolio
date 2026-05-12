@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowUpRight, Mail } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { contactSocialLinks } from '@/content/homepage'
@@ -121,31 +121,17 @@ export function ContactLinks() {
         <a
           href={emailLink.href}
           aria-label={`Email me directly at ${emailAddress}`}
-          className="email-warm-card group/email-card relative flex min-h-[4.7rem] w-full max-w-[29.75rem] origin-center touch-manipulation items-center gap-2.5 overflow-hidden rounded-[3px] border border-border/70 bg-[var(--contact-paper)] px-3 py-2.5 pr-8 text-left shadow-[0_1px_0_rgba(255,255,255,0.58),0_12px_24px_-24px_rgba(43,39,34,0.34)] transition-[transform,box-shadow,color,background-color,border-color] duration-150 ease-[cubic-bezier(0.2,0,0,1)] hover:-translate-y-[1px] hover:border-[var(--contact-rule)] hover:bg-[var(--contact-paper-hover)] hover:text-[var(--contact-accent)] hover:shadow-[0_1px_0_rgba(255,255,255,0.64),0_12px_25px_-24px_rgba(var(--contact-accent-rgb),0.18)] active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-[5.05rem] sm:gap-3 sm:px-[1.125rem] sm:py-3.5 sm:pr-[3.15rem]"
+          className="aqua-contact-button group/aqua-contact relative isolate mx-auto flex min-h-[3.95rem] w-[calc(100%-1.25rem)] max-w-[28.75rem] origin-center touch-manipulation items-center justify-center overflow-visible px-7 py-3 text-center transition-[filter,transform,box-shadow] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-[4.35rem] sm:w-full sm:px-10"
           onClick={() => handleContactClick(emailLink)}
         >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.36),rgba(255,255,255,0)_54%)]"
-          />
-          <span className="relative z-10 flex h-[2.62rem] w-[2.62rem] shrink-0 items-center justify-center rounded-[2px] bg-background/70 text-foreground/84 shadow-[inset_0_0_0_1px_rgba(43,39,34,0.08),0_1px_0_rgba(255,255,255,0.48)] transition-[box-shadow,color] duration-150 group-hover/email-card:text-[var(--contact-accent)] group-hover/email-card:shadow-[inset_0_0_0_1px_rgba(var(--contact-accent-rgb),0.14),0_1px_0_rgba(255,255,255,0.48)] sm:h-[2.86rem] sm:w-[2.86rem]">
-            <Mail aria-hidden="true" strokeWidth={1.55} className="h-[1.22rem] w-[1.22rem] sm:h-[1.32rem] sm:w-[1.32rem]" />
+          <span className="relative z-10 flex min-w-0 items-center justify-center font-header text-[0.98rem] font-normal leading-none text-[#0d0f12] transition-transform duration-150 ease-[cubic-bezier(0.2,0,0,1)] group-active/aqua-contact:translate-y-px sm:text-[1.16rem]">
+            <span className="truncate">Connect with me</span>
           </span>
-          <span className="relative z-10 min-w-0 flex-1 space-y-1">
-            <span className="block font-header text-[0.66rem] font-normal leading-none tracking-normal text-muted-foreground/78 sm:text-[0.68rem]">
-              email
-            </span>
-            <span className="block font-header text-[0.84rem] font-normal leading-[1.18] tracking-normal text-foreground [overflow-wrap:anywhere] sm:text-[0.92rem]">
-              {emailAddress}
-            </span>
-          </span>
-          <span className="absolute right-2 top-1/2 z-10 flex h-[2.05rem] w-[2.05rem] -translate-y-1/2 items-center justify-center text-foreground/78 transition-[transform,color] duration-200 group-hover/email-card:translate-x-0.5 group-hover/email-card:-translate-y-[calc(50%+1px)] group-hover/email-card:text-[var(--contact-accent)] sm:right-3.5">
-            <ArrowUpRight aria-hidden="true" strokeWidth={1.7} className="h-[0.86rem] w-[0.86rem]" />
-          </span>
+          <span className="sr-only">{emailAddress}</span>
         </a>
       ) : null}
 
-      <div className="relative isolate grid w-full max-w-[29.75rem] grid-cols-[repeat(auto-fit,minmax(8.75rem,1fr))] gap-2 sm:gap-2.5">
+      <div className="relative isolate mx-auto grid w-full max-w-[30rem] grid-cols-[repeat(auto-fit,minmax(8.75rem,1fr))] gap-2 sm:gap-2.5">
         <div aria-hidden="true" className="social-pixel-field">
           <span className="social-capture-rail" />
           <span className="social-ambient-pixel social-ambient-pixel-one" />
@@ -173,7 +159,7 @@ export function ContactLinks() {
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noreferrer' : undefined}
             aria-label={link.ariaLabel ?? `Open ${link.label}`}
-            className="group/social-link relative z-10 inline-flex min-h-[40px] w-full origin-center touch-manipulation items-center justify-between gap-2 overflow-hidden rounded-[2px] border border-border/70 bg-[var(--contact-paper)] px-3 py-2 font-mono text-[0.72rem] leading-none text-foreground/78 shadow-[0_1px_0_rgba(255,255,255,0.5)] transition-[background-color,border-color,box-shadow,color,transform] duration-150 hover:-translate-y-[1px] hover:border-[var(--contact-rule)] hover:bg-[var(--contact-paper-hover)] hover:text-[var(--contact-accent)] hover:shadow-[0_1px_0_rgba(255,255,255,0.54),0_10px_18px_-20px_rgba(var(--contact-accent-rgb),0.16)] active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.74rem] last:sm:col-start-2"
+            className="group/social-link relative z-10 inline-flex min-h-[40px] w-full origin-center touch-manipulation items-center justify-between gap-2 overflow-hidden rounded-[2px] border border-border/70 bg-[var(--contact-paper)] px-3 py-2 font-header text-[0.72rem] font-normal leading-none tracking-normal text-foreground/78 shadow-[0_1px_0_rgba(255,255,255,0.5)] transition-[background-color,border-color,box-shadow,color,transform] duration-150 hover:-translate-y-[1px] hover:border-[var(--contact-rule)] hover:bg-[var(--contact-paper-hover)] hover:text-[var(--contact-accent)] hover:shadow-[0_1px_0_rgba(255,255,255,0.54),0_10px_18px_-20px_rgba(var(--contact-accent-rgb),0.16)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.74rem] last:sm:col-start-2"
             style={SOCIAL_GLINT_STYLES[index % SOCIAL_GLINT_STYLES.length]}
             onClick={() => handleSocialClick(link)}
             onKeyDown={handleSocialKeyDown}

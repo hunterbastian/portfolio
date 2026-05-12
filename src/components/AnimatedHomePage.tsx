@@ -566,7 +566,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 />
 
                 <div className="relative z-10 space-y-6 sm:space-y-11">
-                  <p className="max-w-[38rem] font-mono text-[0.88rem] leading-[1.55] text-muted-foreground sm:text-[1rem] sm:leading-[1.7]">
+                  <p className="mx-auto max-w-[38rem] text-center font-mono text-[0.88rem] leading-[1.55] text-muted-foreground sm:text-[1rem] sm:leading-[1.7]">
                     If something here resonates, reach out.
                   </p>
                   <ContactLinks />

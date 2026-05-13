@@ -26,7 +26,7 @@ export function ContactLinks() {
   }
 
   return (
-    <div className="space-y-6 sm:space-y-7">
+    <div className="space-y-10 sm:space-y-12">
       {emailLink ? (
         <EmailButton
           email={emailAddress}
@@ -36,7 +36,7 @@ export function ContactLinks() {
         />
       ) : null}
 
-      <div className="grid grid-cols-2 gap-2 text-left sm:grid-cols-4 sm:gap-2.5">
+      <div className="flex flex-wrap gap-3 text-left sm:gap-3.5">
         {socialLinks.map((link) => (
           <a
             key={link.label}
@@ -46,7 +46,7 @@ export function ContactLinks() {
             aria-label={link.ariaLabel ?? `Open ${link.label}`}
             className={cn(
               styles.socialLink,
-              'group/social-link inline-flex min-h-[40px] origin-center touch-manipulation items-center justify-between gap-2 font-header text-[0.78rem] leading-none text-[#403d38]/78 transition-[background-color,box-shadow,color,transform] duration-150 hover:-translate-y-[1px] hover:text-[#403d38] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:text-[#f7efe4]/76 dark:hover:text-[#f7efe4] sm:text-[0.82rem]',
+              'group/social-link inline-flex min-h-[40px] origin-center touch-manipulation items-center justify-center gap-1.5 font-header text-[0.72rem] leading-none text-[#403d38]/78 transition-[background-color,box-shadow,color,transform] duration-150 hover:-translate-y-[1px] hover:text-[#403d38] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:text-[#f7efe4]/76 dark:hover:text-[#f7efe4] sm:text-[0.76rem]',
             )}
             onClick={() => handleContactClick(link)}
           >
@@ -56,7 +56,7 @@ export function ContactLinks() {
             <ArrowUpRight
               aria-hidden="true"
               strokeWidth={1.7}
-              className="relative z-10 h-3 w-3 shrink-0 text-[#403d38]/42 transition-[color,transform] duration-150 group-hover/social-link:-translate-y-0.5 group-hover/social-link:translate-x-0.5 group-hover/social-link:text-[#403d38]/68 dark:text-[#f7efe4]/42 dark:group-hover/social-link:text-[#f7efe4]/68"
+              className="relative z-10 h-2.5 w-2.5 shrink-0 text-[#403d38]/42 transition-[color,transform] duration-150 group-hover/social-link:-translate-y-0.5 group-hover/social-link:translate-x-0.5 group-hover/social-link:text-[#403d38]/68 dark:text-[#f7efe4]/42 dark:group-hover/social-link:text-[#f7efe4]/68"
             />
           </a>
         ))}

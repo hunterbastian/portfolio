@@ -101,15 +101,72 @@ html {
   --contact-paper-hover: color-mix(in srgb, var(--background) 72%, var(--contact-accent-soft));
   --contact-rule: color-mix(in srgb, var(--border) 78%, var(--contact-accent) 22%);
   --box-radius: 8px;
+  --surface-glass-soft: rgba(var(--surface-paper-rgb), 0.2);
+  --surface-glass-soft-border: rgba(0, 0, 0, 0.05);
+  --surface-glass-soft-shadow:
+    0 0 0 1px var(--surface-glass-soft-border),
+    0 8px 18px -22px rgba(20, 16, 10, 0.2);
+  --surface-glass-chrome:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 252, 246, 0.96) 36%, rgba(247, 241, 231, 0.99) 100%),
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 58%);
+  --surface-glass-chrome-hover:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 251, 244, 0.98) 36%, rgba(248, 240, 228, 1) 100%),
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 60%);
+  --surface-glass-chrome-dark:
+    linear-gradient(180deg, rgba(61, 57, 51, 0.96) 0%, rgba(46, 42, 37, 0.98) 100%),
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 58%);
+  --surface-glass-chrome-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.84),
+    inset 0 0 0 3px rgba(246, 242, 235, 0.88),
+    inset 0 6px 14px rgba(255, 255, 255, 0.58),
+    inset 0 -7px 14px rgba(202, 192, 176, 0.24),
+    0 0 0 1px rgba(75, 65, 50, 0.08),
+    0 5px 0 -3px rgba(215, 207, 194, 0.9),
+    0 14px 24px -19px rgba(38, 34, 29, 0.72),
+    0 20px 44px -28px rgba(83, 73, 58, 0.56);
+  --surface-glass-chrome-shadow-hover:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9),
+    inset 0 0 0 3px rgba(248, 244, 237, 0.92),
+    inset 0 7px 15px rgba(255, 255, 255, 0.64),
+    inset 0 -8px 16px rgba(202, 192, 176, 0.28),
+    0 0 0 1px rgba(75, 65, 50, 0.1),
+    0 6px 0 -3px rgba(215, 207, 194, 0.95),
+    0 16px 28px -20px rgba(38, 34, 29, 0.76),
+    0 24px 50px -30px rgba(83, 73, 58, 0.6);
+  --surface-glass-chrome-shadow-active:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.84),
+    inset 0 0 0 3px rgba(242, 237, 229, 0.86),
+    inset 0 6px 12px rgba(202, 192, 176, 0.2),
+    inset 0 -5px 10px rgba(255, 255, 255, 0.42),
+    0 0 0 1px rgba(75, 65, 50, 0.08),
+    0 8px 18px -18px rgba(38, 34, 29, 0.56);
+  --shadow-raised:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+  --shadow-raised-subtle:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.04),
+    0px 1px 2px -1px rgba(0, 0, 0, 0.06);
+  --shadow-hover:
+    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
+    0px 2px 4px -1px rgba(0, 0, 0, 0.08),
+    0px 8px 20px -4px rgba(0, 0, 0, 0.1);
+  --motion-press-transform: translateY(0) scale(0.96);
+  --motion-press-transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-peek-transition:
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1),
+    filter 200ms cubic-bezier(0.2, 0, 0, 1);
+  --accent-editorial-hover: var(--contact-accent);
+  --accent-editorial-hover-bg: color-mix(in srgb, var(--accent-editorial-hover) 7%, transparent);
+  --accent-editorial-hover-border: color-mix(in srgb, var(--accent-editorial-hover) 46%, var(--border));
+  --accent-editorial-hover-shadow: color-mix(in srgb, var(--accent-editorial-hover) 22%, transparent);
 }
 
 /* Project cards — refined borders per mode */
 .project-card {
   background: var(--card);
-  box-shadow:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-raised);
 }
 
 .project-card::after {
@@ -147,10 +204,7 @@ html {
 }
 
 .project-card:hover {
-  box-shadow:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
-    0px 2px 4px -1px rgba(0, 0, 0, 0.08),
-    0px 8px 20px -4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Risograph / printed feel on card images — filter only, transform/opacity handled by Tailwind */
@@ -211,6 +265,46 @@ html {
   --contact-paper-hover: color-mix(in srgb, var(--background) 78%, var(--contact-accent-soft));
   --contact-rule: color-mix(in srgb, var(--border) 78%, var(--contact-accent) 22%);
   --sky-spot-b: oklch(0.336 0.019 245.2 / 0.055);
+  --surface-glass-soft: rgba(var(--surface-paper-rgb), 0.16);
+  --surface-glass-soft-border: rgba(255, 255, 255, 0.06);
+  --surface-glass-soft-shadow:
+    0 0 0 1px var(--surface-glass-soft-border),
+    0 8px 18px -20px rgba(0, 0, 0, 0.36);
+  --surface-glass-chrome-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.05),
+    inset 0 8px 18px rgba(255, 255, 255, 0.08),
+    inset 0 -9px 18px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(0, 0, 0, 0.36),
+    0 7px 0 -4px rgba(0, 0, 0, 0.42),
+    0 22px 44px -28px rgba(0, 0, 0, 0.72);
+  --surface-glass-chrome-hover:
+    linear-gradient(180deg, rgba(73, 69, 62, 0.98) 0%, rgba(51, 47, 41, 1) 100%),
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 60%);
+  --surface-glass-chrome-shadow-hover:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.07),
+    inset 0 9px 20px rgba(255, 255, 255, 0.1),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 7px 0 -4px rgba(0, 0, 0, 0.46),
+    0 24px 48px -30px rgba(0, 0, 0, 0.78);
+  --surface-glass-chrome-shadow-active:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.04),
+    inset 0 6px 15px rgba(0, 0, 0, 0.22),
+    inset 0 -6px 14px rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(0, 0, 0, 0.36),
+    0 10px 24px -22px rgba(0, 0, 0, 0.7);
+  --shadow-raised:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  --shadow-raised-subtle:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  --shadow-hover:
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
 }
 
 html {
@@ -408,10 +502,7 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   background: var(--card);
   border-radius: var(--box-radius);
-  box-shadow:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-raised);
 }
 
 .status-pill::before {
@@ -487,10 +578,7 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   background: var(--card);
   border-radius: var(--box-radius);
-  box-shadow:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-raised);
 }
 
 .frost-panel {
@@ -509,19 +597,13 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--card);
   color: var(--foreground);
   border-radius: var(--box-radius);
-  box-shadow:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-raised);
   transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nord-button:hover {
   background: var(--secondary);
-  box-shadow:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
-    0px 2px 4px -1px rgba(0, 0, 0, 0.08),
-    0px 6px 16px -4px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-hover);
 }
 
 .nord-button:focus-visible {
@@ -534,18 +616,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .launcher-depth-pill {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 252, 246, 0.96) 36%, rgba(247, 241, 231, 0.99) 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 58%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.84),
-    inset 0 0 0 3px rgba(246, 242, 235, 0.88),
-    inset 0 6px 14px rgba(255, 255, 255, 0.58),
-    inset 0 -7px 14px rgba(202, 192, 176, 0.24),
-    0 0 0 1px rgba(75, 65, 50, 0.08),
-    0 5px 0 -3px rgba(215, 207, 194, 0.9),
-    0 14px 24px -19px rgba(38, 34, 29, 0.72),
-    0 20px 44px -28px rgba(83, 73, 58, 0.56);
+  background: var(--surface-glass-chrome);
+  box-shadow: var(--surface-glass-chrome-shadow);
   transition:
     background 220ms cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -576,43 +648,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .group\/launcher:hover .launcher-depth-pill {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 251, 244, 0.98) 36%, rgba(248, 240, 228, 1) 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 60%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.9),
-    inset 0 0 0 3px rgba(248, 244, 237, 0.92),
-    inset 0 7px 15px rgba(255, 255, 255, 0.64),
-    inset 0 -8px 16px rgba(202, 192, 176, 0.28),
-    0 0 0 1px rgba(75, 65, 50, 0.1),
-    0 6px 0 -3px rgba(215, 207, 194, 0.95),
-    0 16px 28px -20px rgba(38, 34, 29, 0.76),
-    0 24px 50px -30px rgba(83, 73, 58, 0.6);
+  background: var(--surface-glass-chrome-hover);
+  box-shadow: var(--surface-glass-chrome-shadow-hover);
   filter: saturate(1.02);
 }
 
 .group\/launcher:active .launcher-depth-pill {
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.84),
-    inset 0 0 0 3px rgba(242, 237, 229, 0.86),
-    inset 0 6px 12px rgba(202, 192, 176, 0.2),
-    inset 0 -5px 10px rgba(255, 255, 255, 0.42),
-    0 0 0 1px rgba(75, 65, 50, 0.08),
-    0 8px 18px -18px rgba(38, 34, 29, 0.56);
+  box-shadow: var(--surface-glass-chrome-shadow-active);
 }
 
 .dark .launcher-depth-pill {
-  background:
-    linear-gradient(180deg, rgba(61, 57, 51, 0.96) 0%, rgba(46, 42, 37, 0.98) 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 58%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
-    inset 0 0 0 3px rgba(255, 255, 255, 0.05),
-    inset 0 8px 18px rgba(255, 255, 255, 0.08),
-    inset 0 -9px 18px rgba(0, 0, 0, 0.28),
-    0 0 0 1px rgba(0, 0, 0, 0.36),
-    0 7px 0 -4px rgba(0, 0, 0, 0.42),
-    0 22px 44px -28px rgba(0, 0, 0, 0.72);
+  background: var(--surface-glass-chrome-dark);
+  box-shadow: var(--surface-glass-chrome-shadow);
 }
 
 .font-handscript {
@@ -957,10 +1004,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .top-meta-pill {
-  background: rgba(var(--surface-paper-rgb), 0.2);
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.05),
-    0 8px 18px -22px rgba(20, 16, 10, 0.2);
+  background: var(--surface-glass-soft);
+  box-shadow: var(--surface-glass-soft-shadow);
 }
 
 .nav-scroll-pill {
@@ -979,10 +1024,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dark .top-meta-pill {
-  background: rgba(var(--surface-paper-rgb), 0.16);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 8px 18px -20px rgba(0, 0, 0, 0.36);
+  background: var(--surface-glass-soft);
+  box-shadow: var(--surface-glass-soft-shadow);
 }
 
 .site-header-frosted {
@@ -1001,28 +1044,19 @@ img {
 }
 
 .shadow-card {
-  box-shadow:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-raised);
 }
 
 .dark .shadow-card {
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  box-shadow: var(--shadow-raised);
 }
 
 .shadow-card-subtle {
-  box-shadow:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.04),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-raised-subtle);
 }
 
 .dark .shadow-card-subtle {
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  box-shadow: var(--shadow-raised-subtle);
 }
 
 .img-inset-outline {
@@ -1206,106 +1240,6 @@ button {
   animation: hb-section-cloud-shadow 1050ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-shadow-delay, 0ms) both;
 }
 
-.contact-email-gloss-button {
-  --email-rim-blue: 0, 92, 175;
-  --email-rim-blue-deep: 16, 49, 88;
-
-  background:
-    radial-gradient(ellipse at 50% 15%, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.26) 42%, rgba(255, 255, 255, 0) 72%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 244, 243, 0.96) 48%, rgba(219, 219, 217, 0.94) 100%);
-  border-radius: 999px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.98),
-    inset 0 -19px 30px rgba(116, 113, 109, 0.18),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.78),
-    0 11px 17px -15px rgba(29, 34, 38, 0.74),
-    0 22px 34px -27px rgba(25, 45, 68, 0.58);
-  isolation: isolate;
-  min-height: clamp(54px, 4.35vw, 62px);
-  padding: 0 1.75rem;
-  position: relative;
-}
-
-.contact-email-gloss-button::before,
-.contact-email-gloss-button::after {
-  border-radius: inherit;
-  content: "";
-  pointer-events: none;
-  position: absolute;
-}
-
-.contact-email-gloss-button::before {
-  background:
-    linear-gradient(90deg, rgba(var(--email-rim-blue), 0.94) 0%, rgba(var(--email-rim-blue), 0.78) 3.2%, rgba(255, 255, 255, 0.74) 7.4%, transparent 15%, transparent 85%, rgba(255, 255, 255, 0.74) 92.6%, rgba(var(--email-rim-blue), 0.78) 96.8%, rgba(var(--email-rim-blue), 0.94) 100%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(221, 229, 236, 0.58) 46%, rgba(var(--email-rim-blue-deep), 0.62));
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.86),
-    0 6px 13px -10px rgba(var(--email-rim-blue), 0.76),
-    0 18px 25px -19px rgba(23, 31, 39, 0.82);
-  inset: -0.28rem;
-  z-index: -2;
-}
-
-.contact-email-gloss-button::after {
-  background:
-    radial-gradient(ellipse at 50% 18%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.34) 50%, transparent 82%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.54), transparent 62%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.58),
-    inset 0 -18px 25px rgba(124, 120, 116, 0.075);
-  inset: 0.36rem 0.62rem 0.54rem;
-  opacity: 0.9;
-  z-index: 0;
-}
-
-.contact-email-gloss-label {
-  letter-spacing: -0.02em;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.62);
-}
-
-.contact-email-gloss-button:not(:disabled):hover {
-  --email-rim-blue: 0, 104, 183;
-  --email-rim-blue-deep: 8, 48, 92;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -19px 30px rgba(116, 113, 109, 0.2),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.82),
-    0 13px 19px -15px rgba(29, 34, 38, 0.78),
-    0 26px 38px -29px rgba(0, 92, 175, 0.42);
-}
-
-.contact-email-gloss-button:not(:disabled):hover::before {
-  filter: saturate(1.08);
-  transform: scale(1.006);
-}
-
-.contact-email-gloss-button:not(:disabled):hover::after {
-  opacity: 0.96;
-  transform: translateY(-1px);
-}
-
-.contact-email-gloss-button:not(:disabled):active::before {
-  transform: scale(0.996);
-}
-
-.contact-email-gloss-button:not(:disabled):active::after {
-  opacity: 0.72;
-  transform: translateY(1px);
-}
-
-.dark .contact-email-gloss-button {
-  background:
-    radial-gradient(ellipse at 50% 18%, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.16) 48%, rgba(255, 255, 255, 0) 72%),
-    linear-gradient(180deg, rgba(236, 236, 233, 0.96) 0%, rgba(214, 214, 211, 0.95) 48%, rgba(181, 180, 176, 0.94) 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -19px 30px rgba(70, 68, 66, 0.22),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.58),
-    0 14px 22px -18px rgba(0, 0, 0, 0.78),
-    0 28px 46px -34px rgba(0, 0, 0, 0.72);
-}
-
 .nature-link-glint {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0)),
@@ -1450,7 +1384,7 @@ button {
 
 .project-hover-dust {
   box-shadow: 0 0 10px color-mix(in srgb, currentColor 14%, transparent);
-  color: var(--editorial-accent);
+  color: var(--editorial-accent, var(--accent-editorial-hover));
   opacity: 0;
   transform: translate3d(0, 0, 0) scale(0.4);
 }

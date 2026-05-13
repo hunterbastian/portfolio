@@ -179,7 +179,7 @@ export default function PlaygroundDraw() {
         <button
           type="button"
           onClick={clearAll}
-          className="ml-1 flex h-7 w-7 items-center justify-center text-muted-foreground/60 transition-colors duration-150 hover:bg-black/[0.04] hover:text-foreground/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:hover:bg-white/[0.06]"
+          className="ml-1 flex h-10 w-10 items-center justify-center text-muted-foreground/60 transition-colors duration-150 hover:bg-black/[0.04] hover:text-foreground/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:hover:bg-white/[0.06]"
           aria-label="Clear drawing"
           title="Clear all"
         >

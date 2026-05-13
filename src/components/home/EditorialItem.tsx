@@ -54,7 +54,7 @@ export function EditorialItem({
   thumbnailImage,
   thumbnailAlt,
   underlineOnHover = false,
-  hoverAccentColor = 'var(--contact-accent)',
+  hoverAccentColor = 'var(--accent-editorial-hover)',
   toastMessage,
   tracking,
 }: EditorialItemProps) {

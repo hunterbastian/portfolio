@@ -82,19 +82,19 @@ export default function ImageAnnotation({
               <button
                 type="button"
                 onClick={() => toggleHotspot(index)}
-                className="group relative flex h-6 w-6 items-center justify-center focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="group relative flex h-10 w-10 items-center justify-center focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
                 aria-expanded={isActive}
                 aria-label={`${hotspot.label}: ${hotspot.description}`}
               >
                 {/* Ping animation */}
                 <span
-                  className="absolute inset-0 rounded-full animate-ping opacity-30"
+                  className="absolute h-6 w-6 rounded-full animate-ping opacity-30"
                   style={{ background: 'var(--accent)', animationDuration: '2.5s' }}
                   aria-hidden
                 />
                 {/* Outer ring */}
                 <span
-                  className="absolute inset-0 rounded-full transition-transform duration-200 group-hover:scale-110"
+                  className="absolute h-6 w-6 rounded-full transition-transform duration-200 group-hover:scale-110"
                   style={{ background: 'var(--accent)', opacity: 0.25 }}
                   aria-hidden
                 />

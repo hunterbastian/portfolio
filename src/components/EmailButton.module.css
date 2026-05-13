@@ -1,0 +1,146 @@
+.button {
+  --email-aqua: 86, 183, 207;
+  --email-aqua-deep: 18, 89, 126;
+  --email-aqua-ice: 216, 248, 255;
+
+  align-items: center;
+  background: var(--surface-glass-chrome);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.86),
+    inset 0 0 0 3px rgba(246, 242, 235, 0.9),
+    inset 0 8px 16px rgba(255, 255, 255, 0.64),
+    inset 0 -9px 18px rgba(202, 192, 176, 0.28),
+    0 0 0 1px rgba(75, 65, 50, 0.08),
+    0 5px 0 -3px rgba(215, 207, 194, 0.95),
+    0 13px 24px -18px rgba(38, 34, 29, 0.72),
+    0 22px 44px -30px rgba(var(--email-aqua-deep), 0.48),
+    0 0 18px -13px rgba(var(--email-aqua), 0.84);
+  color: #070707;
+  display: flex;
+  font-family: var(--font-geist-pixel-square), "Geist Pixel Square", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.88rem;
+  font-weight: 500;
+  isolation: isolate;
+  justify-content: center;
+  line-height: 1;
+  min-height: 40px;
+  padding: 0 0.95rem;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transform-origin: center;
+  transition:
+    var(--motion-peek-transition),
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1);
+  width: 100%;
+}
+
+.button::before,
+.button::after {
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+  position: absolute;
+}
+
+.button::before {
+  background:
+    linear-gradient(90deg, rgba(var(--email-aqua-deep), 0.9) 0%, rgba(var(--email-aqua), 0.7) 3.2%, rgba(255, 255, 255, 0.76) 8.5%, transparent 18%, transparent 82%, rgba(255, 255, 255, 0.76) 91.5%, rgba(var(--email-aqua), 0.7) 96.8%, rgba(var(--email-aqua-deep), 0.9) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(var(--email-aqua-ice), 0.4) 45%, rgba(var(--email-aqua-deep), 0.58));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.9),
+    0 0 14px -8px rgba(var(--email-aqua), 0.96),
+    0 8px 15px -11px rgba(var(--email-aqua-deep), 0.82),
+    0 20px 28px -19px rgba(18, 48, 66, 0.72);
+  inset: -0.26rem;
+  z-index: -2;
+}
+
+.button::after {
+  background:
+    radial-gradient(ellipse at 50% 7%, rgba(255, 255, 255, 0.98), rgba(var(--email-aqua-ice), 0.26) 45%, transparent 76%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.12) 58%, rgba(206, 197, 181, 0.12));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.68),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    inset 0 -13px 18px rgba(202, 192, 176, 0.1);
+  inset: 0.16rem 0.26rem 0.24rem;
+  opacity: 0.96;
+  z-index: 0;
+}
+
+.label {
+  letter-spacing: 0;
+  position: relative;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.62);
+  z-index: 1;
+}
+
+.button:hover {
+  --email-aqua: 78, 198, 224;
+  --email-aqua-deep: 13, 98, 138;
+
+  background: var(--surface-glass-chrome-hover);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.9),
+    inset 0 0 0 3px rgba(248, 244, 237, 0.94),
+    inset 0 9px 17px rgba(255, 255, 255, 0.7),
+    inset 0 -10px 19px rgba(202, 192, 176, 0.31),
+    0 0 0 1px rgba(75, 65, 50, 0.1),
+    0 6px 0 -3px rgba(215, 207, 194, 0.98),
+    0 15px 27px -18px rgba(38, 34, 29, 0.76),
+    0 25px 50px -31px rgba(var(--email-aqua-deep), 0.56),
+    0 0 24px -14px rgba(var(--email-aqua), 0.94);
+  filter: brightness(1.03) saturate(1.04);
+  transform: translateY(-1px);
+}
+
+.button:hover::before {
+  filter: saturate(1.08);
+  transform: scale(1.006);
+}
+
+.button:hover::after {
+  opacity: 0.96;
+  transform: translateY(-1px);
+}
+
+.button:active {
+  filter: brightness(0.98);
+  transform: var(--motion-press-transform);
+}
+
+.button:active::before {
+  transform: scale(0.996);
+}
+
+.button:active::after {
+  opacity: 0.72;
+  transform: translateY(1px);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+:global(.dark) .button {
+  background: var(--surface-glass-chrome-dark);
+  box-shadow: var(--surface-glass-chrome-shadow);
+}
+
+@media (min-width: 640px) {
+  .button {
+    font-size: 0.92rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button::before,
+  .button::after {
+    transition: none;
+  }
+}

@@ -178,7 +178,7 @@ export default function FooterSnakeEasterEgg() {
           setIsOpen(true)
           restartGame()
         }}
-        className={`group inline-flex h-7 w-7 origin-center touch-manipulation items-center justify-center border border-current transition-transform duration-150 hover:scale-110 active:translate-y-0 active:scale-[0.96] ${
+        className={`group inline-flex h-10 w-10 origin-center touch-manipulation items-center justify-center border border-current transition-transform duration-150 hover:scale-110 active:translate-y-0 active:scale-[0.96] ${
           isOpen ? 'bg-background text-foreground' : 'bg-foreground text-background'
         }`}
       >

@@ -303,17 +303,8 @@
 .compactButton {
   --arc-button-size: 4.08rem;
 
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.76) 0%, rgba(255, 252, 246, 0.97) 38%, rgba(247, 241, 231, 0.99) 100%),
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 62%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.86),
-    inset 0 0 0 3px rgba(246, 242, 235, 0.9),
-    inset 0 7px 15px rgba(255, 255, 255, 0.58),
-    inset 0 -8px 16px rgba(202, 192, 176, 0.23),
-    0 0 0 1px rgba(75, 65, 50, 0.08),
-    0 16px 28px -22px rgba(38, 34, 29, 0.7),
-    0 24px 54px -34px rgba(83, 73, 58, 0.5);
+  background: var(--surface-glass-chrome);
+  box-shadow: var(--surface-glass-chrome-shadow);
   color: rgba(64, 61, 56, 0.94);
 }
 
@@ -402,14 +393,8 @@
 }
 
 .compactButton:not(:disabled):hover {
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.9),
-    inset 0 0 0 3px rgba(248, 244, 237, 0.93),
-    inset 0 8px 16px rgba(255, 255, 255, 0.64),
-    inset 0 -9px 17px rgba(202, 192, 176, 0.28),
-    0 0 0 1px rgba(75, 65, 50, 0.1),
-    0 18px 32px -22px rgba(38, 34, 29, 0.75),
-    0 30px 62px -38px rgba(83, 73, 58, 0.58);
+  background: var(--surface-glass-chrome-hover);
+  box-shadow: var(--surface-glass-chrome-shadow-hover);
   transform: translate3d(0, -1px, 0);
 }
 
@@ -429,14 +414,8 @@
 }
 
 .compactButton:not(:disabled):active {
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.84),
-    inset 0 0 0 3px rgba(242, 237, 229, 0.86),
-    inset 0 6px 12px rgba(202, 192, 176, 0.2),
-    inset 0 -5px 10px rgba(255, 255, 255, 0.42),
-    0 0 0 1px rgba(75, 65, 50, 0.08),
-    0 8px 18px -18px rgba(38, 34, 29, 0.56);
-  transform: translate3d(0, 0, 0) scale(0.96);
+  box-shadow: var(--surface-glass-chrome-shadow-active);
+  transform: var(--motion-press-transform);
 }
 
 .compactButton:not(:disabled):active::before {

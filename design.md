@@ -167,6 +167,25 @@ box-shadow:
 - Dark mode uses `inset` shadows with white at low opacity for inner edge definition
 - `--box-radius: 8px` is the default surface radius. Use larger radii only for explicit variants such as circular avatars, rounded badges, or Launchpad.
 
+### Effect Tokens
+
+Named effect tokens live as CSS custom properties in `src/app/globals.css`. Use the dot name in design discussion and the CSS variable in implementation.
+
+| Token | CSS variable | Usage |
+|-------|--------------|-------|
+| `surface.glass.soft` | `--surface-glass-soft` | Quiet translucent surfaces such as TopMeta pills and subtle header chrome. |
+| `surface.glass.chrome` | `--surface-glass-chrome` | Glossy raised controls such as Launchpad, the compact upload control, and the contact email CTA. |
+| `shadow.raised` | `--shadow-raised` | Default raised surface depth for cards, pills, and utility panels. |
+| `shadow.hover` | `--shadow-hover` | Hover elevation for raised surfaces. |
+| `motion.press` | `--motion-press-transform` | Pressed tactile state. Default is `translateY(0) scale(0.96)`. |
+| `motion.peek` | `--motion-peek-transition` | Tooltip, peek, and tiny reveal transitions using opacity, transform, and filter. |
+| `accent.editorial.hover` | `--accent-editorial-hover` | Default hover accent for editorial rows, glints, and project/endeavor hover particles. |
+
+Rules:
+- If an effect appears in more than one component, make it a token before tuning it.
+- Component-specific variants may add local variables, but the base surface, shadow, motion, or accent should point back to these aliases.
+- Do not copy glossy gradients directly into new components; use `surface.glass.chrome` and tune only local rim/highlight details.
+
 ---
 
 ## Border Radius
@@ -207,7 +226,7 @@ Spring-first animation system. Constants in `src/lib/motion.ts`.
 - Subtle exits: less movement than enter. Small fixed offset (`-12px`) instead of full container height
 - `motionDurationMs()` / `motionDelayMs()` helpers respect `prefers-reduced-motion`
 - Animation orchestration follows the **Interface Craft storyboard pattern**: named timing constants at file top, stage-driven sequencing via single integer state, config objects for initial/final values
-- `button:active` gets `transform: scale(0.96)` for tactile press feedback
+- Pressable controls use `motion.press` (`--motion-press-transform`) for tactile feedback
 - Links transition `color` and `transform` at `0.15s ease`
 - Magnetic hover on pill buttons (via animate-ui Magnetic primitive)
 - Web haptics on interactive elements (via web-haptics library)
@@ -226,6 +245,7 @@ Interactive sizing follows a mobile-first floor, even when the visible text is s
 |---------|----------------|---------------|-------|
 | Text actions / peek links | `min-height: 40px`, `min-width: 40px` | `min-height: 40px`, `min-width: 40px` | Use `PeekAction` for homepage text actions, top nav links, mobile menu text, and launchpad text actions. |
 | Icon buttons | `40px` square minimum | `44px` square preferred | Use 44px when the control is isolated or primary on mobile. |
+| Shared `Button` primitive | `40px` minimum height/width | `40px` minimum height/width | `xs`, `sm`, `default`, and icon variants keep the same touch floor; use typography/padding for visual density. |
 | Contact email CTA | `54-62px` height | `54px` minimum | A single compact glossy pill is allowed here, but Contact still belongs inside the homepage editorial rhythm, not a separate conversion panel. |
 | Social/action links | `40px` minimum row height | `40px` minimum row height | Labels may be compact, but the row remains thumb-friendly. |
 | Inline utility buttons | `40px` minimum height | `40px` minimum height | Filter controls such as `Clear` must not drop below the shared floor. |

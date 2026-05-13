@@ -167,6 +167,14 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
         <span className="home-painterly-wash home-painterly-wash-projects" />
         <span className="home-painterly-wash home-painterly-wash-contact" />
       </div>
+      <div aria-hidden="true" className="home-coast-outro">
+        <span className="home-coast-cloud home-coast-cloud-left" />
+        <span className="home-coast-cloud home-coast-cloud-center" />
+        <span className="home-coast-cloud home-coast-cloud-right" />
+        <span className="home-coast-rock home-coast-rock-left" />
+        <span className="home-coast-rock home-coast-rock-right" />
+        <span className="home-coast-foam" />
+      </div>
 
       <div className="mx-auto max-w-[36rem] pt-9 sm:pt-28">
         <Reveal>

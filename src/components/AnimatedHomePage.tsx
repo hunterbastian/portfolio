@@ -14,7 +14,6 @@ import { ContactLinks } from '@/components/home/ContactLinks'
 import { EditorialItem } from '@/components/home/EditorialItem'
 import { Reveal, Section } from '@/components/home/HomeSection'
 import { PeekAction } from '@/components/PeekAction'
-import ResumeModal from '@/components/ResumeModal'
 import { showJoyToast } from '@/lib/joy'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 import { analytics } from '@/lib/analytics'
@@ -41,7 +40,6 @@ function clamp(value: number, min: number, max: number) {
 export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const introParagraphs = homeHeroContent.intro.split('\n\n')
   const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null)
-  const [resumeOpen, setResumeOpen] = useState(false)
   const [workFilter, setWorkFilter] = useState<WorkFilter>('all')
   const [heroGlowActive, setHeroGlowActive] = useState(false)
   const heroGlowRef = useRef<HTMLDivElement | null>(null)
@@ -319,19 +317,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 >
                   Resume
                 </PeekAction>
-                <PeekAction
-                  peek="Preview resume"
-                  className="text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]"
-                  labelClassName="underline decoration-transparent underline-offset-[0.2em] group-hover/peek:decoration-current group-focus-visible/peek:decoration-current"
-                  onClick={() => {
-                    haptic.trigger('light')
-                    analytics.resumeAction('view', { source: 'home_hero' })
-                    showJoyToast('Previewing resume')
-                    setResumeOpen(true)
-                  }}
-                >
-                  Resume
-                </PeekAction>
               </div>
             </div>
           </section>
@@ -507,8 +492,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
           </Reveal>
         </div>
       </div>
-
-      <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
     </div>
   )
 }

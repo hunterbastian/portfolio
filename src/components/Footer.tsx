@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const pathname = usePathname()
   const [footerHidden, setFooterHidden] = useState(false)
   const [sparkleActive, setSparkleActive] = useState(false)
   const lastScrollY = useRef(0)
@@ -77,7 +79,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className={`px-5 pb-10 pt-12 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-8 sm:pb-14 sm:pt-20 ${
+      className={`${pathname === '/' ? 'footer-coast-shell' : ''} px-5 pb-10 pt-12 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-8 sm:pb-14 sm:pt-20 ${
         footerHidden ? 'pointer-events-none translate-y-6 opacity-0' : 'translate-y-0 opacity-100'
       }`}
     >

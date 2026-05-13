@@ -171,8 +171,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
         <span className="home-coast-cloud home-coast-cloud-left" />
         <span className="home-coast-cloud home-coast-cloud-center" />
         <span className="home-coast-cloud home-coast-cloud-right" />
-        <span className="home-coast-rock home-coast-rock-left" />
-        <span className="home-coast-rock home-coast-rock-right" />
         <span className="home-coast-foam" />
       </div>
 

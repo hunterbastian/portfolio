@@ -31,7 +31,7 @@ export function ContactLinks() {
         <EmailButton
           email={emailAddress}
           aria-label={`Email me directly at ${emailAddress}`}
-          className="max-w-[9.75rem] sm:max-w-[11rem]"
+          className="max-w-[12.25rem] sm:max-w-[13.75rem]"
           onClick={() => handleContactClick(emailLink)}
         />
       ) : null}

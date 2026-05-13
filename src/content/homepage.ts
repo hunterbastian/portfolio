@@ -55,11 +55,9 @@ export const contactSocialLinks: HomeLinkItem[] = [
   { label: 'Email', href: 'mailto:hunterbastianux@gmail.com', external: true },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
   { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
-  { label: 'Threads', href: 'https://threads.net/@studio.alpine', external: true },
   { label: 'X', href: 'https://x.com/thestudioalpine', external: true },
   { label: 'GitHub', href: 'https://github.com/hunterbastian', external: true },
   { label: 'YouTube', href: 'https://youtube.com/@studio.alpine', external: true },
-  { label: 'Are.na', href: 'https://www.are.na/hunter-bastian/channels', external: true },
 ]
 
 export const experienceItems: ExperienceItem[] = [

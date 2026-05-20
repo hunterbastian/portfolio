@@ -179,14 +179,14 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <div
               ref={heroGlowRef}
               aria-hidden="true"
-              className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-20 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-[0.64] blur-[1.5px] transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:-top-28 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:opacity-[0.72] sm:blur-[2px] dark:opacity-[0.34] ${
+              className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-20 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-[0.64] blur-[2.5px] transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:-top-28 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:opacity-[0.72] sm:blur-[3.5px] dark:opacity-[0.34] ${
                 heroGlowActive ? 'is-active' : ''
               }`}
               style={{
                 maskImage:
-                  'radial-gradient(ellipse 72% 52% at 50% 42%, black 0%, rgba(0, 0, 0, 0.78) 42%, rgba(0, 0, 0, 0.24) 72%, transparent 100%)',
+                  'radial-gradient(ellipse 56% 54% at 50% 42%, black 0%, rgba(0, 0, 0, 0.88) 28%, rgba(0, 0, 0, 0.42) 58%, rgba(0, 0, 0, 0.1) 82%, transparent 100%)',
                 WebkitMaskImage:
-                  'radial-gradient(ellipse 72% 52% at 50% 42%, black 0%, rgba(0, 0, 0, 0.78) 42%, rgba(0, 0, 0, 0.24) 72%, transparent 100%)',
+                  'radial-gradient(ellipse 56% 54% at 50% 42%, black 0%, rgba(0, 0, 0, 0.88) 28%, rgba(0, 0, 0, 0.42) 58%, rgba(0, 0, 0, 0.1) 82%, transparent 100%)',
               }}
             >
               <Image

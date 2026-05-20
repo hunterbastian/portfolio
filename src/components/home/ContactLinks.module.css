@@ -1,17 +1,25 @@
 .socialLink {
-  background: var(--surface-glass-chrome);
-  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 42% 8%, rgba(255, 255, 255, 0.86), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(244, 250, 251, 0.97) 38%, rgba(231, 229, 221, 0.96) 100%),
+    var(--surface-glass-chrome);
+  border-radius: 999px;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.82),
-    inset 0 0 0 2px rgba(246, 242, 235, 0.82),
-    inset 0 6px 13px rgba(255, 255, 255, 0.52),
-    inset 0 -7px 13px rgba(202, 192, 176, 0.18),
-    0 0 0 1px rgba(75, 65, 50, 0.07),
-    0 8px 18px -17px rgba(43, 39, 34, 0.38);
+    inset 0 1px 0 rgba(255, 255, 255, 0.96),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72),
+    inset 0 -8px 13px rgba(44, 93, 112, 0.13),
+    inset 0 -14px 17px rgba(74, 66, 54, 0.055),
+    0 0 0 1px rgba(25, 103, 138, 0.14),
+    0 1px 0 rgba(255, 255, 255, 0.76),
+    0 7px 15px -14px rgba(20, 54, 72, 0.62);
   overflow: hidden;
-  padding: 0 0.82rem;
+  padding: 0 0.6rem;
   position: relative;
-  width: 6.85rem;
+  transition:
+    transform 140ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  width: 5.85rem;
 }
 
 .socialLink::before,
@@ -21,36 +29,52 @@
   inset: 0;
   pointer-events: none;
   position: absolute;
+  transition:
+    opacity 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .socialLink::before {
   background:
-    linear-gradient(112deg, rgba(255, 255, 255, 0.62), transparent 42%),
-    radial-gradient(circle at 8% 22%, rgba(255, 255, 255, 0.76), transparent 24%),
-    radial-gradient(circle at 92% 76%, rgba(202, 192, 176, 0.16), transparent 28%);
-  opacity: 0.68;
+    linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.72) 22%, rgba(255, 255, 255, 0.2) 42%, transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.24) 34%, transparent 58%),
+    linear-gradient(90deg, rgba(0, 94, 150, 0.22), transparent 12%, transparent 88%, rgba(0, 94, 150, 0.2));
+  opacity: 0.88;
 }
 
 .socialLink::after {
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.46),
-    inset 0 -1px 0 rgba(var(--contact-accent-rgb), 0.12);
-  opacity: 0.86;
+    inset 0 0 0 1px rgba(255, 255, 255, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 -1px 0 rgba(0, 117, 178, 0.2),
+    inset 0 -9px 13px rgba(28, 73, 92, 0.14),
+    0 5px 0 -4px rgba(70, 119, 135, 0.52);
+  opacity: 0.92;
 }
 
-.socialLink:hover {
-  background: var(--surface-glass-chrome-hover);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.88),
-    inset 0 0 0 2px rgba(248, 244, 237, 0.9),
-    inset 0 7px 14px rgba(255, 255, 255, 0.6),
-    inset 0 -8px 14px rgba(202, 192, 176, 0.23),
-    0 0 0 1px rgba(75, 65, 50, 0.09),
-    0 10px 20px -17px rgba(83, 73, 58, 0.46);
-}
+@media (hover: hover) and (pointer: fine) {
+  .socialLink:hover {
+    background:
+      radial-gradient(ellipse at 42% 8%, rgba(255, 255, 255, 0.94), transparent 39%),
+      linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(240, 251, 253, 0.98) 38%, rgba(229, 231, 224, 0.98) 100%),
+      var(--surface-glass-chrome-hover);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.78),
+      inset 0 -9px 14px rgba(44, 93, 112, 0.16),
+      inset 0 -15px 18px rgba(74, 66, 54, 0.065),
+      0 0 0 1px rgba(25, 103, 138, 0.18),
+      0 1px 0 rgba(255, 255, 255, 0.84),
+      0 9px 18px -14px rgba(20, 54, 72, 0.68),
+      0 0 17px -12px rgba(0, 172, 237, 0.72);
+    filter: brightness(1.025) saturate(1.04);
+    transform: translateY(-1px);
+  }
 
-.socialLink:hover::before {
-  opacity: 0.86;
+  .socialLink:hover::before {
+    opacity: 0.96;
+    transform: translateY(-1px);
+  }
 }
 
 :global(.dark) .socialLink {

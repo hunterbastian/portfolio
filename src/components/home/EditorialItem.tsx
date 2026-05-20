@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { showJoyToast } from '@/lib/joy'
 
@@ -28,6 +28,7 @@ export interface EditorialItemProps {
   external?: boolean
   title: string
   description: string
+  titleLeadingIcon?: ReactNode
   trailing?: string
   titleFontClassName?: string
   onMouseEnter?: () => void
@@ -47,6 +48,7 @@ export function EditorialItem({
   external = false,
   title,
   description,
+  titleLeadingIcon,
   trailing,
   titleFontClassName,
   onMouseEnter,
@@ -128,18 +130,21 @@ export function EditorialItem({
               {eyebrow}
             </p>
           ) : null}
-          <div className="flex min-w-0 items-baseline justify-between gap-3">
-            <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 text-[0.95rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 ${underlineOnHover ? 'group-hover:text-[var(--editorial-accent)]' : 'group-hover:text-foreground/86'} sm:text-[1.02rem] sm:leading-none`}>
-              <span
-                className={
-                  underlineOnHover
-                    ? `${titleFontClassName ?? ''} inline underline decoration-current underline-offset-[0.2em] transition-[text-decoration-color] duration-300 group-hover:decoration-[var(--editorial-accent)]`
-                    : `${titleFontClassName ?? ''} inline`
-                }
-              >
-                {title}
-              </span>
-            </p>
+          <div className="flex min-w-0 items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-2">
+              {titleLeadingIcon ? <span className="shrink-0">{titleLeadingIcon}</span> : null}
+              <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 text-[0.95rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 ${underlineOnHover ? 'group-hover:text-[var(--editorial-accent)]' : 'group-hover:text-foreground/86'} sm:text-[1.02rem] sm:leading-none`}>
+                <span
+                  className={
+                    underlineOnHover
+                      ? `${titleFontClassName ?? ''} inline underline decoration-current underline-offset-[0.2em] transition-[text-decoration-color] duration-300 group-hover:decoration-[var(--editorial-accent)]`
+                      : `${titleFontClassName ?? ''} inline`
+                  }
+                >
+                  {title}
+                </span>
+              </p>
+            </div>
             {trailing ? (
               <span className="shrink-0 font-mono text-[0.72rem] text-muted-foreground/70 transition-colors duration-300 group-hover:text-[var(--editorial-accent)] sm:hidden">
                 {trailing}

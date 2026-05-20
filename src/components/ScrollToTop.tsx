@@ -101,13 +101,9 @@ export default function ScrollToTop() {
             type="button"
             onClick={scrollToTop}
             aria-label="Scroll to top"
-            className={`${arcStyles.button} ${arcStyles.compactButton}`}
+            className={arcStyles.scrollTopButton}
           >
-            <span className={arcStyles.bezel} aria-hidden="true" />
-            <span className={arcStyles.recess} aria-hidden="true" />
-            <span className={arcStyles.face} aria-hidden="true">
-              <ScrollArrowMark className={arcStyles.arrow} />
-            </span>
+            <ScrollArrowMark className={arcStyles.scrollTopArrow} />
           </button>
         </m.div>
       )}

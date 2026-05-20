@@ -17,30 +17,42 @@ export default function SoundToggle() {
       aria-label={enabled ? 'Mute sounds' : 'Enable sounds'}
       title={enabled ? 'Mute sounds' : 'Enable sounds'}
     >
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 16 16"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        {/* Speaker body */}
-        <path d="M3 5.5h2l3.5-3v11L5 10.5H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z" />
-        {enabled ? (
-          <>
-            {/* Sound waves */}
-            <path d="M11 5.5a3 3 0 0 1 0 5" />
-            <path d="M13 3.5a6 6 0 0 1 0 9" />
-          </>
-        ) : (
-          /* Mute slash */
+      <span className="t-icon-swap" data-state={enabled ? 'b' : 'a'}>
+        {/* a = muted (slash); b = enabled (waves) */}
+        <svg
+          className="t-icon"
+          data-icon="a"
+          width="12"
+          height="12"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 5.5h2l3.5-3v11L5 10.5H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z" />
           <path d="M11 5.5l4 5M15 5.5l-4 5" />
-        )}
-      </svg>
+        </svg>
+        <svg
+          className="t-icon"
+          data-icon="b"
+          width="12"
+          height="12"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 5.5h2l3.5-3v11L5 10.5H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z" />
+          <path d="M11 5.5a3 3 0 0 1 0 5" />
+          <path d="M13 3.5a6 6 0 0 1 0 9" />
+        </svg>
+      </span>
     </button>
   )
 }

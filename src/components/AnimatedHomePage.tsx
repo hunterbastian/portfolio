@@ -166,10 +166,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
         <span className="home-painterly-wash home-painterly-wash-contact" />
       </div>
       <div aria-hidden="true" className="home-coast-outro">
-        <span className="home-coast-cloud home-coast-cloud-left" />
-        <span className="home-coast-cloud home-coast-cloud-center" />
-        <span className="home-coast-cloud home-coast-cloud-right" />
-        <span className="home-coast-foam" />
       </div>
 
       <div className="mx-auto max-w-[36rem] pt-9 sm:pt-28">
@@ -183,33 +179,33 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <div
               ref={heroGlowRef}
               aria-hidden="true"
-              className={`animated-hero-glow pointer-events-none absolute left-[calc(50%+2rem)] -top-20 -z-10 h-[28rem] w-[calc(100vw+2rem)] overflow-hidden opacity-[0.3] blur-lg transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:left-[calc(50%+7rem)] sm:-top-28 sm:h-[34rem] sm:w-[calc(100vw+12rem)] sm:opacity-[0.38] sm:blur-xl dark:opacity-[0.24] ${
+              className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-20 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-[0.64] blur-[1.5px] transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:-top-28 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:opacity-[0.72] sm:blur-[2px] dark:opacity-[0.34] ${
                 heroGlowActive ? 'is-active' : ''
               }`}
               style={{
                 maskImage:
-                  'radial-gradient(ellipse 58% 44% at 50% 42%, black 0%, rgba(0, 0, 0, 0.72) 32%, rgba(0, 0, 0, 0.22) 58%, transparent 82%)',
+                  'radial-gradient(ellipse 72% 52% at 50% 42%, black 0%, rgba(0, 0, 0, 0.78) 42%, rgba(0, 0, 0, 0.24) 72%, transparent 100%)',
                 WebkitMaskImage:
-                  'radial-gradient(ellipse 58% 44% at 50% 42%, black 0%, rgba(0, 0, 0, 0.72) 32%, rgba(0, 0, 0, 0.22) 58%, transparent 82%)',
+                  'radial-gradient(ellipse 72% 52% at 50% 42%, black 0%, rgba(0, 0, 0, 0.78) 42%, rgba(0, 0, 0, 0.24) 72%, transparent 100%)',
               }}
             >
               <Image
-                src="/images/grainient-lightglow-01.jpg"
+                src="/images/mediterranean-ambient-home.webp"
                 alt=""
                 fill
-                loading="lazy"
+                loading="eager"
                 fetchPriority="low"
-                className="scale-[1.04] object-cover object-[50%_48%] sepia-[0.36] saturate-[1.18] hue-rotate-[326deg] brightness-[1.08] contrast-[0.92] mix-blend-multiply dark:mix-blend-screen"
+                className="scale-[1.02] object-cover object-[50%_48%] saturate-[1.08] brightness-[1.03] contrast-[0.98] dark:mix-blend-screen"
                 sizes="100vw"
               />
               <div
                 className="absolute inset-0 dark:mix-blend-screen"
                 style={{
                   background:
-                    'radial-gradient(ellipse at 46% 48%, rgba(255, 72, 0, 0.88) 0%, rgba(255, 92, 10, 0.64) 34%, rgba(255, 156, 58, 0.26) 62%, transparent 84%)',
+                    'linear-gradient(90deg, rgba(245, 252, 254, 0.18) 0%, transparent 34%, rgba(255, 199, 139, 0.1) 78%, transparent 100%)',
                 }}
               />
-              <div className="absolute inset-0 bg-background/14 dark:bg-background/42" />
+              <div className="absolute inset-0 bg-background/28 dark:bg-background/52" />
             </div>
 
             <div
@@ -434,6 +430,22 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     href={link.href}
                     external={link.external}
                     title={link.label}
+                    titleLeadingIcon={
+                      link.iconType === 'studio-alpine' ? (
+                        <span
+                          aria-hidden="true"
+                          className="relative block h-[1.25rem] w-[1.25rem] overflow-hidden rounded-[3px] bg-black shadow-[0_3px_10px_rgba(15,23,42,0.12)] ring-1 ring-border/45 transition-transform duration-300 group-hover:scale-[1.04] sm:h-[1.35rem] sm:w-[1.35rem]"
+                        >
+                          <Image
+                            src="/images/optimized/studio-alpine-logo.webp"
+                            alt=""
+                            fill
+                            sizes="20px"
+                            className="scale-[3.1] object-contain object-center translate-y-[-16%]"
+                          />
+                        </span>
+                      ) : null
+                    }
                     description={
                       link.label === 'Studio Alpine'
                         ? 'Photography, image-making, and visual experiments shaped outside of client work.'
@@ -482,7 +494,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <Section id="contact" title="Contact">
               <div className="space-y-5 sm:space-y-7">
                 <div className="space-y-2">
-                  <p className="max-w-[31rem] font-mono text-[0.9rem] leading-[1.58] text-muted-foreground sm:text-[0.96rem] sm:leading-[1.65]">
+                  <p className="max-w-[31rem] font-header text-[0.9rem] font-semibold leading-[1.58] tracking-[-0.02em] text-muted-foreground sm:text-[0.96rem] sm:leading-[1.65]">
                     If something here resonates, reach out.
                   </p>
                 </div>

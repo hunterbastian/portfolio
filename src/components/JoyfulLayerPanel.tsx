@@ -6,7 +6,6 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import type { ComponentType, SVGProps } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
-import ResumeModal from '@/components/ResumeModal'
 import { Archive, Contact, Work, Writing } from '@/components/pixel/glyphs'
 import { JOY_TOAST_EVENT, showJoyToast, type JoyToastDetail } from '@/lib/joy'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
@@ -150,7 +149,6 @@ export default function JoyfulLayerPanel({ projects = [], openSignal = 0 }: Joyf
   const haptic = useWebHaptics()
   const [toast, setToast] = useState<JoyToast | null>(null)
   const [paletteOpen, setPaletteOpen] = useState(false)
-  const [resumeOpen, setResumeOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
   const [recentCommandIds, setRecentCommandIds] = useState<string[]>([])
@@ -216,7 +214,7 @@ export default function JoyfulLayerPanel({ projects = [], openSignal = 0 }: Joyf
       },
       {
         id: 'cv',
-        label: 'View Resume',
+        label: 'Resume',
         hint: 'Open the resume page',
         icon: Writing,
         section: 'navigate',
@@ -257,21 +255,6 @@ export default function JoyfulLayerPanel({ projects = [], openSignal = 0 }: Joyf
         run: () => {
           router.push('/archive')
           showJoyToast('Opening playground')
-        },
-      },
-      {
-        id: 'resume',
-        label: 'Resume',
-        hint: 'Open the resume preview',
-        icon: Writing,
-        section: 'contact',
-        priority: 10,
-        keys: 'R',
-        kind: 'Control',
-        keywords: ['pdf', 'download', 'work history', 'experience'],
-        run: () => {
-          setResumeOpen(true)
-          showJoyToast('Resume opened')
         },
       },
       {
@@ -592,11 +575,6 @@ export default function JoyfulLayerPanel({ projects = [], openSignal = 0 }: Joyf
       return
     }
 
-    if (command.id === 'resume') {
-      analytics.navigationClick('launchpad_resume')
-      return
-    }
-
     if (command.id === 'email' || command.id === 'draft-project-email') {
       analytics.externalLink(`mailto:${EMAIL_ADDRESS}`, 'email')
       return
@@ -866,8 +844,6 @@ export default function JoyfulLayerPanel({ projects = [], openSignal = 0 }: Joyf
           </m.div>
         ) : null}
       </AnimatePresence>
-
-      <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
     </>
   )
 }

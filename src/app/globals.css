@@ -1020,40 +1020,12 @@ button {
 }
 
 .footer-coast-shell {
-  isolation: isolate;
-  overflow: hidden;
   position: relative;
 }
 
-.footer-coast-shell::before {
-  border-radius: 999px;
-  background:
-    radial-gradient(ellipse at 28% 48%, rgba(174, 200, 214, 0.11) 0%, rgba(174, 200, 214, 0.045) 36%, transparent 74%),
-    radial-gradient(ellipse at 52% 50%, rgba(136, 218, 232, 0.13) 0%, rgba(136, 218, 232, 0.055) 37%, transparent 76%),
-    radial-gradient(ellipse at 76% 54%, rgba(255, 204, 152, 0.075) 0%, rgba(255, 204, 152, 0.028) 34%, transparent 70%);
-  bottom: -10rem;
-  content: "";
-  filter: blur(80px) saturate(1.03);
-  left: calc(50% - 56vw);
-  mask-image: radial-gradient(ellipse 56% 60% at 50% 50%, black 0%, rgba(0, 0, 0, 0.88) 28%, rgba(0, 0, 0, 0.42) 58%, rgba(0, 0, 0, 0.1) 82%, transparent 100%);
-  opacity: 0.42;
-  pointer-events: none;
-  position: absolute;
-  right: calc(50% - 56vw);
-  top: -18rem;
-  transform: rotate(-2deg);
-  -webkit-mask-image: radial-gradient(ellipse 56% 60% at 50% 50%, black 0%, rgba(0, 0, 0, 0.88) 28%, rgba(0, 0, 0, 0.42) 58%, rgba(0, 0, 0, 0.1) 82%, transparent 100%);
-  z-index: -1;
-}
-
+.footer-coast-shell::before,
 .footer-coast-shell::after {
-  content: "";
   display: none;
-}
-
-.footer-coast-shell > * {
-  position: relative;
-  z-index: 1;
 }
 
 .home-reveal-shell {

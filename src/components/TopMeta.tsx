@@ -148,7 +148,7 @@ export default function TopMeta() {
 
   return (
     <div
-      className={`fixed inset-x-0 top-0 z-40 px-5 py-4 transition-[transform,opacity,filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-8 sm:py-6 ${
+      className={`fixed inset-x-0 top-0 z-40 px-5 py-4 transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6 ${
         headerHidden && !mobileMenuOpen
           ? 'pointer-events-none -translate-y-3 opacity-0 blur-[2px]'
           : 'pointer-events-none translate-y-0 opacity-100 blur-0'
@@ -173,7 +173,7 @@ export default function TopMeta() {
           }}
         >
           <span>Hunter Bastian</span>
-          <span className={`header-sun-shell text-accent/85 transition-[filter,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-active:scale-[0.96] ${
+          <span className={`header-sun-shell text-accent/85 transition-[filter,transform] duration-200 ease-soft group-active:scale-[0.96] ${
             sunBlinking ? 'animate-hb-sun-blink' : ''
           }`}>
               <PixelSun size={11} />
@@ -235,7 +235,7 @@ export default function TopMeta() {
           </PeekAction>
 
           <div
-            className={`absolute right-0 top-[calc(100%+0.65rem)] z-50 w-[10.5rem] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-background/94 shadow-[0_18px_44px_-32px_rgba(43,39,34,0.52),0_1px_3px_rgba(43,39,34,0.06)] backdrop-blur-xl transition-[opacity,transform,filter] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            className={`absolute right-0 top-[calc(100%+0.65rem)] z-50 w-[10.5rem] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-background/94 shadow-[0_18px_44px_-32px_rgba(43,39,34,0.52),0_1px_3px_rgba(43,39,34,0.06)] backdrop-blur-xl transition-[opacity,transform,filter] duration-200 ease-soft ${
               mobileMenuOpen
                 ? 'pointer-events-auto visible translate-y-0 opacity-100 blur-0'
                 : 'pointer-events-none invisible translate-y-1 opacity-0 blur-[4px]'

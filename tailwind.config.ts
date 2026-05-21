@@ -44,6 +44,10 @@ const config: Config = {
         'safe-left': 'env(safe-area-inset-left)',
         'safe-right': 'env(safe-area-inset-right)',
       },
+      transitionTimingFunction: {
+        soft: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        exit: 'cubic-bezier(0.4, 0, 0.7, 0.2)',
+      },
       borderRadius: {
         sm: 'var(--box-radius)',
         DEFAULT: 'var(--box-radius)',

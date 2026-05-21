@@ -86,7 +86,7 @@ export function EditorialItem({
   }
   const content = (
     <div
-      className={`group relative flex w-full origin-center items-start justify-between gap-3 px-0 py-2 transition-[transform,color,opacity,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:-mx-3 sm:gap-10 sm:px-3 sm:py-3 ${
+      className={`group relative flex w-full origin-center items-start justify-between gap-3 px-0 py-2 transition-[transform,color,opacity,background-color] duration-300 ease-soft sm:-mx-3 sm:gap-10 sm:px-3 sm:py-3 ${
         interactive ? 'cursor-pointer touch-manipulation active:translate-y-0 active:scale-[0.96] sm:hover:translate-x-[3px] sm:hover:bg-[var(--editorial-accent-bg)]' : ''
       }`}
       style={accentStyle}
@@ -113,12 +113,12 @@ export function EditorialItem({
       ) : null}
       <div className="flex min-w-0 flex-1 items-start gap-3 sm:gap-6">
         {thumbnailImage ? (
-          <div className="relative mt-0.5 h-[60px] w-[60px] shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] transition-[transform,border-color,box-shadow,filter] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[1px] group-hover:border-[var(--editorial-accent-border)] group-hover:shadow-[0_12px_28px_-18px_var(--editorial-accent-shadow)] group-active:translate-y-0 group-active:scale-[0.96] group-active:brightness-[0.98] sm:h-[84px] sm:w-[84px]">
+          <div className="relative mt-0.5 h-[60px] w-[60px] shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] transition-[transform,border-color,box-shadow,filter] duration-300 ease-soft group-hover:-translate-y-[1px] group-hover:border-[var(--editorial-accent-border)] group-hover:shadow-[0_12px_28px_-18px_var(--editorial-accent-shadow)] group-active:translate-y-0 group-active:scale-[0.96] group-active:brightness-[0.98] sm:h-[84px] sm:w-[84px]">
             <Image
               src={thumbnailImage}
               alt={thumbnailAlt ?? title}
               fill
-              className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.018] group-active:scale-[1.01]"
+              className="object-cover transition-transform duration-500 ease-soft group-hover:scale-[1.018] group-active:scale-[1.01]"
               sizes="(min-width: 640px) 84px, 60px"
             />
           </div>

@@ -78,7 +78,7 @@ export default function ProjectTextList({ projects }: ProjectTextListProps) {
               }}
               onMouseEnter={() => setHoveredSlug(project.slug)}
               onMouseLeave={() => setHoveredSlug(null)}
-              className="group relative flex w-full items-center justify-between border-b border-border px-1 py-4 text-left transition-[color,opacity,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:py-5"
+              className="group relative flex w-full items-center justify-between border-b border-border px-1 py-4 text-left transition-[color,opacity,filter] duration-500 ease-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:py-5"
               style={{
                 opacity: hasHover && !isHovered ? 0.35 : 1,
                 filter: hasHover && !isHovered ? 'blur(1px)' : 'none',

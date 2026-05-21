@@ -238,7 +238,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
           return (
             <div
               key={project.slug}
-              className="w-full transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+              className="w-full transition-[transform,opacity] duration-[550ms] ease-soft"
               style={{
                 zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
                 opacity: cardOpacity,
@@ -270,7 +270,7 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
         return (
           <m.div
             key={project.slug}
-            className="w-full transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+            className="w-full transition-[transform,opacity] duration-[550ms] ease-soft"
             style={{
               zIndex: isHovered ? orderedProjects.length + 20 : stackZIndex,
             }}

@@ -23,7 +23,7 @@ export default function BreadcrumbPill({ href, parentLabel, currentLabel }: Brea
         analytics.navigationClick(parentLabel.toLowerCase())
       }}
     >
-      <IconArrowBackUp size={11} className="shrink-0 opacity-60 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1" aria-hidden />
+      <IconArrowBackUp size={11} className="shrink-0 opacity-60 transition-transform duration-200 ease-soft group-hover:-translate-x-1" aria-hidden />
       <span className="text-foreground opacity-90">{parentLabel}</span>
       <span aria-hidden className="text-muted-foreground/30">/</span>
       <span>{currentLabel}</span>

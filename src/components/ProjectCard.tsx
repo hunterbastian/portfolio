@@ -67,7 +67,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
     <div className="relative">
       <Link href={`/projects/${slug}`} onClick={handleTransitionClick} onMouseEnter={() => { if (canHover) play('tone') }} className="group block h-full w-full touch-manipulation focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">
           <div
-            className="project-card relative isolate origin-center overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.96]"
+            className="project-card relative isolate origin-center overflow-hidden text-card-foreground transition-[transform,box-shadow] duration-[400ms] ease-soft hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.96]"
             style={{
               animationDelay: `${index * 80}ms`,
             }}
@@ -84,7 +84,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                   src={imgSrc}
                   alt={`Preview of ${frontmatter.title}`}
                   fill
-                  className={`object-cover ${index === 0 ? 'transition-[transform,filter]' : 'transition-[transform,opacity,filter]'} duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.015] group-hover:saturate-[0.96] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  className={`object-cover ${index === 0 ? 'transition-[transform,filter]' : 'transition-[transform,opacity,filter]'} duration-500 ease-soft group-hover:scale-[1.015] group-hover:saturate-[0.96] ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
                   sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc((100vw - 5rem) / 2), 560px"
                   quality={80}
                   priority={shouldPrioritizeImage}
@@ -98,7 +98,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
               {frontmatter.video && (
                 <video
                   src={frontmatter.video}
-                  className="absolute inset-0 hidden h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 sm:block"
+                  className="absolute inset-0 hidden h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-soft group-hover:opacity-100 sm:block"
                   autoPlay
                   loop
                   muted
@@ -107,7 +107,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                 />
               )}
 
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/8 transition-opacity duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-70" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/8 transition-opacity duration-500 ease-soft group-hover:opacity-70" />
             </div>
 
             {!hideLabel && (

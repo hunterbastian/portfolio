@@ -50,7 +50,7 @@ function ProjectEndNavLink({
             src={item.image}
             alt=""
             fill
-            className="object-cover transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]"
+            className="object-cover transition-transform duration-300 ease-soft group-hover:scale-[1.02]"
             sizes="(max-width: 640px) 68px, 80px"
           />
         </div>

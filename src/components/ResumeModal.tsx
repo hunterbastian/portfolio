@@ -68,7 +68,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   onClick={handleClose}
                   className="group mb-6 inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 font-mono text-[12px] tracking-[0.06em] text-muted-foreground transition-[color,transform] duration-150 hover:text-foreground active:translate-y-0 active:scale-[0.96]"
                 >
-                  <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-0.5" aria-hidden />
+                  <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-soft group-hover:-translate-x-0.5" aria-hidden />
                   <span className="text-foreground">Home</span>
                   <span aria-hidden className="text-muted-foreground/70">/</span>
                   <span>Resume</span>

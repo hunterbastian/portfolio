@@ -92,7 +92,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
-      className={`${shellClass} px-5 pb-10 pt-12 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-8 sm:pb-14 sm:pt-20 ${visibilityClass}`}
+      className={`${shellClass} px-5 pb-10 pt-12 transition-[transform,opacity] duration-300 ease-soft sm:px-8 sm:pb-14 sm:pt-20 ${visibilityClass}`}
     >
       <div className="mx-auto max-w-[36rem] border-t border-border/80 pt-5">
         <div className="flex flex-col gap-3 text-[0.76rem] text-muted-foreground sm:flex-row sm:items-start sm:justify-between">
@@ -102,7 +102,7 @@ export default function Footer() {
           <p className="footer-made-line inline-flex items-center gap-2 font-header transition-colors duration-150 hover:text-foreground/78">
             <span aria-hidden="true" className="footer-pixel-sun-shell">
               <span
-                className={`footer-pixel-sun transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                className={`footer-pixel-sun transition-transform duration-200 ease-soft ${
                   sparkleActive ? 'animate-hb-sun-blink' : ''
                 }`}
               >

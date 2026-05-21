@@ -189,7 +189,7 @@ function OrbitCard({
       }}
     >
       <m.div
-        className="will-change-transform transition-[filter,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="will-change-transform transition-[filter,transform] duration-700 ease-soft"
         style={{
           rotate: tilt,
           scale: isHovered ? 1.2 : 1,

@@ -27,7 +27,7 @@ export default function AboutPageClient() {
         <div className="relative z-10 flex justify-center pb-32 pt-16 sm:pt-24">
           <div className="flex max-w-[36rem] flex-col items-center text-center">
             {/* --- Profile --- */}
-            <div className="mask mask-squircle p-[2px] shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.06]" style={{ background: 'var(--border)' }}>
+            <div className="mask mask-squircle p-[2px] shadow-sm transition-transform duration-300 ease-soft hover:scale-[1.06]" style={{ background: 'var(--border)' }}>
               <Image
                 src="/images/profilepicture.webp"
                 alt="Outdoor photograph of Hunter Bastian walking along a mountain road."

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { useMediaQuery } from '@/lib/use-media-query'
 
 interface TextTypeProps {
   text: string | string[]
@@ -35,7 +36,7 @@ export default function TextType({
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [displayText, setDisplayText] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
-  const [reduceMotion, setReduceMotion] = useState(false)
+  const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   const [hasStarted, setHasStarted] = useState(startDelay <= 0)
   const [cursorVisible, setCursorVisible] = useState(true)
   const cursorTimerRef = useRef<number | null>(null)
@@ -44,19 +45,6 @@ export default function TextType({
     !isDeleting &&
     currentTextIndex === texts.length - 1 &&
     displayText === (texts[texts.length - 1] ?? '')
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const updateReduceMotion = () => setReduceMotion(media.matches)
-    updateReduceMotion()
-    media.addEventListener('change', updateReduceMotion)
-
-    return () => media.removeEventListener('change', updateReduceMotion)
-  }, [])
 
   useEffect(() => {
     if (reduceMotion || startDelay <= 0) {

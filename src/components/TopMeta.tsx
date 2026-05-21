@@ -8,6 +8,7 @@ import { Summer as PixelSun } from '@/components/pixel/glyphs'
 import { PeekAction } from '@/components/PeekAction'
 import { showJoyToast } from '@/lib/joy'
 import { analytics } from '@/lib/analytics'
+import { useMediaQuery } from '@/lib/use-media-query'
 import { cn } from '@/lib/utils'
 
 const PAGE_NAV = [
@@ -54,6 +55,7 @@ export default function TopMeta() {
   const sunIdleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const sunBlinkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const haptic = useWebHaptics()
+  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
 
   const triggerSunBlink = useCallback(() => {
     setSunBlinking(true)
@@ -90,9 +92,7 @@ export default function TopMeta() {
   }, [])
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return
-    }
+    if (prefersReducedMotion) return
 
     const scheduleIdleBlink = () => {
       sunIdleTimerRef.current = setTimeout(() => {
@@ -108,7 +108,7 @@ export default function TopMeta() {
         clearTimeout(sunIdleTimerRef.current)
       }
     }
-  }, [triggerSunBlink])
+  }, [prefersReducedMotion, triggerSunBlink])
 
   useEffect(() => {
     mobileMenuOpenRef.current = mobileMenuOpen

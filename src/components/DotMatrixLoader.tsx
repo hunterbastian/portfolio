@@ -70,10 +70,10 @@ export default function DotMatrixLoader({
     >
       {fullscreen ? (
         <>
-          <div className="absolute inset-0 bg-background/82 backdrop-blur-xl dark:bg-background/88" />
+          <div className="absolute inset-0 bg-background/82 backdrop-blur-xl" />
           <div
             aria-hidden="true"
-            className="absolute inset-0 opacity-[0.18] dark:opacity-[0.11]"
+            className="absolute inset-0 opacity-[0.18]"
             style={{
               backgroundImage:
                 'radial-gradient(circle at center, rgba(var(--grain-rgb), 0.36) 0 0.8px, transparent 1px)',

@@ -83,7 +83,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <div
               ref={heroGlow.glowRef}
               aria-hidden="true"
-              className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-100 blur-[2.5px] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:blur-[3.5px] dark:opacity-[0.58] ${
+              className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-100 blur-[2.5px] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:blur-[3.5px] ${
                 heroGlow.isActive ? 'is-active' : ''
               }`}
               style={{
@@ -99,23 +99,23 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 fill
                 loading="eager"
                 fetchPriority="low"
-                className="scale-[1.02] object-cover object-[50%_48%] saturate-[1.08] brightness-[1.03] contrast-[0.98] dark:mix-blend-screen"
+                className="scale-[1.02] object-cover object-[50%_48%] saturate-[1.08] brightness-[1.03] contrast-[0.98]"
                 sizes="100vw"
               />
               <div
-                className="absolute inset-0 dark:mix-blend-screen"
+                className="absolute inset-0"
                 style={{
                   background:
                     'linear-gradient(90deg, rgba(245, 252, 254, 0.18) 0%, transparent 34%, rgba(255, 199, 139, 0.1) 78%, transparent 100%)',
                 }}
               />
-              <div className="absolute inset-0 bg-background/8 dark:bg-background/32" />
+              <div className="absolute inset-0 bg-background/8" />
             </div>
 
             <div
               ref={heroGlow.grainRef}
               aria-hidden="true"
-              className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[28rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-multiply transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-16 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] dark:opacity-[0.036] dark:mix-blend-screen ${
+              className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[28rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-multiply transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-16 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] ${
                 heroGlow.isActive ? 'is-active' : ''
               }`}
               style={{
@@ -133,7 +133,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 <div className="group relative isolate w-fit">
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-soft group-hover:opacity-100 group-hover:scale-100 dark:hidden"
+                    className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-soft group-hover:opacity-100 group-hover:scale-100"
                     style={{
                       background:
                         'radial-gradient(ellipse at 48% 52%, rgba(255, 72, 0, 0.56) 0%, rgba(255, 103, 16, 0.42) 32%, rgba(255, 178, 66, 0.22) 58%, transparent 80%)',
@@ -141,7 +141,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   />
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -inset-10 -z-10 hidden rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-soft group-hover:opacity-100 group-hover:scale-100 dark:block"
+                    className="pointer-events-none absolute -inset-10 -z-10 hidden rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-soft group-hover:opacity-100 group-hover:scale-100"
                     style={{
                       background:
                         'radial-gradient(ellipse at 48% 52%, rgba(255, 78, 0, 0.4) 0%, rgba(255, 114, 18, 0.3) 34%, rgba(255, 178, 66, 0.16) 60%, transparent 82%)',

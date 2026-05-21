@@ -16,7 +16,7 @@ export default function AboutPageClient() {
   return (
     <div className="relative min-h-screen">
       <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.15] dark:opacity-[0.08] about-page-glow"
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.15] about-page-glow"
         aria-hidden="true"
       />
       <div className="relative z-10 mx-auto max-w-[36rem] px-5 sm:px-8">

@@ -108,8 +108,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <meta name="theme-color" content={siteConfig.themeColorLight} media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content={siteConfig.themeColorDark} media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content={siteConfig.themeColorLight} />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />

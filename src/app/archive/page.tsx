@@ -76,7 +76,7 @@ export default function ArchivePage() {
   return (
     <div className="relative -mt-14 min-h-screen px-5 pb-24 pt-14 sm:-mt-16 sm:px-8 sm:pb-32 sm:pt-16">
       <div
-        className="pointer-events-none fixed inset-0 z-0 opacity-[0.14] dark:opacity-[0.08] archive-glow"
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.14] archive-glow"
         aria-hidden="true"
       />
 

@@ -208,13 +208,13 @@ export default function TopMeta() {
             onMouseEnter={() => window.dispatchEvent(new CustomEvent(LAUNCHER_PRELOAD_EVENT))}
           >
             <span className="launcher-depth-pill relative isolate inline-flex min-w-[8rem] items-center justify-center gap-3 overflow-hidden rounded-full px-4 py-[0.48rem] leading-none">
-              <span className="relative z-10 translate-y-[0.01rem] text-[0.83rem] tracking-[-0.025em] text-[#403d38] [text-shadow:0_1px_0_rgba(255,255,255,0.72)] dark:text-[#f7efe4]">
+              <span className="relative z-10 translate-y-[0.01rem] text-[0.83rem] tracking-[-0.025em] text-[#403d38] [text-shadow:0_1px_0_rgba(255,255,255,0.72)]">
                 Launchpad
               </span>
               <ArrowUpRight
                 aria-hidden="true"
                 strokeWidth={1.95}
-                className="relative z-10 h-[1rem] w-[1rem] translate-y-[-0.03rem] text-[#403d38] drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] transition-transform duration-200 group-hover/launcher:translate-x-0.5 group-hover/launcher:-translate-y-[0.18rem] dark:text-[#f7efe4]"
+                className="relative z-10 h-[1rem] w-[1rem] translate-y-[-0.03rem] text-[#403d38] drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] transition-transform duration-200 group-hover/launcher:translate-x-0.5 group-hover/launcher:-translate-y-[0.18rem]"
               />
             </span>
           </PeekAction>

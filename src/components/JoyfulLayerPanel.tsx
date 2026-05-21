@@ -768,7 +768,7 @@ export default function JoyfulLayerPanel({ projects = [], openSignal = 0 }: Joyf
                                 aria-selected={active}
                                 className={`flex min-h-[46px] w-full origin-center touch-manipulation items-center justify-between gap-3 rounded-[6px] border px-2.5 py-2 text-left transition-[background-color,border-color,box-shadow,color,transform] duration-150 active:translate-y-0 active:scale-[0.97] ${
                                   active
-                                    ? 'border-[#d8cfc2]/80 bg-[#fffaf4]/82 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_10px_24px_-22px_rgba(43,39,34,0.54)] dark:border-foreground/[0.14] dark:bg-foreground/[0.08]'
+                                    ? 'border-[#d8cfc2]/80 bg-[#fffaf4]/82 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_10px_24px_-22px_rgba(43,39,34,0.54)]'
                                     : 'border-transparent text-foreground hover:bg-foreground/[0.035]'
                                 }`}
                                 onMouseEnter={() => setActiveIndex(rowIndex)}
@@ -779,7 +779,7 @@ export default function JoyfulLayerPanel({ projects = [], openSignal = 0 }: Joyf
                                     aria-hidden="true"
                                     className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-[5px] border text-muted-foreground transition-[color,background-color,border-color,box-shadow] duration-150 ${
                                       active
-                                        ? 'border-[#d3c6b8]/90 bg-background/82 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] dark:border-foreground/[0.16] dark:bg-background/62'
+                                        ? 'border-[#d3c6b8]/90 bg-background/82 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]'
                                         : 'border-border/56 bg-background/50'
                                     }`}
                                   >

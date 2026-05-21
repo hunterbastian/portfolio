@@ -46,7 +46,7 @@ export function ContactLinks() {
             aria-label={link.ariaLabel ?? `Open ${link.label}`}
             className={cn(
               styles.socialLink,
-              'group/social-link inline-flex min-h-[36px] origin-center touch-manipulation items-center justify-center gap-1 font-header text-[0.68rem] leading-none text-[#403d38]/78 transition-[color,transform] duration-150 hover:text-[#403d38] active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:text-[#f7efe4]/76 dark:hover:text-[#f7efe4] sm:text-[0.72rem]',
+              'group/social-link inline-flex min-h-[36px] origin-center touch-manipulation items-center justify-center gap-1 font-header text-[0.68rem] leading-none text-[#403d38]/78 transition-[color,transform] duration-150 hover:text-[#403d38] active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.72rem]',
             )}
             onClick={() => handleContactClick(link)}
           >
@@ -56,7 +56,7 @@ export function ContactLinks() {
             <ArrowUpRight
               aria-hidden="true"
               strokeWidth={1.7}
-              className="relative z-10 h-2 w-2 shrink-0 text-[#403d38]/42 transition-colors duration-150 group-hover/social-link:text-[#403d38]/68 dark:text-[#f7efe4]/42 dark:group-hover/social-link:text-[#f7efe4]/68"
+              className="relative z-10 h-2 w-2 shrink-0 text-[#403d38]/42 transition-colors duration-150 group-hover/social-link:text-[#403d38]/68"
             />
           </a>
         ))}

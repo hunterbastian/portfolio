@@ -3,7 +3,6 @@
 import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
 export interface GrainWaveProps {
@@ -251,10 +250,7 @@ const GrainWave: React.FC<GrainWaveProps> = ({
   waveWidth = 3.5,
   scale = 0.6,
 }) => {
-  const { resolvedTheme } = useTheme();
-
-  const backgroundColor =
-    resolvedTheme === "dark" ? darkBackground : lightBackground;
+  const backgroundColor = lightBackground;
 
   const widthStyle = typeof width === "number" ? `${width}px` : width;
   const heightStyle = typeof height === "number" ? `${height}px` : height;

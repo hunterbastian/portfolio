@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useState, useCallback, useRef, useEffect } from 'react'
+import { memo, useState, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/types/project'
@@ -9,6 +9,7 @@ import { useWebHaptics } from 'web-haptics/react'
 import { useSound } from '@/lib/sounds/context'
 import { showJoyToast } from '@/lib/joy'
 import { analytics } from '@/lib/analytics'
+import { useMediaQuery } from '@/lib/use-media-query'
 
 interface ProjectCardProps {
   slug: string
@@ -45,16 +46,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
   const onLoad = useCallback(() => setImgLoaded(true), [])
   const haptic = useWebHaptics()
   const { play } = useSound()
-  const [canHover, setCanHover] = useState(false)
-
-  // Only enable hover sounds on devices that support fine pointer (desktop)
-  useEffect(() => {
-    const mq = window.matchMedia('(hover: hover)')
-    setCanHover(mq.matches)
-    const onChange = (e: MediaQueryListEvent) => setCanHover(e.matches)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
+  const canHover = useMediaQuery('(hover: hover)')
 
   const handleTransitionClick = useCallback(() => {
     haptic.trigger('medium')

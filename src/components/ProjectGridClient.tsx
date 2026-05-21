@@ -7,6 +7,7 @@ import ProjectCard from '@/components/ProjectCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ProjectFrontmatter } from '@/types/project'
 import { MOTION_EASE_SOFT, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import { useMediaQuery } from '@/lib/use-media-query'
 
 interface Project {
   slug: string
@@ -118,7 +119,7 @@ function getStackPriorityZIndex(index: number, total: number, stackPriority: Sta
 export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: ProjectGridClientProps) {
   const [stage, setStage] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [supportsHover, setSupportsHover] = useState(false)
+  const supportsHover = useMediaQuery('(hover: hover) and (pointer: fine)')
 
   const router = useRouter()
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -158,20 +159,6 @@ export default function ProjectGridClient({ projects, initialLoadDelayMs = 0 }: 
     prefetchedSlugsRef.current.add(slug)
     router.prefetch(`/projects/${slug}`)
   }, [router])
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
-    const updateSupportsHover = () => setSupportsHover(mediaQuery.matches)
-
-    updateSupportsHover()
-    mediaQuery.addEventListener('change', updateSupportsHover)
-
-    return () => mediaQuery.removeEventListener('change', updateSupportsHover)
-  }, [])
 
   useEffect(() => {
     if (!isGridInView) {

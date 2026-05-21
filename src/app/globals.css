@@ -1007,36 +1007,11 @@ button {
 }
 
 .home-coast-outro {
-  border-radius: 999px;
-  background:
-    radial-gradient(ellipse at 26% 58%, rgba(174, 200, 214, 0.18) 0%, rgba(174, 200, 214, 0.08) 35%, transparent 71%),
-    radial-gradient(ellipse at 54% 56%, rgba(136, 218, 232, 0.24) 0%, rgba(136, 218, 232, 0.11) 36%, transparent 73%),
-    radial-gradient(ellipse at 74% 62%, rgba(255, 204, 152, 0.14) 0%, rgba(255, 204, 152, 0.055) 35%, transparent 70%),
-    radial-gradient(ellipse at 50% 76%, rgba(232, 250, 251, 0.2) 0%, transparent 58%);
-  bottom: -18rem;
-  filter: blur(64px) saturate(1.04);
-  height: 36rem;
-  inset-inline: calc(50% - 56vw);
-  mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.12) 14%, black 42%, rgba(0, 0, 0, 0.78) 78%, transparent 100%);
-  overflow: hidden;
-  pointer-events: none;
-  position: absolute;
-  opacity: 0.74;
-  transform: rotate(-2deg);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.12) 14%, black 42%, rgba(0, 0, 0, 0.78) 78%, transparent 100%);
-  z-index: -1;
+  display: none;
 }
 
 .home-coast-outro::before {
-  background:
-    radial-gradient(ellipse at 42% 45%, rgba(255, 255, 255, 0.46) 0%, rgba(255, 255, 255, 0.16) 34%, transparent 68%),
-    radial-gradient(ellipse at 62% 86%, rgba(235, 250, 251, 0.3) 0%, transparent 62%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.12) 36%, transparent 76%);
-  content: "";
-  filter: blur(48px);
-  inset: -5rem 3vw 18%;
-  opacity: 0.52;
-  position: absolute;
+  display: none;
 }
 
 .home-coast-outro::after {

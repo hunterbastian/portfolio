@@ -179,7 +179,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <div
               ref={heroGlowRef}
               aria-hidden="true"
-              className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-[0.86] blur-[2.5px] transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:opacity-[0.94] sm:blur-[3.5px] dark:opacity-[0.48] ${
+              className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-100 blur-[2.5px] transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:blur-[3.5px] dark:opacity-[0.58] ${
                 heroGlowActive ? 'is-active' : ''
               }`}
               style={{
@@ -205,7 +205,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     'linear-gradient(90deg, rgba(245, 252, 254, 0.18) 0%, transparent 34%, rgba(255, 199, 139, 0.1) 78%, transparent 100%)',
                 }}
               />
-              <div className="absolute inset-0 bg-background/14 dark:bg-background/40" />
+              <div className="absolute inset-0 bg-background/8 dark:bg-background/32" />
             </div>
 
             <div

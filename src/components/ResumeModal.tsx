@@ -5,6 +5,7 @@ import { useCallback, useEffect } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { showJoyToast } from '@/lib/joy'
 import { analytics } from '@/lib/analytics'
+import { useBodyScrollLock } from '@/lib/use-body-scroll-lock'
 import IconArrowBackUp from './IconArrowBackUp'
 
 interface ResumeModalProps {
@@ -27,20 +28,17 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
     }
   }, [isOpen])
 
+  useBodyScrollLock(isOpen)
+
   useEffect(() => {
+    if (!isOpen) return
+
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') handleClose()
     }
 
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'hidden'
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
-    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
   }, [isOpen, handleClose])
 
   return (

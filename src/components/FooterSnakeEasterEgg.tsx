@@ -9,6 +9,7 @@ import {
   setSnakeDirection,
   SnakeDirection,
 } from '@/lib/snake'
+import { useBodyScrollLock } from '@/lib/use-body-scroll-lock'
 
 const TICK_MS = 120
 const PIXEL_ICON = ['00100', '01110', '11111', '01110', '00100']
@@ -83,13 +84,10 @@ export default function FooterSnakeEasterEgg() {
     return () => window.clearInterval(intervalId)
   }, [isOpen, isPaused])
 
-  useEffect(() => {
-    if (!isOpen) {
-      return undefined
-    }
+  useBodyScrollLock(isOpen)
 
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+  useEffect(() => {
+    if (!isOpen) return
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -118,11 +116,7 @@ export default function FooterSnakeEasterEgg() {
     }
 
     window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleKeyDown)
-    }
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleDirection, isOpen, restartGame])
 
   useEffect(() => {

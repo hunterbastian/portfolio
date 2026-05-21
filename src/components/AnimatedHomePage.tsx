@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { AnimatePresence, m } from 'framer-motion'
-import { useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import {
   creatingLinks,
@@ -17,6 +17,8 @@ import { PeekAction } from '@/components/PeekAction'
 import { showJoyToast } from '@/lib/joy'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 import { analytics } from '@/lib/analytics'
+import { useHeroGlow } from '@/lib/use-hero-glow'
+import { useWorkFilterUrlSync } from '@/lib/use-work-filter-url-sync'
 import {
   PROJECT_GLOW_GRADIENTS,
   WORK_FILTER_LABELS,
@@ -24,7 +26,6 @@ import {
   getHomeProjectDescription,
   getProjectAccent,
   getProjectRows,
-  normalizeWorkFilter,
   type HomeProject,
   type WorkFilter,
 } from '@/lib/home-projects'
@@ -33,23 +34,15 @@ interface AnimatedHomePageProps {
   projects: HomeProject[]
 }
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max)
-}
-
 export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const introParagraphs = homeHeroContent.intro.split('\n\n')
   const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null)
   const [workFilter, setWorkFilter] = useState<WorkFilter>('all')
-  const [heroGlowActive, setHeroGlowActive] = useState(false)
-  const heroGlowRef = useRef<HTMLDivElement | null>(null)
-  const heroGrainRef = useRef<HTMLDivElement | null>(null)
-  const heroGlowBoundsRef = useRef<DOMRect | null>(null)
-  const heroGlowFrameRef = useRef<number | null>(null)
-  const heroGlowPointerRef = useRef({ x: 0, y: 0 })
-  const heroGlowCurrentRef = useRef({ x: 0, y: 0 })
+  const heroGlow = useHeroGlow()
   const haptic = useWebHaptics()
   const projectRows = getProjectRows(projects, workFilter)
+
+  useWorkFilterUrlSync(setWorkFilter)
 
   const applyWorkFilter = (filter: WorkFilter) => {
     setWorkFilter(filter)
@@ -69,95 +62,6 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
     }
   }
 
-  useEffect(() => {
-    return () => {
-      if (heroGlowFrameRef.current !== null) {
-        window.cancelAnimationFrame(heroGlowFrameRef.current)
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    const syncFilterFromUrl = () => {
-      setWorkFilter(normalizeWorkFilter(new URL(window.location.href).searchParams.get('work')))
-    }
-
-    const handleExternalFilter = (event: Event) => {
-      const detail = (event as CustomEvent<{ filter?: string }>).detail
-      setWorkFilter(normalizeWorkFilter(detail?.filter))
-    }
-
-    syncFilterFromUrl()
-    window.addEventListener('popstate', syncFilterFromUrl)
-    window.addEventListener('hb-work-filter', handleExternalFilter as EventListener)
-
-    return () => {
-      window.removeEventListener('popstate', syncFilterFromUrl)
-      window.removeEventListener('hb-work-filter', handleExternalFilter as EventListener)
-    }
-  }, [])
-
-  const writeHeroGlowPosition = () => {
-    const glow = heroGlowRef.current
-    const grain = heroGrainRef.current
-    const target = heroGlowPointerRef.current
-    const current = heroGlowCurrentRef.current
-
-    current.x += (target.x - current.x) * 0.09
-    current.y += (target.y - current.y) * 0.09
-
-    const glowX = clamp(current.x * 16, -16, 16)
-    const glowY = clamp(current.y * 8, -8, 8)
-
-    if (glow) {
-      glow.style.setProperty('--hero-glow-cursor-x', `${glowX}px`)
-      glow.style.setProperty('--hero-glow-cursor-y', `${glowY}px`)
-    }
-
-    if (grain) {
-      grain.style.setProperty('--hero-grain-cursor-x', `${glowX * 0.55}px`)
-      grain.style.setProperty('--hero-grain-cursor-y', `${glowY * 0.55}px`)
-    }
-
-    if (Math.abs(target.x - current.x) > 0.002 || Math.abs(target.y - current.y) > 0.002) {
-      heroGlowFrameRef.current = window.requestAnimationFrame(writeHeroGlowPosition)
-      return
-    }
-
-    heroGlowCurrentRef.current = { x: target.x, y: target.y }
-    heroGlowFrameRef.current = null
-  }
-
-  const scheduleHeroGlowPosition = () => {
-    if (heroGlowFrameRef.current === null) {
-      heroGlowFrameRef.current = window.requestAnimationFrame(writeHeroGlowPosition)
-    }
-  }
-
-  const trackHeroGlowBounds = (event: PointerEvent<HTMLElement>) => {
-    setHeroGlowActive(true)
-    heroGlowBoundsRef.current = event.currentTarget.getBoundingClientRect()
-  }
-
-  const updateHeroGlow = (event: PointerEvent<HTMLElement>) => {
-    const rect = heroGlowBoundsRef.current ?? event.currentTarget.getBoundingClientRect()
-    heroGlowBoundsRef.current = rect
-
-    heroGlowPointerRef.current = {
-      x: (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2),
-      y: (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2),
-    }
-
-    scheduleHeroGlowPosition()
-  }
-
-  const resetHeroGlow = () => {
-    heroGlowBoundsRef.current = null
-    heroGlowPointerRef.current = { x: 0, y: 0 }
-    setHeroGlowActive(false)
-    scheduleHeroGlowPosition()
-  }
-
   return (
     <div className="relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
       <div aria-hidden="true" className="home-painterly-washes">
@@ -172,15 +76,15 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
         <Reveal>
           <section
             className="relative isolate space-y-6 sm:min-h-[20.5rem] sm:space-y-8"
-            onPointerEnter={trackHeroGlowBounds}
-            onPointerMove={updateHeroGlow}
-            onPointerLeave={resetHeroGlow}
+            onPointerEnter={heroGlow.handlers.onPointerEnter}
+            onPointerMove={heroGlow.handlers.onPointerMove}
+            onPointerLeave={heroGlow.handlers.onPointerLeave}
           >
             <div
-              ref={heroGlowRef}
+              ref={heroGlow.glowRef}
               aria-hidden="true"
               className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-100 blur-[2.5px] transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:blur-[3.5px] dark:opacity-[0.58] ${
-                heroGlowActive ? 'is-active' : ''
+                heroGlow.isActive ? 'is-active' : ''
               }`}
               style={{
                 maskImage:
@@ -209,10 +113,10 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             </div>
 
             <div
-              ref={heroGrainRef}
+              ref={heroGlow.grainRef}
               aria-hidden="true"
               className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[28rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-multiply transition-transform duration-[1800ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform sm:left-[calc(50%+7rem)] sm:-top-16 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] dark:opacity-[0.036] dark:mix-blend-screen ${
-                heroGlowActive ? 'is-active' : ''
+                heroGlow.isActive ? 'is-active' : ''
               }`}
               style={{
                 backgroundImage: "url('/images/hero-grain.svg')",

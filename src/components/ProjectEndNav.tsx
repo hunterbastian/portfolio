@@ -17,12 +17,14 @@ interface ProjectEndNavProps {
 
 function ProjectEndNavLink({
   item,
+  indexLabel,
   label,
   currentSlug,
   currentTitle,
   source,
 }: {
   item: ProjectEndNavItem
+  indexLabel: string
   label: string
   currentSlug: string
   currentTitle: string
@@ -33,7 +35,7 @@ function ProjectEndNavLink({
   return (
     <Link
       href={`/projects/${item.slug}`}
-      className="group block touch-manipulation border border-border/70 bg-background/55 p-2.5 shadow-card-subtle transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-[1px] hover:border-foreground/18 hover:shadow-card active:translate-y-0 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+      className="group block max-w-full touch-manipulation overflow-hidden border border-border/68 bg-[color-mix(in_srgb,var(--background)_86%,#fff7ed)] p-2.5 shadow-[0_12px_28px_-26px_rgba(43,39,34,0.5),inset_0_1px_0_rgba(255,255,255,0.7)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-[1px] hover:border-[color-mix(in_srgb,var(--contact-accent)_28%,var(--border))] hover:shadow-[0_18px_34px_-28px_rgba(43,39,34,0.58),inset_0_1px_0_rgba(255,255,255,0.82)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       onClick={() => {
         haptic.trigger('light')
         analytics.projectClick(item.slug, item.title, {
@@ -44,30 +46,34 @@ function ProjectEndNavLink({
         showJoyToast(`Opening ${item.title}`)
       }}
     >
-      <div className="grid grid-cols-[4.25rem_1fr] gap-3 sm:grid-cols-[5rem_1fr]">
-        <div className="relative aspect-[4/3] overflow-hidden border border-border/60 bg-card">
+      <div className="grid max-w-full grid-cols-[3rem_minmax(0,1fr)] gap-3 sm:grid-cols-[3.6rem_minmax(0,1fr)] sm:gap-3.5">
+        <div className="relative h-[4.4rem] overflow-hidden border border-border/60 bg-card shadow-[inset_0_1px_0_rgba(255,255,255,0.62)] sm:h-[5.25rem]">
           <Image
             src={item.image}
             alt=""
             fill
-            className="object-cover transition-transform duration-300 ease-soft group-hover:scale-[1.02]"
-            sizes="(max-width: 640px) 68px, 80px"
+            className="object-cover saturate-[0.82] contrast-[1.02] sepia-[0.06] transition-[filter,transform] duration-300 ease-soft group-hover:scale-[1.02] group-hover:saturate-[0.9]"
+            sizes="(max-width: 640px) 48px, 58px"
           />
         </div>
-        <div className="min-w-0 space-y-1">
+        <div className="min-w-0 space-y-1.5">
           <div className="flex min-w-0 items-center justify-between gap-3">
-            <p className="font-mono text-[0.64rem] uppercase tracking-[0.12em] text-muted-foreground/65">
+            <p className="font-mono text-[0.58rem] uppercase leading-none tracking-[0.16em] text-muted-foreground/56">
+              <span className="mr-2 text-muted-foreground/38">{indexLabel}</span>
               {label}
             </p>
             <ArrowRight
               aria-hidden="true"
-              className="h-3.5 w-3.5 shrink-0 text-muted-foreground transition-[color,transform] duration-200 group-hover:translate-x-0.5 group-hover:text-foreground"
+              className="h-3.5 w-3.5 shrink-0 text-muted-foreground/68 transition-[color,transform] duration-200 group-hover:translate-x-0.5 group-hover:text-[var(--contact-accent)]"
               strokeWidth={1.8}
             />
           </div>
           <h3 className="truncate font-mono text-[0.88rem] font-medium leading-snug text-foreground sm:text-[0.94rem]">
             {item.title}
           </h3>
+          <p className="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-muted-foreground/52">
+            {item.category}
+          </p>
           <p className="line-clamp-2 font-inter text-[12px] leading-relaxed text-muted-foreground">
             {item.description}
           </p>
@@ -103,6 +109,7 @@ export default function ProjectEndNav({
         {nextProject ? (
           <ProjectEndNavLink
             item={nextProject}
+            indexLabel="01"
             label="Next project"
             currentSlug={currentSlug}
             currentTitle={currentTitle}
@@ -112,6 +119,7 @@ export default function ProjectEndNav({
         {relatedProject ? (
           <ProjectEndNavLink
             item={relatedProject}
+            indexLabel="02"
             label="Related project"
             currentSlug={currentSlug}
             currentTitle={currentTitle}

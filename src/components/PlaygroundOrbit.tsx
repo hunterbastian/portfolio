@@ -90,7 +90,7 @@ function MobilePlayground({ projects }: PlaygroundOrbitProps) {
         </p>
       </m.div>
 
-      <div className="grid w-full grid-cols-2 gap-x-3 gap-y-5 pb-5 pt-1">
+      <div className="grid w-full max-w-[20.5rem] grid-cols-1 gap-y-5 pb-5 pt-1 min-[560px]:max-w-none min-[560px]:grid-cols-2 min-[560px]:gap-x-3">
         {projects.map((project, index) => {
           const tilt = cardTilt(index)
 

@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { FileText, Mail } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
@@ -23,38 +22,10 @@ export default function ProjectContactCTA({ projectSlug, projectTitle }: Project
 
   return (
     <section
-      className="not-prose relative isolate my-12 overflow-hidden border-y border-border/70 py-6 sm:my-14 sm:py-7"
+      className="not-prose my-12 border-y border-border/70 py-6 sm:my-14 sm:py-7"
       aria-labelledby="project-contact-heading"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full opacity-70"
-      >
-        <Image
-          src="/images/mediterranean-ambient-home.webp"
-          alt=""
-          fill
-          className="scale-[1.08] object-cover object-[50%_54%] opacity-[0.18] saturate-[0.78] contrast-[0.96] sepia-[0.08]"
-          sizes="560px"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--background)_0%,rgba(249,247,242,0.76)_28%,rgba(249,247,242,0.9)_100%)]" />
-      </div>
-
       <div className="space-y-4">
-        <div
-          aria-hidden="true"
-          className="h-[2.65rem] w-full max-w-[17rem] overflow-hidden border border-border/58 bg-card/45 shadow-[0_12px_30px_-26px_rgba(43,39,34,0.44)] sm:max-w-[20rem]"
-        >
-          <Image
-            src="/images/mediterranean-ambient-home.webp"
-            alt=""
-            width={512}
-            height={120}
-            className="h-full w-full object-cover object-[42%_58%] opacity-90 saturate-[0.86] contrast-[0.98] sepia-[0.06]"
-            sizes="(min-width: 640px) 20rem, 17rem"
-          />
-        </div>
-
         <div className="space-y-1.5">
           <p className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-muted-foreground/62">
             Work together
@@ -74,7 +45,7 @@ export default function ProjectContactCTA({ projectSlug, projectTitle }: Project
           <Link
             href="/cv"
             aria-label={`View resume after reading ${projectTitle}`}
-            className="group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 border border-border/70 bg-[color-mix(in_srgb,var(--background)_82%,#fff7ed)] px-3 py-2 font-mono text-[0.72rem] text-foreground shadow-[0_10px_24px_-22px_rgba(43,39,34,0.46),inset_0_1px_0_rgba(255,255,255,0.72)] transition-[border-color,box-shadow,transform] duration-150 hover:-translate-y-[1px] hover:border-[color-mix(in_srgb,var(--contact-accent)_32%,var(--border))] hover:shadow-[0_14px_30px_-24px_rgba(43,39,34,0.55),inset_0_1px_0_rgba(255,255,255,0.82)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            className="group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 border border-border/75 bg-background px-3 py-2 font-mono text-[0.72rem] text-foreground shadow-card-subtle transition-[border-color,box-shadow,transform] duration-150 hover:-translate-y-[1px] hover:border-foreground/20 hover:shadow-card active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             onClick={() => {
               haptic.trigger('light')
               analytics.navigationClick('project_cta_resume', analyticsContext)
@@ -91,7 +62,7 @@ export default function ProjectContactCTA({ projectSlug, projectTitle }: Project
           <a
             href={siteProjectInquiryHref}
             aria-label={`Email ${siteConfig.personName} about work like ${projectTitle}`}
-            className="group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 border border-border/70 bg-[color-mix(in_srgb,var(--background)_82%,#fff7ed)] px-3 py-2 font-mono text-[0.72rem] text-foreground shadow-[0_10px_24px_-22px_rgba(43,39,34,0.46),inset_0_1px_0_rgba(255,255,255,0.72)] transition-[border-color,box-shadow,transform] duration-150 hover:-translate-y-[1px] hover:border-[color-mix(in_srgb,var(--contact-accent)_32%,var(--border))] hover:shadow-[0_14px_30px_-24px_rgba(43,39,34,0.55),inset_0_1px_0_rgba(255,255,255,0.82)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            className="group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 border border-border/75 bg-background px-3 py-2 font-mono text-[0.72rem] text-foreground shadow-card-subtle transition-[border-color,box-shadow,transform] duration-150 hover:-translate-y-[1px] hover:border-foreground/20 hover:shadow-card active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             onClick={() => {
               haptic.trigger('light')
               analytics.externalLink(siteProjectInquiryHref, 'email', analyticsContext)

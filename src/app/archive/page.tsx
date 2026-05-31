@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import PlaygroundOrbit from '@/components/PlaygroundOrbit'
 import { getArchivedProjects } from '@/lib/projects'
 import { resolveSiteUrl, siteConfig, sitePortfolioName } from '@/lib/site'
@@ -83,33 +82,10 @@ export default function ArchivePage() {
 
       <div className="relative z-10 mx-auto max-w-[36rem]">
         <div className="pt-16 sm:pt-24">
-          <div className="space-y-5 sm:space-y-6">
-            <div className="space-y-1.5">
-              <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground/58">
-                Archive
-              </p>
-              <h1 className="font-header text-[1.08rem] tracking-[-0.03em] text-foreground/92 sm:text-[1.18rem]">
-                Playground
-              </h1>
-              <p className="max-w-[min(20.5rem,calc(100vw-2.5rem))] font-header text-[0.94rem] leading-[1.58] tracking-[-0.02em] text-muted-foreground sm:max-w-[28rem] sm:text-[1rem]">
-                Smaller studies, visual fragments, and experiments kept loose but edited.
-              </p>
-            </div>
-
-            <div
-              aria-hidden="true"
-              className="relative h-[4rem] w-full max-w-[min(22rem,calc(100vw-2.5rem))] overflow-hidden border border-border/68 bg-card/45 shadow-[0_16px_38px_-32px_rgba(43,39,34,0.48),inset_0_1px_0_rgba(255,255,255,0.7)] sm:h-[4.75rem] sm:max-w-[27rem]"
-            >
-              <Image
-                src="/images/mediterranean-ambient-home.webp"
-                alt=""
-                fill
-                className="scale-[1.04] object-cover object-[44%_56%] saturate-[0.88] contrast-[0.98] sepia-[0.06]"
-                sizes="(min-width: 640px) 27rem, min(22rem, calc(100vw - 2.5rem))"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(249,247,242,0.14)_0%,transparent_38%,rgba(255,247,236,0.2)_100%)]" />
-              <div className="absolute inset-x-0 bottom-0 h-px bg-foreground/10" />
-            </div>
+          <div className="space-y-4">
+            <p className="font-mono text-[1rem] tracking-[-0.03em] text-foreground/92">
+              Playground
+            </p>
           </div>
 
           {archivedProjects.length === 0 ? (
@@ -119,7 +95,7 @@ export default function ArchivePage() {
               </p>
             </div>
           ) : (
-            <section className="pt-12 sm:pt-16">
+            <section className="pt-10 sm:pt-14">
               <div>
                 <div className="mx-0 max-w-none sm:mx-[-4rem] lg:mx-[-6rem]">
                   <div className="relative overflow-visible py-2 sm:py-0 md:h-[39rem] lg:h-[41rem] xl:h-[43rem]">

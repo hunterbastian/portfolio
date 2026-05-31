@@ -190,6 +190,21 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 ))}
               </div>
 
+              <div
+                aria-hidden="true"
+                className="relative h-[4.25rem] w-full max-w-[min(20.5rem,calc(100vw-2.5rem))] overflow-hidden border border-border/72 bg-card/40 shadow-[0_18px_44px_-38px_rgba(43,39,34,0.5),inset_0_1px_0_rgba(255,255,255,0.68)] sm:h-[5.25rem] sm:max-w-[31rem]"
+              >
+                <Image
+                  src="/images/mediterranean-ambient-home.webp"
+                  alt=""
+                  fill
+                  className="scale-[1.03] object-cover object-[46%_56%] saturate-[0.92] contrast-[0.98] sepia-[0.06]"
+                  sizes="(min-width: 640px) 31rem, min(20.5rem, calc(100vw - 2.5rem))"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(249,247,242,0.18)_0%,transparent_34%,rgba(255,247,236,0.18)_100%)]" />
+                <div className="absolute inset-x-0 bottom-0 h-px bg-foreground/10" />
+              </div>
+
               <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 sm:gap-x-5 sm:gap-y-2.5">
                 <PeekAction
                   href="/#contact"

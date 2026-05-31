@@ -1,17 +1,12 @@
 .socialLink {
   background:
-    radial-gradient(ellipse at 42% 8%, rgba(255, 255, 255, 0.86), transparent 38%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(244, 250, 251, 0.97) 38%, rgba(231, 229, 221, 0.96) 100%),
-    var(--surface-glass-chrome);
-  border-radius: 999px;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 250, 242, 0.9) 100%),
+    color-mix(in srgb, var(--background) 84%, #fff7ed);
+  border-radius: 4px;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.96),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.72),
-    inset 0 -8px 13px rgba(44, 93, 112, 0.13),
-    inset 0 -14px 17px rgba(74, 66, 54, 0.055),
-    0 0 0 1px rgba(25, 103, 138, 0.14),
-    0 1px 0 rgba(255, 255, 255, 0.76),
-    0 7px 15px -14px rgba(20, 54, 72, 0.62);
+    inset 0 1px 0 rgba(255, 255, 255, 0.76),
+    0 0 0 1px color-mix(in srgb, var(--border) 80%, var(--contact-accent) 20%),
+    0 10px 24px -23px rgba(43, 39, 34, 0.44);
   overflow: hidden;
   padding: 0 0.6rem;
   position: relative;
@@ -36,38 +31,28 @@
 
 .socialLink::before {
   background:
-    linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.72) 22%, rgba(255, 255, 255, 0.2) 42%, transparent 62%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.24) 34%, transparent 58%),
-    linear-gradient(90deg, rgba(0, 94, 150, 0.22), transparent 12%, transparent 88%, rgba(0, 94, 150, 0.2));
-  opacity: 0.88;
+    linear-gradient(90deg, rgba(138, 183, 204, 0.12), transparent 42%, rgba(255, 194, 132, 0.16));
+  height: 1px;
+  inset: 1px 1px auto 1px;
+  opacity: 0.9;
 }
 
 .socialLink::after {
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.48),
-    inset 0 1px 0 rgba(255, 255, 255, 0.78),
-    inset 0 -1px 0 rgba(0, 117, 178, 0.2),
-    inset 0 -9px 13px rgba(28, 73, 92, 0.14),
-    0 5px 0 -4px rgba(70, 119, 135, 0.52);
-  opacity: 0.92;
+    inset 0 -1px 0 rgba(var(--contact-accent-rgb), 0.08);
+  opacity: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .socialLink:hover {
     background:
-      radial-gradient(ellipse at 42% 8%, rgba(255, 255, 255, 0.94), transparent 39%),
-      linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(240, 251, 253, 0.98) 38%, rgba(229, 231, 224, 0.98) 100%),
-      var(--surface-glass-chrome-hover);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 248, 238, 0.96) 100%),
+      color-mix(in srgb, var(--background) 78%, #fff1df);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 1),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.78),
-      inset 0 -9px 14px rgba(44, 93, 112, 0.16),
-      inset 0 -15px 18px rgba(74, 66, 54, 0.065),
-      0 0 0 1px rgba(25, 103, 138, 0.18),
-      0 1px 0 rgba(255, 255, 255, 0.84),
-      0 9px 18px -14px rgba(20, 54, 72, 0.68),
-      0 0 17px -12px rgba(0, 172, 237, 0.72);
-    filter: brightness(1.025) saturate(1.04);
+      inset 0 1px 0 rgba(255, 255, 255, 0.84),
+      0 0 0 1px color-mix(in srgb, var(--border) 64%, var(--contact-accent) 36%),
+      0 14px 30px -24px rgba(43, 39, 34, 0.54);
+    filter: brightness(1.015) saturate(0.98);
     transform: translateY(-1px);
   }
 
@@ -76,4 +61,3 @@
     transform: translateY(-1px);
   }
 }
-

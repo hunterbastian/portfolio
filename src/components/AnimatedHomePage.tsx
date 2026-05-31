@@ -97,8 +97,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 src="/images/mediterranean-ambient-home.webp"
                 alt=""
                 fill
-                loading="eager"
-                fetchPriority="low"
+                priority
                 className="scale-[1.02] object-cover object-[50%_48%] saturate-[1.08] brightness-[1.03] contrast-[0.98]"
                 sizes="100vw"
               />
@@ -198,6 +197,8 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                   src="/images/mediterranean-ambient-home.webp"
                   alt=""
                   fill
+                  loading="eager"
+                  fetchPriority="low"
                   className="scale-[1.03] object-cover object-[46%_56%] saturate-[0.92] contrast-[0.98] sepia-[0.06]"
                   sizes="(min-width: 640px) 31rem, min(20.5rem, calc(100vw - 2.5rem))"
                 />

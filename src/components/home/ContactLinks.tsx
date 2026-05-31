@@ -46,7 +46,7 @@ export function ContactLinks() {
             aria-label={link.ariaLabel ?? `Open ${link.label}`}
             className={cn(
               styles.socialLink,
-              'group/social-link inline-flex min-h-[40px] origin-center touch-manipulation items-center justify-center gap-1 font-header text-[0.68rem] leading-none text-[#403d38]/78 transition-[color,transform] duration-150 hover:text-[#403d38] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.72rem]',
+              'group/social-link inline-flex min-h-[36px] origin-center touch-manipulation items-center justify-center gap-1 font-header text-[0.68rem] leading-none text-[#403d38]/78 transition-[color,transform] duration-150 hover:text-[#403d38] active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.72rem]',
             )}
             onClick={() => handleContactClick(link)}
           >

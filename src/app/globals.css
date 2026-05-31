@@ -640,6 +640,11 @@ h1, h2, h3, h4, h5, h6 {
     radial-gradient(78% 30% at 72% 8%, rgba(255, 194, 132, 0.26) 0%, transparent 100%);
 }
 
+.cv-glow {
+  background-image:
+    radial-gradient(66% 30% at 28% 9%, rgba(138, 183, 204, 0.28) 0%, transparent 100%),
+    radial-gradient(72% 32% at 76% 6%, rgba(255, 194, 132, 0.22) 0%, transparent 100%);
+}
 
 .about-page-glow {
   background-image: radial-gradient(125% 125% at 50% 10%, #f2f0ec 40%, #d8c87a 100%);

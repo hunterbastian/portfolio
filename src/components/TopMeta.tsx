@@ -156,7 +156,7 @@ export default function TopMeta() {
     >
       <div
         className={cn(
-          'relative isolate mx-auto flex max-w-[36rem] items-center justify-between gap-6 border-b border-border/72 pb-3 sm:pb-3.5',
+          'relative isolate mx-auto flex w-full max-w-[36rem] min-w-0 items-center justify-between gap-6 border-b border-border/72 pb-3 sm:pb-3.5',
           headerHidden && !mobileMenuOpen ? 'pointer-events-none' : 'pointer-events-auto',
         )}
       >

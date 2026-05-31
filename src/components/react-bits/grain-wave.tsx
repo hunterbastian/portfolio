@@ -244,7 +244,6 @@ const GrainWave: React.FC<GrainWaveProps> = ({
   startColor = "#ff6666",
   endColor = "#6666ff",
   lightBackground = "#f2f0ec",
-  darkBackground = "#000000",
   brightness = 1,
   speedVariation = 0.006,
   waveWidth = 3.5,

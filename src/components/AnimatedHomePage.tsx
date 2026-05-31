@@ -72,7 +72,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
       <div aria-hidden="true" className="home-coast-outro">
       </div>
 
-      <div className="mx-auto max-w-[36rem] pt-9 sm:pt-28">
+      <div className="mx-auto w-full max-w-[36rem] min-w-0 pt-9 sm:pt-28">
         <Reveal>
           <section
             className="relative isolate space-y-6 sm:min-h-[20.5rem] sm:space-y-8"
@@ -183,7 +183,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 {introParagraphs.map((paragraph) => (
                   <p
                     key={paragraph}
-                    className="max-w-[31rem] font-header text-[0.96rem] leading-[1.54] tracking-[-0.02em] text-foreground/84 sm:text-[1.03rem] sm:leading-[1.72]"
+                    className="w-full max-w-[min(20.5rem,calc(100vw-2.5rem))] whitespace-normal break-normal font-header text-[0.96rem] leading-[1.54] tracking-[-0.02em] text-foreground/84 [overflow-wrap:normal] [text-wrap:wrap] sm:max-w-[31rem] sm:text-[1.03rem] sm:leading-[1.72]"
                   >
                     {paragraph}
                   </p>
@@ -246,7 +246,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                       </button>
                     </div>
                   ) : null}
-                  {projectRows.map((project) => (
+                  {projectRows.map((project, projectIndex) => (
                     <div key={project.slug} className="relative isolate">
                       <AnimatePresence initial={false}>
                         {hoveredProjectSlug === project.slug ? (
@@ -268,6 +268,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                       <div className="relative z-10">
                         <EditorialItem
                           href={`/projects/${project.slug}`}
+                          indexLabel={`${projectIndex + 1}`.padStart(2, '0')}
                           title={project.frontmatter.displayTitle || project.frontmatter.title}
                           description={getHomeProjectDescription(project)}
                           trailing={formatProjectYear(project.frontmatter.date)}
@@ -276,6 +277,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                           onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
                           thumbnailImage={project.frontmatter.image}
                           thumbnailAlt={project.frontmatter.displayTitle || project.frontmatter.title}
+                          thumbnailShape="catalog"
                           underlineOnHover
                           hoverAccentColor={getProjectAccent(project.slug)}
                           toastMessage="Opening project"
@@ -305,6 +307,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                     <div className="relative z-10">
                       <EditorialItem
                         href="/archive"
+                        indexLabel={`${projectRows.length + 1}`.padStart(2, '0')}
                         title="Playground"
                         description="Small experiments and prototypes."
                         trailing="See more"
@@ -313,6 +316,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                         onMouseLeave={() => setHoveredProjectSlug((current) => (current === 'playground' ? null : current))}
                         thumbnailImage="/images/optimized/projects/path.webp"
                         thumbnailAlt="Playground experiments preview"
+                        thumbnailShape="catalog"
                         underlineOnHover
                         hoverAccentColor={getProjectAccent('playground')}
                         toastMessage="Opening playground"
@@ -398,7 +402,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <Section id="contact" title="Contact">
               <div className="space-y-5 sm:space-y-7">
                 <div className="space-y-2">
-                  <p className="max-w-[31rem] font-header text-[0.9rem] font-semibold leading-[1.58] tracking-[-0.02em] text-muted-foreground sm:text-[0.96rem] sm:leading-[1.65]">
+                  <p className="w-full max-w-[min(20.5rem,calc(100vw-2.5rem))] whitespace-normal break-normal font-header text-[0.9rem] font-semibold leading-[1.58] tracking-[-0.02em] text-muted-foreground [overflow-wrap:normal] [text-wrap:wrap] sm:max-w-[31rem] sm:text-[0.96rem] sm:leading-[1.65]">
                     If something here resonates, reach out.
                   </p>
                 </div>

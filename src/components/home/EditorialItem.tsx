@@ -26,6 +26,7 @@ export interface EditorialItemProps {
   eyebrowClassName?: string
   href?: string
   external?: boolean
+  indexLabel?: string
   title: string
   description: string
   titleLeadingIcon?: ReactNode
@@ -35,6 +36,7 @@ export interface EditorialItemProps {
   onMouseLeave?: () => void
   thumbnailImage?: string
   thumbnailAlt?: string
+  thumbnailShape?: 'square' | 'catalog'
   underlineOnHover?: boolean
   hoverAccentColor?: string
   toastMessage?: string
@@ -46,6 +48,7 @@ export function EditorialItem({
   eyebrowClassName,
   href,
   external = false,
+  indexLabel,
   title,
   description,
   titleLeadingIcon,
@@ -55,6 +58,7 @@ export function EditorialItem({
   onMouseLeave,
   thumbnailImage,
   thumbnailAlt,
+  thumbnailShape = 'square',
   underlineOnHover = false,
   hoverAccentColor = 'var(--accent-editorial-hover)',
   toastMessage,
@@ -86,7 +90,7 @@ export function EditorialItem({
   }
   const content = (
     <div
-      className={`group relative flex w-full origin-center items-start justify-between gap-3 px-0 py-2 transition-[transform,color,opacity,background-color] duration-300 ease-soft sm:-mx-3 sm:gap-10 sm:px-3 sm:py-3 ${
+      className={`group relative flex w-full max-w-full origin-center items-start justify-between gap-3 overflow-hidden px-0 py-2 transition-[transform,color,opacity,background-color] duration-300 ease-soft sm:-mx-3 sm:gap-10 sm:overflow-visible sm:px-3 sm:py-3 ${
         interactive ? 'cursor-pointer touch-manipulation active:translate-y-0 active:scale-[0.96] sm:hover:translate-x-[3px] sm:hover:bg-[var(--editorial-accent-bg)]' : ''
       }`}
       style={accentStyle}
@@ -111,20 +115,37 @@ export function EditorialItem({
           />
         </>
       ) : null}
-      <div className="flex min-w-0 flex-1 items-start gap-3 sm:gap-6">
+      <div className="flex min-w-0 max-w-full flex-1 items-start gap-3 sm:gap-6">
+        {indexLabel ? (
+          <span className="hidden w-6 shrink-0 pt-1.5 font-mono text-[0.58rem] leading-none tracking-[0.22em] text-muted-foreground/48 transition-colors duration-300 group-hover:text-[var(--editorial-accent)] sm:block">
+            {indexLabel}
+          </span>
+        ) : null}
         {thumbnailImage ? (
-          <div className="relative mt-0.5 h-[60px] w-[60px] shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] transition-[transform,border-color,box-shadow,filter] duration-300 ease-soft group-hover:-translate-y-[1px] group-hover:border-[var(--editorial-accent-border)] group-hover:shadow-[0_12px_28px_-18px_var(--editorial-accent-shadow)] group-active:translate-y-0 group-active:scale-[0.96] group-active:brightness-[0.98] sm:h-[84px] sm:w-[84px]">
+          <div
+            className={`relative mt-0.5 shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] transition-[transform,border-color,box-shadow,filter] duration-300 ease-soft group-hover:-translate-y-[1px] group-hover:border-[var(--editorial-accent-border)] group-hover:shadow-[0_12px_28px_-18px_var(--editorial-accent-shadow)] group-active:translate-y-0 group-active:scale-[0.96] group-active:brightness-[0.98] ${
+              thumbnailShape === 'catalog'
+                ? 'h-[68px] w-[52px] sm:h-[112px] sm:w-[82px]'
+                : 'h-[60px] w-[60px] sm:h-[84px] sm:w-[84px]'
+            }`}
+          >
             <Image
               src={thumbnailImage}
               alt={thumbnailAlt ?? title}
               fill
-              className="object-cover transition-transform duration-500 ease-soft group-hover:scale-[1.018] group-active:scale-[1.01]"
-              sizes="(min-width: 640px) 84px, 60px"
+              className={`object-cover transition-[filter,transform] duration-500 ease-soft group-hover:scale-[1.018] group-active:scale-[1.01] ${
+                thumbnailShape === 'catalog' ? 'saturate-[0.82] contrast-[1.03] sepia-[0.08]' : ''
+              }`}
+              sizes={thumbnailShape === 'catalog' ? '(min-width: 640px) 82px, 52px' : '(min-width: 640px) 84px, 60px'}
             />
           </div>
         ) : null}
 
-        <div className="min-w-0 flex-1 space-y-1.5">
+        <div
+          className={`min-w-0 flex-1 space-y-1.5 ${
+            thumbnailImage ? 'max-w-[min(16.75rem,calc(100vw-6.75rem))] sm:max-w-none' : 'max-w-full'
+          }`}
+        >
           {eyebrow ? (
             <p className={`${eyebrowClassName ?? 'font-mono text-muted-foreground/70 group-hover:text-muted-foreground'} text-[0.66rem] uppercase tracking-[0.12em] transition-colors duration-300`}>
               {eyebrow}
@@ -133,12 +154,12 @@ export function EditorialItem({
           <div className="flex min-w-0 items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2">
               {titleLeadingIcon ? <span className="shrink-0">{titleLeadingIcon}</span> : null}
-              <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 text-[0.95rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 ${underlineOnHover ? 'group-hover:text-[var(--editorial-accent)]' : 'group-hover:text-foreground/86'} sm:text-[1.02rem] sm:leading-none`}>
+              <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 max-w-full text-[0.95rem] leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-300 ${underlineOnHover ? 'group-hover:text-[var(--editorial-accent)]' : 'group-hover:text-foreground/86'} sm:text-[1.02rem] sm:leading-none`}>
                 <span
                   className={
                     underlineOnHover
-                      ? `${titleFontClassName ?? ''} inline underline decoration-current underline-offset-[0.2em] transition-[text-decoration-color] duration-300 group-hover:decoration-[var(--editorial-accent)]`
-                      : `${titleFontClassName ?? ''} inline`
+                      ? `${titleFontClassName ?? ''} inline break-words [overflow-wrap:anywhere] underline decoration-current underline-offset-[0.2em] transition-[text-decoration-color] duration-300 group-hover:decoration-[var(--editorial-accent)]`
+                      : `${titleFontClassName ?? ''} inline break-words [overflow-wrap:anywhere]`
                   }
                 >
                   {title}
@@ -151,7 +172,7 @@ export function EditorialItem({
               </span>
             ) : null}
           </div>
-          <p className="max-w-[44rem] font-mono text-[0.82rem] leading-[1.46] text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72 sm:text-[0.96rem] sm:leading-[1.65]">
+          <p className="w-full max-w-full whitespace-normal break-normal font-mono text-[0.82rem] leading-[1.46] text-muted-foreground transition-colors duration-300 [overflow-wrap:normal] [text-wrap:wrap] group-hover:text-foreground/72 sm:max-w-[44rem] sm:text-[0.96rem] sm:leading-[1.65]">
             {description}
           </p>
         </div>

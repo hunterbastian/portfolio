@@ -119,41 +119,42 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              {
-                '@context': 'https://schema.org',
-                '@type': 'Person',
-                '@id': `${siteConfig.url}/#person`,
-                name: siteConfig.personName,
-                url: siteConfig.url,
-                jobTitle: 'Design Engineer',
-                description: siteConfig.siteDescription,
-                sameAs: [
-                  'https://github.com/hunterbastian',
-                  'https://linkedin.com/in/hunterbastian',
-                  'https://x.com/thestudioalpine',
-                  'https://instagram.com/studio.alpine',
-                  'https://threads.net/@studio.alpine',
-                  'https://youtube.com/@studio.alpine',
-                ],
-                knowsAbout: ['Interaction Design', 'UI Design', 'UX Design', 'Web Development', 'Frontend Development', 'React', 'Next.js', 'TypeScript', 'Three.js', 'Framer Motion', 'Photography', 'Creative Coding'],
-              },
-              {
-                '@context': 'https://schema.org',
-                '@type': 'Organization',
-                '@id': `${siteConfig.url}/#organization`,
-                name: siteConfig.studioName,
-                url: 'https://instagram.com/studio.alpine',
-                logo: `${siteConfig.url}/images/optimized/studio-alpine-logo.webp`,
-                description: `Photography and design studio founded by ${siteConfig.personName}.`,
-                founder: { '@id': `${siteConfig.url}/#person` },
-                foundingDate: '2026',
-                sameAs: [
-                  'https://instagram.com/studio.alpine',
-                  'https://youtube.com/@studio.alpine',
-                ],
-              },
-            ]),
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                {
+                  '@type': 'Person',
+                  '@id': `${siteConfig.url}/#person`,
+                  name: siteConfig.personName,
+                  url: siteConfig.url,
+                  jobTitle: 'Design Engineer',
+                  description: siteConfig.siteDescription,
+                  sameAs: [
+                    'https://github.com/hunterbastian',
+                    'https://linkedin.com/in/hunterbastian',
+                    'https://x.com/thestudioalpine',
+                    'https://instagram.com/studio.alpine',
+                    'https://threads.net/@studio.alpine',
+                    'https://youtube.com/@studio.alpine',
+                  ],
+                  knowsAbout: ['Interaction Design', 'UI Design', 'UX Design', 'Web Development', 'Frontend Development', 'React', 'Next.js', 'TypeScript', 'Three.js', 'Framer Motion', 'Photography', 'Creative Coding'],
+                },
+                {
+                  '@type': 'Organization',
+                  '@id': `${siteConfig.url}/#organization`,
+                  name: siteConfig.studioName,
+                  url: 'https://instagram.com/studio.alpine',
+                  logo: `${siteConfig.url}/images/optimized/studio-alpine-logo.webp`,
+                  description: `Photography and design studio founded by ${siteConfig.personName}.`,
+                  founder: { '@id': `${siteConfig.url}/#person` },
+                  foundingDate: '2026',
+                  sameAs: [
+                    'https://instagram.com/studio.alpine',
+                    'https://youtube.com/@studio.alpine',
+                  ],
+                },
+              ],
+            }),
           }}
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />

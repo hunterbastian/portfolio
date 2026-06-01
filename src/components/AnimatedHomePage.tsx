@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { AnimatePresence, m } from 'framer-motion'
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import {
@@ -41,6 +41,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   const heroGlow = useHeroGlow()
   const haptic = useWebHaptics()
   const projectRows = getProjectRows(projects, workFilter)
+  const shouldReduceMotion = useReducedMotion()
 
   useWorkFilterUrlSync(setWorkFilter)
 
@@ -75,7 +76,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
       <div className="mx-auto max-w-[36rem] pt-9 sm:pt-28">
         <Reveal>
           <section
-            className="relative isolate space-y-6 sm:min-h-[20.5rem] sm:space-y-8"
+            className="relative isolate flex min-h-[calc(100svh-5.5rem)] flex-col justify-between gap-8 pb-4 sm:min-h-[calc(100svh-10rem)] sm:gap-10 sm:pb-6"
             onPointerEnter={heroGlow.handlers.onPointerEnter}
             onPointerMove={heroGlow.handlers.onPointerMove}
             onPointerLeave={heroGlow.handlers.onPointerLeave}
@@ -192,12 +193,14 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
               <div
                 aria-hidden="true"
-                className="relative h-[4.25rem] w-full max-w-[min(20.5rem,calc(100vw-2.5rem))] overflow-hidden border border-border/72 bg-card/40 shadow-[0_18px_44px_-38px_rgba(43,39,34,0.5),inset_0_1px_0_rgba(255,255,255,0.68)] sm:h-[5.25rem] sm:max-w-[31rem]"
+                className="home-visual-pause relative h-[4rem] w-full max-w-[min(20.5rem,calc(100vw-2.5rem))] overflow-hidden border border-border/72 bg-card/40 shadow-[0_18px_44px_-38px_rgba(43,39,34,0.5),inset_0_1px_0_rgba(255,255,255,0.68)] sm:h-[4.75rem] sm:max-w-[31rem]"
               >
                 <Image
                   src="/images/mediterranean-ambient-home.webp"
                   alt=""
                   fill
+                  loading="eager"
+                  fetchPriority="high"
                   className="scale-[1.03] object-cover object-[46%_56%] saturate-[0.92] contrast-[0.98] sepia-[0.06]"
                   sizes="(min-width: 640px) 31rem, min(20.5rem, calc(100vw - 2.5rem))"
                 />
@@ -234,10 +237,25 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
                 </PeekAction>
               </div>
             </div>
+
+            <m.a
+              href="#projects"
+              aria-label="View projects"
+              className="home-scroll-hint relative z-10 block min-h-[40px] w-fit min-w-[40px] origin-center self-center touch-manipulation focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              initial={shouldReduceMotion ? false : { opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.8, ease: MOTION_EASE_SOFT }}
+              onClick={() => {
+                haptic.trigger('light')
+                analytics.navigationClick('projects_hint')
+              }}
+            >
+              <span aria-hidden="true" className="home-scroll-hint-mark" />
+            </m.a>
           </section>
         </Reveal>
 
-        <div className="mt-10 space-y-9 sm:mt-24 sm:space-y-20">
+        <div className="mt-7 space-y-9 sm:mt-10 sm:space-y-20">
           <Reveal delayMs={40}>
             <Section id="projects" title="Projects">
               <div className="relative">

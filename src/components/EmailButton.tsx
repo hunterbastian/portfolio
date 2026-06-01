@@ -1,6 +1,5 @@
 import type { AnchorHTMLAttributes } from 'react'
-import { cn } from '@/lib/utils'
-import styles from './EmailButton.module.css'
+import { chromePillClassName, chromePillLabelClassName } from '@/components/ui/tactile'
 
 type EmailButtonProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'href'> & {
   email: string
@@ -19,9 +18,9 @@ export function EmailButton({
       {...props}
       href={`mailto:${email}`}
       aria-label={ariaLabel ?? `Email me directly at ${email}`}
-      className={cn(styles.button, className)}
+      className={chromePillClassName({ size: 'contact-primary', className })}
     >
-      <span className={styles.label}>{label}</span>
+      <span className={chromePillLabelClassName}>{label}</span>
     </a>
   )
 }

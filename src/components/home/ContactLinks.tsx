@@ -3,11 +3,11 @@
 import { ArrowUpRight } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
 import { EmailButton } from '@/components/EmailButton'
+import { chromePillClassName, chromePillIconClassName, chromePillLabelClassName } from '@/components/ui/tactile'
 import { contactSocialLinks } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
 import { showJoyToast } from '@/lib/joy'
 import { cn } from '@/lib/utils'
-import styles from './ContactLinks.module.css'
 
 export function ContactLinks() {
   const haptic = useWebHaptics()
@@ -44,19 +44,14 @@ export function ContactLinks() {
             target={opensNewTab(link) ? '_blank' : undefined}
             rel={opensNewTab(link) ? 'noreferrer' : undefined}
             aria-label={link.ariaLabel ?? `Open ${link.label}`}
-            className={cn(
-              styles.socialLink,
-              'group/social-link inline-flex min-h-[36px] origin-center touch-manipulation items-center justify-center gap-1 font-header text-[0.68rem] leading-none text-[#403d38]/78 transition-[color,transform] duration-150 hover:text-[#403d38] active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-[0.72rem]',
-            )}
+            className={chromePillClassName({ size: 'contact-social' })}
             onClick={() => handleContactClick(link)}
           >
-            <span className="relative z-10 min-w-0 truncate underline decoration-current underline-offset-[0.2em] transition-[text-decoration-color] duration-150 group-hover/social-link:decoration-current">
-              {link.label}
-            </span>
+            <span className={chromePillLabelClassName}>{link.label}</span>
             <ArrowUpRight
               aria-hidden="true"
               strokeWidth={1.7}
-              className="relative z-10 h-2 w-2 shrink-0 text-[#403d38]/42 transition-colors duration-150 group-hover/social-link:text-[#403d38]/68"
+              className={cn(chromePillIconClassName, 'h-2 w-2')}
             />
           </a>
         ))}

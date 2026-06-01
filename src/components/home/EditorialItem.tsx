@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { CSSProperties, ReactNode } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
+import { editorialImageClassName, editorialImageFrameClassName } from '@/components/ui/tactile'
 import { showJoyToast } from '@/lib/joy'
 
 type EditorialAccentStyle = CSSProperties & {
@@ -113,12 +114,12 @@ export function EditorialItem({
       ) : null}
       <div className="flex min-w-0 flex-1 items-start gap-3 sm:gap-6">
         {thumbnailImage ? (
-          <div className="relative mt-0.5 h-[60px] w-[60px] shrink-0 overflow-hidden border border-border/75 bg-card/55 shadow-[0_2px_10px_rgba(15,23,42,0.04)] transition-[transform,border-color,box-shadow,filter] duration-300 ease-soft group-hover:-translate-y-[1px] group-hover:border-[var(--editorial-accent-border)] group-hover:shadow-[0_12px_28px_-18px_var(--editorial-accent-shadow)] group-active:translate-y-0 group-active:scale-[0.96] group-active:brightness-[0.98] sm:h-[84px] sm:w-[84px]">
+          <div className={editorialImageFrameClassName}>
             <Image
               src={thumbnailImage}
               alt={thumbnailAlt ?? title}
               fill
-              className="object-cover transition-transform duration-500 ease-soft group-hover:scale-[1.018] group-active:scale-[1.01]"
+              className={editorialImageClassName}
               sizes="(min-width: 640px) 84px, 60px"
             />
           </div>

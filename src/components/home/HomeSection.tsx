@@ -46,15 +46,19 @@ export function Section({
   id,
   title,
   children,
+  contentGapClassName = 'space-y-4 sm:space-y-7',
+  scrollMarginClassName = 'scroll-mt-24',
   rule = true,
 }: {
   id?: string
   title: string
   children: ReactNode
+  contentGapClassName?: string
+  scrollMarginClassName?: string
   rule?: boolean
 }) {
   return (
-    <section id={id} className="scroll-mt-24 space-y-4 sm:space-y-7">
+    <section id={id} className={`${scrollMarginClassName} ${contentGapClassName}`}>
       <div className="space-y-2 sm:space-y-3">
         <div className="flex items-baseline gap-4 text-[0.85rem] tracking-[-0.02em] text-foreground/92">
           <h2>{title}</h2>

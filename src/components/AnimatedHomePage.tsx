@@ -224,7 +224,12 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
         <div className="mt-7 space-y-9 sm:mt-10 sm:space-y-20">
           <Reveal delayMs={40}>
-            <Section id="projects" title="Projects">
+            <Section
+              id="projects"
+              title="Projects"
+              contentGapClassName="space-y-2 sm:space-y-3"
+              scrollMarginClassName="scroll-mt-10 sm:scroll-mt-12"
+            >
               <div className="relative">
                 <div className="relative z-10 space-y-3 sm:space-y-5">
                   {workFilter !== 'all' ? (

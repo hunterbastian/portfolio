@@ -74,9 +74,9 @@ export function EditorialItem({
   const accentStyle: EditorialAccentStyle = {
     '--dust-delay-offset': glintPlacement.dust,
     '--editorial-accent': hoverAccentColor,
-    '--editorial-accent-bg': `color-mix(in srgb, ${hoverAccentColor} 7%, transparent)`,
-    '--editorial-accent-border': `color-mix(in srgb, ${hoverAccentColor} 46%, var(--border))`,
-    '--editorial-accent-shadow': `color-mix(in srgb, ${hoverAccentColor} 22%, transparent)`,
+    '--editorial-accent-bg': `color-mix(in srgb, ${hoverAccentColor} 9%, transparent)`,
+    '--editorial-accent-border': `color-mix(in srgb, ${hoverAccentColor} 54%, var(--border))`,
+    '--editorial-accent-shadow': `color-mix(in srgb, ${hoverAccentColor} 32%, transparent)`,
     '--glint-delay': glintPlacement.delay,
     '--glint-hover-x': glintPlacement.hoverX,
     '--glint-hover-y': glintPlacement.hoverY,
@@ -87,8 +87,8 @@ export function EditorialItem({
   }
   const content = (
     <div
-      className={`group relative flex w-full origin-center items-start justify-between gap-3 px-0 py-2 transition-[transform,color,opacity,background-color] duration-300 ease-soft sm:-mx-3 sm:gap-10 sm:px-3 sm:py-3 ${
-        interactive ? 'cursor-pointer touch-manipulation active:translate-y-0 active:scale-[0.96] sm:hover:translate-x-[3px] sm:hover:bg-[var(--editorial-accent-bg)]' : ''
+      className={`group relative flex w-full origin-center items-start justify-between gap-3 overflow-hidden px-0 py-2 transition-[transform,color,opacity,background-color,box-shadow] duration-300 ease-soft sm:-mx-3 sm:gap-10 sm:rounded-[8px] sm:px-3 sm:py-3 ${
+        interactive ? 'cursor-pointer touch-manipulation active:translate-y-0 active:scale-[0.96] sm:hover:-translate-y-[1px] sm:hover:translate-x-[3px] sm:hover:bg-[var(--editorial-accent-bg)] sm:hover:shadow-[0_1px_0_rgba(255,255,255,0.68),0_16px_38px_-34px_var(--editorial-accent-shadow)]' : ''
       }`}
       style={accentStyle}
     >
@@ -147,7 +147,7 @@ export function EditorialItem({
               </p>
             </div>
             {trailing ? (
-              <span className="shrink-0 font-mono text-[0.72rem] text-muted-foreground/70 transition-colors duration-300 group-hover:text-[var(--editorial-accent)] sm:hidden">
+              <span className="shrink-0 font-mono text-[0.68rem] font-medium tabular-nums text-muted-foreground/72 transition-[color,transform] duration-300 group-hover:-translate-y-px group-hover:text-[var(--editorial-accent)] sm:hidden">
                 {trailing}
               </span>
             ) : null}
@@ -158,8 +158,10 @@ export function EditorialItem({
         </div>
       </div>
       {trailing ? (
-        <span className="hidden shrink-0 pt-0.5 font-mono text-[0.84rem] text-muted-foreground/75 transition-[transform,color] duration-300 group-hover:translate-x-[2px] group-hover:text-[var(--editorial-accent)] sm:block">
-          {trailing}
+        <span className="hidden shrink-0 pt-0.5 sm:block">
+          <span className="inline-flex min-w-[4.25rem] justify-end rounded-full px-2 py-1 font-mono text-[0.74rem] font-medium leading-none tabular-nums text-muted-foreground/70 transition-[background-color,color,transform] duration-300 group-hover:-translate-y-px group-hover:bg-[color-mix(in_srgb,var(--editorial-accent)_12%,transparent)] group-hover:text-[var(--editorial-accent)]">
+            {trailing}
+          </span>
         </span>
       ) : null}
     </div>

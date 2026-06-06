@@ -15,6 +15,7 @@ const config: Config = {
         'sans': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         'inter': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         'header': ['var(--font-geist-pixel-square)', 'Geist Pixel Square', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'redaction': ['HB Redaction', 'Redaction', 'Redaction 35', 'Georgia', 'serif'],
       },
       screens: {
         'xs': '375px',      // Extra small phones

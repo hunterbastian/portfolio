@@ -1,6 +1,7 @@
 'use client'
 
 import type { ButtonHTMLAttributes } from 'react'
+import { getArcGlossUploadButtonClassNames } from '@/lib/arc-gloss-upload-button'
 import styles from './ArcGlossUploadButton.module.css'
 
 interface ArcGlossUploadButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -18,14 +19,14 @@ export default function ArcGlossUploadButton({
   'aria-label': ariaLabel = 'Upload',
   ...buttonProps
 }: ArcGlossUploadButtonProps) {
-  const stageClassName = [
-    styles.stage,
-    fillViewport ? styles.fullViewport : '',
-    containerClassName ?? '',
-  ]
-    .filter(Boolean)
-    .join(' ')
-  const buttonClassName = [styles.button, className ?? ''].filter(Boolean).join(' ')
+  const { buttonClassName, stageClassName } = getArcGlossUploadButtonClassNames({
+    buttonClass: styles.button,
+    className,
+    containerClassName,
+    fillViewport,
+    fullViewportClass: styles.fullViewport,
+    stageClass: styles.stage,
+  })
 
   return (
     <div className={stageClassName} data-surface={surface}>

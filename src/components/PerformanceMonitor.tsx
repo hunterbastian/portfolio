@@ -1,38 +1,21 @@
 'use client'
 
 import { useEffect } from 'react'
-
-type LayoutShiftPerformanceEntry = PerformanceEntry & {
-  hadRecentInput: boolean
-  value: number
-}
+import {
+  activatePerformanceMonitor,
+  type PerformanceMonitorEntry,
+} from '@/lib/performance-monitor'
 
 export default function PerformanceMonitor() {
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'development') return
-    if (!('performance' in window)) return
-
-    const observer = new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        if (entry.entryType === 'largest-contentful-paint') {
-          console.log('LCP:', entry.startTime)
-        }
-        if (entry.entryType === 'first-input') {
-          const firstInputEntry = entry as PerformanceEventTiming
-          console.log('FID:', firstInputEntry.processingStart - firstInputEntry.startTime)
-        }
-        if (entry.entryType === 'layout-shift') {
-          const layoutShiftEntry = entry as LayoutShiftPerformanceEntry
-          if (!layoutShiftEntry.hadRecentInput) {
-            console.log('CLS:', layoutShiftEntry.value)
-          }
-        }
-      }
+    return activatePerformanceMonitor({
+      createObserver: (onEntries) => new PerformanceObserver((list) => {
+        onEntries(list.getEntries() as PerformanceMonitorEntry[])
+      }),
+      environment: process.env.NODE_ENV,
+      hasPerformance: 'performance' in window,
+      logMetric: (label, value) => console.log(label, value),
     })
-
-    observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] })
-
-    return () => observer.disconnect()
   }, [])
 
   return null

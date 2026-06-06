@@ -5,6 +5,7 @@ export interface ProjectFrontmatter {
   category: string
   tags: string[]
   image: string
+  homeImage?: string
   video?: string
   github?: string
   demo?: string

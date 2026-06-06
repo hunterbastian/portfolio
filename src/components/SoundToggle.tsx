@@ -1,6 +1,17 @@
 'use client'
 
 import { useSound } from '@/lib/sounds/context'
+import {
+  SOUND_TOGGLE_BUTTON_CLASS_NAME,
+  SOUND_TOGGLE_ICONS,
+  SOUND_TOGGLE_ICON_CLASS_NAME,
+  SOUND_TOGGLE_ICON_SIZE,
+  SOUND_TOGGLE_ICON_STROKE_WIDTH,
+  SOUND_TOGGLE_ICON_SWAP_CLASS_NAME,
+  SOUND_TOGGLE_ICON_VIEW_BOX,
+  getSoundToggleIconState,
+  getSoundToggleLabel,
+} from '@/lib/sound-toggle'
 
 /**
  * Minimal sound toggle button for the header.
@@ -8,50 +19,38 @@ import { useSound } from '@/lib/sounds/context'
  */
 export default function SoundToggle() {
   const { enabled, toggle } = useSound()
+  const label = getSoundToggleLabel(enabled)
+  const iconState = getSoundToggleIconState(enabled)
 
   return (
     <button
       type="button"
       onClick={toggle}
-      className="flex items-center justify-center w-11 h-11 text-foreground/40 hover:text-foreground/70 active:scale-[0.96] transition-[color,transform] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-      aria-label={enabled ? 'Mute sounds' : 'Enable sounds'}
-      title={enabled ? 'Mute sounds' : 'Enable sounds'}
+      className={SOUND_TOGGLE_BUTTON_CLASS_NAME}
+      aria-label={label}
+      title={label}
     >
-      <span className="t-icon-swap" data-state={enabled ? 'b' : 'a'}>
-        {/* a = muted (slash); b = enabled (waves) */}
-        <svg
-          className="t-icon"
-          data-icon="a"
-          width="12"
-          height="12"
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M3 5.5h2l3.5-3v11L5 10.5H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z" />
-          <path d="M11 5.5l4 5M15 5.5l-4 5" />
-        </svg>
-        <svg
-          className="t-icon"
-          data-icon="b"
-          width="12"
-          height="12"
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M3 5.5h2l3.5-3v11L5 10.5H3a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z" />
-          <path d="M11 5.5a3 3 0 0 1 0 5" />
-          <path d="M13 3.5a6 6 0 0 1 0 9" />
-        </svg>
+      <span className={SOUND_TOGGLE_ICON_SWAP_CLASS_NAME} data-state={iconState}>
+        {SOUND_TOGGLE_ICONS.map((icon) => (
+          <svg
+            key={icon.id}
+            className={SOUND_TOGGLE_ICON_CLASS_NAME}
+            data-icon={icon.id}
+            width={SOUND_TOGGLE_ICON_SIZE}
+            height={SOUND_TOGGLE_ICON_SIZE}
+            viewBox={SOUND_TOGGLE_ICON_VIEW_BOX}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={SOUND_TOGGLE_ICON_STROKE_WIDTH}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            {icon.paths.map((path) => (
+              <path key={path} d={path} />
+            ))}
+          </svg>
+        ))}
       </span>
     </button>
   )

@@ -8,7 +8,17 @@ import {
   subscribeProjectTransition,
   setProjectTransitionTarget,
 } from '@/lib/project-transition'
-import { PAGE_ENTRANCE_INITIAL_Y, CHILD_ENTRANCE_INITIAL_Y } from '@/components/PageTransition'
+import {
+  PROJECT_DETAIL_HERO_INITIAL_Y,
+  PROJECT_DETAIL_INITIAL_STAGE,
+  PROJECT_DETAIL_ITEM_MOTION,
+  PROJECT_DETAIL_TIMING,
+  activateProjectDetailTransitionTarget,
+  activateProjectDetailView,
+  getProjectDetailItemMotion,
+  scheduleProjectDetailRevealStages,
+} from '@/lib/project-detail'
+import { getPageTransitionYOffset } from '@/lib/page-transition'
 import { analytics } from '@/lib/analytics'
 
 /* ─────────────────────────────────────────────────────────
@@ -21,25 +31,9 @@ import { analytics } from '@/lib/analytics'
  *  400ms   MDX content appears
  * ───────────────────────────────────────────────────────── */
 
-const TIMING = {
-  headerAppear: 60,
-  imageAppear: 160,
-  metaAppear: 280,
-  contentAppear: 400,
-  duration: 500,
-}
-
-const ITEM = {
-  initialOpacity: 0,
-  finalOpacity: 1,
-  initialY: 12,
-  finalY: 0,
-  ease: MOTION_EASE_SOFT,
-}
-
 // PageTransition entrance offsets at mount time — subtract from
 // getBoundingClientRect() to get the hero's final resting position.
-const PAGE_TRANSITION_Y_OFFSET = PAGE_ENTRANCE_INITIAL_Y + CHILD_ENTRANCE_INITIAL_Y
+const PAGE_TRANSITION_Y_OFFSET = getPageTransitionYOffset()
 
 interface ProjectDetailContentProps {
   header: ReactNode
@@ -63,7 +57,7 @@ export default function ProjectDetailContent({
   projectTitle,
 }: ProjectDetailContentProps) {
   const prefersReducedMotion = useReducedMotion() ?? false
-  const [stage, setStage] = useState(0)
+  const [stage, setStage] = useState(PROJECT_DETAIL_INITIAL_STAGE)
   const heroRef = useRef<HTMLDivElement>(null)
 
   const transition = useSyncExternalStore(
@@ -75,89 +69,83 @@ export default function ProjectDetailContent({
   const isTransitionActive = transition != null && transition.slug === slug && !transition.completing
 
   useEffect(() => {
-    if (!slug || !projectTitle) return
-
-    analytics.projectView(slug, projectTitle)
+    activateProjectDetailView({
+      projectTitle,
+      slug,
+      trackProjectView: (viewSlug, title) => analytics.projectView(viewSlug, title),
+    })
   }, [projectTitle, slug])
 
   // Measure the hero image position and feed it to the overlay.
   // useLayoutEffect fires before paint, so the overlay gets the target immediately.
   useLayoutEffect(() => {
-    if (isTransitionActive && heroRef.current) {
-      const rect = heroRef.current.getBoundingClientRect()
-      setProjectTransitionTarget({
-        top: rect.top - PAGE_TRANSITION_Y_OFFSET,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height,
+    const heroNode = heroRef.current
+
+    if (isTransitionActive && heroNode) {
+      activateProjectDetailTransitionTarget({
+        getHeroRect: () => heroNode.getBoundingClientRect(),
+        pageTransitionYOffset: PAGE_TRANSITION_Y_OFFSET,
+        setTransitionTarget: setProjectTransitionTarget,
       })
     }
   }, [isTransitionActive])
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setStage(4)
-      return
-    }
-
-    setStage(0)
-    const timers: Array<ReturnType<typeof setTimeout>> = []
-    timers.push(setTimeout(() => setStage(1), TIMING.headerAppear))
-    timers.push(setTimeout(() => setStage(2), TIMING.imageAppear))
-    timers.push(setTimeout(() => setStage(3), TIMING.metaAppear))
-    timers.push(setTimeout(() => setStage(4), TIMING.contentAppear))
+    const timers = scheduleProjectDetailRevealStages({
+      prefersReducedMotion,
+      scheduleStage: (nextStage, delay) => setTimeout(() => setStage(nextStage), delay),
+      setStage,
+    })
 
     return () => timers.forEach(clearTimeout)
   }, [prefersReducedMotion])
 
-  const duration = motionDurationMs(TIMING.duration, prefersReducedMotion)
+  const duration = motionDurationMs(PROJECT_DETAIL_TIMING.duration, prefersReducedMotion)
 
   return (
     <>
       <m.div
-        initial={{ opacity: ITEM.initialOpacity, y: ITEM.initialY }}
-        animate={{
-          opacity: stage >= 1 ? ITEM.finalOpacity : ITEM.initialOpacity,
-          y: stage >= 1 ? ITEM.finalY : ITEM.initialY,
-        }}
-        transition={{ duration, ease: ITEM.ease }}
+        initial={{ opacity: PROJECT_DETAIL_ITEM_MOTION.initialOpacity, y: PROJECT_DETAIL_ITEM_MOTION.initialY }}
+        animate={getProjectDetailItemMotion({ stage, visibleStage: 1 })}
+        transition={{ duration, ease: MOTION_EASE_SOFT }}
       >
         {header}
       </m.div>
 
       <m.div
         ref={heroRef}
-        initial={{ opacity: isTransitionActive ? 0 : ITEM.initialOpacity, y: isTransitionActive ? 0 : 16 }}
-        animate={{
-          opacity: isTransitionActive ? 0 : (stage >= 2 ? ITEM.finalOpacity : ITEM.initialOpacity),
-          y: isTransitionActive ? 0 : (stage >= 2 ? ITEM.finalY : 16),
-        }}
-        transition={{ duration, ease: ITEM.ease }}
+        initial={getProjectDetailItemMotion({
+          initialY: PROJECT_DETAIL_HERO_INITIAL_Y,
+          stage: 0,
+          transitionActive: isTransitionActive,
+          visibleStage: 2,
+        })}
+        animate={getProjectDetailItemMotion({
+          initialY: PROJECT_DETAIL_HERO_INITIAL_Y,
+          stage,
+          transitionActive: isTransitionActive,
+          visibleStage: 2,
+        })}
+        transition={{ duration, ease: MOTION_EASE_SOFT }}
       >
         {image}
       </m.div>
 
       <m.div
-        initial={{ opacity: ITEM.initialOpacity, y: ITEM.initialY }}
-        animate={{
-          opacity: stage >= 3 ? ITEM.finalOpacity : ITEM.initialOpacity,
-          y: stage >= 3 ? ITEM.finalY : ITEM.initialY,
-        }}
-        transition={{ duration, ease: ITEM.ease }}
+        initial={{ opacity: PROJECT_DETAIL_ITEM_MOTION.initialOpacity, y: PROJECT_DETAIL_ITEM_MOTION.initialY }}
+        animate={getProjectDetailItemMotion({ stage, visibleStage: 3 })}
+        transition={{ duration, ease: MOTION_EASE_SOFT }}
       >
         {description}
       </m.div>
 
       <m.div
-        initial={{ opacity: ITEM.initialOpacity, y: ITEM.initialY }}
-        animate={{
-          opacity: stage >= 3 ? ITEM.finalOpacity : ITEM.initialOpacity,
-          y: stage >= 3 ? ITEM.finalY : ITEM.initialY,
-        }}
+        initial={{ opacity: PROJECT_DETAIL_ITEM_MOTION.initialOpacity, y: PROJECT_DETAIL_ITEM_MOTION.initialY }}
+        animate={getProjectDetailItemMotion({ stage, visibleStage: 3 })}
         transition={{
           duration,
           delay: stage >= 3 ? motionDelayMs(60, prefersReducedMotion) : 0,
-          ease: ITEM.ease,
+          ease: MOTION_EASE_SOFT,
         }}
       >
         {meta}
@@ -165,12 +153,9 @@ export default function ProjectDetailContent({
       </m.div>
 
       <m.div
-        initial={{ opacity: ITEM.initialOpacity, y: ITEM.initialY }}
-        animate={{
-          opacity: stage >= 4 ? ITEM.finalOpacity : ITEM.initialOpacity,
-          y: stage >= 4 ? ITEM.finalY : ITEM.initialY,
-        }}
-        transition={{ duration, ease: ITEM.ease }}
+        initial={{ opacity: PROJECT_DETAIL_ITEM_MOTION.initialOpacity, y: PROJECT_DETAIL_ITEM_MOTION.initialY }}
+        animate={getProjectDetailItemMotion({ stage, visibleStage: 4 })}
+        transition={{ duration, ease: MOTION_EASE_SOFT }}
       >
         {content}
       </m.div>

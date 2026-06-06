@@ -2,9 +2,19 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
-import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
+import { MOTION_EASE_EXIT, MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 import { useWebHaptics } from 'web-haptics/react'
 import { showJoyToast } from '@/lib/joy'
+import {
+  SCROLL_TO_TOP_ARIA_LABEL,
+  SCROLL_TO_TOP_MOTION_DURATION_MS,
+  activateScrollToTop,
+  getScrollToTopAnimateFrame,
+  getScrollToTopExitFrame,
+  getScrollToTopFrameScheduleState,
+  getScrollToTopInitialFrame,
+  getScrollToTopVisibilityUpdate,
+} from '@/lib/scroll-to-top'
 import arcStyles from './ArcGlossUploadButton.module.css'
 
 function ScrollArrowMark({ className }: { className?: string }) {
@@ -41,17 +51,27 @@ export default function ScrollToTop() {
   const tickingRef = useRef(false)
   const haptic = useWebHaptics()
   const prefersReducedMotion = useReducedMotion() ?? false
+  const enterTransition = {
+    duration: motionDurationMs(SCROLL_TO_TOP_MOTION_DURATION_MS, prefersReducedMotion),
+    ease: MOTION_EASE_SOFT,
+  }
+  const exitTransition = {
+    duration: motionDurationMs(160, prefersReducedMotion),
+    ease: MOTION_EASE_EXIT,
+  }
 
   useEffect(() => {
     const updateVisibility = () => {
-      const pageHeight = document.documentElement.scrollHeight
-      const viewportBottom = window.scrollY + window.innerHeight
-      const nearPageEnd = viewportBottom >= pageHeight - 360
-      const nextVisible = nearPageEnd && window.scrollY > 720
+      const nextVisibility = getScrollToTopVisibilityUpdate({
+        currentVisible: visibleRef.current,
+        pageHeight: document.documentElement.scrollHeight,
+        scrollY: window.scrollY,
+        viewportHeight: window.innerHeight,
+      })
 
-      if (nextVisible !== visibleRef.current) {
-        visibleRef.current = nextVisible
-        setVisible(nextVisible)
+      if (nextVisibility.changed) {
+        visibleRef.current = nextVisibility.visible
+        setVisible(nextVisibility.visible)
       }
 
       tickingRef.current = false
@@ -59,9 +79,11 @@ export default function ScrollToTop() {
     }
 
     const onScroll = () => {
-      if (tickingRef.current) return
+      const scheduleState = getScrollToTopFrameScheduleState(tickingRef.current)
+      tickingRef.current = scheduleState.ticking
 
-      tickingRef.current = true
+      if (!scheduleState.shouldRequestFrame) return
+
       frameRef.current = window.requestAnimationFrame(updateVisibility)
     }
 
@@ -79,9 +101,11 @@ export default function ScrollToTop() {
   }, [])
 
   const scrollToTop = () => {
-    haptic.trigger('light')
-    showJoyToast('Back to top')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    activateScrollToTop({
+      scrollToTop: (options) => window.scrollTo(options),
+      showToast: showJoyToast,
+      triggerHaptic: (style) => haptic.trigger(style),
+    })
   }
 
   return (
@@ -89,18 +113,14 @@ export default function ScrollToTop() {
       {visible && (
         <m.div
           className="fixed bottom-[6.85rem] right-5 z-50 origin-center sm:bottom-[5.5rem] sm:right-10 lg:right-12"
-          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.94, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-          exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.96, filter: 'blur(4px)' }}
-          transition={{
-            duration: motionDurationMs(220, prefersReducedMotion),
-            ease: MOTION_EASE_SOFT,
-          }}
+          initial={getScrollToTopInitialFrame(prefersReducedMotion)}
+          animate={{ ...getScrollToTopAnimateFrame(), transition: enterTransition }}
+          exit={{ ...getScrollToTopExitFrame(prefersReducedMotion), transition: exitTransition }}
         >
           <button
             type="button"
             onClick={scrollToTop}
-            aria-label="Scroll to top"
+            aria-label={SCROLL_TO_TOP_ARIA_LABEL}
             className={arcStyles.scrollTopButton}
           >
             <ScrollArrowMark className={arcStyles.scrollTopArrow} />

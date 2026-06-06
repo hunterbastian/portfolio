@@ -2,18 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState, type ComponentType } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
-
-const LAUNCHER_OPEN_EVENT = 'hb-open-launcher'
-const LAUNCHER_PRELOAD_EVENT = 'hb-preload-launcher'
-
-interface LauncherProject {
-  slug: string
-  title: string
-  description: string
-  category: string
-  tags: string[]
-  date: string
-}
+import type { LauncherProject } from '@/components/launcher/types'
+import {
+  LAUNCHER_OPEN_EVENT,
+  LAUNCHER_PRELOAD_EVENT,
+  getGlobalLauncherKeyboardAction,
+  isLauncherTypingTarget,
+} from '@/lib/launcher'
 
 interface JoyfulLayerProps {
   projects?: LauncherProject[]
@@ -22,13 +17,6 @@ interface JoyfulLayerProps {
 interface JoyfulLayerPanelProps {
   projects?: LauncherProject[]
   openSignal: number
-}
-
-function isTypingTarget(target: EventTarget | null) {
-  if (!(target instanceof HTMLElement)) return false
-  const tagName = target.tagName.toLowerCase()
-
-  return tagName === 'input' || tagName === 'textarea' || target.isContentEditable
 }
 
 export default function JoyfulLayer({ projects = [] }: JoyfulLayerProps) {
@@ -64,21 +52,17 @@ export default function JoyfulLayer({ projects = [] }: JoyfulLayerProps) {
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      const key = event.key.toLowerCase()
-      const modifierKey = event.metaKey || event.ctrlKey
+      const action = getGlobalLauncherKeyboardAction({
+        ctrlKey: event.ctrlKey,
+        isTypingTarget: isLauncherTypingTarget(event.target),
+        key: event.key,
+        metaKey: event.metaKey,
+      })
+      if (!action) return
 
-      if (modifierKey && key === 'k') {
-        event.preventDefault()
-        haptic.trigger('light')
-        openPanel()
-        return
-      }
-
-      if (event.key === '/' && !isTypingTarget(event.target)) {
-        event.preventDefault()
-        haptic.trigger('light')
-        openPanel()
-      }
+      event.preventDefault()
+      haptic.trigger('light')
+      openPanel()
     }
 
     window.addEventListener(LAUNCHER_OPEN_EVENT, handleOpenLauncher)

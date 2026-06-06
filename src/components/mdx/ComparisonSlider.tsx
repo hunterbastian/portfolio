@@ -3,6 +3,18 @@
 import Image from 'next/image'
 import { useId, useState } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
+import {
+  COMPARISON_SLIDER_AFTER_LABEL,
+  COMPARISON_SLIDER_ARIA_LABEL,
+  COMPARISON_SLIDER_BEFORE_LABEL,
+  COMPARISON_SLIDER_INITIAL_POSITION,
+  COMPARISON_SLIDER_MAX,
+  COMPARISON_SLIDER_MIN,
+  COMPARISON_SLIDER_MOTION_DURATION_MS,
+  clampComparisonSliderPosition,
+  getComparisonSliderInputPosition,
+  getComparisonSliderPercent,
+} from '@/lib/comparison-slider'
 import { MOTION_EASE_STANDARD, motionDurationMs } from '@/lib/motion'
 
 interface ComparisonSliderProps {
@@ -15,22 +27,18 @@ interface ComparisonSliderProps {
   initialPosition?: number
 }
 
-function clampPercentage(value: number): number {
-  return Math.min(90, Math.max(10, value))
-}
-
 export default function ComparisonSlider({
   beforeSrc,
   afterSrc,
   beforeAlt,
   afterAlt,
-  beforeLabel = 'Before',
-  afterLabel = 'After',
-  initialPosition = 52,
+  beforeLabel = COMPARISON_SLIDER_BEFORE_LABEL,
+  afterLabel = COMPARISON_SLIDER_AFTER_LABEL,
+  initialPosition = COMPARISON_SLIDER_INITIAL_POSITION,
 }: ComparisonSliderProps) {
   const sliderId = useId()
   const prefersReducedMotion = useReducedMotion() ?? false
-  const [position, setPosition] = useState(clampPercentage(initialPosition))
+  const [position, setPosition] = useState(clampComparisonSliderPosition(initialPosition))
 
   return (
     <figure className="my-10">
@@ -46,9 +54,9 @@ export default function ComparisonSlider({
 
           <m.div
             className="absolute inset-y-0 left-0 overflow-hidden"
-            animate={{ width: `${position}%` }}
+            animate={{ width: getComparisonSliderPercent(position) }}
             transition={{
-              duration: motionDurationMs(260, prefersReducedMotion),
+              duration: motionDurationMs(COMPARISON_SLIDER_MOTION_DURATION_MS, prefersReducedMotion),
               ease: MOTION_EASE_STANDARD,
             }}
           >
@@ -66,9 +74,9 @@ export default function ComparisonSlider({
           <m.div
             aria-hidden
             className="pointer-events-none absolute inset-y-0 w-0.5 bg-card/95 shadow-[0_0_0_1px_rgba(0,0,0,0.28)]"
-            animate={{ left: `${position}%` }}
+            animate={{ left: getComparisonSliderPercent(position) }}
             transition={{
-              duration: motionDurationMs(260, prefersReducedMotion),
+              duration: motionDurationMs(COMPARISON_SLIDER_MOTION_DURATION_MS, prefersReducedMotion),
               ease: MOTION_EASE_STANDARD,
             }}
           />
@@ -86,17 +94,17 @@ export default function ComparisonSlider({
 
       <div className="mt-3">
         <label htmlFor={sliderId} className="sr-only">
-          Compare before and after designs
+          {COMPARISON_SLIDER_ARIA_LABEL}
         </label>
         <input
           id={sliderId}
           type="range"
-          min={10}
-          max={90}
+          min={COMPARISON_SLIDER_MIN}
+          max={COMPARISON_SLIDER_MAX}
           value={position}
-          onChange={(event) => setPosition(clampPercentage(Number(event.target.value)))}
+          onChange={(event) => setPosition(getComparisonSliderInputPosition(event.target.value))}
           className="h-1.5 w-full cursor-ew-resize accent-primary"
-          aria-label="Compare before and after designs"
+          aria-label={COMPARISON_SLIDER_ARIA_LABEL}
         />
       </div>
     </figure>

@@ -1,12 +1,30 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-
-type Tool = 'pencil' | 'eraser'
+import {
+  PLAYGROUND_DRAW_ACTIVE_MARK_CLASS_NAME,
+  PLAYGROUND_DRAW_CANVAS_CLASS_NAME,
+  PLAYGROUND_DRAW_CLEAR_BUTTON_CLASS_NAME,
+  PLAYGROUND_DRAW_CLEAR_LABEL,
+  PLAYGROUND_DRAW_CLEAR_TITLE,
+  PLAYGROUND_DRAW_ERASER_LABEL,
+  PLAYGROUND_DRAW_ERASER_TITLE,
+  PLAYGROUND_DRAW_INITIAL_TOOL,
+  PLAYGROUND_DRAW_PENCIL_LABEL,
+  PLAYGROUND_DRAW_PENCIL_TITLE,
+  PLAYGROUND_DRAW_TOOL_BUTTON_CLASS_NAME,
+  PLAYGROUND_DRAW_TOOL_TRAY_CLASS_NAME,
+  getPlaygroundDrawCanvasStyle,
+  getPlaygroundDrawPoint,
+  getPlaygroundDrawStrokeConfig,
+  getPlaygroundDrawToolIconClassName,
+  shouldShowPlaygroundDrawActiveMark,
+  type PlaygroundDrawTool,
+} from '@/lib/playground-draw'
 
 export default function PlaygroundDraw() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [tool, setTool] = useState<Tool>('pencil')
+  const [tool, setTool] = useState<PlaygroundDrawTool>(PLAYGROUND_DRAW_INITIAL_TOOL)
   const [drawing, setDrawing] = useState(false)
   const lastPos = useRef<{ x: number; y: number } | null>(null)
 
@@ -15,10 +33,7 @@ export default function PlaygroundDraw() {
     if (!canvas) return { x: 0, y: 0 }
     const rect = canvas.getBoundingClientRect()
     const dpr = window.devicePixelRatio || 1
-    return {
-      x: (e.clientX - rect.left) * dpr,
-      y: (e.clientY - rect.top) * dpr,
-    }
+    return getPlaygroundDrawPoint(e.clientX, e.clientY, rect, dpr)
   }, [])
 
   // Size canvas to viewport
@@ -62,14 +77,12 @@ export default function PlaygroundDraw() {
       ctx.lineCap = 'round'
       ctx.lineJoin = 'round'
 
-      if (tool === 'pencil') {
-        ctx.globalCompositeOperation = 'source-over'
-        ctx.strokeStyle = 'rgba(60, 60, 60, 0.7)'
-        ctx.lineWidth = 2.5 * (window.devicePixelRatio || 1)
-      } else {
-        ctx.globalCompositeOperation = 'destination-out'
-        ctx.lineWidth = 24 * (window.devicePixelRatio || 1)
+      const strokeConfig = getPlaygroundDrawStrokeConfig(tool, window.devicePixelRatio || 1)
+      ctx.globalCompositeOperation = strokeConfig.globalCompositeOperation
+      if (strokeConfig.strokeStyle) {
+        ctx.strokeStyle = strokeConfig.strokeStyle
       }
+      ctx.lineWidth = strokeConfig.lineWidth
 
       ctx.beginPath()
       ctx.moveTo(lastPos.current.x, lastPos.current.y)
@@ -98,8 +111,8 @@ export default function PlaygroundDraw() {
       {/* Drawing canvas overlay */}
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 z-[5]"
-        style={{ cursor: tool === 'pencil' ? 'crosshair' : 'grab', touchAction: 'none' }}
+        className={PLAYGROUND_DRAW_CANVAS_CLASS_NAME}
+        style={getPlaygroundDrawCanvasStyle(tool)}
         onPointerDown={startDraw}
         onPointerMove={draw}
         onPointerUp={stopDraw}
@@ -108,24 +121,22 @@ export default function PlaygroundDraw() {
 
       {/* Tool tray */}
       <div
-        className="fixed bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-end gap-1 border border-black/[0.05] bg-card/60 px-3 pb-2 pt-2 shadow-[0_2px_20px_rgba(0,0,0,0.08)] backdrop-blur-xl"
+        className={PLAYGROUND_DRAW_TOOL_TRAY_CLASS_NAME}
       >
         {/* Pencil */}
         <button
           type="button"
           onClick={() => setTool('pencil')}
-          className="group relative flex flex-col items-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary rounded"
-          aria-label="Pencil tool"
-          title="Pencil"
+          className={PLAYGROUND_DRAW_TOOL_BUTTON_CLASS_NAME}
+          aria-label={PLAYGROUND_DRAW_PENCIL_LABEL}
+          title={PLAYGROUND_DRAW_PENCIL_TITLE}
         >
           <svg
             width="28"
             height="56"
             viewBox="0 0 28 56"
             fill="none"
-            className={`transition-transform duration-300 ease-soft ${
-              tool === 'pencil' ? '-translate-y-2' : 'translate-y-0 group-hover:-translate-y-1'
-            }`}
+            className={getPlaygroundDrawToolIconClassName('pencil', tool)}
           >
             {/* Pencil body */}
             <rect x="8" y="12" width="12" height="34" rx="1" fill="#f5e6d0" />
@@ -138,8 +149,8 @@ export default function PlaygroundDraw() {
             {/* Barrel stripe */}
             <rect x="12" y="12" width="4" height="26" fill="#eedcc2" opacity="0.5" />
           </svg>
-          {tool === 'pencil' && (
-            <span className="absolute -bottom-0.5 h-1 w-1 rounded-[1px] bg-foreground/40" />
+          {shouldShowPlaygroundDrawActiveMark('pencil', tool) && (
+            <span className={PLAYGROUND_DRAW_ACTIVE_MARK_CLASS_NAME} />
           )}
         </button>
 
@@ -147,18 +158,16 @@ export default function PlaygroundDraw() {
         <button
           type="button"
           onClick={() => setTool('eraser')}
-          className="group relative flex flex-col items-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary rounded"
-          aria-label="Eraser tool"
-          title="Eraser"
+          className={PLAYGROUND_DRAW_TOOL_BUTTON_CLASS_NAME}
+          aria-label={PLAYGROUND_DRAW_ERASER_LABEL}
+          title={PLAYGROUND_DRAW_ERASER_TITLE}
         >
           <svg
             width="32"
             height="24"
             viewBox="0 0 32 24"
             fill="none"
-            className={`transition-transform duration-300 ease-soft ${
-              tool === 'eraser' ? '-translate-y-2' : 'translate-y-0 group-hover:-translate-y-1'
-            }`}
+            className={getPlaygroundDrawToolIconClassName('eraser', tool)}
           >
             {/* Eraser body */}
             <rect x="1" y="1" width="30" height="22" rx="3" fill="#f5a0b1" />
@@ -170,8 +179,8 @@ export default function PlaygroundDraw() {
             <line x1="8" y1="7" x2="24" y2="7" stroke="#e09aaa" strokeWidth="1" />
             <line x1="10" y1="10" x2="22" y2="10" stroke="#e09aaa" strokeWidth="1" />
           </svg>
-          {tool === 'eraser' && (
-            <span className="absolute -bottom-0.5 h-1 w-1 rounded-[1px] bg-foreground/40" />
+          {shouldShowPlaygroundDrawActiveMark('eraser', tool) && (
+            <span className={PLAYGROUND_DRAW_ACTIVE_MARK_CLASS_NAME} />
           )}
         </button>
 
@@ -179,9 +188,9 @@ export default function PlaygroundDraw() {
         <button
           type="button"
           onClick={clearAll}
-          className="ml-1 flex h-10 w-10 items-center justify-center text-muted-foreground/60 transition-colors duration-150 hover:bg-black/[0.04] hover:text-foreground/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          aria-label="Clear drawing"
-          title="Clear all"
+          className={PLAYGROUND_DRAW_CLEAR_BUTTON_CLASS_NAME}
+          aria-label={PLAYGROUND_DRAW_CLEAR_LABEL}
+          title={PLAYGROUND_DRAW_CLEAR_TITLE}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
             <path d="M18 6L6 18M6 6l12 12" />

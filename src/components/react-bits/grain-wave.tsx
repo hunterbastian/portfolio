@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useMemo } from "react";
+import React, { useEffect, useRef, useMemo, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { cn } from "@/lib/utils";
@@ -250,7 +250,26 @@ const GrainWave: React.FC<GrainWaveProps> = ({
   waveWidth = 3.5,
   scale = 0.6,
 }) => {
-  const backgroundColor = lightBackground;
+  const [darkThemeActive, setDarkThemeActive] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const syncThemeState = () => {
+      setDarkThemeActive(root.classList.contains("dark") || root.dataset.theme === "dark");
+    };
+
+    syncThemeState();
+
+    const observer = new MutationObserver(syncThemeState);
+    observer.observe(root, {
+      attributeFilter: ["class", "data-theme"],
+      attributes: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const backgroundColor = darkThemeActive ? darkBackground : lightBackground;
 
   const widthStyle = typeof width === "number" ? `${width}px` : width;
   const heightStyle = typeof height === "number" ? `${height}px` : height;

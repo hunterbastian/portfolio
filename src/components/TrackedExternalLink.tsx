@@ -2,6 +2,10 @@
 
 import type { AnchorHTMLAttributes, MouseEvent, ReactNode } from 'react'
 import { analytics } from '@/lib/analytics'
+import {
+  activateTrackedExternalLink,
+  getTrackedExternalLinkRel,
+} from '@/lib/tracked-external-link'
 
 interface TrackedExternalLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'children'> {
   href: string
@@ -24,15 +28,20 @@ export default function TrackedExternalLink({
   onClick,
   ...props
 }: TrackedExternalLinkProps) {
-  const safeRel = rel ?? (target === '_blank' ? 'noopener noreferrer' : undefined)
+  const safeRel = getTrackedExternalLinkRel(target, rel)
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    analytics.externalLink(href, platform, {
-      source: trackingSource,
+    activateTrackedExternalLink({
+      event,
+      href,
+      onClick,
+      platform,
       projectSlug,
       projectTitle,
+      trackExternalLink: (trackedHref, trackedPlatform, context) =>
+        analytics.externalLink(trackedHref, trackedPlatform, context),
+      trackingSource,
     })
-    onClick?.(event)
   }
 
   return (

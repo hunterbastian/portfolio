@@ -2,6 +2,15 @@
 
 import React from 'react'
 import Link from 'next/link'
+import {
+  ERROR_BOUNDARY_DESCRIPTION,
+  ERROR_BOUNDARY_HOME_CLASS,
+  ERROR_BOUNDARY_RETRY_CLASS,
+  ERROR_BOUNDARY_RETRY_LABEL,
+  ERROR_BOUNDARY_TITLE,
+  getErrorBoundaryHomeAction,
+  logErrorBoundaryError,
+} from '@/lib/error-boundary'
 
 interface ErrorBoundaryProps {
   children: React.ReactNode
@@ -22,8 +31,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
   }
 
   componentDidCatch(error: unknown) {
-    // Log to console; could be replaced with analytics
-    console.error('ErrorBoundary caught an error:', error)
+    logErrorBoundaryError(error)
   }
 
   handleReset = () => {
@@ -32,15 +40,17 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
 
   render() {
     if (this.state.hasError) {
+      const homeAction = getErrorBoundaryHomeAction()
+
       return (
         <div className="container mx-auto max-w-[560px] px-4 py-16 text-center">
-          <h2 className="text-2xl font-semibold mb-3">Something went wrong</h2>
-          <p className="text-muted-foreground mb-6">Please try again. If the issue persists, contact me.</p>
+          <h2 className="text-2xl font-semibold mb-3">{ERROR_BOUNDARY_TITLE}</h2>
+          <p className="text-muted-foreground mb-6">{ERROR_BOUNDARY_DESCRIPTION}</p>
           <div className="flex items-center justify-center gap-3">
-            <button onClick={this.handleReset} className="min-h-[40px] origin-center touch-manipulation rounded bg-primary px-4 py-2 text-primary-foreground transition-transform duration-150 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-              Try again
+            <button onClick={this.handleReset} className={ERROR_BOUNDARY_RETRY_CLASS}>
+              {ERROR_BOUNDARY_RETRY_LABEL}
             </button>
-            <Link href="/" className="inline-flex min-h-[40px] origin-center touch-manipulation items-center rounded border px-4 py-2 transition-transform duration-150 active:translate-y-0 active:scale-[0.96]">Go Home</Link>
+            <Link href={homeAction.href} className={ERROR_BOUNDARY_HOME_CLASS}>{homeAction.label}</Link>
           </div>
         </div>
       )

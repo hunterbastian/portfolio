@@ -7,9 +7,21 @@ import { usePathname } from 'next/navigation'
 import {
   getProjectTransition,
   subscribeProjectTransition,
+  activateProjectTransitionOverlayCompletion,
+  activateProjectTransitionOverlayTarget,
   clearProjectTransition,
+  clearProjectTransitionForPath,
+  getProjectTransitionOverlayAnimateFrame,
+  getProjectTransitionOverlayDuration,
+  getProjectTransitionOverlayInitialFrame,
   markProjectTransitionCompleting,
-  type TransitionRect,
+  PROJECT_TRANSITION_OVERLAY_IMAGE_CLASS_NAME,
+  PROJECT_TRANSITION_OVERLAY_IMAGE_QUALITY,
+  PROJECT_TRANSITION_OVERLAY_IMAGE_SIZES,
+  PROJECT_TRANSITION_OVERLAY_ROOT_CLASS_NAME,
+  resetProjectTransitionOverlayPhase,
+  scheduleProjectTransitionHoldFallback,
+  type ProjectTransitionOverlayPhase,
 } from '@/lib/project-transition'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 
@@ -23,13 +35,6 @@ import { MOTION_EASE_SOFT } from '@/lib/motion'
  *   (unmount) — clearProjectTransition() removes overlay
  * ───────────────────────────────────────────────────────── */
 
-type Phase = 'hold' | 'fly' | 'fade'
-
-const FLY_DURATION = 0.48
-const FADE_DURATION = 0.22
-/** Safety net: clear if target never arrives */
-const HOLD_TIMEOUT_MS = 2000
-
 export default function ProjectTransitionOverlay() {
   const transition = useSyncExternalStore(
     subscribeProjectTransition,
@@ -37,88 +42,73 @@ export default function ProjectTransitionOverlay() {
     () => null,
   )
   const prefersReducedMotion = useReducedMotion() ?? false
-  const [phase, setPhase] = useState<Phase>('hold')
-  const phaseRef = useRef<Phase>('hold')
+  const [phase, setPhase] = useState<ProjectTransitionOverlayPhase>('hold')
+  const phaseRef = useRef<ProjectTransitionOverlayPhase>('hold')
   const pathname = usePathname()
+
+  const setOverlayPhase = useCallback((nextPhase: ProjectTransitionOverlayPhase) => {
+    setPhase(nextPhase)
+    phaseRef.current = nextPhase
+  }, [])
 
   // Reset phase when a new transition starts (id changes on every click, even same card)
   useEffect(() => {
-    if (transition && !transition.targetRect && !transition.completing) {
-      setPhase('hold')
-      phaseRef.current = 'hold'
-    }
-  }, [transition?.id])
+    resetProjectTransitionOverlayPhase({ setPhase: setOverlayPhase, transition })
+  }, [setOverlayPhase, transition, transition?.id])
 
   // Start flying when target rect arrives
   useEffect(() => {
-    if (transition?.targetRect && phaseRef.current === 'hold') {
-      if (prefersReducedMotion) {
-        markProjectTransitionCompleting()
-        clearProjectTransition()
-        return
-      }
-      setPhase('fly')
-      phaseRef.current = 'fly'
-    }
-  }, [transition?.targetRect, prefersReducedMotion])
+    activateProjectTransitionOverlayTarget({
+      clearTransition: clearProjectTransition,
+      markCompleting: markProjectTransitionCompleting,
+      phase: phaseRef.current,
+      prefersReducedMotion,
+      setPhase: setOverlayPhase,
+      transition,
+    })
+  }, [prefersReducedMotion, setOverlayPhase, transition, transition?.targetRect])
 
   // Safety: graceful degradation if target never arrives
   useEffect(() => {
-    if (transition && phaseRef.current === 'hold') {
-      const timer = setTimeout(() => {
-        markProjectTransitionCompleting()
-        // Give the hero a moment to start fading in, then remove the overlay
-        setTimeout(clearProjectTransition, 300)
-      }, HOLD_TIMEOUT_MS)
-      return () => clearTimeout(timer)
-    }
+    const timers = scheduleProjectTransitionHoldFallback({
+      clearTransition: clearProjectTransition,
+      markCompleting: markProjectTransitionCompleting,
+      phase: phaseRef.current,
+      schedule: (delay, callback) => setTimeout(callback, delay),
+      transition,
+    })
+
+    return () => timers.forEach(clearTimeout)
   }, [transition?.id])
 
   // Clear if user navigates away from the target page
   useEffect(() => {
-    if (transition && !pathname.startsWith(`/projects/${transition.slug}`)) {
-      clearProjectTransition()
-    }
+    clearProjectTransitionForPath({
+      clearTransition: clearProjectTransition,
+      pathname,
+      transition,
+    })
   }, [pathname, transition])
 
   const handleAnimationComplete = useCallback(() => {
-    if (phaseRef.current === 'fly') {
-      markProjectTransitionCompleting()
-      setPhase('fade')
-      phaseRef.current = 'fade'
-    } else if (phaseRef.current === 'fade') {
-      clearProjectTransition()
-    }
-  }, [])
+    activateProjectTransitionOverlayCompletion({
+      clearTransition: clearProjectTransition,
+      markCompleting: markProjectTransitionCompleting,
+      phase: phaseRef.current,
+      setPhase: setOverlayPhase,
+    })
+  }, [setOverlayPhase])
 
   if (!transition) return null
-
-  const target = transition.targetRect
-  const rect: TransitionRect =
-    (phase === 'fly' || phase === 'fade') && target ? target : transition.sourceRect
 
   return (
     <m.div
       key={transition.id}
-      className="pointer-events-none fixed z-[100] overflow-hidden will-change-[top,left,width,height]"
-      initial={{
-        top: transition.sourceRect.top,
-        left: transition.sourceRect.left,
-        width: transition.sourceRect.width,
-        height: transition.sourceRect.height,
-        borderRadius: 12,
-        opacity: 1,
-      }}
-      animate={{
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height,
-        borderRadius: phase === 'hold' ? 12 : 3,
-        opacity: phase === 'fade' ? 0 : 1,
-      }}
+      className={PROJECT_TRANSITION_OVERLAY_ROOT_CLASS_NAME}
+      initial={{ ...getProjectTransitionOverlayInitialFrame(transition) }}
+      animate={{ ...getProjectTransitionOverlayAnimateFrame(phase, transition) }}
       transition={{
-        duration: phase === 'fly' ? FLY_DURATION : phase === 'fade' ? FADE_DURATION : 0,
+        duration: getProjectTransitionOverlayDuration(phase),
         ease: MOTION_EASE_SOFT,
       }}
       onAnimationComplete={handleAnimationComplete}
@@ -127,9 +117,9 @@ export default function ProjectTransitionOverlay() {
         src={transition.imageSrc}
         alt=""
         fill
-        className="object-cover"
-        sizes="(max-width: 640px) 100vw, 560px"
-        quality={90}
+        className={PROJECT_TRANSITION_OVERLAY_IMAGE_CLASS_NAME}
+        sizes={PROJECT_TRANSITION_OVERLAY_IMAGE_SIZES}
+        quality={PROJECT_TRANSITION_OVERLAY_IMAGE_QUALITY}
         priority
       />
     </m.div>

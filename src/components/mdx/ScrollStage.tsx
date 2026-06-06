@@ -2,6 +2,15 @@
 
 import { type ReactNode, useRef } from 'react'
 import { m, useInView, useReducedMotion } from 'framer-motion'
+import {
+  SCROLL_STAGE_DURATION_MS,
+  getScrollStageClassName,
+  getScrollStageContentAnimationState,
+  getScrollStageContentDelayMs,
+  getScrollStageRuleAnimationState,
+  getScrollStageTitleAnimationState,
+  getScrollStageTitleDelayMs,
+} from '@/lib/scroll-stage'
 import { MOTION_EASE_SOFT, motionDurationMs, motionDelayMs } from '@/lib/motion'
 
 interface ScrollStageProps {
@@ -13,9 +22,6 @@ interface ScrollStageProps {
   className?: string
 }
 
-const DURATION_MS = 600
-const STAGGER_MS = 120
-
 export default function ScrollStage({
   chapter,
   title,
@@ -26,21 +32,21 @@ export default function ScrollStage({
   const isInView = useInView(ref, { once: true, margin: '-100px 0px -100px 0px' })
   const prefersReducedMotion = useReducedMotion() ?? false
 
-  const duration = motionDurationMs(DURATION_MS, prefersReducedMotion)
+  const duration = motionDurationMs(SCROLL_STAGE_DURATION_MS, prefersReducedMotion)
 
   return (
     <section
       ref={ref}
       data-chapter={chapter}
       data-chapter-title={title ?? ''}
-      className={`my-16 first:mt-0 ${className ?? ''}`}
+      className={getScrollStageClassName(className)}
     >
       <div className="not-prose">
         {/* Chapter label + rule */}
         <m.div
           className="mb-5 flex items-center gap-3"
-          initial={{ opacity: 0, x: -8 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
+          initial={getScrollStageRuleAnimationState(false)}
+          animate={getScrollStageRuleAnimationState(isInView)}
           transition={{ duration, ease: MOTION_EASE_SOFT }}
         >
           <span className="shrink-0 font-mono text-[11px] font-medium tracking-[0.12em] uppercase text-accent">
@@ -53,11 +59,11 @@ export default function ScrollStage({
         {title && (
           <m.h2
             className="mb-8 font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-xl"
-            initial={{ opacity: 0, y: 12 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+            initial={getScrollStageTitleAnimationState(false)}
+            animate={getScrollStageTitleAnimationState(isInView)}
             transition={{
               duration,
-              delay: motionDelayMs(STAGGER_MS, prefersReducedMotion),
+              delay: motionDelayMs(getScrollStageTitleDelayMs(), prefersReducedMotion),
               ease: MOTION_EASE_SOFT,
             }}
           >
@@ -68,11 +74,11 @@ export default function ScrollStage({
 
       {/* Content — inherits prose styling from parent */}
       <m.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        initial={getScrollStageContentAnimationState(false)}
+        animate={getScrollStageContentAnimationState(isInView)}
         transition={{
           duration,
-          delay: motionDelayMs(title ? STAGGER_MS * 2 : STAGGER_MS, prefersReducedMotion),
+          delay: motionDelayMs(getScrollStageContentDelayMs(Boolean(title)), prefersReducedMotion),
           ease: MOTION_EASE_SOFT,
         }}
       >

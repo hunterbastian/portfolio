@@ -2,6 +2,15 @@
 
 import { useState, useRef } from 'react'
 import { m, useInView, useReducedMotion } from 'framer-motion'
+import { BLANK_LINK_TARGET, getSafeExternalLinkRel } from '@/lib/link-safety'
+import {
+  LIVE_DEMO_DEFAULT_ASPECT_RATIO,
+  LIVE_DEMO_FALLBACK_LINK_LABEL,
+  LIVE_DEMO_LOAD_BUTTON_LABEL,
+  LIVE_DEMO_PANEL_DURATION_MS,
+  getLiveDemoLoadAriaLabel,
+  getLiveDemoPanelAnimationState,
+} from '@/lib/live-demo'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 
 interface LiveDemoProps {
@@ -13,12 +22,10 @@ interface LiveDemoProps {
   aspectRatio?: string
 }
 
-const DURATION_MS = 600
-
 export default function LiveDemo({
   src,
   title,
-  aspectRatio = '16/9',
+  aspectRatio = LIVE_DEMO_DEFAULT_ASPECT_RATIO,
 }: LiveDemoProps) {
   const [isLoaded, setIsLoaded] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -29,10 +36,10 @@ export default function LiveDemo({
     <figure ref={ref} className="not-prose my-10">
       <m.div
         className="overflow-hidden border border-border shadow-card"
-        initial={{ opacity: 0, y: 16 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        initial={getLiveDemoPanelAnimationState(false)}
+        animate={getLiveDemoPanelAnimationState(isInView)}
         transition={{
-          duration: motionDurationMs(DURATION_MS, prefersReducedMotion),
+          duration: motionDurationMs(LIVE_DEMO_PANEL_DURATION_MS, prefersReducedMotion),
           ease: MOTION_EASE_SOFT,
         }}
       >
@@ -42,7 +49,7 @@ export default function LiveDemo({
             onClick={() => setIsLoaded(true)}
             className="group relative w-full origin-center touch-manipulation bg-card/80 transition-transform duration-150 active:translate-y-0 active:scale-[0.96]"
             style={{ aspectRatio }}
-            aria-label={`Load ${title} demo`}
+            aria-label={getLiveDemoLoadAriaLabel(title)}
           >
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-foreground/8 transition-colors duration-200 group-hover:bg-foreground/12">
@@ -56,7 +63,7 @@ export default function LiveDemo({
                 </svg>
               </div>
               <span className="font-mono text-[11px] tracking-[0.08em] text-muted-foreground">
-                Load interactive demo
+                {LIVE_DEMO_LOAD_BUTTON_LABEL}
               </span>
             </div>
           </button>
@@ -77,11 +84,11 @@ export default function LiveDemo({
       <div className="mt-2 flex justify-end">
         <a
           href={src}
-          target="_blank"
-          rel="noopener noreferrer"
+          target={BLANK_LINK_TARGET}
+          rel={getSafeExternalLinkRel(BLANK_LINK_TARGET)}
           className="inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.08em] text-muted-foreground transition-colors duration-200 hover:text-foreground"
         >
-          Open in new tab
+          {LIVE_DEMO_FALLBACK_LINK_LABEL}
           <svg
             className="h-2.5 w-2.5"
             fill="none"

@@ -3,16 +3,47 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
-  advanceSnakeGame,
+  advanceSnakeGameByElapsedTimeIfPlaying,
+  advanceSnakeGameIfPlaying,
   createInitialSnakeGame,
-  directionFromKey,
+  getSnakeBoardGridStyle,
+  getSnakeBoardCells,
+  getSnakeBoardCellClassName,
+  getSnakeBoardCellStyle,
+  getSnakeKeyboardAction,
+  getSnakeMoveButtonAriaLabel,
+  getSnakeOpenButtonClassName,
+  getSnakePauseButtonLabel,
+  getSnakePixelIconCellClassName,
+  getSnakeScoreLabel,
+  serializeSnakeGameSnapshot,
   setSnakeDirection,
   SnakeDirection,
+  SNAKE_ACTION_ROW_CLASS_NAME,
+  SNAKE_ARROWS_HINT,
+  SNAKE_BOARD_CLASS_NAME,
+  SNAKE_CLOSE_LABEL,
+  SNAKE_CONTROL_BUTTON_CLASS_NAME,
+  SNAKE_CONTROL_LABELS,
+  SNAKE_DIALOG_ACTION_BUTTON_CLASS_NAME,
+  SNAKE_DIALOG_CLASS_NAME,
+  SNAKE_DIALOG_HEADER_CLASS_NAME,
+  SNAKE_DIALOG_LABEL,
+  SNAKE_GAME_OVER_CLASS_NAME,
+  SNAKE_GAME_OVER_LABEL,
+  SNAKE_HINT_CLASS_NAME,
+  SNAKE_MODAL_BACKDROP_CLASS_NAME,
+  SNAKE_OPEN_BUTTON_LABEL,
+  SNAKE_PIXEL_ICON_GRID_CLASS_NAME,
+  SNAKE_PIXEL_ICON,
+  SNAKE_RESTART_LABEL,
+  SNAKE_SCORE_CLASS_NAME,
+  SNAKE_SPACE_HINT,
+  SNAKE_TICK_MS,
+  SNAKE_TOUCH_CONTROLS_CLASS_NAME,
+  SNAKE_TOUCH_CONTROLS_ROW_CLASS_NAME,
 } from '@/lib/snake'
 import { useBodyScrollLock } from '@/lib/use-body-scroll-lock'
-
-const TICK_MS = 120
-const PIXEL_ICON = ['00100', '01110', '11111', '01110', '00100']
 
 declare global {
   interface Window {
@@ -38,8 +69,8 @@ function ControlButton({
     <button
       type="button"
       onClick={() => onPress(direction)}
-      className="h-9 min-w-9 border border-black bg-white px-3 text-[10px] font-mono tracking-[0.1em] text-black transition-colors hover:bg-black hover:text-white active:bg-black active:text-white touch-manipulation"
-      aria-label={`Move ${direction}`}
+      className={SNAKE_CONTROL_BUTTON_CLASS_NAME}
+      aria-label={getSnakeMoveButtonAriaLabel(direction)}
     >
       {label}
     </button>
@@ -51,7 +82,7 @@ export default function FooterSnakeEasterEgg() {
   const [isPaused, setIsPaused] = useState(false)
   const [game, setGame] = useState(createGame)
 
-  const occupiedCells = useMemo(() => new Set(game.snake.map((segment) => `${segment.x},${segment.y}`)), [game.snake])
+  const boardCells = useMemo(() => getSnakeBoardCells(game), [game])
 
   const restartGame = useCallback(() => {
     setGame(createGame())
@@ -74,12 +105,9 @@ export default function FooterSnakeEasterEgg() {
 
     const intervalId = window.setInterval(() => {
       setGame((previousGame) => {
-        if (previousGame.gameOver) {
-          return previousGame
-        }
-        return advanceSnakeGame(previousGame)
+        return advanceSnakeGameIfPlaying(previousGame, { isOpen, isPaused })
       })
-    }, TICK_MS)
+    }, SNAKE_TICK_MS)
 
     return () => window.clearInterval(intervalId)
   }, [isOpen, isPaused])
@@ -90,28 +118,20 @@ export default function FooterSnakeEasterEgg() {
     if (!isOpen) return
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        event.preventDefault()
+      const action = getSnakeKeyboardAction(event.key)
+
+      if (!action) return
+
+      event.preventDefault()
+
+      if (action.type === 'close') {
         setIsOpen(false)
-        return
-      }
-
-      if (event.key === ' ') {
-        event.preventDefault()
+      } else if (action.type === 'toggle_pause') {
         setIsPaused((previousValue) => !previousValue)
-        return
-      }
-
-      if (event.key.toLowerCase() === 'r') {
-        event.preventDefault()
+      } else if (action.type === 'restart') {
         restartGame()
-        return
-      }
-
-      const nextDirection = directionFromKey(event.key)
-      if (nextDirection) {
-        event.preventDefault()
-        handleDirection(nextDirection)
+      } else {
+        handleDirection(action.direction)
       }
     }
 
@@ -120,38 +140,11 @@ export default function FooterSnakeEasterEgg() {
   }, [handleDirection, isOpen, restartGame])
 
   useEffect(() => {
-    window.render_game_to_text = () =>
-      JSON.stringify({
-        mode: (() => {
-          if (!isOpen) return 'closed'
-          if (game.gameOver) return 'game_over'
-          if (isPaused) return 'paused'
-          return 'playing'
-        })(),
-        coordinateSystem: { origin: 'top-left', xAxis: 'right', yAxis: 'down' },
-        board: { width: game.config.width, height: game.config.height },
-        snake: game.snake,
-        food: game.food,
-        score: game.score,
-        direction: game.direction,
-        tick: game.tick,
-      })
+    window.render_game_to_text = () => serializeSnakeGameSnapshot(game, isOpen, isPaused)
 
     window.advanceTime = (ms: number) => {
-      if (!isOpen || isPaused) {
-        return
-      }
-
-      const steps = Math.max(1, Math.round(ms / TICK_MS))
       setGame((previousGame) => {
-        let nextGame = previousGame
-        for (let step = 0; step < steps; step += 1) {
-          if (nextGame.gameOver) {
-            break
-          }
-          nextGame = advanceSnakeGame(nextGame)
-        }
-        return nextGame
+        return advanceSnakeGameByElapsedTimeIfPlaying(previousGame, ms, SNAKE_TICK_MS, { isOpen, isPaused })
       })
     }
 
@@ -161,27 +154,23 @@ export default function FooterSnakeEasterEgg() {
     }
   }, [game, isOpen, isPaused])
 
-  const boardCells = game.config.width * game.config.height
-
   return (
     <>
       <button
         type="button"
-        aria-label="Open Snake mini game"
+        aria-label={SNAKE_OPEN_BUTTON_LABEL}
         onClick={() => {
           setIsOpen(true)
           restartGame()
         }}
-        className={`group inline-flex h-10 w-10 origin-center touch-manipulation items-center justify-center border border-current transition-transform duration-150 hover:scale-110 active:translate-y-0 active:scale-[0.96] ${
-          isOpen ? 'bg-background text-foreground' : 'bg-foreground text-background'
-        }`}
+        className={getSnakeOpenButtonClassName(isOpen)}
       >
-        <span className="grid grid-cols-5 gap-[1px]">
-          {PIXEL_ICON.map((row, rowIndex) =>
+        <span className={SNAKE_PIXEL_ICON_GRID_CLASS_NAME}>
+          {SNAKE_PIXEL_ICON.map((row, rowIndex) =>
             row.split('').map((pixel, columnIndex) => (
               <span
                 key={`${rowIndex}-${columnIndex}`}
-                className={`h-[2px] w-[2px] ${pixel === '1' ? 'bg-current' : 'bg-transparent'}`}
+                className={getSnakePixelIconCellClassName(pixel)}
                 aria-hidden="true"
               />
             )),
@@ -190,86 +179,70 @@ export default function FooterSnakeEasterEgg() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 px-4 py-6" onClick={() => setIsOpen(false)}>
+        <div className={SNAKE_MODAL_BACKDROP_CLASS_NAME} onClick={() => setIsOpen(false)}>
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="Snake game"
+            aria-label={SNAKE_DIALOG_LABEL}
             onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-sm border-2 border-black bg-white p-4 text-black shadow-[8px_8px_0_0_#000000]"
+            className={SNAKE_DIALOG_CLASS_NAME}
           >
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="font-mono text-[11px] tracking-[0.12em]">SNAKE // SCORE {game.score}</p>
+            <div className={SNAKE_DIALOG_HEADER_CLASS_NAME}>
+              <p className={SNAKE_SCORE_CLASS_NAME}>{getSnakeScoreLabel(game.score)}</p>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="border border-black px-2 py-1 font-mono text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
+                className={SNAKE_DIALOG_ACTION_BUTTON_CLASS_NAME}
               >
-                CLOSE
+                {SNAKE_CLOSE_LABEL}
               </button>
             </div>
 
             <div
-              className="grid w-[min(84vw,18rem)] border-2 border-black bg-white"
-              style={{ gridTemplateColumns: `repeat(${game.config.width}, minmax(0, 1fr))` }}
+              className={SNAKE_BOARD_CLASS_NAME}
+              style={getSnakeBoardGridStyle(game.config.width)}
             >
-              {Array.from({ length: boardCells }).map((_, index) => {
-                const x = index % game.config.width
-                const y = Math.floor(index / game.config.width)
-                const key = `${x},${y}`
-                const isSnake = occupiedCells.has(key)
-                const isFood = game.food?.x === x && game.food?.y === y
-
-                const foodStyle = isFood
-                  ? {
-                      backgroundImage:
-                        'linear-gradient(45deg, #000 25%, #fff 25%, #fff 50%, #000 50%, #000 75%, #fff 75%, #fff 100%)',
-                      backgroundSize: '4px 4px',
-                    }
-                  : undefined
-
-                return (
-                  <span
-                    key={key}
-                    className={`aspect-square border border-black/5 ${isSnake ? 'bg-black' : 'bg-white'}`}
-                    style={foodStyle}
-                    aria-hidden="true"
-                  />
-                )
-              })}
+              {boardCells.map((cell) => (
+                <span
+                  key={cell.key}
+                  className={getSnakeBoardCellClassName(cell)}
+                  style={getSnakeBoardCellStyle(cell)}
+                  aria-hidden="true"
+                />
+              ))}
             </div>
 
-            <div className="mt-3 flex flex-wrap items-center gap-2">
+            <div className={SNAKE_ACTION_ROW_CLASS_NAME}>
               <button
                 type="button"
                 onClick={() => setIsPaused((previousValue) => !previousValue)}
-                className="border border-black px-2 py-1 font-mono text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
+                className={SNAKE_DIALOG_ACTION_BUTTON_CLASS_NAME}
               >
-                {isPaused ? 'RESUME' : 'PAUSE'}
+                {getSnakePauseButtonLabel(isPaused)}
               </button>
               <button
                 type="button"
                 onClick={restartGame}
-                className="border border-black px-2 py-1 font-mono text-[10px] tracking-[0.1em] transition-colors hover:bg-black hover:text-white"
+                className={SNAKE_DIALOG_ACTION_BUTTON_CLASS_NAME}
               >
-                RESTART
+                {SNAKE_RESTART_LABEL}
               </button>
-              <p className="font-mono text-[10px] tracking-[0.1em] text-black/75">ARROWS/WASD</p>
-              <p className="font-mono text-[10px] tracking-[0.1em] text-black/75">SPACE PAUSE</p>
+              <p className={SNAKE_HINT_CLASS_NAME}>{SNAKE_ARROWS_HINT}</p>
+              <p className={SNAKE_HINT_CLASS_NAME}>{SNAKE_SPACE_HINT}</p>
             </div>
 
-            <div className="mt-3 flex flex-col items-center gap-1 sm:hidden">
-              <ControlButton label="UP" direction="up" onPress={handleDirection} />
-              <div className="flex items-center gap-1">
-                <ControlButton label="LEFT" direction="left" onPress={handleDirection} />
-                <ControlButton label="DOWN" direction="down" onPress={handleDirection} />
-                <ControlButton label="RIGHT" direction="right" onPress={handleDirection} />
+            <div className={SNAKE_TOUCH_CONTROLS_CLASS_NAME}>
+              <ControlButton label={SNAKE_CONTROL_LABELS.up} direction="up" onPress={handleDirection} />
+              <div className={SNAKE_TOUCH_CONTROLS_ROW_CLASS_NAME}>
+                <ControlButton label={SNAKE_CONTROL_LABELS.left} direction="left" onPress={handleDirection} />
+                <ControlButton label={SNAKE_CONTROL_LABELS.down} direction="down" onPress={handleDirection} />
+                <ControlButton label={SNAKE_CONTROL_LABELS.right} direction="right" onPress={handleDirection} />
               </div>
             </div>
 
             {game.gameOver && (
-              <p className="mt-3 border border-black bg-black px-2 py-1 text-center font-mono text-[10px] tracking-[0.12em] text-white">
-                GAME OVER. PRESS RESTART OR R.
+              <p className={SNAKE_GAME_OVER_CLASS_NAME}>
+                {SNAKE_GAME_OVER_LABEL}
               </p>
             )}
           </div>

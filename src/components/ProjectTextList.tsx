@@ -1,32 +1,46 @@
 'use client'
 
-import { useCallback, useRef, useState } from 'react'
+import type { MouseEvent } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AnimatePresence, m, useMotionValue, useSpring } from 'framer-motion'
 import Image from 'next/image'
-import { MOTION_EASE_SOFT, MOTION_SPRING_SNAPPY } from '@/lib/motion'
-import { ProjectFrontmatter } from '@/types/project'
+import { MOTION_SPRING_SNAPPY } from '@/lib/motion'
 import { analytics } from '@/lib/analytics'
-
-interface Project {
-  slug: string
-  frontmatter: ProjectFrontmatter
-}
+import {
+  CASE_STUDY_TEXT_LIST_ITEM_ANIMATE,
+  CASE_STUDY_TEXT_LIST_ITEM_INITIAL,
+  CASE_STUDY_TEXT_LIST_CATEGORY_CLASS_NAME,
+  CASE_STUDY_TEXT_LIST_CONTAINER_CLASS_NAME,
+  CASE_STUDY_TEXT_LIST_DOT_CLASS_NAME,
+  CASE_STUDY_TEXT_LIST_DOT_LAYOUT_ID,
+  CASE_STUDY_TEXT_LIST_LIST_CLASS_NAME,
+  CASE_STUDY_TEXT_LIST_PREVIEW_ANIMATE,
+  CASE_STUDY_TEXT_LIST_PREVIEW_CLASS_NAME,
+  CASE_STUDY_TEXT_LIST_PREVIEW_EXIT,
+  CASE_STUDY_TEXT_LIST_PREVIEW_IMAGE_CLASS_NAME,
+  CASE_STUDY_TEXT_LIST_PREVIEW_IMAGE_HEIGHT,
+  CASE_STUDY_TEXT_LIST_PREVIEW_IMAGE_WIDTH,
+  CASE_STUDY_TEXT_LIST_PREVIEW_INITIAL,
+  CASE_STUDY_TEXT_LIST_PREVIEW_SIZES,
+  CASE_STUDY_TEXT_LIST_ROW_CLASS_NAME,
+  CASE_STUDY_TEXT_LIST_ROW_CONTENT_CLASS_NAME,
+  CASE_STUDY_TEXT_LIST_SPRING,
+  activateCaseStudyTextListHoverEnd,
+  activateCaseStudyTextListHoverStart,
+  activateCaseStudyTextListRow,
+  getCaseStudyTextListViewStateFromOrderedProjects,
+  getCaseStudyTextListItemTransition,
+  getCaseStudyTextListMousePosition,
+  getCaseStudyTextListPreviewStyle,
+  getCaseStudyTextListPreviewTransition,
+  sortCaseStudyProjects,
+  type CaseStudyProject,
+} from '@/lib/case-study-projects'
 
 interface ProjectTextListProps {
-  projects: Project[]
+  projects: CaseStudyProject[]
 }
-
-const CASE_STUDY_ORDER = [
-  'lumo',
-  'ai-project',
-  'wander-utah',
-  'brand-identity-system',
-  'porsche-app',
-  'aol-redesign',
-  'grand-teton-wallet',
-  'nutricost',
-] as const
 
 export default function ProjectTextList({ projects }: ProjectTextListProps) {
   const router = useRouter()
@@ -35,109 +49,95 @@ export default function ProjectTextList({ projects }: ProjectTextListProps) {
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  const springX = useSpring(mouseX, { stiffness: 300, damping: 30 })
-  const springY = useSpring(mouseY, { stiffness: 300, damping: 30 })
+  const springX = useSpring(mouseX, CASE_STUDY_TEXT_LIST_SPRING)
+  const springY = useSpring(mouseY, CASE_STUDY_TEXT_LIST_SPRING)
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    mouseX.set(e.clientX + 24)
-    mouseY.set(e.clientY - 80)
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const { x, y } = getCaseStudyTextListMousePosition(e.clientX, e.clientY)
+    mouseX.set(x)
+    mouseY.set(y)
   }, [mouseX, mouseY])
 
-  const orderedProjects = [...projects].sort((a, b) => {
-    const aIdx = CASE_STUDY_ORDER.indexOf(a.slug as typeof CASE_STUDY_ORDER[number])
-    const bIdx = CASE_STUDY_ORDER.indexOf(b.slug as typeof CASE_STUDY_ORDER[number])
-    if (aIdx === -1 && bIdx === -1) return 0
-    if (aIdx === -1) return 1
-    if (bIdx === -1) return -1
-    return aIdx - bIdx
-  })
-
-  const hoveredProject = hoveredSlug
-    ? orderedProjects.find(p => p.slug === hoveredSlug)
-    : null
+  const orderedProjects = useMemo(() => sortCaseStudyProjects(projects), [projects])
+  const viewState = useMemo(
+    () => getCaseStudyTextListViewStateFromOrderedProjects(orderedProjects, hoveredSlug),
+    [hoveredSlug, orderedProjects],
+  )
 
   return (
     <div
       ref={containerRef}
-      className="relative"
+      className={CASE_STUDY_TEXT_LIST_CONTAINER_CLASS_NAME}
       onMouseMove={handleMouseMove}
     >
-      <div className="border-t border-border">
-        {orderedProjects.map((project, index) => {
-          const isHovered = hoveredSlug === project.slug
-          const hasHover = hoveredSlug !== null
-          const title = project.frontmatter.displayTitle || project.frontmatter.title
-
-          return (
-            <m.button
-              key={project.slug}
-              type="button"
-              onClick={() => {
-                analytics.projectClick(project.slug, title)
-                router.push(`/projects/${project.slug}`)
-              }}
-              onMouseEnter={() => setHoveredSlug(project.slug)}
-              onMouseLeave={() => setHoveredSlug(null)}
-              className="group relative flex w-full items-center justify-between border-b border-border px-1 py-4 text-left transition-[color,opacity,filter] duration-500 ease-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:py-5"
-              style={{
-                opacity: hasHover && !isHovered ? 0.35 : 1,
-                filter: hasHover && !isHovered ? 'blur(1px)' : 'none',
-              }}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.4,
-                delay: index * 0.06,
-                ease: MOTION_EASE_SOFT,
-              }}
-            >
-              <div className="flex items-center gap-3">
-                {isHovered && (
-                  <m.span
-                    className="w-[4px] h-[4px] rounded-full bg-accent shrink-0"
-                    layoutId="project-dot"
-                    transition={MOTION_SPRING_SNAPPY}
-                    aria-hidden
-                  />
-                )}
-                <span className={`font-mono text-[13px] tracking-[0.04em] transition-colors duration-300 sm:text-[14px] ${
-                  isHovered ? 'text-foreground' : 'text-foreground/70'
-                }`}>
-                  {title}
-                </span>
-              </div>
-              <span className="font-mono text-[9px] tracking-[0.1em] text-muted-foreground/50 uppercase shrink-0">
-                {project.frontmatter.category}
+      <div className={CASE_STUDY_TEXT_LIST_LIST_CLASS_NAME}>
+        {viewState.rows.map(({ category, href, index, isHovered, project, rowStyle, title, titleClassName }) => (
+          <m.button
+            key={project.slug}
+            type="button"
+            onClick={() =>
+              activateCaseStudyTextListRow({
+                href,
+                navigateTo: (targetHref) => router.push(targetHref),
+                project,
+                title,
+                trackProjectClick: (slug, projectTitle) => analytics.projectClick(slug, projectTitle),
+              })
+            }
+            onMouseEnter={() =>
+              activateCaseStudyTextListHoverStart({
+                projectSlug: project.slug,
+                setHoveredSlug,
+              })
+            }
+            onMouseLeave={() =>
+              activateCaseStudyTextListHoverEnd({
+                setHoveredSlug,
+              })
+            }
+            className={CASE_STUDY_TEXT_LIST_ROW_CLASS_NAME}
+            style={rowStyle}
+            initial={CASE_STUDY_TEXT_LIST_ITEM_INITIAL}
+            animate={CASE_STUDY_TEXT_LIST_ITEM_ANIMATE}
+            transition={getCaseStudyTextListItemTransition(index)}
+          >
+            <div className={CASE_STUDY_TEXT_LIST_ROW_CONTENT_CLASS_NAME}>
+              {isHovered && (
+                <m.span
+                  className={CASE_STUDY_TEXT_LIST_DOT_CLASS_NAME}
+                  layoutId={CASE_STUDY_TEXT_LIST_DOT_LAYOUT_ID}
+                  transition={MOTION_SPRING_SNAPPY}
+                  aria-hidden
+                />
+              )}
+              <span className={titleClassName}>
+                {title}
               </span>
-            </m.button>
-          )
-        })}
+            </div>
+            <span className={CASE_STUDY_TEXT_LIST_CATEGORY_CLASS_NAME}>
+              {category}
+            </span>
+          </m.button>
+        ))}
       </div>
 
       <AnimatePresence>
-        {hoveredProject?.frontmatter.image && (
+        {viewState.preview && (
           <m.div
-            className="pointer-events-none fixed z-50 overflow-hidden shadow-lg"
-            style={{
-              x: springX,
-              y: springY,
-              width: 280,
-            }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{
-              opacity: { duration: 0.25, ease: MOTION_EASE_SOFT },
-              scale: { duration: 0.35, ease: MOTION_EASE_SOFT },
-            }}
+            className={CASE_STUDY_TEXT_LIST_PREVIEW_CLASS_NAME}
+            style={getCaseStudyTextListPreviewStyle(springX, springY)}
+            initial={CASE_STUDY_TEXT_LIST_PREVIEW_INITIAL}
+            animate={CASE_STUDY_TEXT_LIST_PREVIEW_ANIMATE}
+            exit={CASE_STUDY_TEXT_LIST_PREVIEW_EXIT}
+            transition={getCaseStudyTextListPreviewTransition()}
           >
             <Image
-              src={hoveredProject.frontmatter.image}
-              alt={hoveredProject.frontmatter.title}
-              width={560}
-              height={315}
-              className="h-auto w-full object-cover"
-              sizes="280px"
+              src={viewState.preview.image}
+              alt={viewState.preview.alt}
+              width={CASE_STUDY_TEXT_LIST_PREVIEW_IMAGE_WIDTH}
+              height={CASE_STUDY_TEXT_LIST_PREVIEW_IMAGE_HEIGHT}
+              className={CASE_STUDY_TEXT_LIST_PREVIEW_IMAGE_CLASS_NAME}
+              sizes={CASE_STUDY_TEXT_LIST_PREVIEW_SIZES}
               priority={false}
             />
           </m.div>

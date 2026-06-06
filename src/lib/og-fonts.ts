@@ -9,19 +9,27 @@ interface OgFont {
 
 let cached: OgFont[] | null = null
 
+function toArrayBuffer(buffer: Buffer): ArrayBuffer {
+  return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer
+}
+
 export async function getOgFonts(): Promise<OgFont[]> {
   if (cached) return cached
 
-  const fontsDir = path.join(process.cwd(), 'node_modules/geist/dist/fonts/geist-mono')
+  const geistDir = path.join(process.cwd(), 'node_modules/geist/dist/fonts')
+  const monoDir = path.join(geistDir, 'geist-mono')
+  const publicFontsDir = path.join(process.cwd(), 'public/fonts')
 
-  const [medium, regular] = await Promise.all([
-    fs.promises.readFile(path.join(fontsDir, 'GeistMono-Medium.ttf')),
-    fs.promises.readFile(path.join(fontsDir, 'GeistMono-Regular.ttf')),
+  const [medium, regular, pixelSquare] = await Promise.all([
+    fs.promises.readFile(path.join(monoDir, 'GeistMono-Medium.ttf')),
+    fs.promises.readFile(path.join(monoDir, 'GeistMono-Regular.ttf')),
+    fs.promises.readFile(path.join(publicFontsDir, 'geist-pixel-square.ttf')),
   ])
 
   cached = [
-    { name: 'GeistMono', data: medium.buffer as ArrayBuffer, weight: 500 },
-    { name: 'GeistMono', data: regular.buffer as ArrayBuffer, weight: 400 },
+    { name: 'GeistMono', data: toArrayBuffer(medium), weight: 500 },
+    { name: 'GeistMono', data: toArrayBuffer(regular), weight: 400 },
+    { name: 'GeistPixelSquare', data: toArrayBuffer(pixelSquare), weight: 500 },
   ]
 
   return cached

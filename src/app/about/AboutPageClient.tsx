@@ -8,6 +8,11 @@ import TextReveal from '@/components/TextReveal'
 import { useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { showJoyToast } from '@/lib/joy'
+import {
+  ABOUT_PAGE_ACTION_CLASS,
+  ABOUT_PAGE_ACTIONS,
+  activateAboutPageAction,
+} from '@/lib/about-page'
 
 export default function AboutPageClient() {
   const [resumeOpen, setResumeOpen] = useState(false)
@@ -62,37 +67,36 @@ export default function AboutPageClient() {
             </p>
             {/* --- Actions --- */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-              <Link
-                href="/#contact"
-                className="min-h-[40px] origin-center touch-manipulation font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                onClick={() => {
-                  haptic.trigger('light')
-                  showJoyToast('Say hi')
-                }}
-              >
-                Contact
-              </Link>
-              <Link
-                href="/cv"
-                className="min-h-[40px] origin-center touch-manipulation font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                onClick={() => {
-                  haptic.trigger('light')
-                  showJoyToast('Opening resume')
-                }}
-              >
-                Resume
-              </Link>
-              <button
-                type="button"
-                className="min-h-[40px] origin-center touch-manipulation font-mono text-[0.96rem] text-foreground decoration-border underline underline-offset-[0.24em] transition-[color,transform,text-decoration-color] duration-150 hover:-translate-y-[1px] hover:text-foreground/70 hover:decoration-foreground/80 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                onClick={() => {
-                  haptic.trigger('light')
-                  showJoyToast('Resume opened')
-                  setResumeOpen(true)
-                }}
-              >
-                Preview
-              </button>
+              {ABOUT_PAGE_ACTIONS.map((action) => {
+                const handleAction = () => {
+                  activateAboutPageAction({
+                    action,
+                    openResumePreview: () => setResumeOpen(true),
+                    showToast: showJoyToast,
+                    triggerHaptic: (style) => haptic.trigger(style),
+                  })
+                }
+
+                return action.kind === 'link' ? (
+                  <Link
+                    key={action.id}
+                    href={action.href}
+                    className={ABOUT_PAGE_ACTION_CLASS}
+                    onClick={handleAction}
+                  >
+                    {action.label}
+                  </Link>
+                ) : (
+                  <button
+                    key={action.id}
+                    type="button"
+                    className={ABOUT_PAGE_ACTION_CLASS}
+                    onClick={handleAction}
+                  >
+                    {action.label}
+                  </button>
+                )
+              })}
             </div>
             <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
           </div>

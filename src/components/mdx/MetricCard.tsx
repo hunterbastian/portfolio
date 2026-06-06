@@ -2,6 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { m, useInView, useReducedMotion } from 'framer-motion'
+import {
+  METRIC_CARD_DEFAULT_DURATION_MS,
+  METRIC_CARD_PANEL_DURATION_MS,
+  activateMetricCardCountUp,
+  getMetricCardNumericValue,
+  getMetricCardPanelAnimationState,
+  getMetricCardVisibleValue,
+  isMetricCardNumericValue,
+} from '@/lib/metric-card'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 
 interface MetricCardProps {
@@ -19,46 +28,31 @@ interface MetricCardProps {
 
 function useCountUp(target: number, isActive: boolean, durationMs: number) {
   const [display, setDisplay] = useState(0)
-  const rafRef = useRef<number>(0)
 
   useEffect(() => {
-    if (!isActive) {
-      setDisplay(0)
-      return
-    }
-
-    const start = performance.now()
-
-    function tick(now: number) {
-      const elapsed = now - start
-      const progress = Math.min(elapsed / durationMs, 1)
-      // Ease-out quad for a satisfying deceleration
-      const eased = 1 - (1 - progress) * (1 - progress)
-      setDisplay(Math.round(eased * target))
-
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(tick)
-      }
-    }
-
-    rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
+    return activateMetricCardCountUp({
+      cancelFrame: (frame: number) => cancelAnimationFrame(frame),
+      durationMs,
+      isActive,
+      now: () => performance.now(),
+      requestFrame: (callback) => requestAnimationFrame(callback),
+      setDisplay,
+      target,
+    })
   }, [isActive, target, durationMs])
 
   return display
 }
-
-const PANEL_DURATION_MS = 400
 
 export default function MetricCard({
   value,
   label,
   prefix = '',
   suffix = '',
-  duration = 1200,
+  duration = METRIC_CARD_DEFAULT_DURATION_MS,
 }: MetricCardProps) {
-  const numericValue = Number(value)
-  const isNumeric = !isNaN(numericValue)
+  const numericValue = getMetricCardNumericValue(value)
+  const isNumeric = isMetricCardNumericValue(value)
 
   const ref = useRef<HTMLDivElement>(null)
   // Use no negative margin so elements near the viewport edge still trigger.
@@ -67,21 +61,27 @@ export default function MetricCard({
   const isInView = useInView(ref, { once: true, margin: '0px' })
   const prefersReducedMotion = useReducedMotion() ?? false
   const displayValue = useCountUp(numericValue, isInView && isNumeric, prefersReducedMotion ? 0 : duration)
+  const visibleValue = getMetricCardVisibleValue({
+    animatedValue: displayValue,
+    isNumeric,
+    prefersReducedMotion,
+    value,
+  })
 
   return (
     <m.div
       ref={ref}
       className="inline-flex flex-col items-center px-6 py-5 text-center shadow-card-subtle"
       style={{ background: 'var(--card)' }}
-      initial={{ opacity: 0, y: 12 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+      initial={getMetricCardPanelAnimationState(false)}
+      animate={getMetricCardPanelAnimationState(isInView)}
       transition={{
-        duration: motionDurationMs(PANEL_DURATION_MS, prefersReducedMotion),
+        duration: motionDurationMs(METRIC_CARD_PANEL_DURATION_MS, prefersReducedMotion),
         ease: MOTION_EASE_SOFT,
       }}
     >
       <span className="font-mono text-2xl font-medium tracking-tight text-foreground tabular-nums sm:text-3xl">
-        {prefix}{(prefersReducedMotion || !isNumeric) ? value : displayValue}{suffix}
+        {prefix}{visibleValue}{suffix}
       </span>
       <span className="mt-1.5 font-inter text-xs font-normal leading-snug text-muted-foreground sm:text-sm">
         {label}

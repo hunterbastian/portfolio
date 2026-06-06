@@ -13,13 +13,27 @@ import { useEffect, useState } from 'react'
  *   After effect:     _initialLoadComplete = true
  *   Next mount:       isInitial = false → animations play normally
  */
-let _initialLoadComplete = false
+export interface InitialLoadTracker {
+  complete: boolean
+}
+
+const initialLoadTracker: InitialLoadTracker = {
+  complete: false,
+}
+
+export function getIsInitialLoad(tracker: InitialLoadTracker): boolean {
+  return !tracker.complete
+}
+
+export function markInitialLoadComplete(tracker: InitialLoadTracker) {
+  tracker.complete = true
+}
 
 export function useIsInitialLoad(): boolean {
-  const [isInitial] = useState(() => !_initialLoadComplete)
+  const [isInitial] = useState(() => getIsInitialLoad(initialLoadTracker))
 
   useEffect(() => {
-    _initialLoadComplete = true
+    markInitialLoadComplete(initialLoadTracker)
   }, [])
 
   return isInitial

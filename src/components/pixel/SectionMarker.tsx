@@ -1,17 +1,14 @@
 import type { ComponentType, SVGProps } from 'react'
 import * as Glyphs from './glyphs'
+import {
+  SECTION_MARKER_GLYPH_SIZE,
+  categoryToSectionMarkerKind,
+  getSectionMarkerClassName,
+  shouldRenderSectionMarkerLabel,
+  type SectionMarkerKind,
+} from '@/lib/section-marker'
 
-export type Kind =
-  | 'work'
-  | 'writing'
-  | 'games'
-  | 'contact'
-  | 'archive'
-  | 'now'
-  | 'spring'
-  | 'summer'
-  | 'autumn'
-  | 'winter'
+export type Kind = SectionMarkerKind
 type GlyphComponent = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>
 
 type Props = {
@@ -33,28 +30,16 @@ const GLYPHS: Record<Kind, GlyphComponent> = {
   winter: Glyphs.Winter,
 }
 
-export function categoryToKind(category?: string): Kind {
-  if (!category) return 'work'
-  const c = category.toLowerCase()
-  if (c.includes('game') || c.includes('creative cod')) return 'games'
-  if (c.includes('brand') || c.includes('writing') || c.includes('graphic')) return 'writing'
-  if (c.includes('photo')) return 'archive'
-  return 'work'
-}
+export const categoryToKind = categoryToSectionMarkerKind
 
 export default function SectionMarker({ kind, label, className }: Props) {
   const Glyph = GLYPHS[kind]
   return (
     <span
-      className={[
-        'inline-flex items-center gap-2 font-mono text-[10px] font-normal tracking-[0.06em] uppercase text-muted-foreground/55',
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      className={getSectionMarkerClassName(className)}
     >
-      <Glyph size={10} />
-      {label ? <span>{label}</span> : null}
+      <Glyph size={SECTION_MARKER_GLYPH_SIZE} />
+      {shouldRenderSectionMarkerLabel(label) ? <span>{label}</span> : null}
     </span>
   )
 }

@@ -1,6 +1,16 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import {
+  UNICORN_ORB_DEFAULT_HEIGHT,
+  UNICORN_ORB_DEFAULT_WIDTH,
+  UNICORN_STUDIO_SCRIPT_SRC,
+  UNICORN_STUDIO_WATERMARK_LINK_SELECTOR,
+  UNICORN_STUDIO_WATERMARK_RETRY_DELAYS_MS,
+  getUnicornOrbStyle,
+  isUnicornStudioWatermarkText,
+} from '@/lib/unicorn-orb'
+import type { UnicornStudioWindow } from '@/lib/unicorn-orb'
 
 interface UnicornOrbProps {
   projectId: string
@@ -11,9 +21,9 @@ interface UnicornOrbProps {
 
 export default function UnicornOrb({
   projectId,
-  width = '100%',
-  height = 420,
-  className = ''
+  width = UNICORN_ORB_DEFAULT_WIDTH,
+  height = UNICORN_ORB_DEFAULT_HEIGHT,
+  className = '',
 }: UnicornOrbProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
@@ -22,13 +32,13 @@ export default function UnicornOrb({
       const container = containerRef.current
       if (!container) return
       // Hide typical watermark link
-      container.querySelectorAll<HTMLAnchorElement>('a[href*="unicornstudio"]').forEach((el) => {
+      container.querySelectorAll<HTMLAnchorElement>(UNICORN_STUDIO_WATERMARK_LINK_SELECTOR).forEach((el) => {
         el.style.display = 'none'
       })
       // Heuristic: hide elements containing the phrase
       container.querySelectorAll<HTMLElement>('*').forEach((node) => {
-        const text = (node.textContent || '').trim().toLowerCase()
-        if (text.includes('unicorn studio')) {
+        const text = node.textContent || ''
+        if (isUnicornStudioWatermarkText(text)) {
           node.style.display = 'none'
         }
       })
@@ -37,25 +47,23 @@ export default function UnicornOrb({
     // If UnicornStudio is already on the page, just init again to pick up new nodes
     const maybeInit = () => {
       try {
-        const anyWindow = window as unknown as { UnicornStudio?: { init: () => void; isInitialized?: boolean } }
+        const anyWindow = window as unknown as UnicornStudioWindow
         if (anyWindow.UnicornStudio) {
           anyWindow.UnicornStudio.init()
           anyWindow.UnicornStudio.isInitialized = true
           // Attempt to remove watermark shortly after init
-          setTimeout(removeWatermark, 50)
-          setTimeout(removeWatermark, 300)
-          setTimeout(removeWatermark, 1000)
+          UNICORN_STUDIO_WATERMARK_RETRY_DELAYS_MS.forEach((delayMs) => setTimeout(removeWatermark, delayMs))
         }
       } catch {
         return
       }
     }
 
-    const anyWindow = window as unknown as { UnicornStudio?: { init: () => void; isInitialized?: boolean }; __usScriptLoading?: boolean }
+    const anyWindow = window as unknown as UnicornStudioWindow
     if (!anyWindow.UnicornStudio && !anyWindow.__usScriptLoading) {
       anyWindow.__usScriptLoading = true
       const script = document.createElement('script')
-      script.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js'
+      script.src = UNICORN_STUDIO_SCRIPT_SRC
       script.async = true
       script.onload = () => {
         anyWindow.__usScriptLoading = false
@@ -80,7 +88,7 @@ export default function UnicornOrb({
       ref={containerRef}
       data-us-project={projectId}
       className={className}
-      style={{ width, height }}
+      style={getUnicornOrbStyle({ width, height })}
     />
   )
 }

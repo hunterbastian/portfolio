@@ -2,7 +2,13 @@
 
 import Link from 'next/link'
 import type { ReactNode } from 'react'
-import { cn } from '@/lib/utils'
+import { BLANK_LINK_TARGET, getSafeExternalLinkRel } from '@/lib/link-safety'
+import {
+  getPeekActionClassName,
+  getPeekActionKind,
+  getPeekTooltipClassName,
+  shouldRenderPeekTooltip,
+} from '@/lib/peek-action'
 
 type PeekActionProps = {
   children: ReactNode
@@ -19,12 +25,6 @@ type PeekActionProps = {
   onFocus?: () => void
   onMouseEnter?: () => void
 }
-
-const baseActionClass =
-  'group/peek relative inline-flex min-h-[40px] min-w-[40px] origin-center touch-manipulation items-center leading-none font-header transition-[color,transform] duration-150 hover:-translate-y-[1px] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary'
-
-const baseTooltipClass =
-  'pointer-events-none absolute bottom-full left-1/2 z-50 mb-1.5 hidden -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-[5px] border border-border/70 bg-background/92 px-2 py-1 font-mono text-[0.62rem] leading-none text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover/peek:translate-y-0 group-hover/peek:opacity-100 group-hover/peek:blur-0 group-focus-visible/peek:translate-y-0 group-focus-visible/peek:opacity-100 group-focus-visible/peek:blur-0 sm:block'
 
 export function PeekAction({
   children,
@@ -44,21 +44,22 @@ export function PeekAction({
   const content = (
     <>
       <span className={labelClassName}>{children}</span>
-      {peek ? (
-        <span aria-hidden="true" className={cn(baseTooltipClass, tooltipClassName)}>
+      {shouldRenderPeekTooltip(peek) ? (
+        <span aria-hidden="true" className={getPeekTooltipClassName(tooltipClassName)}>
           {peek}
         </span>
       ) : null}
     </>
   )
-  const actionClassName = cn(baseActionClass, className)
+  const actionClassName = getPeekActionClassName(className)
+  const actionKind = getPeekActionKind(href, external)
 
-  if (href && external) {
+  if (actionKind === 'external-link' && href) {
     return (
       <a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={BLANK_LINK_TARGET}
+        rel={getSafeExternalLinkRel(BLANK_LINK_TARGET)}
         aria-label={ariaLabel}
         className={actionClassName}
         onClick={onClick}
@@ -70,7 +71,7 @@ export function PeekAction({
     )
   }
 
-  if (href) {
+  if (actionKind === 'internal-link' && href) {
     return (
       <Link
         href={href}

@@ -1,16 +1,28 @@
 'use client'
 
-import { useEffect } from 'react'
+import { Fragment, useEffect } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
 import TextReveal from '@/components/TextReveal'
 import * as Glyphs from '@/components/pixel/glyphs'
 import { experienceItems, educationItems } from '@/content/homepage'
 import { siteConfig } from '@/lib/site'
-import { MOTION_EASE_SOFT } from '@/lib/motion'
 import { analytics } from '@/lib/analytics'
-
-const STAGGER_DELAY = 0.06
+import {
+  CV_CONTACT_LINKS,
+  CV_CONTACT_LIST_CLASS_NAME,
+  CV_ITEM_HIDDEN_MOTION,
+  CV_LOCATION_LABEL,
+  CV_PRINT_ARIA_LABEL,
+  CV_PRINT_BUTTON_CLASS_NAME,
+  CV_PRINT_BUTTON_LABEL,
+  CV_RESUME_VIEW_ACTION,
+  activateCvContactClick,
+  activateCvPrint,
+  getCvContactLinkClassName,
+  getCvItemVisibleMotion,
+  type CvContactLink,
+} from '@/lib/cv-page'
 
 const CV_KIND_GLYPHS = {
   work: Glyphs.Work,
@@ -39,24 +51,24 @@ function Divider() {
   return <div className="border-t border-border/40 print:border-border/20" />
 }
 
+function trackCvContactClick(link: CvContactLink) {
+  activateCvContactClick({
+    link,
+    trackExternalLink: (href, platform) => analytics.externalLink(href, platform),
+    trackNavigationClick: (target) => analytics.navigationClick(target),
+  })
+}
+
 export default function CVPageClient() {
   const prefersReducedMotion = useReducedMotion() ?? false
 
   useEffect(() => {
-    analytics.resumeAction('view')
+    analytics.resumeAction(CV_RESUME_VIEW_ACTION)
   }, [])
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 8 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: prefersReducedMotion ? 0 : 0.3 + i * STAGGER_DELAY,
-        duration: prefersReducedMotion ? 0 : 0.4,
-        ease: MOTION_EASE_SOFT,
-      },
-    }),
+    hidden: CV_ITEM_HIDDEN_MOTION,
+    visible: (i: number) => getCvItemVisibleMotion(i, prefersReducedMotion),
   }
 
   return (
@@ -80,43 +92,33 @@ export default function CVPageClient() {
             </div>
             <button
               onClick={() => {
-                analytics.resumeAction('print')
-                window.print()
+                activateCvPrint({
+                  printPage: () => window.print(),
+                  trackResumeAction: (action) => analytics.resumeAction(action),
+                })
               }}
-              className="print:hidden ml-4 inline-flex min-h-[40px] origin-center touch-manipulation shrink-0 items-center border border-border bg-card px-3 py-1.5 text-[10px] font-mono tracking-[0.12em] text-muted-foreground transition-[color,transform,border-color] duration-150 hover:border-foreground/20 hover:text-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-              aria-label="Print or save as PDF"
+              className={CV_PRINT_BUTTON_CLASS_NAME}
+              aria-label={CV_PRINT_ARIA_LABEL}
             >
-              Print
+              {CV_PRINT_BUTTON_LABEL}
             </button>
           </div>
 
           {/* Contact links */}
-          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-mono tracking-wide text-muted-foreground/70">
-            <span>Utah, USA</span>
-            <span className="text-border">·</span>
-            <a
-              href="mailto:hunterbastianux@gmail.com"
-              className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]"
-              onClick={() => analytics.externalLink('mailto:hunterbastianux@gmail.com', 'email')}
-            >
-              hunterbastianux@gmail.com
-            </a>
-            <span className="text-border">·</span>
-            <a
-              href="https://hunterbastian.com"
-              className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96] print:no-underline"
-              onClick={() => analytics.navigationClick('portfolio_link')}
-            >
-              hunterbastian.com
-            </a>
-            <span className="text-border">·</span>
-            <a
-              href="https://linkedin.com/in/hunterbastian"
-              className="origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]"
-              onClick={() => analytics.externalLink('https://linkedin.com/in/hunterbastian', 'linkedin')}
-            >
-              LinkedIn
-            </a>
+          <div className={CV_CONTACT_LIST_CLASS_NAME}>
+            <span>{CV_LOCATION_LABEL}</span>
+            {CV_CONTACT_LINKS.map((link) => (
+              <Fragment key={link.href}>
+                <span className="text-border">·</span>
+                <a
+                  href={link.href}
+                  className={getCvContactLinkClassName(link.printNoUnderline)}
+                  onClick={() => trackCvContactClick(link)}
+                >
+                  {link.label}
+                </a>
+              </Fragment>
+            ))}
           </div>
         </header>
 

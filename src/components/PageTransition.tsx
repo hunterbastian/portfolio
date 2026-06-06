@@ -5,6 +5,20 @@ import { usePathname } from 'next/navigation'
 import { Children, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { MOTION_EASE_SOFT, MOTION_EASE_EXIT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import { useIsInitialLoad } from '@/lib/initial-load'
+import {
+  PAGE_TRANSITION_PAGE_STATE,
+  PAGE_TRANSITION_STAGE,
+  PAGE_TRANSITION_TIMING,
+  getInitialRouteSceneStage,
+  getRouteSceneChildDelay,
+  getRouteSceneDefaults,
+  getRouteSceneInitial,
+  getRouteSceneMotion,
+  scheduleRouteSceneStages,
+  type RouteSceneOffsets,
+  type RouteSceneStage,
+  type RouteSceneTiming,
+} from '@/lib/page-transition'
 
 /* ─────────────────────────────────────────────────────────
  * PAGE TRANSITION STORYBOARD
@@ -17,88 +31,43 @@ import { useIsInitialLoad } from '@/lib/initial-load'
  *   44ms   new page children settle y 4 → 0
  * ───────────────────────────────────────────────────────── */
 
-const TIMING = {
-  oldFadeDuration: 140,
-  newContentDelay: 24,
-  newSlideDuration: 220,
-  childStartDelay: 20,
-  childStagger: 0,
-  childDuration: 200,
-}
-
-/** Exported for shared-element transition measurement offset */
-export const PAGE_ENTRANCE_INITIAL_Y = 6
-
-const PAGE = {
-  initialY: PAGE_ENTRANCE_INITIAL_Y,
-  finalY: 0,
-  initialOpacity: 0,
-  finalOpacity: 1,
-  exitOpacity: 0,
-  exitY: -4,
-}
-
-/** Exported for shared-element transition measurement offset */
-export const CHILD_ENTRANCE_INITIAL_Y = 4
-
-const CHILD = {
-  initialY: CHILD_ENTRANCE_INITIAL_Y,
-  finalY: 0,
-  initialOpacity: 0,
-  finalOpacity: 1,
-}
-
 interface PageTransitionProps {
   children: ReactNode
 }
+
+const ROUTE_SCENE_DEFAULTS = getRouteSceneDefaults()
 
 interface RouteSceneProps {
   children: ReactNode
   prefersReducedMotion: boolean
   isInitialLoad: boolean
-  timing: {
-    newContentDelay: number
-    newSlideDuration: number
-    childStartDelay: number
-    childStagger: number
-    childDuration: number
-  }
-  offsets: {
-    pageY: number
-    childY: number
-  }
+  timing: RouteSceneTiming
+  offsets: RouteSceneOffsets
 }
 
 function RouteScene({ children, prefersReducedMotion, isInitialLoad, timing, offsets }: RouteSceneProps) {
-  const [stage, setStage] = useState(isInitialLoad ? 2 : 0)
+  const [stage, setStage] = useState<RouteSceneStage>(getInitialRouteSceneStage(isInitialLoad))
   const routeChildren = useMemo(() => Children.toArray(children), [children])
 
   useEffect(() => {
-    if (isInitialLoad) return  // Content already visible from SSR
-    if (prefersReducedMotion) {
-      setStage(2)
-      return
-    }
-
-    setStage(0)
-    const timers: Array<ReturnType<typeof setTimeout>> = []
-
-    timers.push(setTimeout(() => setStage(1), timing.newContentDelay))
-    timers.push(setTimeout(() => setStage(2), timing.newContentDelay + timing.childStartDelay))
+    const timers = scheduleRouteSceneStages({
+      isInitialLoad,
+      prefersReducedMotion,
+      scheduleStage: (nextStage, delay) => setTimeout(() => setStage(nextStage), delay),
+      setStage,
+      timing: {
+        childStartDelay: timing.childStartDelay,
+        newContentDelay: timing.newContentDelay,
+      },
+    })
 
     return () => timers.forEach(clearTimeout)
   }, [isInitialLoad, prefersReducedMotion, timing.childStartDelay, timing.newContentDelay])
 
   return (
     <m.div
-      initial={isInitialLoad ? false : {
-        opacity: PAGE.initialOpacity,
-        y: offsets.pageY,
-      }}
-      animate={{
-        opacity: stage >= 1 ? PAGE.finalOpacity : PAGE.initialOpacity,
-        y: stage >= 1 ? PAGE.finalY : offsets.pageY,
-      }}
+      initial={getRouteSceneInitial(isInitialLoad, offsets.pageY)}
+      animate={getRouteSceneMotion(stage, PAGE_TRANSITION_STAGE.page, offsets.pageY)}
       transition={{
         duration: motionDurationMs(timing.newSlideDuration, prefersReducedMotion),
         ease: MOTION_EASE_SOFT,
@@ -108,17 +77,19 @@ function RouteScene({ children, prefersReducedMotion, isInitialLoad, timing, off
       {routeChildren.map((child, index) => (
         <m.div
           key={index}
-          initial={isInitialLoad ? false : {
-            opacity: CHILD.initialOpacity,
-            y: offsets.childY,
-          }}
-          animate={{
-            opacity: stage >= 2 ? CHILD.finalOpacity : CHILD.initialOpacity,
-            y: stage >= 2 ? CHILD.finalY : offsets.childY,
-          }}
+          initial={getRouteSceneInitial(isInitialLoad, offsets.childY)}
+          animate={getRouteSceneMotion(stage, PAGE_TRANSITION_STAGE.children, offsets.childY)}
           transition={{
             duration: motionDurationMs(timing.childDuration, prefersReducedMotion),
-            delay: stage >= 2 ? motionDelayMs(index * timing.childStagger, prefersReducedMotion) : 0,
+            delay: motionDelayMs(
+              getRouteSceneChildDelay({
+                index,
+                prefersReducedMotion,
+                stage,
+                stagger: timing.childStagger,
+              }),
+              prefersReducedMotion,
+            ),
             ease: MOTION_EASE_SOFT,
           }}
           className="will-change-transform"
@@ -139,26 +110,17 @@ export default function PageTransition({ children }: PageTransitionProps) {
     <AnimatePresence mode="wait" initial={false}>
       <m.div
         key={pathname}
-        exit={{ opacity: PAGE.exitOpacity, y: PAGE.exitY }}
+        exit={{ opacity: PAGE_TRANSITION_PAGE_STATE.exitOpacity, y: PAGE_TRANSITION_PAGE_STATE.exitY }}
         transition={{
-          duration: motionDurationMs(TIMING.oldFadeDuration, prefersReducedMotion),
+          duration: motionDurationMs(PAGE_TRANSITION_TIMING.oldFadeDuration, prefersReducedMotion),
           ease: MOTION_EASE_EXIT,
         }}
       >
         <RouteScene
           isInitialLoad={isInitialLoad}
           prefersReducedMotion={prefersReducedMotion}
-          timing={{
-            newContentDelay: TIMING.newContentDelay,
-            newSlideDuration: TIMING.newSlideDuration,
-            childStartDelay: TIMING.childStartDelay,
-            childStagger: TIMING.childStagger,
-            childDuration: TIMING.childDuration,
-          }}
-          offsets={{
-            pageY: PAGE.initialY,
-            childY: CHILD.initialY,
-          }}
+          timing={ROUTE_SCENE_DEFAULTS.timing}
+          offsets={ROUTE_SCENE_DEFAULTS.offsets}
         >
           {children}
         </RouteScene>

@@ -11,6 +11,7 @@ import { BlurHighlight } from '@/components/react-bits/blur-highlight'
 import ScrollStage from './ScrollStage'
 import LiveDemo from './LiveDemo'
 import TrackedExternalLink from '@/components/TrackedExternalLink'
+import { isExternalHttpHref } from '@/lib/link-safety'
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>
 type ParagraphProps = React.HTMLAttributes<HTMLParagraphElement>
@@ -55,8 +56,7 @@ export const LI: React.FC<ListItemProps> = ({ children, ...props }) => (
 )
 
 export const A: React.FC<AnchorProps> = ({ href = '', children, ...props }) => {
-  const isExternal = /^https?:\/\//.test(href)
-  if (isExternal) {
+  if (isExternalHttpHref(href)) {
     return (
       <TrackedExternalLink href={href} className="text-primary underline underline-offset-4" {...props}>
         {children}

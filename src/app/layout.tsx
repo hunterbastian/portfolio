@@ -1,7 +1,7 @@
-import type { Metadata } from 'next'
 import { GeistMono } from 'geist/font/mono'
 import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
+import './playground.css'
 import './viewport.css'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
@@ -16,8 +16,13 @@ import { Agentation } from 'agentation'
 import TopMeta from '@/components/TopMeta'
 import JoyfulLayer from '@/components/JoyfulLayer'
 import ScrollToTop from '@/components/ScrollToTop'
+import HoverSoundCue from '@/components/HoverSoundCue'
+import { getLauncherProjectSources } from '@/lib/launcher'
 import { getAllProjects } from '@/lib/projects'
-import { siteConfig, sitePortfolioName } from '@/lib/site'
+import { siteConfig } from '@/lib/site'
+import { getSiteMetadata } from '@/lib/site-metadata'
+import { SoundProvider } from '@/lib/sounds/context'
+import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
 // Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
 
@@ -32,77 +37,14 @@ export const viewport = {
 
 const faviconVersion = siteConfig.faviconVersion
 
-export const metadata: Metadata = {
-  title: siteConfig.siteTitle,
-  applicationName: siteConfig.appName,
-  description: siteConfig.siteDescription,
-  keywords: ['Hunter Bastian', 'design engineer', 'portfolio', 'interaction design', 'UI design', 'web development', 'React', 'Next.js', 'Three.js', 'photographer', 'Utah', 'UVU'],
-  authors: [{ name: siteConfig.personName, url: siteConfig.url }],
-  creator: siteConfig.personName,
-  publisher: siteConfig.studioName,
-  metadataBase: new URL(siteConfig.url),
-
-  icons: {
-    icon: [
-      { url: `/favicon/favicon.svg?v=${faviconVersion}`, sizes: 'any', type: 'image/svg+xml' },
-      { url: `/favicon.ico?v=${faviconVersion}`, sizes: 'any' },
-      { url: `/favicon/favicon-16x16.png?v=${faviconVersion}`, sizes: '16x16', type: 'image/png' },
-      { url: `/favicon/favicon-32x32.png?v=${faviconVersion}`, sizes: '32x32', type: 'image/png' },
-      { url: `/favicon/favicon.ico?v=${faviconVersion}`, sizes: 'any' },
-    ],
-    shortcut: [
-      { url: `/favicon.ico?v=${faviconVersion}` },
-    ],
-    apple: [
-      { url: `/favicon/apple-touch-icon.png?v=${faviconVersion}`, sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      { rel: 'mask-icon', url: `/favicon/favicon.svg?v=${faviconVersion}`, color: siteConfig.themeColorDark },
-      { url: `/favicon/favicon-192x192.png?v=${faviconVersion}`, sizes: '192x192', type: 'image/png' },
-      { url: `/favicon/favicon-512x512.png?v=${faviconVersion}`, sizes: '512x512', type: 'image/png' },
-    ],
-  },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: siteConfig.url,
-    title: siteConfig.siteTitle,
-    description: siteConfig.siteDescription,
-    siteName: sitePortfolioName,
-    images: [
-      {
-        url: siteConfig.defaultOgImage,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.appName} - design engineer portfolio`,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteConfig.siteTitle,
-    description: siteConfig.siteDescription,
-    creator: '@thestudioalpine',
-    images: [siteConfig.defaultOgImage],
-  },
-  alternates: {
-    canonical: siteConfig.url,
-  },
-}
+export const metadata = getSiteMetadata()
 
 export default function RootLayout({
   children,
 }: {
   children: ReactNode
 }) {
-  const launcherProjects = getAllProjects().map((project) => ({
-    slug: project.slug,
-    title: project.frontmatter.displayTitle || project.frontmatter.title,
-    description: project.frontmatter.description,
-    category: project.frontmatter.category,
-    tags: project.frontmatter.tags,
-    date: project.frontmatter.date,
-  }))
+  const launcherProjects = getLauncherProjectSources(getAllProjects())
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -119,42 +61,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@graph': [
-                {
-                  '@type': 'Person',
-                  '@id': `${siteConfig.url}/#person`,
-                  name: siteConfig.personName,
-                  url: siteConfig.url,
-                  jobTitle: 'Design Engineer',
-                  description: siteConfig.siteDescription,
-                  sameAs: [
-                    'https://github.com/hunterbastian',
-                    'https://linkedin.com/in/hunterbastian',
-                    'https://x.com/thestudioalpine',
-                    'https://instagram.com/studio.alpine',
-                    'https://threads.net/@studio.alpine',
-                    'https://youtube.com/@studio.alpine',
-                  ],
-                  knowsAbout: ['Interaction Design', 'UI Design', 'UX Design', 'Web Development', 'Frontend Development', 'React', 'Next.js', 'TypeScript', 'Three.js', 'Framer Motion', 'Photography', 'Creative Coding'],
-                },
-                {
-                  '@type': 'Organization',
-                  '@id': `${siteConfig.url}/#organization`,
-                  name: siteConfig.studioName,
-                  url: 'https://instagram.com/studio.alpine',
-                  logo: `${siteConfig.url}/images/optimized/studio-alpine-logo.webp`,
-                  description: `Photography and design studio founded by ${siteConfig.personName}.`,
-                  founder: { '@id': `${siteConfig.url}/#person` },
-                  foundingDate: '2026',
-                  sameAs: [
-                    'https://instagram.com/studio.alpine',
-                    'https://youtube.com/@studio.alpine',
-                  ],
-                },
-              ],
-            }),
+            __html: JSON.stringify(getSiteStructuredData()),
           }}
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,85 +90,88 @@ export default function RootLayout({
         }}
       >
         <MotionProvider>
-          <TopMeta />
-          <SmoothScroll>
-            <a
-              href="#main-content"
-              className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2 focus:text-foreground"
-            >
-              Skip to content
-            </a>
-            <div className="min-h-screen flex flex-col">
-              <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
-                <PageTransition>{children}</PageTransition>
-              </main>
-              <Footer />
-            </div>
-            {telemetryConfig.enableSpeedInsights && (
-              <SpeedInsights
-                sampleRate={1}
-              />
-            )}
-            {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
-            {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_PERF_MONITOR === 'true' && <PerformanceMonitor />}
-            {process.env.NODE_ENV === 'development' && <Agentation />}
-            {process.env.NODE_ENV === 'development' && (
-              <Script id="sw-dev-reset" strategy="afterInteractive">
-                {`
-                  if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.getRegistrations()
-                      .then(function(registrations) {
-                        return Promise.all(registrations.map(function(registration) {
-                          return registration.unregister();
-                        }));
-                      })
-                      .catch(function() {});
-                  }
-
-                  if ('caches' in window) {
-                    caches.keys()
-                      .then(function(cacheNames) {
-                        return Promise.all(cacheNames.map(function(cacheName) {
-                          return caches.delete(cacheName);
-                        }));
-                      })
-                      .catch(function() {});
-                  }
-                `}
-              </Script>
-            )}
-
-            {/* Google Analytics - deferred to avoid blocking */}
-            {telemetryConfig.enableGa && telemetryConfig.gaId && (
-              <>
-                <Script
-                  src={`https://www.googletagmanager.com/gtag/js?id=${telemetryConfig.gaId}`}
-                  strategy="afterInteractive"
-                />
-                <Script id="ga-init" strategy="afterInteractive">
-                  {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${telemetryConfig.gaId}');`}
-                </Script>
-              </>
-            )}
-
-            {/* Service Worker Registration - Deferred for better performance */}
-            {process.env.NODE_ENV === 'production' && (
-              <Script
-                id="sw-registration"
-                strategy="lazyOnload"
+          <SoundProvider>
+            <HoverSoundCue />
+            <TopMeta />
+            <SmoothScroll>
+              <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2 focus:text-foreground"
               >
-                {`
-                  if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
-                    requestIdleCallback(function() {
-                      navigator.serviceWorker.register('/sw.js').catch(function() {});
-                    }, { timeout: 5000 });
-                  }
-                `}
-              </Script>
-            )}
-          </SmoothScroll>
-          <JoyfulLayer projects={launcherProjects} />
-          <ScrollToTop />
+                Skip to content
+              </a>
+              <div className="min-h-screen flex flex-col">
+                <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
+                  <PageTransition>{children}</PageTransition>
+                </main>
+                <Footer />
+              </div>
+              {telemetryConfig.enableSpeedInsights && (
+                <SpeedInsights
+                  sampleRate={1}
+                />
+              )}
+              {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
+              {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_PERF_MONITOR === 'true' && <PerformanceMonitor />}
+              {process.env.NODE_ENV === 'development' && <Agentation />}
+              {process.env.NODE_ENV === 'development' && (
+                <Script id="sw-dev-reset" strategy="afterInteractive">
+                  {`
+                    if ('serviceWorker' in navigator) {
+                      navigator.serviceWorker.getRegistrations()
+                        .then(function(registrations) {
+                          return Promise.all(registrations.map(function(registration) {
+                            return registration.unregister();
+                          }));
+                        })
+                        .catch(function() {});
+                    }
+
+                    if ('caches' in window) {
+                      caches.keys()
+                        .then(function(cacheNames) {
+                          return Promise.all(cacheNames.map(function(cacheName) {
+                            return caches.delete(cacheName);
+                          }));
+                        })
+                        .catch(function() {});
+                    }
+                  `}
+                </Script>
+              )}
+
+              {/* Google Analytics - deferred to avoid blocking */}
+              {telemetryConfig.enableGa && telemetryConfig.gaId && (
+                <>
+                  <Script
+                    src={`https://www.googletagmanager.com/gtag/js?id=${telemetryConfig.gaId}`}
+                    strategy="afterInteractive"
+                  />
+                  <Script id="ga-init" strategy="afterInteractive">
+                    {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${telemetryConfig.gaId}');`}
+                  </Script>
+                </>
+              )}
+
+              {/* Service Worker Registration - Deferred for better performance */}
+              {process.env.NODE_ENV === 'production' && (
+                <Script
+                  id="sw-registration"
+                  strategy="lazyOnload"
+                >
+                  {`
+                    if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
+                      requestIdleCallback(function() {
+                        navigator.serviceWorker.register('/sw.js').catch(function() {});
+                      }, { timeout: 5000 });
+                    }
+                  `}
+                </Script>
+              )}
+            </SmoothScroll>
+            <JoyfulLayer projects={launcherProjects} />
+            <ScrollToTop />
+          </SoundProvider>
         </MotionProvider>
       </body>
     </html>

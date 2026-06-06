@@ -23,16 +23,18 @@ export function chromePillClassName({
 }
 
 export const chromePillLabelClassName =
-  'relative z-10 min-w-0 truncate translate-y-[0.01rem] font-header tracking-[-0.025em] text-[#403d38] [text-shadow:0_1px_0_rgba(255,255,255,0.72)]'
+  'chrome-pill-label relative z-10 min-w-0 truncate translate-y-[0.01rem] font-header tracking-[-0.025em] text-[#403d38] [text-shadow:0_1px_0_rgba(255,255,255,0.72)]'
 
 export const chromePillIconClassName =
-  'relative z-10 shrink-0 text-[#403d38] drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] transition-transform duration-200 group-hover/chrome:translate-x-0.5 group-hover/chrome:-translate-y-[0.14rem]'
+  'chrome-pill-icon relative z-10 shrink-0 text-[#403d38] drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] transition-transform duration-200 group-hover/chrome:translate-x-0.5 group-hover/chrome:-translate-y-[0.14rem]'
+
+export const chromePillContactAccentClassName = 'chrome-pill-contact-accent'
 
 export const editorialImageFrameClassName =
-  'relative mt-0.5 h-[60px] w-[60px] shrink-0 overflow-hidden rounded-[7px] bg-card/65 shadow-[0_1px_0_rgba(255,255,255,0.72),0_6px_18px_-16px_rgba(15,23,42,0.28)] ring-1 ring-border/70 transition-[transform,box-shadow,filter,ring-color] duration-300 ease-soft group-hover:-translate-y-[2px] group-hover:scale-[1.018] group-hover:ring-[var(--editorial-accent-border)] group-hover:shadow-[0_1px_0_rgba(255,255,255,0.78),0_16px_36px_-24px_var(--editorial-accent-shadow),0_10px_22px_-20px_rgba(15,23,42,0.34)] group-active:translate-y-0 group-active:scale-[0.96] group-active:brightness-[0.98] sm:h-[84px] sm:w-[84px] sm:rounded-[8px]'
+  'relative mt-0.5 h-[48px] w-[48px] shrink-0 overflow-visible rounded-[7px] bg-transparent transition-[transform,filter] duration-300 ease-soft group-hover:-translate-y-[2px] group-hover:scale-[1.018] group-active:translate-y-0 group-active:scale-[0.96] group-active:brightness-[0.98] sm:h-[68px] sm:w-[68px] sm:rounded-[8px]'
 
 export const editorialImageClassName =
-  'object-cover transition-[filter,transform] duration-500 ease-soft group-hover:scale-[1.035] group-hover:saturate-[1.05] group-hover:contrast-[1.02] group-active:scale-[1.01]'
+  'object-contain drop-shadow-[0_10px_14px_rgba(15,23,42,0.055)] transition-[filter,transform] duration-500 ease-soft group-hover:scale-[1.035] group-hover:drop-shadow-[0_14px_18px_var(--editorial-accent-shadow)] group-hover:saturate-[1.05] group-hover:contrast-[1.02] group-active:scale-[1.01]'
 
 export const logoFrameClassName =
   'relative inline-flex h-[1.35rem] w-[1.35rem] shrink-0 overflow-hidden rounded-[5px] bg-[#2e3440] shadow-[0_6px_18px_-12px_rgba(15,23,42,0.5),inset_0_0_0_1px_rgba(255,255,255,0.08)] ring-1 ring-border/45 transition-[transform,box-shadow,filter] duration-300 ease-soft group-hover:scale-[1.04] group-hover:shadow-[0_9px_24px_-14px_var(--editorial-accent-shadow),inset_0_0_0_1px_rgba(255,255,255,0.12)] group-active:scale-[0.98]'

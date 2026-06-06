@@ -3,9 +3,26 @@
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion'
 import { Children, isValidElement, type ReactNode, useEffect, useRef, useState } from 'react'
 import { MOTION_EASE_SOFT, MOTION_SPRING_HEAVY, motionDelayMs, motionDurationMs } from '@/lib/motion'
+import {
+  LABEL_TIMING,
+  SECTION_PANEL_STATE,
+  SECTION_ROW_STATE,
+  SECTION_STAGE,
+  SECTION_TIMING,
+  SECTION_TITLE_STAGE,
+  getCollapsibleSectionClassName,
+  getSectionRowDelay,
+  getSectionRowKey,
+  getSectionTitleMotion,
+  getSectionTransitionDuration,
+  getStagedSectionMotion,
+  isSectionStageReady,
+  scheduleSectionEntranceStages,
+  scheduleSectionTitleEntrance,
+  splitSectionTitle,
+  type SectionKind,
+} from '@/lib/collapsible-section'
 import * as Glyphs from './pixel/glyphs'
-
-type SectionKind = 'work' | 'writing' | 'games' | 'contact' | 'archive' | 'now'
 
 const KIND_GLYPHS = {
   work: Glyphs.Work,
@@ -17,11 +34,11 @@ const KIND_GLYPHS = {
 } as const
 
 function SectionTitle({ title }: { title: string }) {
-  const match = title.match(/^(\d+)\s+(.+)$/)
-  if (!match) return <>{title}</>
+  const splitTitle = splitSectionTitle(title)
+  if (!splitTitle.number) return <>{splitTitle.label}</>
   return (
     <>
-      <span className="text-accent/70">{match[1]}</span>{' '}{match[2]}
+      <span className="text-accent/70">{splitTitle.number}</span>{' '}{splitTitle.label}
     </>
   )
 }
@@ -53,40 +70,12 @@ interface CollapsibleSectionProps {
  *  200ms   content rows rise into place (staggered 70ms, spring)
  * ───────────────────────────────────────────────────────── */
 
-const SECTION_TIMING = {
-  panelAppear: 80,      // panel starts appearing
-  rowsAppear: 200,      // child rows begin staggered reveal
-  panelDuration: 380,   // panel fade-in duration
-  rowDuration: 420,     // each child row transition duration
-  rowStagger: 70,       // wider stagger — each row gets its moment
-}
-
-const SECTION_PANEL = {
-  initialOpacity: 0,    // hidden before stage 1
-  finalOpacity: 1,      // visible at rest
-  initialY: 12,         // more travel for visible glide
-  finalY: 0,            // resting panel position
-  ease: MOTION_EASE_SOFT,
-}
-
-const SECTION_ROW = {
-  initialOpacity: 0,    // hidden row before stage 2
-  finalOpacity: 1,      // visible row at rest
-  initialY: 12,         // rows rise from further down
-  finalY: 0,            // resting row position
-}
-
 /* Height animation uses a spring for organic open/close feel */
 const HEIGHT_SPRING = MOTION_SPRING_HEAVY
 
 /* ─────────────────────────────────────────────────────────
  * LABEL ENTRANCE — gentle fade-in
  * ───────────────────────────────────────────────────────── */
-
-const LABEL_TIMING = {
-  start: 72,            // heading label reveal starts
-  duration: 420,        // longer, gentler fade-in
-}
 
 export default function CollapsibleSection({
   id,
@@ -119,65 +108,56 @@ export default function CollapsibleSection({
   const rowStagger = motionDelayMs(SECTION_TIMING.rowStagger, prefersReducedMotion)
   const contentPanelClassName = contentClassName ?? ''
   const contentItems = Children.toArray(children)
-  const sectionClasses = [className, isOpen ? openClassName : closedClassName, 'performance-section transition-[padding] duration-300']
-    .filter(Boolean)
-    .join(' ')
+  const sectionClasses = getCollapsibleSectionClassName({
+    className,
+    closedClassName,
+    isOpen,
+    openClassName,
+  })
 
   useEffect(() => {
-    if (!isOpen) {
-      setStage(0)
-      return
-    }
-
-    if (!isInView) {
-      setStage(0)
-      return
-    }
-
-    if (prefersReducedMotion) {
-      setStage(2)
-      hasPlayedSectionEntranceRef.current = true
-      return
-    }
-
-    const initialDelay = hasPlayedSectionEntranceRef.current ? 0 : initialLoadDelayMs
-    setStage(0)
-    const timers: Array<ReturnType<typeof setTimeout>> = []
-
-    timers.push(setTimeout(() => setStage(1), initialDelay + SECTION_TIMING.panelAppear))
-    timers.push(
-      setTimeout(() => {
-        setStage(2)
-        hasPlayedSectionEntranceRef.current = true
-      }, initialDelay + SECTION_TIMING.rowsAppear)
-    )
+    const timers = scheduleSectionEntranceStages({
+      hasPlayed: hasPlayedSectionEntranceRef.current,
+      initialLoadDelayMs,
+      isInView,
+      isOpen,
+      prefersReducedMotion,
+      scheduleStage: (nextStage, delay, markPlayed) => (
+        setTimeout(() => {
+          setStage(nextStage)
+          if (markPlayed) {
+            hasPlayedSectionEntranceRef.current = true
+          }
+        }, delay)
+      ),
+      setHasPlayed: (hasPlayed) => {
+        hasPlayedSectionEntranceRef.current = hasPlayed
+      },
+      setStage,
+    })
 
     return () => timers.forEach(clearTimeout)
   }, [initialLoadDelayMs, isOpen, isInView, prefersReducedMotion])
 
   useEffect(() => {
-    if (!isTitleInView) {
-      setTitleStage(0)
-      return
-    }
+    const timers = scheduleSectionTitleEntrance({
+      hasPlayed: hasPlayedTitleEntranceRef.current,
+      initialLoadDelayMs,
+      isTitleInView,
+      prefersReducedMotion,
+      scheduleVisible: (delay) => (
+        setTimeout(() => {
+          setTitleStage(SECTION_TITLE_STAGE.visible)
+          hasPlayedTitleEntranceRef.current = true
+        }, delay)
+      ),
+      setHasPlayed: (hasPlayed) => {
+        hasPlayedTitleEntranceRef.current = hasPlayed
+      },
+      setTitleStage,
+    })
 
-    if (prefersReducedMotion) {
-      setTitleStage(1)
-      hasPlayedTitleEntranceRef.current = true
-      return
-    }
-
-    if (hasPlayedTitleEntranceRef.current) {
-      setTitleStage(1)
-      return
-    }
-
-    setTitleStage(0)
-    const timer = setTimeout(() => {
-      setTitleStage(1)
-      hasPlayedTitleEntranceRef.current = true
-    }, initialLoadDelayMs + LABEL_TIMING.start)
-    return () => clearTimeout(timer)
+    return () => timers.forEach(clearTimeout)
   }, [initialLoadDelayMs, isTitleInView, prefersReducedMotion, title])
 
   return (
@@ -187,10 +167,7 @@ export default function CollapsibleSection({
           ref={titleRef}
           className="section-heading m-0 shrink-0 font-mono text-[10px] leading-none tracking-[0.1em]"
           initial={false}
-          animate={{
-            opacity: titleStage >= 1 ? 1 : 0,
-            y: titleStage >= 1 ? 0 : 6,
-          }}
+          animate={getSectionTitleMotion(titleStage)}
           transition={{
             duration: motionDurationMs(LABEL_TIMING.duration, prefersReducedMotion),
             ease: MOTION_EASE_SOFT,
@@ -245,27 +222,29 @@ export default function CollapsibleSection({
               ref={contentRef}
               className={contentPanelClassName}
               initial={false}
-              animate={{
-                opacity: skipContentStaging ? SECTION_PANEL.finalOpacity : (stage >= 1 ? SECTION_PANEL.finalOpacity : SECTION_PANEL.initialOpacity),
-                y: skipContentStaging ? SECTION_PANEL.finalY : (stage >= 1 ? SECTION_PANEL.finalY : SECTION_PANEL.initialY),
-              }}
+              animate={getStagedSectionMotion({
+                ...SECTION_PANEL_STATE,
+                ready: isSectionStageReady(stage, SECTION_STAGE.panel),
+                skipStaging: skipContentStaging,
+              })}
               transition={{
-                duration: skipContentStaging ? 0 : panelDuration,
-                ease: SECTION_PANEL.ease,
+                duration: getSectionTransitionDuration(skipContentStaging, panelDuration),
+                ease: MOTION_EASE_SOFT,
               }}
             >
               {contentItems.map((child, index) => (
                 <m.div
-                  key={isValidElement(child) && child.key != null ? String(child.key) : `section-row-${index}`}
+                  key={getSectionRowKey(isValidElement(child) ? child.key : null, index)}
                   initial={false}
-                  animate={{
-                    opacity: skipContentStaging ? SECTION_ROW.finalOpacity : (stage >= 2 ? SECTION_ROW.finalOpacity : SECTION_ROW.initialOpacity),
-                    y: skipContentStaging ? SECTION_ROW.finalY : (stage >= 2 ? SECTION_ROW.finalY : SECTION_ROW.initialY),
-                  }}
+                  animate={getStagedSectionMotion({
+                    ...SECTION_ROW_STATE,
+                    ready: isSectionStageReady(stage, SECTION_STAGE.rows),
+                    skipStaging: skipContentStaging,
+                  })}
                   transition={{
-                    duration: skipContentStaging ? 0 : rowDuration,
-                    delay: skipContentStaging ? 0 : (stage >= 2 ? index * rowStagger : 0),
-                    ease: SECTION_PANEL.ease,
+                    duration: getSectionTransitionDuration(skipContentStaging, rowDuration),
+                    delay: getSectionRowDelay({ index, rowStagger, skipStaging: skipContentStaging, stage }),
+                    ease: MOTION_EASE_SOFT,
                   }}
                 >
                   {child}

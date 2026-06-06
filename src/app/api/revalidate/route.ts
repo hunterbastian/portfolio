@@ -1,24 +1,10 @@
 import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
+import { isAllowedRevalidatePath, normalizeRevalidatePath } from '@/lib/revalidate'
 
 interface RevalidateBody {
   path?: string
   secret?: string
-}
-
-const ALLOWED_REVALIDATE_PATHS = [
-  '/',
-  '/about',
-  '/archive',
-  '/cv',
-  '/logo',
-  '/opengraph-image',
-  '/robots.txt',
-  '/sitemap.xml',
-]
-
-function isAllowedRevalidatePath(path: string): boolean {
-  return ALLOWED_REVALIDATE_PATHS.includes(path) || /^\/projects\/[a-z0-9-]+(?:\/opengraph-image)?$/.test(path)
 }
 
 export async function POST(request: Request) {
@@ -41,7 +27,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid secret.' }, { status: 401 })
   }
 
-  const path = body.path?.trim()
+  const path = normalizeRevalidatePath(body.path)
   if (!path || !path.startsWith('/')) {
     return NextResponse.json(
       { error: 'Path is required and must start with /.' },

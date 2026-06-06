@@ -1,16 +1,15 @@
 'use client'
 
 import { GitHubCalendar } from 'react-github-calendar'
-import type { Activity } from 'react-github-calendar'
+import {
+  GITHUB_CONTRIBUTION_CALENDAR_CONFIG,
+  GITHUB_CONTRIBUTION_MONTHS,
+  GITHUB_CONTRIBUTION_THEME,
+  GITHUB_CONTRIBUTION_USERNAME,
+  selectRecentContributionMonths,
+} from '@/lib/github-contributions'
 import SectionMarker from './pixel/SectionMarker'
 import styles from './pixel/pixel.module.css'
-
-function selectRecentMonths(data: Activity[], months: number): Activity[] {
-  const cutoff = new Date()
-  cutoff.setMonth(cutoff.getMonth() - months)
-  const cutoffStr = cutoff.toISOString().slice(0, 10)
-  return data.filter((d) => d.date >= cutoffStr)
-}
 
 export default function GitHubContributions() {
   return (
@@ -20,18 +19,10 @@ export default function GitHubContributions() {
       </div>
       <div className={styles.crisp}>
         <GitHubCalendar
-          username="hunterbastian"
-          transformData={(data) => selectRecentMonths(data, 5)}
-          showColorLegend={false}
-          showTotalCount={false}
-          blockSize={10}
-          blockMargin={3}
-          blockRadius={0}
-          fontSize={10}
-          theme={{
-            light: ['#e5e5e5', '#c0c0c0', '#8a8a8a', '#555555', '#222222'],
-            dark: ['#2a2a2a', '#444444', '#666666', '#999999', '#cccccc'],
-          }}
+          username={GITHUB_CONTRIBUTION_USERNAME}
+          transformData={(data) => selectRecentContributionMonths(data, GITHUB_CONTRIBUTION_MONTHS)}
+          {...GITHUB_CONTRIBUTION_CALENDAR_CONFIG}
+          theme={GITHUB_CONTRIBUTION_THEME}
         />
       </div>
     </div>

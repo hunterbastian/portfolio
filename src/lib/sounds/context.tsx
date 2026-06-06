@@ -1,8 +1,13 @@
 'use client'
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react'
-import { playClick, playTone, playChime, playWhoosh } from './synth'
+import { playClick, playHoverClick, playTone, playChime, playWhoosh } from './synth'
 import type { SoundName } from './types'
+import {
+  getNextSoundEnabled,
+  readStoredSoundEnabled,
+  writeStoredSoundEnabled,
+} from './preferences'
 
 interface SoundContextValue {
   /** Whether sound is enabled (opt-in, default false) */
@@ -19,10 +24,9 @@ const SoundContext = createContext<SoundContextValue>({
   play: () => {},
 })
 
-const STORAGE_KEY = 'hb-sound-enabled'
-
 const synthMap: Record<SoundName, () => void> = {
   click: playClick,
+  hoverClick: playHoverClick,
   tone: playTone,
   chime: playChime,
   whoosh: playWhoosh,
@@ -33,22 +37,13 @@ export function SoundProvider({ children }: { children: ReactNode }) {
 
   // Read persisted preference on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY)
-      if (stored === 'true') setEnabled(true)
-    } catch {
-      // localStorage unavailable
-    }
+    if (readStoredSoundEnabled(localStorage)) setEnabled(true)
   }, [])
 
   const toggle = useCallback(() => {
     setEnabled((prev) => {
-      const next = !prev
-      try {
-        localStorage.setItem(STORAGE_KEY, String(next))
-      } catch {
-        // localStorage unavailable
-      }
+      const next = getNextSoundEnabled(prev)
+      writeStoredSoundEnabled(localStorage, next)
       return next
     })
   }, [])

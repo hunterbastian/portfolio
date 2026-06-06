@@ -1,22 +1,35 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
 import DotMatrixLoader from './DotMatrixLoader'
+import {
+  LOADING_SCREEN_CONTENT_TRANSITION,
+  LOADING_SCREEN_DEFAULT_DURATION_MS,
+  LOADING_SCREEN_LOADER_TRANSITION,
+  scheduleLoadingScreenReveal,
+} from '@/lib/loading-screen'
 import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 interface LoadingScreenProps {
-  children: React.ReactNode
+  children: ReactNode
   duration?: number
 }
 
-export default function LoadingScreen({ children, duration = 1000 }: LoadingScreenProps) {
+export default function LoadingScreen({
+  children,
+  duration = LOADING_SCREEN_DEFAULT_DURATION_MS,
+}: LoadingScreenProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setIsMounted(true)
-    const timer = setTimeout(() => setIsLoading(false), duration)
+    const timer = scheduleLoadingScreenReveal({
+      durationMs: duration,
+      scheduleReveal: (delayMs) => setTimeout(() => setIsLoading(false), delayMs),
+      setIsMounted,
+    })
+
     return () => clearTimeout(timer)
   }, [duration])
 
@@ -33,7 +46,7 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: MOTION_EASE_SOFT }}
+            transition={{ ...LOADING_SCREEN_LOADER_TRANSITION, ease: MOTION_EASE_SOFT }}
           >
             <DotMatrixLoader />
           </m.div>
@@ -42,7 +55,7 @@ export default function LoadingScreen({ children, duration = 1000 }: LoadingScre
             key="content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: MOTION_EASE_SOFT }}
+            transition={{ ...LOADING_SCREEN_CONTENT_TRANSITION, ease: MOTION_EASE_SOFT }}
           >
             {children}
           </m.div>

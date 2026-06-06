@@ -12,6 +12,7 @@
     "build:analyze": "ANALYZE=true npm run build",
     "start": "next start",
     "lint": "eslint .",
+    "test:lib": "node --experimental-strip-types --test src/lib/*.test.mts",
     "test:snake": "node --experimental-strip-types --test src/lib/snake.test.mts",
     "performance": "npm run build && npm run build:analyze",
     "optimize-images": "node scripts/optimize-images.js",

@@ -44,6 +44,54 @@ export function playClick() {
 }
 
 // ---------------------------------------------------------------------------
+// Hover click — tiny UI tick, softer than activation clicks
+// ---------------------------------------------------------------------------
+export function playHoverClick() {
+  const ctx = getAudioContext()
+  if (!ctx) return
+  const now = ctx.currentTime
+
+  const osc = ctx.createOscillator()
+  osc.type = 'triangle'
+  osc.frequency.setValueAtTime(940, now)
+  osc.frequency.exponentialRampToValueAtTime(720, now + 0.024)
+
+  const toneGain = ctx.createGain()
+  toneGain.gain.setValueAtTime(0.018, now)
+  toneGain.gain.exponentialRampToValueAtTime(0.001, now + 0.026)
+
+  const bufferSize = Math.floor(ctx.sampleRate * 0.018)
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+  const data = noiseBuffer.getChannelData(0)
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = Math.random() * 2 - 1
+  }
+
+  const noise = ctx.createBufferSource()
+  noise.buffer = noiseBuffer
+
+  const filter = ctx.createBiquadFilter()
+  filter.type = 'bandpass'
+  filter.frequency.value = 3200
+  filter.Q.value = 2.4
+
+  const noiseGain = ctx.createGain()
+  noiseGain.gain.setValueAtTime(0.022, now)
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.018)
+
+  osc.connect(toneGain)
+  toneGain.connect(ctx.destination)
+  noise.connect(filter)
+  filter.connect(noiseGain)
+  noiseGain.connect(ctx.destination)
+
+  osc.start(now)
+  osc.stop(now + 0.03)
+  noise.start(now)
+  noise.stop(now + 0.018)
+}
+
+// ---------------------------------------------------------------------------
 // Tone — sine wave sweep 400Hz→600Hz, warm and ascending
 // ---------------------------------------------------------------------------
 export function playTone() {

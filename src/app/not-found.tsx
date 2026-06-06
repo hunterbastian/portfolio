@@ -4,9 +4,25 @@ import Link from 'next/link'
 import { m } from 'framer-motion'
 import IconArrowBackUp from '@/components/IconArrowBackUp'
 import { Archive as ArchiveGlyph } from '@/components/pixel/glyphs'
-import { MOTION_EASE_SOFT } from '@/lib/motion'
-
-const STAGGER_DELAY = 0.08
+import {
+  getNotFoundRevealTransition,
+  getNotFoundStaggerDelay,
+  NOT_FOUND_ACTIONS_ANIMATE,
+  NOT_FOUND_ACTIONS_INITIAL,
+  NOT_FOUND_BLUR_REVEAL_ANIMATE,
+  NOT_FOUND_BLUR_REVEAL_INITIAL,
+  NOT_FOUND_CONTACT_ACTION_CLASS,
+  NOT_FOUND_CONTACT_HREF,
+  NOT_FOUND_CONTACT_LABEL,
+  NOT_FOUND_DESCRIPTION,
+  NOT_FOUND_HOME_ACTION_CLASS,
+  NOT_FOUND_HOME_HREF,
+  NOT_FOUND_HOME_ICON_CLASS,
+  NOT_FOUND_HOME_LABEL,
+  NOT_FOUND_STATUS_CODE,
+  NOT_FOUND_STATUS_DELAY,
+  NOT_FOUND_TITLE,
+} from '@/lib/not-found'
 
 export default function NotFound() {
   return (
@@ -14,9 +30,9 @@ export default function NotFound() {
       <div className="text-center max-w-sm">
         <m.div
           className="flex justify-center mb-4"
-          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.4, ease: MOTION_EASE_SOFT }}
+          initial={NOT_FOUND_BLUR_REVEAL_INITIAL}
+          animate={NOT_FOUND_BLUR_REVEAL_ANIMATE}
+          transition={getNotFoundRevealTransition()}
         >
           <ArchiveGlyph size={24} className="text-muted-foreground/50" />
         </m.div>
@@ -24,52 +40,52 @@ export default function NotFound() {
         <m.p
           className="text-[11px] tracking-[0.14em] uppercase text-muted-foreground"
           style={{ fontFamily: 'inherit' }}
-          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.4, delay: 0.04, ease: MOTION_EASE_SOFT }}
+          initial={NOT_FOUND_BLUR_REVEAL_INITIAL}
+          animate={NOT_FOUND_BLUR_REVEAL_ANIMATE}
+          transition={getNotFoundRevealTransition(NOT_FOUND_STATUS_DELAY)}
         >
-          404
+          {NOT_FOUND_STATUS_CODE}
         </m.p>
 
         <m.h1
           className="mt-3 text-sm font-medium tracking-[0.06em] text-foreground"
           style={{ fontFamily: 'inherit' }}
-          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.4, delay: STAGGER_DELAY, ease: MOTION_EASE_SOFT }}
+          initial={NOT_FOUND_BLUR_REVEAL_INITIAL}
+          animate={NOT_FOUND_BLUR_REVEAL_ANIMATE}
+          transition={getNotFoundRevealTransition(getNotFoundStaggerDelay(1))}
         >
-          This page doesn&apos;t exist.
+          {NOT_FOUND_TITLE}
         </m.h1>
 
         <m.p
           className="mt-1.5 text-xs leading-relaxed text-muted-foreground"
           style={{ fontFamily: 'inherit' }}
-          initial={{ opacity: 0, y: 8, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.4, delay: STAGGER_DELAY * 2, ease: MOTION_EASE_SOFT }}
+          initial={NOT_FOUND_BLUR_REVEAL_INITIAL}
+          animate={NOT_FOUND_BLUR_REVEAL_ANIMATE}
+          transition={getNotFoundRevealTransition(getNotFoundStaggerDelay(2))}
         >
-          It might have been moved or deleted.
+          {NOT_FOUND_DESCRIPTION}
         </m.p>
 
         <m.div
           className="mt-10 flex items-center justify-center gap-6"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: STAGGER_DELAY * 3, ease: MOTION_EASE_SOFT }}
+          initial={NOT_FOUND_ACTIONS_INITIAL}
+          animate={NOT_FOUND_ACTIONS_ANIMATE}
+          transition={getNotFoundRevealTransition(getNotFoundStaggerDelay(3))}
         >
           <Link
-            href="/"
-            className="group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-1.5 font-mono text-[12px] tracking-[0.06em] text-foreground transition-[color,transform] duration-150 hover:text-accent active:translate-y-0 active:scale-[0.96]"
+            href={NOT_FOUND_HOME_HREF}
+            className={NOT_FOUND_HOME_ACTION_CLASS}
           >
-            <IconArrowBackUp size={12} className="shrink-0 opacity-60 transition-transform duration-200 ease-soft group-hover:-translate-x-1" aria-hidden />
-            Home
+            <IconArrowBackUp size={12} className={NOT_FOUND_HOME_ICON_CLASS} aria-hidden />
+            {NOT_FOUND_HOME_LABEL}
           </Link>
           <Link
-            href="/#contact"
-            className="inline-flex min-h-[40px] origin-center touch-manipulation items-center text-xs tracking-[0.08em] uppercase text-muted-foreground transition-[color,transform] duration-150 hover:text-accent active:translate-y-0 active:scale-[0.96]"
+            href={NOT_FOUND_CONTACT_HREF}
+            className={NOT_FOUND_CONTACT_ACTION_CLASS}
             style={{ fontFamily: 'inherit' }}
           >
-            Contact
+            {NOT_FOUND_CONTACT_LABEL}
           </Link>
         </m.div>
       </div>

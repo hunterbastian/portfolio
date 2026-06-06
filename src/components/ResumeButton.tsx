@@ -7,6 +7,20 @@ import ResumeModal from './ResumeModal'
 import AnimatedDashedArrow from './AnimatedDashedArrow'
 import { useWebHaptics } from 'web-haptics/react'
 import { Magnetic } from '@/components/animate-ui/primitives/effects/magnetic'
+import {
+  RESUME_BUTTON_CLASS_NAME,
+  RESUME_BUTTON_IDLE_VARIANT,
+  RESUME_BUTTON_LABEL,
+  RESUME_BUTTON_MAGNETIC_RANGE,
+  RESUME_BUTTON_MAGNETIC_STRENGTH,
+  RESUME_BUTTON_STYLE,
+  RESUME_BUTTON_TEXT_CLASS_NAME,
+  RESUME_BUTTON_VARIANTS,
+  getResumeButtonHoverVariant,
+  getResumeButtonTapMotion,
+  getResumeButtonTextVariants,
+  openResumeButtonModal,
+} from '@/lib/resume-button'
 
 export default function ResumeButton() {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,30 +29,32 @@ export default function ResumeButton() {
 
   return (
     <>
-      <Magnetic strength={0.15} range={100} onlyOnHover disableOnTouch>
-      <m.button
-        type="button"
-        onClick={() => { haptic.trigger('light'); setIsOpen(true) }}
-        className="playground-joy group relative inline-flex items-center gap-2 overflow-hidden px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.08em] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-        style={{ fontFamily: 'inherit' }}
-        initial="idle"
-        whileHover={prefersReducedMotion ? undefined : 'hover'}
-        animate="idle"
-        whileTap={prefersReducedMotion ? undefined : { scale: 0.96, y: 0 }}
-        transition={MOTION_SPRING_SNAPPY}
-        variants={{ idle: { y: 0 }, hover: { y: -3 } }}
-      >
-        <m.span
-          className="relative z-10"
-          variants={prefersReducedMotion ? undefined : {
-            idle: { letterSpacing: '0.06em' },
-            hover: { letterSpacing: '0.1em', transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
-          }}
+      <Magnetic strength={RESUME_BUTTON_MAGNETIC_STRENGTH} range={RESUME_BUTTON_MAGNETIC_RANGE} onlyOnHover disableOnTouch>
+        <m.button
+          type="button"
+          onClick={() =>
+            openResumeButtonModal({
+              setOpen: setIsOpen,
+              triggerHaptic: (style) => haptic.trigger(style),
+            })
+          }
+          className={RESUME_BUTTON_CLASS_NAME}
+          style={RESUME_BUTTON_STYLE}
+          initial={RESUME_BUTTON_IDLE_VARIANT}
+          whileHover={getResumeButtonHoverVariant(prefersReducedMotion)}
+          animate={RESUME_BUTTON_IDLE_VARIANT}
+          whileTap={getResumeButtonTapMotion(prefersReducedMotion)}
+          transition={MOTION_SPRING_SNAPPY}
+          variants={RESUME_BUTTON_VARIANTS}
         >
-          Resume
-        </m.span>
-        <AnimatedDashedArrow size={14} />
-      </m.button>
+          <m.span
+            className={RESUME_BUTTON_TEXT_CLASS_NAME}
+            variants={getResumeButtonTextVariants(prefersReducedMotion)}
+          >
+            {RESUME_BUTTON_LABEL}
+          </m.span>
+          <AnimatedDashedArrow size={14} />
+        </m.button>
       </Magnetic>
       <ResumeModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>

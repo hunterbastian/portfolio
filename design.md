@@ -1,423 +1,237 @@
-# Design System — hunterbastian.com
-
-This is the single source of truth for the visual design language of the portfolio. Every component, page, and interaction should reference this document.
-
+---
+name: "Hunter Bastian Portfolio"
+description: "Warm minimal portfolio for a Utah-based design engineer, built around calm craft, tactile interaction, and restrained project storytelling."
+colors:
+  canvas-warm: "#f9f7f2"
+  surface-paper: "#fbfaf6"
+  ink-soft: "#4c463d"
+  ink-muted: "#837b70"
+  rule-soft: "#d8d3ca"
+  accent-green: "#6f9c68"
+  accent-blue: "#4f7fa4"
+  accent-cyan: "#7fb8c6"
+  accent-amber: "#d49a4a"
+  contact-brown: "#8e5244"
+  contact-cyan: "#3b8b94"
+typography:
+  display:
+    fontFamily: "Geist Pixel Square, Geist Mono, ui-monospace, SFMono-Regular, monospace"
+    fontSize: "clamp(2.25rem, 4vw, 3rem)"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "-0.02em"
+  title:
+    fontFamily: "Geist Pixel Square, Geist Mono, ui-monospace, SFMono-Regular, monospace"
+    fontSize: "0.95rem"
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: "-0.02em"
+  body:
+    fontFamily: "Geist Mono, ui-monospace, SFMono-Regular, monospace"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.62
+    letterSpacing: "-0.012em"
+  label:
+    fontFamily: "Geist Mono, ui-monospace, SFMono-Regular, monospace"
+    fontSize: "0.68rem"
+    fontWeight: 650
+    lineHeight: 1
+    letterSpacing: "0.09em"
+rounded:
+  base: "8px"
+  small: "6px"
+  pill: "999px"
+spacing:
+  xs: "4px"
+  sm: "8px"
+  md: "16px"
+  lg: "24px"
+  xl: "40px"
+components:
+  nav-link:
+    textColor: "{colors.ink-muted}"
+    typography: "{typography.label}"
+    rounded: "{rounded.base}"
+    padding: "10px 12px"
+  tactile-button:
+    backgroundColor: "{colors.surface-paper}"
+    textColor: "{colors.ink-soft}"
+    rounded: "{rounded.pill}"
+    padding: "10px 16px"
+  project-surface:
+    backgroundColor: "{colors.surface-paper}"
+    textColor: "{colors.ink-soft}"
+    rounded: "{rounded.base}"
+    padding: "8px"
+  playground-tile:
+    backgroundColor: "{colors.surface-paper}"
+    textColor: "{colors.ink-muted}"
+    rounded: "{rounded.base}"
+    padding: "0"
 ---
 
-## Philosophy
+# Design System: Hunter Bastian Portfolio
 
-Warm minimal, editorial, and lightly tactile. When in doubt, do less. The site should feel like a well-made tool — precise, warm, and quiet. Ambient gradients, glass, and glow are allowed only when they are named system surfaces with a clear job: hero atmosphere, hover feedback, or launchpad depth. Let typography, spacing, imagery, and composition carry most hierarchy.
+## 1. Overview
 
-Light mode by default. Dark mode as an intentional alternative, not an afterthought.
-
-**Core risks (what makes this site memorable):**
-1. **Mono editorial identity** — Geist Mono is the readable structural base; Geist Pixel Square appears through `font-header` for brand, hero, labels, and compact interface moments.
-2. **Restrained accent system** — `--accent` stays quiet and sparse, while project-specific hover glows are documented exceptions.
-3. **Tactile utility surfaces** — Launchpad, resume preview, and contact actions should feel crafted without turning the whole site into glassmorphism.
-4. **Sound and haptics** — subtle, opt-in micro-sounds and haptics on key interactions. Multi-sensory craft, never required for comprehension.
-
----
-
-## Color System
-
-Warm neutral palette. No pure white, no pure black. Colors defined as CSS custom properties in `globals.css`.
-
-### Light Mode (`:root`)
-
-| Token              | Value      | Usage                          |
-|--------------------|------------|--------------------------------|
-| `--background`     | `#f2f0ec`  | Warm off-white canvas          |
-| `--card`           | `#f5f3ef`  | Slightly lighter panels        |
-| `--foreground`     | `#3f4f5c`  | Slate blue text                |
-| `--primary`        | `#3f4f5c`  | Same as foreground             |
-| `--secondary`      | `#e9e6e1`  | Hover states, subtle fills     |
-| `--muted`          | `#e1ded9`  | Disabled/inactive surfaces     |
-| `--muted-foreground`| `#3f4f5c` | Section headings, labels       |
-| `--accent`         | `#da8a82`  | Dusty rose (spring default)    |
-| `--border`         | `#d6d3cd`  | Dividers, input borders        |
-| `--ring`           | `#da8a82`  | Focus indicators               |
-| `--ink-underline`  | `#b8a48a`  | Hero handscript ink underline   |
+**Creative North Star: "The Quiet Field Notebook"**
 
-### Dark Mode (`.dark`)
+The portfolio should feel like a carefully edited field notebook for digital craft: warm, quiet, precise, and a little tactile. It is a brand surface before it is an app. The page itself must prove that Hunter can design and build refined interfaces without relying on loud visual tropes.
 
-| Token              | Value      | Usage                          |
-|--------------------|------------|--------------------------------|
-| `--background`     | `#1e2830`  | Dark charcoal canvas           |
-| `--card`           | `#2a2c2f`  | Slightly lighter panels        |
-| `--foreground`     | `#cdc8c0`  | Warm light gray text           |
-| `--primary`        | `#cdc8c0`  | Same as foreground             |
-| `--secondary`      | `#313335`  | Hover states                   |
-| `--muted`          | `#393b3e`  | Disabled/inactive surfaces     |
-| `--muted-foreground`| `#9a9590` | Section headings, labels       |
-| `--accent`         | `#da8a82`  | Dusty rose (spring default)    |
-| `--border`         | `#353739`  | Dividers, input borders        |
-| `--ring`           | `#da8a82`  | Focus indicators               |
-| `--ink-underline`  | `#b8a48a`  | Hero handscript ink underline   |
-
-### Accent Modes
-
-The shipped site uses a quiet green accent in `globals.css` and project-specific hover accent colors in `home-projects.ts`. Seasonal accent helpers exist in `src/lib/season.ts`; if seasonal accent rotation is re-enabled, mount one provider that sets `--accent` and `--ring` together so the visual and focus systems stay aligned.
-
-| Season  | Accent hex | Name          | Mood                        |
-|---------|-----------|---------------|-----------------------------|
-| Spring  | `#da8a82` | Dusty rose    | Warm, soft, renewal         |
-| Summer  | `#c99a5b` | Warm amber    | Golden, sun-soaked, open    |
-| Autumn  | `#b57a5d` | Burnt sienna  | Earthy, rich, grounded      |
-| Winter  | `#7a8b96` | Slate blue    | Cool, quiet, reflective     |
-
-Implementation rule: all accent changes must flow through CSS custom properties, not one-off hex values inside components. Hard-coded exception colors are allowed only for generated assets, social previews, or carefully named local effects.
-
-### Principles
-
-- No pure white (`#fff`) or pure black (`#000`) anywhere in the UI
-- Accent color is seasonal, used sparingly for interactive hints, never as a loud highlight
-- Dark mode images get `brightness(0.92)` to avoid glare
-- Selection highlight uses accent at 20% opacity
-- `color-mix()` used for blending foreground with accent (e.g., handscript text)
-
----
-
-## Typography
-
-Two-font system plus a handwritten accent. Each font has a specific role.
-
-### Font Stack
-
-| Font                   | Role                          | Usage                                                    |
-|------------------------|-------------------------------|----------------------------------------------------------|
-| **Geist Mono**         | Readability / system text     | Body, project descriptions, metadata, contact copy, MDX prose, lists |
-| **Geist Pixel Square** | Identity / compact structure  | TopMeta brand, hero name/location, text actions, project titles, badges, selected labels |
-| **HB Handscript**      | Handwritten accent            | Hero handwritten note only                               |
-
-### Rules
-
-- **Geist Mono** is the default `<body>` font. Tailwind `font-mono`, `font-sans`, and `font-inter` currently resolve to Geist Mono.
-- **Geist Pixel Square** is opt-in through `font-header`. Use it for compact identity moments, not long paragraphs unless intentionally matching the shipped homepage voice.
-- MDX headings (`h2`/`h3`/`h4`) may stay pixel/structural, but body prose should remain highly readable.
-- Project detail pages: mono body at `13px`; project titles and compact metadata may use structural treatments.
-- Never use pixel for paragraph-length text — it's for identity, not reading
-- Headings use `text-wrap: balance` to prevent orphans
-- Body copy uses `text-wrap: pretty`
-- `-webkit-font-smoothing: antialiased` on body for crisp rendering on macOS
-- OG images use GeistMono (Satori requires TTF, pixel font is woff2 only)
+The visual system uses a warm paper canvas, soft ink, sparse green and blue accents, compact pixel identity moments, and Geist Mono as the readable structural base. Tactile effects are allowed when they have a clear job: launchpad depth, hover feedback, contact affordance, Playground framing, or hero atmosphere. They should not spread into decorative glassmorphism.
 
-### Sizing
+The site rejects SaaS-template composition, generic agency grids, neon AI polish, repeated section eyebrows, over-rounded cards, and empty minimalism that hides the work.
 
-Fluid typography via `clamp()` in Tailwind config:
+**Key Characteristics:**
 
-| Token          | Range                          |
-|----------------|--------------------------------|
-| `fluid-sm`     | `0.875rem` -> `1rem`           |
-| `fluid-base`   | `1rem` -> `1.125rem`           |
-| `fluid-lg`     | `1.125rem` -> `1.25rem`        |
-| `fluid-xl`     | `1.25rem` -> `1.5rem`          |
-| `fluid-2xl`    | `1.5rem` -> `2rem`             |
-| `fluid-3xl`    | `1.875rem` -> `2.5rem`         |
-| `fluid-4xl`    | `2.25rem` -> `3rem`            |
+- Warm off-white canvas with low-chroma ink and sparse accent.
+- Geist Mono for reading, Geist Pixel Square for identity and compact structure.
+- Small, precise surfaces with `8px` default radius.
+- Motion and haptics as optional craft details, never requirements.
+- Project imagery and composition as primary proof of taste.
 
-### Section Headings
+## 2. Colors
 
-All section headings (Projects, Endeavors, Experience, etc.) are styled as:
-- Compact title case, around `0.85rem`, with tight tracking
-- Color: `--muted-foreground`
-- Plain text — no interactive buttons, no collapse toggles
+The palette is warm, low-chroma, and restrained. Accent colors should be rare enough that they still feel intentional.
 
----
+### Primary
 
-## Surfaces & Elevation
+- **Soft Ink** (`#4c463d`, CSS source: `--foreground`, `--primary`): Main text, navigation, project titles, and structural marks.
+- **Quiet Green** (`#6f9c68`, CSS source: `--accent`, Playground local green): Primary accent for selected states, small status marks, and restrained hover cues.
 
-Shadows over borders. Multi-layer `box-shadow` creates depth without hard edges.
+### Secondary
 
-### Card Shadow (`.shadow-card`, `.project-card`)
+- **Portfolio Blue** (`#4f7fa4`): Used in Playground and selected atmospheric details when a cooler technical note is needed.
+- **Soft Cyan** (`#7fb8c6`): Used for light atmospheric glows and soft depth, especially in Playground.
+- **Warm Amber** (`#d49a4a`): Used sparingly for warmth in Playground and seasonal accents.
 
-```css
-/* Light */
-box-shadow:
-  0px 0px 0px 1px rgba(0, 0, 0, 0.06),
-  0px 1px 2px -1px rgba(0, 0, 0, 0.06),
-  0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+### Tertiary
 
-/* Dark */
-box-shadow:
-  0 1px 3px rgba(0, 0, 0, 0.3),
-  0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-```
+- **Contact Brown** (`#8e5244`): Contact and editorial hover warmth.
+- **Contact Cyan** (`#3b8b94`): Email/contact-specific utility accent.
 
-### Card Hover
+### Neutral
 
-```css
-/* Light */
-box-shadow:
-  0px 0px 0px 1px rgba(0, 0, 0, 0.08),
-  0px 2px 4px -1px rgba(0, 0, 0, 0.08),
-  0px 8px 20px -4px rgba(0, 0, 0, 0.1);
+- **Warm Canvas** (`#f9f7f2`, CSS source: `--background`): Default page background.
+- **Paper Surface** (`#fbfaf6`, CSS source: `--card`, `--surface-paper-rgb`): Cards, tiles, framed surfaces, and utility panels.
+- **Muted Ink** (`#837b70`, CSS source: `--muted-foreground`, `--subtle-foreground`): Metadata, captions, secondary labels.
+- **Soft Rule** (`#d8d3ca`, CSS source: `--border`): Dividers, focus offsets, and quiet edges.
 
-/* Dark */
-box-shadow:
-  0 8px 24px rgba(0, 0, 0, 0.5),
-  0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-```
+### Named Rules
 
-### Principles
+**The Accent Scarcity Rule.** Accent should usually occupy less than 10 percent of a viewport. Its rarity is part of the brand.
 
-- Prefer shadows over solid borders — shadows adapt to any background
-- Hover state: same shadow structure, slightly darker/deeper values
-- Transition shadows with `transition-[box-shadow]`
-- Cards get a subtle light-gradient `::after` overlay on hover (165deg angle)
-- Dark mode uses `inset` shadows with white at low opacity for inner edge definition
-- `--box-radius: 8px` is the default surface radius. Use larger radii only for explicit variants such as circular avatars, rounded badges, or Launchpad.
+**The No Pure White Rule.** Avoid pure `#fff` as a default fill. When local white is needed for optical lift, blend it into a named paper or chrome surface.
 
-### Effect Tokens
+**The Warmth Without Beige Trap Rule.** The existing warm canvas is part of the identity, but new sections should not solve every problem by adding more cream, sand, or parchment tones.
 
-Named effect tokens live as CSS custom properties in `src/app/globals.css`. Use the dot name in design discussion and the CSS variable in implementation.
+## 3. Typography
 
-| Token | CSS variable | Usage |
-|-------|--------------|-------|
-| `surface.glass.soft` | `--surface-glass-soft` | Quiet translucent surfaces such as TopMeta pills and subtle header chrome. |
-| `surface.glass.chrome` | `--surface-glass-chrome` | Glossy raised controls such as Launchpad, the compact upload control, and the contact email CTA. |
-| `shadow.raised` | `--shadow-raised` | Default raised surface depth for cards, pills, and utility panels. |
-| `shadow.hover` | `--shadow-hover` | Hover elevation for raised surfaces. |
-| `motion.press` | `--motion-press-transform` | Pressed tactile state. Default is `translateY(0) scale(0.96)`. |
-| `motion.peek` | `--motion-peek-transition` | Tooltip, peek, and tiny reveal transitions using opacity, transform, and filter. |
-| `accent.editorial.hover` | `--accent-editorial-hover` | Default hover accent for editorial rows, glints, and project/endeavor hover particles. |
+**Display Font:** Geist Pixel Square, with Geist Mono and system monospace fallbacks.
+**Body Font:** Geist Mono, with system monospace fallbacks.
+**Accent Font:** HB Handscript Preview for the hero handwritten note only.
 
-Rules:
-- If an effect appears in more than one component, make it a token before tuning it.
-- Component-specific variants may add local variables, but the base surface, shadow, motion, or accent should point back to these aliases.
-- Do not copy glossy gradients directly into new components; use `surface.glass.chrome` and tune only local rim/highlight details.
+**Character:** The type system is compact, structural, and personal. Geist Mono keeps the site readable and tool-like; Geist Pixel Square adds the recognizable portfolio voice in short identity moments.
 
----
+### Hierarchy
 
-## Border Radius
+- **Display** (`400`, `clamp(2.25rem, 4vw, 3rem)`, `1`): Brand moments, hero identity, and highly controlled display use. Keep max sizes modest.
+- **Headline** (`600`, `1.25rem` to `2rem`, `1.15`): Section-specific headings when a page needs stronger hierarchy than the homepage list rhythm.
+- **Title** (`600`, `0.9rem` to `1rem`, `1.25`): Project rows, tile titles, launchpad items, and compact UI labels that need identity.
+- **Body** (`400`, `14px`, `1.62`): Intro copy, project descriptions, MDX prose, and list content. Keep line length around 65 to 75 characters.
+- **Label** (`650`, `0.53rem` to `0.72rem`, `0.07em` to `0.13em`): Metadata, captions, small controls, and status text. Use uppercase sparingly.
 
-All standard radii are unified to `--box-radius: 8px` via the Tailwind config. Every Tailwind radius utility (`rounded-sm` through `rounded-3xl`) maps to this single value unless an arbitrary class documents a deliberate exception.
+### Named Rules
 
-**Concentric radius rule**: Outer radius = inner radius + padding. Nested elements must calculate their radius relative to their parent to avoid visual mismatch.
+**The Pixel Is a Spice Rule.** Geist Pixel Square is for identity, compact labels, and selected UI moments. Do not use it for long paragraphs.
 
----
+**The Mono Must Stay Human Rule.** Geist Mono can be the base face, but spacing, line height, and short copy need to keep it from feeling like a terminal costume.
 
-## Images
+## 4. Elevation
 
-- All project images optimized as WebP via `scripts/optimize-images.js`
-- Images get an inset outline for depth: `outline: 1px solid rgba(0,0,0,0.1); outline-offset: -1px`
-- Dark mode outline: `rgba(255,255,255,0.1)`
-- `image-rendering: -webkit-optimize-contrast` for sharper rendering
-- Images fade in: `transition: opacity 0.3s ease-in-out`
-- Unloaded images (`img:not([src])`) are hidden with `opacity: 0`
+Elevation is subtle and mostly material. The system uses tonal layering, inset rims, and small layered shadows instead of heavy cards. Shadows should define state or surface role, not decorate every section.
 
----
+### Shadow Vocabulary
 
-## Motion
+- **Raised Surface** (`var(--shadow-raised)`): Default for project cards, pills, and utility panels.
+- **Raised Hover** (`var(--shadow-hover)`): Hover state for raised surfaces. Keep the same shadow structure with slightly deeper values.
+- **Chrome Surface** (`var(--surface-glass-chrome-shadow)`): Signature glossy controls such as Launchpad, compact upload controls, and contact CTAs.
+- **Soft Glass** (`var(--surface-glass-soft-shadow)`): Quiet translucent surfaces such as TopMeta pills and subtle header chrome.
+- **Playground Media Depth** (`0 18px 42px -32px rgba(35, 31, 27, 0.42)`): Gallery media frames only. Keep this soft and narrow.
 
-Spring-first animation system. Constants in `src/lib/motion.ts`.
+### Named Rules
 
-### Easing
+**The Named Material Rule.** Do not copy a glossy gradient into a new component unless it maps to an existing material token such as `surface.glass.chrome`.
 
-| Constant              | Value                                      | Use                          |
-|-----------------------|--------------------------------------------|------------------------------|
-| `MOTION_EASE_SOFT`    | `[0.16, 1, 0.3, 1]`                       | Default entrance/reveal      |
-| `MOTION_EASE_EXIT`    | `[0.4, 0, 0.7, 0.2]`                      | Exit transitions             |
-| `MOTION_SPRING_SMOOTH`| `{ stiffness: 170, damping: 26, mass: 1 }` | Interactive/layout elements  |
+**The No Ghost Card Rule.** Avoid pairing a decorative 1px border with a wide soft drop shadow. Pick a clear edge or a clear shadow.
 
-### Principles
+## 5. Components
 
-- **Springs for interaction**, easing curves for one-shot sequences
-- Stagger enter animations: `~100ms` delay between items, combine `opacity + blur + translateY`
-- Subtle exits: less movement than enter. Small fixed offset (`-12px`) instead of full container height
-- `motionDurationMs()` / `motionDelayMs()` helpers respect `prefers-reduced-motion`
-- Animation orchestration follows the **Interface Craft storyboard pattern**: named timing constants at file top, stage-driven sequencing via single integer state, config objects for initial/final values
-- Pressable controls use `motion.press` (`--motion-press-transform`) for tactile feedback
-- Links transition `color` and `transform` at `0.15s ease`
-- Magnetic hover on pill buttons (via animate-ui Magnetic primitive)
-- Web haptics on interactive elements (via web-haptics library)
+### Buttons
 
-### Reduced Motion
+- **Shape:** Pills for text actions and `8px` for compact icon or utility controls.
+- **Primary:** Warm paper or chrome surface with soft ink text. Accent is used for hover or focus, not as a default fill.
+- **Hover / Focus:** Use color, small translate, and named shadow tokens. Focus rings use `--ring` and must remain visible.
+- **Press:** Preserve `active:scale-[0.96]` or `--motion-press-transform` unless the control is static or repeated at very high frequency.
 
-All motion respects `prefers-reduced-motion: reduce`. Transitions are disabled. No animation should be the only way to convey information.
+### Chips
 
----
+- **Style:** Compact text, restrained tint, and a visible 40px hit target when interactive.
+- **State:** Selected or filter states should use ink contrast and a small accent cue rather than saturated fills.
 
-## Touch and Component Sizing
+### Cards / Containers
 
-Interactive sizing follows a mobile-first floor, even when the visible text is small.
+- **Corner Style:** Default `8px`. Larger radii are exceptions for avatars, pills, and shell-level compositions.
+- **Background:** `--card`, local paper mixes, or named chrome/glass surfaces.
+- **Shadow Strategy:** Use `shadow.raised` at rest and `shadow.hover` on hover. Do not nest cards inside other cards.
+- **Border:** Soft rules only. Avoid side-stripe accents.
+- **Internal Padding:** Tight by default; increase spacing only when the content needs a slower read.
 
-| Pattern | Desktop target | Mobile target | Notes |
-|---------|----------------|---------------|-------|
-| Text actions / peek links | `min-height: 40px`, `min-width: 40px` | `min-height: 40px`, `min-width: 40px` | Use `PeekAction` for homepage text actions, top nav links, mobile menu text, and launchpad text actions. |
-| Icon buttons | `40px` square minimum | `44px` square preferred | Use 44px when the control is isolated or primary on mobile. |
-| Shared `Button` primitive | `40px` minimum height/width | `40px` minimum height/width | `xs`, `sm`, `default`, and icon variants keep the same touch floor; use typography/padding for visual density. |
-| Contact email CTA | `54-62px` height | `54px` minimum | A single compact glossy pill is allowed here, but Contact still belongs inside the homepage editorial rhythm, not a separate conversion panel. |
-| Social/action links | `40px` minimum row height | `40px` minimum row height | Labels may be compact, but the row remains thumb-friendly. |
-| Inline utility buttons | `40px` minimum height | `40px` minimum height | Filter controls such as `Clear` must not drop below the shared floor. |
+### Inputs / Fields
 
-Rules:
-- Do not make a mobile-only text action smaller than 40px high just because the label is visually tiny.
-- If a label needs to look compact, keep the visible typography small and enlarge the hit area with padding or `min-*` utilities.
-- Never overlap invisible hit areas; extra target size must remain inside the component's own layout box.
-- Preserve `active:scale-[0.96]` on pressable controls unless the control is static or repeated at very high frequency.
+- **Style:** Paper surface, `8px` radius, soft rule border, and clear ink text.
+- **Focus:** Visible ring or border shift using `--ring`.
+- **Error / Disabled:** Preserve contrast. Disabled controls should not become unreadable pale gray.
 
----
+### Navigation
 
-## Copywriting
+- **Style:** Small, centered, tactile, and quiet. Top navigation must stay clickable above animated page surfaces.
+- **Typography:** Geist Pixel or Geist Mono depending on the control, never large marketing nav.
+- **States:** Hover can use soft accent tints and a small vertical lift. Active press uses scale feedback.
 
-Copy is part of the design system. The site voice is direct, compact, warm, and specific.
+### Playground Gallery
 
-### Project Descriptions
+- **Role:** A visual archive surface inspired by a designed project board, not a card grid.
+- **Layout:** Desktop should show the whole gallery without vertical scroll. Tiles stay in a two-row, four-column rhythm at desktop sizes.
+- **Frames:** Each project image can have project-specific composition if the source asset needs it. Use slug-based classes for exceptions, as with `grand-teton-wallet`, `mountain`, and `sunset-graphic`.
+- **Captions:** Keep route-code-like labels out of the top-left corner. Year metadata is enough unless the tile is focused or hovered.
+- **Surface:** Large rounded shell is allowed as an outer frame. Individual tiles stay `8px` radius and quiet.
 
-- One sentence fragment, usually 4-9 words.
-- Lead with the artifact or user value, not internal process.
-- Prefer concrete nouns: `Student support minisite`, `Mindfulness app`, `National parks trip-planning app`.
-- Avoid inflated claims such as "revolutionary", "beautiful", "world-class", or generic "digital experience".
+### Signature Utility Surfaces
 
-### CTA Labels
+Launchpad, contact email, resume preview, and Playground are allowed to feel more tactile than the rest of the site. They should still share the same ink, paper, radius, and restrained accent rules.
 
-- Use short visible labels: `Contact`, `Resume`, `Preview`, `Launchpad`.
-- Use peek/tooltips to clarify action: `Say hi`, `Open resume`, `Preview resume`, `Open experiments`.
-- Resume language is always `Resume` in visible UI; `/cv` may stay as the route.
-- Contact language should feel human and low-pressure: `Let's work together`, `Connect with me`, `If something here resonates, reach out.`
+## 6. Do's and Don'ts
 
-### Toasts and Feedback
+### Do:
 
-- Toasts confirm the action in present-tense language: `Opening resume`, `Previewing resume`, `Showing all work`.
-- Toasts should be short enough to read at a glance.
-- Do not use toasts for decorative commentary or instructions.
+- **Do** keep the first read calm: small typography, quiet hierarchy, and visible work.
+- **Do** use `font-header` for short brand and identity moments such as hero name, location, compact labels, and selected project titles.
+- **Do** keep body and project prose in Geist Mono with generous line height.
+- **Do** preserve `8px` as the default radius for cards, tiles, and compact panels.
+- **Do** use project-specific image composition when a source asset has unusual whitespace or aspect ratio.
+- **Do** test desktop and mobile viewports in the browser before calling visual work done.
+- **Do** keep sound and haptics optional.
 
-### Empty and Error States
+### Don't:
 
-- Say what happened, then provide the next action.
-- Avoid blame and avoid clever copy.
-- Keep error copy as calm as the rest of the site.
-
----
-
-## Sound Design
-
-Opt-in micro-sounds for key interactions. Sound is a progressive enhancement, never required.
-
-### Principles
-
-- **Muted by default** — sound only activates after user interaction or explicit opt-in
-- **Quiet and organic** — soft clicks, gentle tones, not UI beeps
-- **Sparse** — only on meaningful moments, not every hover or scroll
-- **Respect system settings** — honor device mute/silent mode
-
-### Recommended Sound Points
-
-| Interaction           | Sound type         | Character                |
-|-----------------------|--------------------|--------------------------|
-| Nav link click        | Soft click         | Wooden, tactile          |
-| Project card hover    | Gentle tone        | Warm, brief, ascending   |
-| Snake easter egg      | Chime              | Playful, rewarding       |
-| Page transition       | Subtle whoosh      | Airy, directional        |
-| Season change (rare)  | Ambient tone       | Nature-inspired          |
-
-### Implementation
-
-Use `src/lib/sounds/` (context + types already exist). Load audio files lazily. Use Web Audio API for low-latency playback. Pair with existing web-haptics for multi-sensory feedback.
-
----
-
-## Icons
-
-`nucleo-pixel-essential` — tree-shakeable React SVG icon library.
-
-```tsx
-import { IconChevronLeft } from 'nucleo-pixel-essential'
-<IconChevronLeft size={12} />
-```
-
-Icons receive group-hover effects (scale, rotate, translate) via parent `group` class. Keep icon sizes small and consistent — `12px` for inline, `16px` for standalone.
-
----
-
-## Layout
-
-### Breakpoints
-
-| Token       | Value     | Description         |
-|-------------|-----------|---------------------|
-| `xs`        | `375px`   | Extra small phones  |
-| `sm`        | `640px`   | Small tablets       |
-| `md`        | `768px`   | Large tablets       |
-| `lg`        | `1024px`  | Small desktops      |
-| `xl`        | `1280px`  | Large desktops      |
-| `2xl`       | `1536px`  | Extra large         |
-| `tall`      | `min-height: 800px` | Tall viewports |
-| `short`     | `max-height: 600px` | Short viewports |
-
-### Page Structure
-
-- Homepage sections (Projects, Endeavors, Experience, Education, Contact) are always expanded — no collapse toggles
-- Safe area insets respected via `env(safe-area-inset-*)` spacing tokens
-- `overscroll-behavior-y: none` on `html, body` to prevent pull-to-refresh interference
-- Performance sections use `content-visibility: auto` with `contain-intrinsic-size: 640px`
-
-### Header
-
-- The live header is `TopMeta.tsx`; do not use the stale `Header.tsx` pattern.
-- Header width aligns to the homepage content column (`max-w-[36rem]`).
-- Nav, brand, menu, and launchpad text actions use `PeekAction` for shared touch target, press scale, tooltip, and underline behavior.
-- Separator is a quiet `border-b border-border/72`.
-- Launchpad is the one intentionally tactile pill in the header; keep its depth treatment local to `.launcher-depth-pill`.
-
----
-
-## Accessibility
-
-- All interactive elements must have `focus-visible` indicators (ring or outline)
-- Focus ring color: `--ring` token
-- `ResumeModal` uses `role="dialog"` + `aria-modal`
-- Error messages use `text-destructive` color
-- Dark mode backgrounds never use pure black — preserves readability
-- Skip to content, semantic headings, and landmark regions throughout
-- Color contrast ratios meet WCAG AA minimum
-- Sound is opt-in and never the only way to convey information
-
----
-
-## Background
-
-The site background is not flat, but it stays quiet. The shipped system has three broad layers:
-
-1. **Warm paper canvas** — `--background` plus a subtle body linear wash
-2. **Hero atmosphere** — `grainient-lightglow-01.jpg`, radial masks, and a low-opacity grain layer behind the intro
-3. **Section atmosphere** — painterly washes and hover glows that stay behind content
-
-This creates a "paper" feel without being heavy. Dark mode uses the same structure with dark values.
-
-### Hero Atmosphere
-
-The hero glow is the primary atmospheric exception to the "quiet surface" rule. Contact stays inside the standard section system; its email action may use one glossy pill, while surrounding copy and social links remain quiet.
-
----
-
-## Dark Mode
-
-Toggled via `.dark` class on `<html>`, responds to `prefers-color-scheme`. Not a simple inversion — every token is hand-tuned.
-
-Key differences from light:
-- Tactile/glass surfaces use darker rgba backgrounds
-- Card shadows are deeper and darker
-- Images dimmed to `brightness(0.92)`
-- Selection color uses the accent system
-- Inset shadows use `rgba(255,255,255,0.04)` for subtle inner edge
-- Header and launcher contrast are tuned separately from the body canvas
-
----
-
-## Naming Conventions
-
-- CSS classes use kebab-case: `.project-card`, `.nord-panel`, `.hero-sky`
-- Utility classes prefixed by domain: `.shadow-card`, `.img-inset-outline`
-- State classes use `is-` prefix: `.is-emphasis`, `.is-subdued`, `.is-active`
-- Animation classes: `.animate-fade-in`
-- Mode-specific overrides: `.dark .class-name { ... }`
-
----
-
-## What This Site Is Not
-
-- Not flashy. No neon, no default glassmorphism, no bouncing elements
-- Not trendy for trend's sake. If something is removed, it was intentional
-- Not a template. Every detail is considered. If it looks default, revisit it
-- Not silent forever. Sound is part of the craft, but always respectful
+- **Don't** make the portfolio feel like a generic SaaS landing page with metric blocks, stock gradients, or conversion-section scaffolding.
+- **Don't** make it feel like a generic agency portfolio with oversized interchangeable project cards.
+- **Don't** use over-glossy glass UI as the whole identity. Gloss belongs only to named surfaces with a job.
+- **Don't** use neon, dark-purple AI polish, or cyan-purple gradient tropes.
+- **Don't** repeat tiny uppercase eyebrows above every section.
+- **Don't** use numbered section markers unless the content is truly sequential.
+- **Don't** hide personality behind empty minimalism.
+- **Don't** rely on motion, sound, or haptics for comprehension.
+- **Don't** use text that overflows its container at mobile, tablet, or desktop breakpoints.

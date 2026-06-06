@@ -4,6 +4,14 @@ import Link from 'next/link'
 import { useWebHaptics } from 'web-haptics/react'
 import IconArrowBackUp from '@/components/IconArrowBackUp'
 import { analytics } from '@/lib/analytics'
+import {
+  BREADCRUMB_ICON_CLASS,
+  BREADCRUMB_PARENT_LABEL_CLASS,
+  BREADCRUMB_PILL_CLASS,
+  BREADCRUMB_SEPARATOR_CLASS,
+  activateBreadcrumbPill,
+  getBreadcrumbPillViewState,
+} from '@/lib/breadcrumb-pill'
 
 interface BreadcrumbPillProps {
   href: string
@@ -13,20 +21,24 @@ interface BreadcrumbPillProps {
 
 export default function BreadcrumbPill({ href, parentLabel, currentLabel }: BreadcrumbPillProps) {
   const haptic = useWebHaptics()
+  const viewState = getBreadcrumbPillViewState({ href, parentLabel, currentLabel })
 
   return (
     <Link
-      href={href}
-      className="group top-meta-pill inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 px-5 py-2.5 font-mono text-[11px] tracking-[0.12em] text-muted-foreground backdrop-blur-xl transition-[color,transform] duration-150 hover:text-foreground active:translate-y-0 active:scale-[0.96]"
-      onClick={() => {
-        haptic.trigger('light')
-        analytics.navigationClick(parentLabel.toLowerCase())
-      }}
+      href={viewState.href}
+      className={BREADCRUMB_PILL_CLASS}
+      onClick={() =>
+        activateBreadcrumbPill({
+          analyticsTarget: viewState.analyticsTarget,
+          trackNavigationClick: (target) => analytics.navigationClick(target),
+          triggerHaptic: (style) => haptic.trigger(style),
+        })
+      }
     >
-      <IconArrowBackUp size={11} className="shrink-0 opacity-60 transition-transform duration-200 ease-soft group-hover:-translate-x-1" aria-hidden />
-      <span className="text-foreground opacity-90">{parentLabel}</span>
-      <span aria-hidden className="text-muted-foreground/30">/</span>
-      <span>{currentLabel}</span>
+      <IconArrowBackUp size={11} className={BREADCRUMB_ICON_CLASS} aria-hidden />
+      <span className={BREADCRUMB_PARENT_LABEL_CLASS}>{viewState.parentLabel}</span>
+      <span aria-hidden className={BREADCRUMB_SEPARATOR_CLASS}>/</span>
+      <span>{viewState.currentLabel}</span>
     </Link>
   )
 }

@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { spinners } from 'unicode-animations'
+import {
+  activateUnicodeLoaderFrameLoop,
+  getUnicodeLoaderClassName,
+} from '@/lib/unicode-loader'
 
 type SpinnerName = keyof typeof spinners
 
@@ -15,14 +19,17 @@ export default function UnicodeLoader({ spinner = 'breathe', className = '' }: U
   const anim = spinners[spinner]
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setFrameIndex(i => (i + 1) % anim.frames.length)
-    }, anim.interval)
-    return () => clearInterval(id)
+    return activateUnicodeLoaderFrameLoop<number>({
+      clearInterval: (timer) => window.clearInterval(timer),
+      frameCount: anim.frames.length,
+      intervalMs: anim.interval,
+      scheduleInterval: (callback, intervalMs) => window.setInterval(callback, intervalMs),
+      setFrameIndex,
+    })
   }, [anim])
 
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center ${className}`}>
+    <div className={getUnicodeLoaderClassName(className)}>
       <div className="absolute inset-0 bg-white/70 backdrop-blur-xl" />
       <div className="relative z-10 flex flex-col items-center gap-5">
         <span

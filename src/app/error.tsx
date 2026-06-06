@@ -2,10 +2,23 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
+import {
+  GLOBAL_ERROR_DESCRIPTION,
+  GLOBAL_ERROR_EYEBROW,
+  GLOBAL_ERROR_FONT_STYLE,
+  GLOBAL_ERROR_HOME_CLASS,
+  GLOBAL_ERROR_RETRY_CLASS,
+  GLOBAL_ERROR_RETRY_LABEL,
+  GLOBAL_ERROR_TITLE,
+  getGlobalErrorHomeAction,
+  logGlobalError,
+} from '@/lib/global-error'
 
 export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
+  const homeAction = getGlobalErrorHomeAction()
+
   useEffect(() => {
-    console.error('Global error:', error)
+    logGlobalError(error)
   }, [error])
 
   return (
@@ -13,29 +26,29 @@ export default function GlobalError({ error, reset }: { error: Error; reset: () 
       <div className="max-w-sm text-center">
         <p
           className="text-[11px] tracking-[0.14em] uppercase text-muted-foreground"
-          style={{ fontFamily: 'inherit' }}
+          style={GLOBAL_ERROR_FONT_STYLE}
         >
-          Error
+          {GLOBAL_ERROR_EYEBROW}
         </p>
-        <h2 className="mt-3 text-sm font-medium tracking-[0.06em] text-foreground" style={{ fontFamily: 'inherit' }}>
-          Something went wrong.
+        <h2 className="mt-3 text-sm font-medium tracking-[0.06em] text-foreground" style={GLOBAL_ERROR_FONT_STYLE}>
+          {GLOBAL_ERROR_TITLE}
         </h2>
-        <p className="mt-3 text-xs leading-relaxed text-muted-foreground" style={{ fontFamily: 'inherit' }}>
-          We hit an unexpected error. You can try again or return home.
+        <p className="mt-3 text-xs leading-relaxed text-muted-foreground" style={GLOBAL_ERROR_FONT_STYLE}>
+          {GLOBAL_ERROR_DESCRIPTION}
         </p>
         <div className="mt-8 flex items-center justify-center gap-6">
           <button
             onClick={() => reset()}
-            className="inline-flex min-h-[40px] origin-center touch-manipulation items-center font-mono text-[12px] tracking-[0.06em] text-foreground transition-[color,transform] duration-150 hover:text-muted-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className={GLOBAL_ERROR_RETRY_CLASS}
           >
-            Try again
+            {GLOBAL_ERROR_RETRY_LABEL}
           </button>
           <Link
-            href="/"
-            className="inline-flex min-h-[40px] origin-center touch-manipulation items-center text-xs tracking-[0.08em] uppercase text-muted-foreground transition-[color,transform] duration-150 hover:text-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            style={{ fontFamily: 'inherit' }}
+            href={homeAction.href}
+            className={GLOBAL_ERROR_HOME_CLASS}
+            style={GLOBAL_ERROR_FONT_STYLE}
           >
-            Go Home
+            {homeAction.label}
           </Link>
         </div>
       </div>

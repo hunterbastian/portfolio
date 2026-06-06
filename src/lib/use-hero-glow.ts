@@ -1,16 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState, type PointerEvent } from 'react'
-
-const LERP_FACTOR = 0.09
-const GLOW_MAX_X = 16
-const GLOW_MAX_Y = 8
-const GRAIN_PARALLAX_RATIO = 0.55
-const SETTLE_THRESHOLD = 0.002
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max)
-}
+import {
+  HERO_GLOW_ORIGIN,
+  applyHeroGlowCssVariables,
+  cancelHeroGlowFrame,
+  getHeroGlowAnimationStep,
+  getHeroGlowPointerRatio,
+  requestHeroGlowFrame,
+  scheduleHeroGlowFrameIfIdle,
+} from './hero-glow.ts'
 
 export function useHeroGlow() {
   const [isActive, setIsActive] = useState(false)
@@ -18,14 +17,12 @@ export function useHeroGlow() {
   const grainRef = useRef<HTMLDivElement | null>(null)
   const boundsRef = useRef<DOMRect | null>(null)
   const frameRef = useRef<number | null>(null)
-  const pointerRef = useRef({ x: 0, y: 0 })
-  const currentRef = useRef({ x: 0, y: 0 })
+  const pointerRef = useRef({ ...HERO_GLOW_ORIGIN })
+  const currentRef = useRef({ ...HERO_GLOW_ORIGIN })
 
   useEffect(() => {
     return () => {
-      if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current)
-      }
+      cancelHeroGlowFrame({ cancelFrame: (frame) => window.cancelAnimationFrame(frame), frameRef })
     }
   }, [])
 
@@ -33,40 +30,30 @@ export function useHeroGlow() {
     const glow = glowRef.current
     const grain = grainRef.current
     const target = pointerRef.current
-    const current = currentRef.current
+    const step = getHeroGlowAnimationStep(currentRef.current, target)
 
-    current.x += (target.x - current.x) * LERP_FACTOR
-    current.y += (target.y - current.y) * LERP_FACTOR
+    currentRef.current = step.point
+    applyHeroGlowCssVariables({ glow, grain, point: step.point })
 
-    const glowX = clamp(current.x * GLOW_MAX_X, -GLOW_MAX_X, GLOW_MAX_X)
-    const glowY = clamp(current.y * GLOW_MAX_Y, -GLOW_MAX_Y, GLOW_MAX_Y)
-
-    if (glow) {
-      glow.style.setProperty('--hero-glow-cursor-x', `${glowX}px`)
-      glow.style.setProperty('--hero-glow-cursor-y', `${glowY}px`)
-    }
-
-    if (grain) {
-      grain.style.setProperty('--hero-grain-cursor-x', `${glowX * GRAIN_PARALLAX_RATIO}px`)
-      grain.style.setProperty('--hero-grain-cursor-y', `${glowY * GRAIN_PARALLAX_RATIO}px`)
-    }
-
-    if (
-      Math.abs(target.x - current.x) > SETTLE_THRESHOLD ||
-      Math.abs(target.y - current.y) > SETTLE_THRESHOLD
-    ) {
-      frameRef.current = window.requestAnimationFrame(writePosition)
+    if (step.shouldContinue) {
+      requestHeroGlowFrame({
+        callback: writePosition,
+        frameRef,
+        requestFrame: (callback) => window.requestAnimationFrame(callback),
+      })
       return
     }
 
-    currentRef.current = { x: target.x, y: target.y }
+    currentRef.current = step.settledPoint
     frameRef.current = null
   }
 
   const schedule = () => {
-    if (frameRef.current === null) {
-      frameRef.current = window.requestAnimationFrame(writePosition)
-    }
+    scheduleHeroGlowFrameIfIdle({
+      callback: writePosition,
+      frameRef,
+      requestFrame: (callback) => window.requestAnimationFrame(callback),
+    })
   }
 
   const onPointerEnter = (event: PointerEvent<HTMLElement>) => {
@@ -78,17 +65,14 @@ export function useHeroGlow() {
     const rect = boundsRef.current ?? event.currentTarget.getBoundingClientRect()
     boundsRef.current = rect
 
-    pointerRef.current = {
-      x: (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2),
-      y: (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2),
-    }
+    pointerRef.current = getHeroGlowPointerRatio(event, rect)
 
     schedule()
   }
 
   const onPointerLeave = () => {
     boundsRef.current = null
-    pointerRef.current = { x: 0, y: 0 }
+    pointerRef.current = { ...HERO_GLOW_ORIGIN }
     setIsActive(false)
     schedule()
   }

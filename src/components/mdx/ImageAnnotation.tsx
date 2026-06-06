@@ -4,17 +4,14 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
-
-interface Hotspot {
-  /** X position as percentage (0–100) */
-  x: number
-  /** Y position as percentage (0–100) */
-  y: number
-  /** Label shown on the hotspot dot */
-  label: string
-  /** Description revealed on click/hover */
-  description: string
-}
+import {
+  type ImageAnnotationHotspot,
+  getImageAnnotationHotspotKey,
+  getImageAnnotationHotspotPositionStyle,
+  getNextImageAnnotationActiveIndex,
+  getImageAnnotationTooltipStyle,
+  parseImageAnnotationHotspots,
+} from '@/lib/image-annotation'
 
 interface ImageAnnotationProps {
   /** Image source path */
@@ -22,18 +19,9 @@ interface ImageAnnotationProps {
   /** Image alt text */
   alt: string
   /** Hotspot annotations — accepts an array or a JSON string (for MDX compatibility) */
-  hotspots: Hotspot[] | string
+  hotspots: ImageAnnotationHotspot[] | string
   /** Image aspect ratio. Default: "16/10" */
   aspect?: string
-}
-
-function parseHotspots(input: Hotspot[] | string): Hotspot[] {
-  if (Array.isArray(input)) return input
-  try {
-    return JSON.parse(input) as Hotspot[]
-  } catch {
-    return []
-  }
 }
 
 const TOOLTIP_MS = 240
@@ -44,12 +32,12 @@ export default function ImageAnnotation({
   hotspots: hotspotsInput,
   aspect = '16/10',
 }: ImageAnnotationProps) {
-  const hotspots = parseHotspots(hotspotsInput)
+  const hotspots = parseImageAnnotationHotspots(hotspotsInput)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const prefersReducedMotion = useReducedMotion() ?? false
 
   function toggleHotspot(index: number) {
-    setActiveIndex((prev) => (prev === index ? null : index))
+    setActiveIndex((prev) => getNextImageAnnotationActiveIndex(prev, index))
   }
 
   return (
@@ -69,15 +57,11 @@ export default function ImageAnnotation({
         {hotspots.map((hotspot, index) => {
           const isActive = activeIndex === index
 
-          // Determine tooltip horizontal alignment based on position
-          const alignRight = hotspot.x > 65
-          const alignCenter = hotspot.x > 35 && hotspot.x <= 65
-
           return (
             <div
-              key={`${hotspot.x}-${hotspot.y}-${hotspot.label}`}
+              key={getImageAnnotationHotspotKey(hotspot)}
               className="absolute"
-              style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%`, transform: 'translate(-50%, -50%)' }}
+              style={getImageAnnotationHotspotPositionStyle(hotspot)}
             >
               <button
                 type="button"
@@ -117,14 +101,7 @@ export default function ImageAnnotation({
                       ease: MOTION_EASE_SOFT,
                     }}
                     className="absolute z-20 mt-2 w-52 border border-border bg-background/95 px-3 py-2.5 shadow-lg backdrop-blur-sm sm:w-60"
-                    style={{
-                      top: '100%',
-                      ...(alignRight
-                        ? { right: '-8px' }
-                        : alignCenter
-                          ? { left: '50%', transform: 'translateX(-50%)' }
-                          : { left: '-8px' }),
-                    }}
+                    style={getImageAnnotationTooltipStyle(hotspot.x)}
                   >
                     <span className="mb-1 block font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-accent">
                       {hotspot.label}

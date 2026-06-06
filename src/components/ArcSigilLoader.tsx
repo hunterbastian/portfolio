@@ -1,57 +1,22 @@
 'use client'
 
 import { useCallback, useMemo, useState } from 'react'
+import {
+  ARC_SIGIL_DOWNLOAD_ACTIONS,
+  ARC_SIGIL_DOWNLOAD_FILES,
+  ARC_SIGIL_EXPORT_SIZES,
+  ARC_SIGIL_DOWNLOAD_BUTTON_CLASS,
+  ARC_SIGIL_LOADER_FRAME_CLASS,
+  buildArcSigilLinkedInSvgMarkup,
+  buildArcSigilLogoSvgMarkup,
+  getArcSigilLoaderClassName,
+  getArcSigilLoaderSizeStyle,
+} from '@/lib/arc-sigil'
 
 interface ArcSigilLoaderProps {
   size?: number
   className?: string
   downloadable?: boolean
-}
-
-const EXPORT_COLORS = {
-  stroke: '#d8dee9',
-  accent: '#d4928e',
-  background: '#2e3440',
-  panel: '#3b4252',
-}
-
-function getSigilGroupMarkup(stroke: string, accent: string) {
-  return `
-    <g fill="none" stroke="${stroke}" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="60" cy="60" r="44" stroke-width="1.4" />
-      <circle cx="60" cy="60" r="30" stroke-width="1.0" opacity="0.45" />
-      <path d="M24 42l72 36" stroke-width="0.8" opacity="0.22" />
-      <path d="M20 66l80-12" stroke-width="0.8" opacity="0.18" />
-      <line x1="60" y1="26" x2="60" y2="38" stroke-width="1.6" />
-      <circle cx="60" cy="60" r="4.2" fill="${stroke}" stroke="none" opacity="0.95" />
-    </g>
-    <g fill="none" stroke="${accent}" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M90 48a32 32 0 0 1-4 24" stroke-width="2.1" />
-      <path d="M84 34a44 44 0 0 1 8 22" stroke-width="1.5" opacity="0.7" />
-      <circle cx="60" cy="16" r="2.1" fill="${accent}" stroke="none" />
-      <circle cx="96" cy="62" r="2.1" fill="${accent}" stroke="none" />
-    </g>
-  `
-}
-
-function buildLogoSvgMarkup() {
-  return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none">
-      ${getSigilGroupMarkup(EXPORT_COLORS.stroke, EXPORT_COLORS.accent)}
-    </svg>
-  `.trim()
-}
-
-function buildLinkedInSvgMarkup() {
-  return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" fill="none">
-      <rect width="400" height="400" fill="${EXPORT_COLORS.background}" />
-      <circle cx="200" cy="200" r="170" fill="${EXPORT_COLORS.panel}" />
-      <g transform="translate(55 55) scale(2.4167)">
-        ${getSigilGroupMarkup(EXPORT_COLORS.stroke, EXPORT_COLORS.accent)}
-      </g>
-    </svg>
-  `.trim()
 }
 
 async function renderPngFromSvg(svgMarkup: string, width: number, height: number): Promise<Blob> {
@@ -110,21 +75,21 @@ export default function ArcSigilLoader({
   className = '',
   downloadable = false,
 }: ArcSigilLoaderProps) {
-  const pixelSize = `${size}px`
   const [isExporting, setIsExporting] = useState(false)
 
-  const logoSvg = useMemo(() => buildLogoSvgMarkup(), [])
-  const linkedInSvg = useMemo(() => buildLinkedInSvgMarkup(), [])
+  const logoSvg = useMemo(() => buildArcSigilLogoSvgMarkup(), [])
+  const linkedInSvg = useMemo(() => buildArcSigilLinkedInSvgMarkup(), [])
 
   const downloadSvg = useCallback(() => {
-    triggerDownload(new Blob([logoSvg], { type: 'image/svg+xml;charset=utf-8' }), 'hunter-logo.svg')
+    triggerDownload(new Blob([logoSvg], { type: 'image/svg+xml;charset=utf-8' }), ARC_SIGIL_DOWNLOAD_FILES.logoSvg)
   }, [logoSvg])
 
   const downloadLogoPng = useCallback(async () => {
     setIsExporting(true)
     try {
-      const blob = await renderPngFromSvg(logoSvg, 1200, 1200)
-      triggerDownload(blob, 'hunter-logo.png')
+      const { width, height } = ARC_SIGIL_EXPORT_SIZES.logoPng
+      const blob = await renderPngFromSvg(logoSvg, width, height)
+      triggerDownload(blob, ARC_SIGIL_DOWNLOAD_FILES.logoPng)
     } finally {
       setIsExporting(false)
     }
@@ -133,18 +98,25 @@ export default function ArcSigilLoader({
   const downloadLinkedInPng = useCallback(async () => {
     setIsExporting(true)
     try {
-      const blob = await renderPngFromSvg(linkedInSvg, 400, 400)
-      triggerDownload(blob, 'hunter-linkedin-logo-400x400.png')
+      const { width, height } = ARC_SIGIL_EXPORT_SIZES.linkedInPng
+      const blob = await renderPngFromSvg(linkedInSvg, width, height)
+      triggerDownload(blob, ARC_SIGIL_DOWNLOAD_FILES.linkedInPng)
     } finally {
       setIsExporting(false)
     }
   }, [linkedInSvg])
 
+  const downloadHandlers = {
+    linkedInPng: downloadLinkedInPng,
+    logoPng: downloadLogoPng,
+    logoSvg: downloadSvg,
+  } as const
+
   return (
-    <div className={`flex flex-col items-center justify-center gap-5 ${className}`} aria-label="Loading">
+    <div className={getArcSigilLoaderClassName(className)} aria-label="Loading">
       <div
-        className="relative isolate"
-        style={{ width: pixelSize, height: pixelSize }}
+        className={ARC_SIGIL_LOADER_FRAME_CLASS}
+        style={getArcSigilLoaderSizeStyle(size)}
       >
         <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(129,161,193,0.18),transparent_65%)] blur-[1px]" />
 
@@ -199,30 +171,19 @@ export default function ArcSigilLoader({
 
       {downloadable && (
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <button
-            type="button"
-            className="nord-button px-3 py-2 text-xs font-mono tracking-[0.08em] uppercase"
-            onClick={downloadSvg}
-            disabled={isExporting}
-          >
-            Download SVG
-          </button>
-          <button
-            type="button"
-            className="nord-button px-3 py-2 text-xs font-mono tracking-[0.08em] uppercase"
-            onClick={downloadLogoPng}
-            disabled={isExporting}
-          >
-            Download PNG
-          </button>
-          <button
-            type="button"
-            className="nord-button px-3 py-2 text-xs font-mono tracking-[0.08em] uppercase"
-            onClick={downloadLinkedInPng}
-            disabled={isExporting}
-          >
-            LinkedIn 400x400
-          </button>
+          {ARC_SIGIL_DOWNLOAD_ACTIONS.map((action) => (
+            <button
+              key={action.id}
+              type="button"
+              className={ARC_SIGIL_DOWNLOAD_BUTTON_CLASS}
+              onClick={() => {
+                void downloadHandlers[action.id]()
+              }}
+              disabled={isExporting}
+            >
+              {action.label}
+            </button>
+          ))}
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-export type SoundName = 'click' | 'tone' | 'chime' | 'whoosh'
+export type SoundName = 'click' | 'hoverClick' | 'tone' | 'chime' | 'whoosh'
 
 export interface SoundAsset {
   name: string

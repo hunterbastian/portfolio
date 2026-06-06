@@ -67,6 +67,10 @@ function buildProjectIndex(): ProjectIndex {
 }
 
 function getProjectIndex(): ProjectIndex {
+  if (process.env.NODE_ENV !== 'production') {
+    return buildProjectIndex()
+  }
+
   if (!cachedProjectIndex) {
     cachedProjectIndex = buildProjectIndex()
   }

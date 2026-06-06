@@ -8,9 +8,15 @@ import {
   useReducedMotion,
   type HTMLMotionProps,
 } from 'framer-motion'
-
-const TILT_SPRING = { stiffness: 240, damping: 30 }
-const DEFAULT_MAX_TILT = 2.8 // degrees
+import {
+  TILT_CARD_DEFAULT_MAX_TILT,
+  TILT_CARD_DEFAULT_PERSPECTIVE,
+  TILT_CARD_RESET_ROTATION,
+  TILT_CARD_SPRING,
+  getTiltCardInnerStyle,
+  getTiltCardOuterStyle,
+  getTiltCardRotation,
+} from '@/lib/tilt-card'
 
 interface TiltCardProps {
   children: ReactNode
@@ -27,8 +33,8 @@ export default function TiltCard({
   children,
   className,
   style,
-  maxTilt = DEFAULT_MAX_TILT,
-  perspective = 900,
+  maxTilt = TILT_CARD_DEFAULT_MAX_TILT,
+  perspective = TILT_CARD_DEFAULT_PERSPECTIVE,
   initial,
   animate,
   transition,
@@ -39,8 +45,8 @@ export default function TiltCard({
   const rotateX = useMotionValue(0)
   const rotateY = useMotionValue(0)
 
-  const springX = useSpring(rotateX, TILT_SPRING)
-  const springY = useSpring(rotateY, TILT_SPRING)
+  const springX = useSpring(rotateX, TILT_CARD_SPRING)
+  const springY = useSpring(rotateY, TILT_CARD_SPRING)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (prefersReduced) return
@@ -48,28 +54,26 @@ export default function TiltCard({
     if (!el) return
 
     const rect = el.getBoundingClientRect()
-    // Normalize to -1…1 from center
-    const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2
-    const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2
+    const nextRotation = getTiltCardRotation({
+      clientX: e.clientX,
+      clientY: e.clientY,
+      maxTilt,
+      rect,
+    })
 
-    // rotateX tilts around horizontal axis (mouse Y controls it, inverted)
-    rotateX.set(-ny * maxTilt)
-    // rotateY tilts around vertical axis (mouse X controls it)
-    rotateY.set(nx * maxTilt)
+    rotateX.set(nextRotation.rotateX)
+    rotateY.set(nextRotation.rotateY)
   }
 
   const handleMouseLeave = () => {
-    rotateX.set(0)
-    rotateY.set(0)
+    rotateX.set(TILT_CARD_RESET_ROTATION.rotateX)
+    rotateY.set(TILT_CARD_RESET_ROTATION.rotateY)
   }
 
   return (
     <m.div
       ref={ref}
-      style={{
-        perspective,
-        willChange: 'transform',
-      }}
+      style={getTiltCardOuterStyle(perspective)}
       initial={initial}
       animate={animate}
       transition={transition}
@@ -78,13 +82,11 @@ export default function TiltCard({
     >
       <m.div
         className={className}
-        style={{
-          ...style,
+        style={getTiltCardInnerStyle({
           rotateX: springX,
           rotateY: springY,
-          transformStyle: 'preserve-3d',
-          willChange: 'transform',
-        }}
+          style,
+        })}
       >
         {children}
       </m.div>

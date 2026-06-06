@@ -5,97 +5,87 @@ import { m, useReducedMotion } from 'framer-motion'
 import { useWebHaptics } from 'web-haptics/react'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 import { analytics } from '@/lib/analytics'
-
-interface Chapter {
-  id: string
-  title: string
-}
+import {
+  CASE_STUDY_CHAPTER_BUTTON_CLASS_NAME,
+  CASE_STUDY_CHAPTER_MARKER_CLASS_NAME,
+  CASE_STUDY_CHAPTER_SELECTOR,
+  CASE_STUDY_NAV_ARIA_LABEL,
+  CASE_STUDY_NAV_LIST_CLASS_NAME,
+  CASE_STUDY_NAV_ROOT_CLASS_NAME,
+  type CaseStudyChapter,
+  activateCaseStudyChapterObserver,
+  activateCaseStudyChapterNavigation,
+  getCaseStudyChapterAriaCurrent,
+  getCaseStudyChapterAriaLabel,
+  getCaseStudyChapterIndicatorState,
+  getCaseStudyChapterLabelClassName,
+  getCaseStudyChapters,
+  getInitialCaseStudyChapterId,
+} from '@/lib/case-study-nav'
 
 export default function CaseStudyNav() {
-  const [chapters, setChapters] = useState<Chapter[]>([])
+  const [chapters, setChapters] = useState<CaseStudyChapter[]>([])
   const [activeChapter, setActiveChapter] = useState('')
   const prefersReducedMotion = useReducedMotion() ?? false
   const haptic = useWebHaptics()
 
   // Discover chapters from [data-chapter] elements
   useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>('[data-chapter]')
-    const found: Chapter[] = []
-    elements.forEach((el) => {
-      const id = el.dataset.chapter ?? ''
-      const title = el.dataset.chapterTitle ?? ''
-      if (id) found.push({ id, title })
-    })
+    const elements = document.querySelectorAll<HTMLElement>(CASE_STUDY_CHAPTER_SELECTOR)
+    const found = getCaseStudyChapters(elements)
+
     setChapters(found)
-    if (found.length > 0) setActiveChapter(found[0].id)
+    setActiveChapter(getInitialCaseStudyChapterId(found))
   }, [])
 
   // Track which chapter is in view
   useEffect(() => {
-    if (chapters.length === 0) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const id = (entry.target as HTMLElement).dataset.chapter
-            if (id) setActiveChapter(id)
-          }
-        }
-      },
-      { rootMargin: '-20% 0px -60% 0px' },
-    )
-
-    const elements = document.querySelectorAll('[data-chapter]')
-    elements.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
+    return activateCaseStudyChapterObserver({
+      chapters,
+      createObserver: (onEntries, options) => new IntersectionObserver((entries) => onEntries(entries), options),
+      getChapterElements: () => document.querySelectorAll(CASE_STUDY_CHAPTER_SELECTOR),
+      setActiveChapter,
+    })
   }, [chapters])
 
   if (chapters.length === 0) return null
 
   return (
-    <div className="absolute -left-20 top-0 bottom-0 hidden xl:block w-14">
+    <div className={CASE_STUDY_NAV_ROOT_CLASS_NAME}>
       <nav
-        className="sticky top-[33vh] flex flex-col gap-3"
-        aria-label="Case study chapters"
+        className={CASE_STUDY_NAV_LIST_CLASS_NAME}
+        aria-label={CASE_STUDY_NAV_ARIA_LABEL}
       >
         {chapters.map((chapter) => {
           const isActive = chapter.id === activeChapter
+          const indicatorState = getCaseStudyChapterIndicatorState(isActive)
 
           return (
             <button
               key={chapter.id}
               type="button"
-              onClick={() => {
-                haptic.trigger('light')
-                analytics.navigationClick(`chapter_${chapter.id}`)
-                const el = document.querySelector(`[data-chapter="${chapter.id}"]`)
-                el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              }}
-              className="group flex min-h-[40px] origin-center touch-manipulation items-center gap-2 text-left transition-transform duration-150 active:translate-y-0 active:scale-[0.96] focus-visible:outline-none"
-              aria-current={isActive ? 'step' : undefined}
-              aria-label={`Chapter ${chapter.id}: ${chapter.title}`}
+              onClick={() =>
+                activateCaseStudyChapterNavigation({
+                  chapterId: chapter.id,
+                  findChapterElement: (selector) => document.querySelector(selector),
+                  trackNavigationClick: (target) => analytics.navigationClick(target),
+                  triggerHaptic: (style) => haptic.trigger(style),
+                })
+              }
+              className={CASE_STUDY_CHAPTER_BUTTON_CLASS_NAME}
+              aria-current={getCaseStudyChapterAriaCurrent(isActive)}
+              aria-label={getCaseStudyChapterAriaLabel(chapter)}
             >
               <m.span
-                className="block rounded-full"
-                animate={{
-                  width: isActive ? 16 : 4,
-                  height: 4,
-                  opacity: isActive ? 0.9 : 0.15,
-                  backgroundColor: isActive ? 'var(--accent)' : 'var(--foreground)',
-                }}
+                className={CASE_STUDY_CHAPTER_MARKER_CLASS_NAME}
+                animate={indicatorState}
                 transition={{
                   duration: motionDurationMs(300, prefersReducedMotion),
                   ease: MOTION_EASE_SOFT,
                 }}
               />
               <span
-                className={`font-mono text-[10px] tracking-[0.08em] transition-opacity duration-200 ${
-                  isActive
-                    ? 'text-foreground opacity-70'
-                    : 'text-muted-foreground opacity-0 group-hover:opacity-50'
-                }`}
+                className={getCaseStudyChapterLabelClassName(isActive)}
               >
                 {chapter.id}
               </span>

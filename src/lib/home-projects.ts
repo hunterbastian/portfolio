@@ -1,8 +1,35 @@
 import type { ProjectFrontmatter } from '@/types/project'
+import { formatYearFromDate } from './date.ts'
 
 export interface HomeProject {
   slug: string
   frontmatter: ProjectFrontmatter
+}
+
+export interface FeaturedProjectRowStyleVars {
+  '--editorial-accent': string
+  '--featured-row-highlight-bg': string
+  '--featured-row-highlight-border': string
+  '--featured-row-highlight-shadow': string
+}
+
+export interface FeaturedProjectHoveredState {
+  index: number
+  slug: string
+}
+
+export interface FeaturedProjectRowState {
+  active: boolean
+  hoverDistance: number
+  index: number
+  muted: boolean
+  slug: string
+}
+
+export interface FeaturedProjectListState {
+  hasHoveredProject: boolean
+  playgroundRow: FeaturedProjectRowState
+  projectRows: FeaturedProjectRowState[]
 }
 
 export const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
@@ -13,37 +40,40 @@ export const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
   'porsche-app': 'Simplified Porsche browsing concept.',
 }
 
-export const PROJECT_GLOW_GRADIENTS: Record<string, string> = {
-  'mentalhealth-minisite':
-    'radial-gradient(ellipse at 22% 48%, rgba(47, 125, 115, 0.28) 0%, rgba(84, 156, 143, 0.16) 24%, rgba(166, 214, 204, 0.08) 43%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(80, 112, 196, 0.12) 0%, rgba(80, 112, 196, 0.05) 30%, transparent 58%)',
-  lumo:
-    'radial-gradient(ellipse at 22% 48%, rgba(248, 198, 57, 0.34) 0%, rgba(255, 212, 80, 0.2) 22%, rgba(255, 236, 148, 0.08) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(255, 75, 0, 0.13) 0%, rgba(255, 154, 64, 0.06) 30%, transparent 58%)',
-  'middle-earth-journey':
-    'radial-gradient(ellipse at 24% 48%, rgba(35, 84, 128, 0.3) 0%, rgba(66, 116, 156, 0.17) 24%, rgba(156, 182, 196, 0.08) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(226, 61, 40, 0.11) 0%, rgba(226, 61, 40, 0.045) 28%, transparent 56%)',
-  'wander-utah':
-    'radial-gradient(ellipse at 24% 48%, rgba(255, 75, 0, 0.3) 0%, rgba(255, 116, 36, 0.17) 23%, rgba(255, 186, 105, 0.08) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(143, 166, 85, 0.13) 0%, rgba(143, 166, 85, 0.055) 28%, transparent 56%)',
-  'porsche-app':
-    'radial-gradient(ellipse at 24% 48%, rgba(226, 61, 40, 0.28) 0%, rgba(226, 61, 40, 0.16) 23%, rgba(242, 170, 150, 0.075) 42%, transparent 72%), radial-gradient(ellipse at 44% 58%, rgba(42, 42, 44, 0.16) 0%, rgba(42, 42, 44, 0.055) 28%, transparent 56%)',
-  playground:
-    'radial-gradient(ellipse at 24% 48%, rgba(255, 75, 0, 0.36) 0%, rgba(255, 154, 64, 0.2) 20%, rgba(255, 188, 118, 0.1) 36%, rgba(255, 212, 168, 0.04) 52%, transparent 72%), radial-gradient(ellipse at 42% 58%, rgba(255, 185, 120, 0.13) 0%, rgba(255, 205, 152, 0.065) 28%, transparent 56%)',
-}
-
-export const PROJECT_ACCENTS: Record<string, string> = {
-  'mentalhealth-minisite': '#2f7d73',
-  lumo: '#f8c639',
-  'middle-earth-journey': '#235480',
-  'wander-utah': '#8fa655',
-  'porsche-app': '#e23d28',
-  playground: '#ff4b00',
-}
+export const HOME_ROW_HOVER_ACCENT = '#2f7d73'
 
 export type WorkFilter = 'all' | 'product' | 'visual' | 'web'
+
+export const HOME_WORK_FILTER_EVENT = 'hb-work-filter'
+export const HOME_PROJECT_CLEAR_FILTER_ANALYTICS_TARGET = 'work_filter_all'
+export const HOME_PROJECT_CLEAR_FILTER_HAPTIC_STYLE = 'light'
+export const HOME_PROJECT_CLEAR_FILTER_TOAST = 'Showing all work'
 
 export const WORK_FILTER_LABELS: Record<WorkFilter, string> = {
   all: 'All work',
   product: 'Product work',
   visual: 'Visual work',
   web: 'Web work',
+}
+
+export interface HomeProjectClearFilterActivationInput {
+  setWorkFilter: (filter: WorkFilter) => void
+  showToast: (message: string) => void
+  trackNavigationClick: (target: string) => void
+  triggerHaptic: (style: typeof HOME_PROJECT_CLEAR_FILTER_HAPTIC_STYLE) => void
+}
+
+export interface HomeWorkFilterChangeActivationInput {
+  currentHref?: string
+  filter: WorkFilter
+  replaceUrl: (href: string) => void
+  requestFrame: (callback: () => void) => void
+  scrollProjectsIntoView: () => void
+  setWorkFilter: (filter: WorkFilter) => void
+}
+
+export interface HomeWorkFilterEventDetail {
+  filter?: string
 }
 
 const PRODUCT_TAGS = new Set(['ux design', 'ui design', 'mobile design', 'web design', 'accessibility'])
@@ -55,6 +85,28 @@ export function normalizeWorkFilter(value: string | null | undefined): WorkFilte
   }
 
   return 'all'
+}
+
+export function getWorkFilterFromHref(currentHref: string): WorkFilter {
+  return normalizeWorkFilter(new URL(currentHref).searchParams.get('work'))
+}
+
+export function getWorkFilterFromEventDetail(detail: HomeWorkFilterEventDetail | null | undefined): WorkFilter {
+  return normalizeWorkFilter(detail?.filter)
+}
+
+export function getWorkFilterUrl(currentHref: string, filter: WorkFilter) {
+  const url = new URL(currentHref)
+
+  if (filter === 'all') {
+    url.searchParams.delete('work')
+  } else {
+    url.searchParams.set('work', filter)
+  }
+
+  url.hash = 'projects'
+
+  return `${url.pathname}${url.search}${url.hash}`
 }
 
 export function projectMatchesWorkFilter(project: HomeProject, filter: WorkFilter) {
@@ -84,17 +136,99 @@ export function projectMatchesWorkFilter(project: HomeProject, filter: WorkFilte
 }
 
 export function formatProjectYear(date: string) {
-  return new Date(date).getFullYear().toString()
+  return formatYearFromDate(date)
 }
 
 export function getProjectRows(projects: HomeProject[], filter: WorkFilter) {
   return projects.filter((project) => projectMatchesWorkFilter(project, filter)).slice(0, 5)
 }
 
+export function activateHomeProjectClearFilter({
+  setWorkFilter,
+  showToast,
+  trackNavigationClick,
+  triggerHaptic,
+}: HomeProjectClearFilterActivationInput) {
+  triggerHaptic(HOME_PROJECT_CLEAR_FILTER_HAPTIC_STYLE)
+  trackNavigationClick(HOME_PROJECT_CLEAR_FILTER_ANALYTICS_TARGET)
+  setWorkFilter('all')
+  showToast(HOME_PROJECT_CLEAR_FILTER_TOAST)
+}
+
+export function activateHomeWorkFilterChange({
+  currentHref,
+  filter,
+  replaceUrl,
+  requestFrame,
+  scrollProjectsIntoView,
+  setWorkFilter,
+}: HomeWorkFilterChangeActivationInput) {
+  setWorkFilter(filter)
+
+  if (!currentHref) {
+    return
+  }
+
+  replaceUrl(getWorkFilterUrl(currentHref, filter))
+  requestFrame(scrollProjectsIntoView)
+}
+
 export function getHomeProjectDescription(project: HomeProject) {
   return HOME_PROJECT_DESCRIPTIONS[project.slug] ?? project.frontmatter.description
 }
 
-export function getProjectAccent(slug: string) {
-  return PROJECT_ACCENTS[slug] ?? '#ff4b00'
+export function getHomeProjectTitle(project: HomeProject) {
+  return project.frontmatter.displayTitle ?? project.frontmatter.title
+}
+
+export function getHomeProjectThumbnailImage(project: HomeProject) {
+  return project.frontmatter.homeImage ?? project.frontmatter.image
+}
+
+export function getProjectAccent(_slug: string) {
+  return HOME_ROW_HOVER_ACCENT
+}
+
+export function getFeaturedProjectHoverDistance(hoveredIndex: number | null, index: number): number {
+  return hoveredIndex === null ? 0 : Math.abs(hoveredIndex - index)
+}
+
+export function getFeaturedProjectRowState(
+  slug: string,
+  index: number,
+  hoveredProject: FeaturedProjectHoveredState | null,
+): FeaturedProjectRowState {
+  const hasHoveredProject = hoveredProject !== null
+
+  return {
+    active: hoveredProject?.slug === slug,
+    hoverDistance: getFeaturedProjectHoverDistance(hoveredProject?.index ?? null, index),
+    index,
+    muted: hasHoveredProject && hoveredProject?.slug !== slug,
+    slug,
+  }
+}
+
+export function getFeaturedProjectListState(
+  projects: readonly HomeProject[],
+  hoveredProject: FeaturedProjectHoveredState | null,
+): FeaturedProjectListState {
+  return {
+    hasHoveredProject: hoveredProject !== null,
+    playgroundRow: getFeaturedProjectRowState('playground', projects.length, hoveredProject),
+    projectRows: projects.map((project, index) => getFeaturedProjectRowState(project.slug, index, hoveredProject)),
+  }
+}
+
+export function getFeaturedProjectRowStyleVars(
+  slug: string,
+  _hoverDistance = 0,
+  accent = getProjectAccent(slug),
+): FeaturedProjectRowStyleVars {
+  return {
+    '--editorial-accent': accent,
+    '--featured-row-highlight-bg': `color-mix(in srgb, ${accent} 5%, rgba(var(--background-rgb), 0.58))`,
+    '--featured-row-highlight-border': `color-mix(in srgb, ${accent} 16%, transparent)`,
+    '--featured-row-highlight-shadow': `color-mix(in srgb, ${accent} 10%, transparent)`,
+  }
 }

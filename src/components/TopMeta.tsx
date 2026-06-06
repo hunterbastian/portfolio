@@ -9,42 +9,69 @@ import { PeekAction } from '@/components/PeekAction'
 import { chromePillClassName, chromePillIconClassName, chromePillLabelClassName } from '@/components/ui/tactile'
 import { showJoyToast } from '@/lib/joy'
 import { analytics } from '@/lib/analytics'
+import { LAUNCHER_OPEN_EVENT, LAUNCHER_PRELOAD_EVENT } from '@/lib/launcher'
+import {
+  TOP_META_BRAND_ACTION,
+  TOP_META_LAUNCHPAD_ARIA_LABEL,
+  TOP_META_LAUNCHPAD_LABEL,
+  TOP_META_LAUNCHPAD_PEEK,
+  TOP_META_MOBILE_MENU_LABEL,
+  TOP_META_NAV_ITEMS,
+  activateTopMetaBrandAction,
+  activateTopMetaLaunchpad,
+  activateTopMetaMobileMenuToggle,
+  activateTopMetaNavAction,
+  activateTopMetaSunBlink,
+  getTopMetaInnerClassName,
+  getTopMetaMobileMenuAriaLabel,
+  getTopMetaMobileMenuClassName,
+  getTopMetaHeaderState,
+  getTopMetaNavAction,
+  getTopMetaNavLabelClassName,
+  getTopMetaNavLinkClassName,
+  getTopMetaShellClassName,
+  getTopMetaSunClassName,
+  getTopMetaSunIdleDelay,
+  preloadTopMetaLaunchpad,
+  type TopMetaNavItem,
+  isTopMetaNavItemActive,
+  shouldHideTopMetaHeader,
+} from '@/lib/top-meta'
 import { useMediaQuery } from '@/lib/use-media-query'
 import { cn } from '@/lib/utils'
 
-const PAGE_NAV = [
-  { name: 'Home', href: '/', peek: 'Go home', toast: 'Opening home' },
-  { name: 'Playground', href: '/archive', peek: 'Open experiments', toast: 'Opening playground' },
-] as const
-
-const LAUNCHER_OPEN_EVENT = 'hb-open-launcher'
-const LAUNCHER_PRELOAD_EVENT = 'hb-preload-launcher'
-const TOP_REVEAL_SCROLL_Y = 24
-
-function NavLink({ href, name, active, peek, toast }: { href: string; name: string; active: boolean; peek: string; toast: string }) {
+function NavLink({ item, active, className }: { item: TopMetaNavItem; active: boolean; className?: string }) {
   const haptic = useWebHaptics()
+  const action = getTopMetaNavAction(item)
 
   return (
     <PeekAction
-      href={href}
-      peek={peek}
-      className={cn(
-        'justify-center text-[0.76rem] tracking-normal sm:text-[0.94rem]',
-        active ? 'text-foreground' : 'text-muted-foreground/76 hover:text-foreground/82',
-      )}
-      labelClassName={cn(
-        'underline decoration-[0.08em] underline-offset-[0.24em] transition-[filter,text-decoration-color] duration-150 group-hover/peek:brightness-95',
-        active ? 'decoration-foreground/55' : 'decoration-transparent group-hover/peek:decoration-foreground/30',
-      )}
-      onClick={() => {
-        haptic.trigger('light')
-        analytics.navigationClick(name.toLowerCase())
-        showJoyToast(toast)
-      }}
+      href={item.href}
+      peek={item.peek}
+      className={cn(getTopMetaNavLinkClassName(active), className)}
+      labelClassName={getTopMetaNavLabelClassName(active)}
+      onClick={() =>
+        activateTopMetaNavAction({
+          action,
+          showToast: showJoyToast,
+          trackNavigationClick: (target) => analytics.navigationClick(target),
+          triggerHaptic: (style) => haptic.trigger(style),
+        })
+      }
     >
-      {name}
+      {item.name}
     </PeekAction>
   )
+}
+
+function openTopMetaLaunchpad() {
+  window.dispatchEvent(new CustomEvent(LAUNCHER_OPEN_EVENT))
+}
+
+function preloadLauncher() {
+  preloadTopMetaLaunchpad({
+    preloadLauncher: () => window.dispatchEvent(new CustomEvent(LAUNCHER_PRELOAD_EVENT)),
+  })
 }
 
 export default function TopMeta() {
@@ -59,20 +86,19 @@ export default function TopMeta() {
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
 
   const triggerSunBlink = useCallback(() => {
-    setSunBlinking(true)
-    if (sunBlinkTimerRef.current) {
-      clearTimeout(sunBlinkTimerRef.current)
-    }
-    sunBlinkTimerRef.current = setTimeout(() => {
-      setSunBlinking(false)
-    }, 420)
+    sunBlinkTimerRef.current = activateTopMetaSunBlink({
+      clearTimer: (timer) => clearTimeout(timer),
+      currentTimer: sunBlinkTimerRef.current,
+      scheduleTimer: (callback, delayMs) => setTimeout(callback, delayMs),
+      setSunBlinking,
+    })
   }, [])
 
   useEffect(() => {
     setMobileMenuOpen(false)
 
     const syncHeaderVisibility = () => {
-      setHeaderHidden(window.scrollY > TOP_REVEAL_SCROLL_Y)
+      setHeaderHidden(shouldHideTopMetaHeader(window.scrollY))
     }
 
     syncHeaderVisibility()
@@ -99,7 +125,7 @@ export default function TopMeta() {
       sunIdleTimerRef.current = setTimeout(() => {
         triggerSunBlink()
         scheduleIdleBlink()
-      }, 11000 + Math.random() * 7000)
+      }, getTopMetaSunIdleDelay())
     }
 
     scheduleIdleBlink()
@@ -119,18 +145,16 @@ export default function TopMeta() {
     let ticking = false
 
     const updateHeaderVisibility = () => {
-      const currentScrollY = window.scrollY
-      const atTop = currentScrollY <= TOP_REVEAL_SCROLL_Y
+      const nextState = getTopMetaHeaderState({
+        mobileMenuOpen: mobileMenuOpenRef.current,
+        scrollY: window.scrollY,
+      })
 
-      if (atTop) {
-        setHeaderHidden(false)
-      } else {
-        if (mobileMenuOpenRef.current) {
-          setMobileMenuOpen(false)
-        }
-        setHeaderHidden(true)
+      if (!nextState.mobileMenuOpen && mobileMenuOpenRef.current) {
+        setMobileMenuOpen(false)
       }
 
+      setHeaderHidden(nextState.headerHidden)
       ticking = false
     }
 
@@ -149,67 +173,60 @@ export default function TopMeta() {
 
   return (
     <div
-      className={`fixed inset-x-0 top-0 z-40 px-5 py-4 transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6 ${
-        headerHidden && !mobileMenuOpen
-          ? 'pointer-events-none -translate-y-3 opacity-0 blur-[2px]'
-          : 'pointer-events-none translate-y-0 opacity-100 blur-0'
-      }`}
+      className={getTopMetaShellClassName(headerHidden, mobileMenuOpen)}
     >
       <div
-        className={cn(
-          'relative isolate mx-auto flex max-w-[36rem] items-center justify-between gap-6 border-b border-border/72 pb-3 sm:pb-3.5',
-          headerHidden && !mobileMenuOpen ? 'pointer-events-none' : 'pointer-events-auto',
-        )}
+        className={getTopMetaInnerClassName(headerHidden, mobileMenuOpen)}
       >
         <PeekAction
           href="/"
           peek="Start here"
           className="z-10 text-[0.86rem] tracking-normal text-foreground/80 hover:text-foreground"
           labelClassName="inline-flex items-center gap-2"
-          onClick={() => {
-            haptic.trigger('light')
-            analytics.navigationClick('home')
-            triggerSunBlink()
-            showJoyToast('Opening home')
-          }}
+          onClick={() =>
+            activateTopMetaBrandAction({
+              action: TOP_META_BRAND_ACTION,
+              showToast: showJoyToast,
+              trackNavigationClick: (target) => analytics.navigationClick(target),
+              triggerHaptic: (style) => haptic.trigger(style),
+              triggerSunBlink,
+            })
+          }
         >
           <span>Hunter Bastian</span>
-          <span className={`header-sun-shell text-accent/85 transition-[filter,transform] duration-200 ease-soft group-active:scale-[0.96] ${
-            sunBlinking ? 'animate-hb-sun-blink' : ''
-          }`}>
-              <PixelSun size={11} />
-            </span>
+          <span className={getTopMetaSunClassName(sunBlinking)}>
+            <PixelSun size={11} />
+          </span>
         </PeekAction>
 
-        <div className="relative z-10 hidden w-[16.5rem] items-center justify-end gap-5 sm:flex">
+        <div className="relative z-10 hidden w-[18rem] items-center justify-end gap-4 sm:flex">
           <nav className="flex items-center gap-6">
-            {PAGE_NAV.map((item) => (
+            {TOP_META_NAV_ITEMS.map((item) => (
               <NavLink
                 key={item.href}
-                href={item.href}
-                name={item.name}
-                peek={item.peek}
-                toast={item.toast}
-                active={item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)}
+                item={item}
+                active={isTopMetaNavItemActive(pathname, item)}
               />
             ))}
           </nav>
 
           <PeekAction
-            peek="Open Launchpad"
+            peek={TOP_META_LAUNCHPAD_PEEK}
             className="group/launcher pointer-events-auto shrink-0 text-foreground transition-[filter,transform] duration-200"
             labelClassName="inline-flex"
-            ariaLabel="Open Launchpad. Also use CMD K"
-            onClick={() => {
-              haptic.trigger('light')
-              analytics.navigationClick('launchpad')
-              window.dispatchEvent(new CustomEvent(LAUNCHER_OPEN_EVENT))
-            }}
-            onFocus={() => window.dispatchEvent(new CustomEvent(LAUNCHER_PRELOAD_EVENT))}
-            onMouseEnter={() => window.dispatchEvent(new CustomEvent(LAUNCHER_PRELOAD_EVENT))}
+            ariaLabel={TOP_META_LAUNCHPAD_ARIA_LABEL}
+            onClick={() =>
+              activateTopMetaLaunchpad({
+                openLauncher: openTopMetaLaunchpad,
+                trackNavigationClick: (target) => analytics.navigationClick(target),
+                triggerHaptic: (style) => haptic.trigger(style),
+              })
+            }
+            onFocus={preloadLauncher}
+            onMouseEnter={preloadLauncher}
           >
             <span className={chromePillClassName({ size: 'launchpad' })}>
-              <span className={chromePillLabelClassName}>Launchpad</span>
+              <span className={chromePillLabelClassName}>{TOP_META_LAUNCHPAD_LABEL}</span>
               <ArrowUpRight
                 aria-hidden="true"
                 strokeWidth={1.95}
@@ -221,51 +238,49 @@ export default function TopMeta() {
 
         <div className="relative z-10 sm:hidden">
           <PeekAction
-            onClick={() => {
-              haptic.trigger('light')
-              setMobileMenuOpen((open) => !open)
-            }}
+            onClick={() =>
+              activateTopMetaMobileMenuToggle({
+                toggleMobileMenu: () => setMobileMenuOpen((open) => !open),
+                triggerHaptic: (style) => haptic.trigger(style),
+              })
+            }
             className="justify-center text-[0.76rem] text-muted-foreground hover:text-foreground"
             labelClassName="decoration-border underline underline-offset-[0.24em]"
-            ariaLabel={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            ariaLabel={getTopMetaMobileMenuAriaLabel(mobileMenuOpen)}
             ariaExpanded={mobileMenuOpen}
           >
-            Menu
+            {TOP_META_MOBILE_MENU_LABEL}
           </PeekAction>
 
           <div
-            className={`absolute right-0 top-[calc(100%+0.65rem)] z-50 w-[10.5rem] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-background/94 shadow-[0_18px_44px_-32px_rgba(43,39,34,0.52),0_1px_3px_rgba(43,39,34,0.06)] backdrop-blur-xl transition-[opacity,transform,filter] duration-200 ease-soft ${
-              mobileMenuOpen
-                ? 'pointer-events-auto visible translate-y-0 opacity-100 blur-0'
-                : 'pointer-events-none invisible translate-y-1 opacity-0 blur-[4px]'
-            }`}
+            className={getTopMetaMobileMenuClassName(mobileMenuOpen)}
             aria-hidden={!mobileMenuOpen}
           >
-            <div className="flex flex-col items-end gap-1.5 px-3.5 py-3">
-              {PAGE_NAV.map((item) => (
+            <div className="flex flex-col items-stretch gap-1.5 px-3.5 py-3">
+              {TOP_META_NAV_ITEMS.map((item) => (
                 <NavLink
                   key={item.href}
-                  href={item.href}
-                  name={item.name}
-                  peek={item.peek}
-                  toast={item.toast}
-                  active={item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)}
+                  item={item}
+                  active={isTopMetaNavItemActive(pathname, item)}
+                  className="w-full justify-start rounded-[6px] px-2 text-left hover:bg-foreground/[0.035]"
                 />
               ))}
               <PeekAction
-                className="group/launcher-mobile gap-2 border-t border-border/58 pt-2.5 text-[0.76rem] text-foreground hover:text-foreground/82"
+                className="group/launcher-mobile w-full justify-start gap-2 border-t border-border/58 px-2 pt-2.5 text-left text-[0.76rem] text-foreground hover:bg-foreground/[0.035] hover:text-foreground/82"
                 labelClassName="inline-flex items-center gap-2"
-                onClick={() => {
-                  haptic.trigger('light')
-                  analytics.navigationClick('launchpad')
-                  setMobileMenuOpen(false)
-                  window.dispatchEvent(new CustomEvent(LAUNCHER_OPEN_EVENT))
-                }}
-                onFocus={() => window.dispatchEvent(new CustomEvent(LAUNCHER_PRELOAD_EVENT))}
-                onMouseEnter={() => window.dispatchEvent(new CustomEvent(LAUNCHER_PRELOAD_EVENT))}
+                onClick={() =>
+                  activateTopMetaLaunchpad({
+                    closeMobileMenu: () => setMobileMenuOpen(false),
+                    openLauncher: openTopMetaLaunchpad,
+                    trackNavigationClick: (target) => analytics.navigationClick(target),
+                    triggerHaptic: (style) => haptic.trigger(style),
+                  })
+                }
+                onFocus={preloadLauncher}
+                onMouseEnter={preloadLauncher}
               >
                 <span className="underline decoration-border underline-offset-[0.24em]">
-                  Launchpad
+                  {TOP_META_LAUNCHPAD_LABEL}
                 </span>
                 <ArrowUpRight
                   aria-hidden="true"

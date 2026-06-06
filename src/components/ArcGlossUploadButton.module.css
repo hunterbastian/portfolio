@@ -437,6 +437,7 @@
 
 .scrollTopButton {
   --arc-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --scroll-top-size: 3.72rem;
 
   align-items: center;
   aspect-ratio: 1;
@@ -447,17 +448,17 @@
   color: rgba(58, 56, 51, 0.94);
   cursor: pointer;
   display: grid;
-  height: 4.05rem;
+  height: var(--scroll-top-size);
   justify-items: center;
   overflow: hidden;
   padding: 0;
   position: relative;
   transform: translate3d(0, 0, 0);
   transition:
-    box-shadow 180ms var(--arc-ease),
-    filter 180ms var(--arc-ease),
-    transform 180ms var(--arc-ease);
-  width: 4.05rem;
+    box-shadow 220ms var(--arc-ease),
+    filter 220ms var(--arc-ease),
+    transform 220ms var(--arc-ease);
+  width: var(--scroll-top-size);
 }
 
 .scrollTopButton::before,
@@ -495,12 +496,12 @@
   filter:
     drop-shadow(0 1px 0 rgba(255, 255, 255, 0.56))
     drop-shadow(0 5px 8px rgba(72, 58, 42, 0.16));
-  height: 46%;
+  height: 44%;
   position: relative;
   transition:
-    filter 160ms var(--arc-ease),
-    transform 160ms var(--arc-ease);
-  width: 46%;
+    filter 200ms var(--arc-ease),
+    transform 200ms var(--arc-ease);
+  width: 44%;
   z-index: 1;
 }
 
@@ -508,19 +509,19 @@
   background: var(--surface-glass-chrome-hover);
   box-shadow: var(--surface-glass-chrome-shadow-hover);
   filter: saturate(1.02);
-  transform: translate3d(0, -1px, 0);
+  transform: translate3d(0, -1.5px, 0) scale(1.01);
 }
 
 .scrollTopButton:not(:disabled):hover .scrollTopArrow {
   filter:
     drop-shadow(0 1px 0 rgba(255, 255, 255, 0.64))
     drop-shadow(0 6px 9px rgba(72, 58, 42, 0.18));
-  transform: translateY(-5%) scale(1.02);
+  transform: translateY(-4%) scale(1.025);
 }
 
 .scrollTopButton:not(:disabled):active {
   box-shadow: var(--surface-glass-chrome-shadow-active);
-  transform: var(--motion-press-transform);
+  transform: translate3d(0, 0, 0) scale(0.97);
 }
 
 .scrollTopButton:not(:disabled):active .scrollTopArrow {
@@ -545,8 +546,7 @@
   }
 
   .scrollTopButton {
-    height: 3.5rem;
-    width: 3.5rem;
+    --scroll-top-size: 3.28rem;
   }
 
   .stage {

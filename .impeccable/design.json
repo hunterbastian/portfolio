@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-06T00:00:00.000Z",
+  "title": "Design System: Hunter Bastian Portfolio",
+  "extensions": {
+    "northStar": "The Quiet Field Notebook",
+    "colorMeta": {
+      "canvas-warm": {
+        "role": "neutral",
+        "displayName": "Warm Canvas",
+        "canonical": "#f9f7f2",
+        "purpose": "Default page canvas."
+      },
+      "surface-paper": {
+        "role": "neutral",
+        "displayName": "Paper Surface",
+        "canonical": "#fbfaf6",
+        "purpose": "Tiles, cards, and framed utility panels."
+      },
+      "ink-soft": {
+        "role": "primary",
+        "displayName": "Soft Ink",
+        "canonical": "#4c463d",
+        "purpose": "Main text and structural marks."
+      },
+      "accent-green": {
+        "role": "primary",
+        "displayName": "Quiet Green",
+        "canonical": "#6f9c68",
+        "purpose": "Sparse selected state and status accent."
+      },
+      "accent-blue": {
+        "role": "secondary",
+        "displayName": "Portfolio Blue",
+        "canonical": "#4f7fa4",
+        "purpose": "Cool technical accent, especially in Playground."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Pixel Identity",
+        "purpose": "Brand moments and compact identity text only."
+      },
+      "body": {
+        "displayName": "Readable Mono",
+        "purpose": "Portfolio prose, project descriptions, metadata, and utility text."
+      }
+    },
+    "motion": {
+      "easeSoft": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "pressTransform": "translateY(0) scale(0.96)",
+      "reducedMotion": "Transitions should disable or simplify under prefers-reduced-motion."
+    },
+    "signatureComponents": {
+      "playgroundGallery": {
+        "purpose": "Visual archive surface with a two-row desktop board.",
+        "rules": [
+          "Show the full desktop gallery without vertical scroll.",
+          "Use project-specific composition classes for unusual image whitespace.",
+          "Keep individual tiles at 8px radius inside the larger shell."
+        ]
+      },
+      "chromeControls": {
+        "purpose": "Launchpad, contact, and upload controls that may use the chrome surface token.",
+        "rules": [
+          "Gloss must map to a named material token.",
+          "Do not copy chrome gradients into arbitrary cards."
+        ]
+      }
+    },
+    "dont": [
+      "Generic SaaS landing-page metrics and gradients.",
+      "Generic agency portfolio grids.",
+      "Over-glossy glass UI as default identity.",
+      "Neon or dark-purple AI polish.",
+      "Repeated tiny uppercase section eyebrows.",
+      "Motion, sound, or haptics as required comprehension."
+    ]
+  }
+}
+*** Add File: .impeccable/live/config.json
+{
+  "files": [
+    "src/app/layout.tsx"
+  ],
+  "insertBefore": "</body>",
+  "commentSyntax": "jsx",
+  "cspChecked": true
+}

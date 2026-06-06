@@ -1,5 +1,16 @@
 import type { AnchorHTMLAttributes } from 'react'
-import { chromePillClassName, chromePillLabelClassName } from '@/components/ui/tactile'
+import { ArrowUpRight } from 'lucide-react'
+import {
+  chromePillClassName,
+  chromePillContactAccentClassName,
+  chromePillIconClassName,
+  chromePillLabelClassName,
+} from '@/components/ui/tactile'
+import { cn } from '@/lib/utils'
+import {
+  DEFAULT_EMAIL_BUTTON_LABEL,
+  getEmailButtonViewState,
+} from '@/lib/email-button'
 
 type EmailButtonProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'href'> & {
   email: string
@@ -8,19 +19,29 @@ type EmailButtonProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children'
 
 export function EmailButton({
   email,
-  label = 'email me',
+  label = DEFAULT_EMAIL_BUTTON_LABEL,
   className,
   'aria-label': ariaLabel,
   ...props
 }: EmailButtonProps) {
+  const viewState = getEmailButtonViewState({ email, label, ariaLabel })
+
   return (
     <a
       {...props}
-      href={`mailto:${email}`}
-      aria-label={ariaLabel ?? `Email me directly at ${email}`}
-      className={chromePillClassName({ size: 'contact-primary', className })}
+      href={viewState.href}
+      aria-label={viewState.ariaLabel}
+      className={chromePillClassName({
+        size: 'contact-primary',
+        className: cn(chromePillContactAccentClassName, className),
+      })}
     >
-      <span className={chromePillLabelClassName}>{label}</span>
+      <span className={chromePillLabelClassName}>{viewState.label}</span>
+      <ArrowUpRight
+        aria-hidden="true"
+        strokeWidth={1.7}
+        className={`${chromePillIconClassName} h-2 w-2`}
+      />
     </a>
   )
 }

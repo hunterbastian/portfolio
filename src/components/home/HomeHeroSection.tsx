@@ -152,10 +152,10 @@ export function HomeHeroSection() {
           </div>
 
           <div className={`space-y-0.5 ${profileDefocusClassName}`}>
-            <p className="font-redaction text-[1.08rem] font-normal italic leading-[1.18] tracking-normal text-foreground/92">
+            <p className="font-header text-[15px] font-bold leading-[1.18] tracking-normal text-foreground/92">
               {homeHeroContent.headline}
             </p>
-            <p className="font-header text-[0.96rem] font-normal leading-[1.12] tracking-[-0.02em] text-muted-foreground">
+            <p className="font-header text-[15px] font-bold leading-[1.12] tracking-[-0.02em] text-muted-foreground">
               {homeHeroContent.subtitle}
             </p>
           </div>

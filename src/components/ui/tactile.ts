@@ -4,8 +4,8 @@ type ChromePillSize = 'launchpad' | 'contact-primary' | 'contact-social'
 
 const chromePillSizes: Record<ChromePillSize, string> = {
   launchpad: 'min-w-[8rem] gap-3 px-4 py-[0.48rem] text-[0.83rem]',
-  'contact-primary': 'min-h-[36px] min-w-[7rem] gap-1.5 px-3.5 text-[0.76rem] sm:min-h-[38px] sm:px-4 sm:text-[0.8rem]',
-  'contact-social': 'min-h-[36px] w-[5.85rem] gap-1 px-2 text-[0.68rem] sm:text-[0.72rem]',
+  'contact-primary': 'min-h-[44px] min-w-[7rem] gap-1.5 px-3.5 text-[0.76rem] sm:min-h-[38px] sm:px-4 sm:text-[0.8rem]',
+  'contact-social': 'min-h-[44px] w-[5.85rem] gap-1 px-2 text-[0.68rem] sm:min-h-[36px] sm:text-[0.72rem]',
 }
 
 export function chromePillClassName({

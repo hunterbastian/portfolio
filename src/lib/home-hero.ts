@@ -18,7 +18,7 @@ export const HOME_HERO_LOCAL_TIME_UPDATE_MS = 30_000
 export const HOME_HERO_INLINE_LOCAL_TIME_CLASS_NAME =
   'home-hero-local-time inline whitespace-nowrap text-inherit'
 export const HOME_HERO_TIME_TOGGLE_CLASS_NAME =
-  'home-hero-time-toggle relative inline-flex shrink-0 cursor-pointer items-baseline whitespace-nowrap rounded-[3px] font-[inherit] text-[inherit] leading-[inherit] tracking-[inherit] text-inherit underline decoration-current/35 decoration-dotted decoration-[1px] underline-offset-[0.22em] transition-[color,opacity,transform,text-decoration-color] duration-200 ease-soft hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/35 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.96] motion-reduce:transition-none'
+  'home-hero-time-toggle relative inline-flex shrink-0 cursor-pointer items-baseline whitespace-nowrap rounded-[3px] before:absolute before:-inset-x-1.5 before:-inset-y-2.5 before:content-[\'\'] font-[inherit] text-[inherit] leading-[inherit] tracking-[inherit] text-inherit underline decoration-current/35 decoration-dotted decoration-[1px] underline-offset-[0.22em] transition-[color,opacity,transform,text-decoration-color] duration-200 ease-soft hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/35 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.96] motion-reduce:transition-none'
 export const HOME_HERO_TIME_VALUE_CLASS_NAME = 'home-hero-time-value tabular-nums'
 export const HOME_HERO_TIME_TOGGLE_HAPTIC_STYLE = 'light'
 

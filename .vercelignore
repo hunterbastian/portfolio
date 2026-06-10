@@ -12,17 +12,20 @@ test-results/
 .vercel/
 
 # Local QA captures and reports
+# Patterns are anchored to the repo root with a leading slash — unanchored
+# globs match at any depth and would exclude real assets under public/
+# (e.g. playground-*.png once hid public/images/optimized/projects/playground-mountain-*.png)
 output/
 .codex-tmp/
 .playwright-mcp/
-lighthouse-report*.html
-lighthouse-report*.json
-archive-orbit-*.png
-home-profile-hover-glow*.png
-home-topmeta-brand-sunset-glow.png
-portfolio-*.png
-launcher-*.png
-playground-*.png
+/lighthouse-report*.html
+/lighthouse-report*.json
+/archive-orbit-*.png
+/home-profile-hover-glow*.png
+/home-topmeta-brand-sunset-glow.png
+/portfolio-*.png
+/launcher-*.png
+/playground-*.png
 
 # Local agent and workspace metadata
 .agents/

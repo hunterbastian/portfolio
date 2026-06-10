@@ -62,7 +62,10 @@ export function formatHomeHeroLocalTime(
     hourCycle: format === 'military' ? 'h23' : undefined,
     minute: '2-digit',
     timeZone: HOME_HERO_LOCAL_TIME_ZONE,
-  }).format(date)
+  })
+    .format(date)
+    .replace(/\bAM\b/, 'am')
+    .replace(/\bPM\b/, 'pm')
 }
 
 export function getNextHomeHeroLocalTimeFormat(format: HomeHeroLocalTimeFormat): HomeHeroLocalTimeFormat {

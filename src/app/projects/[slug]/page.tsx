@@ -166,7 +166,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           }
           content={
             <div>
-              <div className="prose max-w-none font-inter text-[13px] [&_li]:font-inter [&_ol]:font-inter [&_p]:font-inter [&_p]:text-[13px] [&_ul]:font-inter [&_li]:text-[13px] [&_h2]:font-mono [&_h3]:font-mono [&_h4]:font-mono">
+              <div className="prose max-w-none font-inter text-[14px] [&_li]:font-inter [&_ol]:font-inter [&_p]:font-inter [&_p]:text-[14px] [&_ul]:font-inter [&_li]:text-[14px] [&_h2]:font-mono [&_h3]:font-mono [&_h4]:font-mono">
                 <MDXRemote source={content} components={mdxComponents} />
               </div>
               <ProjectContactCTA projectSlug={slug} projectTitle={displayTitle} />

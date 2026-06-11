@@ -1,9 +1,6 @@
-'use client'
-
 /**
- * Progressive blur — a fixed gradient of increasing backdrop-blur
- * at the bottom of the viewport. Each layer covers a vertical slice
- * with a linear-gradient mask so the blur builds smoothly.
+ * Fixed top and bottom viewport blurs. Each masked layer increases the
+ * backdrop blur toward the edge, producing a smooth optical falloff.
  */
 
 const BLUR_LAYERS = [
@@ -14,12 +11,17 @@ const BLUR_LAYERS = [
   { blur: 8.6, start: 75, end: 100 },
 ]
 
-export default function ProgressiveBlur() {
+type BlurEdge = 'top' | 'bottom'
+
+function ProgressiveBlurEdge({ edge }: { edge: BlurEdge }) {
+  const direction = edge === 'top' ? 'to top' : 'to bottom'
+
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-30"
-      style={{ height: '90px' }}
-      aria-hidden
+      className={`pointer-events-none fixed inset-x-0 z-30 h-[4.75rem] sm:h-[5.625rem] ${
+        edge === 'top' ? 'top-0' : 'bottom-0'
+      }`}
+      aria-hidden="true"
     >
       {BLUR_LAYERS.map(({ blur, start, end }, i) => (
         <div
@@ -28,11 +30,20 @@ export default function ProgressiveBlur() {
           style={{
             backdropFilter: `blur(${blur}px)`,
             WebkitBackdropFilter: `blur(${blur}px)`,
-            maskImage: `linear-gradient(to bottom, transparent ${start}%, black ${end}%)`,
-            WebkitMaskImage: `linear-gradient(to bottom, transparent ${start}%, black ${end}%)`,
+            maskImage: `linear-gradient(${direction}, transparent ${start}%, black ${end}%)`,
+            WebkitMaskImage: `linear-gradient(${direction}, transparent ${start}%, black ${end}%)`,
           }}
         />
       ))}
     </div>
+  )
+}
+
+export default function ProgressiveBlur() {
+  return (
+    <>
+      <ProgressiveBlurEdge edge="top" />
+      <ProgressiveBlurEdge edge="bottom" />
+    </>
   )
 }

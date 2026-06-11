@@ -17,6 +17,7 @@ import TopMeta from '@/components/TopMeta'
 import JoyfulLayer from '@/components/JoyfulLayer'
 import ScrollToTop from '@/components/ScrollToTop'
 import HoverSoundCue from '@/components/HoverSoundCue'
+import ProgressiveBlur from '@/components/ProgressiveBlur'
 import { getLauncherProjectSources } from '@/lib/launcher'
 import { getAllProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
@@ -171,6 +172,7 @@ export default function RootLayout({
             </SmoothScroll>
             <JoyfulLayer projects={launcherProjects} />
             <ScrollToTop />
+            <ProgressiveBlur />
           </SoundProvider>
         </MotionProvider>
       </body>

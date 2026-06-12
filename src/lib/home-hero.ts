@@ -56,7 +56,7 @@ export function formatHomeHeroLocalTime(
   date: Date,
   format: HomeHeroLocalTimeFormat = 'standard',
 ): string {
-  return new Intl.DateTimeFormat('en-US', {
+  const formattedTime = new Intl.DateTimeFormat('en-US', {
     hour: format === 'military' ? '2-digit' : 'numeric',
     hour12: format === 'standard',
     hourCycle: format === 'military' ? 'h23' : undefined,
@@ -64,6 +64,10 @@ export function formatHomeHeroLocalTime(
     timeZone: HOME_HERO_LOCAL_TIME_ZONE,
   })
     .format(date)
+
+  return format === 'standard'
+    ? formattedTime.replace(/\b(AM|PM)\b$/, (period) => period.toLowerCase())
+    : formattedTime
 }
 
 export function getNextHomeHeroLocalTimeFormat(format: HomeHeroLocalTimeFormat): HomeHeroLocalTimeFormat {
@@ -72,7 +76,7 @@ export function getNextHomeHeroLocalTimeFormat(format: HomeHeroLocalTimeFormat):
 
 export function getHomeHeroLocalTimeToggleLabel(format: HomeHeroLocalTimeFormat, localTime: string) {
   const nextFormat = getNextHomeHeroLocalTimeFormat(format)
-  const nextFormatLabel = nextFormat === 'military' ? '24-hour time' : 'AM/PM time'
+  const nextFormatLabel = nextFormat === 'military' ? '24-hour time' : 'am/pm time'
 
   return `Switch to ${nextFormatLabel}. Current time is ${localTime}.`
 }

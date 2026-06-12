@@ -42,6 +42,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   return (
     <div className="relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
       <div aria-hidden="true" className="home-painterly-washes">
+        <span className="home-painterly-wash home-painterly-wash-dawn" />
         <span className="home-painterly-wash home-painterly-wash-hero" />
         <span className="home-painterly-wash home-painterly-wash-projects" />
         <span className="home-painterly-wash home-painterly-wash-contact" />

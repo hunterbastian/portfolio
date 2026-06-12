@@ -5,8 +5,8 @@ import { getHomeExperienceDisplayItem } from '@/lib/home-credentials'
 
 export function HomeExperienceSection() {
   return (
-    <Section title="Experience">
-      <div className="space-y-3 sm:space-y-5">
+    <Section title="Experience" contentGapClassName="space-y-1.5 sm:space-y-2">
+      <div className="space-y-1.5 sm:space-y-2.5">
         {experienceItems.map((item) => {
           const displayItem = getHomeExperienceDisplayItem(item)
 
@@ -17,6 +17,7 @@ export function HomeExperienceSection() {
               eyebrowClassName="font-mono text-muted-foreground/45 group-hover:text-muted-foreground/58"
               title={displayItem.title}
               description={displayItem.description}
+              compact
             />
           )
         })}

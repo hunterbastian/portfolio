@@ -3,6 +3,7 @@ import test from 'node:test'
 
 import {
   SOUND_TOGGLE_BUTTON_CLASS_NAME,
+  SOUND_TOGGLE_BUTTON_SIZE_PX,
   SOUND_TOGGLE_ENABLE_LABEL,
   SOUND_TOGGLE_ICON_CLASS_NAME,
   SOUND_TOGGLE_ICONS,
@@ -34,7 +35,9 @@ test('sound toggle icon descriptors preserve muted and enabled states', () => {
 })
 
 test('sound toggle chrome constants preserve hit area and icon swap classes', () => {
-  assert.match(SOUND_TOGGLE_BUTTON_CLASS_NAME, /w-11 h-11/)
+  assert.equal(SOUND_TOGGLE_BUTTON_SIZE_PX, 44)
+  assert.match(SOUND_TOGGLE_BUTTON_CLASS_NAME, /w-\[44px\]/)
+  assert.match(SOUND_TOGGLE_BUTTON_CLASS_NAME, /h-\[44px\]/)
   assert.match(SOUND_TOGGLE_BUTTON_CLASS_NAME, /active:scale-\[0\.96\]/)
   assert.match(SOUND_TOGGLE_BUTTON_CLASS_NAME, /focus-visible:outline-primary/)
   assert.equal(SOUND_TOGGLE_ICON_SWAP_CLASS_NAME, 't-icon-swap')

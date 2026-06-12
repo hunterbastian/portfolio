@@ -59,6 +59,7 @@ function HomeEndeavorRow({
           hoverAccentColor={hoverAccentColor}
           tracking={() => analytics.externalLink(link.href, link.label.toLowerCase())}
           simpleHover
+          compact
         />
       </div>
     </div>
@@ -77,10 +78,10 @@ export function HomeEndeavorsSection() {
   }
 
   return (
-    <Section title="Endeavors">
+    <Section title="Endeavors" contentGapClassName="space-y-1.5 sm:space-y-2">
       <div
         className={cn(
-          'featured-project-list home-endeavor-list space-y-3 sm:space-y-5',
+          'featured-project-list home-endeavor-list space-y-1.5 sm:space-y-2.5',
           listState.hasHoveredEndeavor && 'featured-project-list-hovering',
         )}
         onBlur={handleListBlur}

@@ -76,7 +76,7 @@ test('home hero action metadata preserves navigation, analytics, and toast contr
 })
 
 test('formatHomeHeroLocalTime formats Hunter local time in Mountain time', () => {
-  assert.equal(formatHomeHeroLocalTime(new Date('2026-06-04T14:34:00.000Z')), '8:34 AM')
+  assert.equal(formatHomeHeroLocalTime(new Date('2026-06-04T14:34:00.000Z')), '8:34 am')
   assert.equal(formatHomeHeroLocalTime(new Date('2026-06-04T14:34:00.000Z'), 'military'), '08:34')
   assert.equal(formatHomeHeroLocalTime(new Date('2026-06-05T02:34:00.000Z'), 'military'), '20:34')
 })
@@ -85,12 +85,12 @@ test('home hero local time toggle helpers describe the next format', () => {
   assert.equal(getNextHomeHeroLocalTimeFormat('standard'), 'military')
   assert.equal(getNextHomeHeroLocalTimeFormat('military'), 'standard')
   assert.equal(
-    getHomeHeroLocalTimeToggleLabel('standard', '8:34 AM'),
-    'Switch to 24-hour time. Current time is 8:34 AM.',
+    getHomeHeroLocalTimeToggleLabel('standard', '8:34 am'),
+    'Switch to 24-hour time. Current time is 8:34 am.',
   )
   assert.equal(
     getHomeHeroLocalTimeToggleLabel('military', '08:34'),
-    'Switch to AM/PM time. Current time is 08:34.',
+    'Switch to am/pm time. Current time is 08:34.',
   )
 })
 

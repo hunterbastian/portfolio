@@ -5,8 +5,8 @@ import { getHomeEducationDisplayItem } from '@/lib/home-credentials'
 
 export function HomeEducationSection() {
   return (
-    <Section title="Education">
-      <div className="space-y-3 sm:space-y-5">
+    <Section title="Education" contentGapClassName="space-y-1.5 sm:space-y-2">
+      <div className="space-y-1.5 sm:space-y-2.5">
         {educationItems.map((item) => {
           const displayItem = getHomeEducationDisplayItem(item)
 
@@ -16,6 +16,7 @@ export function HomeEducationSection() {
               eyebrow={displayItem.eyebrow}
               title={displayItem.title}
               description={displayItem.description}
+              compact
             />
           )
         })}

@@ -2,6 +2,7 @@
 
 import { useSound } from '@/lib/sounds/context'
 import {
+  SOUND_TOGGLE_BUTTON_SIZE_PX,
   SOUND_TOGGLE_BUTTON_CLASS_NAME,
   SOUND_TOGGLE_ICONS,
   SOUND_TOGGLE_ICON_CLASS_NAME,
@@ -27,6 +28,11 @@ export default function SoundToggle() {
       type="button"
       onClick={toggle}
       className={SOUND_TOGGLE_BUTTON_CLASS_NAME}
+      style={{
+        flex: `0 0 ${SOUND_TOGGLE_BUTTON_SIZE_PX}px`,
+        height: SOUND_TOGGLE_BUTTON_SIZE_PX,
+        width: SOUND_TOGGLE_BUTTON_SIZE_PX,
+      }}
       aria-label={label}
       title={label}
     >

@@ -69,6 +69,7 @@ function PlaygroundProjectRow({
           toastMessage="Opening playground"
           tracking={() => analytics.navigationClick('archive')}
           simpleHover
+          compact
         />
       </div>
     </div>
@@ -115,6 +116,7 @@ function FeaturedProjectRow({
           toastMessage="Opening project"
           tracking={() => analytics.projectClick(project.slug, title)}
           simpleHover
+          compact
         />
       </div>
     </div>
@@ -136,7 +138,7 @@ export function FeaturedProjectList({ projects }: FeaturedProjectListProps) {
   return (
     <div
       className={cn(
-        'featured-project-list space-y-3 sm:space-y-5',
+        'featured-project-list space-y-1.5 sm:space-y-2.5',
         listState.hasHoveredProject && 'featured-project-list-hovering',
       )}
       onBlur={handleListBlur}

@@ -1,10 +1,11 @@
 export const SOUND_TOGGLE_ENABLE_LABEL = 'Enable sounds'
 export const SOUND_TOGGLE_MUTE_LABEL = 'Mute sounds'
+export const SOUND_TOGGLE_BUTTON_SIZE_PX = 44
 export const SOUND_TOGGLE_ICON_SIZE = 11
 export const SOUND_TOGGLE_ICON_VIEW_BOX = '0 0 16 16'
 export const SOUND_TOGGLE_ICON_STROKE_WIDTH = 1.5
 export const SOUND_TOGGLE_BUTTON_CLASS_NAME =
-  'flex items-center justify-center w-11 h-11 text-foreground/40 hover:text-foreground/70 active:scale-[0.96] transition-[color,transform] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+  'inline-flex h-[44px] w-[44px] items-center justify-center text-foreground/40 transition-[color,transform] duration-200 hover:text-foreground/70 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
 export const SOUND_TOGGLE_ICON_SWAP_CLASS_NAME = 't-icon-swap'
 export const SOUND_TOGGLE_ICON_CLASS_NAME = 't-icon'
 

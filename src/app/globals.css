@@ -1058,6 +1058,20 @@ button {
   width: 58rem;
 }
 
+.home-painterly-wash-dawn {
+  --wash-rotate: 0deg;
+  background: radial-gradient(
+    ellipse at 70% 26%,
+    rgba(212, 154, 74, 0.34) 0%,
+    rgba(212, 154, 74, 0.12) 42%,
+    transparent 72%
+  );
+  height: 30rem;
+  right: -14rem;
+  top: -12rem;
+  width: 46rem;
+}
+
 .home-painterly-wash-contact {
   --wash-rotate: -5deg;
   background:

@@ -8,7 +8,7 @@ export const PROJECT_CONTACT_CTA_ACTION_CLASS_NAME =
   'group inline-flex min-h-[40px] origin-center touch-manipulation items-center gap-2 border border-border/75 bg-background px-3 py-2 font-mono text-[0.72rem] text-foreground shadow-card-subtle transition-[border-color,box-shadow,transform] duration-150 hover:-translate-y-[1px] hover:border-foreground/20 hover:shadow-card active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary'
 
 export const PROJECT_CONTACT_CTA_ICON_CLASS_NAME =
-  'h-3.5 w-3.5 text-muted-foreground transition-[color,transform] duration-150 group-hover:text-foreground group-hover:-translate-y-px'
+  'h-3 w-3 text-muted-foreground transition-[color,transform] duration-150 group-hover:text-foreground group-hover:-translate-y-px'
 
 export const PROJECT_CONTACT_CTA_COPY = {
   eyebrow: 'Work together',

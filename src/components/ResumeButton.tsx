@@ -53,7 +53,7 @@ export default function ResumeButton() {
           >
             {RESUME_BUTTON_LABEL}
           </m.span>
-          <AnimatedDashedArrow size={14} />
+          <AnimatedDashedArrow size={13} />
         </m.button>
       </Magnetic>
       <ResumeModal isOpen={isOpen} onClose={() => setIsOpen(false)} />

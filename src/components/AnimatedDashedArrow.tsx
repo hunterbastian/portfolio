@@ -9,7 +9,7 @@ interface AnimatedDashedArrowProps {
   className?: string
 }
 
-export default function AnimatedDashedArrow({ size = 14, className = '' }: AnimatedDashedArrowProps) {
+export default function AnimatedDashedArrow({ size = 13, className = '' }: AnimatedDashedArrowProps) {
   const [hovered, setHovered] = useState(false)
   const prefersReducedMotion = useReducedMotion() ?? false
 

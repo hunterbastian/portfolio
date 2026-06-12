@@ -34,7 +34,7 @@ export default function NotFound() {
           animate={NOT_FOUND_BLUR_REVEAL_ANIMATE}
           transition={getNotFoundRevealTransition()}
         >
-          <ArchiveGlyph size={24} className="text-muted-foreground/50" />
+          <ArchiveGlyph size={22} className="text-muted-foreground/50" />
         </m.div>
 
         <m.p
@@ -77,7 +77,7 @@ export default function NotFound() {
             href={NOT_FOUND_HOME_HREF}
             className={NOT_FOUND_HOME_ACTION_CLASS}
           >
-            <IconArrowBackUp size={12} className={NOT_FOUND_HOME_ICON_CLASS} aria-hidden />
+            <IconArrowBackUp size={11} className={NOT_FOUND_HOME_ICON_CLASS} aria-hidden />
             {NOT_FOUND_HOME_LABEL}
           </Link>
           <Link

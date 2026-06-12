@@ -12,7 +12,7 @@ import {
 
 test('section marker constants preserve base chrome and default kind', () => {
   assert.equal(SECTION_MARKER_DEFAULT_KIND, 'work')
-  assert.equal(SECTION_MARKER_GLYPH_SIZE, 10)
+  assert.equal(SECTION_MARKER_GLYPH_SIZE, 9)
   assert.match(SECTION_MARKER_BASE_CLASS_NAME, /inline-flex/)
   assert.match(SECTION_MARKER_BASE_CLASS_NAME, /uppercase/)
   assert.match(SECTION_MARKER_BASE_CLASS_NAME, /text-muted-foreground\/55/)

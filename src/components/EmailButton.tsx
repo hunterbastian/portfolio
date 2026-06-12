@@ -40,7 +40,7 @@ export function EmailButton({
       <ArrowUpRight
         aria-hidden="true"
         strokeWidth={1.7}
-        className={`${chromePillIconClassName} h-2 w-2`}
+        className={`${chromePillIconClassName} h-[0.45rem] w-[0.45rem]`}
       />
     </a>
   )

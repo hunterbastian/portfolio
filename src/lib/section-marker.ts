@@ -12,7 +12,7 @@ export type SectionMarkerKind =
 
 export const SECTION_MARKER_BASE_CLASS_NAME =
   'inline-flex items-center gap-2 font-mono text-[10px] font-normal tracking-[0.06em] uppercase text-muted-foreground/55'
-export const SECTION_MARKER_GLYPH_SIZE = 10
+export const SECTION_MARKER_GLYPH_SIZE = 9
 export const SECTION_MARKER_DEFAULT_KIND: SectionMarkerKind = 'work'
 
 export function getSectionMarkerClassName(className?: string) {

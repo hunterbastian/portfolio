@@ -92,13 +92,13 @@ export function LauncherCommandList({
                         <span className="flex min-w-0 items-center gap-2.5">
                           <span
                             aria-hidden="true"
-                            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[7px] text-muted-foreground transition-[color,background-color,box-shadow,transform] duration-150 group-hover/launcher-command:-translate-y-[1px] ${
+                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-muted-foreground transition-[color,background-color,box-shadow,transform] duration-150 group-hover/launcher-command:-translate-y-[1px] ${
                               active
                                 ? 'bg-[color-mix(in_srgb,var(--contact-email-accent-soft)_64%,var(--background))] text-[color-mix(in_srgb,var(--contact-email-accent)_70%,var(--foreground))] shadow-[inset_0_1px_0_rgba(255,255,255,0.74),inset_0_0_0_1px_rgba(80,72,61,0.06)]'
                                 : 'bg-background/48 shadow-[inset_0_0_0_1px_rgba(80,72,61,0.06)]'
                             }`}
                           >
-                            <Icon size={12} />
+                            <Icon size={11} />
                           </span>
                           <span className="min-w-0">
                             <span className="block truncate font-header text-[0.94rem] leading-tight tracking-[-0.02em] text-foreground">

@@ -25,7 +25,7 @@ test('project contact CTA constants preserve copy and analytics targets', () => 
   assert.equal(PROJECT_CONTACT_CTA_HAPTIC_STYLE, 'light')
   assert.match(PROJECT_CONTACT_CTA_ACTION_CLASS_NAME, /min-h-\[40px\]/)
   assert.match(PROJECT_CONTACT_CTA_ACTION_CLASS_NAME, /active:scale-\[0\.96\]/)
-  assert.match(PROJECT_CONTACT_CTA_ICON_CLASS_NAME, /h-3\.5/)
+  assert.match(PROJECT_CONTACT_CTA_ICON_CLASS_NAME, /h-3/)
   assert.match(PROJECT_CONTACT_CTA_ICON_CLASS_NAME, /group-hover:text-foreground/)
   assert.equal(PROJECT_CONTACT_CTA_COPY.eyebrow, 'Work together')
   assert.equal(PROJECT_CONTACT_CTA_COPY.resumeToast, 'Opening resume')

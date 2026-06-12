@@ -27,7 +27,7 @@ export function PlaygroundCenterHub({ hub }: PlaygroundCenterHubProps) {
     >
       <div className="playground-center-eyebrow">
         <span className="playground-center-icon" aria-hidden="true">
-          <Radar size={14} strokeWidth={1.7} />
+          <Radar size={13} strokeWidth={1.7} />
         </span>
         <span>Active route</span>
       </div>

@@ -30,8 +30,8 @@ export function LauncherSearchHeader({
     <div className="sticky top-0 z-10 border-b border-border/45 bg-background/[0.76] p-2.5 shadow-[0_10px_26px_-24px_rgba(43,39,34,0.42)] backdrop-blur-xl">
       <div className="mb-2.5 flex items-center justify-between gap-3 px-1">
         <div className="flex min-w-0 items-center gap-2.5">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[7px] bg-[color-mix(in_srgb,var(--contact-email-accent-soft)_74%,var(--background))] text-[color-mix(in_srgb,var(--contact-email-accent)_76%,var(--foreground))] shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_22px_-20px_rgba(25,90,94,0.55)]">
-            <Command aria-hidden="true" size={13} strokeWidth={1.8} />
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] bg-[color-mix(in_srgb,var(--contact-email-accent-soft)_74%,var(--background))] text-[color-mix(in_srgb,var(--contact-email-accent)_76%,var(--foreground))] shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_22px_-20px_rgba(25,90,94,0.55)]">
+            <Command aria-hidden="true" size={12} strokeWidth={1.8} />
           </span>
           <span className="min-w-0">
             <span className="block truncate font-header text-[0.95rem] leading-tight tracking-[-0.02em] text-foreground">
@@ -50,7 +50,7 @@ export function LauncherSearchHeader({
         >
           <X
             aria-hidden="true"
-            size={14}
+            size={13}
             className="transition-transform duration-150 group-hover/launcher-close:rotate-6"
           />
         </button>
@@ -58,7 +58,7 @@ export function LauncherSearchHeader({
       <div className="relative">
         <Search
           aria-hidden="true"
-          size={14}
+          size={13}
           className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/48"
         />
         <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded-[5px] bg-background/72 px-1.5 py-1 font-mono text-[0.56rem] leading-none text-muted-foreground/58 shadow-[inset_0_0_0_1px_rgba(80,72,61,0.08),inset_0_1px_0_rgba(255,255,255,0.72)]">

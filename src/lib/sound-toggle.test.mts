@@ -23,7 +23,7 @@ test('sound toggle labels describe the next available action', () => {
 })
 
 test('sound toggle icon descriptors preserve muted and enabled states', () => {
-  assert.equal(SOUND_TOGGLE_ICON_SIZE, 12)
+  assert.equal(SOUND_TOGGLE_ICON_SIZE, 11)
   assert.equal(SOUND_TOGGLE_ICON_VIEW_BOX, '0 0 16 16')
   assert.equal(SOUND_TOGGLE_ICON_STROKE_WIDTH, 1.5)
   assert.deepEqual(SOUND_TOGGLE_ICONS.map((icon) => icon.id), ['a', 'b'])

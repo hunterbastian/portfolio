@@ -631,8 +631,8 @@
 
 .playground-center-icon {
   display: grid;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.42rem;
+  height: 1.42rem;
   place-items: center;
   border-radius: 6px;
   color: var(--playground-blue);

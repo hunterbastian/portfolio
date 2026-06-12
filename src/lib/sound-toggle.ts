@@ -1,6 +1,6 @@
 export const SOUND_TOGGLE_ENABLE_LABEL = 'Enable sounds'
 export const SOUND_TOGGLE_MUTE_LABEL = 'Mute sounds'
-export const SOUND_TOGGLE_ICON_SIZE = 12
+export const SOUND_TOGGLE_ICON_SIZE = 11
 export const SOUND_TOGGLE_ICON_VIEW_BOX = '0 0 16 16'
 export const SOUND_TOGGLE_ICON_STROKE_WIDTH = 1.5
 export const SOUND_TOGGLE_BUTTON_CLASS_NAME =

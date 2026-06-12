@@ -195,7 +195,7 @@ export default function TopMeta() {
         >
           <span>Hunter Bastian</span>
           <span className={getTopMetaSunClassName(sunBlinking)}>
-            <PixelSun size={11} />
+            <PixelSun size={10} />
           </span>
         </PeekAction>
 
@@ -230,7 +230,7 @@ export default function TopMeta() {
               <ArrowUpRight
                 aria-hidden="true"
                 strokeWidth={1.95}
-                className={cn(chromePillIconClassName, 'h-[1rem] w-[1rem] translate-y-[-0.03rem] group-hover/launcher:-translate-y-[0.18rem]')}
+                className={cn(chromePillIconClassName, 'h-[0.9rem] w-[0.9rem] translate-y-[-0.03rem] group-hover/launcher:-translate-y-[0.18rem]')}
               />
             </span>
           </PeekAction>
@@ -285,7 +285,7 @@ export default function TopMeta() {
                 <ArrowUpRight
                   aria-hidden="true"
                   strokeWidth={1.9}
-                  className="h-[0.82rem] w-[0.82rem] transition-transform duration-150 group-hover/launcher-mobile:translate-x-0.5 group-hover/launcher-mobile:-translate-y-0.5"
+                  className="h-[0.76rem] w-[0.76rem] transition-transform duration-150 group-hover/launcher-mobile:translate-x-0.5 group-hover/launcher-mobile:-translate-y-0.5"
                 />
               </PeekAction>
             </div>

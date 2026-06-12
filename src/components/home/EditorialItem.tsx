@@ -59,7 +59,7 @@ export function EditorialItem({
   const interactive = Boolean(href)
   const decorativeHover = interactive && !simpleHover
   const imageFrameClassName = simpleHover
-    ? 'relative mt-0.5 h-[48px] w-[48px] shrink-0 overflow-visible rounded-[7px] bg-transparent transition-[filter] duration-150 ease-soft group-active:brightness-[0.98] sm:h-[68px] sm:w-[68px] sm:rounded-[8px]'
+    ? 'relative mt-0.5 h-[44px] w-[44px] shrink-0 overflow-visible rounded-[7px] bg-transparent transition-[filter] duration-150 ease-soft group-active:brightness-[0.98] sm:h-[62px] sm:w-[62px] sm:rounded-[8px]'
     : editorialImageFrameClassName
   const imageClassName = simpleHover
     ? 'object-contain drop-shadow-[0_10px_14px_rgba(15,23,42,0.055)] transition-[filter] duration-150 ease-soft group-hover:brightness-[1.015]'
@@ -116,7 +116,7 @@ export function EditorialItem({
               alt={thumbnailAlt ?? title}
               fill
               className={imageClassName}
-              sizes="(min-width: 640px) 68px, 48px"
+              sizes="(min-width: 640px) 62px, 44px"
             />
           </div>
         ) : null}

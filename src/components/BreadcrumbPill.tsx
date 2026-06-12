@@ -35,7 +35,7 @@ export default function BreadcrumbPill({ href, parentLabel, currentLabel }: Brea
         })
       }
     >
-      <IconArrowBackUp size={11} className={BREADCRUMB_ICON_CLASS} aria-hidden />
+      <IconArrowBackUp size={10} className={BREADCRUMB_ICON_CLASS} aria-hidden />
       <span className={BREADCRUMB_PARENT_LABEL_CLASS}>{viewState.parentLabel}</span>
       <span aria-hidden className={BREADCRUMB_SEPARATOR_CLASS}>/</span>
       <span>{viewState.currentLabel}</span>

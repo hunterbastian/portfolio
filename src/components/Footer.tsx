@@ -106,7 +106,7 @@ export default function Footer() {
               <span
                 className={getFooterSparkleClassName(sparkleActive)}
               >
-                <PixelSun size={12} />
+                <PixelSun size={11} />
               </span>
             </span>
             <span>{FOOTER_MADE_LABEL}</span>

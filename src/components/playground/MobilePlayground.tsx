@@ -32,7 +32,7 @@ export function MobilePlayground({ projects }: MobilePlaygroundProps) {
       >
         <div className="flex items-center justify-between gap-3">
           <span className="inline-flex items-center gap-2">
-            <RadioTower size={14} strokeWidth={1.7} aria-hidden="true" />
+            <RadioTower size={13} strokeWidth={1.7} aria-hidden="true" />
             Manifest
           </span>
           <span>{mobileState.manifest.routeCountLabel} routes</span>

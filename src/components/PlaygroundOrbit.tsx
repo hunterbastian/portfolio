@@ -86,7 +86,7 @@ export default function PlaygroundOrbit({
       <div className="playground-orbit-stage relative hidden h-full md:block" onMouseLeave={handleHoverEnd}>
         <div className="playground-orbit-ring" aria-hidden="true" />
         <div className="playground-route-plane" aria-hidden="true">
-          <Plane size={15} strokeWidth={1.7} />
+          <Plane size={14} strokeWidth={1.7} />
         </div>
 
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">

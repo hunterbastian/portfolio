@@ -496,12 +496,12 @@
   filter:
     drop-shadow(0 1px 0 rgba(255, 255, 255, 0.56))
     drop-shadow(0 5px 8px rgba(72, 58, 42, 0.16));
-  height: 44%;
+  height: 40%;
   position: relative;
   transition:
     filter 200ms var(--arc-ease),
     transform 200ms var(--arc-ease);
-  width: 44%;
+  width: 40%;
   z-index: 1;
 }
 

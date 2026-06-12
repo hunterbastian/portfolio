@@ -60,7 +60,7 @@ export const PROJECT_END_NAV_LABEL_CLASS_NAME =
   'font-mono text-[0.64rem] uppercase tracking-[0.12em] text-muted-foreground/65'
 
 export const PROJECT_END_NAV_ICON_CLASS_NAME =
-  'h-3.5 w-3.5 shrink-0 text-muted-foreground transition-[color,transform] duration-200 group-hover:translate-x-0.5 group-hover:text-foreground'
+  'h-3 w-3 shrink-0 text-muted-foreground transition-[color,transform] duration-200 group-hover:translate-x-0.5 group-hover:text-foreground'
 
 export const PROJECT_END_NAV_TITLE_CLASS_NAME =
   'truncate font-mono text-[0.88rem] font-medium leading-snug text-foreground sm:text-[0.94rem]'

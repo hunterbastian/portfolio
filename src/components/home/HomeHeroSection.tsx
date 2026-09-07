@@ -118,7 +118,7 @@ export function HomeHeroSection() {
               className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-soft group-hover:opacity-100 group-hover:scale-100"
               style={{
                 background:
-                  'radial-gradient(ellipse at 48% 52%, rgba(255, 72, 0, 0.56) 0%, rgba(255, 103, 16, 0.42) 32%, rgba(255, 178, 66, 0.22) 58%, transparent 80%)',
+                  'radial-gradient(ellipse at 50% 55%, color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 72%)',
               }}
             />
             <span
@@ -130,16 +130,16 @@ export function HomeHeroSection() {
               }}
             />
             <div
-              className="home-profile-print w-fit shadow-sm transition-[transform,rotate,box-shadow] duration-200 ease-soft hover:-translate-y-[2px] hover:scale-[1.01]"
+              className="home-profile-print"
             >
               <Image
                 src="/images/profilepicture.webp"
                 alt="Outdoor photograph of Hunter Bastian walking along a mountain road."
-                width={75}
-                height={75}
+                width={96}
+                height={96}
                 priority
                 className="home-profile-photo object-cover img-inset-outline"
-                sizes="75px"
+                sizes="96px"
               />
             </div>
             <span

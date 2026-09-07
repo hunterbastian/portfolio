@@ -130,8 +130,7 @@ export function HomeHeroSection() {
               }}
             />
             <div
-              className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-soft hover:-translate-y-[2px] hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
-              style={{ background: 'var(--border)' }}
+              className="home-profile-print w-fit shadow-sm transition-[transform,rotate,box-shadow] duration-200 ease-soft hover:-translate-y-[2px] hover:scale-[1.01]"
             >
               <Image
                 src="/images/profilepicture.webp"
@@ -139,7 +138,7 @@ export function HomeHeroSection() {
                 width={75}
                 height={75}
                 priority
-                className="mask mask-squircle object-cover img-inset-outline transition-[filter,transform] duration-200 ease-soft hover:scale-[1.02] hover:brightness-[1.02]"
+                className="home-profile-photo object-cover img-inset-outline"
                 sizes="75px"
               />
             </div>

@@ -91,7 +91,7 @@ export function LauncherPaletteDialog({
             className="relative flex max-h-[78dvh] w-full max-w-[30rem] flex-col overflow-hidden rounded-t-[10px] border border-foreground/[0.08] border-b-0 bg-background/[0.88] pb-[env(safe-area-inset-bottom)] shadow-[inset_0_1px_0_rgba(255,255,255,0.78),inset_0_0_0_1px_rgba(255,255,255,0.34),0_26px_80px_-48px_rgba(43,39,34,0.72),0_1px_3px_rgba(43,39,34,0.08)] backdrop-blur-2xl sm:max-h-[min(34rem,72vh)] sm:rounded-[8px] sm:border-b sm:pb-0"
             style={{
               background:
-                'linear-gradient(180deg, #23272a, #191c1f)',
+                'linear-gradient(180deg, var(--secondary), var(--background))',
             }}
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 18, scale: 0.97, filter: 'blur(3px)' }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}

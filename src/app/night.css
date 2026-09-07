@@ -1,17 +1,43 @@
-/* Dark surfaces only. Layout, typography, spacing, and motion stay in the original styles. */
+/* Film-inspired surfaces layered over the original compact layout and typography. */
 html {
   background: var(--background);
   color-scheme: dark;
 }
 
+body {
+  background-image:
+    url('/images/hero-grain.svg'),
+    radial-gradient(ellipse at 68% 5%, rgba(213, 177, 124, 0.035), transparent 52%),
+    linear-gradient(180deg, rgba(var(--surface-warm-rgb), 0.18), transparent 44%);
+  background-size: 160px 160px, 100% 65rem, 100% 100%;
+  background-repeat: repeat, no-repeat, no-repeat;
+}
+
+.home-profile-print {
+  padding: 4px 4px 10px;
+  border-radius: 1px;
+  background: var(--photo-mat);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24), 0 8px 22px -10px rgba(0, 0, 0, 0.8);
+  rotate: -2deg;
+}
+
+.home-profile-print:hover {
+  rotate: 0deg;
+}
+
+.home-profile-photo {
+  display: block;
+  border-radius: 0;
+}
+
 /* Keep the original ambient photograph as a quiet glow behind readable light text. */
 .animated-hero-glow {
-  opacity: 0.1;
+  opacity: 0.065;
 }
 
 .chrome-pill::before,
 .chrome-pill::after {
-  opacity: 0.12;
+  opacity: 0.045;
 }
 
 .chrome-pill,
@@ -22,13 +48,13 @@ html {
 }
 
 .chrome-pill-contact-accent {
-  background: linear-gradient(180deg, #30403d, var(--contact-email-accent-soft));
+  background: linear-gradient(180deg, var(--secondary), var(--contact-email-accent-soft));
   box-shadow: var(--surface-glass-chrome-shadow);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .chrome-pill-contact-accent:hover {
-    background: linear-gradient(180deg, #3a4d49, #2d3d39);
+    background: linear-gradient(180deg, var(--border), var(--contact-email-accent-soft));
     box-shadow: var(--surface-glass-chrome-shadow-hover);
   }
 }
@@ -46,7 +72,7 @@ html {
   --playground-ink: var(--foreground);
   --playground-muted: var(--muted-foreground);
   background:
-    radial-gradient(70% 42% at 50% 0%, rgba(127, 184, 198, 0.06) 0%, transparent 72%),
+    radial-gradient(70% 42% at 50% 0%, rgba(213, 177, 124, 0.045) 0%, transparent 72%),
     var(--background);
 }
 
@@ -66,13 +92,13 @@ html {
 }
 
 .playground-gallery-tile {
-  background: linear-gradient(155deg, #272c30, var(--card));
+  background: linear-gradient(155deg, var(--secondary), var(--card));
   box-shadow: inset 0 0 0 1px var(--border);
 }
 
 .playground-gallery-tile:hover,
 .playground-gallery-tile:focus-visible {
-  box-shadow: inset 0 0 0 1px var(--accent-blue);
+  box-shadow: inset 0 0 0 1px var(--accent);
 }
 
 .playground-gallery-caption,

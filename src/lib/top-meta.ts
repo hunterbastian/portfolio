@@ -27,13 +27,13 @@ const TOP_META_MOBILE_MENU_CLOSED_CLASS = 'pointer-events-none invisible transla
 const TOP_META_SUN_BASE_CLASS =
   'header-sun-shell text-accent/85 transition-[color,filter,transform] duration-200 ease-soft group-hover/peek:scale-[1.08] group-hover/peek:text-accent group-hover/peek:brightness-110 group-hover/peek:drop-shadow-[0_0_8px_rgba(255,75,0,0.28)] group-active:scale-[0.96]'
 const TOP_META_SUN_BLINK_CLASS = 'animate-hb-sun-blink'
-const TOP_META_NAV_ACCENT_CLASS = 'text-[#81bbb2]'
+const TOP_META_NAV_ACCENT_CLASS = 'text-accent'
 const TOP_META_NAV_LINK_BASE_CLASS =
   'justify-center rounded-[8px] px-3 text-[0.76rem] tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:text-[0.94rem]'
 const TOP_META_NAV_LINK_ACTIVE_CLASS =
-  `${TOP_META_NAV_ACCENT_CLASS} bg-[color-mix(in_srgb,#81bbb2_11%,transparent)]`
+  `${TOP_META_NAV_ACCENT_CLASS} bg-[color-mix(in_srgb,var(--accent)_11%,transparent)]`
 const TOP_META_NAV_LINK_INACTIVE_CLASS =
-  'text-muted-foreground/76 hover:bg-[color-mix(in_srgb,#81bbb2_8%,transparent)] hover:text-[#81bbb2] focus-visible:bg-[color-mix(in_srgb,#81bbb2_8%,transparent)] focus-visible:text-[#81bbb2]'
+  'text-muted-foreground/76 hover:bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] hover:text-accent focus-visible:bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] focus-visible:text-accent'
 const TOP_META_NAV_LABEL_BASE_CLASS =
   'transition-[color,filter] duration-150 group-hover/peek:brightness-95'
 const TOP_META_NAV_LABEL_ACTIVE_CLASS = ''

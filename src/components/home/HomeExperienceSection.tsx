@@ -14,7 +14,7 @@ export function HomeExperienceSection() {
             <EditorialItem
               key={displayItem.key}
               eyebrow={displayItem.eyebrow}
-              eyebrowClassName="font-mono text-muted-foreground group-hover:text-muted-foreground"
+              eyebrowClassName="font-mono text-muted-foreground/45 group-hover:text-muted-foreground/58"
               title={displayItem.title}
               description={displayItem.description}
               compact

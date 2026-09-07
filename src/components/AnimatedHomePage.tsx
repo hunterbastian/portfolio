@@ -40,11 +40,21 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   }
 
   return (
-    <div className="hb-home relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-16">
-      <div className="mx-auto max-w-[64rem] pt-9 sm:pt-20">
-        <HomeHeroSection />
+    <div className="relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
+      <div aria-hidden="true" className="home-painterly-washes">
+        <span className="home-painterly-wash home-painterly-wash-dawn" />
+        <span className="home-painterly-wash home-painterly-wash-hero" />
+        <span className="home-painterly-wash home-painterly-wash-projects" />
+        <span className="home-painterly-wash home-painterly-wash-contact" />
+      </div>
+      <div aria-hidden="true" className="home-coast-outro" />
 
-        <div className="mt-12 space-y-14 sm:mt-20 sm:space-y-20">
+      <div className="mx-auto max-w-[36rem] pt-9 sm:pt-28">
+        <Reveal>
+          <HomeHeroSection />
+        </Reveal>
+
+        <div className="mt-5 space-y-9 sm:mt-7 sm:space-y-20">
           <Reveal delayMs={40}>
             <HomeProjectsSection
               onWorkFilterChange={applyWorkFilter}
@@ -57,10 +67,13 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
             <HomeEndeavorsSection />
           </Reveal>
 
-          <div className="hb-credentials">
+          <Reveal delayMs={120}>
             <HomeExperienceSection />
+          </Reveal>
+
+          <Reveal delayMs={160}>
             <HomeEducationSection />
-          </div>
+          </Reveal>
 
           <Reveal delayMs={200}>
             <HomeContactSection />

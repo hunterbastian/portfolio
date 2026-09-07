@@ -26,9 +26,9 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
   return (
     <Section
       id="projects"
-      title="Selected work"
+      title="Projects"
       contentGapClassName="space-y-1.5 sm:space-y-2"
-      scrollMarginClassName="scroll-mt-24 sm:scroll-mt-28"
+      scrollMarginClassName="scroll-mt-10 sm:scroll-mt-12"
     >
       <div className="relative">
         <div className="relative z-10 space-y-2 sm:space-y-3">

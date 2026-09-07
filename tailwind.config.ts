@@ -13,11 +13,34 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Preserve the original translucent colors when generating Tailwind utilities.
+      opacity: {
+        8: '0.08',
+        12: '0.12',
+        18: '0.18',
+        34: '0.34',
+        42: '0.42',
+        46: '0.46',
+        48: '0.48',
+        52: '0.52',
+        58: '0.58',
+        62: '0.62',
+        66: '0.66',
+        68: '0.68',
+        72: '0.72',
+        76: '0.76',
+        78: '0.78',
+        82: '0.82',
+        86: '0.86',
+        88: '0.88',
+        92: '0.92',
+        94: '0.94',
+      },
       fontFamily: {
         'mono': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        'sans': ['var(--font-geist-sans)', 'Geist Sans', 'Arial', 'sans-serif'],
-        'inter': ['var(--font-geist-sans)', 'Geist Sans', 'Arial', 'sans-serif'],
-        'header': ['var(--font-geist-sans)', 'Geist Sans', 'Arial', 'sans-serif'],
+        'sans': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'inter': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'header': ['var(--font-geist-pixel-square)', 'Geist Pixel Square', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         'redaction': ['HB Redaction', 'Redaction', 'Redaction 35', 'Georgia', 'serif'],
       },
       screens: {

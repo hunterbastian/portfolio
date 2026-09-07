@@ -1,49 +1,174 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowUpRight, Route } from 'lucide-react'
+import type { CSSProperties, FocusEvent } from 'react'
+import { useState } from 'react'
+import { EditorialItem } from '@/components/home/EditorialItem'
 import { analytics } from '@/lib/analytics'
-import { formatProjectYear, getHomeProjectDescription, getHomeProjectTitle, type HomeProject } from '@/lib/home-projects'
+import {
+  formatProjectYear,
+  getFeaturedProjectListState,
+  getFeaturedProjectRowStyleVars,
+  getHomeProjectDescription,
+  getHomeProjectThumbnailImage,
+  getHomeProjectTitle,
+  getProjectAccent,
+  type FeaturedProjectHoveredState,
+  type FeaturedProjectRowState,
+  type HomeProject,
+} from '@/lib/home-projects'
+import { cn } from '@/lib/utils'
 
-export function FeaturedProjectList({ projects }: { projects: HomeProject[] }) {
-  const featured = projects.slice(0, 3)
-  const more = projects.slice(3)
+interface FeaturedProjectListProps {
+  projects: HomeProject[]
+}
+
+type FeaturedProjectRowStyle = CSSProperties &
+  ReturnType<typeof getFeaturedProjectRowStyleVars>
+
+function getFeaturedProjectRowStyle(slug: string, hoverDistance = 0): FeaturedProjectRowStyle {
+  return getFeaturedProjectRowStyleVars(slug, hoverDistance)
+}
+
+function PlaygroundProjectRow({
+  active,
+  hoverDistance,
+  muted,
+  onHoverEnd,
+  onHoverStart,
+}: {
+  active: boolean
+  hoverDistance: number
+  muted: boolean
+  onHoverEnd: () => void
+  onHoverStart: () => void
+}) {
   return (
-    <div className="hb-work">
-      <div className="hb-project-grid">
-        {featured.map((project, index) => {
-          const title = getHomeProjectTitle(project)
-          return (
-            <Link href={`/projects/${project.slug}`} key={project.slug} className="hb-project-card" onClick={() => analytics.projectClick(project.slug, title)}>
-              <div className="hb-project-image">
-                <Image src={project.frontmatter.image} alt={`Preview of ${title}`} fill sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1100px) 30vw, 320px" className="object-cover" />
-                <span className="hb-project-open"><ArrowUpRight size={18} aria-hidden="true" /></span>
-              </div>
-              <div className="hb-project-info">
-                <p className="hb-project-meta"><span>{String(index + 1).padStart(2, '0')} / {project.frontmatter.category}</span><span>{formatProjectYear(project.frontmatter.date)}</span></p>
-                <h3>{title}</h3>
-                <p className="hb-project-description">{getHomeProjectDescription(project)}</p>
-              </div>
-            </Link>
-          )
-        })}
+    <div
+      className={cn(
+        'featured-project-row relative isolate',
+        active && 'featured-project-row-active',
+        muted && 'featured-project-row-muted',
+      )}
+      onFocus={onHoverStart}
+      onMouseLeave={onHoverEnd}
+      onMouseEnter={onHoverStart}
+      style={getFeaturedProjectRowStyle('playground', hoverDistance)}
+    >
+      <div className="relative z-10">
+        <EditorialItem
+          href="/archive"
+          title="Playground"
+          description="Small experiments and prototypes."
+          trailing="See more"
+          titleFontClassName="font-header"
+          onMouseEnter={onHoverStart}
+          thumbnailImage="/images/optimized/projects/playground-mountain-object-icon.png"
+          thumbnailAlt="Playground mountain icon"
+          underlineOnHover
+          hoverAccentColor={getProjectAccent('playground')}
+          toastMessage="Opening playground"
+          tracking={() => analytics.navigationClick('archive')}
+          simpleHover
+          compact
+        />
       </div>
-      {more.length > 0 && <div className="hb-more-projects">
-        {more.map((project, index) => (
-          <Link href={`/projects/${project.slug}`} key={project.slug} className="hb-project-row" onClick={() => analytics.projectClick(project.slug, getHomeProjectTitle(project))}>
-            <span className="hb-row-index">{String(index + 4).padStart(2, '0')}</span>
-            <div><h3>{getHomeProjectTitle(project)}</h3><p>{getHomeProjectDescription(project)}</p></div>
-            <span className="hb-row-year">{formatProjectYear(project.frontmatter.date)}</span>
-            <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        ))}
-      </div>}
-      <Link href="/archive" className="hb-playground-link" onClick={() => analytics.navigationClick('archive')}>
-        <span className="hb-playground-icon"><Route size={26} strokeWidth={1.5} aria-hidden="true" /></span>
-        <div><span className="hb-meta-label">Take a detour</span><h3>Into the Playground</h3><p>Small worlds, playful interfaces, and things built out of curiosity.</p></div>
-        <ArrowUpRight size={24} aria-hidden="true" />
-      </Link>
+    </div>
+  )
+}
+
+function FeaturedProjectRow({
+  project,
+  rowState,
+  onHoverEnd,
+  onHoverStart,
+}: {
+  project: HomeProject
+  rowState: FeaturedProjectRowState
+  onHoverEnd: () => void
+  onHoverStart: () => void
+}) {
+  const title = getHomeProjectTitle(project)
+
+  return (
+    <div
+      className={cn(
+        'featured-project-row relative isolate',
+        rowState.active && 'featured-project-row-active',
+        rowState.muted && 'featured-project-row-muted',
+      )}
+      onFocus={onHoverStart}
+      onMouseLeave={onHoverEnd}
+      onMouseEnter={onHoverStart}
+      style={getFeaturedProjectRowStyle(project.slug, rowState.hoverDistance)}
+    >
+      <div className="relative z-10">
+        <EditorialItem
+          href={`/projects/${project.slug}`}
+          title={title}
+          description={getHomeProjectDescription(project)}
+          trailing={formatProjectYear(project.frontmatter.date)}
+          titleFontClassName="font-header"
+          onMouseEnter={onHoverStart}
+          thumbnailImage={getHomeProjectThumbnailImage(project)}
+          thumbnailAlt={title}
+          underlineOnHover
+          hoverAccentColor={getProjectAccent(project.slug)}
+          toastMessage="Opening project"
+          tracking={() => analytics.projectClick(project.slug, title)}
+          simpleHover
+          compact
+        />
+      </div>
+    </div>
+  )
+}
+
+export function FeaturedProjectList({ projects }: FeaturedProjectListProps) {
+  const [hoveredProject, setHoveredProject] = useState<FeaturedProjectHoveredState | null>(null)
+
+  const listState = getFeaturedProjectListState(projects, hoveredProject)
+  const clearHoveredProject = () => setHoveredProject(null)
+
+  const handleListBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      clearHoveredProject()
+    }
+  }
+
+  return (
+    <div
+      className={cn(
+        'featured-project-list space-y-1.5 sm:space-y-2.5',
+        listState.hasHoveredProject && 'featured-project-list-hovering',
+      )}
+      onBlur={handleListBlur}
+      onMouseLeave={clearHoveredProject}
+    >
+      {listState.projectRows.map((rowState) => {
+        const project = projects[rowState.index]
+
+        if (!project) return null
+
+        return (
+          <FeaturedProjectRow
+            key={rowState.slug}
+            project={project}
+            rowState={rowState}
+            onHoverEnd={clearHoveredProject}
+            onHoverStart={() => setHoveredProject({ slug: rowState.slug, index: rowState.index })}
+          />
+        )
+      })}
+      <PlaygroundProjectRow
+        active={listState.playgroundRow.active}
+        hoverDistance={listState.playgroundRow.hoverDistance}
+        muted={listState.playgroundRow.muted}
+        onHoverEnd={clearHoveredProject}
+        onHoverStart={() => setHoveredProject({
+          slug: listState.playgroundRow.slug,
+          index: listState.playgroundRow.index,
+        })}
+      />
     </div>
   )
 }

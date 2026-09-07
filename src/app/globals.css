@@ -66,11 +66,11 @@ html, body {
 
 html {
   scroll-behavior: auto;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* ─────────────────────────────────────────────────────────
- * COLOR SYSTEM — permanent charcoal with warm orange accents
+ * COLOR SYSTEM — permanent dark palette for the original design
  * ───────────────────────────────────────── */
 
 :root {
@@ -78,43 +78,43 @@ html {
   --foreground-rgb: 242, 241, 237;
   --card-rgb: 27, 30, 33;
   --card-foreground-rgb: 242, 241, 237;
-  --primary-rgb: 255, 117, 71;
+  --primary-rgb: 242, 241, 237;
   --primary-foreground-rgb: 17, 19, 21;
   --secondary-rgb: 35, 39, 42;
   --secondary-foreground-rgb: 242, 241, 237;
   --muted-rgb: 35, 39, 42;
-  --muted-foreground-rgb: 169, 173, 176;
-  --subtle-foreground-rgb: 148, 154, 158;
-  --accent-rgb: 255, 117, 71;
+  --muted-foreground-rgb: 191, 195, 198;
+  --subtle-foreground-rgb: 174, 179, 183;
+  --accent-rgb: 155, 184, 155;
   --accent-foreground-rgb: 17, 19, 21;
-  --accent-subtle-rgb: 48, 33, 25;
-  --accent-muted-rgb: 186, 104, 73;
+  --accent-subtle-rgb: 37, 48, 41;
+  --accent-muted-rgb: 113, 135, 117;
   --accent-blue-rgb: 154, 190, 203;
   --accent-green-rgb: 155, 184, 155;
   --border-rgb: 51, 56, 60;
   --input-rgb: 65, 73, 78;
-  --ring-rgb: 255, 117, 71;
+  --ring-rgb: 155, 184, 155;
   --background: #111315;
   --foreground: #f2f1ed;
   --background-rgb: 17, 19, 21;
   --card: #1b1e21;
   --card-foreground: #f2f1ed;
-  --primary: #ff7547;
+  --primary: #f2f1ed;
   --primary-foreground: #111315;
   --secondary: #23272a;
   --secondary-foreground: #f2f1ed;
   --muted: #23272a;
-  --muted-foreground: #a9adb0;
-  --subtle-foreground: #949a9e;
-  --accent: #ff7547;
+  --muted-foreground: #bfc3c6;
+  --subtle-foreground: #aeb3b7;
+  --accent: #9bb89b;
   --accent-foreground: #111315;
-  --accent-subtle: #302119;
-  --accent-muted: #ba6849;
+  --accent-subtle: #253029;
+  --accent-muted: #718775;
   --accent-blue: #9abecb;
   --accent-green: #9bb89b;
   --border: #33383c;
   --input: #41494e;
-  --ring: #ff7547;
+  --ring: #9bb89b;
   --surface-warm-rgb: 34, 38, 41;
   --surface-paper-rgb: 27, 30, 33;
   --grain-rgb: 125, 130, 133;
@@ -128,12 +128,12 @@ html {
   --sky-cool: oklch(0.893 0.006 84.6 / 0.035);
   --sky-spot-a: oklch(0.868 0.009 84.6 / 0.045);
   --sky-spot-b: oklch(0.893 0.006 84.6 / 0.035);
-  --ink-underline: #ff7547;
-  --contact-accent: #ff7547;
-  --contact-accent-soft: #302119;
-  --contact-accent-rgb: 255, 117, 71;
-  --contact-email-accent: #ff7547;
-  --contact-email-accent-soft: #302119;
+  --ink-underline: #c3ae8f;
+  --contact-accent: #d79c88;
+  --contact-accent-soft: #302725;
+  --contact-accent-rgb: 215, 156, 136;
+  --contact-email-accent: #81bbb2;
+  --contact-email-accent-soft: #23312f;
   --contact-email-ink: #f2f1ed;
   --contact-paper: #1b1e21;
   --contact-paper-hover: #23272a;
@@ -251,7 +251,7 @@ body {
   backface-visibility: hidden;
 }
 
-/* Body copy uses Geist Sans; metadata keeps the mono stack. */
+/* Body copy inherits the site-wide Geist Mono stack; keep pretty wrapping for readability. */
 p, li, dd, blockquote, figcaption {
   text-wrap: pretty;
 }

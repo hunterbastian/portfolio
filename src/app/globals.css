@@ -66,38 +66,39 @@ html, body {
 
 html {
   scroll-behavior: auto;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* ─────────────────────────────────────────────────────────
- * COLOR SYSTEM — warm off-white minimal
+ * COLOR SYSTEM — permanent charcoal with warm orange accents
  * ───────────────────────────────────────── */
 
 :root {
-  --background: oklch(0.985 0.003 90);
-  --foreground: oklch(0.355 0.012 70);
-  --background-rgb: 249, 247, 242;
-  --card: oklch(0.99 0.002 90);
-  --card-foreground: oklch(0.355 0.012 70);
-  --primary: oklch(0.355 0.012 70);
-  --primary-foreground: oklch(0.985 0.003 90);
-  --secondary: oklch(0.965 0.004 90);
-  --secondary-foreground: oklch(0.355 0.012 70);
-  --muted: oklch(0.955 0.004 90);
-  --muted-foreground: oklch(0.54 0.01 70);
-  --subtle-foreground: oklch(0.68 0.01 70);
-  --accent: oklch(0.62 0.05 130);
-  --accent-foreground: oklch(0.985 0.003 90);
-  --accent-subtle: oklch(0.96 0.015 130);
-  --accent-muted: oklch(0.82 0.03 130);
-  --accent-blue: oklch(0.58 0.05 238);
-  --accent-green: oklch(0.56 0.06 145);
-  --border: oklch(0.885 0.006 90);
-  --input: oklch(0.885 0.006 90);
-  --ring: oklch(0.62 0.05 130);
-  --surface-warm-rgb: 232, 228, 219;
-  --surface-paper-rgb: 239, 236, 229;
-  --grain-rgb: 183, 177, 165;
+  color-scheme: dark;
+  --background: #111315;
+  --foreground: #f2f1ed;
+  --background-rgb: 17, 19, 21;
+  --card: #1b1e21;
+  --card-foreground: #f2f1ed;
+  --primary: #ff7547;
+  --primary-foreground: #111315;
+  --secondary: #23272a;
+  --secondary-foreground: #f2f1ed;
+  --muted: #23272a;
+  --muted-foreground: #a9adb0;
+  --subtle-foreground: #949a9e;
+  --accent: #ff7547;
+  --accent-foreground: #111315;
+  --accent-subtle: #302119;
+  --accent-muted: #ba6849;
+  --accent-blue: #9abecb;
+  --accent-green: #9bb89b;
+  --border: #33383c;
+  --input: #41494e;
+  --ring: #ff7547;
+  --surface-warm-rgb: 34, 38, 41;
+  --surface-paper-rgb: 27, 30, 33;
+  --grain-rgb: 125, 130, 133;
   --header-frost-opacity: 0.66;
   --header-frost-highlight: 0.1;
   --header-frost-blur: 20px;
@@ -108,67 +109,31 @@ html {
   --sky-cool: oklch(0.893 0.006 84.6 / 0.035);
   --sky-spot-a: oklch(0.868 0.009 84.6 / 0.045);
   --sky-spot-b: oklch(0.893 0.006 84.6 / 0.035);
-  --ink-underline: oklch(0.729 0.043 74.3);
-  --contact-accent: oklch(0.49 0.055 34);
-  --contact-accent-soft: oklch(0.976 0.006 72);
-  --contact-accent-rgb: 142, 82, 68;
-  --contact-email-accent: oklch(0.53 0.07 188);
-  --contact-email-accent-soft: oklch(0.948 0.028 188);
-  --contact-email-ink: oklch(0.285 0.042 188);
-  --contact-paper: color-mix(in srgb, var(--background) 76%, #fffaf4);
-  --contact-paper-hover: color-mix(in srgb, var(--background) 72%, var(--contact-accent-soft));
-  --contact-rule: color-mix(in srgb, var(--border) 78%, var(--contact-accent) 22%);
+  --ink-underline: #ff7547;
+  --contact-accent: #ff7547;
+  --contact-accent-soft: #302119;
+  --contact-accent-rgb: 255, 117, 71;
+  --contact-email-accent: #ff7547;
+  --contact-email-accent-soft: #302119;
+  --contact-email-ink: #f2f1ed;
+  --contact-paper: #1b1e21;
+  --contact-paper-hover: #23272a;
+  --contact-rule: #41494e;
   --box-radius: 8px;
-  --surface-glass-soft: rgba(var(--surface-paper-rgb), 0.2);
-  --surface-glass-soft-border: rgba(0, 0, 0, 0.05);
+  --surface-glass-soft: #1b1e21;
+  --surface-glass-soft-border: rgba(255,255,255,0.1);
   --surface-glass-soft-shadow:
     0 0 0 1px var(--surface-glass-soft-border),
     0 8px 18px -22px rgba(20, 16, 10, 0.2);
-  --surface-glass-chrome:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 252, 246, 0.96) 36%, rgba(247, 241, 231, 0.99) 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 58%);
-  --surface-glass-chrome-hover:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 251, 244, 0.98) 36%, rgba(248, 240, 228, 1) 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 60%);
-  --surface-glass-chrome-dark:
-    linear-gradient(180deg, rgba(61, 57, 51, 0.96) 0%, rgba(46, 42, 37, 0.98) 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 58%);
-  --surface-glass-chrome-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.84),
-    inset 0 0 0 3px rgba(246, 242, 235, 0.88),
-    inset 0 6px 14px rgba(255, 255, 255, 0.58),
-    inset 0 -7px 14px rgba(202, 192, 176, 0.24),
-    0 0 0 1px rgba(75, 65, 50, 0.08),
-    0 5px 0 -3px rgba(215, 207, 194, 0.9),
-    0 14px 24px -19px rgba(38, 34, 29, 0.72),
-    0 20px 44px -28px rgba(83, 73, 58, 0.56);
-  --surface-glass-chrome-shadow-hover:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.9),
-    inset 0 0 0 3px rgba(248, 244, 237, 0.92),
-    inset 0 7px 15px rgba(255, 255, 255, 0.64),
-    inset 0 -8px 16px rgba(202, 192, 176, 0.28),
-    0 0 0 1px rgba(75, 65, 50, 0.1),
-    0 6px 0 -3px rgba(215, 207, 194, 0.95),
-    0 16px 28px -20px rgba(38, 34, 29, 0.76),
-    0 24px 50px -30px rgba(83, 73, 58, 0.6);
-  --surface-glass-chrome-shadow-active:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.84),
-    inset 0 0 0 3px rgba(242, 237, 229, 0.86),
-    inset 0 6px 12px rgba(202, 192, 176, 0.2),
-    inset 0 -5px 10px rgba(255, 255, 255, 0.42),
-    0 0 0 1px rgba(75, 65, 50, 0.08),
-    0 8px 18px -18px rgba(38, 34, 29, 0.56);
-  --shadow-raised:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.06),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.06),
-    0px 2px 4px 0px rgba(0, 0, 0, 0.04);
-  --shadow-raised-subtle:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.04),
-    0px 1px 2px -1px rgba(0, 0, 0, 0.06);
-  --shadow-hover:
-    0px 0px 0px 1px rgba(0, 0, 0, 0.08),
-    0px 2px 4px -1px rgba(0, 0, 0, 0.08),
-    0px 8px 20px -4px rgba(0, 0, 0, 0.1);
+  --surface-glass-chrome: linear-gradient(180deg, #353a3f, #22262a);
+  --surface-glass-chrome-hover: linear-gradient(180deg, #40464b, #2b3035);
+  --surface-glass-chrome-dark: linear-gradient(180deg, #353a3f, #22262a);
+  --surface-glass-chrome-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1px #41474c, 0 5px 16px -6px #000;
+  --surface-glass-chrome-shadow-hover: inset 0 1px 0 rgba(255,255,255,0.16), 0 0 0 1px #5a6269, 0 7px 18px -6px #000;
+  --surface-glass-chrome-shadow-active: inset 0 1px 5px rgba(0,0,0,0.4), 0 0 0 1px #41474c;
+  --shadow-raised: 0 0 0 1px #33383c, 0 4px 12px -6px #000;
+  --shadow-raised-subtle: 0 0 0 1px #33383c;
+  --shadow-hover: 0 0 0 1px #51595e, 0 8px 22px -8px #000;
   --motion-press-transform: translateY(0) scale(0.96);
   --motion-press-transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
   --motion-peek-transition:
@@ -267,7 +232,7 @@ body {
   backface-visibility: hidden;
 }
 
-/* Body copy inherits the site-wide Geist Mono stack; keep pretty wrapping for readability. */
+/* Body copy uses Geist Sans; metadata keeps the mono stack. */
 p, li, dd, blockquote, figcaption {
   text-wrap: pretty;
 }

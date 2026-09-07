@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
-import { Summer as PixelSun } from '@/components/pixel/glyphs'
+import { Mountain } from 'lucide-react'
 import { PeekAction } from '@/components/PeekAction'
 import SoundToggle from '@/components/SoundToggle'
 import { chromePillClassName, chromePillIconClassName, chromePillLabelClassName } from '@/components/ui/tactile'
@@ -196,7 +196,7 @@ export default function TopMeta() {
         >
           <span>Hunter Bastian</span>
           <span className={getTopMetaSunClassName(sunBlinking)}>
-            <PixelSun size={10} />
+            <Mountain size={16} strokeWidth={1.75} />
           </span>
         </PeekAction>
 

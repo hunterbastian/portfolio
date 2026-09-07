@@ -51,7 +51,7 @@ export function getSiteStructuredData(config: SiteStructuredDataConfig = siteCon
         name: config.studioName,
         url: 'https://instagram.com/studio.alpine',
         logo: `${config.url}/images/optimized/studio-alpine-logo.webp`,
-        description: `Photography and design studio founded by ${config.personName}.`,
+        description: `Photography and creator brand founded by ${config.personName}.`,
         founder: { '@id': `${config.url}/#person` },
         foundingDate: '2026',
         sameAs: [

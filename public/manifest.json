@@ -6,8 +6,8 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#f2f1ef",
-  "theme_color": "#f2f1ef",
+  "background_color": "#111315",
+  "theme_color": "#111315",
   "orientation": "portrait-primary",
   "icons": [
     {
@@ -29,7 +29,11 @@
       "purpose": "maskable any"
     }
   ],
-  "categories": ["design", "portfolio", "creative"],
+  "categories": [
+    "design",
+    "portfolio",
+    "creative"
+  ],
   "lang": "en",
   "dir": "ltr"
 }

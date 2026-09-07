@@ -1,7 +1,10 @@
 export const siteConfig = {
   url: 'https://hunterbastian.com',
   personName: 'Hunter Bastian',
+  // Separate brands: Alpine is photography/creator work; Cala is the design business.
   studioName: 'Studio Alpine',
+  designStudioName: 'Studio Cala',
+  designStudioUrl: 'https://studio-cala.vercel.app/',
   brandName: 'Hunter Bastian',
   appName: 'Hunter Bastian Portfolio',
   shortName: 'HB Portfolio',
@@ -12,8 +15,8 @@ export const siteConfig = {
   siteLocation: 'LEHI UT',
   siteSeason: 'SPRING / 2026',
   faviconVersion: '20260506a',
-  themeColorLight: '#f2f1ef',
-  themeColorDark: '#232527',
+  themeColorLight: '#111315',
+  themeColorDark: '#111315',
   email: 'hunterbastianux@gmail.com',
   inquirySubject: 'Project Inquiry',
 } as const

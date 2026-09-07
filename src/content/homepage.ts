@@ -1,4 +1,4 @@
-import { siteProjectInquiryHref } from '@/lib/site'
+import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
 
 export interface ExperienceItem {
   year: string
@@ -29,7 +29,7 @@ export const homeHeroContent = {
   headline: 'Hunter Bastian',
   subtitle: 'Lehi, Utah',
   intro:
-    'I design and build digital products with a focus on calm interfaces, thoughtful motion, and visual restraint. I am studying Interaction Design at Utah Valley University.',
+    'I design and build thoughtful digital experiences. Away from the screen, I’m usually chasing a mountain trail or a photograph. This is a collection of my work, experiments, and the things that keep me curious.',
   handwrittenNote: 'A little page on the internet all about me',
 } as const
 
@@ -41,6 +41,13 @@ export const creatingLinks: HomeLinkItem[] = [
     ariaLabel: 'Photography Studio Studio Alpine',
     title: 'Photography Studio Studio Alpine',
     iconType: 'studio-alpine',
+  },
+  {
+    label: siteConfig.designStudioName,
+    href: siteConfig.designStudioUrl,
+    external: true,
+    ariaLabel: 'Studio Cala — web design and design studio',
+    title: 'Studio Cala — web design and design studio',
   },
   {
     label: 'Available for freelance',
@@ -65,7 +72,7 @@ export const experienceItems: ExperienceItem[] = [
     year: '2026 - Present',
     company: 'Studio Alpine',
     title: 'Founder',
-    description: 'Founder of Studio Alpine, a photography and design project.',
+    description: 'Founder of Studio Alpine, my photography and creator brand.',
   },
   {
     year: '2024 - Present',

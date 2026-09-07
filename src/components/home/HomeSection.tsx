@@ -63,7 +63,7 @@ export function Section({
   return (
     <section id={id} className={getHomeSectionClassName(scrollMarginClassName, contentGapClassName)}>
       <div className="space-y-2 sm:space-y-3">
-        <div className="hb-section-heading flex items-baseline gap-4 text-foreground">
+        <div className="flex items-baseline gap-4 text-[0.85rem] tracking-[-0.02em] text-foreground/92">
           <h2>{title}</h2>
         </div>
         {rule ? <div className="h-px w-full bg-border/90" /> : null}

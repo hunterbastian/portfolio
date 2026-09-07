@@ -29,7 +29,7 @@ export const homeHeroContent = {
   headline: 'Hunter Bastian',
   subtitle: 'Lehi, Utah',
   intro:
-    'I design and build thoughtful digital experiences. Away from the screen, I’m usually on a mountain trail or behind a camera. Here’s a little of what I’ve been making.',
+    'I design and build digital products with a focus on calm interfaces, thoughtful motion, and visual restraint. I am studying Interaction Design at Utah Valley University.',
   handwrittenNote: 'A little page on the internet all about me',
 } as const
 

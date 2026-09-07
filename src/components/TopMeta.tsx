@@ -6,7 +6,6 @@ import { ArrowUpRight } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
 import { PeekAction } from '@/components/PeekAction'
-import SoundToggle from '@/components/SoundToggle'
 import { chromePillClassName, chromePillIconClassName, chromePillLabelClassName } from '@/components/ui/tactile'
 import { showJoyToast } from '@/lib/joy'
 import { analytics } from '@/lib/analytics'
@@ -210,8 +209,6 @@ export default function TopMeta() {
               />
             ))}
           </nav>
-          <SoundToggle />
-
           <PeekAction
             peek={TOP_META_LAUNCHPAD_PEEK}
             className="group/launcher pointer-events-auto shrink-0 text-foreground transition-[filter,transform] duration-200"
@@ -239,7 +236,6 @@ export default function TopMeta() {
         </div>
 
         <div className="relative z-10 flex items-center gap-1 sm:hidden">
-          <SoundToggle />
           <PeekAction
             onClick={() =>
               activateTopMetaMobileMenuToggle({

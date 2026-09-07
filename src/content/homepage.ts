@@ -71,6 +71,12 @@ export const contactSocialLinks: HomeLinkItem[] = [
 export const experienceItems: ExperienceItem[] = [
   {
     year: '2026 - Present',
+    company: 'Tesla',
+    title: 'AI Data Labeler',
+    description: 'Labeling data to support AI model training.',
+  },
+  {
+    year: '2026 - Present',
     company: 'Studio Alpine',
     title: 'Founder',
     description: 'Founder of Studio Alpine, my photography and creator brand.',

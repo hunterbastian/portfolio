@@ -4,6 +4,11 @@ html {
   color-scheme: dark;
 }
 
+/* Keep the original ambient photograph as a quiet glow behind readable light text. */
+.animated-hero-glow {
+  opacity: 0.1;
+}
+
 .chrome-pill::before,
 .chrome-pill::after {
   opacity: 0.12;

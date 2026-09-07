@@ -22,14 +22,14 @@ export interface HomeLinkItem {
   ariaLabel?: string
   title?: string
   /** Identifier for a special icon/image to render alongside the label */
-  iconType?: 'studio-alpine' | 'handshake'
+  iconType?: 'studio-alpine' | 'studio-cala' | 'handshake'
 }
 
 export const homeHeroContent = {
   headline: 'Hunter Bastian',
   subtitle: 'Lehi, Utah',
   intro:
-    'I design and build thoughtful digital experiences. Away from the screen, I’m usually chasing a mountain trail or a photograph. This is a collection of my work, experiments, and the things that keep me curious.',
+    'I design and build thoughtful digital experiences. Away from the screen, I’m usually on a mountain trail or behind a camera. Here’s a little of what I’ve been making.',
   handwrittenNote: 'A little page on the internet all about me',
 } as const
 
@@ -43,6 +43,7 @@ export const creatingLinks: HomeLinkItem[] = [
     iconType: 'studio-alpine',
   },
   {
+    iconType: 'studio-cala',
     label: siteConfig.designStudioName,
     href: siteConfig.designStudioUrl,
     external: true,

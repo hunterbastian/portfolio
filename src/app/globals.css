@@ -75,6 +75,25 @@ html {
 
 :root {
   color-scheme: dark;
+  --foreground-rgb: 242, 241, 237;
+  --card-rgb: 27, 30, 33;
+  --card-foreground-rgb: 242, 241, 237;
+  --primary-rgb: 255, 117, 71;
+  --primary-foreground-rgb: 17, 19, 21;
+  --secondary-rgb: 35, 39, 42;
+  --secondary-foreground-rgb: 242, 241, 237;
+  --muted-rgb: 35, 39, 42;
+  --muted-foreground-rgb: 169, 173, 176;
+  --subtle-foreground-rgb: 148, 154, 158;
+  --accent-rgb: 255, 117, 71;
+  --accent-foreground-rgb: 17, 19, 21;
+  --accent-subtle-rgb: 48, 33, 25;
+  --accent-muted-rgb: 186, 104, 73;
+  --accent-blue-rgb: 154, 190, 203;
+  --accent-green-rgb: 155, 184, 155;
+  --border-rgb: 51, 56, 60;
+  --input-rgb: 65, 73, 78;
+  --ring-rgb: 255, 117, 71;
   --background: #111315;
   --foreground: #f2f1ed;
   --background-rgb: 17, 19, 21;

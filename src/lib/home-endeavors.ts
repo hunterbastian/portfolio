@@ -32,6 +32,10 @@ const HOME_ENDEAVOR_THUMBNAILS: Record<NonNullable<HomeLinkItem['iconType']>, Ho
     alt: 'Studio Alpine camera icon',
     src: '/images/optimized/endeavors/studio-alpine-camera-object-icon.png',
   },
+  'studio-cala': {
+    alt: 'Studio Cala design workspace icon',
+    src: '/images/optimized/projects/mental-health-computer-object-icon.png',
+  },
   handshake: {
     alt: 'Freelance coffee icon',
     src: '/images/optimized/endeavors/freelance-coffee-object-icon.png',

@@ -3,10 +3,12 @@ html { background: var(--background); color-scheme: dark; }
 body { background-image: none; }
 ::selection { background: #ff754740; color: var(--foreground); }
 :where(a, button, input):focus-visible { outline: 2px solid var(--ring); outline-offset: 5px; }
+.hb-mobile-menu { background: #1b1e21; border-color: var(--border); }
 .hb-header { font-family: var(--font-geist-sans), sans-serif; }
-.hb-header > div { background: color-mix(in srgb, var(--background) 94%, transparent); }
+.hb-header > div { border-color: var(--border); background: color-mix(in srgb, var(--background) 94%, transparent); }
 .chrome-pill::before, .chrome-pill::after { opacity: .12; }
 .chrome-pill { color: var(--foreground); }
+.chrome-pill .chrome-pill-label, .chrome-pill .chrome-pill-icon { color: var(--foreground); text-shadow: none; filter: none; }
 .frost-panel { background: #1b1e21e8; box-shadow: var(--shadow-raised); }
 .home-reveal-cloud-shadow, .footer-coast-shell::before, .footer-coast-shell::after { display: none; }
 .footer-coast-shell { background: none; }
@@ -115,7 +117,8 @@ body { background-image: none; }
   .hb-project-meta { flex-wrap: nowrap; font-size: .75rem; }
   .hb-project-info h3 { font-size: 1.25rem; }
   .hb-field-image figcaption { font-size: .6875rem; gap: .5rem; }
-  .hb-hero-actions { gap: 1rem; }
+  .hb-hero-actions { gap: .75rem; }
+  .hb-hero-actions .hb-button { padding-inline: .85rem; gap: .65rem; }
   .hb-eyebrow { font-size: .6875rem; gap: .65rem; }
   .hb-playground-icon { display: none; }
   .hb-playground-link h3 { font-size: 1.2rem; }

@@ -32,6 +32,10 @@ const HOME_ENDEAVOR_THUMBNAILS: Record<NonNullable<HomeLinkItem['iconType']>, Ho
     alt: 'Studio Alpine camera icon',
     src: '/images/optimized/endeavors/studio-alpine-camera-object-icon.png',
   },
+  'studio-cala': {
+    alt: 'Studio Cala design workspace icon',
+    src: '/images/optimized/projects/mental-health-computer-object-icon.png',
+  },
   handshake: {
     alt: 'Freelance coffee icon',
     src: '/images/optimized/endeavors/freelance-coffee-object-icon.png',
@@ -39,12 +43,14 @@ const HOME_ENDEAVOR_THUMBNAILS: Record<NonNullable<HomeLinkItem['iconType']>, Ho
 }
 
 const HOME_ENDEAVOR_DESCRIPTIONS: Record<string, string> = {
-  'Studio Alpine': 'Photography and lifestyle.',
+  'Studio Alpine': 'My photography and creator brand.',
+  'Studio Cala': 'My web design and design studio.',
   'Available for freelance': 'Design and web work.',
 }
 
 const HOME_ENDEAVOR_META: Record<string, string> = {
-  'Studio Alpine': 'Studio',
+  'Studio Alpine': 'Photography',
+  'Studio Cala': 'Design',
   'Available for freelance': 'Open',
 }
 

@@ -11,29 +11,29 @@ export const TOP_META_LAUNCHPAD_ARIA_LABEL = 'Open Launchpad. Also use CMD K'
 export const TOP_META_HAPTIC_STYLE = 'light'
 
 const TOP_META_SHELL_BASE_CLASS =
-  'fixed inset-x-0 top-0 z-50 px-5 py-4 transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6'
+  'hb-header fixed inset-x-0 top-0 z-50 px-5 py-4 transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6'
 const TOP_META_SHELL_HIDDEN_CLASS = 'pointer-events-none -translate-y-3 opacity-0 blur-[2px]'
 const TOP_META_SHELL_VISIBLE_CLASS = 'pointer-events-none translate-y-0 opacity-100 blur-0'
 
 const TOP_META_INNER_BASE_CLASS =
-  'relative isolate mx-auto flex max-w-[36rem] items-center justify-between gap-6 border-b border-border/72 pb-4 sm:pb-4'
+  'relative isolate mx-auto flex max-w-[64rem] items-center justify-between gap-6 border-b border-border/72 pb-4 sm:pb-4'
 const TOP_META_INNER_DISABLED_CLASS = 'pointer-events-none'
 const TOP_META_INNER_ENABLED_CLASS = 'pointer-events-auto'
 
 const TOP_META_MOBILE_MENU_BASE_CLASS =
-  'fixed right-5 top-[3.5rem] z-50 w-[12rem] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-[#fffaf2]/95 shadow-[0_18px_44px_-28px_rgba(43,39,34,0.56),0_1px_3px_rgba(43,39,34,0.08)] backdrop-blur-xl transition-[opacity,transform,filter] duration-200 ease-soft'
+  'hb-mobile-menu fixed right-5 top-[3.5rem] z-50 w-[12rem] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-card/95 shadow-[0_18px_44px_-28px_rgba(43,39,34,0.56),0_1px_3px_rgba(43,39,34,0.08)] backdrop-blur-xl transition-[opacity,transform,filter] duration-200 ease-soft'
 const TOP_META_MOBILE_MENU_OPEN_CLASS = 'pointer-events-auto visible translate-y-0 opacity-100 blur-0'
 const TOP_META_MOBILE_MENU_CLOSED_CLASS = 'pointer-events-none invisible translate-y-1 opacity-0 blur-[4px]'
 const TOP_META_SUN_BASE_CLASS =
   'header-sun-shell text-accent/85 transition-[color,filter,transform] duration-200 ease-soft group-hover/peek:scale-[1.08] group-hover/peek:text-accent group-hover/peek:brightness-110 group-hover/peek:drop-shadow-[0_0_8px_rgba(255,75,0,0.28)] group-active:scale-[0.96]'
 const TOP_META_SUN_BLINK_CLASS = 'animate-hb-sun-blink'
-const TOP_META_NAV_ACCENT_CLASS = 'text-[#2f7d73]'
+const TOP_META_NAV_ACCENT_CLASS = 'text-[#ff7547]'
 const TOP_META_NAV_LINK_BASE_CLASS =
   'justify-center rounded-[8px] px-3 text-[0.76rem] tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:text-[0.94rem]'
 const TOP_META_NAV_LINK_ACTIVE_CLASS =
-  `${TOP_META_NAV_ACCENT_CLASS} bg-[color-mix(in_srgb,#2f7d73_11%,transparent)]`
+  `${TOP_META_NAV_ACCENT_CLASS} bg-[color-mix(in_srgb,#ff7547_11%,transparent)]`
 const TOP_META_NAV_LINK_INACTIVE_CLASS =
-  'text-muted-foreground/76 hover:bg-[color-mix(in_srgb,#2f7d73_8%,transparent)] hover:text-[#2f7d73] focus-visible:bg-[color-mix(in_srgb,#2f7d73_8%,transparent)] focus-visible:text-[#2f7d73]'
+  'text-muted-foreground hover:bg-[color-mix(in_srgb,#ff7547_8%,transparent)] hover:text-[#ff7547] focus-visible:bg-[color-mix(in_srgb,#ff7547_8%,transparent)] focus-visible:text-[#ff7547]'
 const TOP_META_NAV_LABEL_BASE_CLASS =
   'transition-[color,filter] duration-150 group-hover/peek:brightness-95'
 const TOP_META_NAV_LABEL_ACTIVE_CLASS = ''

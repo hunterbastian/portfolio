@@ -1,5 +1,5 @@
 // Service Worker for Portfolio - media assets only, fresh HTML/code always
-const CACHE_NAME = 'portfolio-assets-v14'
+const CACHE_NAME = 'portfolio-assets-v15'
 const STATIC_ASSETS = [
   '/offline.html',
   '/favicon.ico',

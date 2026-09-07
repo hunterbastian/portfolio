@@ -70,26 +70,26 @@ export function EditorialItem({
     : editorialImageClassName
   const imageSizes = compact ? '(min-width: 640px) 48px, 38px' : '(min-width: 640px) 62px, 44px'
   const titleSizeClassName = compact
-    ? 'text-[0.84rem] sm:text-[0.86rem]'
+    ? 'text-[1rem] sm:text-[1rem]'
     : simpleHover
       ? 'text-[0.93rem] sm:text-[0.93rem]'
       : 'text-[0.95rem] sm:text-[1.02rem]'
   const descriptionSizeClassName = compact
-    ? 'text-[0.76rem] sm:text-[0.8rem]'
+    ? 'text-[0.9375rem] sm:text-[0.9375rem]'
     : simpleHover
       ? 'text-[0.93rem] sm:text-[0.93rem]'
       : 'text-[0.82rem] sm:text-[0.96rem]'
-  const eyebrowSizeClassName = compact ? 'text-[0.58rem] sm:text-[0.62rem]' : 'text-[0.66rem]'
+  const eyebrowSizeClassName = compact ? 'text-[0.75rem] sm:text-[0.75rem]' : 'text-[0.66rem]'
   const rowSpacingClassName = compact
     ? 'gap-2.5 px-0 py-1.5 sm:-mx-2 sm:gap-5 sm:rounded-[7px] sm:px-2 sm:py-2'
     : 'gap-3 px-0 py-2 sm:-mx-3 sm:gap-10 sm:rounded-[8px] sm:px-3 sm:py-3'
   const contentGapClassName = compact ? 'gap-2.5 sm:gap-4' : 'gap-3 sm:gap-6'
   const textStackClassName = compact ? 'space-y-1' : 'space-y-1.5'
   const titleGapClassName = compact ? 'gap-1.5' : 'gap-2'
-  const titleTrailingClassName = compact ? 'text-[0.6rem]' : 'text-[0.68rem]'
-  const descriptionLeadingClassName = compact ? 'leading-[1.34] sm:leading-[1.42]' : 'leading-[1.46] sm:leading-[1.65]'
+  const titleTrailingClassName = compact ? 'text-[0.75rem]' : 'text-[0.68rem]'
+  const descriptionLeadingClassName = compact ? 'leading-[1.6] sm:leading-[1.6]' : 'leading-[1.46] sm:leading-[1.65]'
   const desktopTrailingClassName = compact
-    ? 'min-w-[3.25rem] px-1.5 py-0.5 text-[0.62rem]'
+    ? 'min-w-[3.25rem] px-1.5 py-0.5 text-[0.75rem]'
     : 'min-w-[4.25rem] px-2 py-1 text-[0.74rem]'
   const haptic = useWebHaptics()
   const accentStyle = getEditorialAccentStyle(title, hoverAccentColor) as EditorialAccentCssStyle
@@ -155,7 +155,7 @@ export function EditorialItem({
           <div className="flex min-w-0 items-center justify-between gap-3">
             <div className={`flex min-w-0 items-center ${titleGapClassName}`}>
               {titleLeadingIcon ? <span className="shrink-0">{titleLeadingIcon}</span> : null}
-              <p className={`${titleFontClassName ?? 'font-mono'} min-w-0 ${titleSizeClassName} leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-200 ${simpleHover ? 'group-hover:text-foreground/88' : underlineOnHover ? 'group-hover:text-[var(--editorial-accent)]' : 'group-hover:text-foreground/86'} sm:leading-none`}>
+              <p className={`${titleFontClassName ?? 'font-sans'} min-w-0 ${titleSizeClassName} leading-[1.15] tracking-[-0.03em] text-foreground transition-colors duration-200 ${simpleHover ? 'group-hover:text-foreground/88' : underlineOnHover ? 'group-hover:text-[var(--editorial-accent)]' : 'group-hover:text-foreground/86'} sm:leading-none`}>
                 <span
                   className={
                     underlineOnHover
@@ -173,7 +173,7 @@ export function EditorialItem({
               </span>
             ) : null}
           </div>
-          <p className={`max-w-[44rem] font-mono ${descriptionSizeClassName} ${descriptionLeadingClassName} text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72`}>
+          <p className={`max-w-[44rem] font-sans ${descriptionSizeClassName} ${descriptionLeadingClassName} text-muted-foreground transition-colors duration-300 group-hover:text-foreground/72`}>
             {description}
           </p>
         </div>

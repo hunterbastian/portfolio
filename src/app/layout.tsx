@@ -1,8 +1,10 @@
+import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
 import './playground.css'
 import './viewport.css'
+import './night.css'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -25,7 +27,7 @@ import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
-// Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
+// Sans for reading and expressive headings; mono for compact metadata.
 
 
 export const viewport = {
@@ -34,6 +36,8 @@ export const viewport = {
   maximumScale: 5,
   userScalable: true,
   viewportFit: 'cover',
+  colorScheme: 'dark',
+  themeColor: siteConfig.themeColorDark,
 }
 
 const faviconVersion = siteConfig.faviconVersion
@@ -48,10 +52,9 @@ export default function RootLayout({
   const launcherProjects = getLauncherProjectSources(getAllProjects())
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" data-theme="dark" suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <meta name="theme-color" content={siteConfig.themeColorLight} />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
@@ -67,7 +70,7 @@ export default function RootLayout({
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
         
         {/* Resource Hints - Optimized for performance */}
@@ -80,12 +83,12 @@ export default function RootLayout({
         
         {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: 'body{margin:0}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}::-moz-selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}'
+          __html: 'body{margin:0}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(255,117,71,.25)!important;color:inherit!important}::-moz-selection{background-color:rgba(255,117,71,.25)!important;color:inherit!important}'
         }} />
       </head>
       <body
         suppressHydrationWarning
-        className={`${GeistMono.className} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
+        className={`${GeistSans.className} ${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}

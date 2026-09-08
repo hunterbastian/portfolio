@@ -15,8 +15,8 @@ export const siteConfig = {
   siteLocation: 'LEHI UT',
   siteSeason: 'SPRING / 2026',
   faviconVersion: '20260506a',
-  themeColorLight: '#191815',
-  themeColorDark: '#191815',
+  themeColorLight: '#151719',
+  themeColorDark: '#151719',
   email: 'hunterbastianux@gmail.com',
   inquirySubject: 'Project Inquiry',
 } as const

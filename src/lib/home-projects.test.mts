@@ -202,30 +202,30 @@ test('getHomeProjectThumbnailImage prefers home-specific image before detail ima
 test('formatProjectYear and getProjectAccent provide display fallbacks', () => {
   assert.equal(formatProjectYear('2023-01-01'), '2023')
   assert.equal(formatProjectYear('2026-02-03'), '2026')
-  assert.equal(getProjectAccent('lumo'), '#2f7d73')
-  assert.equal(getProjectAccent('unknown'), '#2f7d73')
+  assert.equal(getProjectAccent('lumo'), '#c3cbd5')
+  assert.equal(getProjectAccent('unknown'), '#c3cbd5')
 })
 
 test('featured project row style vars clamp hover distance and preserve accent math', () => {
   assert.deepEqual(getFeaturedProjectRowStyleVars('lumo', 2), {
-    '--editorial-accent': '#2f7d73',
-    '--featured-row-highlight-bg': 'color-mix(in srgb, #2f7d73 5%, rgba(var(--background-rgb), 0.58))',
-    '--featured-row-highlight-border': 'color-mix(in srgb, #2f7d73 16%, transparent)',
-    '--featured-row-highlight-shadow': 'color-mix(in srgb, #2f7d73 10%, transparent)',
+    '--editorial-accent': '#c3cbd5',
+    '--featured-row-highlight-bg': 'color-mix(in srgb, #c3cbd5 5%, rgba(var(--background-rgb), 0.58))',
+    '--featured-row-highlight-border': 'color-mix(in srgb, #c3cbd5 16%, transparent)',
+    '--featured-row-highlight-shadow': 'color-mix(in srgb, #c3cbd5 10%, transparent)',
   })
   assert.equal(
     getFeaturedProjectRowStyleVars('unknown', -2)['--featured-row-highlight-bg'],
-    'color-mix(in srgb, #2f7d73 5%, rgba(var(--background-rgb), 0.58))',
+    'color-mix(in srgb, #c3cbd5 5%, rgba(var(--background-rgb), 0.58))',
   )
   assert.equal(
     getFeaturedProjectRowStyleVars('lumo', 10)['--featured-row-highlight-border'],
-    'color-mix(in srgb, #2f7d73 16%, transparent)',
+    'color-mix(in srgb, #c3cbd5 16%, transparent)',
   )
-  assert.deepEqual(getFeaturedProjectRowStyleVars('Studio Alpine', 1, '#2f7d73'), {
-    '--editorial-accent': '#2f7d73',
-    '--featured-row-highlight-bg': 'color-mix(in srgb, #2f7d73 5%, rgba(var(--background-rgb), 0.58))',
-    '--featured-row-highlight-border': 'color-mix(in srgb, #2f7d73 16%, transparent)',
-    '--featured-row-highlight-shadow': 'color-mix(in srgb, #2f7d73 10%, transparent)',
+  assert.deepEqual(getFeaturedProjectRowStyleVars('Studio Alpine', 1, '#c3cbd5'), {
+    '--editorial-accent': '#c3cbd5',
+    '--featured-row-highlight-bg': 'color-mix(in srgb, #c3cbd5 5%, rgba(var(--background-rgb), 0.58))',
+    '--featured-row-highlight-border': 'color-mix(in srgb, #c3cbd5 16%, transparent)',
+    '--featured-row-highlight-shadow': 'color-mix(in srgb, #c3cbd5 10%, transparent)',
   })
 })
 

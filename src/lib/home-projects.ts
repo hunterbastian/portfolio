@@ -40,7 +40,7 @@ export const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
   'porsche-app': 'Simplified Porsche browsing concept.',
 }
 
-export const HOME_ROW_HOVER_ACCENT = '#2f7d73'
+export const HOME_ROW_HOVER_ACCENT = '#c3cbd5'
 
 export type WorkFilter = 'all' | 'product' | 'visual' | 'web'
 

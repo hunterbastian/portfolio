@@ -145,15 +145,41 @@ test('top meta chrome class helpers preserve hidden and interactive states', () 
   assert.match(menuInner, /pointer-events-auto/)
 })
 
-test('top meta mobile menu class helper preserves open and closed transitions', () => {
-  const openClassName = getTopMetaMobileMenuClassName(true)
-  const closedClassName = getTopMetaMobileMenuClassName(false)
+test('top meta mobile menu class helper preserves visibility and interactivity', () => {
+  const openClasses = getTopMetaMobileMenuClassName(true).split(' ')
+  const closedClasses = getTopMetaMobileMenuClassName(false).split(' ')
 
-  assert.match(openClassName, /pointer-events-auto/)
-  assert.match(openClassName, /translate-y-0/)
-  assert.match(openClassName, /w-\[12rem\]/)
-  assert.match(closedClassName, /pointer-events-none/)
-  assert.match(closedClassName, /blur-\[4px\]/)
+  for (const token of ['pointer-events-auto', 'visible', 'translate-y-0', 'opacity-100']) {
+    assert.ok(openClasses.includes(token), token)
+    assert.ok(!closedClasses.includes(token), token)
+  }
+  for (const token of ['pointer-events-none', 'invisible', 'translate-y-1', 'opacity-0']) {
+    assert.ok(closedClasses.includes(token), token)
+    assert.ok(!openClasses.includes(token), token)
+  }
+})
+
+test('top meta mobile menu uses only a 200ms translate and fade without animated blur', () => {
+  for (const open of [false, true]) {
+    const classes = getTopMetaMobileMenuClassName(open).split(' ')
+
+    assert.deepEqual(classes.filter((token) => token.startsWith('transition-')), [
+      'transition-[opacity,transform]',
+    ])
+    assert.deepEqual(classes.filter((token) => token.startsWith('blur-')), [])
+    for (const token of ['duration-200', 'ease-soft', 'fixed', 'right-5', 'top-[3.5rem]', 'w-[12rem]', 'origin-top-right', 'backdrop-blur-xl']) {
+      assert.ok(classes.includes(token), token)
+    }
+  }
+})
+
+test('top meta mobile menu disables transitions and translation for reduced motion in both states', () => {
+  for (const open of [false, true]) {
+    const classes = getTopMetaMobileMenuClassName(open).split(' ')
+
+    assert.ok(classes.includes('motion-reduce:transition-none'))
+    assert.ok(classes.includes('motion-reduce:transform-none'))
+  }
 })
 
 test('top meta nav and sun class helpers preserve active and blink states', () => {

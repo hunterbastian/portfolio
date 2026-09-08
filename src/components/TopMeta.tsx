@@ -209,6 +209,7 @@ export default function TopMeta() {
               />
             ))}
           </nav>
+
           <PeekAction
             peek={TOP_META_LAUNCHPAD_PEEK}
             className="group/launcher pointer-events-auto shrink-0 text-foreground transition-[filter,transform] duration-200"

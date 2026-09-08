@@ -242,9 +242,9 @@ export function getProjectPageMetadata({
       images: [
         {
           url: imageUrl,
-          width: frontmatter.imageWidth ?? 1200,
-          height: frontmatter.imageHeight ?? 630,
-          alt: frontmatter.imageAlt ?? title,
+          width: 1200,
+          height: 630,
+          alt: title,
         },
       ],
       publishedTime: date,

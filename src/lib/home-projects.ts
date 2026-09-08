@@ -41,6 +41,7 @@ export const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
 }
 
 export const HOME_ROW_HOVER_ACCENT = '#2f7d73'
+export const HOME_PROJECT_GRID_PROJECT_LIMIT = 8
 
 export type WorkFilter = 'all' | 'product' | 'visual' | 'web'
 
@@ -140,7 +141,7 @@ export function formatProjectYear(date: string) {
 }
 
 export function getProjectRows(projects: HomeProject[], filter: WorkFilter) {
-  return projects.filter((project) => projectMatchesWorkFilter(project, filter))
+  return projects.filter((project) => projectMatchesWorkFilter(project, filter)).slice(0, HOME_PROJECT_GRID_PROJECT_LIMIT)
 }
 
 export function activateHomeProjectClearFilter({

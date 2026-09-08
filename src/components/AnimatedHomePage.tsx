@@ -42,6 +42,7 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
   return (
     <div className="relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
       <div aria-hidden="true" className="home-painterly-washes">
+        <span className="home-painterly-wash home-painterly-wash-canvas" />
         <span className="home-painterly-wash home-painterly-wash-dawn" />
         <span className="home-painterly-wash home-painterly-wash-hero" />
         <span className="home-painterly-wash home-painterly-wash-projects" />
@@ -56,15 +57,15 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
         <div className="mt-5 space-y-9 sm:mt-7 sm:space-y-20">
           <Reveal delayMs={40}>
+            <HomeEndeavorsSection />
+          </Reveal>
+
+          <Reveal delayMs={80}>
             <HomeProjectsSection
               onWorkFilterChange={applyWorkFilter}
               projects={projects}
               workFilter={workFilter}
             />
-          </Reveal>
-
-          <Reveal delayMs={80}>
-            <HomeEndeavorsSection />
           </Reveal>
 
           <Reveal delayMs={120}>

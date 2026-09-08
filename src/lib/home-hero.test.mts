@@ -32,7 +32,7 @@ test('home hero intro helper preserves paragraph splitting', () => {
 test('home hero action metadata preserves navigation, analytics, and toast contracts', () => {
   assert.equal(
     HOME_HERO_ACTION_CLASS_NAME,
-    'text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]',
+    'min-h-[44px] min-w-[44px] items-center sm:min-h-0 sm:min-w-0 text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]',
   )
   assert.equal(
     HOME_HERO_ACTION_LABEL_CLASS_NAME,

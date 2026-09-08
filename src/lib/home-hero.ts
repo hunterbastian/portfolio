@@ -6,7 +6,7 @@ export interface HomeHeroAction {
   toast: string
 }
 
-export const HOME_HERO_ACTION_CLASS_NAME = 'text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]'
+export const HOME_HERO_ACTION_CLASS_NAME = 'min-h-[44px] min-w-[44px] items-center sm:min-h-0 sm:min-w-0 text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]'
 export const HOME_HERO_ACTION_LABEL_CLASS_NAME = 'underline decoration-transparent underline-offset-[0.2em] group-hover/peek:decoration-current group-focus-visible/peek:decoration-current'
 export const HOME_HERO_ACTION_HAPTIC_STYLE = 'light'
 export const HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS =

@@ -116,13 +116,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </header>
           }
           image={
-            <div
-              className="relative mb-12 w-full overflow-hidden img-inset-outline shadow-card"
-              style={{ aspectRatio: frontmatter.imageWidth && frontmatter.imageHeight ? `${frontmatter.imageWidth} / ${frontmatter.imageHeight}` : '4 / 3' }}
-            >
+            <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden img-inset-outline shadow-card">
               <Image
                 src={frontmatter.image}
-                alt={frontmatter.imageAlt ?? frontmatter.title}
+                alt={frontmatter.title}
                 fill
                 className="object-cover"
                 priority

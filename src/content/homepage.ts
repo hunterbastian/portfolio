@@ -1,4 +1,4 @@
-import { siteConfig, siteProjectInquiryHref } from '@/lib/site'
+import { siteProjectInquiryHref } from '@/lib/site'
 
 export interface ExperienceItem {
   year: string
@@ -22,7 +22,7 @@ export interface HomeLinkItem {
   ariaLabel?: string
   title?: string
   /** Identifier for a special icon/image to render alongside the label */
-  iconType?: 'studio-alpine' | 'studio-cala' | 'handshake'
+  iconType?: 'studio-alpine' | 'handshake'
 }
 
 export const homeHeroContent = {
@@ -43,18 +43,10 @@ export const creatingLinks: HomeLinkItem[] = [
     iconType: 'studio-alpine',
   },
   {
-    iconType: 'studio-cala',
-    label: siteConfig.designStudioName,
-    href: siteConfig.designStudioUrl,
-    external: true,
-    ariaLabel: 'Studio Cala — web design and design studio',
-    title: 'Studio Cala — web design and design studio',
-  },
-  {
-    label: 'Available for freelance',
+    label: 'Studio Cala',
     href: siteProjectInquiryHref,
-    ariaLabel: 'Available for freelance',
-    title: 'Available for freelance',
+    ariaLabel: 'Studio Cala — design inquiries',
+    title: 'Studio Cala',
     iconType: 'handshake',
   },
 ]
@@ -71,15 +63,9 @@ export const contactSocialLinks: HomeLinkItem[] = [
 export const experienceItems: ExperienceItem[] = [
   {
     year: '2026 - Present',
-    company: 'Tesla',
-    title: 'AI Data Labeler',
-    description: 'Labeling data to support AI model training.',
-  },
-  {
-    year: '2026 - Present',
     company: 'Studio Alpine',
     title: 'Founder',
-    description: 'Founder of Studio Alpine, my photography and creator brand.',
+    description: 'Founder of Studio Alpine, a photography and design project.',
   },
   {
     year: '2024 - Present',

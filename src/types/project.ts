@@ -5,9 +5,6 @@ export interface ProjectFrontmatter {
   category: string
   tags: string[]
   image: string
-  imageWidth?: number
-  imageHeight?: number
-  imageAlt?: string
   homeImage?: string
   video?: string
   github?: string

@@ -3,6 +3,7 @@ import test from 'node:test'
 
 import {
   HOME_WORK_FILTER_EVENT,
+  HOME_PROJECT_GRID_PROJECT_LIMIT,
   HOME_PROJECT_CLEAR_FILTER_ANALYTICS_TARGET,
   HOME_PROJECT_CLEAR_FILTER_HAPTIC_STYLE,
   HOME_PROJECT_CLEAR_FILTER_TOAST,
@@ -161,12 +162,16 @@ test('getProjectRows filters projects and limits homepage rows', () => {
     project('d', 'Web Design', ['Next.js']),
     project('e', 'Web Design', ['Interactive']),
     project('f', 'Web Design', ['Web Design']),
-    project('g', 'Graphic Design', ['Branding']),
+    project('g', 'Web Design', ['Next.js']),
+    project('h', 'Web Design', ['Interactive']),
+    project('i', 'Web Design', ['Web Design']),
+    project('j', 'Graphic Design', ['Branding']),
   ]
 
+  assert.equal(HOME_PROJECT_GRID_PROJECT_LIMIT, 8)
   assert.deepEqual(
     getProjectRows(projects, 'web').map((item) => item.slug),
-    ['a', 'b', 'c', 'd', 'e'],
+    ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
   )
 })
 

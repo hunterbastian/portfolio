@@ -21,9 +21,9 @@ const TOP_META_INNER_DISABLED_CLASS = 'pointer-events-none'
 const TOP_META_INNER_ENABLED_CLASS = 'pointer-events-auto'
 
 const TOP_META_MOBILE_MENU_BASE_CLASS =
-  'fixed right-5 top-[3.5rem] z-50 w-[12rem] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-[#fffaf2]/95 shadow-[0_18px_44px_-28px_rgba(43,39,34,0.56),0_1px_3px_rgba(43,39,34,0.08)] backdrop-blur-xl transition-[opacity,transform,filter] duration-200 ease-soft'
-const TOP_META_MOBILE_MENU_OPEN_CLASS = 'pointer-events-auto visible translate-y-0 opacity-100 blur-0'
-const TOP_META_MOBILE_MENU_CLOSED_CLASS = 'pointer-events-none invisible translate-y-1 opacity-0 blur-[4px]'
+  'fixed right-5 top-[3.5rem] z-50 w-[12rem] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-card/95 shadow-[0_18px_44px_-28px_rgba(43,39,34,0.56),0_1px_3px_rgba(43,39,34,0.08)] backdrop-blur-xl transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
+const TOP_META_MOBILE_MENU_OPEN_CLASS = 'pointer-events-auto visible translate-y-0 opacity-100'
+const TOP_META_MOBILE_MENU_CLOSED_CLASS = 'pointer-events-none invisible translate-y-1 opacity-0'
 const TOP_META_SUN_BASE_CLASS =
   'header-sun-shell text-accent/85 transition-[color,filter,transform] duration-200 ease-soft group-hover/peek:scale-[1.08] group-hover/peek:text-accent group-hover/peek:brightness-110 group-hover/peek:drop-shadow-[0_0_8px_rgba(255,75,0,0.28)] group-active:scale-[0.96]'
 const TOP_META_SUN_BLINK_CLASS = 'animate-hb-sun-blink'

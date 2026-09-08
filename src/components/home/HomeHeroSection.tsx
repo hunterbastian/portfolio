@@ -19,7 +19,6 @@ import {
   formatHomeHeroLocalTime,
   getHomeHeroLocalTimeToggleLabel,
   getHomeHeroIntroParagraphs,
-  getHomeHeroProfileDefocusClassName,
   getNextHomeHeroLocalTimeFormat,
   type HomeHeroLocalTimeFormat,
 } from '@/lib/home-hero'
@@ -34,10 +33,8 @@ export function HomeHeroSection() {
   const introParagraphs = getHomeHeroIntroParagraphs(homeHeroContent.intro)
   const heroGlow = useHeroGlow()
   const haptic = useWebHaptics()
-  const [profileImageHovered, setProfileImageHovered] = useState(false)
   const [localTime, setLocalTime] = useState('')
   const [localTimeFormat, setLocalTimeFormat] = useState<HomeHeroLocalTimeFormat>('standard')
-  const profileDefocusClassName = getHomeHeroProfileDefocusClassName(profileImageHovered)
 
   useEffect(() => {
     const updateLocalTime = () => setLocalTime(formatHomeHeroLocalTime(new Date(), localTimeFormat))
@@ -69,7 +66,7 @@ export function HomeHeroSection() {
         }}
       >
         <Image
-          src="/images/mediterranean-ambient-home.webp"
+          src="/images/grainwave-b-preview.webp"
           alt=""
           fill
           loading="eager"
@@ -105,54 +102,8 @@ export function HomeHeroSection() {
 
       <div className="relative z-10 space-y-5 sm:space-y-7">
         <div className="space-y-3.5 sm:space-y-4">
-          <div
-            className="group relative isolate w-fit"
-            onMouseEnter={() => setProfileImageHovered(true)}
-            onMouseLeave={() => setProfileImageHovered(false)}
-            onPointerCancel={() => setProfileImageHovered(false)}
-            onPointerEnter={() => setProfileImageHovered(true)}
-            onPointerLeave={() => setProfileImageHovered(false)}
-          >
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-soft group-hover:opacity-100 group-hover:scale-100"
-              style={{
-                background:
-                  'radial-gradient(ellipse at 48% 52%, rgba(255, 72, 0, 0.56) 0%, rgba(255, 103, 16, 0.42) 32%, rgba(255, 178, 66, 0.22) 58%, transparent 80%)',
-              }}
-            />
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute -inset-10 -z-10 hidden rounded-full opacity-0 blur-3xl scale-90 transition-[opacity,transform] duration-500 ease-soft group-hover:opacity-100 group-hover:scale-100"
-              style={{
-                background:
-                  'radial-gradient(ellipse at 48% 52%, rgba(255, 78, 0, 0.4) 0%, rgba(255, 114, 18, 0.3) 34%, rgba(255, 178, 66, 0.16) 60%, transparent 82%)',
-              }}
-            />
-            <div
-              className="mask mask-squircle w-fit p-[2px] shadow-sm transition-[transform,box-shadow,background-color] duration-200 ease-soft hover:-translate-y-[2px] hover:scale-[1.01] hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
-              style={{ background: 'var(--border)' }}
-            >
-              <Image
-                src="/images/profilepicture.webp"
-                alt="Outdoor photograph of Hunter Bastian walking along a mountain road."
-                width={75}
-                height={75}
-                priority
-                className="mask mask-squircle object-cover img-inset-outline transition-[filter,transform] duration-200 ease-soft hover:scale-[1.02] hover:brightness-[1.02]"
-                sizes="75px"
-              />
-            </div>
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-1.5 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-[5px] border border-border/70 bg-background px-2 py-1 font-mono text-[0.62rem] leading-none text-muted-foreground opacity-0 shadow-[0_8px_24px_-20px_rgba(15,23,42,0.35)] blur-[4px] transition-[opacity,transform,filter] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-hover:blur-0"
-            >
-              hi
-            </span>
-          </div>
-
-          <div className={`space-y-1 ${profileDefocusClassName}`}>
-            <h1 className="font-header text-[20px] font-semibold leading-[1.05] tracking-[-0.035em] text-foreground/94 sm:text-[21px]">
+          <div className={`space-y-1 `}>
+            <h1 className="font-hero-name text-[30px] font-normal leading-[1.15] tracking-[-0.02em] text-foreground/94 sm:text-[36px]">
               {homeHeroContent.headline}
             </h1>
             <p className="font-mono text-[0.76rem] font-medium uppercase leading-none tracking-[0.11em] text-muted-foreground/68">
@@ -161,7 +112,7 @@ export function HomeHeroSection() {
           </div>
         </div>
 
-        <div className={`${homeHeroIntroStackClassName} ${profileDefocusClassName}`}>
+        <div className={`${homeHeroIntroStackClassName} `}>
           {introParagraphs.map((paragraph, index) => (
             <p
               key={paragraph}
@@ -198,7 +149,7 @@ export function HomeHeroSection() {
           ))}
         </div>
 
-        <div className={`flex flex-wrap items-center gap-x-3.5 gap-y-1.5 sm:gap-x-5 sm:gap-y-2.5 ${profileDefocusClassName}`}>
+        <div className={`flex flex-wrap items-center gap-x-3.5 gap-y-1.5 sm:gap-x-5 sm:gap-y-2.5 `}>
           {HOME_HERO_ACTIONS.map((action) => (
             <PeekAction
               key={action.label}

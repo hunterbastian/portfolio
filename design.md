@@ -15,7 +15,7 @@ colors:
   contact-cyan: "#3b8b94"
 typography:
   display:
-    fontFamily: "Geist Pixel Square, Geist Mono, ui-monospace, SFMono-Regular, monospace"
+    fontFamily: "PP Mondwest, Geist Pixel Square, Geist Mono, ui-monospace, SFMono-Regular, monospace"
     fontSize: "clamp(2.25rem, 4vw, 3rem)"
     fontWeight: 400
     lineHeight: 1
@@ -86,7 +86,7 @@ The site rejects SaaS-template composition, generic agency grids, neon AI polish
 **Key Characteristics:**
 
 - Warm off-white canvas with low-chroma ink and sparse accent.
-- Geist Mono for reading, Geist Pixel Square for identity and compact structure.
+- PP Mondwest for hero/display moments, Geist Pixel Square for identity and compact structure, Geist Mono for reading.
 - Small, precise surfaces with `8px` default radius.
 - Motion and haptics as optional craft details, never requirements.
 - Project imagery and composition as primary proof of taste.
@@ -128,15 +128,16 @@ The palette is warm, low-chroma, and restrained. Accent colors should be rare en
 
 ## 3. Typography
 
-**Display Font:** Geist Pixel Square, with Geist Mono and system monospace fallbacks.
-**Body Font:** Geist Mono, with system monospace fallbacks.
+**Display Font:** PP Mondwest, with Geist Pixel Square and Geist Mono as fallbacks.
+**Title/Label Font:** Geist Pixel Square Regular, with Geist Mono and system monospace fallbacks.
+**Body Font:** Geist Mono Regular, with system monospace fallbacks.
 **Accent Font:** HB Handscript Preview for the hero handwritten note only.
 
-**Character:** The type system is compact, structural, and personal. Geist Mono keeps the site readable and tool-like; Geist Pixel Square adds the recognizable portfolio voice in short identity moments.
+**Character:** The type system is compact, structural, and personal. Geist Mono keeps the site readable and tool-like; Geist Pixel Square carries the recognizable portfolio voice in short identity moments; PP Mondwest is the one deliberately louder face, reserved for hero and display headline moments.
 
 ### Hierarchy
 
-- **Display** (`400`, `clamp(2.25rem, 4vw, 3rem)`, `1`): Brand moments, hero identity, and highly controlled display use. Keep max sizes modest.
+- **Display** (`400`, `clamp(2.25rem, 4vw, 3rem)`, `1`): PP Mondwest. Brand moments, hero identity, and highly controlled display use. Keep max sizes modest.
 - **Headline** (`600`, `1.25rem` to `2rem`, `1.15`): Section-specific headings when a page needs stronger hierarchy than the homepage list rhythm.
 - **Title** (`600`, `0.9rem` to `1rem`, `1.25`): Project rows, tile titles, launchpad items, and compact UI labels that need identity.
 - **Body** (`400`, `14px`, `1.62`): Intro copy, project descriptions, MDX prose, and list content. Keep line length around 65 to 75 characters.
@@ -147,6 +148,8 @@ The palette is warm, low-chroma, and restrained. Accent colors should be rare en
 **The Pixel Is a Spice Rule.** Geist Pixel Square is for identity, compact labels, and selected UI moments. Do not use it for long paragraphs.
 
 **The Mono Must Stay Human Rule.** Geist Mono can be the base face, but spacing, line height, and short copy need to keep it from feeling like a terminal costume.
+
+**The Mondwest Moment Rule.** PP Mondwest is reserved for hero and display headline moments only, never titles, body copy, or labels. One louder face per system, used rarely, is a signature; used everywhere, it's a costume.
 
 ## 4. Elevation
 
@@ -218,6 +221,7 @@ Launchpad, contact email, resume preview, and Playground are allowed to feel mor
 
 - **Do** keep the first read calm: small typography, quiet hierarchy, and visible work.
 - **Do** use `font-header` for short brand and identity moments such as hero name, location, compact labels, and selected project titles.
+- **Do** reserve PP Mondwest for hero/display headline moments only; everything else stays Geist Pixel Square or Geist Mono.
 - **Do** keep body and project prose in Geist Mono with generous line height.
 - **Do** preserve `8px` as the default radius for cards, tiles, and compact panels.
 - **Do** use project-specific image composition when a source asset has unusual whitespace or aspect ratio.

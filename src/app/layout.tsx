@@ -3,6 +3,7 @@ import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
 import './playground.css'
 import './viewport.css'
+import './dark-theme.css'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -51,7 +52,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <meta name="theme-color" content={siteConfig.themeColorLight} />
+        <meta name="theme-color" content={siteConfig.themeColorDark} />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />

@@ -70,90 +70,90 @@ html {
 }
 
 /* ─────────────────────────────────────────────────────────
- * COLOR SYSTEM — warm darkroom neutrals and restrained film accents
+ * COLOR SYSTEM — graphite neutrals and restrained silver accents
  * ───────────────────────────────────────── */
 
 :root {
   color-scheme: dark;
-  --foreground-rgb: 234, 228, 216;
-  --card-rgb: 34, 33, 29;
-  --card-foreground-rgb: 234, 228, 216;
-  --primary-rgb: 234, 228, 216;
-  --primary-foreground-rgb: 25, 24, 21;
-  --secondary-rgb: 44, 42, 36;
-  --secondary-foreground-rgb: 234, 228, 216;
-  --muted-rgb: 44, 42, 36;
-  --muted-foreground-rgb: 200, 192, 178;
-  --subtle-foreground-rgb: 182, 172, 157;
-  --accent-rgb: 213, 177, 124;
-  --accent-foreground-rgb: 25, 24, 21;
-  --accent-subtle-rgb: 50, 43, 33;
-  --accent-muted-rgb: 155, 130, 96;
-  --accent-blue-rgb: 167, 180, 171;
-  --accent-green-rgb: 173, 181, 142;
-  --border-rgb: 64, 59, 50;
-  --input-rgb: 81, 75, 64;
-  --ring-rgb: 213, 177, 124;
-  --background: #191815;
-  --foreground: #eae4d8;
-  --background-rgb: 25, 24, 21;
-  --card: #22211d;
-  --card-foreground: #eae4d8;
-  --primary: #eae4d8;
-  --primary-foreground: #191815;
-  --secondary: #2c2a24;
-  --secondary-foreground: #eae4d8;
-  --muted: #2c2a24;
-  --muted-foreground: #c8c0b2;
-  --subtle-foreground: #b6ac9d;
-  --accent: #d5b17c;
-  --accent-foreground: #191815;
-  --accent-subtle: #322b21;
-  --accent-muted: #9b8260;
-  --accent-blue: #a7b4ab;
-  --accent-green: #adb58e;
-  --border: #403b32;
-  --input: #514b40;
-  --ring: #d5b17c;
-  --surface-warm-rgb: 48, 44, 35;
-  --surface-paper-rgb: 34, 33, 29;
-  --grain-rgb: 151, 139, 116;
-  --photo-mat: #d9d0bc;
+  --foreground-rgb: 228, 231, 235;
+  --card-rgb: 29, 32, 36;
+  --card-foreground-rgb: 228, 231, 235;
+  --primary-rgb: 228, 231, 235;
+  --primary-foreground-rgb: 21, 23, 25;
+  --secondary-rgb: 40, 44, 49;
+  --secondary-foreground-rgb: 228, 231, 235;
+  --muted-rgb: 40, 44, 49;
+  --muted-foreground-rgb: 186, 193, 201;
+  --subtle-foreground-rgb: 157, 166, 177;
+  --accent-rgb: 195, 203, 213;
+  --accent-foreground-rgb: 21, 23, 25;
+  --accent-subtle-rgb: 41, 48, 57;
+  --accent-muted-rgb: 135, 147, 162;
+  --accent-blue-rgb: 156, 178, 207;
+  --accent-green-rgb: 168, 183, 170;
+  --border-rgb: 57, 65, 74;
+  --input-rgb: 74, 85, 98;
+  --ring-rgb: 195, 203, 213;
+  --background: #151719;
+  --foreground: #e4e7eb;
+  --background-rgb: 21, 23, 25;
+  --card: #1d2024;
+  --card-foreground: #e4e7eb;
+  --primary: #e4e7eb;
+  --primary-foreground: #151719;
+  --secondary: #282c31;
+  --secondary-foreground: #e4e7eb;
+  --muted: #282c31;
+  --muted-foreground: #bac1c9;
+  --subtle-foreground: #9da6b1;
+  --accent: #c3cbd5;
+  --accent-foreground: #151719;
+  --accent-subtle: #293039;
+  --accent-muted: #8793a2;
+  --accent-blue: #9cb2cf;
+  --accent-green: #a8b7aa;
+  --border: #39414a;
+  --input: #4a5562;
+  --ring: #c3cbd5;
+  --surface-warm-rgb: 38, 44, 52;
+  --surface-paper-rgb: 29, 32, 36;
+  --grain-rgb: 143, 152, 163;
+  --photo-mat: #d6dade;
   --header-frost-opacity: 0.66;
   --header-frost-highlight: 0.1;
   --header-frost-blur: 20px;
   --resize-dur: 300ms;
   --resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --sky-top: oklch(0.868 0.009 84.6 / 0.1);
-  --sky-mid: oklch(0.844 0.010 80.7 / 0.06);
-  --sky-cool: oklch(0.893 0.006 84.6 / 0.035);
-  --sky-spot-a: oklch(0.868 0.009 84.6 / 0.045);
-  --sky-spot-b: oklch(0.893 0.006 84.6 / 0.035);
-  --ink-underline: #d5b17c;
-  --contact-accent: #d5b17c;
-  --contact-accent-soft: #322b21;
-  --contact-accent-rgb: 213, 177, 124;
-  --contact-email-accent: #d5b17c;
-  --contact-email-accent-soft: #322b21;
-  --contact-email-ink: #eae4d8;
-  --contact-paper: #22211d;
-  --contact-paper-hover: #2c2a24;
-  --contact-rule: #514b40;
+  --sky-top: oklch(0.868 0.009 255 / 0.1);
+  --sky-mid: oklch(0.844 0.010 255 / 0.06);
+  --sky-cool: oklch(0.893 0.006 255 / 0.035);
+  --sky-spot-a: oklch(0.868 0.009 255 / 0.045);
+  --sky-spot-b: oklch(0.893 0.006 255 / 0.035);
+  --ink-underline: #c3cbd5;
+  --contact-accent: #c3cbd5;
+  --contact-accent-soft: #293039;
+  --contact-accent-rgb: 195, 203, 213;
+  --contact-email-accent: #c3cbd5;
+  --contact-email-accent-soft: #293039;
+  --contact-email-ink: #e4e7eb;
+  --contact-paper: #1d2024;
+  --contact-paper-hover: #282c31;
+  --contact-rule: #4a5562;
   --box-radius: 8px;
-  --surface-glass-soft: #22211d;
+  --surface-glass-soft: #1d2024;
   --surface-glass-soft-border: rgba(255,255,255,0.1);
   --surface-glass-soft-shadow:
     0 0 0 1px var(--surface-glass-soft-border),
-    0 8px 18px -22px rgba(20, 16, 10, 0.2);
-  --surface-glass-chrome: linear-gradient(180deg, #35322b, #25231e);
-  --surface-glass-chrome-hover: linear-gradient(180deg, #403b32, #302c25);
-  --surface-glass-chrome-dark: linear-gradient(180deg, #35322b, #25231e);
-  --surface-glass-chrome-shadow: inset 0 1px 0 rgba(234,228,216,0.08), 0 0 0 1px #514b40, 0 5px 16px -6px #000;
-  --surface-glass-chrome-shadow-hover: inset 0 1px 0 rgba(234,228,216,0.12), 0 0 0 1px #716652, 0 7px 18px -6px #000;
-  --surface-glass-chrome-shadow-active: inset 0 1px 5px rgba(0,0,0,0.4), 0 0 0 1px #514b40;
-  --shadow-raised: 0 0 0 1px #403b32, 0 4px 12px -6px #000;
-  --shadow-raised-subtle: 0 0 0 1px #403b32;
-  --shadow-hover: 0 0 0 1px #716652, 0 8px 22px -8px #000;
+    0 8px 18px -22px rgba(12, 16, 22, 0.2);
+  --surface-glass-chrome: linear-gradient(180deg, #343c45, #242a31);
+  --surface-glass-chrome-hover: linear-gradient(180deg, #39414a, #303842);
+  --surface-glass-chrome-dark: linear-gradient(180deg, #343c45, #242a31);
+  --surface-glass-chrome-shadow: inset 0 1px 0 rgba(228,231,235,0.08), 0 0 0 1px #4a5562, 0 5px 16px -6px #000;
+  --surface-glass-chrome-shadow-hover: inset 0 1px 0 rgba(228,231,235,0.12), 0 0 0 1px #697787, 0 7px 18px -6px #000;
+  --surface-glass-chrome-shadow-active: inset 0 1px 5px rgba(0,0,0,0.4), 0 0 0 1px #4a5562;
+  --shadow-raised: 0 0 0 1px #39414a, 0 4px 12px -6px #000;
+  --shadow-raised-subtle: 0 0 0 1px #39414a;
+  --shadow-hover: 0 0 0 1px #697787, 0 8px 22px -8px #000;
   --motion-press-transform: translateY(0) scale(0.96);
   --motion-press-transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
   --motion-peek-transition:
@@ -252,7 +252,7 @@ body {
   backface-visibility: hidden;
 }
 
-/* Body copy inherits the site-wide Geist Mono stack; keep pretty wrapping for readability. */
+/* Body copy uses Geist Sans with mono labels and squared headings; keep pretty wrapping for readability. */
 p, li, dd, blockquote, figcaption {
   text-wrap: pretty;
 }

@@ -38,8 +38,8 @@ const config: Config = {
       },
       fontFamily: {
         'mono': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        'sans': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        'inter': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'sans': ['var(--font-geist-sans)', 'Geist Sans', 'Arial', 'sans-serif'],
+        'inter': ['var(--font-geist-sans)', 'Geist Sans', 'Arial', 'sans-serif'],
         'header': ['var(--font-geist-pixel-square)', 'Geist Pixel Square', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         'redaction': ['HB Redaction', 'Redaction', 'Redaction 35', 'Georgia', 'serif'],
       },

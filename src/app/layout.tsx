@@ -1,3 +1,4 @@
+import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
@@ -24,7 +25,7 @@ import { siteConfig } from '@/lib/site'
 import { getSiteMetadata } from '@/lib/site-metadata'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
-// Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
+// Geist Sans carries body copy; mono labels and squared headings retain the technical character.
 
 
 export const viewport = {
@@ -80,12 +81,12 @@ export default function RootLayout({
         
         {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: 'body{margin:0}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(213,177,124,.22)!important;color:inherit!important}::-moz-selection{background-color:rgba(213,177,124,.22)!important;color:inherit!important}'
+          __html: 'body{margin:0}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(195,203,213,.22)!important;color:inherit!important}::-moz-selection{background-color:rgba(195,203,213,.22)!important;color:inherit!important}'
         }} />
       </head>
       <body
         suppressHydrationWarning
-        className={`${GeistMono.className} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
+        className={`${GeistSans.className} ${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}

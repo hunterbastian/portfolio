@@ -21,6 +21,8 @@ import {
 import { showJoyToast } from '@/lib/joy'
 import { BLANK_LINK_TARGET, getSafeExternalLinkRel } from '@/lib/link-safety'
 import { cn } from '@/lib/utils'
+import { StudioWorkStack } from './StudioWorkStack'
+import { studioWork } from '@/content/studio-work'
 
 type HomeEndeavorRowStyle = CSSProperties &
   HomeEndeavorRowStyleVars & {
@@ -38,6 +40,7 @@ function HomeEndeavorRow({
 }) {
   const hoverAccentColor = getHomeEndeavorAccent(link.label)
   const haptic = useWebHaptics()
+  const examples = studioWork[link.label]
   const style: HomeEndeavorRowStyle = {
     ...getHomeEndeavorRowStyleVars(rowState.label, rowState.hoverDistance),
     '--editorial-accent': hoverAccentColor,
@@ -69,7 +72,7 @@ function HomeEndeavorRow({
       </span>
     </>
   )
-  const linkClassName = 'featured-text-row group relative z-10 grid min-h-[6.75rem] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border/85 py-4 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-5'
+  const linkClassName = 'min-w-0 flex-1 featured-text-row group relative z-10 grid min-h-[6.75rem] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 py-4 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-5'
 
   return (
     <div
@@ -82,6 +85,7 @@ function HomeEndeavorRow({
       onMouseEnter={onHoverStart}
       style={style}
     >
+      <div className="relative z-10 flex items-center gap-2 border-t border-border/85 sm:gap-4">
       {link.external ? (
         <a
           href={link.href}
@@ -105,6 +109,8 @@ function HomeEndeavorRow({
           {content}
         </Link>
       )}
+      {examples && <StudioWorkStack studio={link.label} examples={examples} print={link.iconType === 'studio-alpine'} />}
+      </div>
     </div>
   )
 }

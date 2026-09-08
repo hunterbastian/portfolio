@@ -140,7 +140,7 @@ export function formatProjectYear(date: string) {
 }
 
 export function getProjectRows(projects: HomeProject[], filter: WorkFilter) {
-  return projects.filter((project) => projectMatchesWorkFilter(project, filter)).slice(0, 5)
+  return projects.filter((project) => projectMatchesWorkFilter(project, filter))
 }
 
 export function activateHomeProjectClearFilter({

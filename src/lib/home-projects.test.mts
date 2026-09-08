@@ -153,7 +153,7 @@ test('projectMatchesWorkFilter classifies visual and web work', () => {
   assert.equal(projectMatchesWorkFilter(webProject, 'web'), true)
 })
 
-test('getProjectRows filters projects and limits homepage rows', () => {
+test('getProjectRows filters projects without hiding older portfolio entries', () => {
   const projects = [
     project('a', 'Web Design', ['Next.js']),
     project('b', 'Web Design', ['Interactive']),
@@ -166,7 +166,7 @@ test('getProjectRows filters projects and limits homepage rows', () => {
 
   assert.deepEqual(
     getProjectRows(projects, 'web').map((item) => item.slug),
-    ['a', 'b', 'c', 'd', 'e'],
+    ['a', 'b', 'c', 'd', 'e', 'f'],
   )
 })
 

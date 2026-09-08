@@ -57,15 +57,15 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
 
         <div className="mt-5 space-y-9 sm:mt-7 sm:space-y-20">
           <Reveal delayMs={40}>
+            <HomeEndeavorsSection />
+          </Reveal>
+
+          <Reveal delayMs={80}>
             <HomeProjectsSection
               onWorkFilterChange={applyWorkFilter}
               projects={projects}
               workFilter={workFilter}
             />
-          </Reveal>
-
-          <Reveal delayMs={80}>
-            <HomeEndeavorsSection />
           </Reveal>
 
           <Reveal delayMs={120}>

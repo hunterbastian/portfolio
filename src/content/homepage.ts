@@ -43,10 +43,10 @@ export const creatingLinks: HomeLinkItem[] = [
     iconType: 'studio-alpine',
   },
   {
-    label: 'Available for freelance',
+    label: 'Studio Cala',
     href: siteProjectInquiryHref,
-    ariaLabel: 'Available for freelance',
-    title: 'Available for freelance',
+    ariaLabel: 'Studio Cala — design inquiries',
+    title: 'Studio Cala',
     iconType: 'handshake',
   },
 ]

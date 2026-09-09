@@ -25,9 +25,8 @@
 
 .frame {
   position: relative;
-  flex: 1 1 auto;
+  flex: none;
   width: 100%;
-  min-height: 0;
   overflow: hidden;
   border-radius: 6px;
   background: var(--muted);

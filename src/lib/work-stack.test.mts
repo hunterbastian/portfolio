@@ -89,6 +89,16 @@ test('scatter stack does not preload below-fold collage images', () => {
   assert.equal(source.includes('priority='), false)
 })
 
+test('collage aspect ratio belongs to the photo, not the polaroid including the caption', () => {
+  const source = readFileSync(new URL('../components/home/WorkScatterStack.tsx', import.meta.url), 'utf8')
+  const css = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
+
+  assert.ok(source.includes('style={{ aspectRatio: layoutStyle.aspectRatio }}'))
+  assert.equal(source.includes('aspectRatio: layoutStyle.aspectRatio,'), false)
+  assert.ok(css.includes('flex: none'))
+  assert.equal(css.includes('min-height: 0'), false)
+})
+
 test('scatter prints use named materials instead of ghost cards', () => {
   const source = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
 

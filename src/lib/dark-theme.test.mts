@@ -27,6 +27,29 @@ test('dark surfaces climb the Nord polar night ramp', () => {
  assert.equal(token('accent-blue'), '#81a1c1')
 })
 
+test('the ambient backdrop is graded onto Nord rather than its own photographic hues', () => {
+ const theme = readFileSync('src/app/dark-theme.css', 'utf8')
+ assert.match(theme, /--ambient-grade: #5e81ac/)
+
+ const hero = readFileSync('src/components/home/HomeHeroSection.tsx', 'utf8')
+ assert.match(hero, /grayscale/, 'the alpine poster must be flattened before it is tinted')
+ assert.match(hero, /bg-\[var\(--ambient-grade\)\] mix-blend-color/)
+
+ const globals = readFileSync('src/app/globals.css', 'utf8')
+ const washes = globals.slice(
+  globals.indexOf('.home-painterly-washes {'),
+  globals.indexOf('.home-coast-outro'),
+ )
+ assert.ok(washes.length > 0, 'expected to find the painterly wash block')
+ assert.match(washes, /background-blend-mode: screen, color, normal/, 'the dune needs the grade layer')
+
+ // Mask stops are the only place raw rgb() is legitimate here; every colour is a token.
+ const literalColours = washes
+  .split('\n')
+  .filter((line) => /rgba?\(\s*\d/.test(line) && !/mask-image/.test(line))
+ assert.deepEqual(literalColours, [], 'ambient washes must reference --ambient-* tokens')
+})
+
 test('mobile navigation uses the shared surface instead of a hardcoded light fill', () => {
  const source = readFileSync('src/lib/top-meta.ts', 'utf8')
  assert.ok(source.includes('bg-card/95'), 'mobile menu should use the theme card token')

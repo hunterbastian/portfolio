@@ -32,6 +32,19 @@
   --surface-warm-rgb: 46, 52, 64;
   --surface-paper-rgb: 46, 52, 64;
   --grain-rgb: 200, 208, 222;
+  /*
+   * Ambient backdrop. The two photographs behind the homepage (an alpine ridge and a
+   * dune) are flattened to luminance and re-tinted through --ambient-grade, because
+   * their own greens, golds and rust have no Nord equivalent. The wash triplets below
+   * light the same field; only --ambient-ember-rgb is Aurora, and only near contact.
+   */
+  --ambient-grade: #5e81ac;
+  --ambient-frost-rgb: 136, 192, 208;
+  --ambient-sky-rgb: 129, 161, 193;
+  --ambient-dusk-rgb: 94, 129, 172;
+  --ambient-sage-rgb: 163, 190, 140;
+  --ambient-snow-rgb: 216, 222, 233;
+  --ambient-ember-rgb: 208, 135, 112;
   --ink-underline: #7b88a1;
   --contact-accent: #d08770;
   --contact-accent-soft: #3e373c;
@@ -56,11 +69,6 @@
   --shadow-hover: 0 0 0 1px #616e88, 0 8px 20px -4px #0005;
 }
 
-/* Preserve the scenic wash without a bright island behind the text. */
-.animated-hero-glow { opacity: 0.8; filter: blur(6px) saturate(0.8) brightness(0.78); }
-.animated-hero-glow img { transform: none; object-position: center 52%; filter: none; }
-.animated-hero-glow > div { visibility: hidden; }
-.animated-hero-grain { mix-blend-mode: screen; }
 .section-heading-rule { background: linear-gradient(90deg, #d8dee940, transparent); }
 :focus-visible { outline-color: var(--ring); }
 

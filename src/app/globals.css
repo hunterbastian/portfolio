@@ -1045,8 +1045,8 @@ button {
 
 .home-painterly-washes::after {
   background-image:
-    radial-gradient(circle, rgba(21, 57, 70, 0.22) 0 0.55px, transparent 0.8px),
-    radial-gradient(circle, rgba(255, 246, 220, 0.24) 0 0.5px, transparent 0.76px);
+    radial-gradient(circle, rgba(var(--background-rgb), 0.42) 0 0.55px, transparent 0.8px),
+    radial-gradient(circle, rgba(var(--ambient-snow-rgb), 0.2) 0 0.5px, transparent 0.76px);
   background-position: 0 0, 2px 2px;
   background-size: 4px 4px;
   content: "";
@@ -1072,9 +1072,11 @@ button {
 
 .home-painterly-wash-canvas {
   --wash-rotate: -3deg;
-  background-blend-mode: screen, normal;
+  /* The dune's sand is graded onto --ambient-grade before the canvas veil lands on top. */
+  background-blend-mode: screen, color, normal;
   background-image:
     linear-gradient(180deg, rgba(var(--background-rgb), 0.34) 0%, rgba(var(--background-rgb), 0.5) 100%),
+    linear-gradient(0deg, var(--ambient-grade), var(--ambient-grade)),
     url('/images/optimized/ai-bg-088-ocean-dune.webp');
   background-position: 50% 52%;
   background-size: cover;
@@ -1093,8 +1095,13 @@ button {
 .home-painterly-wash-hero {
   --wash-rotate: -8deg;
   background:
-    radial-gradient(ellipse at 44% 48%, rgba(174, 200, 214, 0.2) 0%, rgba(174, 200, 214, 0.08) 34%, transparent 70%),
-    radial-gradient(ellipse at 58% 48%, rgba(255, 204, 152, 0.16) 0%, transparent 68%);
+    radial-gradient(
+      ellipse at 44% 48%,
+      rgba(var(--ambient-frost-rgb), 0.2) 0%,
+      rgba(var(--ambient-frost-rgb), 0.08) 34%,
+      transparent 70%
+    ),
+    radial-gradient(ellipse at 58% 48%, rgba(var(--ambient-sky-rgb), 0.16) 0%, transparent 68%);
   height: 20rem;
   left: 7%;
   top: 7rem;
@@ -1104,8 +1111,13 @@ button {
 .home-painterly-wash-projects {
   --wash-rotate: 7deg;
   background:
-    radial-gradient(ellipse at 38% 52%, rgba(150, 169, 138, 0.13) 0%, rgba(150, 169, 138, 0.055) 36%, transparent 74%),
-    radial-gradient(ellipse at 62% 42%, rgba(196, 198, 184, 0.12) 0%, transparent 68%);
+    radial-gradient(
+      ellipse at 38% 52%,
+      rgba(var(--ambient-sage-rgb), 0.13) 0%,
+      rgba(var(--ambient-sage-rgb), 0.055) 36%,
+      transparent 74%
+    ),
+    radial-gradient(ellipse at 62% 42%, rgba(var(--ambient-snow-rgb), 0.1) 0%, transparent 68%);
   height: 24rem;
   left: -12rem;
   top: 36rem;
@@ -1116,8 +1128,8 @@ button {
   --wash-rotate: 0deg;
   background: radial-gradient(
     ellipse at 70% 26%,
-    rgba(212, 154, 74, 0.34) 0%,
-    rgba(212, 154, 74, 0.12) 42%,
+    rgba(var(--ambient-dusk-rgb), 0.3) 0%,
+    rgba(var(--ambient-dusk-rgb), 0.1) 42%,
     transparent 72%
   );
   height: 30rem;
@@ -1129,8 +1141,13 @@ button {
 .home-painterly-wash-contact {
   --wash-rotate: -5deg;
   background:
-    radial-gradient(ellipse at 48% 52%, rgba(255, 185, 132, 0.16) 0%, rgba(255, 185, 132, 0.06) 42%, transparent 76%),
-    radial-gradient(ellipse at 68% 46%, rgba(214, 150, 130, 0.1) 0%, transparent 68%);
+    radial-gradient(
+      ellipse at 48% 52%,
+      rgba(var(--ambient-ember-rgb), 0.14) 0%,
+      rgba(var(--ambient-ember-rgb), 0.05) 42%,
+      transparent 76%
+    ),
+    radial-gradient(ellipse at 68% 46%, rgba(var(--ambient-ember-rgb), 0.07) 0%, transparent 68%);
   bottom: 2rem;
   height: 22rem;
   right: -12rem;

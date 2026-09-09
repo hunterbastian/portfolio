@@ -2,23 +2,30 @@
 
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-import { Children, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { Children, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { MOTION_EASE_SOFT, MOTION_EASE_EXIT, motionDelayMs, motionDurationMs } from '@/lib/motion'
 import { useIsInitialLoad } from '@/lib/initial-load'
 import {
-  PAGE_TRANSITION_PAGE_STATE,
   PAGE_TRANSITION_STAGE,
   PAGE_TRANSITION_TIMING,
   getInitialRouteSceneStage,
   getRouteSceneChildDelay,
   getRouteSceneDefaults,
+  getRouteSceneExit,
+  getRouteSceneExitDuration,
   getRouteSceneInitial,
   getRouteSceneMotion,
+  isRouteSceneStatic,
   scheduleRouteSceneStages,
   type RouteSceneOffsets,
   type RouteSceneStage,
   type RouteSceneTiming,
 } from '@/lib/page-transition'
+import {
+  getProjectMorphServerSnapshot,
+  getProjectMorphSlug,
+  subscribeProjectMorph,
+} from '@/lib/view-transition'
 
 /* ─────────────────────────────────────────────────────────
  * PAGE TRANSITION STORYBOARD
@@ -40,18 +47,19 @@ const ROUTE_SCENE_DEFAULTS = getRouteSceneDefaults()
 interface RouteSceneProps {
   children: ReactNode
   prefersReducedMotion: boolean
-  isInitialLoad: boolean
+  /** Render at rest and let something else own the motion for this route swap. */
+  isStatic: boolean
   timing: RouteSceneTiming
   offsets: RouteSceneOffsets
 }
 
-function RouteScene({ children, prefersReducedMotion, isInitialLoad, timing, offsets }: RouteSceneProps) {
-  const [stage, setStage] = useState<RouteSceneStage>(getInitialRouteSceneStage(isInitialLoad))
+function RouteScene({ children, prefersReducedMotion, isStatic, timing, offsets }: RouteSceneProps) {
+  const [stage, setStage] = useState<RouteSceneStage>(getInitialRouteSceneStage(isStatic))
   const routeChildren = useMemo(() => Children.toArray(children), [children])
 
   useEffect(() => {
     const timers = scheduleRouteSceneStages({
-      isInitialLoad,
+      isInitialLoad: isStatic,
       prefersReducedMotion,
       scheduleStage: (nextStage, delay) => setTimeout(() => setStage(nextStage), delay),
       setStage,
@@ -62,11 +70,11 @@ function RouteScene({ children, prefersReducedMotion, isInitialLoad, timing, off
     })
 
     return () => timers.forEach(clearTimeout)
-  }, [isInitialLoad, prefersReducedMotion, timing.childStartDelay, timing.newContentDelay])
+  }, [isStatic, prefersReducedMotion, timing.childStartDelay, timing.newContentDelay])
 
   return (
     <m.div
-      initial={getRouteSceneInitial(isInitialLoad, offsets.pageY)}
+      initial={getRouteSceneInitial(isStatic, offsets.pageY)}
       animate={getRouteSceneMotion(stage, PAGE_TRANSITION_STAGE.page, offsets.pageY)}
       transition={{
         duration: motionDurationMs(timing.newSlideDuration, prefersReducedMotion),
@@ -77,7 +85,7 @@ function RouteScene({ children, prefersReducedMotion, isInitialLoad, timing, off
       {routeChildren.map((child, index) => (
         <m.div
           key={index}
-          initial={getRouteSceneInitial(isInitialLoad, offsets.childY)}
+          initial={getRouteSceneInitial(isStatic, offsets.childY)}
           animate={getRouteSceneMotion(stage, PAGE_TRANSITION_STAGE.children, offsets.childY)}
           transition={{
             duration: motionDurationMs(timing.childDuration, prefersReducedMotion),
@@ -105,19 +113,28 @@ export default function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname()
   const prefersReducedMotion = useReducedMotion() ?? false
   const isInitialLoad = useIsInitialLoad()
+  const morphSlug = useSyncExternalStore(
+    subscribeProjectMorph,
+    getProjectMorphSlug,
+    getProjectMorphServerSnapshot,
+  )
+  const isMorphing = morphSlug !== null
 
   return (
     <AnimatePresence mode="wait" initial={false}>
       <m.div
         key={pathname}
-        exit={{ opacity: PAGE_TRANSITION_PAGE_STATE.exitOpacity, y: PAGE_TRANSITION_PAGE_STATE.exitY }}
+        exit={getRouteSceneExit(isMorphing)}
         transition={{
-          duration: motionDurationMs(PAGE_TRANSITION_TIMING.oldFadeDuration, prefersReducedMotion),
+          duration: motionDurationMs(
+            getRouteSceneExitDuration(isMorphing, PAGE_TRANSITION_TIMING.oldFadeDuration),
+            prefersReducedMotion,
+          ),
           ease: MOTION_EASE_EXIT,
         }}
       >
         <RouteScene
-          isInitialLoad={isInitialLoad}
+          isStatic={isRouteSceneStatic({ isInitialLoad, isMorphing })}
           prefersReducedMotion={prefersReducedMotion}
           timing={ROUTE_SCENE_DEFAULTS.timing}
           offsets={ROUTE_SCENE_DEFAULTS.offsets}

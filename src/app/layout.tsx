@@ -4,9 +4,11 @@ import './globals.css'
 import './playground.css'
 import './viewport.css'
 import './dark-theme.css'
+import './view-transitions.css'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
+import ViewTransitionProvider from '@/components/ViewTransitionProvider'
 import SmoothScroll from '@/components/SmoothScroll'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
@@ -105,7 +107,9 @@ export default function RootLayout({
               </a>
               <div className="min-h-screen flex flex-col">
                 <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
-                  <PageTransition>{children}</PageTransition>
+                  <ViewTransitionProvider>
+                    <PageTransition>{children}</PageTransition>
+                  </ViewTransitionProvider>
                 </main>
                 <Footer />
               </div>

@@ -8,11 +8,34 @@ import {
   getPageTransitionYOffset,
   getRouteSceneChildDelay,
   getRouteSceneDefaults,
+  getRouteSceneExit,
+  getRouteSceneExitDuration,
   getRouteSceneInitial,
   getRouteSceneMotion,
   getRouteSceneStageSchedule,
+  isRouteSceneStatic,
+  PAGE_TRANSITION_PAGE_STATE,
+  PAGE_TRANSITION_TIMING,
   scheduleRouteSceneStages,
 } from './page-transition.ts'
+
+test('a morph navigation renders the route scene at rest like the first load does', () => {
+  assert.equal(isRouteSceneStatic({ isInitialLoad: false, isMorphing: false }), false)
+  assert.equal(isRouteSceneStatic({ isInitialLoad: true, isMorphing: false }), true)
+  assert.equal(isRouteSceneStatic({ isInitialLoad: false, isMorphing: true }), true)
+})
+
+test('a morph navigation drops the exit so the incoming hero is not held back', () => {
+  assert.deepEqual(getRouteSceneExit(false), {
+    opacity: PAGE_TRANSITION_PAGE_STATE.exitOpacity,
+    y: PAGE_TRANSITION_PAGE_STATE.exitY,
+  })
+  assert.deepEqual(getRouteSceneExit(true), {})
+
+  const { oldFadeDuration } = PAGE_TRANSITION_TIMING
+  assert.equal(getRouteSceneExitDuration(false, oldFadeDuration), oldFadeDuration)
+  assert.equal(getRouteSceneExitDuration(true, oldFadeDuration), 0)
+})
 
 test('getPageTransitionYOffset combines page and child entrance offsets', () => {
   assert.equal(getPageTransitionYOffset(), PAGE_ENTRANCE_INITIAL_Y + CHILD_ENTRANCE_INITIAL_Y)

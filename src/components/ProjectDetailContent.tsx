@@ -9,15 +9,21 @@ import {
   setProjectTransitionTarget,
 } from '@/lib/project-transition'
 import {
-  PROJECT_DETAIL_HERO_INITIAL_Y,
   PROJECT_DETAIL_INITIAL_STAGE,
   PROJECT_DETAIL_ITEM_MOTION,
   PROJECT_DETAIL_TIMING,
   activateProjectDetailTransitionTarget,
   activateProjectDetailView,
+  getProjectDetailHeroMotion,
   getProjectDetailItemMotion,
   scheduleProjectDetailRevealStages,
 } from '@/lib/project-detail'
+import {
+  getProjectMorphProps,
+  getProjectMorphServerSnapshot,
+  getProjectMorphSlug,
+  subscribeProjectMorph,
+} from '@/lib/view-transition'
 import { getPageTransitionYOffset } from '@/lib/page-transition'
 import { analytics } from '@/lib/analytics'
 
@@ -68,6 +74,14 @@ export default function ProjectDetailContent({
   // Active = transition matches this slug and overlay hasn't started fading out
   const isTransitionActive = transition != null && transition.slug === slug && !transition.completing
 
+  const morphSlug = useSyncExternalStore(
+    subscribeProjectMorph,
+    getProjectMorphSlug,
+    getProjectMorphServerSnapshot,
+  )
+  const { style: morphStyle, ...morphAttributes } = getProjectMorphProps(slug ?? '', morphSlug)
+  const isMorphing = morphStyle !== undefined
+
   useEffect(() => {
     activateProjectDetailView({
       projectTitle,
@@ -114,19 +128,15 @@ export default function ProjectDetailContent({
 
       <m.div
         ref={heroRef}
-        initial={getProjectDetailItemMotion({
-          initialY: PROJECT_DETAIL_HERO_INITIAL_Y,
-          stage: 0,
-          transitionActive: isTransitionActive,
-          visibleStage: 2,
-        })}
-        animate={getProjectDetailItemMotion({
-          initialY: PROJECT_DETAIL_HERO_INITIAL_Y,
-          stage,
-          transitionActive: isTransitionActive,
-          visibleStage: 2,
-        })}
-        transition={{ duration, ease: MOTION_EASE_SOFT }}
+        initial={
+          isMorphing
+            ? false
+            : getProjectDetailHeroMotion({ isMorphing, stage: 0, transitionActive: isTransitionActive })
+        }
+        animate={getProjectDetailHeroMotion({ isMorphing, stage, transitionActive: isTransitionActive })}
+        transition={{ duration: isMorphing ? 0 : duration, ease: MOTION_EASE_SOFT }}
+        style={morphStyle}
+        {...morphAttributes}
       >
         {image}
       </m.div>

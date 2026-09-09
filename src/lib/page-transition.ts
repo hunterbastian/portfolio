@@ -138,6 +138,35 @@ export function scheduleRouteSceneStages<TTimer>({
   ]
 }
 
+/**
+ * A view transition animates the whole route swap itself, so the scene has to
+ * render at rest for those navigations. Playing the framer fade underneath the
+ * browser's own crossfade reads as a stutter, and holding the outgoing page for
+ * the exit would starve the morph of the hero it needs to land on.
+ */
+export function isRouteSceneStatic({
+  isInitialLoad,
+  isMorphing,
+}: {
+  isInitialLoad: boolean
+  isMorphing: boolean
+}): boolean {
+  return isInitialLoad || isMorphing
+}
+
+export function getRouteSceneExit(isMorphing: boolean) {
+  if (isMorphing) return {}
+
+  return {
+    opacity: PAGE_TRANSITION_PAGE_STATE.exitOpacity,
+    y: PAGE_TRANSITION_PAGE_STATE.exitY,
+  }
+}
+
+export function getRouteSceneExitDuration(isMorphing: boolean, duration: number): number {
+  return isMorphing ? 0 : duration
+}
+
 export function getRouteSceneInitial(isInitialLoad: boolean, initialY: number) {
   if (isInitialLoad) return false
   return {

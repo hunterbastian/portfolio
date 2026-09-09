@@ -101,6 +101,34 @@ export function getProjectDetailItemMotion({
   }
 }
 
+export const PROJECT_DETAIL_HERO_VISIBLE_STAGE = 2
+
+/**
+ * A view transition already carries the hero from the card into place, so the
+ * reveal storyboard has to hand it over at rest. Fading and sliding it at the
+ * same time would animate the element twice over the same frames.
+ */
+export function getProjectDetailHeroMotion({
+  isMorphing,
+  stage,
+  transitionActive,
+}: {
+  isMorphing: boolean
+  stage: number
+  transitionActive: boolean
+}) {
+  if (isMorphing) {
+    return { opacity: PROJECT_DETAIL_ITEM_MOTION.finalOpacity, y: PROJECT_DETAIL_ITEM_MOTION.finalY }
+  }
+
+  return getProjectDetailItemMotion({
+    initialY: PROJECT_DETAIL_HERO_INITIAL_Y,
+    stage,
+    transitionActive,
+    visibleStage: PROJECT_DETAIL_HERO_VISIBLE_STAGE,
+  })
+}
+
 export function getProjectDetailTransitionTarget(
   rect: ProjectDetailTransitionRect,
   pageTransitionYOffset: number,

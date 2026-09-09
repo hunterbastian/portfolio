@@ -12,6 +12,7 @@ import {
   formatProjectDate,
   getProjectDetailBreadcrumb,
   getProjectDetailDisplayTitle,
+  getProjectDetailHeroMotion,
   getProjectDetailItemMotion,
   getProjectDetailLinks,
   getProjectDetailTransitionTarget,
@@ -95,6 +96,24 @@ test('project detail link helper preserves optional link order and labels', () =
   ])
   assert.deepEqual(getProjectDetailLinks({}), [])
   assert.match(PROJECT_DETAIL_LINK_CLASS, /hover:-translate-y-\[2px\]/)
+})
+
+test('a morphing hero skips the reveal storyboard and lands at rest', () => {
+  // Mid-storyboard the hero would normally still be hidden and offset.
+  assert.deepEqual(
+    getProjectDetailHeroMotion({ isMorphing: false, stage: 0, transitionActive: false }),
+    { opacity: 0, y: PROJECT_DETAIL_HERO_INITIAL_Y },
+  )
+  assert.deepEqual(
+    getProjectDetailHeroMotion({ isMorphing: true, stage: 0, transitionActive: false }),
+    { opacity: 1, y: 0 },
+  )
+  // Once the storyboard has caught up both paths agree, so clearing the morph
+  // partway through cannot make the hero jump.
+  assert.deepEqual(
+    getProjectDetailHeroMotion({ isMorphing: false, stage: 2, transitionActive: false }),
+    getProjectDetailHeroMotion({ isMorphing: true, stage: 2, transitionActive: false }),
+  )
 })
 
 test('getProjectDetailItemMotion maps detail stages to opacity and y motion', () => {

@@ -53,6 +53,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
         <meta name="theme-color" content={siteConfig.themeColorDark} />
+        <meta name="color-scheme" content="dark" />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
@@ -68,7 +69,7 @@ export default function RootLayout({
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
         
         {/* Resource Hints - Optimized for performance */}
@@ -81,7 +82,7 @@ export default function RootLayout({
         
         {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: 'body{margin:0}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}::-moz-selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}'
+          __html: `html:root{color-scheme:dark;background:${siteConfig.themeColorDark}}body{margin:0;background:var(--background,${siteConfig.themeColorDark})}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}::-moz-selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}`
         }} />
       </head>
       <body

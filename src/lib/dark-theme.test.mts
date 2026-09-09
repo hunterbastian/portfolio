@@ -6,9 +6,13 @@ test('portfolio serves dark styling on first render without client theme hydrati
  const layout = readFileSync('src/app/layout.tsx', 'utf8')
  assert.match(layout, /import '\.\/dark-theme.css'/)
  assert.match(layout, /siteConfig.themeColorDark/)
+ assert.match(layout, /name="color-scheme" content="dark"/)
+ assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="black"/)
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
  assert.match(css, /color-scheme: dark/)
  assert.match(css, /--background: #17191b/)
+ const site = readFileSync('src/lib/site.ts', 'utf8')
+ assert.match(site, /themeColorDark: '#17191b'/)
 })
 
 test('mobile navigation uses the shared surface instead of a hardcoded light fill', () => {

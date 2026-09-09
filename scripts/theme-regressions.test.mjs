@@ -52,7 +52,7 @@ test('manifest and initial page chrome agree with the dark site canvas', () => {
   assert.ok(read('src/lib/site.ts').includes(`themeColorDark: '${background}'`))
   assert.match(layout, /name="color-scheme" content="dark"/)
   assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="black"/)
-  assert.ok(layout.includes('html{color-scheme:dark;background:${siteConfig.themeColorDark}}'))
+  assert.ok(layout.includes('html:root{color-scheme:dark;background:${siteConfig.themeColorDark}}'))
 })
 
 function assertDarkOffline(html) {

@@ -96,13 +96,17 @@ export function getWorkStackCards(
   })
 }
 
+/**
+ * Scatter placement travels as custom properties so the mobile collage can lay the
+ * same cards out as a column flow without fighting inline positioning.
+ */
 export function getWorkStackCardStyle(layout: WorkStackSlot) {
   return {
-    left: `${layout.left}%`,
-    top: `${layout.top}%`,
-    width: `${layout.width}%`,
-    zIndex: layout.zIndex,
+    '--card-left': `${layout.left}%`,
+    '--card-top': `${layout.top}%`,
+    '--card-width': `${layout.width}%`,
+    '--card-z': layout.zIndex,
+    '--card-ratio': WORK_STACK_ASPECT_RATIO[layout.aspect],
     '--stack-rotate': `${layout.rotate}deg`,
-    aspectRatio: WORK_STACK_ASPECT_RATIO[layout.aspect],
   } as const
 }

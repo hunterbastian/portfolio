@@ -33,15 +33,7 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
   return (
     <div className={styles.stack} aria-label={`${label} collage`}>
       {cards.map((card) => {
-        const layoutStyle = getWorkStackCardStyle(card.layout)
-        const style = {
-          left: layoutStyle.left,
-          top: layoutStyle.top,
-          width: layoutStyle.width,
-          zIndex: layoutStyle.zIndex,
-          aspectRatio: layoutStyle.aspectRatio,
-          '--stack-rotate': layoutStyle['--stack-rotate'],
-        } satisfies CSSProperties & { '--stack-rotate': string }
+        const style = getWorkStackCardStyle(card.layout) as CSSProperties
 
         return (
           <Link
@@ -64,7 +56,7 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
               src={card.image}
               alt=""
               fill
-              sizes="(max-width: 640px) 42vw, 180px"
+              sizes="(max-width: 640px) 48vw, 180px"
               className={styles.media}
               style={getProjectCardImageZoomStyle(card.imageZoom)}
             />

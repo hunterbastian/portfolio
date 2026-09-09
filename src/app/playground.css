@@ -955,53 +955,27 @@
     opacity: 1;
   }
 
-  .playground-gallery-tile-portrait .playground-gallery-media {
-    top: 2.35rem;
-    bottom: 2.75rem;
-    left: 27%;
-    width: 46%;
-  }
-
-  .playground-gallery-tile-feature .playground-gallery-media {
-    top: 2.35rem;
-    right: 15%;
-    bottom: 2.75rem;
-    left: 15%;
+  /* A half-width tile is too small to read a device mockup, so every variant drops
+     its framing and shows the photograph itself. */
+  .playground-gallery-tile .playground-gallery-media {
+    top: 2.15rem;
+    right: 0.72rem;
+    bottom: 2.4rem;
+    left: 0.72rem;
+    width: auto;
     height: auto;
+    border-radius: 8px;
+    background: none;
   }
 
-  .playground-gallery-tile-browser .playground-gallery-media,
-  .playground-gallery-tile-document .playground-gallery-media {
-    top: 2.35rem;
-    right: 10%;
-    bottom: 2.75rem;
-    left: 10%;
-    height: auto;
+  .playground-gallery-tile .playground-gallery-image {
+    object-fit: cover;
+    padding: 0;
   }
 
-  .playground-gallery-tile-phone .playground-gallery-media {
-    top: 2.35rem;
-    bottom: 2.75rem;
-    left: 21%;
-    width: 58%;
-    border-radius: 18px 18px 8px 8px;
-  }
-
-  .playground-gallery-tile-stack .playground-gallery-media {
-    top: 39%;
-    height: 25%;
-  }
-
-  .playground-gallery-tile-address .playground-gallery-media {
-    top: 47%;
-    height: 14%;
-  }
-
-  .playground-gallery-tile-print .playground-gallery-media {
-    right: 15%;
-    bottom: 2.75rem;
-    left: 15%;
-    height: 43%;
+  .playground-gallery-tile .playground-gallery-media::before,
+  .playground-gallery-tile .playground-gallery-media::after {
+    content: none;
   }
 
   .playground-gallery-tile:hover,

@@ -76,15 +76,27 @@ test('playground stacks cap at the pile limit and keep experiment hrefs', () => 
   assert.equal(cards[8]?.layout, PLAYGROUND_STACK_SLOTS[8])
 })
 
-test('stack card style uses percent placement and the aspect token', () => {
+test('stack card style ships placement as custom properties the collage can ignore', () => {
   const style = getWorkStackCardStyle(PROJECT_STACK_SLOTS[0])
 
-  assert.equal(style.left, '31%')
-  assert.equal(style.top, '14%')
-  assert.equal(style.width, '40%')
-  assert.equal(style.zIndex, 8)
+  assert.equal(style['--card-left'], '31%')
+  assert.equal(style['--card-top'], '14%')
+  assert.equal(style['--card-width'], '40%')
+  assert.equal(style['--card-z'], 8)
   assert.equal(style['--stack-rotate'], '-7deg')
-  assert.equal(style.aspectRatio, WORK_STACK_ASPECT_RATIO.portrait)
+  assert.equal(style['--card-ratio'], WORK_STACK_ASPECT_RATIO.portrait)
+  assert.equal('left' in style, false)
+  assert.equal('aspectRatio' in style, false)
+})
+
+test('mobile lays the collage out in columns before the scatter starts at sm', () => {
+  const css = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
+  const scatter = css.slice(css.indexOf('@media (min-width: 641px)'))
+
+  assert.ok(css.slice(0, css.indexOf('@media')).includes('columns: 2'))
+  assert.ok(scatter.includes('position: absolute'))
+  assert.ok(scatter.includes('left: var(--card-left)'))
+  assert.equal(css.slice(0, css.indexOf('@media')).includes('position: absolute'), false)
 })
 
 test('scatter stack does not preload below-fold collage images', () => {
@@ -96,7 +108,6 @@ test('scatter photos sit full-bleed without polaroid mats', () => {
   const source = readFileSync(new URL('../components/home/WorkScatterStack.tsx', import.meta.url), 'utf8')
   const css = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
 
-  assert.ok(source.includes('aspectRatio: layoutStyle.aspectRatio'))
   assert.ok(source.includes('getProjectCardImageZoomStyle(card.imageZoom)'))
   assert.equal(source.includes('styles.caption'), false)
   assert.equal(css.includes('padding: 5px 5px 0'), false)

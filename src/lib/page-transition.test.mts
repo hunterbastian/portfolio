@@ -8,33 +8,47 @@ import {
   getPageTransitionYOffset,
   getRouteSceneChildDelay,
   getRouteSceneDefaults,
-  getRouteSceneExit,
-  getRouteSceneExitDuration,
   getRouteSceneInitial,
+  getRouteSceneKey,
   getRouteSceneMotion,
   getRouteSceneStageSchedule,
-  isRouteSceneStatic,
-  PAGE_TRANSITION_PAGE_STATE,
-  PAGE_TRANSITION_TIMING,
   scheduleRouteSceneStages,
 } from './page-transition.ts'
 
-test('a morph navigation renders the route scene at rest like the first load does', () => {
-  assert.equal(isRouteSceneStatic({ isInitialLoad: false, isMorphing: false }), false)
-  assert.equal(isRouteSceneStatic({ isInitialLoad: true, isMorphing: false }), true)
-  assert.equal(isRouteSceneStatic({ isInitialLoad: false, isMorphing: true }), true)
-})
+test('a morph navigation keeps its scene key so the destination can mount at once', () => {
+  // An ordinary navigation swaps the key, which is what drives the framer scene.
+  assert.equal(
+    getRouteSceneKey({
+      currentKey: '/projects/lumo',
+      isMorphing: false,
+      pathname: '/',
+      previousPathname: '/projects/lumo',
+    }),
+    '/',
+  )
 
-test('a morph navigation drops the exit so the incoming hero is not held back', () => {
-  assert.deepEqual(getRouteSceneExit(false), {
-    opacity: PAGE_TRANSITION_PAGE_STATE.exitOpacity,
-    y: PAGE_TRANSITION_PAGE_STATE.exitY,
-  })
-  assert.deepEqual(getRouteSceneExit(true), {})
+  // A morph keeps it, so AnimatePresence never holds the outgoing page.
+  assert.equal(
+    getRouteSceneKey({
+      currentKey: '/projects/lumo',
+      isMorphing: true,
+      pathname: '/',
+      previousPathname: '/projects/lumo',
+    }),
+    '/projects/lumo',
+  )
 
-  const { oldFadeDuration } = PAGE_TRANSITION_TIMING
-  assert.equal(getRouteSceneExitDuration(false, oldFadeDuration), oldFadeDuration)
-  assert.equal(getRouteSceneExitDuration(true, oldFadeDuration), 0)
+  // Re-renders that did not navigate leave the key alone, so the key cannot
+  // catch up once the morph clears and swap the scene on matching content.
+  assert.equal(
+    getRouteSceneKey({
+      currentKey: '/projects/lumo',
+      isMorphing: false,
+      pathname: '/',
+      previousPathname: '/',
+    }),
+    '/projects/lumo',
+  )
 })
 
 test('getPageTransitionYOffset combines page and child entrance offsets', () => {

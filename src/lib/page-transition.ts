@@ -139,32 +139,30 @@ export function scheduleRouteSceneStages<TTimer>({
 }
 
 /**
- * A view transition animates the whole route swap itself, so the scene has to
- * render at rest for those navigations. Playing the framer fade underneath the
- * browser's own crossfade reads as a stutter, and holding the outgoing page for
- * the exit would starve the morph of the hero it needs to land on.
+ * AnimatePresence swaps pages by key, and a changed key holds the outgoing page
+ * in the DOM until its exit animation finishes. Exit animations need frames,
+ * and a view transition stops producing them while it waits on its callback, so
+ * a morph that changed the key would deadlock: the destination could not mount
+ * until the transition gave up waiting for it. Morph navigations keep the
+ * previous key and let the content swap in place instead — the browser is
+ * animating that change itself, so the framer scene has nothing to add.
  */
-export function isRouteSceneStatic({
-  isInitialLoad,
+export function getRouteSceneKey({
+  currentKey,
   isMorphing,
+  pathname,
+  previousPathname,
 }: {
-  isInitialLoad: boolean
+  currentKey: string
   isMorphing: boolean
-}): boolean {
-  return isInitialLoad || isMorphing
-}
-
-export function getRouteSceneExit(isMorphing: boolean) {
-  if (isMorphing) return {}
-
-  return {
-    opacity: PAGE_TRANSITION_PAGE_STATE.exitOpacity,
-    y: PAGE_TRANSITION_PAGE_STATE.exitY,
+  pathname: string
+  previousPathname: string
+}): string {
+  if (pathname === previousPathname) {
+    return currentKey
   }
-}
 
-export function getRouteSceneExitDuration(isMorphing: boolean, duration: number): number {
-  return isMorphing ? 0 : duration
+  return isMorphing ? currentKey : pathname
 }
 
 export function getRouteSceneInitial(isInitialLoad: boolean, initialY: number) {

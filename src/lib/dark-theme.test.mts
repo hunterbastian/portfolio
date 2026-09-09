@@ -10,9 +10,21 @@ test('portfolio serves dark styling on first render without client theme hydrati
  assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="black"/)
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
  assert.match(css, /color-scheme: dark/)
- assert.match(css, /--background: #17191b/)
+ assert.match(css, /--background: #242933/)
  const site = readFileSync('src/lib/site.ts', 'utf8')
- assert.match(site, /themeColorDark: '#17191b'/)
+ assert.match(site, /themeColorDark: '#242933'/)
+})
+
+test('dark surfaces climb the Nord polar night ramp', () => {
+ const css = readFileSync('src/app/dark-theme.css', 'utf8')
+ const token = (name) => css.match(new RegExp(`--${name}: (#[0-9a-f]{6})`))?.[1]
+
+ assert.equal(token('card'), '#2e3440')
+ assert.equal(token('secondary'), '#3b4252')
+ assert.equal(token('border'), '#434c5e')
+ assert.equal(token('foreground'), '#eceff4')
+ assert.equal(token('ring'), '#88c0d0')
+ assert.equal(token('accent-blue'), '#81a1c1')
 })
 
 test('mobile navigation uses the shared surface instead of a hardcoded light fill', () => {

@@ -8,28 +8,18 @@
 
 .card {
   position: absolute;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
-  background: var(--card);
+  background: var(--muted);
   border-radius: 8px;
   box-shadow: var(--shadow-raised);
-  padding: 5px 5px 0;
   transform: rotate(var(--stack-rotate));
-  transform-origin: 50% 58%;
+  transform-origin: center center;
   touch-action: manipulation;
+  filter: blur(0);
   transition:
     transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.frame {
-  position: relative;
-  flex: none;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 6px;
-  background: var(--muted);
+    box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .media {
@@ -37,18 +27,22 @@
 }
 
 .caption {
+  position: absolute;
+  inset: auto 0 0;
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
   gap: 8px;
-  min-height: 1.7rem;
-  padding: 0.38rem 0.28rem 0.5rem;
+  padding: 1.4rem 0.6rem 0.5rem;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--background) 78%, transparent));
+  color: var(--foreground);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .title {
   min-width: 0;
   overflow: hidden;
-  color: var(--foreground);
   font-family: var(--font-geist-pixel-square), 'Geist Pixel Square', ui-monospace, SFMono-Regular, monospace;
   font-size: 0.72rem;
   font-weight: 500;
@@ -75,6 +69,11 @@
   box-shadow: var(--shadow-hover);
 }
 
+.card:hover .caption,
+.card:focus-visible .caption {
+  opacity: 1;
+}
+
 .card:active {
   transform: rotate(calc(var(--stack-rotate) * 0.28)) translateY(0) scale(0.96);
 }
@@ -85,14 +84,14 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .title {
-    opacity: 0;
-    transition: opacity 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  .stack:has(.card:hover) .card,
+  .stack:has(.card:focus-visible) .card {
+    filter: blur(1.5px);
   }
 
-  .card:hover .title,
-  .card:focus-visible .title {
-    opacity: 1;
+  .stack:has(.card:hover) .card:hover,
+  .stack:has(.card:focus-visible) .card:focus-visible {
+    filter: blur(0);
   }
 }
 
@@ -108,8 +107,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .card,
-  .title {
+  .caption {
+    filter: none;
     transition: none;
+  }
+
+  .stack:has(.card:hover) .card,
+  .stack:has(.card:focus-visible) .card {
+    filter: none;
   }
 
   .card:hover,

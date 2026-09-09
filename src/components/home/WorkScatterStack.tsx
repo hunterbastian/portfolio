@@ -38,6 +38,7 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
           top: layoutStyle.top,
           width: layoutStyle.width,
           zIndex: layoutStyle.zIndex,
+          aspectRatio: layoutStyle.aspectRatio,
           '--stack-rotate': layoutStyle['--stack-rotate'],
         } satisfies CSSProperties & { '--stack-rotate': string }
 
@@ -58,15 +59,13 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
               })
             }
           >
-            <span className={styles.frame} style={{ aspectRatio: layoutStyle.aspectRatio }}>
-              <Image
-                src={card.image}
-                alt=""
-                fill
-                sizes="(max-width: 640px) 42vw, 180px"
-                className={styles.media}
-              />
-            </span>
+            <Image
+              src={card.image}
+              alt=""
+              fill
+              sizes="(max-width: 640px) 42vw, 180px"
+              className={styles.media}
+            />
             <span className={styles.caption}>
               <span className={styles.title}>{card.title}</span>
               <span className={styles.year}>{card.year}</span>

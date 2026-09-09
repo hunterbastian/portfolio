@@ -110,7 +110,7 @@ export function useLauncherCommands(projects: LauncherProject[]) {
         kind: 'Navigate',
         keywords: ['archive', 'experiments', 'prototypes', 'play'],
         run: () => {
-          router.push('/archive')
+          router.push('/#playground')
           showJoyToast('Opening playground')
         },
       },

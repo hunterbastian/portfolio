@@ -134,7 +134,7 @@ function PlaygroundProjectRow({
       active={active}
       description="Small experiments and prototypes."
       hoverDistance={hoverDistance}
-      href="/archive"
+      href="/#playground"
       muted={muted}
       onHoverEnd={onHoverEnd}
       onHoverStart={onHoverStart}

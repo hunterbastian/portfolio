@@ -41,7 +41,7 @@ const TOP_META_NAV_LABEL_INACTIVE_CLASS = ''
 
 export const TOP_META_NAV_ITEMS = [
   { name: 'Home', href: '/', peek: 'Go home', toast: 'Opening home' },
-  { name: 'Playground', href: '/archive', peek: 'Open experiments', toast: 'Opening playground' },
+  { name: 'Playground', href: '/#playground', peek: 'Open experiments', toast: 'Opening playground' },
 ] as const
 
 export type TopMetaNavItem = (typeof TOP_META_NAV_ITEMS)[number]

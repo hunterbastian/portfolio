@@ -1,0 +1,27 @@
+.section { scroll-margin-top: 90px; }
+.hint { color: #96969f; font-size: 12px; margin-top: 8px; }
+.toggle { font-size: 12px; color: #ddd; padding: 10px 0; text-decoration: underline; text-underline-offset: 4px; }
+.stack { position: relative; height: 350px; isolation: isolate; }
+.piece { position: absolute; width: 53%; max-width: 300px; left: 23.5%; top: 22px; padding: 0; border-radius: 5px; overflow: hidden; box-shadow: 0 12px 35px #0008; transition: transform 420ms cubic-bezier(.2,.8,.2,1), box-shadow 200ms; cursor: pointer; }
+.piece img { display: block; width: 100%; height: auto; }
+.piece:nth-child(1) { transform: translate(-12%, 7px) rotate(-9deg); }
+.piece:nth-child(2) { transform: translate(10%, 3px) rotate(8deg); }
+.piece:nth-child(3) { transform: rotate(-2deg); }
+.stack[data-expanded=true] .piece:nth-child(1), .stack:focus-within .piece:nth-child(1) { transform: translate(-40%, 22px) rotate(-15deg); }
+.stack[data-expanded=true] .piece:nth-child(2), .stack:focus-within .piece:nth-child(2) { transform: translate(40%, 22px) rotate(15deg); }
+.stack[data-expanded=true] .piece:nth-child(3), .stack:focus-within .piece:nth-child(3) { transform: translateY(-5px); }
+@media (hover: hover) {
+.stack:hover .piece:nth-child(1) { transform: translate(-40%, 22px) rotate(-15deg); }
+.stack:hover .piece:nth-child(2) { transform: translate(40%, 22px) rotate(15deg); }
+.stack:hover .piece:nth-child(3) { transform: translateY(-5px); }
+.piece:hover { z-index: 5; box-shadow: 0 20px 45px #000a; }
+}
+.piece:focus-visible { z-index: 6; outline: 2px solid #eee; outline-offset: 4px; }
+.dialog { padding: 0; border: 0; background: transparent; color: #eee; max-width: 94vw; max-height: 94dvh; }
+.dialog::backdrop { background: #08090ce8; backdrop-filter: blur(12px); }
+.viewer { padding: 12px; background: #141518; border-radius: 10px; }
+.viewer img { width: auto; max-width: 85vw; height: auto; max-height: 74dvh; object-fit: contain; }
+.viewer p { font-size: 12px; padding-top: 12px; }
+.close { display: block; margin-left: auto; padding: 8px 4px 14px; font-size: 13px; }
+@media(max-width: 640px) { .stack { height: 280px; } }
+@media(prefers-reduced-motion: reduce) { .piece { transition: none; } }

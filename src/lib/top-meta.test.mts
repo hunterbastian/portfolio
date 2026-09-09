@@ -38,7 +38,7 @@ import {
 } from './top-meta.ts'
 
 test('TOP_META_NAV_ITEMS keeps primary header navigation stable', () => {
-  assert.deepEqual(TOP_META_NAV_ITEMS.map((item) => item.href), ['/', '/archive'])
+  assert.deepEqual(TOP_META_NAV_ITEMS.map((item) => item.href), ['/', '/#playground'])
   assert.equal(TOP_META_NAV_ITEMS[0]?.toast, 'Opening home')
   assert.equal(TOP_META_NAV_ITEMS[1]?.peek, 'Open experiments')
 })
@@ -59,8 +59,8 @@ test('isTopMetaNavItemActive handles exact home and nested route matches', () =>
 
   assert.equal(isTopMetaNavItemActive('/', home!), true)
   assert.equal(isTopMetaNavItemActive('/projects/lumo', home!), false)
-  assert.equal(isTopMetaNavItemActive('/archive', archive!), true)
-  assert.equal(isTopMetaNavItemActive('/archive?from=home', archive!), true)
+  assert.equal(isTopMetaNavItemActive('/archive', archive!), false)
+  assert.equal(isTopMetaNavItemActive('/#playground', archive!), true)
   assert.equal(isTopMetaNavItemActive('/projects/lumo', archive!), false)
 })
 

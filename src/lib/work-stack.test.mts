@@ -91,12 +91,14 @@ test('stack card style ships placement as custom properties the collage can igno
 
 test('mobile lays the collage out in columns before the scatter starts at sm', () => {
   const css = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
+  const mobile = css.slice(0, css.indexOf('@media'))
   const scatter = css.slice(css.indexOf('@media (min-width: 641px)'))
 
-  assert.ok(css.slice(0, css.indexOf('@media')).includes('columns: 2'))
+  assert.ok(mobile.includes('grid-template-columns: repeat(2, minmax(0, 1fr))'))
+  assert.ok(mobile.includes('grid-column: span 2'))
   assert.ok(scatter.includes('position: absolute'))
   assert.ok(scatter.includes('left: var(--card-left)'))
-  assert.equal(css.slice(0, css.indexOf('@media')).includes('position: absolute'), false)
+  assert.equal(mobile.includes('position: absolute'), false)
 })
 
 test('scatter stack does not preload below-fold collage images', () => {

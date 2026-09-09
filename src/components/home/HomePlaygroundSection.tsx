@@ -6,8 +6,8 @@ import styles from './HomePlaygroundSection.module.css'
 
 const pieces = [
   { slug: 'alpine-sunset', title: 'Alpine sunset' },
-  { slug: 'alpine-daylight', title: 'Alpine daylight' },
   { slug: 'alpine-moonlight', title: 'Alpine moonlight' },
+  { slug: 'alpine-daylight', title: 'Alpine daylight' },
 ]
 
 export function HomePlaygroundSection() {

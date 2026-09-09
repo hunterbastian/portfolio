@@ -1,6 +1,7 @@
-import { getAllProjects } from '@/lib/projects'
 import AnimatedHomePage from '@/components/AnimatedHomePage'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { sortProjectsForPlayground } from '@/lib/playground'
+import { getAllProjects, getArchivedProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
 import { getStaticPageMetadata } from '@/lib/site-metadata'
 
@@ -23,10 +24,11 @@ export const revalidate = 60
 
 export default function HomePage() {
   const projects = getAllProjects()
+  const playgroundProjects = sortProjectsForPlayground(getArchivedProjects())
 
   return (
     <ErrorBoundary>
-      <AnimatedHomePage projects={projects} />
+      <AnimatedHomePage playgroundProjects={playgroundProjects} projects={projects} />
     </ErrorBoundary>
   )
 }

@@ -6,6 +6,7 @@ import { HomeEducationSection } from '@/components/home/HomeEducationSection'
 import { HomeEndeavorsSection } from '@/components/home/HomeEndeavorsSection'
 import { HomeExperienceSection } from '@/components/home/HomeExperienceSection'
 import { HomeHeroSection } from '@/components/home/HomeHeroSection'
+import { HomePlaygroundSection } from '@/components/home/HomePlaygroundSection'
 import { HomeProjectsSection } from '@/components/home/HomeProjectsSection'
 import { Reveal } from '@/components/home/HomeSection'
 import { useWorkFilterUrlSync } from '@/lib/use-work-filter-url-sync'
@@ -16,10 +17,11 @@ import {
 } from '@/lib/home-projects'
 
 interface AnimatedHomePageProps {
+  playgroundProjects: HomeProject[]
   projects: HomeProject[]
 }
 
-export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
+export default function AnimatedHomePage({ playgroundProjects, projects }: AnimatedHomePageProps) {
   const [workFilter, setWorkFilter] = useState<WorkFilter>('all')
 
   useWorkFilterUrlSync(setWorkFilter)
@@ -66,6 +68,10 @@ export default function AnimatedHomePage({ projects }: AnimatedHomePageProps) {
               projects={projects}
               workFilter={workFilter}
             />
+          </Reveal>
+
+          <Reveal delayMs={100}>
+            <HomePlaygroundSection projects={playgroundProjects} />
           </Reveal>
 
           <Reveal delayMs={120}>

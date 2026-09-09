@@ -72,10 +72,10 @@ test('hero glow offsets clamp glow values and apply grain parallax', () => {
     grainY: -HERO_GLOW_MAX_Y * HERO_GRAIN_PARALLAX_RATIO,
   })
   assert.deepEqual(getHeroGlowCssVariables({ x: 0.5, y: -0.5 }), {
-    '--hero-glow-cursor-x': '8px',
-    '--hero-glow-cursor-y': '-4px',
-    '--hero-grain-cursor-x': '4.4px',
-    '--hero-grain-cursor-y': '-2.2px',
+    '--hero-glow-cursor-x': '4px',
+    '--hero-glow-cursor-y': '-2px',
+    '--hero-grain-cursor-x': '2.2px',
+    '--hero-grain-cursor-y': '-1.1px',
   })
 })
 
@@ -86,19 +86,19 @@ test('hero glow css variable writer updates glow and grain targets', () => {
   assert.deepEqual(
     applyHeroGlowCssVariables({ glow: glow.target, grain: grain.target, point: { x: -0.25, y: 0.25 } }),
     {
-      '--hero-glow-cursor-x': '-4px',
-      '--hero-glow-cursor-y': '2px',
-      '--hero-grain-cursor-x': '-2.2px',
-      '--hero-grain-cursor-y': '1.1px',
+      '--hero-glow-cursor-x': '-2px',
+      '--hero-glow-cursor-y': '1px',
+      '--hero-grain-cursor-x': '-1.1px',
+      '--hero-grain-cursor-y': '0.55px',
     },
   )
   assert.deepEqual(glow.properties, {
-    '--hero-glow-cursor-x': '-4px',
-    '--hero-glow-cursor-y': '2px',
+    '--hero-glow-cursor-x': '-2px',
+    '--hero-glow-cursor-y': '1px',
   })
   assert.deepEqual(grain.properties, {
-    '--hero-grain-cursor-x': '-2.2px',
-    '--hero-grain-cursor-y': '1.1px',
+    '--hero-grain-cursor-x': '-1.1px',
+    '--hero-grain-cursor-y': '0.55px',
   })
 })
 

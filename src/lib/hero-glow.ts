@@ -57,8 +57,8 @@ export interface HeroGlowFrameCancelInput<TFrame> {
 }
 
 export const HERO_GLOW_LERP_FACTOR = 0.09
-export const HERO_GLOW_MAX_X = 16
-export const HERO_GLOW_MAX_Y = 8
+export const HERO_GLOW_MAX_X = 8
+export const HERO_GLOW_MAX_Y = 4
 export const HERO_GRAIN_PARALLAX_RATIO = 0.55
 export const HERO_GLOW_SETTLE_THRESHOLD = 0.002
 export const HERO_GLOW_ORIGIN: HeroGlowPoint = { x: 0, y: 0 }

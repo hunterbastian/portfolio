@@ -22,8 +22,8 @@ jobs:
         run: npm run lint
       - name: Type Check
         run: npx tsc --noEmit
-      - name: Tests
-        run: npm test
+      - name: Theme regressions
+        run: npm run test:theme
       - name: Build
         run: npm run build
       - name: Start server

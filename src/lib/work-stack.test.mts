@@ -45,6 +45,7 @@ test('getWorkStackCards maps project media onto the matching scatter slots', () 
   assert.deepEqual(cards[0], {
     href: '/projects/lumo',
     image: '/images/lumo.webp',
+    imageZoom: undefined,
     layout: PROJECT_STACK_SLOTS[0],
     slug: 'lumo',
     title: 'Lumo',
@@ -57,10 +58,12 @@ test('collage cards use case-study photos instead of home object icons', () => {
   const lumo = project('lumo', 'Lumo')
   lumo.frontmatter.homeImage = '/images/optimized/projects/lumo-orb-object-icon.png'
   lumo.frontmatter.image = '/images/optimized/projects/lumo.webp'
+  lumo.frontmatter.imageZoom = 1.4
 
   const [card] = getWorkStackCards([lumo], 'projects')
 
   assert.equal(card?.image, '/images/optimized/projects/lumo.webp')
+  assert.equal(card?.imageZoom, 1.4)
   assert.equal(card?.image.includes('object-icon'), false)
 })
 
@@ -94,7 +97,8 @@ test('scatter photos sit full-bleed without polaroid mats', () => {
   const css = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
 
   assert.ok(source.includes('aspectRatio: layoutStyle.aspectRatio'))
-  assert.equal(source.includes('styles.frame'), false)
+  assert.ok(source.includes('getProjectCardImageZoomStyle(card.imageZoom)'))
+  assert.equal(source.includes('styles.caption'), false)
   assert.equal(css.includes('padding: 5px 5px 0'), false)
   assert.ok(css.includes('filter: blur(1.5px)'))
   assert.ok(css.includes('.stack:has(.card:hover) .card'))

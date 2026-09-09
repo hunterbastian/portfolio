@@ -19,6 +19,7 @@ export interface WorkStackSlot {
 export interface WorkStackCard {
   href: string
   image: string
+  imageZoom?: number
   layout: WorkStackSlot
   slug: string
   title: string
@@ -86,6 +87,7 @@ export function getWorkStackCards(
     return {
       href: `/projects/${project.slug}`,
       image: project.frontmatter.image,
+      imageZoom: project.frontmatter.imageZoom,
       layout: slot,
       slug: project.slug,
       title: getHomeProjectTitle(project),

@@ -7,6 +7,7 @@ import { useWebHaptics } from 'web-haptics/react'
 import { analytics } from '@/lib/analytics'
 import { activateEditorialItem } from '@/lib/editorial-item'
 import { showJoyToast } from '@/lib/joy'
+import { getProjectCardImageZoomStyle } from '@/lib/project-card'
 import {
   getWorkStackCardStyle,
   getWorkStackCards,
@@ -65,11 +66,8 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
               fill
               sizes="(max-width: 640px) 42vw, 180px"
               className={styles.media}
+              style={getProjectCardImageZoomStyle(card.imageZoom)}
             />
-            <span className={styles.caption}>
-              <span className={styles.title}>{card.title}</span>
-              <span className={styles.year}>{card.year}</span>
-            </span>
           </Link>
         )
       })}

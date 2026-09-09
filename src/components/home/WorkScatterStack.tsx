@@ -31,7 +31,7 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
 
   return (
     <div className={styles.stack} aria-label={`${label} collage`}>
-      {cards.map((card, index) => {
+      {cards.map((card) => {
         const layoutStyle = getWorkStackCardStyle(card.layout)
         const style = {
           left: layoutStyle.left,
@@ -65,7 +65,6 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
               fill
               sizes="(max-width: 640px) 42vw, 180px"
               className={styles.media}
-              priority={index < 3}
             />
             <span className={styles.caption}>
               <span>{card.title}</span>

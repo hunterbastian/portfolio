@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import type { HomeProject } from './home-projects.ts'
@@ -52,6 +53,17 @@ test('getWorkStackCards maps project media onto the matching scatter slots', () 
   assert.equal(cards[1]?.layout, PROJECT_STACK_SLOTS[1])
 })
 
+test('collage cards use case-study photos instead of home object icons', () => {
+  const lumo = project('lumo', 'Lumo')
+  lumo.frontmatter.homeImage = '/images/optimized/projects/lumo-orb-object-icon.png'
+  lumo.frontmatter.image = '/images/optimized/projects/lumo.webp'
+
+  const [card] = getWorkStackCards([lumo], 'projects')
+
+  assert.equal(card?.image, '/images/optimized/projects/lumo.webp')
+  assert.equal(card?.image.includes('object-icon'), false)
+})
+
 test('playground stacks cap at the pile limit and keep experiment hrefs', () => {
   const projects = Array.from({ length: 12 }, (_, index) => project(`item-${index}`))
   const cards = getWorkStackCards(projects, 'playground')
@@ -70,4 +82,9 @@ test('stack card style uses percent placement and the aspect token', () => {
   assert.equal(style.zIndex, 8)
   assert.equal(style['--stack-rotate'], '-7deg')
   assert.equal(style.aspectRatio, WORK_STACK_ASPECT_RATIO.portrait)
+})
+
+test('scatter stack does not preload below-fold collage images', () => {
+  const source = readFileSync(new URL('../components/home/WorkScatterStack.tsx', import.meta.url), 'utf8')
+  assert.equal(source.includes('priority='), false)
 })

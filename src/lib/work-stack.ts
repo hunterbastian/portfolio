@@ -1,6 +1,5 @@
 import {
   formatProjectYear,
-  getHomeProjectThumbnailImage,
   getHomeProjectTitle,
   type HomeProject,
 } from './home-projects.ts'
@@ -86,7 +85,7 @@ export function getWorkStackCards(
 
     return {
       href: `/projects/${project.slug}`,
-      image: getHomeProjectThumbnailImage(project),
+      image: project.frontmatter.image,
       layout: slot,
       slug: project.slug,
       title: getHomeProjectTitle(project),

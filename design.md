@@ -160,7 +160,6 @@ Elevation is subtle and mostly material. The system uses tonal layering, inset r
 - **Raised Surface** (`var(--shadow-raised)`): Default for project cards, pills, and utility panels.
 - **Raised Hover** (`var(--shadow-hover)`): Hover state for raised surfaces. Keep the same shadow structure with slightly deeper values.
 - **Chrome Surface** (`var(--surface-glass-chrome-shadow)`): Signature glossy controls such as Launchpad, compact upload controls, and contact CTAs.
-- **Soft Glass** (`var(--surface-glass-soft-shadow)`): Quiet translucent surfaces such as TopMeta pills and subtle header chrome.
 - **Playground Media Depth** (`0 18px 42px -32px rgba(35, 31, 27, 0.42)`): Gallery media frames only. Keep this soft and narrow.
 
 ### Named Rules

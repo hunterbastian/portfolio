@@ -29,7 +29,6 @@
   --border: #434c5e;
   --input: #434c5e;
   --ring: #88c0d0;
-  --surface-warm-rgb: 46, 52, 64;
   --surface-paper-rgb: 46, 52, 64;
   --grain-rgb: 200, 208, 222;
   /*
@@ -45,22 +44,12 @@
   --ambient-sage-rgb: 163, 190, 140;
   --ambient-snow-rgb: 216, 222, 233;
   --ambient-ember-rgb: 208, 135, 112;
-  --ink-underline: #7b88a1;
   --contact-accent: #d08770;
-  --contact-accent-soft: #3e373c;
-  --contact-accent-rgb: 208, 135, 112;
   --contact-email-accent: #8fbcbb;
   --contact-email-accent-soft: #343f47;
   --contact-email-ink: #d8dee9;
-  --contact-paper: #2e3440;
-  --contact-paper-hover: #3b4252;
-  --contact-rule: #434c5e;
-  --surface-glass-soft: rgba(46, 52, 64, 0.72);
-  --surface-glass-soft-border: rgba(236, 239, 244, 0.12);
-  --surface-glass-soft-shadow: 0 0 0 1px var(--surface-glass-soft-border);
   --surface-glass-chrome: linear-gradient(180deg, #434c5e, #333a47);
   --surface-glass-chrome-hover: linear-gradient(180deg, #4f5a6e, #3b4252);
-  --surface-glass-chrome-dark: var(--surface-glass-chrome);
   --surface-glass-chrome-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 0 0 1px #4c566a, 0 8px 20px -12px #000;
   --surface-glass-chrome-shadow-hover: inset 0 1px rgba(255, 255, 255, 0.18), 0 0 0 1px #616e88, 0 10px 24px -12px #000;
   --surface-glass-chrome-shadow-active: inset 0 2px 5px #1c2028, 0 0 0 1px #4c566a;
@@ -80,12 +69,7 @@
 
 /* Playground archive: keep the pinboard composition, sit it on the dark desk. */
 .playground-page {
-  --playground-blue: #81a1c1;
-  --playground-cyan: #8fbcbb;
-  --playground-amber: #d08770;
-  --playground-green: #a3be8c;
   --playground-ink: var(--foreground);
-  --playground-muted: var(--muted-foreground);
   background:
     radial-gradient(70% 42% at 50% 0%, color-mix(in srgb, var(--accent-blue) 10%, transparent) 0%, transparent 72%),
     linear-gradient(180deg, color-mix(in srgb, var(--card) 42%, transparent) 0%, transparent 34%);

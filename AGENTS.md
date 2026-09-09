@@ -14,7 +14,7 @@ npm run start
 
 # Quality + checks
 npm run lint
-npm run test:snake
+npm run test
 
 # Performance + assets
 npm run performance

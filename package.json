@@ -15,7 +15,6 @@
     "test": "npm run test:lib && npm run test:theme",
     "test:lib": "node --experimental-strip-types --test src/lib/*.test.mts",
     "test:theme": "node --test scripts/theme-regressions.test.mjs",
-    "test:snake": "node --experimental-strip-types --test src/lib/snake.test.mts",
     "performance": "npm run build && npm run build:analyze",
     "optimize-images": "node scripts/optimize-images.js",
     "lighthouse": "npx lighthouse http://localhost:3000 --output-path ./lighthouse-report.html --save-assets --view"

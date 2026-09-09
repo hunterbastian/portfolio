@@ -7,7 +7,6 @@ import {
   PROJECT_DETAIL_INITIAL_STAGE,
   PROJECT_DETAIL_LINK_CLASS,
   PROJECT_DETAIL_TIMING,
-  activateProjectDetailTransitionTarget,
   activateProjectDetailView,
   formatProjectDate,
   getProjectDetailBreadcrumb,
@@ -15,7 +14,6 @@ import {
   getProjectDetailHeroMotion,
   getProjectDetailItemMotion,
   getProjectDetailLinks,
-  getProjectDetailTransitionTarget,
   getProjectPageMetadata,
   getProjectStructuredData,
   resolveProjectImageUrl,
@@ -101,18 +99,18 @@ test('project detail link helper preserves optional link order and labels', () =
 test('a morphing hero skips the reveal storyboard and lands at rest', () => {
   // Mid-storyboard the hero would normally still be hidden and offset.
   assert.deepEqual(
-    getProjectDetailHeroMotion({ isMorphing: false, stage: 0, transitionActive: false }),
+    getProjectDetailHeroMotion({ isMorphing: false, stage: 0 }),
     { opacity: 0, y: PROJECT_DETAIL_HERO_INITIAL_Y },
   )
   assert.deepEqual(
-    getProjectDetailHeroMotion({ isMorphing: true, stage: 0, transitionActive: false }),
+    getProjectDetailHeroMotion({ isMorphing: true, stage: 0 }),
     { opacity: 1, y: 0 },
   )
   // Once the storyboard has caught up both paths agree, so clearing the morph
   // partway through cannot make the hero jump.
   assert.deepEqual(
-    getProjectDetailHeroMotion({ isMorphing: false, stage: 2, transitionActive: false }),
-    getProjectDetailHeroMotion({ isMorphing: true, stage: 2, transitionActive: false }),
+    getProjectDetailHeroMotion({ isMorphing: false, stage: 2 }),
+    getProjectDetailHeroMotion({ isMorphing: true, stage: 2 }),
   )
 })
 
@@ -130,11 +128,10 @@ test('getProjectDetailItemMotion maps detail stages to opacity and y motion', ()
   assert.deepEqual(
     getProjectDetailItemMotion({
       initialY: PROJECT_DETAIL_HERO_INITIAL_Y,
-      stage: 4,
-      transitionActive: true,
+      stage: 1,
       visibleStage: 2,
     }),
-    { opacity: 0, y: 0 },
+    { opacity: 0, y: PROJECT_DETAIL_HERO_INITIAL_Y },
   )
 })
 
@@ -147,25 +144,6 @@ test('activateProjectDetailView only tracks complete project view data', () => {
   activateProjectDetailView({ slug: 'missing-title', trackProjectView })
 
   assert.deepEqual(calls, [['lumo', 'Lumo']])
-})
-
-test('activateProjectDetailTransitionTarget measures and stores the adjusted hero rect', () => {
-  const calls: unknown[] = []
-
-  activateProjectDetailTransitionTarget({
-    getHeroRect: () => ({ top: 42, left: 12, width: 640, height: 360 }),
-    pageTransitionYOffset: 10,
-    setTransitionTarget: (target) => calls.push(target),
-  })
-
-  assert.deepEqual(calls, [{ top: 32, left: 12, width: 640, height: 360 }])
-})
-
-test('getProjectDetailTransitionTarget subtracts page entrance offset from hero top', () => {
-  assert.deepEqual(
-    getProjectDetailTransitionTarget({ top: 42, left: 12, width: 640, height: 360 }, 10),
-    { top: 32, left: 12, width: 640, height: 360 },
-  )
 })
 
 test('scheduleProjectDetailRevealStages schedules staged reveal timers and respects reduced motion', () => {

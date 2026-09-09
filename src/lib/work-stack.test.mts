@@ -31,8 +31,9 @@ test('work stack slots stay unique piles for projects and playground', () => {
   assert.equal(getWorkStackSlots('projects'), PROJECT_STACK_SLOTS)
   assert.equal(getWorkStackSlots('playground'), PLAYGROUND_STACK_SLOTS)
   assert.notDeepEqual(PROJECT_STACK_SLOTS[0], PLAYGROUND_STACK_SLOTS[0])
-  assert.equal(HOME_PLAYGROUND_STACK_LIMIT, 9)
-  assert.ok(PLAYGROUND_STACK_SLOTS.length >= HOME_PLAYGROUND_STACK_LIMIT)
+  assert.equal(HOME_PLAYGROUND_STACK_LIMIT, 4)
+  assert.equal(PLAYGROUND_STACK_SLOTS.length, HOME_PLAYGROUND_STACK_LIMIT)
+  assert.ok(PROJECT_STACK_SLOTS.length <= 8)
 })
 
 test('getWorkStackCards maps project media onto the matching scatter slots', () => {
@@ -67,13 +68,13 @@ test('collage cards use case-study photos instead of home object icons', () => {
   assert.equal(card?.image.includes('object-icon'), false)
 })
 
-test('playground stacks cap at the pile limit and keep experiment hrefs', () => {
+test('playground stacks stay a teaser and keep experiment hrefs', () => {
   const projects = Array.from({ length: 12 }, (_, index) => project(`item-${index}`))
   const cards = getWorkStackCards(projects, 'playground')
 
   assert.equal(cards.length, HOME_PLAYGROUND_STACK_LIMIT)
-  assert.equal(cards[8]?.href, '/projects/item-8')
-  assert.equal(cards[8]?.layout, PLAYGROUND_STACK_SLOTS[8])
+  assert.equal(cards[3]?.href, '/projects/item-3')
+  assert.equal(cards[3]?.layout, PLAYGROUND_STACK_SLOTS[3])
 })
 
 test('stack card style ships placement as custom properties the collage can ignore', () => {

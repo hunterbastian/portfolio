@@ -266,8 +266,9 @@ export function getPlaygroundGalleryTileVariant(index: number): PlaygroundGaller
   return PLAYGROUND_GALLERY_TILE_VARIANTS[index % PLAYGROUND_GALLERY_TILE_VARIANTS.length]
 }
 
+/** The gallery is the full archive, so tile variants cycle rather than capping the list. */
 export function getPlaygroundGalleryTileStates(projects: readonly Project[]): PlaygroundGalleryTileState[] {
-  return projects.slice(0, PLAYGROUND_GALLERY_TILE_VARIANTS.length).map((project, index) => ({
+  return projects.map((project, index) => ({
     ...getPlaygroundProjectCardDisplayState(project, index, projects.length),
     variant: getPlaygroundGalleryTileVariant(index),
   }))

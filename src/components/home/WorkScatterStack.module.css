@@ -50,8 +50,10 @@
     position: relative;
     isolation: isolate;
     width: 100%;
-    aspect-ratio: 1.04 / 1;
-    min-height: 18.75rem;
+    /* Card heights come from their own width and ratio, so the container only needs
+       to be tall enough for the lowest slot — anything more reads as dead space. */
+    aspect-ratio: 1.45 / 1;
+    min-height: 16rem;
   }
 
   .card,

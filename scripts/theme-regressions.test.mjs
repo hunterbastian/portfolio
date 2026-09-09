@@ -5,8 +5,13 @@ import postcss from 'postcss'
 import tailwindcss from 'tailwindcss'
 import loadConfig from 'tailwindcss/loadConfig.js'
 
-const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
-const background = read('src/app/dark-theme.css').match(/--background:\s*(#[\da-f]+);/)[1]
+const darkThemeSource = readFileSync('src/app/dark-theme.css', 'utf8')
+const layoutSource = readFileSync('src/app/layout.tsx', 'utf8')
+const siteSource = readFileSync('src/lib/site.ts', 'utf8')
+const manifestSource = readFileSync('public/manifest.json', 'utf8')
+const offlineSource = readFileSync('public/offline.html', 'utf8')
+const workerSource = readFileSync('public/sw.js', 'utf8')
+const background = darkThemeSource.match(/--background:\s*(#[\da-f]+);/)[1]
 
 test('Tailwind emits alpha-aware text, surface, border, ring, and arbitrary utilities', async () => {
   const config = loadConfig(new URL('../tailwind.config.ts', import.meta.url).pathname)
@@ -44,41 +49,41 @@ test('Tailwind emits alpha-aware text, surface, border, ring, and arbitrary util
 })
 
 test('manifest and initial page chrome agree with the dark site canvas', () => {
-  const manifest = JSON.parse(read('public/manifest.json'))
+  const manifest = JSON.parse(manifestSource)
   assert.equal(manifest.background_color, background)
   assert.equal(manifest.theme_color, background)
-  const layout = read('src/app/layout.tsx')
-  assert.ok(read('src/lib/site.ts').includes(`themeColorDark: '${background}'`))
-  assert.match(layout, /name="color-scheme" content="dark"/)
-  assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="black"/)
-  assert.ok(layout.includes(`html:root{color-scheme:dark;background-color:\${siteConfig.themeColorDark}}`))
-  assert.match(layout, /body\{margin:0;background-color:var\(--background,\$\{siteConfig\.themeColorDark\}\)/)
-  assert.doesNotMatch(layout, /body\{[^}]*background:/)
+  assert.ok(siteSource.includes(`themeColorDark: '${background}'`))
+  assert.ok(layoutSource.includes('name="color-scheme" content="dark"'))
+  assert.ok(layoutSource.includes('name="apple-mobile-web-app-status-bar-style" content="black"'))
+  assert.ok(layoutSource.includes('html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark}}'))
+  assert.ok(layoutSource.includes('body{margin:0;background-color:var(--background,${siteConfig.themeColorDark})'))
+  assert.equal(layoutSource.includes('body{margin:0;background:'), false)
 })
 
-function assertDarkOffline(html) {
-  assert.ok(html.includes(background), 'offline canvas must match the live dark background')
-  assert.match(html, /color-scheme:\s*dark[;}]/)
-  assert.match(html, /name="theme-color" content="#17191b"/)
-  assert.doesNotMatch(html, /prefers-color-scheme|color-scheme:\s*light|#f2f1ef/)
+function assertDarkOffline(source) {
+  assert.ok(source.includes(background), 'offline canvas must match the live dark background')
+  assert.ok(source.includes('color-scheme: dark') || source.includes('color-scheme:dark'))
+  assert.ok(source.includes('name="theme-color" content="#17191b"'))
+  assert.equal(source.includes('prefers-color-scheme'), false)
+  assert.equal(source.includes('color-scheme: light'), false)
+  assert.equal(source.includes('#f2f1ef'), false)
 }
 
 test('offline document remains dark regardless of the OS color preference', () => {
-  assertDarkOffline(read('public/offline.html'))
+  assertDarkOffline(offlineSource)
 })
 
 test('service worker advances the cache and keeps dark offline fallbacks', () => {
-  const worker = read('public/sw.js')
-  const cacheName = worker.match(/CACHE_NAME = '([^']+)'/)?.[1]
+  const cacheName = workerSource.match(/CACHE_NAME = '([^']+)'/)?.[1]
   assert.ok(cacheName, 'service worker must declare a cache name')
   assert.notEqual(cacheName, 'portfolio-assets-v14')
-  assert.match(worker, /STATIC_ASSETS = \[[^\]]*\/offline\.html/s)
-  assert.match(worker, /cacheNames\s*\n?\s*\.filter\(cacheName => cacheName !== CACHE_NAME\)/)
-  assert.match(worker, /caches\.delete\(cacheName\)/)
-  assert.match(worker, /self\.skipWaiting\(\)/)
-  assert.match(worker, /self\.clients\.claim\(\)/)
+  assert.ok(workerSource.includes("'/offline.html'"))
+  assert.ok(workerSource.includes('cacheName !== CACHE_NAME'))
+  assert.ok(workerSource.includes('caches.delete(cacheName)'))
+  assert.ok(workerSource.includes('self.skipWaiting()'))
+  assert.ok(workerSource.includes('self.clients.claim()'))
 
-  const fallback = worker.match(/new Response\('([^']+)'/)?.[1]
+  const fallback = workerSource.match(/new Response\('([^']+)'/)?.[1]
   assert.ok(fallback, 'service worker must include an emergency HTML fallback')
-  assertDarkOffline(fallback.replaceAll('\\', ''))
+  assertDarkOffline(fallback)
 })

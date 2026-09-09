@@ -27,13 +27,13 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
     <Section
       id="projects"
       title="Projects"
-      contentGapClassName="space-y-1.5 sm:space-y-2"
+      contentGapClassName="space-y-3 sm:space-y-4"
       scrollMarginClassName="scroll-mt-10 sm:scroll-mt-12"
     >
       <div className="relative">
         <div className="relative z-10 space-y-3 sm:space-y-4">
           {workFilter !== 'all' ? (
-            <div className="flex items-center justify-between gap-3 border border-border/65 bg-background/50 px-2.5 py-2 font-mono text-[0.68rem] text-muted-foreground">
+            <div className="flex items-center justify-between gap-3 rounded-[8px] bg-card px-2.5 py-2 font-mono text-[0.68rem] text-muted-foreground shadow-[var(--shadow-raised-subtle)]">
               <span>
                 Showing <span className="text-foreground">{WORK_FILTER_LABELS[workFilter]}</span>
               </span>

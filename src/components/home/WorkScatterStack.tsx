@@ -59,15 +59,17 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
               })
             }
           >
-            <Image
-              src={card.image}
-              alt=""
-              fill
-              sizes="(max-width: 640px) 42vw, 180px"
-              className={styles.media}
-            />
+            <span className={styles.frame}>
+              <Image
+                src={card.image}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 42vw, 180px"
+                className={styles.media}
+              />
+            </span>
             <span className={styles.caption}>
-              <span>{card.title}</span>
+              <span className={styles.title}>{card.title}</span>
               <span className={styles.year}>{card.year}</span>
             </span>
           </Link>

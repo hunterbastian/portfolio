@@ -62,3 +62,100 @@
 .chrome-pill .chrome-pill-icon { color: #e3e5e5; text-shadow: none; filter: none; }
 .chrome-pill::before,
 .chrome-pill::after { opacity: 0.12; }
+
+/* Playground archive: keep the pinboard composition, sit it on the dark desk. */
+.playground-page {
+  --playground-blue: #a1b7c9;
+  --playground-cyan: #7aa3ae;
+  --playground-amber: #d0b7ab;
+  --playground-green: #a2b8ab;
+  --playground-ink: var(--foreground);
+  --playground-muted: var(--muted-foreground);
+  background:
+    radial-gradient(70% 42% at 50% 0%, color-mix(in srgb, var(--accent-blue) 10%, transparent) 0%, transparent 72%),
+    linear-gradient(180deg, color-mix(in srgb, var(--card) 42%, transparent) 0%, transparent 34%);
+}
+
+.archive-glow {
+  opacity: 0.32;
+  background-image:
+    radial-gradient(52rem 24rem at 54% 0%, color-mix(in srgb, var(--accent-blue) 12%, transparent) 0%, transparent 70%),
+    radial-gradient(34rem 18rem at 34% 10%, color-mix(in srgb, var(--contact-accent) 8%, transparent) 0%, transparent 74%),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 28%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--border) 22%, transparent) 1px, transparent 1px);
+}
+
+.playground-gallery-shell {
+  background: var(--card);
+  box-shadow: var(--shadow-raised);
+}
+
+.playground-gallery-shell::before {
+  background:
+    radial-gradient(45rem 24rem at 16% 14%, color-mix(in srgb, var(--muted) 55%, transparent), transparent 72%),
+    radial-gradient(52rem 26rem at 80% 12%, color-mix(in srgb, var(--accent-subtle) 40%, transparent), transparent 70%);
+}
+
+.playground-gallery-shell::after {
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--card) 88%, transparent));
+}
+
+.playground-gallery-tile {
+  background: var(--muted);
+  box-shadow: var(--shadow-raised-subtle);
+  color: var(--foreground);
+}
+
+.playground-gallery-tile::before {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--card) 42%, transparent), transparent 24%, transparent 72%, color-mix(in srgb, var(--card) 38%, transparent)),
+    radial-gradient(14rem 8rem at 50% 0%, color-mix(in srgb, var(--card) 28%, transparent), transparent 74%);
+  opacity: 0.7;
+}
+
+.playground-gallery-tile:hover,
+.playground-gallery-tile:focus-visible {
+  box-shadow: var(--shadow-hover);
+  filter: saturate(1.02);
+}
+
+.playground-gallery-caption,
+.playground-gallery-title {
+  color: color-mix(in srgb, var(--muted-foreground) 82%, transparent);
+}
+
+.playground-gallery-tile:hover .playground-gallery-caption,
+.playground-gallery-tile:focus-visible .playground-gallery-caption,
+.playground-gallery-tile:hover .playground-gallery-title,
+.playground-gallery-tile:focus-visible .playground-gallery-title {
+  color: var(--foreground);
+}
+
+.playground-gallery-media {
+  box-shadow:
+    0 18px 42px -32px #0008,
+    0 0 0 1px color-mix(in srgb, var(--border) 72%, transparent);
+}
+
+.playground-gallery-tile:hover .playground-gallery-media,
+.playground-gallery-tile:focus-visible .playground-gallery-media {
+  box-shadow:
+    0 26px 52px -34px #000a,
+    0 0 0 1px color-mix(in srgb, var(--ring) 28%, var(--border));
+}
+
+.playground-gallery-tile-browser .playground-gallery-media,
+.playground-gallery-tile-document .playground-gallery-media,
+.playground-gallery-tile-address .playground-gallery-media {
+  background: var(--secondary);
+}
+
+.playground-gallery-tile-browser .playground-gallery-media::before,
+.playground-gallery-tile-document .playground-gallery-media::before {
+  background:
+    radial-gradient(circle at 0.62rem 50%, #ff6b5f 0 0.15rem, transparent 0.16rem),
+    radial-gradient(circle at 1.12rem 50%, #f5bf4f 0 0.15rem, transparent 0.16rem),
+    radial-gradient(circle at 1.62rem 50%, #67c16f 0 0.15rem, transparent 0.16rem),
+    var(--muted);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 55%, transparent);
+}

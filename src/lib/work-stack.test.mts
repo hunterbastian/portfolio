@@ -88,3 +88,16 @@ test('scatter stack does not preload below-fold collage images', () => {
   const source = readFileSync(new URL('../components/home/WorkScatterStack.tsx', import.meta.url), 'utf8')
   assert.equal(source.includes('priority='), false)
 })
+
+test('scatter prints use named materials instead of ghost cards', () => {
+  const source = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
+
+  assert.ok(source.includes('border-radius: 8px'))
+  assert.ok(source.includes('box-shadow: var(--shadow-raised)'))
+  assert.ok(source.includes('box-shadow: var(--shadow-hover)'))
+  assert.ok(source.includes('cubic-bezier(0.16, 1, 0.3, 1)'))
+  assert.ok(source.includes('scale(0.96)'))
+  assert.equal(source.includes('scale(1.08)'), false)
+  assert.equal(source.includes('border-radius: 3px'), false)
+  assert.equal(source.includes('border-radius: 2px'), false)
+})

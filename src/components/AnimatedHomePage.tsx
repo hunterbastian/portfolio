@@ -57,7 +57,7 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
           <HomeHeroSection />
         </Reveal>
 
-        <div className="mt-5 space-y-9 sm:mt-7 sm:space-y-20">
+        <div className="mt-5 space-y-11 sm:mt-7 sm:space-y-24">
           <Reveal delayMs={40}>
             <HomeEndeavorsSection />
           </Reveal>

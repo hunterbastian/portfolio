@@ -73,6 +73,15 @@ test('offline document remains dark regardless of the OS color preference', () =
   assertDarkOffline(offlineSource)
 })
 
+test('playground archive board stays on the dark canvas tokens', () => {
+  const playgroundSource = readFileSync('src/app/playground.css', 'utf8')
+  const galleryOverride = '.playground-gallery-shell {\n  background: var(--card);\n  box-shadow: var(--shadow-raised);\n}'
+
+  assert.ok(playgroundSource.includes('linear-gradient(180deg, rgba(255, 255, 255, 0.96)'))
+  assert.ok(darkThemeSource.includes(galleryOverride))
+  assert.equal(darkThemeSource.includes('#fff'), false)
+})
+
 test('service worker advances the cache and keeps dark offline fallbacks', () => {
   const cacheName = workerSource.match(/CACHE_NAME = '([^']+)'/)?.[1]
   assert.ok(cacheName, 'service worker must declare a cache name')

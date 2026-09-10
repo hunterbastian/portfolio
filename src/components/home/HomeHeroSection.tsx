@@ -25,6 +25,14 @@ import {
 import { showJoyToast } from '@/lib/joy'
 import { useHeroGlow } from '@/lib/use-hero-glow'
 
+/* Falls off inside the viewport so the ridge never smears into the outer gutters. */
+const HOME_HERO_GLOW_MASK =
+  'radial-gradient(ellipse 48% 54% at 50% 42%, black 0%, rgba(0, 0, 0, 0.88) 28%, rgba(0, 0, 0, 0.42) 58%, rgba(0, 0, 0, 0.1) 82%, transparent 100%)'
+
+/* Sinks the lower slopes back to canvas value so the intro copy never sits on a ridge. */
+const HOME_HERO_GLOW_DEPTH =
+  'linear-gradient(180deg, transparent 0%, transparent 30%, rgba(var(--background-rgb), 0.42) 54%, rgba(var(--background-rgb), 0.82) 76%, rgba(var(--background-rgb), 0.96) 100%)'
+
 const homeHeroIntroStackClassName = 'space-y-7 pt-7 sm:space-y-8 sm:pt-10'
 const homeHeroIntroParagraphClassName =
   'w-full max-w-full text-pretty font-header text-[14px] font-normal leading-[1.62] tracking-[-0.012em] text-foreground/92 sm:text-[14px] sm:leading-[1.62]'
@@ -55,14 +63,10 @@ export function HomeHeroSection() {
       <div
         ref={heroGlow.glowRef}
         aria-hidden="true"
-        className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-100 blur-[2.5px] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:blur-[3.5px] ${
-          heroGlow.isActive ? 'is-active' : ''
-        }`}
+        className="animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-[0.82] blur-[7px] brightness-[0.7] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:blur-[9px]"
         style={{
-          maskImage:
-            'radial-gradient(ellipse 56% 54% at 50% 42%, black 0%, rgba(0, 0, 0, 0.88) 28%, rgba(0, 0, 0, 0.42) 58%, rgba(0, 0, 0, 0.1) 82%, transparent 100%)',
-          WebkitMaskImage:
-            'radial-gradient(ellipse 56% 54% at 50% 42%, black 0%, rgba(0, 0, 0, 0.88) 28%, rgba(0, 0, 0, 0.42) 58%, rgba(0, 0, 0, 0.1) 82%, transparent 100%)',
+          maskImage: HOME_HERO_GLOW_MASK,
+          WebkitMaskImage: HOME_HERO_GLOW_MASK,
         }}
       >
         <Image
@@ -71,25 +75,17 @@ export function HomeHeroSection() {
           fill
           loading="eager"
           fetchPriority="low"
-          className="scale-[1.02] object-cover object-[50%_48%] saturate-[1.08] brightness-[1.03] contrast-[0.98]"
+          className="object-cover object-[50%_58%] grayscale contrast-[1.08]"
           sizes="100vw"
         />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(90deg, rgba(245, 252, 254, 0.18) 0%, transparent 34%, rgba(255, 199, 139, 0.1) 78%, transparent 100%)',
-          }}
-        />
-        <div className="absolute inset-0 bg-background/8" />
+        <div className="absolute inset-0 bg-[var(--ambient-grade)] mix-blend-color" />
+        <div className="absolute inset-0" style={{ background: HOME_HERO_GLOW_DEPTH }} />
       </div>
 
       <div
         ref={heroGlow.grainRef}
         aria-hidden="true"
-        className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[28rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-multiply transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-16 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] ${
-          heroGlow.isActive ? 'is-active' : ''
-        }`}
+        className="animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[28rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-screen transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-16 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065]"
         style={{
           backgroundImage: "url('/images/hero-grain.svg')",
           backgroundSize: '260px 260px',

@@ -99,6 +99,3 @@ export function getProjectBySlug(slug: string): Project | null {
   }
 }
 
-export function getAllCategories(): string[] {
-  return getProjectIndex().categories
-}

@@ -32,19 +32,15 @@ yarn-error.log*
 # Output artifacts
 /output/
 
-# Local QA captures/reports
+# Local QA captures/reports. Screenshots get dumped at the repo root while
+# reviewing a change, so ignore the whole root rather than naming each one;
+# images the site actually serves live under public/.
 .codex-tmp/
 .playwright-mcp/
 lighthouse-report*.html
 lighthouse-report*.json
-archive-orbit-*.png
-home-profile-hover-glow*.png
-home-topmeta-brand-sunset-glow.png
-portfolio-*.png
-contact-social-*.png
-impeccable-*.png
-muji-*.png
-aqua-*.png
+/*.png
+/tmp/
 
 # TypeScript
 *.tsbuildinfo

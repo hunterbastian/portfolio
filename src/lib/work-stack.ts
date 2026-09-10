@@ -26,7 +26,11 @@ export interface WorkStackCard {
   year: string
 }
 
-export const HOME_PLAYGROUND_STACK_LIMIT = 9
+/**
+ * The homepage playground is a teaser, not an index — the full set lives on /archive.
+ * Keeping it small stops the two collages from swamping the rest of the page.
+ */
+export const HOME_PLAYGROUND_STACK_LIMIT = 4
 
 export const WORK_STACK_ASPECT_RATIO: Record<WorkStackAspect, string> = {
   landscape: '5 / 4',
@@ -46,15 +50,10 @@ export const PROJECT_STACK_SLOTS: WorkStackSlot[] = [
 ]
 
 export const PLAYGROUND_STACK_SLOTS: WorkStackSlot[] = [
-  { left: 28, top: 12, width: 36, rotate: 9, zIndex: 8, aspect: 'square' },
-  { left: 3, top: 8, width: 32, rotate: -19, zIndex: 5, aspect: 'portrait' },
-  { left: 58, top: 6, width: 33, rotate: 15, zIndex: 6, aspect: 'landscape' },
-  { left: 7, top: 44, width: 29, rotate: -8, zIndex: 4, aspect: 'landscape' },
-  { left: 55, top: 42, width: 34, rotate: -14, zIndex: 7, aspect: 'portrait' },
-  { left: 30, top: 50, width: 26, rotate: 11, zIndex: 9, aspect: 'square' },
-  { left: 17, top: 22, width: 25, rotate: 6, zIndex: 3, aspect: 'portrait' },
-  { left: 46, top: 26, width: 24, rotate: -4, zIndex: 2, aspect: 'landscape' },
-  { left: 67, top: 22, width: 22, rotate: 21, zIndex: 1, aspect: 'square' },
+  { left: 4, top: 14, width: 38, rotate: -11, zIndex: 4, aspect: 'portrait' },
+  { left: 44, top: 6, width: 40, rotate: 9, zIndex: 3, aspect: 'landscape' },
+  { left: 24, top: 44, width: 36, rotate: -5, zIndex: 5, aspect: 'square' },
+  { left: 60, top: 36, width: 32, rotate: 14, zIndex: 2, aspect: 'portrait' },
 ]
 
 export function getWorkStackSlots(tone: WorkStackTone): readonly WorkStackSlot[] {
@@ -96,13 +95,17 @@ export function getWorkStackCards(
   })
 }
 
+/**
+ * Scatter placement travels as custom properties so the mobile collage can lay the
+ * same cards out as a column flow without fighting inline positioning.
+ */
 export function getWorkStackCardStyle(layout: WorkStackSlot) {
   return {
-    left: `${layout.left}%`,
-    top: `${layout.top}%`,
-    width: `${layout.width}%`,
-    zIndex: layout.zIndex,
+    '--card-left': `${layout.left}%`,
+    '--card-top': `${layout.top}%`,
+    '--card-width': `${layout.width}%`,
+    '--card-z': layout.zIndex,
+    '--card-ratio': WORK_STACK_ASPECT_RATIO[layout.aspect],
     '--stack-rotate': `${layout.rotate}deg`,
-    aspectRatio: WORK_STACK_ASPECT_RATIO[layout.aspect],
   } as const
 }

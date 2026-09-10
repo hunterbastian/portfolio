@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useRef, type PointerEvent } from 'react'
 import {
   HERO_GLOW_ORIGIN,
   applyHeroGlowCssVariables,
@@ -12,7 +12,6 @@ import {
 } from './hero-glow.ts'
 
 export function useHeroGlow() {
-  const [isActive, setIsActive] = useState(false)
   const glowRef = useRef<HTMLDivElement | null>(null)
   const grainRef = useRef<HTMLDivElement | null>(null)
   const boundsRef = useRef<DOMRect | null>(null)
@@ -57,7 +56,6 @@ export function useHeroGlow() {
   }
 
   const onPointerEnter = (event: PointerEvent<HTMLElement>) => {
-    setIsActive(true)
     boundsRef.current = event.currentTarget.getBoundingClientRect()
   }
 
@@ -73,14 +71,12 @@ export function useHeroGlow() {
   const onPointerLeave = () => {
     boundsRef.current = null
     pointerRef.current = { ...HERO_GLOW_ORIGIN }
-    setIsActive(false)
     schedule()
   }
 
   return {
     glowRef,
     grainRef,
-    isActive,
     handlers: { onPointerEnter, onPointerMove, onPointerLeave },
   }
 }

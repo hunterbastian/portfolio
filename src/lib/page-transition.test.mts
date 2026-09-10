@@ -1,21 +1,51 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import {
-  CHILD_ENTRANCE_INITIAL_Y,
   PAGE_TRANSITION_STAGE,
   getInitialRouteSceneStage,
-  PAGE_ENTRANCE_INITIAL_Y,
-  getPageTransitionYOffset,
   getRouteSceneChildDelay,
   getRouteSceneDefaults,
   getRouteSceneInitial,
+  getRouteSceneKey,
   getRouteSceneMotion,
   getRouteSceneStageSchedule,
   scheduleRouteSceneStages,
 } from './page-transition.ts'
 
-test('getPageTransitionYOffset combines page and child entrance offsets', () => {
-  assert.equal(getPageTransitionYOffset(), PAGE_ENTRANCE_INITIAL_Y + CHILD_ENTRANCE_INITIAL_Y)
+test('a morph navigation keeps its scene key so the destination can mount at once', () => {
+  // An ordinary navigation swaps the key, which is what drives the framer scene.
+  assert.equal(
+    getRouteSceneKey({
+      currentKey: '/projects/lumo',
+      isMorphing: false,
+      pathname: '/',
+      previousPathname: '/projects/lumo',
+    }),
+    '/',
+  )
+
+  // A morph keeps it, so AnimatePresence never holds the outgoing page.
+  assert.equal(
+    getRouteSceneKey({
+      currentKey: '/projects/lumo',
+      isMorphing: true,
+      pathname: '/',
+      previousPathname: '/projects/lumo',
+    }),
+    '/projects/lumo',
+  )
+
+  // Re-renders that did not navigate leave the key alone, so the key cannot
+  // catch up once the morph clears and swap the scene on matching content.
+  assert.equal(
+    getRouteSceneKey({
+      currentKey: '/projects/lumo',
+      isMorphing: false,
+      pathname: '/',
+      previousPathname: '/',
+    }),
+    '/projects/lumo',
+  )
 })
 
 test('getRouteSceneInitial skips initial animation on first load', () => {

@@ -9,9 +9,6 @@ import {
   HOME_HERO_INLINE_LOCAL_TIME_CLASS_NAME,
   HOME_HERO_LOCAL_TIME_UPDATE_MS,
   HOME_HERO_LOCAL_TIME_ZONE,
-  HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS,
-  HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS,
-  HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS,
   HOME_HERO_TIME_TOGGLE_CLASS_NAME,
   HOME_HERO_TIME_TOGGLE_HAPTIC_STYLE,
   HOME_HERO_TIME_VALUE_CLASS_NAME,
@@ -19,7 +16,6 @@ import {
   formatHomeHeroLocalTime,
   getHomeHeroLocalTimeToggleLabel,
   getHomeHeroIntroParagraphs,
-  getHomeHeroProfileDefocusClassName,
   getNextHomeHeroLocalTimeFormat,
 } from './home-hero.ts'
 
@@ -54,9 +50,6 @@ test('home hero action metadata preserves navigation, analytics, and toast contr
   assert.match(HOME_HERO_TIME_VALUE_CLASS_NAME, /home-hero-time-value/)
   assert.match(HOME_HERO_TIME_VALUE_CLASS_NAME, /tabular-nums/)
   assert.equal(HOME_HERO_TIME_TOGGLE_HAPTIC_STYLE, 'light')
-  assert.match(HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS, /transition-\[filter,opacity,transform\]/)
-  assert.match(HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS, /blur-0/)
-  assert.match(HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS, /blur-\[1\.35px\]/)
   assert.deepEqual(HOME_HERO_ACTIONS, [
     {
       analyticsLabel: 'contact',
@@ -91,17 +84,6 @@ test('home hero local time toggle helpers describe the next format', () => {
   assert.equal(
     getHomeHeroLocalTimeToggleLabel('military', '08:34'),
     'Switch to am/pm time. Current time is 08:34.',
-  )
-})
-
-test('home hero profile defocus helper toggles the blur treatment', () => {
-  assert.equal(
-    getHomeHeroProfileDefocusClassName(false),
-    `${HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS} ${HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS}`,
-  )
-  assert.equal(
-    getHomeHeroProfileDefocusClassName(true),
-    `${HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS} ${HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS}`,
   )
 })
 

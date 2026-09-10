@@ -1,76 +1,75 @@
-/* Version B: dark field notebook. Keep layout, content and imagery intact. */
+/*
+ * Version B: dark field notebook, on a Nord palette.
+ *
+ * Surfaces climb the Polar Night ramp, text comes from Snow Storm and accents from
+ * Frost, with Aurora reserved for the warm contact cue. The canvas sits one step
+ * below nord0 so raised cards still read as lifted off the desk; set --background
+ * to #2e3440 for a literal Nord canvas with the cards on nord1.
+ */
 :root {
   color-scheme: dark;
-  --background: #17191b;
-  --background-rgb: 23, 25, 27;
-  --foreground: #e3e5e5;
-  --card: #202326;
-  --card-foreground: #e3e5e5;
-  --primary: #e3e5e5;
-  --primary-foreground: #17191b;
-  --secondary: #282c2f;
-  --secondary-foreground: #e3e5e5;
-  --muted: #24282b;
-  --muted-foreground: #afb5b8;
-  --subtle-foreground: #9da5aa;
-  --accent: #a2b8ab;
-  --accent-foreground: #17191b;
-  --accent-subtle: #26332e;
-  --accent-muted: #71897b;
-  --accent-blue: #a1b7c9;
-  --accent-green: #a2b8ab;
-  --border: #3b4145;
-  --input: #3b4145;
-  --ring: #b7cec3;
-  --surface-warm-rgb: 33, 36, 38;
-  --surface-paper-rgb: 32, 35, 38;
-  --grain-rgb: 155, 162, 168;
-  --ink-underline: #909d99;
-  --contact-accent: #d0b7ab;
-  --contact-accent-soft: #302b28;
-  --contact-accent-rgb: 208, 183, 171;
-  --contact-email-accent: #a1c9ca;
-  --contact-email-accent-soft: #253638;
-  --contact-email-ink: #d5e9e8;
-  --contact-paper: #202326;
-  --contact-paper-hover: #292d30;
-  --contact-rule: #444b4e;
-  --surface-glass-soft: rgba(32, 35, 38, 0.72);
-  --surface-glass-soft-border: rgba(223, 232, 236, 0.12);
-  --surface-glass-soft-shadow: 0 0 0 1px var(--surface-glass-soft-border);
-  --surface-glass-chrome: linear-gradient(180deg, #343a3f, #272b2e);
-  --surface-glass-chrome-hover: linear-gradient(180deg, #41484e, #30363a);
-  --surface-glass-chrome-dark: var(--surface-glass-chrome);
-  --surface-glass-chrome-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 0 0 1px #42494e, 0 8px 20px -12px #000;
-  --surface-glass-chrome-shadow-hover: inset 0 1px rgba(255, 255, 255, 0.18), 0 0 0 1px #59636a, 0 10px 24px -12px #000;
-  --surface-glass-chrome-shadow-active: inset 0 2px 5px #151719, 0 0 0 1px #42494e;
-  --shadow-raised: 0 0 0 1px #3b4145, 0 2px 4px #0003;
-  --shadow-raised-subtle: 0 0 0 1px #33393d;
-  --shadow-hover: 0 0 0 1px #59636a, 0 8px 20px -4px #0005;
+  --background: #242933;
+  --background-rgb: 36, 41, 51;
+  --foreground: #eceff4;
+  --card: #2e3440;
+  --card-foreground: #eceff4;
+  --primary: #eceff4;
+  --primary-foreground: #242933;
+  --secondary: #3b4252;
+  --secondary-foreground: #eceff4;
+  --muted: #333b49;
+  --muted-foreground: #aeb8c9;
+  --subtle-foreground: #9aa4b8;
+  --accent: #8fbcbb;
+  --accent-foreground: #242933;
+  --accent-subtle: #2f3a44;
+  --accent-muted: #6d8a94;
+  --accent-blue: #81a1c1;
+  --accent-green: #a3be8c;
+  --border: #434c5e;
+  --input: #434c5e;
+  --ring: #88c0d0;
+  --surface-paper-rgb: 46, 52, 64;
+  --grain-rgb: 200, 208, 222;
+  /*
+   * Ambient backdrop. The two photographs behind the homepage (an alpine ridge and a
+   * dune) are flattened to luminance and re-tinted through --ambient-grade, because
+   * their own greens, golds and rust have no Nord equivalent. The wash triplets below
+   * light the same field; only --ambient-ember-rgb is Aurora, and only near contact.
+   */
+  --ambient-grade: #5e81ac;
+  --ambient-frost-rgb: 136, 192, 208;
+  --ambient-sky-rgb: 129, 161, 193;
+  --ambient-dusk-rgb: 94, 129, 172;
+  --ambient-sage-rgb: 163, 190, 140;
+  --ambient-snow-rgb: 216, 222, 233;
+  --ambient-ember-rgb: 208, 135, 112;
+  --contact-accent: #d08770;
+  --contact-email-accent: #8fbcbb;
+  --contact-email-accent-soft: #343f47;
+  --contact-email-ink: #d8dee9;
+  --surface-glass-chrome: linear-gradient(180deg, #434c5e, #333a47);
+  --surface-glass-chrome-hover: linear-gradient(180deg, #4f5a6e, #3b4252);
+  --surface-glass-chrome-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 0 0 1px #4c566a, 0 8px 20px -12px #000;
+  --surface-glass-chrome-shadow-hover: inset 0 1px rgba(255, 255, 255, 0.18), 0 0 0 1px #616e88, 0 10px 24px -12px #000;
+  --surface-glass-chrome-shadow-active: inset 0 2px 5px #1c2028, 0 0 0 1px #4c566a;
+  --shadow-raised: 0 0 0 1px #434c5e, 0 2px 4px #0003;
+  --shadow-raised-subtle: 0 0 0 1px #3b4252;
+  --shadow-hover: 0 0 0 1px #616e88, 0 8px 20px -4px #0005;
 }
 
-/* Preserve the scenic wash without a bright island behind the text. */
-.animated-hero-glow { opacity: 0.8; filter: blur(6px) saturate(0.8) brightness(0.78); }
-.animated-hero-glow img { transform: none; object-position: center 52%; filter: none; }
-.animated-hero-glow > div { visibility: hidden; }
-.animated-hero-grain { mix-blend-mode: screen; }
-.section-heading-rule { background: linear-gradient(90deg, #bbc5cc40, transparent); }
+.section-heading-rule { background: linear-gradient(90deg, #d8dee940, transparent); }
 :focus-visible { outline-color: var(--ring); }
 
 /* Light-mode utility colors must not override dark control contrast. */
 .chrome-pill .chrome-pill-label,
-.chrome-pill .chrome-pill-icon { color: #e3e5e5; text-shadow: none; filter: none; }
+.chrome-pill .chrome-pill-icon { color: #eceff4; text-shadow: none; filter: none; }
 .chrome-pill::before,
 .chrome-pill::after { opacity: 0.12; }
 
 /* Playground archive: keep the pinboard composition, sit it on the dark desk. */
 .playground-page {
-  --playground-blue: #a1b7c9;
-  --playground-cyan: #7aa3ae;
-  --playground-amber: #d0b7ab;
-  --playground-green: #a2b8ab;
   --playground-ink: var(--foreground);
-  --playground-muted: var(--muted-foreground);
   background:
     radial-gradient(70% 42% at 50% 0%, color-mix(in srgb, var(--accent-blue) 10%, transparent) 0%, transparent 72%),
     linear-gradient(180deg, color-mix(in srgb, var(--card) 42%, transparent) 0%, transparent 34%);
@@ -153,9 +152,9 @@
 .playground-gallery-tile-browser .playground-gallery-media::before,
 .playground-gallery-tile-document .playground-gallery-media::before {
   background:
-    radial-gradient(circle at 0.62rem 50%, #ff6b5f 0 0.15rem, transparent 0.16rem),
-    radial-gradient(circle at 1.12rem 50%, #f5bf4f 0 0.15rem, transparent 0.16rem),
-    radial-gradient(circle at 1.62rem 50%, #67c16f 0 0.15rem, transparent 0.16rem),
+    radial-gradient(circle at 0.62rem 50%, #bf616a 0 0.15rem, transparent 0.16rem),
+    radial-gradient(circle at 1.12rem 50%, #ebcb8b 0 0.15rem, transparent 0.16rem),
+    radial-gradient(circle at 1.62rem 50%, #a3be8c 0 0.15rem, transparent 0.16rem),
     var(--muted);
   box-shadow: 0 1px 0 color-mix(in srgb, var(--border) 55%, transparent);
 }

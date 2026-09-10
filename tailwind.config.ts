@@ -1,6 +1,4 @@
 import type { Config } from 'tailwindcss'
-// @ts-expect-error -- daisyui has no type declarations
-import daisyui from 'daisyui'
 
 // Keep complete CSS color tokens (hex or oklch) while letting Tailwind 3
 // substitute the requested opacity; unmodified utilities use an alpha of 1.
@@ -126,10 +124,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [daisyui],
-  daisyui: {
-    themes: false,
-  },
+  plugins: [],
 }
 
 export default config

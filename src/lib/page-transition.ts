@@ -68,9 +68,6 @@ export interface RouteSceneStageSchedulerInput<TTimer> extends RouteSceneStageSc
   setStage: (stage: RouteSceneStage) => void
 }
 
-export function getPageTransitionYOffset(): number {
-  return PAGE_ENTRANCE_INITIAL_Y + CHILD_ENTRANCE_INITIAL_Y
-}
 
 export function getInitialRouteSceneStage(isInitialLoad: boolean): RouteSceneStage {
   return isInitialLoad ? PAGE_TRANSITION_STAGE.children : PAGE_TRANSITION_STAGE.hidden
@@ -136,6 +133,33 @@ export function scheduleRouteSceneStages<TTimer>({
     scheduleStage(PAGE_TRANSITION_STAGE.page, schedule.pageDelay),
     scheduleStage(PAGE_TRANSITION_STAGE.children, schedule.childrenDelay),
   ]
+}
+
+/**
+ * AnimatePresence swaps pages by key, and a changed key holds the outgoing page
+ * in the DOM until its exit animation finishes. Exit animations need frames,
+ * and a view transition stops producing them while it waits on its callback, so
+ * a morph that changed the key would deadlock: the destination could not mount
+ * until the transition gave up waiting for it. Morph navigations keep the
+ * previous key and let the content swap in place instead — the browser is
+ * animating that change itself, so the framer scene has nothing to add.
+ */
+export function getRouteSceneKey({
+  currentKey,
+  isMorphing,
+  pathname,
+  previousPathname,
+}: {
+  currentKey: string
+  isMorphing: boolean
+  pathname: string
+  previousPathname: string
+}): string {
+  if (pathname === previousPathname) {
+    return currentKey
+  }
+
+  return isMorphing ? currentKey : pathname
 }
 
 export function getRouteSceneInitial(isInitialLoad: boolean, initialY: number) {

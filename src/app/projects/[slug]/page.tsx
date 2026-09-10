@@ -100,6 +100,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           href={breadcrumb.href}
           parentLabel={breadcrumb.parentLabel}
           currentLabel={breadcrumb.currentLabel}
+          morphSlug={slug}
         />
       </div>
 

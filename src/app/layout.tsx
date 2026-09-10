@@ -4,10 +4,11 @@ import './globals.css'
 import './playground.css'
 import './viewport.css'
 import './dark-theme.css'
+import './view-transitions.css'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
-import SmoothScroll from '@/components/SmoothScroll'
+import ViewTransitionProvider from '@/components/ViewTransitionProvider'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
@@ -96,82 +97,82 @@ export default function RootLayout({
           <SoundProvider>
             <HoverSoundCue />
             <TopMeta />
-            <SmoothScroll>
-              <a
-                href="#main-content"
-                className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2 focus:text-foreground"
-              >
-                Skip to content
-              </a>
-              <div className="min-h-screen flex flex-col">
-                <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2 focus:text-foreground"
+            >
+              Skip to content
+            </a>
+            <div className="min-h-screen flex flex-col">
+              <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
+                <ViewTransitionProvider>
                   <PageTransition>{children}</PageTransition>
-                </main>
-                <Footer />
-              </div>
-              {telemetryConfig.enableSpeedInsights && (
-                <SpeedInsights
-                  sampleRate={1}
-                />
-              )}
-              {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
-              {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_PERF_MONITOR === 'true' && <PerformanceMonitor />}
-              {process.env.NODE_ENV === 'development' && <Agentation />}
-              {process.env.NODE_ENV === 'development' && (
-                <Script id="sw-dev-reset" strategy="afterInteractive">
-                  {`
-                    if ('serviceWorker' in navigator) {
-                      navigator.serviceWorker.getRegistrations()
-                        .then(function(registrations) {
-                          return Promise.all(registrations.map(function(registration) {
-                            return registration.unregister();
-                          }));
-                        })
-                        .catch(function() {});
-                    }
+                </ViewTransitionProvider>
+              </main>
+              <Footer />
+            </div>
+            {telemetryConfig.enableSpeedInsights && (
+              <SpeedInsights
+                sampleRate={1}
+              />
+            )}
+            {telemetryConfig.enableVercelAnalytics && <Analytics mode="production" />}
+            {process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_ENABLE_PERF_MONITOR === 'true' && <PerformanceMonitor />}
+            {process.env.NODE_ENV === 'development' && <Agentation />}
+            {process.env.NODE_ENV === 'development' && (
+              <Script id="sw-dev-reset" strategy="afterInteractive">
+                {`
+                  if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations()
+                      .then(function(registrations) {
+                        return Promise.all(registrations.map(function(registration) {
+                          return registration.unregister();
+                        }));
+                      })
+                      .catch(function() {});
+                  }
 
-                    if ('caches' in window) {
-                      caches.keys()
-                        .then(function(cacheNames) {
-                          return Promise.all(cacheNames.map(function(cacheName) {
-                            return caches.delete(cacheName);
-                          }));
-                        })
-                        .catch(function() {});
-                    }
-                  `}
-                </Script>
-              )}
+                  if ('caches' in window) {
+                    caches.keys()
+                      .then(function(cacheNames) {
+                        return Promise.all(cacheNames.map(function(cacheName) {
+                          return caches.delete(cacheName);
+                        }));
+                      })
+                      .catch(function() {});
+                  }
+                `}
+              </Script>
+            )}
 
-              {/* Google Analytics - deferred to avoid blocking */}
-              {telemetryConfig.enableGa && telemetryConfig.gaId && (
-                <>
-                  <Script
-                    src={`https://www.googletagmanager.com/gtag/js?id=${telemetryConfig.gaId}`}
-                    strategy="afterInteractive"
-                  />
-                  <Script id="ga-init" strategy="afterInteractive">
-                    {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${telemetryConfig.gaId}');`}
-                  </Script>
-                </>
-              )}
-
-              {/* Service Worker Registration - Deferred for better performance */}
-              {process.env.NODE_ENV === 'production' && (
+            {/* Google Analytics - deferred to avoid blocking */}
+            {telemetryConfig.enableGa && telemetryConfig.gaId && (
+              <>
                 <Script
-                  id="sw-registration"
-                  strategy="lazyOnload"
-                >
-                  {`
-                    if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
-                      requestIdleCallback(function() {
-                        navigator.serviceWorker.register('/sw.js').catch(function() {});
-                      }, { timeout: 5000 });
-                    }
-                  `}
+                  src={`https://www.googletagmanager.com/gtag/js?id=${telemetryConfig.gaId}`}
+                  strategy="afterInteractive"
+                />
+                <Script id="ga-init" strategy="afterInteractive">
+                  {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${telemetryConfig.gaId}');`}
                 </Script>
-              )}
-            </SmoothScroll>
+              </>
+            )}
+
+            {/* Service Worker Registration - Deferred for better performance */}
+            {process.env.NODE_ENV === 'production' && (
+              <Script
+                id="sw-registration"
+                strategy="lazyOnload"
+              >
+                {`
+                  if ('serviceWorker' in navigator && 'requestIdleCallback' in window) {
+                    requestIdleCallback(function() {
+                      navigator.serviceWorker.register('/sw.js').catch(function() {});
+                    }, { timeout: 5000 });
+                  }
+                `}
+              </Script>
+            )}
             <JoyfulLayer projects={launcherProjects} />
             <ScrollToTop />
             <ProgressiveBlur />

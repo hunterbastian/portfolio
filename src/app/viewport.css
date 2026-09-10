@@ -2,11 +2,6 @@
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-  /* Remove hover effects on touch devices */
-  .hover-only:hover {
-    transform: none !important;
-  }
-  
   /* Larger touch targets */
   button, a, input, select, textarea {
     min-height: 44px;
@@ -39,15 +34,6 @@
   }
 }
 
-/* Landscape mobile optimizations */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-  /* Reduce vertical padding on landscape phones */
-  .landscape-reduce-padding {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-  }
-}
-
 /* Safe area insets for iOS */
 @supports (padding: env(safe-area-inset-top)) {
   .safe-area-padding {
@@ -56,35 +42,6 @@
     padding-bottom: env(safe-area-inset-bottom);
     padding-left: env(safe-area-inset-left);
   }
-}
-
-/* Optimize scrolling performance */
-.scroll-smooth {
-  scroll-behavior: auto;
-}
-
-/* Container queries for responsive design */
-@container (max-width: 640px) {
-  .container-responsive {
-    font-size: 0.8125rem;
-  }
-}
-
-/* Viewport units that account for mobile browsers */
-.full-viewport-height {
-  height: 100vh;
-  height: 100dvh; /* Dynamic viewport height */
-}
-
-.full-viewport-width {
-  width: 100vw;
-  width: 100dvw; /* Dynamic viewport width */
-}
-
-/* Focus management for keyboard navigation */
-.focus-visible:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
 }
 
 /* Text selection optimization */

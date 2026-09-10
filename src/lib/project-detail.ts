@@ -37,23 +37,10 @@ export const PROJECT_DETAIL_ITEM_MOTION = {
 
 export const PROJECT_DETAIL_HERO_INITIAL_Y = 16
 
-export interface ProjectDetailTransitionRect {
-  height: number
-  left: number
-  top: number
-  width: number
-}
-
 export interface ProjectDetailViewActivationInput {
   projectTitle?: string
   slug?: string
   trackProjectView: (slug: string, title: string) => void
-}
-
-export interface ProjectDetailTransitionTargetActivationInput {
-  getHeroRect: () => ProjectDetailTransitionRect
-  pageTransitionYOffset: number
-  setTransitionTarget: (target: ProjectDetailTransitionRect) => void
 }
 
 export interface ProjectDetailRevealScheduleInput<TTimer> {
@@ -81,18 +68,12 @@ export function resolveProjectImageUrl(image: string): string {
 export function getProjectDetailItemMotion({
   initialY = PROJECT_DETAIL_ITEM_MOTION.initialY,
   stage,
-  transitionActive = false,
   visibleStage,
 }: {
   initialY?: number
   stage: number
-  transitionActive?: boolean
   visibleStage: number
 }) {
-  if (transitionActive) {
-    return { opacity: PROJECT_DETAIL_ITEM_MOTION.initialOpacity, y: PROJECT_DETAIL_ITEM_MOTION.finalY }
-  }
-
   const visible = stage >= visibleStage
 
   return {
@@ -101,16 +82,29 @@ export function getProjectDetailItemMotion({
   }
 }
 
-export function getProjectDetailTransitionTarget(
-  rect: ProjectDetailTransitionRect,
-  pageTransitionYOffset: number,
-): ProjectDetailTransitionRect {
-  return {
-    top: rect.top - pageTransitionYOffset,
-    left: rect.left,
-    width: rect.width,
-    height: rect.height,
+export const PROJECT_DETAIL_HERO_VISIBLE_STAGE = 2
+
+/**
+ * A view transition already carries the hero from the card into place, so the
+ * reveal storyboard has to hand it over at rest. Fading and sliding it at the
+ * same time would animate the element twice over the same frames.
+ */
+export function getProjectDetailHeroMotion({
+  isMorphing,
+  stage,
+}: {
+  isMorphing: boolean
+  stage: number
+}) {
+  if (isMorphing) {
+    return { opacity: PROJECT_DETAIL_ITEM_MOTION.finalOpacity, y: PROJECT_DETAIL_ITEM_MOTION.finalY }
   }
+
+  return getProjectDetailItemMotion({
+    initialY: PROJECT_DETAIL_HERO_INITIAL_Y,
+    stage,
+    visibleStage: PROJECT_DETAIL_HERO_VISIBLE_STAGE,
+  })
 }
 
 export function activateProjectDetailView({
@@ -123,14 +117,6 @@ export function activateProjectDetailView({
   }
 
   trackProjectView(slug, projectTitle)
-}
-
-export function activateProjectDetailTransitionTarget({
-  getHeroRect,
-  pageTransitionYOffset,
-  setTransitionTarget,
-}: ProjectDetailTransitionTargetActivationInput) {
-  setTransitionTarget(getProjectDetailTransitionTarget(getHeroRect(), pageTransitionYOffset))
 }
 
 export function scheduleProjectDetailRevealStages<TTimer>({

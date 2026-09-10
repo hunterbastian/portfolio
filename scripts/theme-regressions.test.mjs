@@ -63,7 +63,7 @@ test('manifest and initial page chrome agree with the dark site canvas', () => {
 function assertDarkOffline(source) {
   assert.ok(source.includes(background), 'offline canvas must match the live dark background')
   assert.ok(source.includes('color-scheme: dark') || source.includes('color-scheme:dark'))
-  assert.ok(source.includes('name="theme-color" content="#17191b"'))
+  assert.ok(source.includes(`name="theme-color" content="${background}"`))
   assert.equal(source.includes('prefers-color-scheme'), false)
   assert.equal(source.includes('color-scheme: light'), false)
   assert.equal(source.includes('#f2f1ef'), false)

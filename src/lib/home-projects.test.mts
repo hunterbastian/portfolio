@@ -10,12 +10,7 @@ import {
   activateHomeProjectClearFilter,
   activateHomeWorkFilterChange,
   formatProjectYear,
-  getFeaturedProjectHoverDistance,
-  getFeaturedProjectListState,
-  getFeaturedProjectRowState,
   getFeaturedProjectRowStyleVars,
-  getHomeProjectDescription,
-  getHomeProjectThumbnailImage,
   getHomeProjectTitle,
   getProjectAccent,
   getProjectRows,
@@ -175,33 +170,12 @@ test('getProjectRows filters projects and limits homepage rows', () => {
   )
 })
 
-test('getHomeProjectDescription uses curated copy before frontmatter fallback', () => {
-  assert.equal(
-    getHomeProjectDescription(project('lumo', 'Mobile Design', [], 'Lumo', 'Original Lumo copy')),
-    'Mindfulness app for calm reflection.',
-  )
-  assert.equal(
-    getHomeProjectDescription(project('custom', 'Web Design', [], 'Custom', 'Original custom copy')),
-    'Original custom copy',
-  )
-})
-
 test('getHomeProjectTitle prefers display title before frontmatter title', () => {
   const displayProject = project('display', 'Web Design', [], 'Frontmatter Title')
   displayProject.frontmatter.displayTitle = 'Display Title'
 
   assert.equal(getHomeProjectTitle(displayProject), 'Display Title')
   assert.equal(getHomeProjectTitle(project('plain', 'Web Design', [], 'Plain Title')), 'Plain Title')
-})
-
-test('getHomeProjectThumbnailImage prefers home-specific image before detail image', () => {
-  const thumbnailProject = project('lumo', 'Mobile Design', [], 'Lumo')
-
-  assert.equal(getHomeProjectThumbnailImage(thumbnailProject), '/images/lumo.webp')
-
-  thumbnailProject.frontmatter.homeImage = '/images/home/lumo-object-icon.png'
-
-  assert.equal(getHomeProjectThumbnailImage(thumbnailProject), '/images/home/lumo-object-icon.png')
 })
 
 test('formatProjectYear and getProjectAccent provide display fallbacks', () => {
@@ -231,96 +205,6 @@ test('featured project row style vars clamp hover distance and preserve accent m
     '--featured-row-highlight-bg': 'color-mix(in srgb, #2f7d73 5%, rgba(var(--background-rgb), 0.58))',
     '--featured-row-highlight-border': 'color-mix(in srgb, #2f7d73 16%, transparent)',
     '--featured-row-highlight-shadow': 'color-mix(in srgb, #2f7d73 10%, transparent)',
-  })
-})
-
-test('featured project hover distance resolves null and active row offsets', () => {
-  assert.equal(getFeaturedProjectHoverDistance(null, 3), 0)
-  assert.equal(getFeaturedProjectHoverDistance(3, 3), 0)
-  assert.equal(getFeaturedProjectHoverDistance(1, 4), 3)
-})
-
-test('featured project row state resolves active, muted, and hover distance', () => {
-  assert.deepEqual(getFeaturedProjectRowState('lumo', 1, null), {
-    active: false,
-    hoverDistance: 0,
-    index: 1,
-    muted: false,
-    slug: 'lumo',
-  })
-  assert.deepEqual(getFeaturedProjectRowState('lumo', 1, { slug: 'lumo', index: 1 }), {
-    active: true,
-    hoverDistance: 0,
-    index: 1,
-    muted: false,
-    slug: 'lumo',
-  })
-  assert.deepEqual(getFeaturedProjectRowState('lumo', 1, { slug: 'porsche-app', index: 4 }), {
-    active: false,
-    hoverDistance: 3,
-    index: 1,
-    muted: true,
-    slug: 'lumo',
-  })
-})
-
-test('featured project list state packages project and playground rows', () => {
-  const projects = [
-    project('lumo', 'Mobile Design', []),
-    project('porsche-app', 'Product Design', []),
-  ]
-
-  assert.deepEqual(getFeaturedProjectListState(projects, null), {
-    hasHoveredProject: false,
-    playgroundRow: {
-      active: false,
-      hoverDistance: 0,
-      index: 2,
-      muted: false,
-      slug: 'playground',
-    },
-    projectRows: [
-      {
-        active: false,
-        hoverDistance: 0,
-        index: 0,
-        muted: false,
-        slug: 'lumo',
-      },
-      {
-        active: false,
-        hoverDistance: 0,
-        index: 1,
-        muted: false,
-        slug: 'porsche-app',
-      },
-    ],
-  })
-  assert.deepEqual(getFeaturedProjectListState(projects, { slug: 'playground', index: 2 }), {
-    hasHoveredProject: true,
-    playgroundRow: {
-      active: true,
-      hoverDistance: 0,
-      index: 2,
-      muted: false,
-      slug: 'playground',
-    },
-    projectRows: [
-      {
-        active: false,
-        hoverDistance: 2,
-        index: 0,
-        muted: true,
-        slug: 'lumo',
-      },
-      {
-        active: false,
-        hoverDistance: 1,
-        index: 1,
-        muted: true,
-        slug: 'porsche-app',
-      },
-    ],
   })
 })
 

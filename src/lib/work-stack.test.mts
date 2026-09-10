@@ -31,8 +31,9 @@ test('work stack slots stay unique piles for projects and playground', () => {
   assert.equal(getWorkStackSlots('projects'), PROJECT_STACK_SLOTS)
   assert.equal(getWorkStackSlots('playground'), PLAYGROUND_STACK_SLOTS)
   assert.notDeepEqual(PROJECT_STACK_SLOTS[0], PLAYGROUND_STACK_SLOTS[0])
-  assert.equal(HOME_PLAYGROUND_STACK_LIMIT, 9)
-  assert.ok(PLAYGROUND_STACK_SLOTS.length >= HOME_PLAYGROUND_STACK_LIMIT)
+  assert.equal(HOME_PLAYGROUND_STACK_LIMIT, 4)
+  assert.equal(PLAYGROUND_STACK_SLOTS.length, HOME_PLAYGROUND_STACK_LIMIT)
+  assert.ok(PROJECT_STACK_SLOTS.length <= 8)
 })
 
 test('getWorkStackCards maps project media onto the matching scatter slots', () => {
@@ -67,24 +68,38 @@ test('collage cards use case-study photos instead of home object icons', () => {
   assert.equal(card?.image.includes('object-icon'), false)
 })
 
-test('playground stacks cap at the pile limit and keep experiment hrefs', () => {
+test('playground stacks stay a teaser and keep experiment hrefs', () => {
   const projects = Array.from({ length: 12 }, (_, index) => project(`item-${index}`))
   const cards = getWorkStackCards(projects, 'playground')
 
   assert.equal(cards.length, HOME_PLAYGROUND_STACK_LIMIT)
-  assert.equal(cards[8]?.href, '/projects/item-8')
-  assert.equal(cards[8]?.layout, PLAYGROUND_STACK_SLOTS[8])
+  assert.equal(cards[3]?.href, '/projects/item-3')
+  assert.equal(cards[3]?.layout, PLAYGROUND_STACK_SLOTS[3])
 })
 
-test('stack card style uses percent placement and the aspect token', () => {
+test('stack card style ships placement as custom properties the collage can ignore', () => {
   const style = getWorkStackCardStyle(PROJECT_STACK_SLOTS[0])
 
-  assert.equal(style.left, '31%')
-  assert.equal(style.top, '14%')
-  assert.equal(style.width, '40%')
-  assert.equal(style.zIndex, 8)
+  assert.equal(style['--card-left'], '31%')
+  assert.equal(style['--card-top'], '14%')
+  assert.equal(style['--card-width'], '40%')
+  assert.equal(style['--card-z'], 8)
   assert.equal(style['--stack-rotate'], '-7deg')
-  assert.equal(style.aspectRatio, WORK_STACK_ASPECT_RATIO.portrait)
+  assert.equal(style['--card-ratio'], WORK_STACK_ASPECT_RATIO.portrait)
+  assert.equal('left' in style, false)
+  assert.equal('aspectRatio' in style, false)
+})
+
+test('mobile lays the collage out in columns before the scatter starts at sm', () => {
+  const css = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
+  const mobile = css.slice(0, css.indexOf('@media'))
+  const scatter = css.slice(css.indexOf('@media (min-width: 641px)'))
+
+  assert.ok(mobile.includes('grid-template-columns: repeat(2, minmax(0, 1fr))'))
+  assert.ok(mobile.includes('grid-column: span 2'))
+  assert.ok(scatter.includes('position: absolute'))
+  assert.ok(scatter.includes('left: var(--card-left)'))
+  assert.equal(mobile.includes('position: absolute'), false)
 })
 
 test('scatter stack does not preload below-fold collage images', () => {
@@ -96,7 +111,6 @@ test('scatter photos sit full-bleed without polaroid mats', () => {
   const source = readFileSync(new URL('../components/home/WorkScatterStack.tsx', import.meta.url), 'utf8')
   const css = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
 
-  assert.ok(source.includes('aspectRatio: layoutStyle.aspectRatio'))
   assert.ok(source.includes('getProjectCardImageZoomStyle(card.imageZoom)'))
   assert.equal(source.includes('styles.caption'), false)
   assert.equal(css.includes('padding: 5px 5px 0'), false)

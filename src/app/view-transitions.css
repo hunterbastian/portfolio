@@ -1,0 +1,45 @@
+/*
+ * Shared-element morph between a project card and its detail hero.
+ *
+ * The card is a tilted, cropped thumbnail and the hero is a 4/3 plate, so the
+ * two snapshots arrive with different aspect ratios. Left alone they would
+ * stretch into each other's box and squash the photo mid-flight; sizing both to
+ * fill the group and cropping instead keeps the subject steady while the frame
+ * grows around it and the tilt straightens out.
+ */
+
+::view-transition-group(project-hero) {
+  animation-duration: 460ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::view-transition-old(project-hero),
+::view-transition-new(project-hero) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation-duration: 460ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Everything that is not the photo changes underneath on a shorter, quieter fade. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 240ms;
+  animation-timing-function: ease;
+}
+
+/*
+ * Navigation already skips the transition when reduced motion is requested;
+ * this is the backstop for a transition that started before the preference
+ * changed, and for any future named element that forgets to check.
+ */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(project-hero),
+  ::view-transition-old(project-hero),
+  ::view-transition-new(project-hero),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

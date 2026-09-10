@@ -1,13 +1,19 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
-import type { CSSProperties } from 'react'
+import { useSyncExternalStore, type CSSProperties } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
+import MorphLink from '@/components/MorphLink'
 import { analytics } from '@/lib/analytics'
 import { activateEditorialItem } from '@/lib/editorial-item'
 import { showJoyToast } from '@/lib/joy'
 import { getProjectCardImageZoomStyle } from '@/lib/project-card'
+import {
+  getProjectMorphProps,
+  getProjectMorphServerSnapshot,
+  getProjectMorphSlug,
+  subscribeProjectMorph,
+} from '@/lib/view-transition'
 import {
   getWorkStackCardStyle,
   getWorkStackCards,
@@ -25,6 +31,11 @@ interface WorkScatterStackProps {
 export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProps) {
   const haptic = useWebHaptics()
   const cards = getWorkStackCards(projects, tone)
+  const morphSlug = useSyncExternalStore(
+    subscribeProjectMorph,
+    getProjectMorphSlug,
+    getProjectMorphServerSnapshot,
+  )
 
   if (cards.length === 0) {
     return null
@@ -33,23 +44,18 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
   return (
     <div className={styles.stack} aria-label={`${label} collage`}>
       {cards.map((card) => {
-        const layoutStyle = getWorkStackCardStyle(card.layout)
-        const style = {
-          left: layoutStyle.left,
-          top: layoutStyle.top,
-          width: layoutStyle.width,
-          zIndex: layoutStyle.zIndex,
-          aspectRatio: layoutStyle.aspectRatio,
-          '--stack-rotate': layoutStyle['--stack-rotate'],
-        } satisfies CSSProperties & { '--stack-rotate': string }
+        const { style: morphStyle, ...morphAttributes } = getProjectMorphProps(card.slug, morphSlug)
+        const style = { ...getWorkStackCardStyle(card.layout), ...morphStyle } as CSSProperties
 
         return (
-          <Link
+          <MorphLink
             key={card.slug}
             href={card.href}
+            slug={card.slug}
             className={styles.card}
             style={style}
             aria-label={`Open ${card.title}`}
+            {...morphAttributes}
             onClick={() =>
               activateEditorialItem({
                 showToast: showJoyToast,
@@ -64,11 +70,11 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
               src={card.image}
               alt=""
               fill
-              sizes="(max-width: 640px) 42vw, 180px"
+              sizes="(max-width: 640px) 48vw, 180px"
               className={styles.media}
               style={getProjectCardImageZoomStyle(card.imageZoom)}
             />
-          </Link>
+          </MorphLink>
         )
       })}
     </div>

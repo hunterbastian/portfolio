@@ -23,7 +23,7 @@ npm run start
 
 # Quality + checks
 npm run lint
-npm run test:snake
+npm run test
 
 # Performance + assets
 npm run performance
@@ -59,16 +59,8 @@ scripts/           Utility scripts
 
 ## Notes
 
-- Node.js `>= 18.17.0`
+- Node.js `>= 18.17.0`; `.nvmrc` pins 22.14.0
 - `npm run lighthouse` expects a local server at `http://localhost:3000`
-
-## Responsive Transition Notes
-
-- The homepage watches for viewport changes that cross `mobile`, `tablet`, and `desktop` breakpoints in `src/components/AnimatedHomePage.tsx`.
-- `useBreakpointChange()` toggles a short-lived `CreatingLoader` overlay for `900ms` whenever the layout mode changes.
-- The current overlay uses a light, background-tinted blur instead of a dark opacity wash:
-  `rgba(var(--background-rgb), 0.16)` with `blur(14px) saturate(0.92)`.
-- The effect is disabled for users who prefer reduced motion.
 
 ## Docs
 

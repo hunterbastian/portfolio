@@ -1,11 +1,8 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import {
-  CHILD_ENTRANCE_INITIAL_Y,
   PAGE_TRANSITION_STAGE,
   getInitialRouteSceneStage,
-  PAGE_ENTRANCE_INITIAL_Y,
-  getPageTransitionYOffset,
   getRouteSceneChildDelay,
   getRouteSceneDefaults,
   getRouteSceneInitial,
@@ -49,10 +46,6 @@ test('a morph navigation keeps its scene key so the destination can mount at onc
     }),
     '/projects/lumo',
   )
-})
-
-test('getPageTransitionYOffset combines page and child entrance offsets', () => {
-  assert.equal(getPageTransitionYOffset(), PAGE_ENTRANCE_INITIAL_Y + CHILD_ENTRANCE_INITIAL_Y)
 })
 
 test('getRouteSceneInitial skips initial animation on first load', () => {

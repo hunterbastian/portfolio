@@ -13,33 +13,6 @@ export interface FeaturedProjectRowStyleVars {
   '--featured-row-highlight-shadow': string
 }
 
-export interface FeaturedProjectHoveredState {
-  index: number
-  slug: string
-}
-
-export interface FeaturedProjectRowState {
-  active: boolean
-  hoverDistance: number
-  index: number
-  muted: boolean
-  slug: string
-}
-
-export interface FeaturedProjectListState {
-  hasHoveredProject: boolean
-  playgroundRow: FeaturedProjectRowState
-  projectRows: FeaturedProjectRowState[]
-}
-
-export const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
-  'mentalhealth-minisite': 'Student support minisite for finding help quickly.',
-  lumo: 'Mindfulness app for calm reflection.',
-  'middle-earth-journey': 'Interactive Tolkien map experience.',
-  'wander-utah': 'National parks trip-planning app.',
-  'porsche-app': 'Simplified Porsche browsing concept.',
-}
-
 export const HOME_ROW_HOVER_ACCENT = '#2f7d73'
 export const HOME_PROJECT_GRID_PROJECT_LIMIT = 8
 
@@ -174,51 +147,12 @@ export function activateHomeWorkFilterChange({
   requestFrame(scrollProjectsIntoView)
 }
 
-export function getHomeProjectDescription(project: HomeProject) {
-  return HOME_PROJECT_DESCRIPTIONS[project.slug] ?? project.frontmatter.description
-}
-
 export function getHomeProjectTitle(project: HomeProject) {
   return project.frontmatter.displayTitle ?? project.frontmatter.title
 }
 
-export function getHomeProjectThumbnailImage(project: HomeProject) {
-  return project.frontmatter.homeImage ?? project.frontmatter.image
-}
-
 export function getProjectAccent(_slug: string) {
   return HOME_ROW_HOVER_ACCENT
-}
-
-export function getFeaturedProjectHoverDistance(hoveredIndex: number | null, index: number): number {
-  return hoveredIndex === null ? 0 : Math.abs(hoveredIndex - index)
-}
-
-export function getFeaturedProjectRowState(
-  slug: string,
-  index: number,
-  hoveredProject: FeaturedProjectHoveredState | null,
-): FeaturedProjectRowState {
-  const hasHoveredProject = hoveredProject !== null
-
-  return {
-    active: hoveredProject?.slug === slug,
-    hoverDistance: getFeaturedProjectHoverDistance(hoveredProject?.index ?? null, index),
-    index,
-    muted: hasHoveredProject && hoveredProject?.slug !== slug,
-    slug,
-  }
-}
-
-export function getFeaturedProjectListState(
-  projects: readonly HomeProject[],
-  hoveredProject: FeaturedProjectHoveredState | null,
-): FeaturedProjectListState {
-  return {
-    hasHoveredProject: hoveredProject !== null,
-    playgroundRow: getFeaturedProjectRowState('playground', projects.length, hoveredProject),
-    projectRows: projects.map((project, index) => getFeaturedProjectRowState(project.slug, index, hoveredProject)),
-  }
 }
 
 export function getFeaturedProjectRowStyleVars(

@@ -9,7 +9,6 @@ import {
   getHomeEndeavorMeta,
   getHomeEndeavorRowState,
   getHomeEndeavorRowStyleVars,
-  getHomeEndeavorThumbnail,
 } from './home-endeavors.ts'
 
 const links = [
@@ -34,15 +33,6 @@ test('home endeavor display helpers provide stable accents and descriptions', ()
   assert.equal(getHomeEndeavorMeta('Studio Alpine'), 'Studio')
   assert.equal(getHomeEndeavorMeta('Available for freelance'), 'Open')
   assert.equal(getHomeEndeavorMeta('Unknown'), 'Now')
-  assert.deepEqual(getHomeEndeavorThumbnail('studio-alpine'), {
-    alt: 'Studio Alpine camera icon',
-    src: '/images/optimized/endeavors/studio-alpine-camera-object-icon.png',
-  })
-  assert.deepEqual(getHomeEndeavorThumbnail('handshake'), {
-    alt: 'Freelance coffee icon',
-    src: '/images/optimized/endeavors/freelance-coffee-object-icon.png',
-  })
-  assert.equal(getHomeEndeavorThumbnail(), null)
 })
 
 test('home endeavor row style vars reuse shared hover math with endeavor accents', () => {

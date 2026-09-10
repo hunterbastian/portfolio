@@ -68,9 +68,6 @@ export interface RouteSceneStageSchedulerInput<TTimer> extends RouteSceneStageSc
   setStage: (stage: RouteSceneStage) => void
 }
 
-export function getPageTransitionYOffset(): number {
-  return PAGE_ENTRANCE_INITIAL_Y + CHILD_ENTRANCE_INITIAL_Y
-}
 
 export function getInitialRouteSceneStage(isInitialLoad: boolean): RouteSceneStage {
   return isInitialLoad ? PAGE_TRANSITION_STAGE.children : PAGE_TRANSITION_STAGE.hidden

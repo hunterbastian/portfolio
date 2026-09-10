@@ -20,23 +20,7 @@ export interface HomeEndeavorListState {
   rows: HomeEndeavorRowState[]
 }
 
-export interface HomeEndeavorThumbnail {
-  alt: string
-  src: string
-}
-
 export type HomeEndeavorRowStyleVars = FeaturedProjectRowStyleVars
-
-const HOME_ENDEAVOR_THUMBNAILS: Record<NonNullable<HomeLinkItem['iconType']>, HomeEndeavorThumbnail> = {
-  'studio-alpine': {
-    alt: 'Studio Alpine camera icon',
-    src: '/images/optimized/endeavors/studio-alpine-camera-object-icon.png',
-  },
-  handshake: {
-    alt: 'Freelance coffee icon',
-    src: '/images/optimized/endeavors/freelance-coffee-object-icon.png',
-  },
-}
 
 const HOME_ENDEAVOR_DESCRIPTIONS: Record<string, string> = {
   'Studio Alpine': 'Photography and lifestyle.',
@@ -60,10 +44,6 @@ export function getHomeEndeavorDescription(label: string) {
 
 export function getHomeEndeavorMeta(label: string) {
   return HOME_ENDEAVOR_META[label] ?? 'Now'
-}
-
-export function getHomeEndeavorThumbnail(iconType?: HomeLinkItem['iconType']): HomeEndeavorThumbnail | null {
-  return iconType ? HOME_ENDEAVOR_THUMBNAILS[iconType] ?? null : null
 }
 
 export function getHomeEndeavorRowStyleVars(label: string, hoverDistance = 0): HomeEndeavorRowStyleVars {

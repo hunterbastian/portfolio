@@ -36,5 +36,3 @@ export const editorialImageFrameClassName =
 export const editorialImageClassName =
   'object-contain drop-shadow-[0_10px_14px_rgba(15,23,42,0.055)] transition-[filter,transform] duration-500 ease-soft group-hover:scale-[1.035] group-hover:drop-shadow-[0_14px_18px_var(--editorial-accent-shadow)] group-hover:saturate-[1.05] group-hover:contrast-[1.02] group-active:scale-[1.01]'
 
-export const logoFrameClassName =
-  'relative inline-flex h-[1.25rem] w-[1.25rem] shrink-0 overflow-hidden rounded-[5px] bg-[#2e3440] shadow-[0_6px_18px_-12px_rgba(15,23,42,0.5),inset_0_0_0_1px_rgba(255,255,255,0.08)] ring-1 ring-border/45 transition-[transform,box-shadow,filter] duration-300 ease-soft group-hover:scale-[1.04] group-hover:shadow-[0_9px_24px_-14px_var(--editorial-accent-shadow),inset_0_0_0_1px_rgba(255,255,255,0.12)] group-active:scale-[0.98]'

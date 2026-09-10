@@ -9,10 +9,6 @@ export interface HomeHeroAction {
 export const HOME_HERO_ACTION_CLASS_NAME = 'min-h-[44px] min-w-[44px] items-center sm:min-h-0 sm:min-w-0 text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]'
 export const HOME_HERO_ACTION_LABEL_CLASS_NAME = 'underline decoration-transparent underline-offset-[0.2em] group-hover/peek:decoration-current group-focus-visible/peek:decoration-current'
 export const HOME_HERO_ACTION_HAPTIC_STYLE = 'light'
-export const HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS =
-  'transition-[filter,opacity,transform] duration-300 ease-soft motion-reduce:transition-none'
-export const HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS = 'translate-y-0 blur-0 opacity-100'
-export const HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS = 'translate-y-[1px] blur-[1.35px] opacity-65'
 export const HOME_HERO_LOCAL_TIME_ZONE = 'America/Denver'
 export const HOME_HERO_LOCAL_TIME_UPDATE_MS = 30_000
 export const HOME_HERO_INLINE_LOCAL_TIME_CLASS_NAME =
@@ -79,12 +75,6 @@ export function getHomeHeroLocalTimeToggleLabel(format: HomeHeroLocalTimeFormat,
   const nextFormatLabel = nextFormat === 'military' ? '24-hour time' : 'am/pm time'
 
   return `Switch to ${nextFormatLabel}. Current time is ${localTime}.`
-}
-
-export function getHomeHeroProfileDefocusClassName(active: boolean) {
-  return `${HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS} ${
-    active ? HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS : HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS
-  }`
 }
 
 export function activateHomeHeroAction({

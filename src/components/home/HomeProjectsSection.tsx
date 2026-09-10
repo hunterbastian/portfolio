@@ -1,6 +1,7 @@
 'use client'
 
 import { useWebHaptics } from 'web-haptics/react'
+import { FeaturedProjectList } from '@/components/home/FeaturedProjectList'
 import { Section } from '@/components/home/HomeSection'
 import { WorkScatterStack } from '@/components/home/WorkScatterStack'
 import { analytics } from '@/lib/analytics'
@@ -31,7 +32,7 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
       scrollMarginClassName="scroll-mt-10 sm:scroll-mt-12"
     >
       <div className="relative">
-        <div className="relative z-10 space-y-3 sm:space-y-4">
+        <div className="relative z-10 space-y-5 sm:space-y-8">
           {workFilter !== 'all' ? (
             <div className="flex items-center justify-between gap-3 rounded-[8px] bg-card px-2.5 py-2 font-mono text-[0.68rem] text-muted-foreground shadow-[var(--shadow-raised-subtle)]">
               <span>
@@ -53,7 +54,8 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
               </button>
             </div>
           ) : null}
-          <WorkScatterStack label="Projects" projects={projectRows} tone="projects" />
+          <FeaturedProjectList projects={projectRows} />
+          <WorkScatterStack decorative label="Projects" projects={projectRows} tone="projects" />
         </div>
       </div>
     </Section>

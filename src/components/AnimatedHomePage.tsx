@@ -59,15 +59,15 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
 
         <div className="mt-5 space-y-11 sm:mt-7 sm:space-y-24">
           <Reveal delayMs={40}>
-            <HomeEndeavorsSection />
-          </Reveal>
-
-          <Reveal delayMs={80}>
             <HomeProjectsSection
               onWorkFilterChange={applyWorkFilter}
               projects={projects}
               workFilter={workFilter}
             />
+          </Reveal>
+
+          <Reveal delayMs={80}>
+            <HomeEndeavorsSection />
           </Reveal>
 
           <Reveal delayMs={100}>

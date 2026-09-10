@@ -38,6 +38,8 @@ export const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
   'middle-earth-journey': 'Interactive Tolkien map experience.',
   'wander-utah': 'National parks trip-planning app.',
   'porsche-app': 'Simplified Porsche browsing concept.',
+  'aol-redesign': 'Email redesign that modernizes AOL while staying familiar.',
+  nutricost: 'Product labels and marketing for Nutricost supplements.',
 }
 
 export const HOME_ROW_HOVER_ACCENT = '#2f7d73'

@@ -17,12 +17,13 @@ import type { HomeProject } from '@/lib/home-projects'
 import styles from './WorkScatterStack.module.css'
 
 interface WorkScatterStackProps {
+  decorative?: boolean
   label: string
   projects: HomeProject[]
   tone: WorkStackTone
 }
 
-export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProps) {
+export function WorkScatterStack({ decorative = false, label, projects, tone }: WorkScatterStackProps) {
   const haptic = useWebHaptics()
   const cards = getWorkStackCards(projects, tone)
 
@@ -31,7 +32,11 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
   }
 
   return (
-    <div className={styles.stack} aria-label={`${label} collage`}>
+    <div
+      className={styles.stack}
+      aria-hidden={decorative || undefined}
+      aria-label={decorative ? undefined : `${label} collage`}
+    >
       {cards.map((card) => {
         const layoutStyle = getWorkStackCardStyle(card.layout)
         const style = {
@@ -49,7 +54,8 @@ export function WorkScatterStack({ label, projects, tone }: WorkScatterStackProp
             href={card.href}
             className={styles.card}
             style={style}
-            aria-label={`Open ${card.title}`}
+            tabIndex={decorative ? -1 : undefined}
+            aria-label={decorative ? undefined : `Open ${card.title}`}
             onClick={() =>
               activateEditorialItem({
                 showToast: showJoyToast,

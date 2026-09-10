@@ -16,6 +16,8 @@ import {
   getContactLinksView,
   getContactSocialLinkView,
   getContactSocialLinks,
+  getHomepageContactLinks,
+  isHomepageContactLink,
   shouldContactLinkOpenNewTab,
 } from './contact-links.ts'
 
@@ -106,6 +108,26 @@ test('contact links view packages email and social display state', () => {
       },
     ],
   })
+})
+
+test('homepage contact links keep email plus featured socials in source order', () => {
+  const fullLinks = [
+    { label: 'Email', href: 'mailto:hunter@example.com', external: true },
+    { label: 'LinkedIn', href: 'https://linkedin.com/in/hunterbastian', external: true },
+    { label: 'Instagram', href: 'https://instagram.com/studio.alpine', external: true },
+    { label: 'X', href: 'https://x.com/thestudioalpine', external: true },
+    { label: 'GitHub', href: 'https://github.com/hunterbastian', external: true },
+    { label: 'YouTube', href: 'https://youtube.com/@studio.alpine', external: true },
+  ]
+  const featured = ['LinkedIn', 'GitHub'] as const
+
+  assert.equal(isHomepageContactLink(fullLinks[0], featured), true)
+  assert.equal(isHomepageContactLink(fullLinks[2], featured), false)
+  assert.deepEqual(getHomepageContactLinks(fullLinks, featured), [fullLinks[0], fullLinks[1], fullLinks[4]])
+  assert.deepEqual(
+    getContactLinksView(getHomepageContactLinks(fullLinks, featured)).socialLinks.map((social) => social.link.label),
+    ['LinkedIn', 'GitHub'],
+  )
 })
 
 test('activateContactLink preserves haptic, analytics, and toast ordering', () => {

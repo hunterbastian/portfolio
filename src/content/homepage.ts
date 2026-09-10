@@ -60,6 +60,43 @@ export const contactSocialLinks: HomeLinkItem[] = [
   { label: 'YouTube', href: 'https://youtube.com/@studio.alpine', external: true },
 ]
 
+/** Socials featured in the homepage Contact row. Remaining URLs stay in `contactSocialLinks`. */
+export const homepageContactSocialLabels = ['LinkedIn', 'GitHub'] as const
+
+export interface BackgroundBeat {
+  year: string
+  title: string
+  description: string
+}
+
+export const backgroundBeats: BackgroundBeat[] = [
+  {
+    year: '2026',
+    title: 'Founder, Studio Alpine',
+    description: 'Photography and design project. Continuing Interaction Design at UVU.',
+  },
+  {
+    year: '2024 - Present',
+    title: 'Video Producer at Catapult',
+    description: "Department Representative for UVU's Web Design and Development program.",
+  },
+  {
+    year: '2023',
+    title: 'Started B.S. Interaction Design at UVU',
+    description: 'Graphic design intern at Nutricost the same year.',
+  },
+  {
+    year: '2021',
+    title: 'Graphic Design A.A., Columbus State',
+    description: 'Google IT Support Professional Certificate the same year.',
+  },
+  {
+    year: '2017',
+    title: 'Digital Design Intern, Clutch',
+    description: 'Early branding and UX process work.',
+  },
+]
+
 export const experienceItems: ExperienceItem[] = [
   {
     year: '2026 - Present',

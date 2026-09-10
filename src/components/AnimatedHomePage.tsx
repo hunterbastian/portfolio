@@ -1,10 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { HomeBackgroundSection } from '@/components/home/HomeBackgroundSection'
 import { HomeContactSection } from '@/components/home/HomeContactSection'
-import { HomeEducationSection } from '@/components/home/HomeEducationSection'
 import { HomeEndeavorsSection } from '@/components/home/HomeEndeavorsSection'
-import { HomeExperienceSection } from '@/components/home/HomeExperienceSection'
 import { HomeHeroSection } from '@/components/home/HomeHeroSection'
 import { HomePlaygroundSection } from '@/components/home/HomePlaygroundSection'
 import { HomeProjectsSection } from '@/components/home/HomeProjectsSection'
@@ -75,14 +74,10 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
           </Reveal>
 
           <Reveal delayMs={120}>
-            <HomeExperienceSection />
+            <HomeBackgroundSection />
           </Reveal>
 
           <Reveal delayMs={160}>
-            <HomeEducationSection />
-          </Reveal>
-
-          <Reveal delayMs={200}>
             <HomeContactSection />
           </Reveal>
         </div>

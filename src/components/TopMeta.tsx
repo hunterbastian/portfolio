@@ -142,7 +142,7 @@ export default function TopMeta() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [headerHidden, setHeaderHidden] = useState(false)
   const [sunBlinking, setSunBlinking] = useState(false)
-  const [activeSectionId, setActiveSectionId] = useState(HOME_SECTION_NAV_ITEMS[0].id)
+  const [activeSectionId, setActiveSectionId] = useState<string>(HOME_SECTION_NAV_ITEMS[0].id)
   const mobileMenuOpenRef = useRef(false)
   const sunIdleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const sunBlinkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)

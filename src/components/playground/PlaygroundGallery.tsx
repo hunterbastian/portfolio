@@ -19,7 +19,7 @@ export default function PlaygroundGallery({ projects }: PlaygroundGalleryProps) 
 
       <div className="playground-gallery-shell">
         <div className="playground-gallery-grid">
-          {tiles.map(({ index, meta, priorityImage, project, variant }) => (
+          {tiles.map(({ index, priorityImage, project, title, variant, year }) => (
             <PlaygroundGalleryTile
               key={project.slug}
               image={project.frontmatter.image}
@@ -27,9 +27,9 @@ export default function PlaygroundGallery({ projects }: PlaygroundGalleryProps) 
               index={index}
               priorityImage={priorityImage}
               slug={project.slug}
-              title={meta.title}
+              title={title}
               variant={variant}
-              year={meta.year}
+              year={year}
             />
           ))}
         </div>

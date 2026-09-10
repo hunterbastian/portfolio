@@ -14,6 +14,7 @@ const TOP_META_SHELL_BASE_CLASS =
   'fixed inset-x-0 top-0 z-50 px-5 py-4 transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6'
 const TOP_META_SHELL_HIDDEN_CLASS = 'pointer-events-none -translate-y-3 opacity-0 blur-[2px]'
 const TOP_META_SHELL_VISIBLE_CLASS = 'pointer-events-none translate-y-0 opacity-100 blur-0'
+const TOP_META_SHELL_FROSTED_CLASS = 'bg-background/82 backdrop-blur-xl'
 
 const TOP_META_INNER_BASE_CLASS =
   'relative isolate mx-auto flex max-w-[36rem] items-center justify-between gap-6 border-b border-border/72 pb-4 sm:pb-4'
@@ -56,9 +57,13 @@ export interface TopMetaHeaderState {
   mobileMenuOpen: boolean
 }
 
-export interface TopMetaHeaderStateInput {
-  mobileMenuOpen: boolean
+export interface TopMetaHeaderVisibilityInput {
+  persistVisible?: boolean
   scrollY: number
+}
+
+export interface TopMetaHeaderStateInput extends TopMetaHeaderVisibilityInput {
+  mobileMenuOpen: boolean
 }
 
 export interface TopMetaNavActivationInput {
@@ -186,15 +191,30 @@ export function activateTopMetaSunBlink<TTimer>({
   return scheduleTimer(() => setSunBlinking(false), TOP_META_SUN_BLINK_MS)
 }
 
-export function shouldHideTopMetaHeader(scrollY: number) {
+export function shouldHideTopMetaHeader({
+  persistVisible = false,
+  scrollY,
+}: TopMetaHeaderVisibilityInput) {
+  if (persistVisible) {
+    return false
+  }
+
   return scrollY > TOP_REVEAL_SCROLL_Y
+}
+
+export function shouldFrostTopMetaHeader({
+  persistVisible = false,
+  scrollY,
+}: TopMetaHeaderVisibilityInput) {
+  return persistVisible && scrollY > TOP_REVEAL_SCROLL_Y
 }
 
 export function getTopMetaHeaderState({
   mobileMenuOpen,
+  persistVisible = false,
   scrollY,
 }: TopMetaHeaderStateInput): TopMetaHeaderState {
-  const headerHidden = shouldHideTopMetaHeader(scrollY)
+  const headerHidden = shouldHideTopMetaHeader({ persistVisible, scrollY })
 
   return {
     headerHidden,
@@ -202,16 +222,28 @@ export function getTopMetaHeaderState({
   }
 }
 
+export function getTopMetaPageNavItems(pathname: string) {
+  return pathname === '/' ? [] : [...TOP_META_NAV_ITEMS]
+}
+
+export function getTopMetaMobilePageNavItems(pathname: string) {
+  if (pathname !== '/') {
+    return [...TOP_META_NAV_ITEMS]
+  }
+
+  return TOP_META_NAV_ITEMS.filter((item) => item.href !== '/')
+}
+
 function shouldDisableTopMetaPointerEvents(headerHidden: boolean, mobileMenuOpen: boolean) {
   return headerHidden && !mobileMenuOpen
 }
 
-export function getTopMetaShellClassName(headerHidden: boolean, mobileMenuOpen: boolean) {
+export function getTopMetaShellClassName(headerHidden: boolean, mobileMenuOpen: boolean, frosted = false) {
   return `${TOP_META_SHELL_BASE_CLASS} ${
     shouldDisableTopMetaPointerEvents(headerHidden, mobileMenuOpen)
       ? TOP_META_SHELL_HIDDEN_CLASS
       : TOP_META_SHELL_VISIBLE_CLASS
-  }`
+  }${frosted ? ` ${TOP_META_SHELL_FROSTED_CLASS}` : ''}`
 }
 
 export function getTopMetaInnerClassName(headerHidden: boolean, mobileMenuOpen: boolean) {

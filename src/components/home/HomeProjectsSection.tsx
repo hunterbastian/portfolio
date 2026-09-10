@@ -12,6 +12,7 @@ import {
   type HomeProject,
   type WorkFilter,
 } from '@/lib/home-projects'
+import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
 import { showJoyToast } from '@/lib/joy'
 
 interface HomeProjectsSectionProps {
@@ -29,7 +30,7 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
       id="projects"
       title="Projects"
       contentGapClassName="space-y-3 sm:space-y-4"
-      scrollMarginClassName="scroll-mt-10 sm:scroll-mt-12"
+      scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
       <div className="relative">
         <div className="relative z-10 space-y-5 sm:space-y-8">

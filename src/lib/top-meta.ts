@@ -14,6 +14,7 @@ const TOP_META_SHELL_BASE_CLASS =
   'fixed inset-x-0 top-0 z-50 px-5 py-4 transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6'
 const TOP_META_SHELL_HIDDEN_CLASS = 'pointer-events-none -translate-y-3 opacity-0 blur-[2px]'
 const TOP_META_SHELL_VISIBLE_CLASS = 'pointer-events-none translate-y-0 opacity-100 blur-0'
+const TOP_META_SHELL_FROSTED_CLASS = 'bg-background/82 backdrop-blur-xl'
 
 const TOP_META_INNER_BASE_CLASS =
   'relative isolate mx-auto flex max-w-[36rem] items-center justify-between gap-6 border-b border-border/72 pb-4 sm:pb-4'
@@ -201,6 +202,13 @@ export function shouldHideTopMetaHeader({
   return scrollY > TOP_REVEAL_SCROLL_Y
 }
 
+export function shouldFrostTopMetaHeader({
+  persistVisible = false,
+  scrollY,
+}: TopMetaHeaderVisibilityInput) {
+  return persistVisible && scrollY > TOP_REVEAL_SCROLL_Y
+}
+
 export function getTopMetaHeaderState({
   mobileMenuOpen,
   persistVisible = false,
@@ -230,12 +238,12 @@ function shouldDisableTopMetaPointerEvents(headerHidden: boolean, mobileMenuOpen
   return headerHidden && !mobileMenuOpen
 }
 
-export function getTopMetaShellClassName(headerHidden: boolean, mobileMenuOpen: boolean) {
+export function getTopMetaShellClassName(headerHidden: boolean, mobileMenuOpen: boolean, frosted = false) {
   return `${TOP_META_SHELL_BASE_CLASS} ${
     shouldDisableTopMetaPointerEvents(headerHidden, mobileMenuOpen)
       ? TOP_META_SHELL_HIDDEN_CLASS
       : TOP_META_SHELL_VISIBLE_CLASS
-  }`
+  }${frosted ? ` ${TOP_META_SHELL_FROSTED_CLASS}` : ''}`
 }
 
 export function getTopMetaInnerClassName(headerHidden: boolean, mobileMenuOpen: boolean) {

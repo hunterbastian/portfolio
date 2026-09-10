@@ -36,6 +36,7 @@ import {
   getTopMetaSunIdleDelay,
   isTopMetaNavItemActive,
   preloadTopMetaLaunchpad,
+  shouldFrostTopMetaHeader,
   shouldHideTopMetaHeader,
 } from './top-meta.ts'
 
@@ -119,6 +120,9 @@ test('shouldHideTopMetaHeader mirrors the scroll reveal threshold', () => {
 
 test('homepage keeps the header sticky so section jumps stay reachable', () => {
   assert.equal(shouldHideTopMetaHeader({ persistVisible: true, scrollY: TOP_REVEAL_SCROLL_Y + 80 }), false)
+  assert.equal(shouldFrostTopMetaHeader({ persistVisible: true, scrollY: 0 }), false)
+  assert.equal(shouldFrostTopMetaHeader({ persistVisible: true, scrollY: TOP_REVEAL_SCROLL_Y + 80 }), true)
+  assert.equal(shouldFrostTopMetaHeader({ persistVisible: false, scrollY: TOP_REVEAL_SCROLL_Y + 80 }), false)
   assert.deepEqual(
     getTopMetaHeaderState({
       mobileMenuOpen: true,
@@ -130,6 +134,8 @@ test('homepage keeps the header sticky so section jumps stay reachable', () => {
       mobileMenuOpen: true,
     },
   )
+  assert.match(getTopMetaShellClassName(false, false, true), /bg-background\/82/)
+  assert.doesNotMatch(getTopMetaShellClassName(false, false, false), /bg-background\/82/)
 })
 
 test('homepage desktop nav yields to section jumps while mobile keeps Playground', () => {

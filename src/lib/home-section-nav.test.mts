@@ -88,6 +88,13 @@ test('getActiveHomeSectionId follows the last section whose top has crossed the 
   assert.equal(getActiveHomeSectionId(sections, 800 - HOME_SECTION_NAV_SCROLL_OFFSET_PX), 'projects')
   assert.equal(getActiveHomeSectionId(sections, 1450), 'playground')
   assert.equal(getActiveHomeSectionId(sections, 4000), 'contact')
+  assert.equal(
+    getActiveHomeSectionId(sections, 2200, HOME_SECTION_NAV_SCROLL_OFFSET_PX, {
+      documentHeight: 2800,
+      height: 800,
+    }),
+    'contact',
+  )
   assert.equal(getActiveHomeSectionId([], 120), '')
 })
 

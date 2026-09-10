@@ -28,6 +28,11 @@ export interface HomeSectionPosition {
   top: number
 }
 
+export interface HomeSectionViewport {
+  documentHeight: number
+  height: number
+}
+
 export interface HomeSectionScrollableElement {
   scrollIntoView: (options: ReturnType<typeof getHomeSectionScrollOptions>) => void
 }
@@ -77,9 +82,24 @@ export function getActiveHomeSectionId(
   sections: readonly HomeSectionPosition[],
   scrollY: number,
   offsetPx = HOME_SECTION_NAV_SCROLL_OFFSET_PX,
+  viewport?: HomeSectionViewport,
 ) {
   if (sections.length === 0) {
     return ''
+  }
+
+  if (viewport) {
+    const bottomRemaining = viewport.documentHeight - (scrollY + viewport.height)
+
+    if (bottomRemaining <= offsetPx) {
+      for (let index = sections.length - 1; index >= 0; index -= 1) {
+        const section = sections[index]
+
+        if (section && Number.isFinite(section.top)) {
+          return section.id
+        }
+      }
+    }
   }
 
   const probe = scrollY + offsetPx

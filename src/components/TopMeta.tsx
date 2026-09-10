@@ -14,6 +14,7 @@ import {
   HOME_SECTION_NAV_ARIA_LABEL,
   HOME_SECTION_NAV_ITEMS,
   HOME_SECTION_NAV_LIST_CLASS_NAME,
+  HOME_SECTION_NAV_SCROLL_OFFSET_PX,
   activateHomeSectionNavigation,
   getActiveHomeSectionId,
   getHomeSectionHref,
@@ -50,6 +51,7 @@ import {
   preloadTopMetaLaunchpad,
   type TopMetaNavItem,
   isTopMetaNavItemActive,
+  shouldFrostTopMetaHeader,
   shouldHideTopMetaHeader,
 } from '@/lib/top-meta'
 import { useMediaQuery } from '@/lib/use-media-query'
@@ -88,12 +90,14 @@ function SectionNavLink({
   className,
   closeMobileMenu,
   item,
+  onActivate,
   prefersReducedMotion,
 }: {
   active: boolean
   className?: string
   closeMobileMenu?: () => void
   item: HomeSectionNavItem
+  onActivate?: (sectionId: string) => void
   prefersReducedMotion: boolean
 }) {
   const haptic = useWebHaptics()
@@ -111,6 +115,7 @@ function SectionNavLink({
         }
 
         event.preventDefault()
+        onActivate?.(item.id)
         activateHomeSectionNavigation({
           closeMobileMenu,
           findSectionElement: (sectionId) => document.getElementById(sectionId),
@@ -141,6 +146,7 @@ export default function TopMeta() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [headerHidden, setHeaderHidden] = useState(false)
+  const [headerFrosted, setHeaderFrosted] = useState(false)
   const [sunBlinking, setSunBlinking] = useState(false)
   const [activeSectionId, setActiveSectionId] = useState<string>(HOME_SECTION_NAV_ITEMS[0].id)
   const mobileMenuOpenRef = useRef(false)
@@ -168,6 +174,7 @@ export default function TopMeta() {
 
     const syncHeaderVisibility = () => {
       setHeaderHidden(shouldHideTopMetaHeader({ persistVisible, scrollY: window.scrollY }))
+      setHeaderFrosted(shouldFrostTopMetaHeader({ persistVisible, scrollY: window.scrollY }))
     }
 
     syncHeaderVisibility()
@@ -225,6 +232,7 @@ export default function TopMeta() {
       }
 
       setHeaderHidden(nextState.headerHidden)
+      setHeaderFrosted(shouldFrostTopMetaHeader({ persistVisible, scrollY: window.scrollY }))
 
       if (persistVisible) {
         const sections = getHomeSectionPositions(HOME_SECTION_NAV_ITEMS, (sectionId) => {
@@ -237,7 +245,12 @@ export default function TopMeta() {
           return element.getBoundingClientRect().top + window.scrollY
         })
 
-        setActiveSectionId(getActiveHomeSectionId(sections, window.scrollY))
+        setActiveSectionId(
+          getActiveHomeSectionId(sections, window.scrollY, HOME_SECTION_NAV_SCROLL_OFFSET_PX, {
+            documentHeight: document.documentElement.scrollHeight,
+            height: window.innerHeight,
+          }),
+        )
       }
 
       ticking = false
@@ -258,7 +271,7 @@ export default function TopMeta() {
 
   return (
     <div
-      className={getTopMetaShellClassName(headerHidden, mobileMenuOpen)}
+      className={getTopMetaShellClassName(headerHidden, mobileMenuOpen, headerFrosted)}
     >
       <div
         className={cn(getTopMetaInnerClassName(headerHidden, mobileMenuOpen), persistVisible && 'gap-3 sm:gap-4')}
@@ -297,6 +310,7 @@ export default function TopMeta() {
                   key={item.id}
                   active={item.id === activeSectionId}
                   item={item}
+                  onActivate={setActiveSectionId}
                   prefersReducedMotion={prefersReducedMotion}
                 />
               ))}
@@ -361,7 +375,7 @@ export default function TopMeta() {
           >
             <div className="flex flex-col items-stretch gap-1.5 px-3.5 py-3">
               {persistVisible ? (
-                <nav aria-label={HOME_SECTION_NAV_ARIA_LABEL} className="flex flex-col items-stretch gap-1.5">
+                <nav aria-label={HOME_SECTION_NAV_ARIA_LABEL} className="flex flex-col items-stretch gap-2">
                   {HOME_SECTION_NAV_ITEMS.map((item) => (
                     <SectionNavLink
                       key={item.id}
@@ -369,6 +383,7 @@ export default function TopMeta() {
                       className="w-full justify-start rounded-[6px] px-2 text-left hover:bg-foreground/[0.035]"
                       closeMobileMenu={closeMobileMenu}
                       item={item}
+                      onActivate={setActiveSectionId}
                       prefersReducedMotion={prefersReducedMotion}
                     />
                   ))}

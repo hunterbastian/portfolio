@@ -44,6 +44,20 @@ export function getContactSocialLinks<TLink extends ContactLink>(links: TLink[])
   return links.filter((link) => link.label !== CONTACT_EMAIL_LABEL)
 }
 
+export function isHomepageContactLink<TLink extends ContactLink>(
+  link: TLink,
+  featuredSocialLabels: readonly string[],
+) {
+  return link.label === CONTACT_EMAIL_LABEL || featuredSocialLabels.includes(link.label)
+}
+
+export function getHomepageContactLinks<TLink extends ContactLink>(
+  links: TLink[],
+  featuredSocialLabels: readonly string[],
+): TLink[] {
+  return links.filter((link) => isHomepageContactLink(link, featuredSocialLabels))
+}
+
 export function getContactEmailAddress(emailHref: string | undefined) {
   return emailHref?.replace(/^mailto:/, '').split('?')[0] ?? ''
 }

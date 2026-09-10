@@ -4,11 +4,12 @@ import { ArrowUpRight } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
 import { EmailButton } from '@/components/EmailButton'
 import { chromePillClassName, chromePillIconClassName, chromePillLabelClassName } from '@/components/ui/tactile'
-import { contactSocialLinks } from '@/content/homepage'
+import { contactSocialLinks, homepageContactSocialLabels } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
 import {
   activateContactLink,
   getContactLinksView,
+  getHomepageContactLinks,
   type ContactLinkAction,
 } from '@/lib/contact-links'
 import { showJoyToast } from '@/lib/joy'
@@ -16,7 +17,9 @@ import { cn } from '@/lib/utils'
 
 export function ContactLinks() {
   const haptic = useWebHaptics()
-  const contactLinksView = getContactLinksView(contactSocialLinks)
+  const contactLinksView = getContactLinksView(
+    getHomepageContactLinks(contactSocialLinks, homepageContactSocialLabels),
+  )
 
   const handleContactClick = (action: ContactLinkAction<(typeof contactSocialLinks)[number]>) => {
     activateContactLink({

@@ -200,7 +200,7 @@ test('getHomeProjectDescription uses curated copy before frontmatter fallback', 
   )
   assert.equal(
     getHomeProjectDescription(project('aol-redesign', 'UI Design', [], 'AOL', 'Original AOL copy')),
-    'Email redesign that modernizes AOL while staying familiar.',
+    'Email redesign that keeps AOL familiar.',
   )
   assert.equal(
     getHomeProjectDescription(project('nutricost', 'Graphic Design', [], 'Nutricost', 'Original Nutricost copy')),

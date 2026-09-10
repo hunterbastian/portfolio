@@ -35,7 +35,7 @@ const nextConfig: NextConfig = {
   
   // Advanced Performance Features
   experimental: {
-    optimizePackageImports: ['framer-motion', '@react-three/fiber', '@react-three/drei', 'three', 'react', 'react-dom'],
+    optimizePackageImports: ['framer-motion', 'react', 'react-dom'],
     optimizeCss: true, // Enable CSS optimization
     webpackBuildWorker: true, // Use worker threads for builds
     // Note: PPR requires Next.js canary - keeping Suspense boundaries for similar benefits

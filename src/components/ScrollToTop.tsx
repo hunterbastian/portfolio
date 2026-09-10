@@ -112,7 +112,7 @@ export default function ScrollToTop() {
     <AnimatePresence initial={false}>
       {visible && (
         <m.div
-          className="fixed bottom-[6.85rem] right-5 z-50 origin-center sm:bottom-[5.5rem] sm:right-10 lg:right-12"
+          className="fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] z-50 origin-center sm:bottom-[5.5rem] sm:right-10 lg:right-12"
           initial={getScrollToTopInitialFrame(prefersReducedMotion)}
           animate={{ ...getScrollToTopAnimateFrame(), transition: enterTransition }}
           exit={{ ...getScrollToTopExitFrame(prefersReducedMotion), transition: exitTransition }}
@@ -121,9 +121,9 @@ export default function ScrollToTop() {
             type="button"
             onClick={scrollToTop}
             aria-label={SCROLL_TO_TOP_ARIA_LABEL}
-            className={arcStyles.scrollTopButton}
+            className={`${arcStyles.scrollTopButton} chrome-scroll-top`}
           >
-            <ScrollArrowMark className={arcStyles.scrollTopArrow} />
+            <ScrollArrowMark className={`${arcStyles.scrollTopArrow} chrome-scroll-top-arrow`} />
           </button>
         </m.div>
       )}

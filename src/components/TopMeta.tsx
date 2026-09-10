@@ -265,8 +265,12 @@ export default function TopMeta() {
 
     updateHeaderVisibility()
     window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll)
 
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
   }, [persistVisible])
 
   return (
@@ -361,7 +365,7 @@ export default function TopMeta() {
                 triggerHaptic: (style) => haptic.trigger(style),
               })
             }
-            className="justify-center text-[0.76rem] text-muted-foreground hover:text-foreground"
+            className="min-h-[44px] min-w-[44px] justify-center text-[0.76rem] text-muted-foreground hover:text-foreground"
             labelClassName="decoration-border underline underline-offset-[0.24em]"
             ariaLabel={getTopMetaMobileMenuAriaLabel(mobileMenuOpen)}
             ariaExpanded={mobileMenuOpen}
@@ -380,7 +384,7 @@ export default function TopMeta() {
                     <SectionNavLink
                       key={item.id}
                       active={item.id === activeSectionId}
-                      className="w-full justify-start rounded-[6px] px-2 text-left hover:bg-foreground/[0.035]"
+                      className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-foreground/[0.035]"
                       closeMobileMenu={closeMobileMenu}
                       item={item}
                       onActivate={setActiveSectionId}
@@ -394,11 +398,11 @@ export default function TopMeta() {
                   key={item.href}
                   item={item}
                   active={isTopMetaNavItemActive(pathname, item)}
-                  className="w-full justify-start rounded-[6px] px-2 text-left hover:bg-foreground/[0.035]"
+                  className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-foreground/[0.035]"
                 />
               ))}
               <PeekAction
-                className="group/launcher-mobile w-full justify-start gap-2 border-t border-border/58 px-2 pt-2.5 text-left text-[0.76rem] text-foreground hover:bg-foreground/[0.035] hover:text-foreground/82"
+                className="group/launcher-mobile min-h-[44px] w-full justify-start gap-2 border-t border-border/58 px-2 pt-2.5 text-left text-[0.76rem] text-foreground hover:bg-foreground/[0.035] hover:text-foreground/82"
                 labelClassName="inline-flex items-center gap-2"
                 onClick={() =>
                   activateTopMetaLaunchpad({

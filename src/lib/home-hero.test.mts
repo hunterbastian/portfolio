@@ -1,26 +1,22 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import {
   HOME_HERO_ACTIONS,
-  HOME_HERO_ACTION_CLASS_NAME,
   HOME_HERO_ACTION_HAPTIC_STYLE,
-  HOME_HERO_ACTION_LABEL_CLASS_NAME,
-  HOME_HERO_INLINE_LOCAL_TIME_CLASS_NAME,
-  HOME_HERO_LOCAL_TIME_UPDATE_MS,
-  HOME_HERO_LOCAL_TIME_ZONE,
+  HOME_HERO_PRIMARY_ACTION_CLASS_NAME,
+  HOME_HERO_PRIMARY_ACTION_LABEL_CLASS_NAME,
   HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS,
   HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS,
   HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS,
-  HOME_HERO_TIME_TOGGLE_CLASS_NAME,
-  HOME_HERO_TIME_TOGGLE_HAPTIC_STYLE,
-  HOME_HERO_TIME_VALUE_CLASS_NAME,
+  HOME_HERO_SECONDARY_ACTION_CLASS_NAME,
+  HOME_HERO_SECONDARY_ACTION_LABEL_CLASS_NAME,
   activateHomeHeroAction,
-  formatHomeHeroLocalTime,
-  getHomeHeroLocalTimeToggleLabel,
+  getHomeHeroActionClassName,
+  getHomeHeroActionLabelClassName,
   getHomeHeroIntroParagraphs,
   getHomeHeroProfileDefocusClassName,
-  getNextHomeHeroLocalTimeFormat,
 } from './home-hero.ts'
 
 test('home hero intro helper preserves paragraph splitting', () => {
@@ -29,72 +25,57 @@ test('home hero intro helper preserves paragraph splitting', () => {
   assert.deepEqual(getHomeHeroIntroParagraphs('First\n\n'), ['First', ''])
 })
 
-test('home hero action metadata preserves navigation, analytics, and toast contracts', () => {
-  assert.equal(
-    HOME_HERO_ACTION_CLASS_NAME,
-    'min-h-[44px] min-w-[44px] items-center sm:min-h-0 sm:min-w-0 text-[0.74rem] text-foreground hover:text-foreground/70 sm:text-[0.78rem]',
+test('home hero keeps the design sentence and UVU line without a live clock', () => {
+  const homepage = readFileSync(new URL('../content/homepage.ts', import.meta.url), 'utf8')
+  const hero = readFileSync(new URL('../components/home/HomeHeroSection.tsx', import.meta.url), 'utf8')
+
+  assert.match(homepage, /calm interfaces, thoughtful motion, and visual restraint/)
+  assert.match(homepage, /Utah Valley University/)
+  assert.doesNotMatch(homepage, /Local time is/)
+  assert.doesNotMatch(hero, /Local time is/)
+  assert.doesNotMatch(hero, /formatHomeHeroLocalTime/)
+  assert.doesNotMatch(hero, /HOME_HERO_LOCAL_TIME/)
+})
+
+test('home hero actions put Resume first as the primary CTA', () => {
+  assert.deepEqual(
+    HOME_HERO_ACTIONS.map((action) => ({
+      analyticsLabel: action.analyticsLabel,
+      href: action.href,
+      label: action.label,
+      variant: action.variant,
+    })),
+    [
+      {
+        analyticsLabel: 'resume',
+        href: '/cv',
+        label: 'Resume',
+        variant: 'primary',
+      },
+      {
+        analyticsLabel: 'contact',
+        href: '/#contact',
+        label: 'Contact',
+        variant: 'secondary',
+      },
+    ],
   )
-  assert.equal(
-    HOME_HERO_ACTION_LABEL_CLASS_NAME,
-    'underline decoration-transparent underline-offset-[0.2em] group-hover/peek:decoration-current group-focus-visible/peek:decoration-current',
-  )
+  assert.equal(HOME_HERO_ACTIONS.length, 2)
+  assert.match(HOME_HERO_PRIMARY_ACTION_CLASS_NAME, /text-foreground/)
+  assert.match(HOME_HERO_SECONDARY_ACTION_CLASS_NAME, /text-muted-foreground/)
+  assert.match(HOME_HERO_PRIMARY_ACTION_LABEL_CLASS_NAME, /decoration-current\/40/)
+  assert.match(HOME_HERO_SECONDARY_ACTION_LABEL_CLASS_NAME, /decoration-transparent/)
+  assert.equal(getHomeHeroActionClassName('primary'), HOME_HERO_PRIMARY_ACTION_CLASS_NAME)
+  assert.equal(getHomeHeroActionClassName('secondary'), HOME_HERO_SECONDARY_ACTION_CLASS_NAME)
+  assert.equal(getHomeHeroActionLabelClassName('primary'), HOME_HERO_PRIMARY_ACTION_LABEL_CLASS_NAME)
+  assert.equal(getHomeHeroActionLabelClassName('secondary'), HOME_HERO_SECONDARY_ACTION_LABEL_CLASS_NAME)
   assert.equal(HOME_HERO_ACTION_HAPTIC_STYLE, 'light')
-  assert.equal(HOME_HERO_LOCAL_TIME_ZONE, 'America/Denver')
-  assert.equal(HOME_HERO_LOCAL_TIME_UPDATE_MS, 30000)
-  assert.match(HOME_HERO_INLINE_LOCAL_TIME_CLASS_NAME, /whitespace-nowrap/)
-  assert.match(HOME_HERO_INLINE_LOCAL_TIME_CLASS_NAME, /inline/)
-  assert.doesNotMatch(HOME_HERO_INLINE_LOCAL_TIME_CLASS_NAME, /font-mono/)
-  assert.match(HOME_HERO_TIME_TOGGLE_CLASS_NAME, /underline/)
-  assert.match(HOME_HERO_TIME_TOGGLE_CLASS_NAME, /decoration-dotted/)
-  assert.match(HOME_HERO_TIME_TOGGLE_CLASS_NAME, /whitespace-nowrap/)
-  assert.match(HOME_HERO_TIME_TOGGLE_CLASS_NAME, /font-\[inherit\]/)
-  assert.match(HOME_HERO_TIME_TOGGLE_CLASS_NAME, /text-\[inherit\]/)
-  assert.match(HOME_HERO_TIME_TOGGLE_CLASS_NAME, /home-hero-time-toggle/)
-  assert.match(HOME_HERO_TIME_TOGGLE_CLASS_NAME, /active:scale-\[0\.96\]/)
-  assert.match(HOME_HERO_TIME_VALUE_CLASS_NAME, /home-hero-time-value/)
-  assert.match(HOME_HERO_TIME_VALUE_CLASS_NAME, /tabular-nums/)
-  assert.equal(HOME_HERO_TIME_TOGGLE_HAPTIC_STYLE, 'light')
-  assert.match(HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS, /transition-\[filter,opacity,transform\]/)
-  assert.match(HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS, /blur-0/)
-  assert.match(HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS, /blur-\[1\.35px\]/)
-  assert.deepEqual(HOME_HERO_ACTIONS, [
-    {
-      analyticsLabel: 'contact',
-      href: '/#contact',
-      label: 'Contact',
-      peek: 'Say hi',
-      toast: 'Say hi',
-    },
-    {
-      analyticsLabel: 'resume',
-      href: '/cv',
-      label: 'Resume',
-      peek: 'Open resume',
-      toast: 'Opening resume',
-    },
-  ])
-})
-
-test('formatHomeHeroLocalTime formats Hunter local time in Mountain time', () => {
-  assert.equal(formatHomeHeroLocalTime(new Date('2026-06-04T14:34:00.000Z')), '8:34 am')
-  assert.equal(formatHomeHeroLocalTime(new Date('2026-06-04T14:34:00.000Z'), 'military'), '08:34')
-  assert.equal(formatHomeHeroLocalTime(new Date('2026-06-05T02:34:00.000Z'), 'military'), '20:34')
-})
-
-test('home hero local time toggle helpers describe the next format', () => {
-  assert.equal(getNextHomeHeroLocalTimeFormat('standard'), 'military')
-  assert.equal(getNextHomeHeroLocalTimeFormat('military'), 'standard')
-  assert.equal(
-    getHomeHeroLocalTimeToggleLabel('standard', '8:34 am'),
-    'Switch to 24-hour time. Current time is 8:34 am.',
-  )
-  assert.equal(
-    getHomeHeroLocalTimeToggleLabel('military', '08:34'),
-    'Switch to am/pm time. Current time is 08:34.',
-  )
 })
 
 test('home hero profile defocus helper toggles the blur treatment', () => {
+  assert.match(HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS, /transition-\[filter,opacity,transform\]/)
+  assert.match(HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS, /blur-0/)
+  assert.match(HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS, /blur-\[1\.35px\]/)
   assert.equal(
     getHomeHeroProfileDefocusClassName(false),
     `${HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS} ${HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS}`,
@@ -106,10 +87,11 @@ test('home hero profile defocus helper toggles the blur treatment', () => {
 })
 
 test('activateHomeHeroAction preserves haptic, analytics, and toast ordering', () => {
-  const resumeAction = HOME_HERO_ACTIONS[1]
+  const resumeAction = HOME_HERO_ACTIONS[0]
   const calls: unknown[] = []
 
   assert.ok(resumeAction)
+  assert.equal(resumeAction.analyticsLabel, 'resume')
 
   activateHomeHeroAction({
     action: resumeAction,

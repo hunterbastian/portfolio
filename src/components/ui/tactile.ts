@@ -5,7 +5,7 @@ type ChromePillSize = 'launchpad' | 'contact-primary' | 'contact-social'
 const chromePillSizes: Record<ChromePillSize, string> = {
   launchpad: 'min-w-[8rem] gap-3 px-4 py-[0.48rem] text-[0.83rem]',
   'contact-primary': 'min-h-[44px] min-w-[7rem] gap-1.5 px-3.5 text-[0.76rem] sm:min-h-[38px] sm:px-4 sm:text-[0.8rem]',
-  'contact-social': 'min-h-[44px] w-[5.85rem] gap-1 px-2 text-[0.68rem] sm:min-h-[36px] sm:text-[0.72rem]',
+  'contact-social': 'min-h-[44px] min-w-[6.25rem] w-auto gap-1 px-3 text-[0.68rem] sm:min-h-[36px] sm:min-w-[5.85rem] sm:px-2 sm:text-[0.72rem]',
 }
 
 export function chromePillClassName({
@@ -23,10 +23,10 @@ export function chromePillClassName({
 }
 
 export const chromePillLabelClassName =
-  'chrome-pill-label relative z-10 min-w-0 truncate translate-y-[0.01rem] font-header tracking-[-0.025em] text-[#403d38] [text-shadow:0_1px_0_rgba(255,255,255,0.72)]'
+  'chrome-pill-label relative z-10 min-w-0 truncate translate-y-[0.01rem] font-header tracking-[-0.025em] text-[#403d38]'
 
 export const chromePillIconClassName =
-  'chrome-pill-icon relative z-10 shrink-0 text-[#403d38] drop-shadow-[0_1px_0_rgba(255,255,255,0.7)] transition-transform duration-200 group-hover/chrome:translate-x-0.5 group-hover/chrome:-translate-y-[0.14rem]'
+  'chrome-pill-icon relative z-10 shrink-0 text-[#403d38] transition-transform duration-200 group-hover/chrome:translate-x-0.5 group-hover/chrome:-translate-y-[0.14rem]'
 
 export const chromePillContactAccentClassName = 'chrome-pill-contact-accent'
 

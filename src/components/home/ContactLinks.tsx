@@ -31,12 +31,12 @@ export function ContactLinks() {
   }
 
   return (
-    <div className="space-y-10 sm:space-y-12">
+    <div className="space-y-6 sm:space-y-12">
       {contactLinksView.emailLink ? (
         <EmailButton
           email={contactLinksView.emailAddress}
           aria-label={contactLinksView.emailAriaLabel}
-          className="max-w-[8.5rem] sm:max-w-[9.25rem]"
+          className="w-auto max-w-full sm:max-w-[9.25rem]"
           onClick={() => {
             if (contactLinksView.emailAction) {
               handleContactClick(contactLinksView.emailAction)

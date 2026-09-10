@@ -15,6 +15,7 @@ import {
   activateFooterSparkle,
   getFooterClassName,
   getFooterCopyrightLabel,
+  getFooterCopyrightYear,
   getFooterSparkleClassName,
   subscribeFooterVisibility,
   shouldActivateFooterSparkle,
@@ -89,7 +90,11 @@ export default function Footer() {
   const footerRef = useRef<HTMLElement | null>(null)
   const hidden = useHideOnScroll()
   const sparkleActive = useSparkleOnReveal(footerRef)
-  const currentYear = new Date().getFullYear()
+  const [currentYear, setCurrentYear] = useState(() => getFooterCopyrightYear())
+
+  useEffect(() => {
+    setCurrentYear(getFooterCopyrightYear())
+  }, [])
 
   return (
     <footer

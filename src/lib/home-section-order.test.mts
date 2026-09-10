@@ -2,6 +2,13 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 
+test('homepage philosophy beat appears after the hero and before projects', () => {
+ const source = readFileSync(new URL('../components/AnimatedHomePage.tsx', import.meta.url), 'utf8')
+ assert.equal(source.split('<HomePhilosophySection').length - 1, 1)
+ assert.ok(source.indexOf('<HomeHeroSection') < source.indexOf('<HomePhilosophySection'))
+ assert.ok(source.indexOf('<HomePhilosophySection') < source.indexOf('<HomeProjectsSection'))
+})
+
 test('featured projects appear once before studio endeavors', () => {
  const source = readFileSync(new URL('../components/AnimatedHomePage.tsx', import.meta.url), 'utf8')
  assert.equal(source.split('<HomeProjectsSection').length - 1, 1)
@@ -41,4 +48,5 @@ test('homepage contact config keeps secondary social URLs without featuring them
  assert.ok(contactBlock.includes("label: 'GitHub'"))
  assert.ok(contactBlock.includes("label: 'YouTube'"))
  assert.match(source, /export const homepageContactSocialLabels = \['LinkedIn', 'GitHub'\]/)
+ assert.match(source, /If you have a project in mind, email me/)
 })

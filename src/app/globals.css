@@ -1416,6 +1416,36 @@ button {
   transform: translate3d(-3px, 0, 0);
 }
 
+.featured-project-row:focus-within {
+  z-index: 2;
+}
+
+.featured-project-row:focus-within::before {
+  opacity: 0.78;
+  transform: scaleX(1);
+}
+
+.featured-project-row:focus-within::after {
+  background: var(--ring);
+  border-radius: 999px;
+  content: '';
+  inset: 0.45rem auto 0.45rem -0.55rem;
+  pointer-events: none;
+  position: absolute;
+  width: 2px;
+  z-index: 1;
+}
+
+.featured-project-row:focus-within .featured-text-row-copy {
+  transform: translate3d(4px, 0, 0);
+}
+
+.featured-project-row:focus-within .featured-text-row-arrow {
+  color: var(--editorial-accent, var(--accent-editorial-hover));
+  opacity: 1;
+  transform: translate3d(3px, 0, 0);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .featured-project-list-hovering .featured-project-row-active {
     z-index: 2;

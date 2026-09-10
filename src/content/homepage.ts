@@ -33,6 +33,15 @@ export const homeHeroContent = {
   handwrittenNote: 'A little page on the internet all about me',
 } as const
 
+export const homePhilosophyContent = {
+  title: 'How I build',
+  body: 'I start with the quietest version that still feels complete. Motion is there to orient, not decorate. If a detail does not help someone move through a product more calmly, I leave it out.',
+} as const
+
+export const homeContactContent = {
+  line: 'If you have a project in mind, email me.',
+} as const
+
 export const creatingLinks: HomeLinkItem[] = [
   {
     label: 'Studio Alpine',

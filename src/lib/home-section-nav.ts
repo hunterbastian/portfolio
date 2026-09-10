@@ -1,6 +1,7 @@
 export const HOME_SECTION_NAV_ARIA_LABEL = 'On this page'
 export const HOME_SECTION_NAV_HAPTIC_STYLE = 'light'
 export const HOME_SECTION_NAV_SCROLL_OFFSET_PX = 88
+export const HOME_SECTION_NAV_PROBE_RATIO = 0.36
 export const HOME_SECTION_SCROLL_MARGIN_CLASS_NAME = 'scroll-mt-20 sm:scroll-mt-24'
 export const HOME_SECTION_NAV_LIST_CLASS_NAME =
   'flex min-w-0 items-center justify-end gap-0.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-1'
@@ -78,6 +79,17 @@ export function getHomeSectionScrollOptions(prefersReducedMotion: boolean) {
   } as const
 }
 
+export function getHomeSectionNavProbeOffset(
+  offsetPx = HOME_SECTION_NAV_SCROLL_OFFSET_PX,
+  viewportHeight?: number,
+) {
+  if (typeof viewportHeight === 'number' && Number.isFinite(viewportHeight) && viewportHeight > 0) {
+    return Math.max(offsetPx, Math.round(viewportHeight * HOME_SECTION_NAV_PROBE_RATIO))
+  }
+
+  return offsetPx
+}
+
 export function getActiveHomeSectionId(
   sections: readonly HomeSectionPosition[],
   scrollY: number,
@@ -102,7 +114,7 @@ export function getActiveHomeSectionId(
     }
   }
 
-  const probe = scrollY + offsetPx
+  const probe = scrollY + getHomeSectionNavProbeOffset(offsetPx, viewport?.height)
   let activeId = sections[0]?.id ?? ''
 
   for (const section of sections) {

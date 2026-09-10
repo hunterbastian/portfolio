@@ -2,23 +2,23 @@
 
 ## Project Overview
 
-Hunter Bastian's personal portfolio website. Next.js 15 App Router, React 19, TypeScript, Tailwind CSS, Framer Motion, Three.js.
+Hunter Bastian's personal portfolio website. Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 3, Framer Motion.
 
 ## Commands
 
 ```bash
 # Development
-npm run dev              # Dev server on 127.0.0.1:3000 (use this, not dev:turbo)
-npm run dev:turbo        # Turbopack mode — BREAKS JetBrains Mono font, avoid
+npm run dev              # Dev server on 127.0.0.1:3000
+npm run dev:turbo        # Turbopack mode
 
 # Building
-npm run build            # Production build
+npm run build            # Production build (webpack)
 npm run build:analyze    # Build with bundle analysis (ANALYZE=true)
 npm run start            # Start production server
 
 # Quality
 npm run lint             # ESLint
-npm run test:snake       # Run snake game unit tests (Node test runner)
+npm run test             # Unit tests + theme regressions (Node test runner)
 npm run optimize-images  # Optimize images via scripts/optimize-images.js
 npm run lighthouse       # Lighthouse audit (requires local server running first)
 ```
@@ -30,28 +30,34 @@ src/
 ├── app/
 │   ├── page.tsx              # Homepage
 │   ├── layout.tsx            # Root layout
-│   ├── about/                # About page
+│   ├── about/ cv/ logo/      # Static pages
+│   ├── archive/              # Playground gallery (full project archive)
 │   ├── projects/[slug]/      # Dynamic project pages
-│   └── api/                  # API routes
+│   ├── api/                  # resume/file, revalidate
+│   ├── globals.css           # Layout + composition
+│   ├── dark-theme.css        # Palette tokens
+│   └── view-transitions.css  # Card-to-hero morph
 ├── components/
-│   ├── AnimatedHomePage.tsx  # Main homepage animation orchestrator
-│   ├── HeroCanvas.tsx        # Three.js 3D hero scene
-│   ├── HeroCanvasWrapper.tsx # SSR-safe wrapper for HeroCanvas
-│   ├── Footer.tsx
-│   ├── FooterSnakeEasterEgg.tsx
-│   ├── Header.tsx
-│   └── ScrollToTop.tsx       # Floating back-to-top button
-├── lib/
-│   ├── projects.ts           # MDX project loading utilities
-│   ├── motion.ts             # Framer Motion variants
-│   └── snake.ts              # Snake game logic
+│   ├── AnimatedHomePage.tsx  # Homepage animation orchestrator
+│   ├── home/                 # Homepage sections
+│   ├── launcher/             # Launchpad command palette
+│   ├── playground/           # Archive gallery + tiles
+│   ├── MorphLink.tsx         # Navigation that hands off to view transitions
+│   ├── PageTransition.tsx
+│   └── Footer.tsx
+├── lib/                      # One module per surface, each with a .test.mts
+│   ├── projects.ts           # MDX project loading
+│   ├── motion.ts             # Shared eases and duration helpers
+│   └── view-transition.ts    # Shared-element morph store
 └── types/
-    └── project.ts            # Project type definitions
+    └── project.ts
 content/
 └── projects/                 # MDX files (one per project)
 public/
 └── images/optimized/projects/ # Optimized webp project images
 ```
+
+There is no `Header.tsx` — the top bar is `TopMeta.tsx`. There is no blog.
 
 ## Adding Projects
 
@@ -74,19 +80,18 @@ date: "2025-01-01"
 ---
 ```
 
-Blog posts go in `content/blog/your-slug.mdx` with frontmatter: `title`, `description`, `date`, `tags` (optional). Blog nav link is prepared but hidden — add `{ name: 'BLOG', href: '/blog' }` to `PAGE_NAV` in `Header.tsx` to enable.
-
 Run `npm run optimize-images` before adding new images.
 
 ## Motion System
 
-Spring-first animation approach. Constants live in `src/lib/motion.ts`:
+Constants live in `src/lib/motion.ts`:
 - `MOTION_EASE_SOFT [0.16, 1, 0.3, 1]` — default entrance/reveal ease
 - `MOTION_EASE_EXIT [0.4, 0, 0.7, 0.2]` — exit transitions
-- `MOTION_SPRING_SMOOTH { stiffness: 170, damping: 26, mass: 1 }` — interactive/layout elements
 - `motionDurationMs()` / `motionDelayMs()` — helpers that respect `prefers-reduced-motion`
 
-Animation orchestration uses the Interface Craft storyboard pattern: named timing constants, stage-driven sequencing via a single integer state, config objects at the top of the file.
+Animation orchestration uses named timing constants, stage-driven sequencing via a single integer state, and config objects at the top of the file.
+
+Project navigation is a shared-element morph, not a crossfade: `MorphLink` hands off to the View Transitions API and `src/lib/view-transition.ts` names exactly one element at a time. It falls back to a plain client push without browser support or under reduced motion.
 
 ## Icons
 
@@ -99,50 +104,42 @@ import { IconChevronLeft, IconTag } from 'nucleo-pixel-essential'
 
 ## Typography
 
-- **Inter**: Primary UI font
-- **JetBrains Mono**: Code/monospace — **incompatible with Turbopack**
-- **EB Garamond**: Serif accents
+- **Geist Mono**: the site-wide text face, loaded in `layout.tsx`
+- **Geist Pixel Square**: reserved for the top header
 
-Fluid sizing via `clamp()` in `tailwind.config.ts`.
+Fluid sizing via `clamp()` in `tailwind.config.ts`. Note that the `font-inter` Tailwind
+alias there resolves to Geist Mono — the name is a leftover, not a second font.
 
 ## Gotchas
 
-- **Use `npm run dev`, not `dev:turbo`** — Turbopack breaks JetBrains Mono
 - **WATCHPACK_POLLING** is set in dev commands for filesystem watch reliability
-- **Node 22.14.0** required (see `.nvmrc`) — `engines` field in package.json says >=18.17.0 but `.nvmrc` pins 22.14.0
-- **Three.js SSR**: Always use `HeroCanvasWrapper` (not `HeroCanvas` directly) for SSR safety
+- **Node 22.14.0** required (see `.nvmrc`) — `engines` in package.json says >=18.17.0 but `.nvmrc` pins 22.14.0
 - **MDX errors**: Verify frontmatter fields and component imports; check `src/lib/projects.ts` for loading logic
 - **Performance budget**: `.lighthousebudgets.json` — run `npm run build:analyze` after significant changes
-- **`overflow-hidden` clips box shadows**: Framer Motion height-animation wrappers use `overflow-hidden`. Add padding (`pb-6`) to `contentClassName` to create space *inside* the clip boundary so child shadows render.
-- **`CollapsibleSection` shadow clipping**: Use `contentClassName="mt-4 pb-6"` (not outer section padding) to prevent box shadows being clipped by the animation wrapper's `overflow-hidden`.
-- **Hero headline one-line**: Add `whitespace-nowrap` to the `<h1>` in `AnimatedHomePage.tsx:522` to prevent "Hunter Bastian // Studio Alpine" from wrapping.
+- **`overflow-hidden` clips box shadows**: Framer Motion height-animation wrappers use `overflow-hidden`. Add padding (`pb-6`) inside the clip boundary so child shadows render.
 - **Profile picture**: `public/images/profilepicture.webp` — 200×200 WebP, 13KB. Regenerate with `sharp` if updating; keep dimensions ≤200px.
 - **No frosted glass on Endeavors or Contact cards** — user explicitly reverted this; don't re-add.
-- **No dark mode toggle** — user decided against it; site respects `prefers-color-scheme` only.
-- **No PixelateHover or DepthCard** — removed in 2026-03-22 session, files deleted. Don't re-add.
-- **Nav links**: Info, Work, Email, LinkedIn — Email is mailto, LinkedIn is external. No padding boxes, matches coordinates text style.
-- **shadcn Card** used for Projects, Experience, Education panels — no ring/outline on cards.
-- **About page** is split: `page.tsx` (server, metadata) + `AboutPageClient.tsx` (client, TextReveal animations).
+- **No dark mode toggle and no light theme** — the site ships dark unconditionally and has no `prefers-color-scheme` branch
+- **No PixelateHover or DepthCard** — removed in a 2026-03-22 session. Don't re-add.
+- **Unlayered CSS beats `@layer utilities`**: a plain rule in `globals.css` overrides a Tailwind utility on the same element. `.top-meta-pill { backdrop-filter: none }` exists to cancel a `backdrop-blur-xl` the markup still carries — deleting it re-enables the blur.
+- **Tailwind reads tokens through `withOpacity()`**: 20 custom properties are consumed by `tailwind.config.ts` and never appear in a `var()`. Grepping for `var(--x)` will not find them.
 
 ## Color System
 
-Light-by-default, warm neutral palette. August palette (白色 · 縹色 · 銀鼠 · 肉色). Dark mode via `.dark` class on `<html>` (respects OS `prefers-color-scheme`).
+Dark only, on a Nord palette. Tokens live in `src/app/dark-theme.css`; `globals.css`
+holds layout and composition. Surfaces climb the Polar Night ramp, text comes from
+Snow Storm, accents from Frost, and Aurora is reserved for the warm contact cue.
 
-**Light mode** (`:root` in `globals.css`):
-- `--background: #f2f0ec` — warm off-white canvas
-- `--card: #f6f5f3` — slightly lighter panels
-- `--foreground: #3f4f5c` — slate blue text
-- `--accent: #d4928e` — dusty rose / apricot
-
-**Dark mode** (`.dark` in `globals.css`):
-- `--background: #1e2830` — dark charcoal canvas
-- `--card: #2a2c2f` — slightly lighter panels
-- `--foreground: #cdc8c0` — warm light gray text
-- `--accent: #d4928e` — dusty rose (same as light)
+- `--background: #242933` — one step below nord0, so cards read as lifted
+- `--card: #2e3440` — nord0
+- `--foreground: #eceff4` — nord6
+- `--accent: #8fbcbb` — nord7
+- `--ambient-grade: #5e81ac` — re-tints the two backdrop photographs, which are
+  flattened to luminance first because their own greens and golds have no Nord equivalent
 
 ## Deployment
 
-Vercel, auto-deploys from `master` branch. Set `NEXT_PUBLIC_GTM_ID` in Vercel environment variables when needed.
+Vercel, auto-deploys from `master` branch. Analytics env vars are listed in `AGENTS.md`; the site reads `NEXT_PUBLIC_GA_ID`, not a GTM id.
 
 ## Git
 
@@ -151,7 +148,9 @@ Vercel, auto-deploys from `master` branch. Set `NEXT_PUBLIC_GTM_ID` in Vercel en
 
 ## Verification
 
-Run `npm run build` after multi-file changes. Run `npm run lint` before commits. For visual changes, run `npm run dev` and check in Dia browser.
+Run `npm run test` and `npm run lint` before commits, and `npm run build` after multi-file changes. For visual changes, run `npm run dev` and check in a browser.
+
+Two checks worth running when deleting code: `npx tsc --noEmit` catches broken imports the build's incremental cache can miss, and a module reachable only from its own `.test.mts` is dead regardless of how green the suite looks.
 
 ## Skill routing
 

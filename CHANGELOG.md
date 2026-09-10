@@ -75,8 +75,8 @@
 
 ## Technical Notes
 
-**Current Stack**: Next.js 15 • React 18 • TypeScript • Framer Motion • Tailwind CSS  
-**Fonts**: JetBrains Mono • Inter • EB Garamond  
+**Current Stack**: Next.js 16 • React 19 • TypeScript • Framer Motion • Tailwind CSS 3  
+**Fonts**: Geist Mono • Geist Pixel Square  
 **Deployment**: Vercel • GitHub  
 
-**Known Issues**: JetBrains Mono incompatible with Turbopack (using standard dev mode)
+**Known Issues**: None outstanding.

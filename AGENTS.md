@@ -32,9 +32,8 @@ npm run lighthouse
 
 ## Notes
 
-- Node.js >= 18.17.0 (see `package.json`).
+- Node.js >= 18.17.0 (see `package.json`); `.nvmrc` pins 22.14.0.
 - `npm run lighthouse` expects a server at `http://localhost:3000`.
-- `npm run dev:turbo` is incompatible with JetBrains Mono; use `npm run dev` if that font is enabled.
 
 ## TODO
 

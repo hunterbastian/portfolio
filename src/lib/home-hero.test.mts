@@ -5,6 +5,12 @@ import test from 'node:test'
 import {
   HOME_HERO_ACTIONS,
   HOME_HERO_ACTION_HAPTIC_STYLE,
+  HOME_HERO_LOCAL_TIME_CLASS_NAME,
+  HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME,
+  HOME_HERO_LOCAL_TIME_UPDATE_MS,
+  HOME_HERO_LOCAL_TIME_ZONE,
+  HOME_HERO_LOCATION_LABEL_CLASS_NAME,
+  HOME_HERO_LOCATION_META_CLASS_NAME,
   HOME_HERO_PRIMARY_ACTION_CLASS_NAME,
   HOME_HERO_PRIMARY_ACTION_LABEL_CLASS_NAME,
   HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS,
@@ -13,9 +19,12 @@ import {
   HOME_HERO_SECONDARY_ACTION_CLASS_NAME,
   HOME_HERO_SECONDARY_ACTION_LABEL_CLASS_NAME,
   activateHomeHeroAction,
+  formatHomeHeroLocalTime,
   getHomeHeroActionClassName,
   getHomeHeroActionLabelClassName,
   getHomeHeroIntroParagraphs,
+  getHomeHeroLocalTimeAriaLabel,
+  getHomeHeroLocalTimeDelayMs,
   getHomeHeroProfileDefocusClassName,
 } from './home-hero.ts'
 
@@ -25,7 +34,7 @@ test('home hero intro helper preserves paragraph splitting', () => {
   assert.deepEqual(getHomeHeroIntroParagraphs('First\n\n'), ['First', ''])
 })
 
-test('home hero keeps the design sentence and UVU line without a live clock', () => {
+test('home hero keeps the design sentence and UVU line without a prose clock', () => {
   const homepage = readFileSync(new URL('../content/homepage.ts', import.meta.url), 'utf8')
   const hero = readFileSync(new URL('../components/home/HomeHeroSection.tsx', import.meta.url), 'utf8')
 
@@ -33,8 +42,32 @@ test('home hero keeps the design sentence and UVU line without a live clock', ()
   assert.match(homepage, /Utah Valley University/)
   assert.doesNotMatch(homepage, /Local time is/)
   assert.doesNotMatch(hero, /Local time is/)
-  assert.doesNotMatch(hero, /formatHomeHeroLocalTime/)
-  assert.doesNotMatch(hero, /HOME_HERO_LOCAL_TIME/)
+  assert.doesNotMatch(hero, /<button/)
+  assert.match(hero, /HOME_HERO_LOCATION_META_CLASS_NAME/)
+  assert.match(hero, /formatHomeHeroLocalTime/)
+  assert.match(hero, /aria-live="off"/)
+  assert.match(
+    hero,
+    /homeHeroContent\.subtitle[\s\S]*getHomeHeroLocalTimeAriaLabel[\s\S]*introParagraphs\.map/,
+  )
+})
+
+test('home hero local time stays a quiet 24-hour Mountain Time meta line', () => {
+  assert.equal(HOME_HERO_LOCAL_TIME_ZONE, 'America/Denver')
+  assert.equal(HOME_HERO_LOCAL_TIME_UPDATE_MS, 60_000)
+  assert.equal(formatHomeHeroLocalTime(new Date('2026-06-04T14:34:00.000Z')), '08:34')
+  assert.equal(formatHomeHeroLocalTime(new Date('2026-06-05T02:34:00.000Z')), '20:34')
+  assert.equal(formatHomeHeroLocalTime(new Date('2026-01-01T07:05:00.000Z')), '00:05')
+  assert.equal(getHomeHeroLocalTimeAriaLabel('08:34'), '08:34 in Lehi')
+  assert.equal(getHomeHeroLocalTimeDelayMs(new Date(60_000)), 60_000)
+  assert.equal(getHomeHeroLocalTimeDelayMs(new Date(60_001)), 59_999)
+  assert.match(HOME_HERO_LOCATION_META_CLASS_NAME, /whitespace-nowrap/)
+  assert.match(HOME_HERO_LOCATION_META_CLASS_NAME, /font-mono/)
+  assert.match(HOME_HERO_LOCATION_LABEL_CLASS_NAME, /uppercase/)
+  assert.match(HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME, /text-muted-foreground/)
+  assert.match(HOME_HERO_LOCAL_TIME_CLASS_NAME, /tabular-nums/)
+  assert.match(HOME_HERO_LOCAL_TIME_CLASS_NAME, /text-muted-foreground/)
+  assert.doesNotMatch(HOME_HERO_LOCAL_TIME_CLASS_NAME, /underline|accent|uppercase/)
 })
 
 test('home hero actions put Resume first as the primary CTA', () => {

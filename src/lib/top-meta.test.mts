@@ -1,13 +1,10 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import {
   TOP_META_BRAND_ACTION,
   TOP_META_HAPTIC_STYLE,
-  TOP_META_LAUNCHPAD_ARIA_LABEL,
-  TOP_META_LAUNCHPAD_ACTION,
-  TOP_META_LAUNCHPAD_LABEL,
-  TOP_META_LAUNCHPAD_PEEK,
   TOP_META_MOBILE_MENU_CLOSE_LABEL,
   TOP_META_MOBILE_MENU_LABEL,
   TOP_META_MOBILE_MENU_OPEN_LABEL,
@@ -17,7 +14,6 @@ import {
   TOP_META_SUN_IDLE_MIN_MS,
   TOP_REVEAL_SCROLL_Y,
   activateTopMetaBrandAction,
-  activateTopMetaLaunchpad,
   activateTopMetaMobileMenuToggle,
   activateTopMetaNavAction,
   activateTopMetaSunBlink,
@@ -35,7 +31,6 @@ import {
   getTopMetaSunClassName,
   getTopMetaSunIdleDelay,
   isTopMetaNavItemActive,
-  preloadTopMetaLaunchpad,
   shouldFrostTopMetaHeader,
   shouldHideTopMetaHeader,
 } from './top-meta.ts'
@@ -46,15 +41,18 @@ test('TOP_META_NAV_ITEMS keeps primary header navigation stable', () => {
   assert.equal(TOP_META_NAV_ITEMS[1]?.peek, 'Open experiments')
 })
 
-test('top meta copy constants preserve menu and launchpad labels', () => {
+test('top meta copy constants preserve menu labels without Launchpad chrome', () => {
+  const chrome = readFileSync(new URL('../components/TopMeta.tsx', import.meta.url), 'utf8')
+
   assert.equal(TOP_META_MOBILE_MENU_LABEL, 'Menu')
   assert.equal(TOP_META_MOBILE_MENU_OPEN_LABEL, 'Open menu')
   assert.equal(TOP_META_MOBILE_MENU_CLOSE_LABEL, 'Close menu')
-  assert.equal(TOP_META_LAUNCHPAD_LABEL, 'Launchpad')
-  assert.equal(TOP_META_LAUNCHPAD_PEEK, 'Open Launchpad')
-  assert.equal(TOP_META_LAUNCHPAD_ARIA_LABEL, 'Open Launchpad. Also use CMD K')
   assert.equal(getTopMetaMobileMenuAriaLabel(false), 'Open menu')
   assert.equal(getTopMetaMobileMenuAriaLabel(true), 'Close menu')
+  assert.doesNotMatch(chrome, /Launchpad/)
+  assert.doesNotMatch(chrome, /LAUNCHPAD/)
+  assert.doesNotMatch(chrome, /launcher/)
+  assert.doesNotMatch(chrome, /w-\[21rem\]/)
 })
 
 test('isTopMetaNavItemActive handles exact home and nested route matches', () => {
@@ -246,7 +244,7 @@ test('top meta nav and sun class helpers preserve active and blink states', () =
 
 test('getTopMetaAnalyticsTarget normalizes nav labels for analytics', () => {
   assert.equal(getTopMetaAnalyticsTarget('Playground'), 'playground')
-  assert.equal(getTopMetaAnalyticsTarget('Launchpad'), 'launchpad')
+  assert.equal(getTopMetaAnalyticsTarget('Home'), 'home')
 })
 
 test('top meta action helpers centralize nav analytics and toast copy', () => {
@@ -254,9 +252,6 @@ test('top meta action helpers centralize nav analytics and toast copy', () => {
   assert.deepEqual(TOP_META_BRAND_ACTION, {
     analyticsTarget: 'home',
     toast: 'Opening home',
-  })
-  assert.deepEqual(TOP_META_LAUNCHPAD_ACTION, {
-    analyticsTarget: 'launchpad',
   })
   assert.deepEqual(getTopMetaNavAction(TOP_META_NAV_ITEMS[1]!), {
     analyticsTarget: 'playground',
@@ -300,49 +295,16 @@ test('activateTopMetaBrandAction blinks the sun before showing toast', () => {
   ])
 })
 
-test('activateTopMetaLaunchpad preserves desktop and mobile open ordering', () => {
-  const desktopCalls: unknown[] = []
-  const mobileCalls: unknown[] = []
-
-  activateTopMetaLaunchpad({
-    openLauncher: () => desktopCalls.push('open'),
-    trackNavigationClick: (target) => desktopCalls.push(['navigation', target]),
-    triggerHaptic: (style) => desktopCalls.push(['haptic', style]),
-  })
-  activateTopMetaLaunchpad({
-    closeMobileMenu: () => mobileCalls.push('close-menu'),
-    openLauncher: () => mobileCalls.push('open'),
-    trackNavigationClick: (target) => mobileCalls.push(['navigation', target]),
-    triggerHaptic: (style) => mobileCalls.push(['haptic', style]),
-  })
-
-  assert.deepEqual(desktopCalls, [
-    ['haptic', 'light'],
-    ['navigation', 'launchpad'],
-    'open',
-  ])
-  assert.deepEqual(mobileCalls, [
-    ['haptic', 'light'],
-    ['navigation', 'launchpad'],
-    'close-menu',
-    'open',
-  ])
-})
-
-test('top meta launchpad preload and mobile menu toggle helpers preserve small actions', () => {
+test('top meta mobile menu toggle helper preserves haptic then toggle order', () => {
   const calls: unknown[] = []
 
   activateTopMetaMobileMenuToggle({
     toggleMobileMenu: () => calls.push('toggle'),
     triggerHaptic: (style) => calls.push(['haptic', style]),
   })
-  preloadTopMetaLaunchpad({
-    preloadLauncher: () => calls.push('preload'),
-  })
 
   assert.deepEqual(calls, [
     ['haptic', 'light'],
     'toggle',
-    'preload',
   ])
 })

@@ -5,9 +5,6 @@ export const TOP_META_SUN_IDLE_JITTER_MS = 7000
 export const TOP_META_MOBILE_MENU_LABEL = 'Menu'
 export const TOP_META_MOBILE_MENU_OPEN_LABEL = 'Open menu'
 export const TOP_META_MOBILE_MENU_CLOSE_LABEL = 'Close menu'
-export const TOP_META_LAUNCHPAD_LABEL = 'Launchpad'
-export const TOP_META_LAUNCHPAD_PEEK = 'Open Launchpad'
-export const TOP_META_LAUNCHPAD_ARIA_LABEL = 'Open Launchpad. Also use CMD K'
 export const TOP_META_HAPTIC_STYLE = 'light'
 
 const TOP_META_SHELL_BASE_CLASS =
@@ -77,20 +74,9 @@ export interface TopMetaBrandActivationInput extends TopMetaNavActivationInput {
   triggerSunBlink: () => void
 }
 
-export interface TopMetaLaunchpadActivationInput {
-  closeMobileMenu?: () => void
-  openLauncher: () => void
-  trackNavigationClick: (target: string) => void
-  triggerHaptic: (style: typeof TOP_META_HAPTIC_STYLE) => void
-}
-
 export interface TopMetaMobileMenuToggleActivationInput {
   toggleMobileMenu: () => void
   triggerHaptic: (style: typeof TOP_META_HAPTIC_STYLE) => void
-}
-
-export interface TopMetaLaunchpadPreloadInput {
-  preloadLauncher: () => void
 }
 
 export interface TopMetaSunBlinkActivationInput<TTimer> {
@@ -104,10 +90,6 @@ export const TOP_META_BRAND_ACTION = {
   analyticsTarget: 'home',
   toast: 'Opening home',
 } as const satisfies TopMetaActionState
-
-export const TOP_META_LAUNCHPAD_ACTION = {
-  analyticsTarget: 'launchpad',
-} as const
 
 export function isTopMetaNavItemActive(pathname: string, item: Pick<TopMetaNavItem, 'href'>) {
   return item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
@@ -148,28 +130,12 @@ export function activateTopMetaBrandAction({
   showToast(action.toast)
 }
 
-export function activateTopMetaLaunchpad({
-  closeMobileMenu,
-  openLauncher,
-  trackNavigationClick,
-  triggerHaptic,
-}: TopMetaLaunchpadActivationInput) {
-  triggerHaptic(TOP_META_HAPTIC_STYLE)
-  trackNavigationClick(TOP_META_LAUNCHPAD_ACTION.analyticsTarget)
-  closeMobileMenu?.()
-  openLauncher()
-}
-
 export function activateTopMetaMobileMenuToggle({
   toggleMobileMenu,
   triggerHaptic,
 }: TopMetaMobileMenuToggleActivationInput) {
   triggerHaptic(TOP_META_HAPTIC_STYLE)
   toggleMobileMenu()
-}
-
-export function preloadTopMetaLaunchpad({ preloadLauncher }: TopMetaLaunchpadPreloadInput) {
-  preloadLauncher()
 }
 
 export function getTopMetaSunIdleDelay(random: () => number = Math.random) {

@@ -27,7 +27,7 @@ test('HOME_SECTION_NAV_ITEMS maps homepage destinations to short labels', () => 
       { id: 'home', name: 'Home' },
       { id: 'projects', name: 'Work' },
       { id: 'playground', name: 'Play' },
-      { id: 'experience', name: 'Experience' },
+      { id: 'background', name: 'Background' },
       { id: 'contact', name: 'Contact' },
     ],
   )
@@ -35,7 +35,7 @@ test('HOME_SECTION_NAV_ITEMS maps homepage destinations to short labels', () => 
 
 test('homepage section ids exist on the current homepage structure', () => {
   const hero = readFileSync(new URL('../components/home/HomeHeroSection.tsx', import.meta.url), 'utf8')
-  const experience = readFileSync(new URL('../components/home/HomeExperienceSection.tsx', import.meta.url), 'utf8')
+  const background = readFileSync(new URL('../components/home/HomeBackgroundSection.tsx', import.meta.url), 'utf8')
   const projects = readFileSync(new URL('../components/home/HomeProjectsSection.tsx', import.meta.url), 'utf8')
   const playground = readFileSync(new URL('../components/home/HomePlaygroundSection.tsx', import.meta.url), 'utf8')
   const contact = readFileSync(new URL('../components/home/HomeContactSection.tsx', import.meta.url), 'utf8')
@@ -43,7 +43,7 @@ test('homepage section ids exist on the current homepage structure', () => {
   assert.match(hero, /id="home"/)
   assert.match(projects, /id="projects"/)
   assert.match(playground, /id="playground"/)
-  assert.match(experience, /id="experience"/)
+  assert.match(background, /id="background"/)
   assert.match(contact, /id="contact"/)
 })
 
@@ -79,7 +79,7 @@ test('getActiveHomeSectionId follows the last section whose top has crossed the 
     { id: 'home', top: 0 },
     { id: 'projects', top: 800 },
     { id: 'playground', top: 1400 },
-    { id: 'experience', top: 2000 },
+    { id: 'background', top: 2000 },
     { id: 'contact', top: 2600 },
   ]
 

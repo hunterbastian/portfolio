@@ -16,7 +16,7 @@ export const HOME_SECTION_NAV_ITEMS = [
   { id: 'home', name: 'Home', peek: 'Back to top' },
   { id: 'projects', name: 'Work', peek: 'Projects' },
   { id: 'playground', name: 'Play', peek: 'Playground' },
-  { id: 'experience', name: 'Experience', peek: 'Background' },
+  { id: 'background', name: 'Background', peek: 'Timeline' },
   { id: 'contact', name: 'Contact', peek: 'Say hi' },
 ] as const
 

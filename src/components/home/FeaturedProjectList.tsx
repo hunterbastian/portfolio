@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils'
 
 interface FeaturedProjectListProps {
   projects: HomeProject[]
+  showPlaygroundRow?: boolean
 }
 
 type FeaturedProjectRowStyle = CSSProperties &
@@ -92,7 +93,7 @@ function FeaturedProjectCard({
     >
       <Link
         href={href}
-        className="featured-text-row group relative z-10 grid min-h-[6.75rem] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border/85 py-4 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-5"
+        className="featured-text-row group relative z-10 grid grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border/85 py-3 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-3.5"
         onClick={handleClick}
       >
         <span className="featured-text-row-meta pt-0.5 font-mono text-[0.62rem] font-medium leading-none tabular-nums text-muted-foreground/78 transition-colors duration-200 group-hover:text-foreground/72 sm:text-[0.66rem]">
@@ -180,7 +181,7 @@ function FeaturedProjectRow({
   )
 }
 
-export function FeaturedProjectList({ projects }: FeaturedProjectListProps) {
+export function FeaturedProjectList({ projects, showPlaygroundRow = false }: FeaturedProjectListProps) {
   const [hoveredProject, setHoveredProject] = useState<FeaturedProjectHoveredState | null>(null)
 
   const listState = getFeaturedProjectListState(projects, hoveredProject)
@@ -216,17 +217,19 @@ export function FeaturedProjectList({ projects }: FeaturedProjectListProps) {
           />
         )
       })}
-      <PlaygroundProjectRow
-        active={listState.playgroundRow.active}
-        hoverDistance={listState.playgroundRow.hoverDistance}
-        muted={listState.playgroundRow.muted}
-        onHoverEnd={clearHoveredProject}
-        onHoverStart={() => setHoveredProject({
-          slug: listState.playgroundRow.slug,
-          index: listState.playgroundRow.index,
-        })}
-        sequence={listState.playgroundRow.index}
-      />
+      {showPlaygroundRow ? (
+        <PlaygroundProjectRow
+          active={listState.playgroundRow.active}
+          hoverDistance={listState.playgroundRow.hoverDistance}
+          muted={listState.playgroundRow.muted}
+          onHoverEnd={clearHoveredProject}
+          onHoverStart={() => setHoveredProject({
+            slug: listState.playgroundRow.slug,
+            index: listState.playgroundRow.index,
+          })}
+          sequence={listState.playgroundRow.index}
+        />
+      ) : null}
     </div>
   )
 }

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import {
+  HOME_PROJECT_DESCRIPTIONS,
   HOME_WORK_FILTER_EVENT,
   HOME_PROJECT_GRID_PROJECT_LIMIT,
   HOME_PROJECT_CLEAR_FILTER_ANALYTICS_TARGET,
@@ -176,6 +177,19 @@ test('getProjectRows filters projects and limits homepage rows', () => {
 })
 
 test('getHomeProjectDescription uses curated copy before frontmatter fallback', () => {
+  for (const slug of [
+    'mentalhealth-minisite',
+    'lumo',
+    'middle-earth-journey',
+    'wander-utah',
+    'porsche-app',
+    'aol-redesign',
+    'nutricost',
+  ] as const) {
+    assert.equal(typeof HOME_PROJECT_DESCRIPTIONS[slug], 'string')
+    assert.ok((HOME_PROJECT_DESCRIPTIONS[slug] ?? '').length > 0)
+  }
+
   assert.equal(
     getHomeProjectDescription(project('lumo', 'Mobile Design', [], 'Lumo', 'Original Lumo copy')),
     'Mindfulness app for calm reflection.',
@@ -183,6 +197,14 @@ test('getHomeProjectDescription uses curated copy before frontmatter fallback', 
   assert.equal(
     getHomeProjectDescription(project('custom', 'Web Design', [], 'Custom', 'Original custom copy')),
     'Original custom copy',
+  )
+  assert.equal(
+    getHomeProjectDescription(project('aol-redesign', 'UI Design', [], 'AOL', 'Original AOL copy')),
+    'Email redesign that keeps AOL familiar.',
+  )
+  assert.equal(
+    getHomeProjectDescription(project('nutricost', 'Graphic Design', [], 'Nutricost', 'Original Nutricost copy')),
+    'Product labels and marketing for Nutricost supplements.',
   )
 })
 

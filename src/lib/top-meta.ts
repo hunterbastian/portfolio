@@ -56,9 +56,13 @@ export interface TopMetaHeaderState {
   mobileMenuOpen: boolean
 }
 
-export interface TopMetaHeaderStateInput {
-  mobileMenuOpen: boolean
+export interface TopMetaHeaderVisibilityInput {
+  persistVisible?: boolean
   scrollY: number
+}
+
+export interface TopMetaHeaderStateInput extends TopMetaHeaderVisibilityInput {
+  mobileMenuOpen: boolean
 }
 
 export interface TopMetaNavActivationInput {
@@ -186,20 +190,40 @@ export function activateTopMetaSunBlink<TTimer>({
   return scheduleTimer(() => setSunBlinking(false), TOP_META_SUN_BLINK_MS)
 }
 
-export function shouldHideTopMetaHeader(scrollY: number) {
+export function shouldHideTopMetaHeader({
+  persistVisible = false,
+  scrollY,
+}: TopMetaHeaderVisibilityInput) {
+  if (persistVisible) {
+    return false
+  }
+
   return scrollY > TOP_REVEAL_SCROLL_Y
 }
 
 export function getTopMetaHeaderState({
   mobileMenuOpen,
+  persistVisible = false,
   scrollY,
 }: TopMetaHeaderStateInput): TopMetaHeaderState {
-  const headerHidden = shouldHideTopMetaHeader(scrollY)
+  const headerHidden = shouldHideTopMetaHeader({ persistVisible, scrollY })
 
   return {
     headerHidden,
     mobileMenuOpen: headerHidden ? false : mobileMenuOpen,
   }
+}
+
+export function getTopMetaPageNavItems(pathname: string) {
+  return pathname === '/' ? [] : [...TOP_META_NAV_ITEMS]
+}
+
+export function getTopMetaMobilePageNavItems(pathname: string) {
+  if (pathname !== '/') {
+    return [...TOP_META_NAV_ITEMS]
+  }
+
+  return TOP_META_NAV_ITEMS.filter((item) => item.href !== '/')
 }
 
 function shouldDisableTopMetaPointerEvents(headerHidden: boolean, mobileMenuOpen: boolean) {

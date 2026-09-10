@@ -22,6 +22,7 @@ import {
   getNextHomeHeroLocalTimeFormat,
   type HomeHeroLocalTimeFormat,
 } from '@/lib/home-hero'
+import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
 import { showJoyToast } from '@/lib/joy'
 import { useHeroGlow } from '@/lib/use-hero-glow'
 
@@ -47,7 +48,8 @@ export function HomeHeroSection() {
 
   return (
     <section
-      className="relative isolate pb-2 sm:pb-3"
+      id="home"
+      className={`relative isolate ${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME} pb-2 sm:pb-3`}
       onPointerEnter={heroGlow.handlers.onPointerEnter}
       onPointerMove={heroGlow.handlers.onPointerMove}
       onPointerLeave={heroGlow.handlers.onPointerLeave}

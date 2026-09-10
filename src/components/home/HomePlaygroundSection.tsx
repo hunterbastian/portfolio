@@ -7,6 +7,7 @@ import { WorkScatterStack } from '@/components/home/WorkScatterStack'
 import { analytics } from '@/lib/analytics'
 import { activateEditorialItem } from '@/lib/editorial-item'
 import type { HomeProject } from '@/lib/home-projects'
+import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
 import { showJoyToast } from '@/lib/joy'
 
 interface HomePlaygroundSectionProps {
@@ -21,7 +22,7 @@ export function HomePlaygroundSection({ projects }: HomePlaygroundSectionProps) 
       id="playground"
       title="Playground"
       contentGapClassName="space-y-4 sm:space-y-5"
-      scrollMarginClassName="scroll-mt-10 sm:scroll-mt-12"
+      scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
       <WorkScatterStack label="Playground" projects={projects} tone="playground" />
       <Link

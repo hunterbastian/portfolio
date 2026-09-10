@@ -26,9 +26,11 @@ import {
   getTopMetaInnerClassName,
   getTopMetaMobileMenuAriaLabel,
   getTopMetaMobileMenuClassName,
+  getTopMetaMobilePageNavItems,
   getTopMetaNavAction,
   getTopMetaNavLabelClassName,
   getTopMetaNavLinkClassName,
+  getTopMetaPageNavItems,
   getTopMetaShellClassName,
   getTopMetaSunClassName,
   getTopMetaSunIdleDelay,
@@ -110,9 +112,37 @@ test('activateTopMetaSunBlink starts blinking, clears stale timers, and schedule
 })
 
 test('shouldHideTopMetaHeader mirrors the scroll reveal threshold', () => {
-  assert.equal(shouldHideTopMetaHeader(0), false)
-  assert.equal(shouldHideTopMetaHeader(TOP_REVEAL_SCROLL_Y), false)
-  assert.equal(shouldHideTopMetaHeader(TOP_REVEAL_SCROLL_Y + 1), true)
+  assert.equal(shouldHideTopMetaHeader({ scrollY: 0 }), false)
+  assert.equal(shouldHideTopMetaHeader({ scrollY: TOP_REVEAL_SCROLL_Y }), false)
+  assert.equal(shouldHideTopMetaHeader({ scrollY: TOP_REVEAL_SCROLL_Y + 1 }), true)
+})
+
+test('homepage keeps the header sticky so section jumps stay reachable', () => {
+  assert.equal(shouldHideTopMetaHeader({ persistVisible: true, scrollY: TOP_REVEAL_SCROLL_Y + 80 }), false)
+  assert.deepEqual(
+    getTopMetaHeaderState({
+      mobileMenuOpen: true,
+      persistVisible: true,
+      scrollY: TOP_REVEAL_SCROLL_Y + 80,
+    }),
+    {
+      headerHidden: false,
+      mobileMenuOpen: true,
+    },
+  )
+})
+
+test('homepage desktop nav yields to section jumps while mobile keeps Playground', () => {
+  assert.deepEqual(getTopMetaPageNavItems('/'), [])
+  assert.deepEqual(getTopMetaPageNavItems('/archive'), [...TOP_META_NAV_ITEMS])
+  assert.deepEqual(
+    getTopMetaMobilePageNavItems('/').map((item) => item.href),
+    ['/archive'],
+  )
+  assert.deepEqual(
+    getTopMetaMobilePageNavItems('/cv').map((item) => item.href),
+    ['/', '/archive'],
+  )
 })
 
 test('getTopMetaHeaderState closes the mobile menu when the header hides', () => {

@@ -63,9 +63,7 @@ export function HomeHeroSection() {
       <div
         ref={heroGlow.glowRef}
         aria-hidden="true"
-        className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-[0.82] blur-[7px] brightness-[0.7] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:blur-[9px] ${
-          heroGlow.isActive ? 'is-active' : ''
-        }`}
+        className="animated-hero-glow pointer-events-none absolute left-1/2 -top-14 -z-10 h-[27rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-[0.82] blur-[7px] brightness-[0.7] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-20 sm:h-[34rem] sm:w-[min(92rem,112vw)] sm:blur-[9px]"
         style={{
           maskImage: HOME_HERO_GLOW_MASK,
           WebkitMaskImage: HOME_HERO_GLOW_MASK,
@@ -87,9 +85,7 @@ export function HomeHeroSection() {
       <div
         ref={heroGlow.grainRef}
         aria-hidden="true"
-        className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[28rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-screen transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-16 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065] ${
-          heroGlow.isActive ? 'is-active' : ''
-        }`}
+        className="animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[28rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-screen transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-16 sm:h-[34rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.065]"
         style={{
           backgroundImage: "url('/images/hero-grain.svg')",
           backgroundSize: '260px 260px',

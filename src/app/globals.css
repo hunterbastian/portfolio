@@ -783,8 +783,8 @@ button {
   transform: translate3d(var(--glint-hover-x, 0px), var(--glint-hover-y, 0px), 0) scale(1);
 }
 
+/* The backdrop moves when the visitor does, and is otherwise still. */
 .animated-hero-glow {
-  animation: hb-hero-glow-breathe 14s cubic-bezier(0.16, 1, 0.3, 1) 2s infinite;
   transform: translate(
       calc(-50% + var(--hero-glow-cursor-x, 0px)),
       var(--hero-glow-cursor-y, 0px)
@@ -792,86 +792,11 @@ button {
     scale(1);
 }
 
-.animated-hero-glow.is-active {
-  animation-duration: 14s;
-}
-
 .animated-hero-grain {
-  animation: hb-hero-grain-breathe 18s cubic-bezier(0.16, 1, 0.3, 1) 2.2s infinite;
   transform: translate(
     calc(-50% + var(--hero-grain-cursor-x, 0px)),
     var(--hero-grain-cursor-y, 0px)
   );
-}
-
-.animated-hero-grain.is-active {
-  animation-duration: 18s;
-}
-
-@keyframes hb-hero-glow-breathe {
-  0%,
-  100% {
-    transform: translate(
-        calc(-50% + var(--hero-glow-cursor-x, 0px) - 8px),
-        calc(var(--hero-glow-cursor-y, 0px) + 2px)
-      )
-      rotate(-0.18deg)
-      scale(1);
-  }
-
-  28% {
-    transform: translate(
-        calc(-50% + var(--hero-glow-cursor-x, 0px) + 5px),
-        calc(var(--hero-glow-cursor-y, 0px) - 4px)
-      )
-      rotate(0.1deg)
-      scale(1.012);
-  }
-
-  56% {
-    transform: translate(
-        calc(-50% + var(--hero-glow-cursor-x, 0px) + 12px),
-        calc(var(--hero-glow-cursor-y, 0px) + 1px)
-      )
-      rotate(0.22deg)
-      scale(1.026);
-  }
-
-  78% {
-    transform: translate(
-        calc(-50% + var(--hero-glow-cursor-x, 0px) - 1px),
-        calc(var(--hero-glow-cursor-y, 0px) + 7px)
-      )
-      rotate(-0.06deg)
-      scale(1.01);
-  }
-}
-
-@keyframes hb-hero-grain-breathe {
-  0%,
-  100% {
-    transform: translate(
-        calc(-50% + var(--hero-grain-cursor-x, 0px) + 3px),
-        calc(var(--hero-grain-cursor-y, 0px) + 0px)
-      )
-      rotate(0deg);
-  }
-
-  42% {
-    transform: translate(
-        calc(-50% + var(--hero-grain-cursor-x, 0px) - 7px),
-        calc(var(--hero-grain-cursor-y, 0px) + 5px)
-      )
-      rotate(-0.15deg);
-  }
-
-  74% {
-    transform: translate(
-        calc(-50% + var(--hero-grain-cursor-x, 0px) + 1px),
-        calc(var(--hero-grain-cursor-y, 0px) - 3px)
-      )
-      rotate(0.08deg);
-  }
 }
 
 @keyframes hb-section-cloud-shadow {

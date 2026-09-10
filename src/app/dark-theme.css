@@ -61,7 +61,50 @@
 .chrome-pill .chrome-pill-label,
 .chrome-pill .chrome-pill-icon { color: #e3e5e5; text-shadow: none; filter: none; }
 .chrome-pill::before,
-.chrome-pill::after { opacity: 0.12; }
+.chrome-pill::after { opacity: 0; }
+
+/* Keep pills primary, drop the wet glass highlight. */
+.chrome-pill-contact-accent {
+  background: color-mix(in srgb, var(--contact-email-accent-soft) 82%, var(--contact-email-accent) 18%);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--contact-email-accent) 36%, var(--border));
+}
+
+.chrome-pill-contact-accent::before,
+.chrome-pill-contact-accent::after {
+  opacity: 0;
+}
+
+.chrome-pill-contact-accent .chrome-pill-label,
+.chrome-pill-contact-accent .chrome-pill-icon {
+  color: var(--contact-email-ink);
+  text-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chrome-pill-contact-accent:hover {
+    background: color-mix(in srgb, var(--contact-email-accent-soft) 68%, var(--contact-email-accent) 32%);
+    box-shadow:
+      inset 0 1px rgba(255, 255, 255, 0.1),
+      0 0 0 1px color-mix(in srgb, var(--contact-email-accent) 50%, var(--border));
+  }
+}
+
+.chrome-pill-contact-accent:active {
+  box-shadow:
+    inset 0 2px 5px rgba(15, 17, 18, 0.35),
+    0 0 0 1px color-mix(in srgb, var(--contact-email-accent) 28%, var(--border));
+}
+
+.chrome-scroll-top::before,
+.chrome-scroll-top::after {
+  opacity: 0.16;
+}
+
+.chrome-scroll-top .chrome-scroll-top-arrow {
+  filter: none;
+}
 
 /* Playground archive: keep the pinboard composition, sit it on the dark desk. */
 .playground-page {

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import {
@@ -344,6 +345,17 @@ test('featured project list state packages project and playground rows', () => {
       },
     ],
   })
+})
+
+test('featured project rows expose a visible focus ring that is not color-only', () => {
+  const source = readFileSync(new URL('../components/home/FeaturedProjectList.tsx', import.meta.url), 'utf8')
+  const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8')
+
+  assert.match(source, /focus-visible:ring-2/)
+  assert.match(source, /focus-visible:ring-ring\/70/)
+  assert.match(source, /focus-visible:ring-offset-2/)
+  assert.match(css, /\.featured-project-row:focus-within::after/)
+  assert.match(css, /background: var\(--ring\)/)
 })
 
 test('all filter matches every project', () => {

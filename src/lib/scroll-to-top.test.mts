@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import {
@@ -99,4 +100,11 @@ test('activateScrollToTop preserves haptic, toast, and scroll ordering', () => {
     ['toast', 'Back to top'],
     ['scroll', { top: 0, behavior: 'smooth' }],
   ])
+})
+
+test('scroll to top button shares the restrained chrome treatment', () => {
+  const source = readFileSync(new URL('../components/ScrollToTop.tsx', import.meta.url), 'utf8')
+
+  assert.match(source, /chrome-scroll-top/)
+  assert.match(source, /chrome-scroll-top-arrow/)
 })

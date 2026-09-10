@@ -135,6 +135,7 @@ test('homepage keeps the header sticky so section jumps stay reachable', () => {
     },
   )
   assert.match(getTopMetaShellClassName(false, false, true), /bg-background\/82/)
+  assert.match(getTopMetaShellClassName(false, false, true), /safe-area-inset-top/)
   assert.doesNotMatch(getTopMetaShellClassName(false, false, false), /bg-background\/82/)
 })
 
@@ -203,7 +204,16 @@ test('top meta mobile menu uses only a 200ms translate and fade without animated
       'transition-[opacity,transform]',
     ])
     assert.deepEqual(classes.filter((token) => token.startsWith('blur-')), [])
-    for (const token of ['duration-200', 'ease-soft', 'fixed', 'right-5', 'top-[3.5rem]', 'w-[12rem]', 'origin-top-right', 'backdrop-blur-xl']) {
+    for (const token of [
+      'duration-200',
+      'ease-soft',
+      'fixed',
+      'right-[max(1.25rem,env(safe-area-inset-right))]',
+      'top-[calc(3.15rem+env(safe-area-inset-top))]',
+      'w-[min(14rem,calc(100vw-2.5rem))]',
+      'origin-top-right',
+      'backdrop-blur-xl',
+    ]) {
       assert.ok(classes.includes(token), token)
     }
   }

@@ -9,6 +9,7 @@ import {
   HOME_SECTION_NAV_SCROLL_OFFSET_PX,
   activateHomeSectionNavigation,
   getActiveHomeSectionId,
+  getHomeSectionNavProbeOffset,
   getHomeSectionHash,
   getHomeSectionHref,
   getHomeSectionNavAriaCurrent,
@@ -96,6 +97,31 @@ test('getActiveHomeSectionId follows the last section whose top has crossed the 
     'contact',
   )
   assert.equal(getActiveHomeSectionId([], 120), '')
+})
+
+test('getActiveHomeSectionId uses a reading-band probe so Background wins while it is in view', () => {
+  const sections = [
+    { id: 'home', top: 0 },
+    { id: 'projects', top: 800 },
+    { id: 'playground', top: 1400 },
+    { id: 'background', top: 2000 },
+    { id: 'contact', top: 2600 },
+  ]
+  const viewport = { documentHeight: 3200, height: 800 }
+
+  assert.equal(getHomeSectionNavProbeOffset(HOME_SECTION_NAV_SCROLL_OFFSET_PX, 800), 288)
+  assert.equal(
+    getActiveHomeSectionId(sections, 1800, HOME_SECTION_NAV_SCROLL_OFFSET_PX, viewport),
+    'background',
+  )
+  assert.equal(
+    getActiveHomeSectionId(sections, 1450, HOME_SECTION_NAV_SCROLL_OFFSET_PX, viewport),
+    'playground',
+  )
+  assert.equal(
+    getActiveHomeSectionId(sections, 2312, HOME_SECTION_NAV_SCROLL_OFFSET_PX, viewport),
+    'contact',
+  )
 })
 
 test('home section scrolling respects reduced motion', () => {

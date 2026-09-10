@@ -5,6 +5,7 @@ import { HomeBackgroundSection } from '@/components/home/HomeBackgroundSection'
 import { HomeContactSection } from '@/components/home/HomeContactSection'
 import { HomeEndeavorsSection } from '@/components/home/HomeEndeavorsSection'
 import { HomeHeroSection } from '@/components/home/HomeHeroSection'
+import { HomePhilosophySection } from '@/components/home/HomePhilosophySection'
 import { HomePlaygroundSection } from '@/components/home/HomePlaygroundSection'
 import { HomeProjectsSection } from '@/components/home/HomeProjectsSection'
 import { Reveal } from '@/components/home/HomeSection'
@@ -51,12 +52,16 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
       </div>
       <div aria-hidden="true" className="home-coast-outro" />
 
-      <div className="mx-auto max-w-[36rem] pt-9 sm:pt-28">
+      <div className="mx-auto max-w-[36rem] pt-[4.75rem] sm:pt-28">
         <Reveal>
           <HomeHeroSection />
         </Reveal>
 
-        <div className="mt-5 space-y-11 sm:mt-7 sm:space-y-24">
+        <div className="mt-4 space-y-10 sm:mt-5 sm:space-y-16">
+          <Reveal delayMs={20}>
+            <HomePhilosophySection />
+          </Reveal>
+
           <Reveal delayMs={40}>
             <HomeProjectsSection
               onWorkFilterChange={applyWorkFilter}

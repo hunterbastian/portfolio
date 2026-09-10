@@ -11,18 +11,18 @@ export const TOP_META_LAUNCHPAD_ARIA_LABEL = 'Open Launchpad. Also use CMD K'
 export const TOP_META_HAPTIC_STYLE = 'light'
 
 const TOP_META_SHELL_BASE_CLASS =
-  'fixed inset-x-0 top-0 z-50 px-5 py-4 transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6'
+  'fixed inset-x-0 top-0 z-50 px-5 py-2.5 pt-[max(0.625rem,env(safe-area-inset-top))] transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6 sm:pt-6'
 const TOP_META_SHELL_HIDDEN_CLASS = 'pointer-events-none -translate-y-3 opacity-0 blur-[2px]'
 const TOP_META_SHELL_VISIBLE_CLASS = 'pointer-events-none translate-y-0 opacity-100 blur-0'
-const TOP_META_SHELL_FROSTED_CLASS = 'bg-background/82 backdrop-blur-xl'
+const TOP_META_SHELL_FROSTED_CLASS = 'bg-background/82 backdrop-blur-md sm:backdrop-blur-xl'
 
 const TOP_META_INNER_BASE_CLASS =
-  'relative isolate mx-auto flex max-w-[36rem] items-center justify-between gap-6 border-b border-border/72 pb-4 sm:pb-4'
+  'relative isolate mx-auto flex max-w-[36rem] min-w-0 items-center justify-between gap-4 border-b border-border/72 pb-2.5 sm:gap-6 sm:pb-4'
 const TOP_META_INNER_DISABLED_CLASS = 'pointer-events-none'
 const TOP_META_INNER_ENABLED_CLASS = 'pointer-events-auto'
 
 const TOP_META_MOBILE_MENU_BASE_CLASS =
-  'fixed right-5 top-[3.5rem] z-50 w-[12rem] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-card/95 shadow-[0_18px_44px_-28px_rgba(43,39,34,0.56),0_1px_3px_rgba(43,39,34,0.08)] backdrop-blur-xl transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
+  'fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[calc(3.15rem+env(safe-area-inset-top))] z-50 w-[min(14rem,calc(100vw-2.5rem))] origin-top-right overflow-hidden rounded-[8px] border border-border/72 bg-card/95 shadow-[0_18px_44px_-28px_rgba(43,39,34,0.56),0_1px_3px_rgba(43,39,34,0.08)] backdrop-blur-xl transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
 const TOP_META_MOBILE_MENU_OPEN_CLASS = 'pointer-events-auto visible translate-y-0 opacity-100'
 const TOP_META_MOBILE_MENU_CLOSED_CLASS = 'pointer-events-none invisible translate-y-1 opacity-0'
 const TOP_META_SUN_BASE_CLASS =

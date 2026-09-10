@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import {
@@ -17,6 +18,7 @@ import {
   activateFooterSparkle,
   getFooterClassName,
   getFooterCopyrightLabel,
+  getFooterCopyrightYear,
   getFooterShellClassName,
   getFooterSparkleClassName,
   getFooterVisibilityClassName,
@@ -44,6 +46,19 @@ test('footer chrome constants preserve layout and visible copy', () => {
   assert.equal(FOOTER_PIXEL_SUN_SHELL_CLASS, 'footer-pixel-sun-shell')
   assert.equal(FOOTER_MADE_LABEL, 'Made with care in Utah.')
   assert.equal(getFooterCopyrightLabel(2026), '\u00a9 2026 Hunter Bastian')
+  assert.equal(getFooterCopyrightYear(new Date('2026-09-10T00:00:00.000Z')), 2026)
+  assert.notEqual(getFooterCopyrightYear(), 2024)
+  assert.match(getFooterCopyrightLabel(), /\u00a9 20\d{2} Hunter Bastian/)
+  assert.doesNotMatch(getFooterCopyrightLabel(), /2024/)
+})
+
+test('footer component resolves the copyright year at runtime', () => {
+  const source = readFileSync(new URL('../components/Footer.tsx', import.meta.url), 'utf8')
+
+  assert.match(source, /getFooterCopyrightYear/)
+  assert.match(source, /setCurrentYear\(getFooterCopyrightYear\(\)\)/)
+  assert.doesNotMatch(source, /© 2024/)
+  assert.doesNotMatch(source, /\\u00a9 2024/)
 })
 
 test('footer visibility keeps top and page-end states visible', () => {

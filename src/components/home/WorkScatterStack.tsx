@@ -33,7 +33,7 @@ export function WorkScatterStack({ decorative = false, label, projects, tone }: 
 
   return (
     <div
-      className={styles.stack}
+      className={decorative ? `${styles.stack} ${styles.decorative}` : styles.stack}
       aria-hidden={decorative || undefined}
       aria-label={decorative ? undefined : `${label} collage`}
     >

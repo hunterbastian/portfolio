@@ -168,6 +168,10 @@ export function getFooterSparkleClassName(active: boolean) {
     : FOOTER_SPARKLE_BASE_CLASS
 }
 
-export function getFooterCopyrightLabel(year: number) {
+export function getFooterCopyrightYear(now: Date = new Date()) {
+  return now.getFullYear()
+}
+
+export function getFooterCopyrightLabel(year: number = getFooterCopyrightYear()) {
   return `\u00a9 ${year} Hunter Bastian`
 }

@@ -2,8 +2,14 @@
   position: relative;
   isolation: isolate;
   width: 100%;
+  max-width: 100%;
   aspect-ratio: 1.04 / 1;
   min-height: 18.75rem;
+  overflow: hidden;
+}
+
+.decorative {
+  pointer-events: none;
 }
 
 .card {
@@ -56,7 +62,8 @@
 
 @media (max-width: 640px) {
   .stack {
-    min-height: 16.5rem;
+    aspect-ratio: 1.18 / 1;
+    min-height: 13.25rem;
   }
 }
 

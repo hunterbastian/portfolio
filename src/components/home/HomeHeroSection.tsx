@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useWebHaptics } from 'web-haptics/react'
 import { PeekAction } from '@/components/PeekAction'
-import { homeHeroContent } from '@/content/homepage'
+import { ContactLinks } from '@/components/home/ContactLinks'
+import { homeContactContent, homeHeroContent } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
 import {
   HOME_HERO_ACTIONS,
+  HOME_HERO_CONTACT_LINE_CLASS_NAME,
   HOME_HERO_INTRO_CLASS_NAME,
   HOME_HERO_LOCAL_TIME_CLASS_NAME,
   HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME,
@@ -171,6 +173,14 @@ export function HomeHeroSection() {
               {action.label}
             </PeekAction>
           ))}
+        </div>
+
+        <div
+          id="contact"
+          className={`${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME} space-y-4 pt-1 sm:space-y-5 sm:pt-2`}
+        >
+          <p className={HOME_HERO_CONTACT_LINE_CLASS_NAME}>{homeContactContent.line}</p>
+          <ContactLinks />
         </div>
       </div>
     </section>

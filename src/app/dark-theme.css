@@ -13,11 +13,12 @@
   --muted: #202020;
   --muted-foreground: #9b9b9b;
   --subtle-foreground: #6f6f6f;
-  --accent: #a2b8ab;
+  /* Soft scenic accents for ambience only — not UI chrome fills */
+  --accent: #b7a99a;
   --accent-foreground: #191919;
-  --accent-subtle: #26332e;
-  --accent-muted: #71897b;
-  --accent-blue: #a1b7c9;
+  --accent-subtle: #2a2622;
+  --accent-muted: #8a8178;
+  --accent-blue: #a8b0b8;
   --accent-green: #a2b8ab;
   --border: #373737;
   --input: #373737;
@@ -27,116 +28,217 @@
   --grain-rgb: 155, 155, 155;
   --ink-underline: #9b9b9b;
   --contact-accent: #d0b7ab;
-  --contact-accent-soft: #2f2f2f;
+  --contact-accent-soft: #2f2b28;
   --contact-accent-rgb: 208, 183, 171;
-  --contact-email-accent: #a1c9ca;
-  --contact-email-accent-soft: #253638;
-  --contact-email-ink: #d5e9e8;
+  --contact-email-accent: #c4b8ae;
+  --contact-email-accent-soft: #2c2926;
+  --contact-email-ink: #e6e6e6;
   --contact-paper: #202020;
   --contact-paper-hover: #2f2f2f;
   --contact-rule: #373737;
-  --surface-glass-soft: rgba(32, 32, 32, 0.92);
-  --surface-glass-soft-border: #373737;
-  --surface-glass-soft-shadow: 0 0 0 1px var(--surface-glass-soft-border);
-  --surface-glass-chrome: linear-gradient(180deg, #2f2f2f, #202020);
-  --surface-glass-chrome-hover: linear-gradient(180deg, #373737, #2f2f2f);
+  --surface-glass-soft: rgba(32, 32, 32, 0.78);
+  --surface-glass-soft-border: rgba(55, 55, 55, 0.9);
+  --surface-glass-soft-shadow:
+    0 0 0 1px var(--surface-glass-soft-border),
+    0 10px 28px -18px rgba(0, 0, 0, 0.72);
+  --surface-glass-chrome: linear-gradient(180deg, #383838 0%, #2a2a2a 46%, #202020 100%);
+  --surface-glass-chrome-hover: linear-gradient(180deg, #424242 0%, #323232 48%, #252525 100%);
   --surface-glass-chrome-dark: var(--surface-glass-chrome);
-  --surface-glass-chrome-shadow: inset 0 1px rgba(255, 255, 255, 0.06), 0 0 0 1px #373737, 0 8px 20px -12px #000;
-  --surface-glass-chrome-shadow-hover: inset 0 1px rgba(255, 255, 255, 0.08), 0 0 0 1px #4a4a4a, 0 10px 24px -12px #000;
-  --surface-glass-chrome-shadow-active: inset 0 2px 5px #111, 0 0 0 1px #373737;
+  --surface-glass-chrome-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 -1px rgba(0, 0, 0, 0.35),
+    0 0 0 1px #373737,
+    0 12px 28px -16px rgba(0, 0, 0, 0.78);
+  --surface-glass-chrome-shadow-hover:
+    inset 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 -1px rgba(0, 0, 0, 0.28),
+    0 0 0 1px #4a4a4a,
+    0 16px 34px -16px rgba(0, 0, 0, 0.82);
+  --surface-glass-chrome-shadow-active:
+    inset 0 2px 6px rgba(0, 0, 0, 0.55),
+    inset 0 1px rgba(255, 255, 255, 0.06),
+    0 0 0 1px #373737;
   --shadow-raised: 0 0 0 1px #373737, 0 2px 4px #0003;
   --shadow-raised-subtle: 0 0 0 1px #373737;
   --shadow-hover: 0 0 0 1px #4a4a4a, 0 8px 20px -4px #0005;
 }
 
-/* Preserve the scenic wash without a bright island behind the text. */
-.animated-hero-glow { opacity: 0.8; filter: blur(6px) saturate(0.8) brightness(0.78); }
-.animated-hero-glow img { transform: none; object-position: center 52%; filter: none; }
-.animated-hero-glow > div { visibility: hidden; }
-.animated-hero-grain { mix-blend-mode: screen; }
-.section-heading-rule { background: linear-gradient(90deg, #bbc5cc40, transparent); }
-:focus-visible { outline-color: var(--ring); }
+/* Scenic hero ambience: present, but seated on #191919 */
+.animated-hero-glow {
+  opacity: 0.88;
+  filter: blur(5px) saturate(0.92) brightness(0.7);
+}
+.animated-hero-glow img {
+  transform: none;
+  object-position: center 52%;
+  filter: none;
+}
+/* Keep wash overlays from HomeHeroSection so ambience fades into canvas */
+.animated-hero-glow > div {
+  visibility: visible;
+}
+.animated-hero-grain {
+  mix-blend-mode: screen;
+}
+.section-heading-rule {
+  background: linear-gradient(90deg, rgba(155, 155, 155, 0.28), transparent);
+}
+
+/* Neutral focus — no cool blue */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.header-nav-link:focus-visible,
+.chrome-pill:focus-visible,
+.nord-button:focus-visible,
+.status-pill-action:focus-visible,
+[cmdk-input]:focus,
+[cmdk-input]:focus-visible,
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px;
+  --tw-ring-color: var(--ring);
+  box-shadow: 0 0 0 2px rgba(25, 25, 25, 0.9), 0 0 0 4px rgba(200, 200, 200, 0.55);
+}
 
 body {
   line-height: 1.5;
 }
 
-/* Light-mode utility colors must not override dark control contrast. */
+/* Dark glass pills — gloss restored */
 .chrome-pill .chrome-pill-label,
-.chrome-pill .chrome-pill-icon { color: #e6e6e6; text-shadow: none; filter: none; }
+.chrome-pill .chrome-pill-icon {
+  color: #e6e6e6;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  filter: none;
+}
+
 .chrome-pill {
-  background: #2f2f2f;
+  background: var(--surface-glass-chrome);
   border: 1px solid #373737;
-  box-shadow: 0 8px 18px -16px rgba(0, 0, 0, 0.7);
+  box-shadow: var(--surface-glass-chrome-shadow);
   border-radius: 8px;
 }
-.chrome-pill::before,
-.chrome-pill::after { opacity: 0; }
 
-/* Keep pills primary, drop the wet glass highlight. */
-.chrome-pill-contact-accent {
-  background: #252525;
-  border-color: #373737;
-  box-shadow: 0 8px 18px -16px rgba(0, 0, 0, 0.72);
+.chrome-pill::before,
+.chrome-pill::after {
+  opacity: 1;
 }
 
-.chrome-pill-contact-accent::before,
+.chrome-pill::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.04) 52%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.chrome-pill::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+/* Primary contact pill: darker glass with a whisper of warm ambience */
+.chrome-pill-contact-accent {
+  background:
+    linear-gradient(180deg, #3a3734 0%, #2c2926 48%, #221f1d 100%),
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 62%);
+  border-color: #45403c;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.16),
+    inset 0 -1px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(69, 64, 60, 0.9),
+    0 14px 30px -18px rgba(0, 0, 0, 0.8);
+}
+
+.chrome-pill-contact-accent::before {
+  opacity: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.05) 55%,
+    rgba(208, 183, 171, 0.08) 100%
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
 .chrome-pill-contact-accent::after {
-  opacity: 0;
+  opacity: 1;
 }
 
 .chrome-pill-contact-accent .chrome-pill-label,
 .chrome-pill-contact-accent .chrome-pill-icon {
   color: var(--foreground);
-  text-shadow: none;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .chrome-pill:hover {
-    background: #252525;
+  .chrome-pill:hover,
+  .group\/chrome:hover .chrome-pill {
+    background: var(--surface-glass-chrome-hover);
     border-color: #4a4a4a;
-    box-shadow: 0 14px 26px -22px rgba(0, 0, 0, 0.82);
+    box-shadow: var(--surface-glass-chrome-shadow-hover);
+    filter: saturate(1.02);
   }
 
   .chrome-pill-contact-accent:hover {
-    background: #2f2f2f;
-    border-color: #4a4a4a;
-    box-shadow: 0 14px 26px -22px rgba(0, 0, 0, 0.82);
+    background:
+      linear-gradient(180deg, #433f3b 0%, #332f2c 48%, #282422 100%),
+      radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, transparent 62%);
+    border-color: #5a534c;
+    box-shadow:
+      inset 0 1px rgba(255, 255, 255, 0.2),
+      inset 0 -1px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(90, 83, 76, 0.95),
+      0 18px 36px -18px rgba(0, 0, 0, 0.85);
   }
 }
 
+.chrome-pill:active,
+.group\/chrome:active .chrome-pill,
 .chrome-pill-contact-accent:active {
-  background: #252525;
-  box-shadow: 0 0 0 1px #373737;
+  box-shadow: var(--surface-glass-chrome-shadow-active);
+  filter: none;
 }
 
+/* Scroll-top: same dark glass language */
 .chrome-scroll-top::before,
 .chrome-scroll-top::after {
-  opacity: 0;
+  opacity: 1;
 }
 
 .chrome-scroll-top {
-  background: #2f2f2f;
+  background: var(--surface-glass-chrome);
   border: 1px solid #373737;
-  box-shadow: 0 12px 24px -20px rgba(0, 0, 0, 0.78);
+  box-shadow: var(--surface-glass-chrome-shadow);
   color: var(--foreground);
+  backdrop-filter: blur(10px) saturate(1.05);
+  -webkit-backdrop-filter: blur(10px) saturate(1.05);
 }
 
 .chrome-scroll-top:hover {
-  background: #252525;
+  background: var(--surface-glass-chrome-hover);
   border-color: #4a4a4a;
+  box-shadow: var(--surface-glass-chrome-shadow-hover);
 }
 
 .chrome-scroll-top:active {
-  background: #252525;
-  box-shadow: 0 0 0 1px #373737;
+  box-shadow: var(--surface-glass-chrome-shadow-active);
 }
 
 .chrome-scroll-top .chrome-scroll-top-arrow {
   filter: none;
 }
 
-/* Playground archive: keep the pinboard composition, sit it on the dark desk. */
+/* Playground archive: keep ambient color washes (ambience welcome) */
 .playground-page {
   --playground-blue: #a1b7c9;
   --playground-cyan: #7aa3ae;

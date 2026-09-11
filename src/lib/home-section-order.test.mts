@@ -32,7 +32,15 @@ test('homepage uses a short background timeline instead of resume lists', () => 
  assert.equal(source.includes('<HomeExperienceSection'), false)
  assert.equal(source.includes('<HomeEducationSection'), false)
  assert.ok(source.indexOf('<HomePlaygroundSection') < source.indexOf('<HomeBackgroundSection'))
- assert.ok(source.indexOf('<HomeBackgroundSection') < source.indexOf('<HomeContactSection'))
+ assert.equal(source.includes('<HomeContactSection'), false)
+})
+
+test('homepage contact lives in the hero top instead of a separate section', () => {
+ const home = readFileSync(new URL('../components/AnimatedHomePage.tsx', import.meta.url), 'utf8')
+ const hero = readFileSync(new URL('../components/home/HomeHeroSection.tsx', import.meta.url), 'utf8')
+ assert.equal(home.includes('<HomeContactSection'), false)
+ assert.match(hero, /id="contact"/)
+ assert.match(hero, /ContactLinks/)
 })
 
 test('homepage contact config keeps secondary social URLs without featuring them', () => {

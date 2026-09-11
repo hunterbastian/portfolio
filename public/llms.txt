@@ -1,0 +1,47 @@
+# Hunter Bastian
+
+> Interaction design student who designs and builds digital products with calm interfaces, thoughtful motion, and visual restraint.
+
+- Name: Hunter Bastian
+- Location: Lehi, Utah
+- Site: [hunterbastian.com](https://hunterbastian.com)
+- Contact: hunterbastianux@gmail.com
+- Studying: B.S. Interaction Design, Utah Valley University (2023–2027)
+
+## Featured
+
+- [Mental Health Mini Site](https://hunterbastian.com/projects/mentalhealth-minisite): UVU student support minisite that puts emergency contacts first, then a searchable directory for counseling, accommodations, and wellness. TypeScript / Next.js / Tailwind / Motion.
+- [Lumo](https://hunterbastian.com/projects/lumo): Mindfulness app for calm reflection.
+- [AOL redesign](https://hunterbastian.com/projects/aol-redesign): Mobile and desktop email app redesign that modernizes AOL while staying familiar for existing users.
+- Studio Alpine: Photography and lifestyle project (founder).
+- Studio Cala: Design and web work.
+
+## Background
+
+- Interaction Design undergrad at Utah Valley University; ProdUX at UVU; Dean's List Fall 2024.
+- Founder of Studio Alpine (photography and design).
+- Video Producer at Catapult — marketing and product video.
+- Digital Media Department Representative at UVU — internship support for Web Design and Development students.
+- Past: Graphic Design Intern at Nutricost; Digital Design Intern at Clutch.
+
+## Other projects
+
+- Middle-Earth Journey — interactive Tolkien map
+- WanderUtah — national parks trip-planning app
+- Porsche Boutique — simplified browsing concept
+- Playground: small experiments and prototypes
+
+## Certifications
+
+- Platform Builder — Replit (2026)
+- Google Analytics 4 — Google (2026)
+- Foundations of User Experience Design — Google (2022)
+- IT Support Professional Certificate — Google (2021)
+- Graphic Design A.A. — Columbus State Community College (2021)
+
+## Links
+
+- [Portfolio](https://hunterbastian.com)
+- [Email](mailto:hunterbastianux@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/hunterbastian)
+- [GitHub](https://github.com/hunterbastian)

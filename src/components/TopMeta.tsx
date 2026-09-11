@@ -2,14 +2,11 @@
 
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
 import { PeekAction } from '@/components/PeekAction'
-import { chromePillClassName, chromePillIconClassName, chromePillLabelClassName } from '@/components/ui/tactile'
 import { showJoyToast } from '@/lib/joy'
 import { analytics } from '@/lib/analytics'
-import { LAUNCHER_OPEN_EVENT, LAUNCHER_PRELOAD_EVENT } from '@/lib/launcher'
 import {
   HOME_SECTION_NAV_ARIA_LABEL,
   HOME_SECTION_NAV_ITEMS,
@@ -27,12 +24,8 @@ import {
 import { getPeekActionClassName } from '@/lib/peek-action'
 import {
   TOP_META_BRAND_ACTION,
-  TOP_META_LAUNCHPAD_ARIA_LABEL,
-  TOP_META_LAUNCHPAD_LABEL,
-  TOP_META_LAUNCHPAD_PEEK,
   TOP_META_MOBILE_MENU_LABEL,
   activateTopMetaBrandAction,
-  activateTopMetaLaunchpad,
   activateTopMetaMobileMenuToggle,
   activateTopMetaNavAction,
   activateTopMetaSunBlink,
@@ -48,7 +41,6 @@ import {
   getTopMetaShellClassName,
   getTopMetaSunClassName,
   getTopMetaSunIdleDelay,
-  preloadTopMetaLaunchpad,
   type TopMetaNavItem,
   isTopMetaNavItemActive,
   shouldFrostTopMetaHeader,
@@ -130,16 +122,6 @@ function SectionNavLink({
       <span className={getTopMetaNavLabelClassName(active)}>{item.name}</span>
     </a>
   )
-}
-
-function openTopMetaLaunchpad() {
-  window.dispatchEvent(new CustomEvent(LAUNCHER_OPEN_EVENT))
-}
-
-function preloadLauncher() {
-  preloadTopMetaLaunchpad({
-    preloadLauncher: () => window.dispatchEvent(new CustomEvent(LAUNCHER_PRELOAD_EVENT)),
-  })
 }
 
 export default function TopMeta() {
@@ -304,7 +286,7 @@ export default function TopMeta() {
         <div
           className={cn(
             'relative z-10 hidden items-center justify-end sm:flex',
-            persistVisible ? 'min-w-0 flex-1 gap-2' : 'w-[21rem] gap-3',
+            persistVisible && 'min-w-0 flex-1',
           )}
         >
           {persistVisible ? (
@@ -330,31 +312,6 @@ export default function TopMeta() {
               ))}
             </nav>
           )}
-
-          <PeekAction
-            peek={TOP_META_LAUNCHPAD_PEEK}
-            className="group/launcher pointer-events-auto shrink-0 text-foreground transition-[filter,transform] duration-200"
-            labelClassName="inline-flex"
-            ariaLabel={TOP_META_LAUNCHPAD_ARIA_LABEL}
-            onClick={() =>
-              activateTopMetaLaunchpad({
-                openLauncher: openTopMetaLaunchpad,
-                trackNavigationClick: (target) => analytics.navigationClick(target),
-                triggerHaptic: (style) => haptic.trigger(style),
-              })
-            }
-            onFocus={preloadLauncher}
-            onMouseEnter={preloadLauncher}
-          >
-            <span className={chromePillClassName({ size: 'launchpad' })}>
-              <span className={chromePillLabelClassName}>{TOP_META_LAUNCHPAD_LABEL}</span>
-              <ArrowUpRight
-                aria-hidden="true"
-                strokeWidth={1.95}
-                className={cn(chromePillIconClassName, 'h-[0.9rem] w-[0.9rem] translate-y-[-0.03rem] group-hover/launcher:-translate-y-[0.18rem]')}
-              />
-            </span>
-          </PeekAction>
         </div>
 
         <div className="relative z-10 flex items-center gap-1 sm:hidden">
@@ -401,29 +358,6 @@ export default function TopMeta() {
                   className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-foreground/[0.035]"
                 />
               ))}
-              <PeekAction
-                className="group/launcher-mobile min-h-[44px] w-full justify-start gap-2 border-t border-border/58 px-2 pt-2.5 text-left text-[0.76rem] text-foreground hover:bg-foreground/[0.035] hover:text-foreground/82"
-                labelClassName="inline-flex items-center gap-2"
-                onClick={() =>
-                  activateTopMetaLaunchpad({
-                    closeMobileMenu: () => setMobileMenuOpen(false),
-                    openLauncher: openTopMetaLaunchpad,
-                    trackNavigationClick: (target) => analytics.navigationClick(target),
-                    triggerHaptic: (style) => haptic.trigger(style),
-                  })
-                }
-                onFocus={preloadLauncher}
-                onMouseEnter={preloadLauncher}
-              >
-                <span className="underline decoration-border underline-offset-[0.24em]">
-                  {TOP_META_LAUNCHPAD_LABEL}
-                </span>
-                <ArrowUpRight
-                  aria-hidden="true"
-                  strokeWidth={1.9}
-                  className="h-[0.76rem] w-[0.76rem] transition-transform duration-150 group-hover/launcher-mobile:translate-x-0.5 group-hover/launcher-mobile:-translate-y-0.5"
-                />
-              </PeekAction>
             </div>
           </div>
         </div>

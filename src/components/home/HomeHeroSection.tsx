@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useWebHaptics } from 'web-haptics/react'
 import { PeekAction } from '@/components/PeekAction'
@@ -7,14 +8,47 @@ import { homeHeroContent } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
 import {
   HOME_HERO_ACTIONS,
+  HOME_HERO_LOCAL_TIME_CLASS_NAME,
+  HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME,
+  HOME_HERO_LOCAL_TIME_UPDATE_MS,
+  HOME_HERO_LOCATION_LABEL_CLASS_NAME,
+  HOME_HERO_LOCATION_META_CLASS_NAME,
   activateHomeHeroAction,
+  formatHomeHeroLocalTime,
   getHomeHeroActionClassName,
   getHomeHeroActionLabelClassName,
   getHomeHeroIntroParagraphs,
+  getHomeHeroLocalTimeAriaLabel,
+  getHomeHeroLocalTimeDelayMs,
 } from '@/lib/home-hero'
 import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
 import { showJoyToast } from '@/lib/joy'
 import { useHeroGlow } from '@/lib/use-hero-glow'
+
+function useHomeHeroLocalTime() {
+  const [localTime, setLocalTime] = useState('')
+
+  useEffect(() => {
+    let intervalId = 0
+    const now = new Date()
+
+    setLocalTime(formatHomeHeroLocalTime(now))
+
+    const timeoutId = window.setTimeout(() => {
+      const tick = () => setLocalTime(formatHomeHeroLocalTime(new Date()))
+
+      tick()
+      intervalId = window.setInterval(tick, HOME_HERO_LOCAL_TIME_UPDATE_MS)
+    }, getHomeHeroLocalTimeDelayMs(now))
+
+    return () => {
+      window.clearTimeout(timeoutId)
+      window.clearInterval(intervalId)
+    }
+  }, [])
+
+  return localTime
+}
 
 const homeHeroIntroStackClassName = 'space-y-7 pt-5 sm:space-y-8 sm:pt-7'
 const homeHeroIntroParagraphClassName =
@@ -24,6 +58,7 @@ export function HomeHeroSection() {
   const introParagraphs = getHomeHeroIntroParagraphs(homeHeroContent.intro)
   const heroGlow = useHeroGlow()
   const haptic = useWebHaptics()
+  const localTime = useHomeHeroLocalTime()
 
   return (
     <section
@@ -87,8 +122,23 @@ export function HomeHeroSection() {
             <h1 className="break-words text-pretty font-hero-name text-[30px] font-normal leading-[1.15] tracking-[-0.02em] text-foreground/94 sm:text-[36px]">
               {homeHeroContent.headline}
             </h1>
-            <p className="font-mono text-[0.76rem] font-medium uppercase leading-none tracking-[0.11em] text-muted-foreground/68">
-              {homeHeroContent.subtitle}
+            <p className={HOME_HERO_LOCATION_META_CLASS_NAME}>
+              <span className={HOME_HERO_LOCATION_LABEL_CLASS_NAME}>{homeHeroContent.subtitle}</span>
+              {localTime ? (
+                <>
+                  <span aria-hidden="true" className={HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME}>
+                    ·
+                  </span>
+                  <time
+                    dateTime={localTime}
+                    aria-live="off"
+                    aria-label={getHomeHeroLocalTimeAriaLabel(localTime)}
+                    className={HOME_HERO_LOCAL_TIME_CLASS_NAME}
+                  >
+                    {localTime}
+                  </time>
+                </>
+              ) : null}
             </p>
           </div>
         </div>

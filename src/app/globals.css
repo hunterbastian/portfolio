@@ -591,8 +591,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (hover: hover) and (pointer: fine) {
   .chrome-pill:hover,
-  .group\/chrome:hover .chrome-pill,
-  .group\/launcher:hover .chrome-pill {
+  .group\/chrome:hover .chrome-pill {
     background: var(--surface-glass-chrome-hover);
     box-shadow: var(--surface-glass-chrome-shadow-hover);
     filter: saturate(1.02);
@@ -600,8 +599,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .chrome-pill:active,
-.group\/chrome:active .chrome-pill,
-.group\/launcher:active .chrome-pill {
+.group\/chrome:active .chrome-pill {
   box-shadow: var(--surface-glass-chrome-shadow-active);
 }
 
@@ -1496,34 +1494,6 @@ button {
   animation: hb-project-hover-dust 1.4s ease-in-out infinite;
 }
 
-.home-hero-time-toggle::after {
-  background: transparent;
-  border-bottom: 1px dotted currentColor;
-  bottom: 0.08em;
-  content: '';
-  height: 0;
-  inset-inline: 0;
-  opacity: 0.45;
-  pointer-events: none;
-  position: absolute;
-  transform: scaleX(1);
-  transform-origin: left center;
-  transition:
-    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
-    transform 200ms cubic-bezier(0.2, 0, 0, 1);
-}
-
-.home-hero-time-toggle:hover::after,
-.home-hero-time-toggle:focus-visible::after {
-  opacity: 0.9;
-}
-
-.home-hero-time-value {
-  animation: t-digit-pop-in var(--digit-dur) var(--digit-ease) both;
-  display: inline-block;
-  white-space: nowrap;
-}
-
 @keyframes hb-project-hover-dust {
   0% {
     opacity: 0;
@@ -1811,7 +1781,6 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-hero-time-value { animation: none !important; }
   .t-digit-group .t-digit { animation: none !important; }
   .t-icon-swap .t-icon { transition: none !important; }
 }

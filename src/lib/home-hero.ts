@@ -14,6 +14,15 @@ export const HOME_HERO_PROFILE_DEFOCUS_BASE_CLASS =
   'transition-[filter,opacity,transform] duration-300 ease-soft motion-reduce:transition-none'
 export const HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS = 'translate-y-0 blur-0 opacity-100'
 export const HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS = 'translate-y-[1px] blur-[1.35px] opacity-65'
+export const HOME_HERO_LOCAL_TIME_ZONE = 'America/Denver'
+export const HOME_HERO_LOCAL_TIME_UPDATE_MS = 60_000
+export const HOME_HERO_LOCATION_META_CLASS_NAME =
+  'flex max-w-full items-baseline gap-x-2 overflow-hidden whitespace-nowrap font-mono text-[0.76rem] font-medium leading-none text-muted-foreground/68'
+export const HOME_HERO_LOCATION_LABEL_CLASS_NAME = 'uppercase tracking-[0.11em]'
+export const HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME =
+  'select-none font-normal tracking-normal text-muted-foreground/34'
+export const HOME_HERO_LOCAL_TIME_CLASS_NAME =
+  'tabular-nums tracking-[0.05em] text-muted-foreground/50'
 
 const HOME_HERO_ACTION_BASE_CLASS_NAME =
   'min-h-[44px] min-w-[44px] items-center sm:min-h-0 sm:min-w-0 text-[0.74rem] sm:text-[0.78rem]'
@@ -55,6 +64,33 @@ export const HOME_HERO_ACTIONS: readonly HomeHeroAction[] = [
 
 export function getHomeHeroIntroParagraphs(intro: string): string[] {
   return intro.split('\n\n')
+}
+
+export function formatHomeHeroLocalTime(date: Date): string {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    hour: '2-digit',
+    hourCycle: 'h23',
+    minute: '2-digit',
+    timeZone: HOME_HERO_LOCAL_TIME_ZONE,
+  }).formatToParts(date)
+
+  const hour = parts.find((part) => part.type === 'hour')?.value ?? '00'
+  const minute = parts.find((part) => part.type === 'minute')?.value ?? '00'
+
+  return `${hour}:${minute}`
+}
+
+export function getHomeHeroLocalTimeAriaLabel(localTime: string) {
+  return `${localTime} in Lehi`
+}
+
+export function getHomeHeroLocalTimeDelayMs(
+  date: Date,
+  intervalMs = HOME_HERO_LOCAL_TIME_UPDATE_MS,
+) {
+  const elapsedMs = date.getTime() % intervalMs
+
+  return elapsedMs === 0 ? intervalMs : intervalMs - elapsedMs
 }
 
 export function getHomeHeroActionClassName(variant: HomeHeroActionVariant) {

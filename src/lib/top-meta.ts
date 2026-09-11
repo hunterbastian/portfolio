@@ -13,7 +13,8 @@ const TOP_META_SHELL_BASE_CLASS =
   'fixed inset-x-0 top-0 z-50 px-5 py-2.5 pt-[max(0.625rem,env(safe-area-inset-top))] transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6 sm:pt-6'
 const TOP_META_SHELL_HIDDEN_CLASS = 'pointer-events-none -translate-y-3 opacity-0 blur-[2px]'
 const TOP_META_SHELL_VISIBLE_CLASS = 'pointer-events-none translate-y-0 opacity-100 blur-0'
-const TOP_META_SHELL_FROSTED_CLASS = 'bg-card/92 backdrop-blur-md sm:backdrop-blur-xl'
+const TOP_META_SHELL_FROSTED_CLASS =
+  'bg-card/88 shadow-[0_1px_0_0_var(--border),0_10px_26px_-24px_rgba(0,0,0,0.58)] backdrop-blur-sm sm:backdrop-blur-md'
 
 const TOP_META_INNER_BASE_CLASS =
   'relative isolate mx-auto flex max-w-[36rem] min-w-0 items-center justify-between gap-4 border-b border-border pb-2.5 sm:gap-6 sm:pb-4'
@@ -21,7 +22,7 @@ const TOP_META_INNER_DISABLED_CLASS = 'pointer-events-none'
 const TOP_META_INNER_ENABLED_CLASS = 'pointer-events-auto'
 
 const TOP_META_MOBILE_MENU_BASE_CLASS =
-  'fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[calc(3.15rem+env(safe-area-inset-top))] z-50 w-[min(14rem,calc(100vw-2.5rem))] origin-top-right overflow-hidden rounded-[8px] border border-border bg-card shadow-[0_18px_44px_-28px_rgba(0,0,0,0.56),0_1px_3px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
+  'fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[calc(3.15rem+env(safe-area-inset-top))] z-50 w-[min(14rem,calc(100vw-2.5rem))] origin-top-right overflow-hidden rounded-[8px] border border-border bg-[#252525] shadow-[0_20px_46px_-28px_rgba(0,0,0,0.72),0_1px_2px_rgba(0,0,0,0.32)] backdrop-blur-sm transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
 const TOP_META_MOBILE_MENU_OPEN_CLASS = 'pointer-events-auto visible translate-y-0 opacity-100'
 const TOP_META_MOBILE_MENU_CLOSED_CLASS = 'pointer-events-none invisible translate-y-1 opacity-0'
 const TOP_META_SUN_BASE_CLASS =

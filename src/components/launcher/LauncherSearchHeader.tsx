@@ -32,14 +32,14 @@ export function LauncherSearchHeader({
   query,
 }: LauncherSearchHeaderProps) {
   return (
-    <div className="sticky top-0 z-10 border-b border-border/45 bg-background/[0.76] p-2.5 shadow-[0_10px_26px_-24px_rgba(43,39,34,0.42)] backdrop-blur-xl">
+    <div className="sticky top-0 z-10 border-b border-[#373737] bg-[#252525] p-2.5 shadow-[0_8px_20px_-18px_rgba(0,0,0,0.55)]">
       <div className="mb-2.5 flex items-center justify-between gap-3 px-1">
         <div className="flex min-w-0 items-center gap-2.5">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] bg-[color-mix(in_srgb,var(--contact-email-accent-soft)_74%,var(--background))] text-[color-mix(in_srgb,var(--contact-email-accent)_76%,var(--foreground))] shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_22px_-20px_rgba(25,90,94,0.55)]">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] border border-[#373737] bg-[#202020] text-foreground/82">
             <Command aria-hidden="true" size={12} strokeWidth={1.8} />
           </span>
           <span className="min-w-0">
-            <span className="block truncate font-header text-[0.95rem] leading-tight tracking-[-0.02em] text-foreground">
+            <span className="block truncate font-header text-[0.875rem] leading-tight tracking-[-0.02em] text-foreground">
               {LAUNCHER_TITLE}
             </span>
             <span className="block truncate font-mono text-[0.6rem] text-muted-foreground/66">
@@ -50,7 +50,7 @@ export function LauncherSearchHeader({
         <button
           type="button"
           aria-label={LAUNCHER_CLOSE_ARIA_LABEL}
-          className="group/launcher-close flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center rounded-full text-muted-foreground transition-[background-color,color,box-shadow,transform] duration-150 hover:bg-foreground/[0.045] hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="group/launcher-close flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center rounded-[7px] border border-transparent text-muted-foreground transition-[background-color,color,border-color,transform] duration-150 hover:border-[#373737] hover:bg-[#2f2f2f] hover:text-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           onClick={onClose}
         >
           <X
@@ -64,9 +64,9 @@ export function LauncherSearchHeader({
         <Search
           aria-hidden="true"
           size={13}
-          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/48"
+          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/68"
         />
-        <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded-[5px] bg-background/72 px-1.5 py-1 font-mono text-[0.56rem] leading-none text-muted-foreground/58 shadow-[inset_0_0_0_1px_rgba(80,72,61,0.08),inset_0_1px_0_rgba(255,255,255,0.72)]">
+        <span className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded-[5px] border border-[#373737] bg-[#202020] px-1.5 py-1 font-mono text-[0.56rem] leading-none text-muted-foreground/62">
           ⌘K
         </span>
         <input
@@ -75,18 +75,18 @@ export function LauncherSearchHeader({
           onChange={(event) => onQueryChange(event.target.value)}
           onKeyDown={onKeyDown}
           placeholder="Search or open..."
-          className="h-12 w-full rounded-[7px] border border-transparent bg-foreground/[0.032] pl-9 pr-16 font-mono text-[0.92rem] text-foreground outline-none placeholder:text-muted-foreground/52 shadow-[inset_0_1px_0_rgba(255,255,255,0.48)] transition-[background-color,border-color,box-shadow] duration-150 focus:border-[color-mix(in_srgb,var(--contact-email-accent)_18%,transparent)] focus:bg-background/58 focus:shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_0_0_3px_color-mix(in_srgb,var(--contact-email-accent-soft)_56%,transparent)]"
+          className="h-10 w-full rounded-[7px] border border-[#373737] bg-[#202020] pl-9 pr-16 font-mono text-[0.875rem] text-foreground outline-none placeholder:text-muted-foreground/62 transition-[background-color,border-color,box-shadow] duration-150 focus:border-ring focus:bg-[#252525] focus:shadow-[0_0_0_2px_color-mix(in_srgb,var(--ring)_26%,transparent)]"
           aria-label={LAUNCHER_SEARCH_ARIA_LABEL}
         />
       </div>
       <div className="mt-2 flex gap-1 overflow-x-auto px-0.5 pb-0.5 [scrollbar-width:none]">
-        <span className="shrink-0 rounded-full bg-foreground/[0.045] px-2.5 py-1 font-mono text-[0.58rem] leading-none text-muted-foreground/68">
+        <span className="shrink-0 rounded-[999px] border border-[#373737] bg-[#202020] px-2.5 py-1 font-mono text-[0.58rem] leading-none text-muted-foreground/68">
           {commandCount} commands
         </span>
         {commandSections.map((section) => (
           <span
             key={`chip-${section.id}`}
-            className="shrink-0 rounded-full bg-background/58 px-2.5 py-1 font-mono text-[0.58rem] leading-none text-muted-foreground/62 shadow-[inset_0_0_0_1px_rgba(80,72,61,0.06),inset_0_1px_0_rgba(255,255,255,0.62)]"
+            className="shrink-0 rounded-[999px] border border-[#373737] bg-[#202020] px-2.5 py-1 font-mono text-[0.58rem] leading-none text-muted-foreground/62"
           >
             {section.label}
             <span className="ml-1 text-muted-foreground/42">{section.commands.length}</span>

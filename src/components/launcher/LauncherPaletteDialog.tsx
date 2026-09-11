@@ -61,42 +61,30 @@ export function LauncherPaletteDialog({
             className="absolute inset-0 cursor-default"
             onClick={onClose}
             style={{
-              backgroundColor: 'color-mix(in srgb, var(--background) 34%, transparent)',
+              backgroundColor: 'color-mix(in srgb, #191919 70%, transparent)',
             }}
             initial={{
               opacity: 0,
-              backdropFilter: 'blur(0px) saturate(1)',
-              WebkitBackdropFilter: 'blur(0px) saturate(1)',
+              backdropFilter: 'blur(0px)',
+              WebkitBackdropFilter: 'blur(0px)',
             }}
             animate={{
               opacity: 1,
-              backdropFilter: prefersReducedMotion ? 'blur(0px) saturate(1)' : 'blur(10px) saturate(1.04)',
-              WebkitBackdropFilter: prefersReducedMotion ? 'blur(0px) saturate(1)' : 'blur(10px) saturate(1.04)',
+              backdropFilter: prefersReducedMotion ? 'blur(0px)' : 'blur(6px)',
+              WebkitBackdropFilter: prefersReducedMotion ? 'blur(0px)' : 'blur(6px)',
             }}
             exit={{
               opacity: 0,
-              backdropFilter: 'blur(0px) saturate(1)',
-              WebkitBackdropFilter: 'blur(0px) saturate(1)',
+              backdropFilter: 'blur(0px)',
+              WebkitBackdropFilter: 'blur(0px)',
             }}
             transition={{ duration: motionDurationMs(150, prefersReducedMotion), ease: MOTION_EASE_SOFT }}
-          />
-          <m.div
-            aria-hidden="true"
-            className="pointer-events-none absolute bottom-0 left-1/2 h-[16rem] w-[34rem] max-w-[104vw] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,75,0,0.1)_0%,color-mix(in_srgb,var(--background)_34%,transparent)_46%,transparent_74%)] blur-3xl sm:bottom-auto sm:top-[15vh] sm:w-[38rem] sm:max-w-[92vw]"
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: prefersReducedMotion ? 0.12 : 0.3, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: motionDurationMs(160, prefersReducedMotion), ease: MOTION_EASE_SOFT }}
           />
           <m.div
             role="dialog"
             aria-modal="true"
             aria-label={LAUNCHER_DIALOG_ARIA_LABEL}
-            className="relative flex max-h-[78dvh] w-full max-w-[30rem] flex-col overflow-hidden rounded-t-[10px] border border-foreground/[0.08] border-b-0 bg-background/[0.88] pb-[env(safe-area-inset-bottom)] shadow-[inset_0_1px_0_rgba(255,255,255,0.78),inset_0_0_0_1px_rgba(255,255,255,0.34),0_26px_80px_-48px_rgba(43,39,34,0.72),0_1px_3px_rgba(43,39,34,0.08)] backdrop-blur-2xl sm:max-h-[min(34rem,72vh)] sm:rounded-[8px] sm:border-b sm:pb-0"
-            style={{
-              background:
-                'linear-gradient(180deg, color-mix(in srgb, var(--background) 96%, #fffdf8) 0%, color-mix(in srgb, var(--background) 91%, #f7ead8) 58%, color-mix(in srgb, var(--background) 87%, #e8dac4) 100%)',
-            }}
+            className="relative flex max-h-[78dvh] w-full max-w-[30rem] flex-col overflow-hidden rounded-t-[10px] border border-[#373737] border-b-0 bg-[#252525] pb-[env(safe-area-inset-bottom)] shadow-[0_24px_56px_-40px_rgba(0,0,0,0.72),0_2px_8px_rgba(0,0,0,0.3)] sm:max-h-[min(34rem,72vh)] sm:rounded-[8px] sm:border-b sm:pb-0"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 18, scale: 0.97, filter: 'blur(3px)' }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: prefersReducedMotion ? 0 : 12, scale: 0.985, filter: 'blur(2px)' }}

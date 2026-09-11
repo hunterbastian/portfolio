@@ -71,14 +71,14 @@ export function HomeHeroSection() {
       <div
         ref={heroGlow.glowRef}
         aria-hidden="true"
-        className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-10 -z-10 h-[18rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-70 blur-[2.5px] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-14 sm:h-[22rem] sm:w-[min(92rem,112vw)] sm:blur-[3.5px] ${
+        className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-12 -z-10 h-[22rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-85 blur-[2.5px] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-16 sm:h-[28rem] sm:w-[min(92rem,112vw)] sm:blur-[3.5px] ${
           heroGlow.isActive ? 'is-active' : ''
         }`}
         style={{
           maskImage:
-            'radial-gradient(ellipse 52% 48% at 50% 36%, black 0%, rgba(0, 0, 0, 0.72) 26%, rgba(0, 0, 0, 0.28) 54%, rgba(0, 0, 0, 0.06) 76%, transparent 100%)',
+            'radial-gradient(ellipse 54% 50% at 50% 38%, black 0%, rgba(0, 0, 0, 0.78) 28%, rgba(0, 0, 0, 0.34) 58%, rgba(0, 0, 0, 0.08) 78%, transparent 100%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse 52% 48% at 50% 36%, black 0%, rgba(0, 0, 0, 0.72) 26%, rgba(0, 0, 0, 0.28) 54%, rgba(0, 0, 0, 0.06) 76%, transparent 100%)',
+            'radial-gradient(ellipse 54% 50% at 50% 38%, black 0%, rgba(0, 0, 0, 0.78) 28%, rgba(0, 0, 0, 0.34) 58%, rgba(0, 0, 0, 0.08) 78%, transparent 100%)',
         }}
       >
         <Image
@@ -87,32 +87,32 @@ export function HomeHeroSection() {
           fill
           loading="eager"
           fetchPriority="low"
-          className="scale-[1.02] object-cover object-[50%_48%] saturate-[0.92] brightness-[0.82] contrast-[0.96]"
+          className="scale-[1.02] object-cover object-[50%_48%] saturate-[1.02] brightness-[0.88] contrast-[0.97]"
           sizes="100vw"
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(25, 25, 25, 0.28) 0%, rgba(25, 25, 25, 0.55) 52%, rgba(25, 25, 25, 0.92) 100%)',
+              'linear-gradient(180deg, rgba(25, 25, 25, 0.18) 0%, rgba(25, 25, 25, 0.42) 48%, rgba(25, 25, 25, 0.9) 100%)',
           }}
         />
-        <div className="absolute inset-0 bg-[#191919]/35" />
+        <div className="absolute inset-0 bg-[#191919]/22" />
       </div>
 
       <div
         ref={heroGlow.grainRef}
         aria-hidden="true"
-        className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-8 -z-10 h-[18rem] w-[calc(100vw+2rem)] opacity-[0.03] mix-blend-multiply transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-12 sm:h-[22rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.045] ${
+        className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[22rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-multiply transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-14 sm:h-[28rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.055] ${
           heroGlow.isActive ? 'is-active' : ''
         }`}
         style={{
           backgroundImage: "url('/images/hero-grain.svg')",
           backgroundSize: '260px 260px',
           maskImage:
-            'radial-gradient(ellipse 56% 44% at 50% 36%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.22) 48%, transparent 78%)',
+            'radial-gradient(ellipse 58% 46% at 50% 38%, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.24) 48%, transparent 78%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse 56% 44% at 50% 36%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.22) 48%, transparent 78%)',
+            'radial-gradient(ellipse 58% 46% at 50% 38%, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.24) 48%, transparent 78%)',
         }}
       />
 

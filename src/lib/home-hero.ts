@@ -27,6 +27,8 @@ export const HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME =
   'select-none font-normal tracking-normal text-subtle-foreground/70'
 export const HOME_HERO_LOCAL_TIME_CLASS_NAME =
   'tabular-nums tracking-[0.04em] text-subtle-foreground/80'
+export const HOME_HERO_CONTACT_LINE_CLASS_NAME =
+  'max-w-[31rem] font-header text-[0.9rem] font-normal leading-[1.5] tracking-[-0.02em] text-foreground sm:text-[0.96rem]'
 
 const HOME_HERO_ACTION_BASE_CLASS_NAME =
   'min-h-[44px] min-w-[44px] items-center font-medium sm:min-h-0 sm:min-w-0 text-[0.74rem] sm:text-[0.78rem]'
@@ -55,14 +57,6 @@ export const HOME_HERO_ACTIONS: readonly HomeHeroAction[] = [
     peek: 'Open resume',
     toast: 'Opening resume',
     variant: 'primary',
-  },
-  {
-    analyticsLabel: 'contact',
-    href: '/#contact',
-    label: 'Contact',
-    peek: 'Say hi',
-    toast: 'Say hi',
-    variant: 'secondary',
   },
 ]
 

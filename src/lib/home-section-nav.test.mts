@@ -29,7 +29,6 @@ test('HOME_SECTION_NAV_ITEMS maps homepage destinations to short labels', () => 
       { id: 'projects', name: 'Work' },
       { id: 'playground', name: 'Play' },
       { id: 'background', name: 'Background' },
-      { id: 'contact', name: 'Contact' },
     ],
   )
 })
@@ -39,13 +38,12 @@ test('homepage section ids exist on the current homepage structure', () => {
   const background = readFileSync(new URL('../components/home/HomeBackgroundSection.tsx', import.meta.url), 'utf8')
   const projects = readFileSync(new URL('../components/home/HomeProjectsSection.tsx', import.meta.url), 'utf8')
   const playground = readFileSync(new URL('../components/home/HomePlaygroundSection.tsx', import.meta.url), 'utf8')
-  const contact = readFileSync(new URL('../components/home/HomeContactSection.tsx', import.meta.url), 'utf8')
 
   assert.match(hero, /id="home"/)
+  assert.match(hero, /id="contact"/)
   assert.match(projects, /id="projects"/)
   assert.match(playground, /id="playground"/)
   assert.match(background, /id="background"/)
-  assert.match(contact, /id="contact"/)
 })
 
 test('home section href and hash helpers keep shareable anchors', () => {
@@ -81,20 +79,19 @@ test('getActiveHomeSectionId follows the last section whose top has crossed the 
     { id: 'projects', top: 800 },
     { id: 'playground', top: 1400 },
     { id: 'background', top: 2000 },
-    { id: 'contact', top: 2600 },
   ]
 
   assert.equal(getActiveHomeSectionId(sections, 0), 'home')
   assert.equal(getActiveHomeSectionId(sections, 700), 'home')
   assert.equal(getActiveHomeSectionId(sections, 800 - HOME_SECTION_NAV_SCROLL_OFFSET_PX), 'projects')
   assert.equal(getActiveHomeSectionId(sections, 1450), 'playground')
-  assert.equal(getActiveHomeSectionId(sections, 4000), 'contact')
+  assert.equal(getActiveHomeSectionId(sections, 4000), 'background')
   assert.equal(
     getActiveHomeSectionId(sections, 2200, HOME_SECTION_NAV_SCROLL_OFFSET_PX, {
       documentHeight: 2800,
       height: 800,
     }),
-    'contact',
+    'background',
   )
   assert.equal(getActiveHomeSectionId([], 120), '')
 })
@@ -105,7 +102,6 @@ test('getActiveHomeSectionId uses a reading-band probe so Background wins while 
     { id: 'projects', top: 800 },
     { id: 'playground', top: 1400 },
     { id: 'background', top: 2000 },
-    { id: 'contact', top: 2600 },
   ]
   const viewport = { documentHeight: 3200, height: 800 }
 
@@ -120,7 +116,7 @@ test('getActiveHomeSectionId uses a reading-band probe so Background wins while 
   )
   assert.equal(
     getActiveHomeSectionId(sections, 2312, HOME_SECTION_NAV_SCROLL_OFFSET_PX, viewport),
-    'contact',
+    'background',
   )
 })
 

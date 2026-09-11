@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import {
+  HOME_HERO_CONTACT_LINE_CLASS_NAME,
   HOME_HERO_INTRO_CLASS_NAME,
   HOME_HERO_NAME_CLASS_NAME,
   HOME_HERO_PRIMARY_ACTION_CLASS_NAME,
@@ -19,11 +20,11 @@ import { PEEK_ACTION_BASE_CLASS } from './peek-action.ts'
 test('homepage type scale keeps a louder Swiss name and whisper section labels', () => {
   const hero = readFileSync(new URL('../components/home/HomeHeroSection.tsx', import.meta.url), 'utf8')
   const philosophy = readFileSync(new URL('../components/home/HomePhilosophySection.tsx', import.meta.url), 'utf8')
-  const contact = readFileSync(new URL('../components/home/HomeContactSection.tsx', import.meta.url), 'utf8')
   const playground = readFileSync(new URL('../components/home/HomePlaygroundSection.tsx', import.meta.url), 'utf8')
 
   assert.match(hero, /HOME_HERO_NAME_CLASS_NAME/)
   assert.match(hero, /HOME_HERO_INTRO_CLASS_NAME/)
+  assert.match(hero, /HOME_HERO_CONTACT_LINE_CLASS_NAME/)
   assert.match(HOME_HERO_NAME_CLASS_NAME, /text-\[36px\]/)
   assert.match(HOME_HERO_NAME_CLASS_NAME, /sm:text-\[44px\]/)
   assert.match(HOME_HERO_NAME_CLASS_NAME, /font-semibold/)
@@ -50,8 +51,8 @@ test('homepage type scale keeps a louder Swiss name and whisper section labels',
   assert.match(HOME_FEATURED_ROW_META_CLASS_NAME, /text-subtle-foreground/)
   assert.match(HOME_FEATURED_ROW_OUTCOME_CLASS_NAME, /text-muted-foreground/)
 
-  assert.match(contact, /font-normal/)
-  assert.match(contact, /leading-\[1\.5\]/)
-  assert.doesNotMatch(contact, /font-semibold/)
+  assert.match(HOME_HERO_CONTACT_LINE_CLASS_NAME, /font-normal/)
+  assert.match(HOME_HERO_CONTACT_LINE_CLASS_NAME, /leading-\[1\.5\]/)
+  assert.doesNotMatch(HOME_HERO_CONTACT_LINE_CLASS_NAME, /font-semibold/)
   assert.match(playground, /font-medium/)
 })

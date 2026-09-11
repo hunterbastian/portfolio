@@ -5,8 +5,9 @@ export const siteConfig = {
   brandName: 'Hunter Bastian',
   appName: 'Hunter Bastian Portfolio',
   shortName: 'HB Portfolio',
-  siteTitle: 'Hunter Bastian - Design Engineer',
-  siteDescription: 'Design engineer building digital products with motion, craft, and detail. Interaction design student at UVU, based in Utah.',
+  siteTitle: 'Hunter Bastian — Interaction designer in Lehi, Utah',
+  siteDescription:
+    'I design and build digital products with calm interfaces, thoughtful motion, and visual restraint. Interaction Design student at Utah Valley University, based in Lehi, Utah.',
   defaultOgImage: '/images/profilepicture.webp',
   siteCoordinates: '40.7608° N / 111.8910° W',
   siteLocation: 'LEHI UT',

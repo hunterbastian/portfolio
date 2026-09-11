@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { HomeBackgroundSection } from '@/components/home/HomeBackgroundSection'
-import { HomeContactSection } from '@/components/home/HomeContactSection'
 import { HomeEndeavorsSection } from '@/components/home/HomeEndeavorsSection'
 import { HomeHeroSection } from '@/components/home/HomeHeroSection'
 import { HomePhilosophySection } from '@/components/home/HomePhilosophySection'
@@ -80,10 +79,6 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
 
           <Reveal delayMs={120}>
             <HomeBackgroundSection />
-          </Reveal>
-
-          <Reveal delayMs={160}>
-            <HomeContactSection />
           </Reveal>
         </div>
       </div>

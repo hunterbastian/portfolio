@@ -49,6 +49,8 @@ test('home hero keeps the design sentence and UVU line without a prose clock', (
   assert.match(hero, /HOME_HERO_INTRO_CLASS_NAME/)
   assert.match(hero, /HOME_HERO_LOCATION_META_CLASS_NAME/)
   assert.match(hero, /formatHomeHeroLocalTime/)
+  assert.match(hero, /ContactLinks/)
+  assert.match(hero, /id="contact"/)
   assert.doesNotMatch(hero, /text-\[30px\]/)
   assert.doesNotMatch(hero, /sm:text-\[36px\]/)
   assert.match(hero, /aria-live="off"/)
@@ -94,7 +96,7 @@ test('home hero name is one step larger with Swiss display tracking and the only
   assert.match(HOME_HERO_SECONDARY_ACTION_CLASS_NAME, /font-medium/)
 })
 
-test('home hero actions put Resume first as the primary CTA', () => {
+test('home hero actions keep Resume as the primary CTA and fold Contact into pills', () => {
   assert.deepEqual(
     HOME_HERO_ACTIONS.map((action) => ({
       analyticsLabel: action.analyticsLabel,
@@ -109,15 +111,9 @@ test('home hero actions put Resume first as the primary CTA', () => {
         label: 'Resume',
         variant: 'primary',
       },
-      {
-        analyticsLabel: 'contact',
-        href: '/#contact',
-        label: 'Contact',
-        variant: 'secondary',
-      },
     ],
   )
-  assert.equal(HOME_HERO_ACTIONS.length, 2)
+  assert.equal(HOME_HERO_ACTIONS.length, 1)
   assert.match(HOME_HERO_PRIMARY_ACTION_CLASS_NAME, /text-foreground/)
   assert.match(HOME_HERO_SECONDARY_ACTION_CLASS_NAME, /text-muted-foreground/)
   assert.match(HOME_HERO_PRIMARY_ACTION_LABEL_CLASS_NAME, /decoration-current\/40/)

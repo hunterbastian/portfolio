@@ -15,7 +15,10 @@ import {
   HOME_FEATURED_ROW_META_CLASS_NAME,
   HOME_FEATURED_ROW_OUTCOME_CLASS_NAME,
   HOME_FEATURED_ROW_TITLE_CLASS_NAME,
+  HOME_MORE_ROW_META_CLASS_NAME,
+  HOME_MORE_ROW_TITLE_CLASS_NAME,
   type FeaturedProjectHoveredState,
+  type FeaturedProjectListDensity,
   type FeaturedProjectRowState,
   type HomeProject,
 } from '@/lib/home-projects'
@@ -23,6 +26,7 @@ import { showJoyToast } from '@/lib/joy'
 import { cn } from '@/lib/utils'
 
 interface FeaturedProjectListProps {
+  density?: FeaturedProjectListDensity
   projects: HomeProject[]
   showPlaygroundRow?: boolean
 }
@@ -41,6 +45,7 @@ function getFeaturedProjectRowStyle(slug: string, hoverDistance = 0, sequence = 
 
 interface FeaturedProjectCardProps {
   active: boolean
+  density: FeaturedProjectListDensity
   description: string
   hoverDistance: number
   href: string
@@ -57,6 +62,7 @@ interface FeaturedProjectCardProps {
 
 function FeaturedProjectCard({
   active,
+  density,
   description,
   hoverDistance,
   href,
@@ -71,6 +77,7 @@ function FeaturedProjectCard({
   slug,
 }: FeaturedProjectCardProps) {
   const haptic = useWebHaptics()
+  const quiet = density === 'quiet'
 
   const handleClick = () => {
     activateEditorialItem({
@@ -96,19 +103,24 @@ function FeaturedProjectCard({
     >
       <Link
         href={href}
-        className="featured-text-row group relative z-10 grid min-h-[44px] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border py-3 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-3.5"
+        className={cn(
+          'featured-text-row group relative z-10 grid min-h-[44px] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5',
+          quiet ? 'py-2.5 sm:py-3' : 'py-3 sm:py-3.5',
+        )}
         onClick={handleClick}
       >
-        <span className={HOME_FEATURED_ROW_META_CLASS_NAME}>
+        <span className={quiet ? HOME_MORE_ROW_META_CLASS_NAME : HOME_FEATURED_ROW_META_CLASS_NAME}>
           {trailing}
         </span>
-        <div className="featured-text-row-copy min-w-0 space-y-1.5 pr-2">
-          <h3 className={HOME_FEATURED_ROW_TITLE_CLASS_NAME}>
+        <div className={cn('featured-text-row-copy min-w-0 pr-2', quiet ? 'space-y-0' : 'space-y-1.5')}>
+          <h3 className={quiet ? HOME_MORE_ROW_TITLE_CLASS_NAME : HOME_FEATURED_ROW_TITLE_CLASS_NAME}>
             <span>{title}</span>
           </h3>
-          <p className={HOME_FEATURED_ROW_OUTCOME_CLASS_NAME}>
-            {description}
-          </p>
+          {quiet ? null : (
+            <p className={HOME_FEATURED_ROW_OUTCOME_CLASS_NAME}>
+              {description}
+            </p>
+          )}
         </div>
         <span aria-hidden="true" className="featured-text-row-arrow pt-0.5 font-mono text-[0.78rem] text-muted-foreground/62">
           →
@@ -120,6 +132,7 @@ function FeaturedProjectCard({
 
 function PlaygroundProjectRow({
   active,
+  density,
   hoverDistance,
   muted,
   onHoverEnd,
@@ -127,6 +140,7 @@ function PlaygroundProjectRow({
   sequence,
 }: {
   active: boolean
+  density: FeaturedProjectListDensity
   hoverDistance: number
   muted: boolean
   onHoverEnd: () => void
@@ -136,6 +150,7 @@ function PlaygroundProjectRow({
   return (
     <FeaturedProjectCard
       active={active}
+      density={density}
       description="Small experiments and prototypes."
       hoverDistance={hoverDistance}
       href="/archive"
@@ -153,11 +168,13 @@ function PlaygroundProjectRow({
 }
 
 function FeaturedProjectRow({
+  density,
   project,
   rowState,
   onHoverEnd,
   onHoverStart,
 }: {
+  density: FeaturedProjectListDensity
   project: HomeProject
   rowState: FeaturedProjectRowState
   onHoverEnd: () => void
@@ -168,6 +185,7 @@ function FeaturedProjectRow({
   return (
     <FeaturedProjectCard
       active={rowState.active}
+      density={density}
       description={getHomeProjectDescription(project)}
       hoverDistance={rowState.hoverDistance}
       href={`/projects/${project.slug}`}
@@ -184,7 +202,11 @@ function FeaturedProjectRow({
   )
 }
 
-export function FeaturedProjectList({ projects, showPlaygroundRow = false }: FeaturedProjectListProps) {
+export function FeaturedProjectList({
+  density = 'default',
+  projects,
+  showPlaygroundRow = false,
+}: FeaturedProjectListProps) {
   const [hoveredProject, setHoveredProject] = useState<FeaturedProjectHoveredState | null>(null)
 
   const listState = getFeaturedProjectListState(projects, hoveredProject)
@@ -213,6 +235,7 @@ export function FeaturedProjectList({ projects, showPlaygroundRow = false }: Fea
         return (
           <FeaturedProjectRow
             key={rowState.slug}
+            density={density}
             project={project}
             rowState={rowState}
             onHoverEnd={clearHoveredProject}
@@ -223,6 +246,7 @@ export function FeaturedProjectList({ projects, showPlaygroundRow = false }: Fea
       {showPlaygroundRow ? (
         <PlaygroundProjectRow
           active={listState.playgroundRow.active}
+          density={density}
           hoverDistance={listState.playgroundRow.hoverDistance}
           muted={listState.playgroundRow.muted}
           onHoverEnd={clearHoveredProject}

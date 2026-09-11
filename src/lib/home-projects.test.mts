@@ -3,11 +3,15 @@ import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import {
+  HOME_FEATURED_PROJECT_LIMIT,
+  HOME_FEATURED_PROJECT_SLUGS,
   HOME_PROJECT_DESCRIPTIONS,
   HOME_WORK_FILTER_EVENT,
   HOME_FEATURED_ROW_META_CLASS_NAME,
   HOME_FEATURED_ROW_OUTCOME_CLASS_NAME,
   HOME_FEATURED_ROW_TITLE_CLASS_NAME,
+  HOME_MORE_ROW_META_CLASS_NAME,
+  HOME_MORE_ROW_TITLE_CLASS_NAME,
   HOME_PROJECT_GRID_PROJECT_LIMIT,
   HOME_PROJECT_CLEAR_FILTER_ANALYTICS_TARGET,
   HOME_PROJECT_CLEAR_FILTER_HAPTIC_STYLE,
@@ -29,6 +33,7 @@ import {
   getWorkFilterFromHref,
   getWorkFilterUrl,
   normalizeWorkFilter,
+  partitionHomeProjectRows,
   projectMatchesWorkFilter,
 } from './home-projects.ts'
 import type { HomeProject, WorkFilter } from './home-projects.ts'
@@ -181,6 +186,58 @@ test('getProjectRows filters projects and limits homepage rows', () => {
   )
 })
 
+test('partitionHomeProjectRows keeps a short featured set and quieter more list', () => {
+  const projects = [
+    project('porsche-app', 'Product Design', ['UI Design']),
+    project('lumo', 'Mobile Design', ['UX Design']),
+    project('nutricost', 'Graphic Design', ['Branding']),
+    project('mentalhealth-minisite', 'Web Design', ['Web Design']),
+    project('aol-redesign', 'UI Design', ['UX Design']),
+    project('middle-earth-journey', 'Web Design', ['Interactive']),
+    project('wander-utah', 'Web Design', ['Next.js']),
+  ]
+
+  assert.deepEqual([...HOME_FEATURED_PROJECT_SLUGS], [
+    'mentalhealth-minisite',
+    'lumo',
+    'middle-earth-journey',
+    'wander-utah',
+  ])
+  assert.equal(HOME_FEATURED_PROJECT_LIMIT, 4)
+
+  const partitioned = partitionHomeProjectRows(projects, 'all')
+
+  assert.deepEqual(
+    partitioned.featured.map((item) => item.slug),
+    ['mentalhealth-minisite', 'lumo', 'middle-earth-journey', 'wander-utah'],
+  )
+  assert.deepEqual(
+    partitioned.more.map((item) => item.slug),
+    ['porsche-app', 'nutricost', 'aol-redesign'],
+  )
+})
+
+test('partitionHomeProjectRows falls back when no featured slugs match the filter', () => {
+  const projects = [
+    project('a', 'Graphic Design', ['Branding']),
+    project('b', 'Graphic Design', ['Marketing']),
+    project('c', 'Graphic Design', ['Visual Design']),
+    project('d', 'Graphic Design', ['Branding']),
+    project('e', 'Graphic Design', ['Marketing']),
+  ]
+
+  const partitioned = partitionHomeProjectRows(projects, 'visual')
+
+  assert.deepEqual(
+    partitioned.featured.map((item) => item.slug),
+    ['a', 'b', 'c', 'd'],
+  )
+  assert.deepEqual(
+    partitioned.more.map((item) => item.slug),
+    ['e'],
+  )
+})
+
 test('getHomeProjectDescription uses curated copy before frontmatter fallback', () => {
   for (const slug of [
     'mentalhealth-minisite',
@@ -250,6 +307,8 @@ test('formatProjectYear and getProjectAccent stay monochrome for row chrome', ()
   assert.match(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /font-medium/)
   assert.match(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /group-hover:text-foreground/)
   assert.doesNotMatch(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /editorial-accent|#2f7d73/)
+  assert.match(HOME_MORE_ROW_TITLE_CLASS_NAME, /text-\[0\.82rem\]/)
+  assert.match(HOME_MORE_ROW_META_CLASS_NAME, /text-\[10px\]/)
 })
 
 test('featured project row hover uses a solid grey surface instead of a color mix', () => {
@@ -365,11 +424,22 @@ test('featured project rows use tiny meta and a visible focus ring that is not c
 
   assert.match(source, /HOME_FEATURED_ROW_META_CLASS_NAME/)
   assert.match(source, /HOME_FEATURED_ROW_OUTCOME_CLASS_NAME/)
+  assert.match(source, /density/)
+  assert.match(source, /HOME_MORE_ROW_TITLE_CLASS_NAME/)
   assert.match(source, /focus-visible:ring-2/)
   assert.match(source, /focus-visible:ring-ring\/70/)
   assert.match(source, /focus-visible:ring-offset-2/)
   assert.match(css, /\.featured-project-row:focus-within::after/)
   assert.match(css, /background: var\(--ring\)/)
+})
+
+test('homepage projects section renders featured then quiet More', () => {
+  const source = readFileSync(new URL('../components/home/HomeProjectsSection.tsx', import.meta.url), 'utf8')
+
+  assert.match(source, /partitionHomeProjectRows/)
+  assert.match(source, /density="quiet"/)
+  assert.match(source, />More</)
+  assert.match(source, /projects=\{featured\}/)
 })
 
 test('all filter matches every project', () => {

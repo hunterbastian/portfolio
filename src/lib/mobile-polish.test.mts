@@ -15,7 +15,7 @@ test('sticky homepage header stays compact on mobile and respects the notch', ()
 
   assert.match(shell, /py-2\.5/)
   assert.match(shell, /pt-\[max\(0\.625rem,env\(safe-area-inset-top\)\)\]/)
-  assert.match(shell, /backdrop-blur-md/)
+  assert.match(shell, /backdrop-blur-sm/)
   assert.match(menu, /safe-area-inset-right/)
   assert.match(menu, /safe-area-inset-top/)
   assert.match(menu, /min\(14rem/)

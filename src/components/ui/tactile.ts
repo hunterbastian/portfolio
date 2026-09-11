@@ -15,17 +15,17 @@ export function chromePillClassName({
   className?: string
 } = {}) {
   return cn(
-    'chrome-pill group/chrome relative isolate inline-flex origin-center touch-manipulation items-center justify-center overflow-hidden rounded-full leading-none text-[#403d38] transition-[filter,transform] duration-200 active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary',
+    'chrome-pill group/chrome relative isolate inline-flex origin-center touch-manipulation items-center justify-center overflow-hidden rounded-[8px] leading-none text-foreground transition-[filter,transform] duration-200 active:translate-y-0 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring',
     chromePillSizes[size],
     className,
   )
 }
 
 export const chromePillLabelClassName =
-  'chrome-pill-label relative z-10 min-w-0 truncate translate-y-[0.01rem] font-header font-medium tracking-[-0.025em] text-[#403d38]'
+  'chrome-pill-label relative z-10 min-w-0 truncate translate-y-[0.01rem] font-header font-medium tracking-[-0.025em] text-foreground'
 
 export const chromePillIconClassName =
-  'chrome-pill-icon relative z-10 shrink-0 text-[#403d38] transition-transform duration-200 group-hover/chrome:translate-x-0.5 group-hover/chrome:-translate-y-[0.14rem]'
+  'chrome-pill-icon relative z-10 shrink-0 text-foreground transition-transform duration-200 group-hover/chrome:translate-x-0.5 group-hover/chrome:-translate-y-[0.14rem]'
 
 export const chromePillContactAccentClassName = 'chrome-pill-contact-accent'
 

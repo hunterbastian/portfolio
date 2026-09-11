@@ -33,7 +33,7 @@ test('dark chrome pills drop the wet glass highlight and keep tokenized email ac
 
 test('mobile navigation uses the shared elevated surface instead of a hardcoded light fill', () => {
  const source = readFileSync('src/lib/top-meta.ts', 'utf8')
- assert.ok(source.includes('bg-card'), 'mobile menu should use the theme card token')
+ assert.ok(source.includes('bg-[#252525]'), 'mobile menu should use the elevated dark surface')
  assert.ok(!source.includes('bg-[#fffaf2]/95'), 'remove obsolete light surface')
 })
 
@@ -43,4 +43,26 @@ test('dark focus ring stays visible without a green or Notion-blue accent', () =
  assert.doesNotMatch(css, /--ring: #b7cec3/)
  assert.doesNotMatch(css, /--ring: #c8ced2/)
  assert.doesNotMatch(css, /#2383E2/i)
+})
+
+test('launcher palette keeps elevated monochrome surfaces and compact command rows', () => {
+ const dialog = readFileSync('src/components/launcher/LauncherPaletteDialog.tsx', 'utf8')
+ const header = readFileSync('src/components/launcher/LauncherSearchHeader.tsx', 'utf8')
+ const list = readFileSync('src/components/launcher/LauncherCommandList.tsx', 'utf8')
+
+ assert.match(dialog, /bg-\[#252525\]/)
+ assert.match(dialog, /border-\[#373737\]/)
+ assert.match(header, /text-\[0\.875rem\]/)
+ assert.match(header, /bg-\[#202020\]/)
+ assert.match(list, /hover:bg-\[#2f2f2f\]/)
+ assert.doesNotMatch(`${dialog}\n${header}\n${list}`, /#2383E2|contact-email-accent/i)
+})
+
+test('selection and custom focus rings stay neutral in dark mode', () => {
+ const globals = readFileSync('src/app/globals.css', 'utf8')
+ const arcButton = readFileSync('src/components/ArcGlossUploadButton.module.css', 'utf8')
+
+ assert.match(globals, /::selection \{\s*background: color-mix\(in srgb, var\(--foreground\) 20%, transparent\);/)
+ assert.match(arcButton, /\.button:focus-visible \{\s*outline: 2px solid var\(--ring\);/)
+ assert.doesNotMatch(arcButton, /102,\s*126,\s*172|#2383E2/i)
 })

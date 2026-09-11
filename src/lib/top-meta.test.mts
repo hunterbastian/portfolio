@@ -132,9 +132,10 @@ test('homepage keeps the header sticky so section jumps stay reachable', () => {
       mobileMenuOpen: true,
     },
   )
-  assert.match(getTopMetaShellClassName(false, false, true), /bg-card\/92/)
+  assert.match(getTopMetaShellClassName(false, false, true), /bg-card\/88/)
+  assert.match(getTopMetaShellClassName(false, false, true), /shadow-\[0_1px_0_0_var\(--border\)/)
   assert.match(getTopMetaShellClassName(false, false, true), /safe-area-inset-top/)
-  assert.doesNotMatch(getTopMetaShellClassName(false, false, false), /bg-card\/92/)
+  assert.doesNotMatch(getTopMetaShellClassName(false, false, false), /bg-card\/88/)
 })
 
 test('homepage desktop nav yields to section jumps while mobile keeps Playground', () => {
@@ -210,7 +211,7 @@ test('top meta mobile menu uses only a 200ms translate and fade without animated
       'top-[calc(3.15rem+env(safe-area-inset-top))]',
       'w-[min(14rem,calc(100vw-2.5rem))]',
       'origin-top-right',
-      'backdrop-blur-xl',
+      'backdrop-blur-sm',
     ]) {
       assert.ok(classes.includes(token), token)
     }

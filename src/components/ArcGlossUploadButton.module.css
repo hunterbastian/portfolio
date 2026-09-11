@@ -290,7 +290,7 @@
 }
 
 .button:focus-visible {
-  outline: 2px solid rgba(102, 126, 172, 0.54);
+  outline: 2px solid var(--ring);
   outline-offset: 0.8rem;
 }
 
@@ -443,7 +443,8 @@
   aspect-ratio: 1;
   background: var(--surface-glass-chrome);
   border: 0;
-  border-radius: 999px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   box-shadow: var(--surface-glass-chrome-shadow);
   color: rgba(58, 56, 51, 0.94);
   cursor: pointer;
@@ -518,7 +519,7 @@
 }
 
 .scrollTopButton:focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--ring);
   outline-offset: 0.32rem;
 }
 

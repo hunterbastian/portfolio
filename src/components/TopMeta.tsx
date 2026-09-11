@@ -330,18 +330,15 @@ export default function TopMeta() {
             {TOP_META_MOBILE_MENU_LABEL}
           </PeekAction>
 
-          <div
-            className={getTopMetaMobileMenuClassName(mobileMenuOpen)}
-            aria-hidden={!mobileMenuOpen}
-          >
-            <div className="flex flex-col items-stretch gap-1.5 px-3.5 py-3">
+          <div className={getTopMetaMobileMenuClassName(mobileMenuOpen)} aria-hidden={!mobileMenuOpen}>
+            <div className="flex flex-col items-stretch gap-1.5 border-t border-border px-3.5 py-3">
               {persistVisible ? (
                 <nav aria-label={HOME_SECTION_NAV_ARIA_LABEL} className="flex flex-col items-stretch gap-2">
                   {HOME_SECTION_NAV_ITEMS.map((item) => (
                     <SectionNavLink
                       key={item.id}
                       active={item.id === activeSectionId}
-                      className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-secondary"
+                      className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-secondary active:bg-secondary/85 active:scale-[0.99]"
                       closeMobileMenu={closeMobileMenu}
                       item={item}
                       onActivate={setActiveSectionId}
@@ -355,7 +352,7 @@ export default function TopMeta() {
                   key={item.href}
                   item={item}
                   active={isTopMetaNavItemActive(pathname, item)}
-                  className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-secondary"
+                  className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-secondary active:bg-secondary/85 active:scale-[0.99]"
                 />
               ))}
             </div>

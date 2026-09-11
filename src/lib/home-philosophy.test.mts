@@ -47,4 +47,6 @@ test('philosophy sits after the hero and before projects without a new nav item'
   assert.match(HOME_PHILOSOPHY_BODY_CLASS_NAME, /text-foreground/)
   assert.match(philosophy, /HOME_PHILOSOPHY_TITLE_CLASS_NAME/)
   assert.match(philosophy, /HOME_PHILOSOPHY_BODY_CLASS_NAME/)
+  assert.match(philosophy, /rounded-\[8px\]/)
+  assert.match(philosophy, /bg-card/)
 })

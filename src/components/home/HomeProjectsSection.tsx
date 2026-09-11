@@ -8,11 +8,12 @@ import { analytics } from '@/lib/analytics'
 import {
   WORK_FILTER_LABELS,
   activateHomeProjectClearFilter,
-  getProjectRows,
+  partitionHomeProjectRows,
   type HomeProject,
   type WorkFilter,
 } from '@/lib/home-projects'
 import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
+import { HOME_SECTION_TITLE_CLASS_NAME } from '@/lib/home-section'
 import { showJoyToast } from '@/lib/joy'
 
 interface HomeProjectsSectionProps {
@@ -23,7 +24,7 @@ interface HomeProjectsSectionProps {
 
 export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }: HomeProjectsSectionProps) {
   const haptic = useWebHaptics()
-  const projectRows = getProjectRows(projects, workFilter)
+  const { featured, more } = partitionHomeProjectRows(projects, workFilter)
 
   return (
     <Section
@@ -55,8 +56,14 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
               </button>
             </div>
           ) : null}
-          <FeaturedProjectList projects={projectRows} />
-          <WorkScatterStack decorative label="Projects" projects={projectRows} tone="projects" />
+          <FeaturedProjectList projects={featured} />
+          {more.length > 0 ? (
+            <div className="space-y-2 pt-1 sm:space-y-3 sm:pt-2">
+              <p className={HOME_SECTION_TITLE_CLASS_NAME}>More</p>
+              <FeaturedProjectList density="quiet" projects={more} />
+            </div>
+          ) : null}
+          <WorkScatterStack decorative label="Projects" projects={featured} tone="projects" />
         </div>
       </div>
     </Section>

@@ -42,6 +42,14 @@ export const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
   nutricost: 'Product labels and marketing for Nutricost supplements.',
 }
 
+/** Homepage featured set — keep this short so Work has hierarchy. */
+export const HOME_FEATURED_PROJECT_SLUGS = [
+  'mentalhealth-minisite',
+  'lumo',
+  'middle-earth-journey',
+  'wander-utah',
+] as const
+
 export const HOME_ROW_HOVER_ACCENT = 'var(--foreground)'
 export const HOME_FEATURED_ROW_META_CLASS_NAME =
   'featured-text-row-meta pt-0.5 font-mono text-[10px] font-normal leading-none tabular-nums text-subtle-foreground transition-colors duration-200 group-hover:text-muted-foreground sm:text-[11px]'
@@ -49,9 +57,15 @@ export const HOME_FEATURED_ROW_OUTCOME_CLASS_NAME =
   'max-w-[42rem] font-mono text-[0.68rem] font-normal leading-[1.5] text-muted-foreground transition-colors duration-200 group-hover:text-muted-foreground sm:text-[0.7rem]'
 export const HOME_FEATURED_ROW_TITLE_CLASS_NAME =
   'break-words text-pretty font-header text-[0.92rem] font-medium leading-[1.16] tracking-[-0.025em] text-foreground transition-colors duration-200 group-hover:text-foreground sm:text-[0.98rem]'
+export const HOME_MORE_ROW_META_CLASS_NAME =
+  'featured-text-row-meta pt-0.5 font-mono text-[10px] font-normal leading-none tabular-nums text-subtle-foreground/80 transition-colors duration-200 group-hover:text-subtle-foreground sm:text-[10px]'
+export const HOME_MORE_ROW_TITLE_CLASS_NAME =
+  'break-words text-pretty font-header text-[0.82rem] font-medium leading-[1.2] tracking-[-0.02em] text-muted-foreground transition-colors duration-200 group-hover:text-foreground sm:text-[0.86rem]'
 export const HOME_PROJECT_GRID_PROJECT_LIMIT = 8
+export const HOME_FEATURED_PROJECT_LIMIT = HOME_FEATURED_PROJECT_SLUGS.length
 
 export type WorkFilter = 'all' | 'product' | 'visual' | 'web'
+export type FeaturedProjectListDensity = 'default' | 'quiet'
 
 export const HOME_WORK_FILTER_EVENT = 'hb-work-filter'
 export const HOME_PROJECT_CLEAR_FILTER_ANALYTICS_TARGET = 'work_filter_all'
@@ -83,6 +97,11 @@ export interface HomeWorkFilterChangeActivationInput {
 
 export interface HomeWorkFilterEventDetail {
   filter?: string
+}
+
+export interface HomeProjectRowsPartition {
+  featured: HomeProject[]
+  more: HomeProject[]
 }
 
 const PRODUCT_TAGS = new Set(['ux design', 'ui design', 'mobile design', 'web design', 'accessibility'])
@@ -150,6 +169,31 @@ export function formatProjectYear(date: string) {
 
 export function getProjectRows(projects: HomeProject[], filter: WorkFilter) {
   return projects.filter((project) => projectMatchesWorkFilter(project, filter)).slice(0, HOME_PROJECT_GRID_PROJECT_LIMIT)
+}
+
+export function partitionHomeProjectRows(
+  projects: HomeProject[],
+  filter: WorkFilter,
+): HomeProjectRowsPartition {
+  const filtered = projects.filter((project) => projectMatchesWorkFilter(project, filter))
+
+  const featured = HOME_FEATURED_PROJECT_SLUGS.map((slug) => filtered.find((project) => project.slug === slug)).filter(
+    (project): project is HomeProject => Boolean(project),
+  )
+
+  if (featured.length === 0) {
+    return {
+      featured: filtered.slice(0, HOME_FEATURED_PROJECT_LIMIT),
+      more: filtered.slice(HOME_FEATURED_PROJECT_LIMIT),
+    }
+  }
+
+  const featuredSlugs = new Set(featured.map((project) => project.slug))
+
+  return {
+    featured,
+    more: filtered.filter((project) => !featuredSlugs.has(project.slug)),
+  }
 }
 
 export function activateHomeProjectClearFilter({

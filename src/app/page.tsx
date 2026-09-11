@@ -5,17 +5,17 @@ import { getAllProjects, getArchivedProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
 import { getStaticPageMetadata } from '@/lib/site-metadata'
 
-const previewTitle = siteConfig.personName
-const previewDescription = siteConfig.siteLocation
+const previewTitle = siteConfig.siteTitle
+const previewDescription = siteConfig.siteDescription
 
 export const metadata = getStaticPageMetadata({
   absoluteTitle: true,
   description: previewDescription,
   image: '/opengraph-image',
-  imageAlt: `${previewTitle} ${previewDescription}`,
+  imageAlt: previewTitle,
   openGraphType: 'website',
   path: '/',
-  siteName: previewTitle,
+  siteName: siteConfig.personName,
   title: previewTitle,
 })
 

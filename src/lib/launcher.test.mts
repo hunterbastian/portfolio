@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import { test } from 'node:test'
 import {
   activateLauncherClosePalette,
@@ -38,6 +39,9 @@ import {
   getVisibleCommandEntries,
   isEmptySpaceRippleInteractiveTarget,
   isLauncherTypingTarget,
+  LAUNCHER_CLOSE_ARIA_LABEL,
+  LAUNCHER_COMMAND_LIST_ARIA_LABEL,
+  LAUNCHER_DIALOG_ARIA_LABEL,
   LAUNCHER_EMAIL_ADDRESS,
   LAUNCHER_EMAIL_COPIED_TOAST,
   LAUNCHER_EMAIL_OPEN_TOAST,
@@ -46,6 +50,8 @@ import {
   LAUNCHER_PAGE_LINK_COPY_FAILED_TOAST,
   LAUNCHER_PROJECT_INQUIRY_SUBJECT,
   LAUNCHER_PROJECT_EMAIL_OPEN_TOAST,
+  LAUNCHER_SEARCH_ARIA_LABEL,
+  LAUNCHER_TITLE,
   LAUNCHER_TOAST_TIMEOUT_MS,
   LAUNCHER_WORK_FILTER_EVENT,
   LAUNCHER_WORK_FILTER_EVENT_DELAY_MS,
@@ -164,11 +170,11 @@ test('getNextLauncherToastState ignores empty details and increments toast ids',
     nextId: 4,
     toast: null,
   })
-  assert.deepEqual(getNextLauncherToastState(4, { message: 'Launchpad opened' }), {
+  assert.deepEqual(getNextLauncherToastState(4, { message: LAUNCHER_OPEN_TOAST }), {
     nextId: 5,
     toast: {
       id: 5,
-      message: 'Launchpad opened',
+      message: LAUNCHER_OPEN_TOAST,
     },
   })
 })
@@ -307,7 +313,51 @@ test('getClampedLauncherActiveIndex preserves valid selection after filtering', 
   assert.equal(getClampedLauncherActiveIndex(2, 3), 2)
   assert.equal(getClampedLauncherActiveIndex(4, 3), 2)
   assert.equal(getClampedLauncherActiveIndex(4, 0), 0)
-  assert.equal(LAUNCHER_OPEN_TOAST, 'Launchpad opened')
+})
+
+test('command palette copy never exposes Launchpad chrome', () => {
+  assert.equal(LAUNCHER_TITLE, 'Commands')
+  assert.equal(LAUNCHER_DIALOG_ARIA_LABEL, 'Command palette')
+  assert.equal(LAUNCHER_CLOSE_ARIA_LABEL, 'Close command palette')
+  assert.equal(LAUNCHER_SEARCH_ARIA_LABEL, 'Search commands')
+  assert.equal(LAUNCHER_COMMAND_LIST_ARIA_LABEL, 'Commands')
+  assert.equal(LAUNCHER_OPEN_TOAST, 'Command palette opened')
+
+  const visibleCopy = [
+    LAUNCHER_TITLE,
+    LAUNCHER_DIALOG_ARIA_LABEL,
+    LAUNCHER_CLOSE_ARIA_LABEL,
+    LAUNCHER_SEARCH_ARIA_LABEL,
+    LAUNCHER_COMMAND_LIST_ARIA_LABEL,
+    LAUNCHER_OPEN_TOAST,
+  ]
+
+  for (const copy of visibleCopy) {
+    assert.doesNotMatch(copy, /launchpad/i)
+    assert.doesNotMatch(copy, /Open Launchpad/)
+    assert.doesNotMatch(copy, /CMD K/)
+  }
+
+  const chromeFiles = [
+    '../app/layout.tsx',
+    '../components/AnimatedHomePage.tsx',
+    '../components/Footer.tsx',
+    '../components/JoyfulLayer.tsx',
+    '../components/JoyfulLayerPanel.tsx',
+    '../components/TopMeta.tsx',
+    '../components/home/HomeHeroSection.tsx',
+    '../components/launcher/LauncherCommandList.tsx',
+    '../components/launcher/LauncherPaletteDialog.tsx',
+    '../components/launcher/LauncherSearchHeader.tsx',
+    './launcher.ts',
+  ]
+
+  for (const file of chromeFiles) {
+    const source = readFileSync(new URL(file, import.meta.url), 'utf8')
+    assert.doesNotMatch(source, /Launchpad/)
+    assert.doesNotMatch(source, /Open Launchpad/)
+    assert.doesNotMatch(source, /CMD K/)
+  }
 })
 
 test('getLauncherPaletteKeyboardAction preserves palette key handling decisions', () => {

@@ -1,8 +1,8 @@
 'use client'
 
 import type { MutableRefObject } from 'react'
-import type { LauncherCommandSection } from '@/lib/launcher'
 import type { LauncherCommand } from '@/components/launcher/types'
+import { LAUNCHER_COMMAND_LIST_ARIA_LABEL, type LauncherCommandSection } from '@/lib/launcher'
 
 interface LauncherCommandListProps {
   activeIndex: number
@@ -47,7 +47,7 @@ export function LauncherCommandList({
       <div
         className="min-h-0 flex-1 overflow-y-auto px-2 py-2.5 sm:max-h-[26rem]"
         role="listbox"
-        aria-label="Launchpad commands"
+        aria-label={LAUNCHER_COMMAND_LIST_ARIA_LABEL}
       >
         {commandCount > 0 ? (
           <div className="space-y-3">

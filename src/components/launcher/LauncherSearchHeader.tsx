@@ -2,8 +2,13 @@
 
 import { Command, Search, X } from 'lucide-react'
 import type { KeyboardEvent, RefObject } from 'react'
-import type { LauncherCommandSection } from '@/lib/launcher'
 import type { LauncherCommand } from '@/components/launcher/types'
+import {
+  LAUNCHER_CLOSE_ARIA_LABEL,
+  LAUNCHER_SEARCH_ARIA_LABEL,
+  LAUNCHER_TITLE,
+  type LauncherCommandSection,
+} from '@/lib/launcher'
 
 interface LauncherSearchHeaderProps {
   commandCount: number
@@ -35,7 +40,7 @@ export function LauncherSearchHeader({
           </span>
           <span className="min-w-0">
             <span className="block truncate font-header text-[0.95rem] leading-tight tracking-[-0.02em] text-foreground">
-              Launchpad
+              {LAUNCHER_TITLE}
             </span>
             <span className="block truncate font-mono text-[0.6rem] text-muted-foreground/66">
               {currentPageLabel}
@@ -44,7 +49,7 @@ export function LauncherSearchHeader({
         </div>
         <button
           type="button"
-          aria-label="Close Launchpad"
+          aria-label={LAUNCHER_CLOSE_ARIA_LABEL}
           className="group/launcher-close flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center rounded-full text-muted-foreground transition-[background-color,color,box-shadow,transform] duration-150 hover:bg-foreground/[0.045] hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           onClick={onClose}
         >
@@ -71,7 +76,7 @@ export function LauncherSearchHeader({
           onKeyDown={onKeyDown}
           placeholder="Search or open..."
           className="h-12 w-full rounded-[7px] border border-transparent bg-foreground/[0.032] pl-9 pr-16 font-mono text-[0.92rem] text-foreground outline-none placeholder:text-muted-foreground/52 shadow-[inset_0_1px_0_rgba(255,255,255,0.48)] transition-[background-color,border-color,box-shadow] duration-150 focus:border-[color-mix(in_srgb,var(--contact-email-accent)_18%,transparent)] focus:bg-background/58 focus:shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_0_0_3px_color-mix(in_srgb,var(--contact-email-accent-soft)_56%,transparent)]"
-          aria-label="Search Launchpad commands"
+          aria-label={LAUNCHER_SEARCH_ARIA_LABEL}
         />
       </div>
       <div className="mt-2 flex gap-1 overflow-x-auto px-0.5 pb-0.5 [scrollbar-width:none]">

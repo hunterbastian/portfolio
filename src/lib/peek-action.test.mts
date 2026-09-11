@@ -19,6 +19,7 @@ test('peek action kind helper preserves link and button routing', () => {
 
 test('peek action class helpers preserve base classes and caller overrides', () => {
   assert.equal(getPeekActionClassName(), PEEK_ACTION_BASE_CLASS)
+  assert.match(PEEK_ACTION_BASE_CLASS, /font-medium/)
   assert.match(getPeekActionClassName('text-primary'), /text-primary/)
   assert.match(getPeekActionClassName('text-primary'), /group\/peek/)
   assert.equal(getPeekTooltipClassName(), PEEK_TOOLTIP_BASE_CLASS)

@@ -1,52 +1,52 @@
 /* Version B: dark field notebook. Keep layout, content and imagery intact. */
 :root {
   color-scheme: dark;
-  --background: #17191b;
-  --background-rgb: 23, 25, 27;
-  --foreground: #e3e5e5;
-  --card: #202326;
-  --card-foreground: #e3e5e5;
-  --primary: #e3e5e5;
-  --primary-foreground: #17191b;
-  --secondary: #282c2f;
-  --secondary-foreground: #e3e5e5;
-  --muted: #24282b;
-  --muted-foreground: #afb5b8;
-  --subtle-foreground: #9da5aa;
+  --background: #191919;
+  --background-rgb: 25, 25, 25;
+  --foreground: #e6e6e6;
+  --card: #202020;
+  --card-foreground: #e6e6e6;
+  --primary: #e6e6e6;
+  --primary-foreground: #191919;
+  --secondary: #2f2f2f;
+  --secondary-foreground: #e6e6e6;
+  --muted: #202020;
+  --muted-foreground: #9b9b9b;
+  --subtle-foreground: #6f6f6f;
   --accent: #a2b8ab;
-  --accent-foreground: #17191b;
+  --accent-foreground: #191919;
   --accent-subtle: #26332e;
   --accent-muted: #71897b;
   --accent-blue: #a1b7c9;
   --accent-green: #a2b8ab;
-  --border: #3b4145;
-  --input: #3b4145;
-  --ring: #b7cec3;
-  --surface-warm-rgb: 33, 36, 38;
-  --surface-paper-rgb: 32, 35, 38;
-  --grain-rgb: 155, 162, 168;
-  --ink-underline: #909d99;
+  --border: #373737;
+  --input: #373737;
+  --ring: #c8c8c8;
+  --surface-warm-rgb: 32, 32, 32;
+  --surface-paper-rgb: 32, 32, 32;
+  --grain-rgb: 155, 155, 155;
+  --ink-underline: #9b9b9b;
   --contact-accent: #d0b7ab;
-  --contact-accent-soft: #302b28;
+  --contact-accent-soft: #2f2f2f;
   --contact-accent-rgb: 208, 183, 171;
   --contact-email-accent: #a1c9ca;
   --contact-email-accent-soft: #253638;
   --contact-email-ink: #d5e9e8;
-  --contact-paper: #202326;
-  --contact-paper-hover: #292d30;
-  --contact-rule: #444b4e;
-  --surface-glass-soft: rgba(32, 35, 38, 0.72);
-  --surface-glass-soft-border: rgba(223, 232, 236, 0.12);
+  --contact-paper: #202020;
+  --contact-paper-hover: #2f2f2f;
+  --contact-rule: #373737;
+  --surface-glass-soft: rgba(32, 32, 32, 0.92);
+  --surface-glass-soft-border: #373737;
   --surface-glass-soft-shadow: 0 0 0 1px var(--surface-glass-soft-border);
-  --surface-glass-chrome: linear-gradient(180deg, #343a3f, #272b2e);
-  --surface-glass-chrome-hover: linear-gradient(180deg, #41484e, #30363a);
+  --surface-glass-chrome: linear-gradient(180deg, #2f2f2f, #202020);
+  --surface-glass-chrome-hover: linear-gradient(180deg, #373737, #2f2f2f);
   --surface-glass-chrome-dark: var(--surface-glass-chrome);
-  --surface-glass-chrome-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 0 0 1px #42494e, 0 8px 20px -12px #000;
-  --surface-glass-chrome-shadow-hover: inset 0 1px rgba(255, 255, 255, 0.18), 0 0 0 1px #59636a, 0 10px 24px -12px #000;
-  --surface-glass-chrome-shadow-active: inset 0 2px 5px #151719, 0 0 0 1px #42494e;
-  --shadow-raised: 0 0 0 1px #3b4145, 0 2px 4px #0003;
-  --shadow-raised-subtle: 0 0 0 1px #33393d;
-  --shadow-hover: 0 0 0 1px #59636a, 0 8px 20px -4px #0005;
+  --surface-glass-chrome-shadow: inset 0 1px rgba(255, 255, 255, 0.06), 0 0 0 1px #373737, 0 8px 20px -12px #000;
+  --surface-glass-chrome-shadow-hover: inset 0 1px rgba(255, 255, 255, 0.08), 0 0 0 1px #4a4a4a, 0 10px 24px -12px #000;
+  --surface-glass-chrome-shadow-active: inset 0 2px 5px #111, 0 0 0 1px #373737;
+  --shadow-raised: 0 0 0 1px #373737, 0 2px 4px #0003;
+  --shadow-raised-subtle: 0 0 0 1px #373737;
+  --shadow-hover: 0 0 0 1px #4a4a4a, 0 8px 20px -4px #0005;
 }
 
 /* Preserve the scenic wash without a bright island behind the text. */
@@ -57,9 +57,13 @@
 .section-heading-rule { background: linear-gradient(90deg, #bbc5cc40, transparent); }
 :focus-visible { outline-color: var(--ring); }
 
+body {
+  line-height: 1.5;
+}
+
 /* Light-mode utility colors must not override dark control contrast. */
 .chrome-pill .chrome-pill-label,
-.chrome-pill .chrome-pill-icon { color: #e3e5e5; text-shadow: none; filter: none; }
+.chrome-pill .chrome-pill-icon { color: #e6e6e6; text-shadow: none; filter: none; }
 .chrome-pill::before,
 .chrome-pill::after { opacity: 0; }
 

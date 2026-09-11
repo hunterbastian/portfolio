@@ -10,9 +10,9 @@ export const FOOTER_SPARKLE_BASE_CLASS = 'footer-pixel-sun transition-transform 
 export const FOOTER_SPARKLE_ACTIVE_CLASS = 'animate-hb-sun-blink'
 export const FOOTER_BASE_CLASS =
   'px-5 pb-10 pt-12 transition-[transform,opacity] duration-300 ease-soft sm:px-8 sm:pb-14 sm:pt-20'
-export const FOOTER_INNER_CLASS = 'mx-auto max-w-[36rem] border-t border-border/80 pt-6'
+export const FOOTER_INNER_CLASS = 'mx-auto max-w-[36rem] border-t border-border pt-6'
 export const FOOTER_META_ROW_CLASS =
-  'flex items-start justify-between gap-4 text-[0.76rem] text-muted-foreground'
+  'flex items-start justify-between gap-4 text-[10px] font-normal text-subtle-foreground'
 export const FOOTER_COPYRIGHT_CLASS = 'shrink-0 font-header transition-colors duration-150 hover:text-foreground/78'
 export const FOOTER_MADE_LINE_CLASS =
   'footer-made-line inline-flex items-center justify-end gap-2 text-right font-header transition-colors duration-150 hover:text-foreground/78'

@@ -9,8 +9,10 @@ import {
   HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME,
   HOME_HERO_LOCAL_TIME_UPDATE_MS,
   HOME_HERO_LOCAL_TIME_ZONE,
+  HOME_HERO_INTRO_CLASS_NAME,
   HOME_HERO_LOCATION_LABEL_CLASS_NAME,
   HOME_HERO_LOCATION_META_CLASS_NAME,
+  HOME_HERO_NAME_CLASS_NAME,
   HOME_HERO_PRIMARY_ACTION_CLASS_NAME,
   HOME_HERO_PRIMARY_ACTION_LABEL_CLASS_NAME,
   HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS,
@@ -43,8 +45,12 @@ test('home hero keeps the design sentence and UVU line without a prose clock', (
   assert.doesNotMatch(homepage, /Local time is/)
   assert.doesNotMatch(hero, /Local time is/)
   assert.doesNotMatch(hero, /<button/)
+  assert.match(hero, /HOME_HERO_NAME_CLASS_NAME/)
+  assert.match(hero, /HOME_HERO_INTRO_CLASS_NAME/)
   assert.match(hero, /HOME_HERO_LOCATION_META_CLASS_NAME/)
   assert.match(hero, /formatHomeHeroLocalTime/)
+  assert.doesNotMatch(hero, /text-\[30px\]/)
+  assert.doesNotMatch(hero, /sm:text-\[36px\]/)
   assert.match(hero, /aria-live="off"/)
   assert.match(
     hero,
@@ -63,11 +69,29 @@ test('home hero local time stays a quiet 24-hour Mountain Time meta line', () =>
   assert.equal(getHomeHeroLocalTimeDelayMs(new Date(60_001)), 59_999)
   assert.match(HOME_HERO_LOCATION_META_CLASS_NAME, /whitespace-nowrap/)
   assert.match(HOME_HERO_LOCATION_META_CLASS_NAME, /font-mono/)
+  assert.match(HOME_HERO_LOCATION_META_CLASS_NAME, /text-\[10px\]/)
+  assert.match(HOME_HERO_LOCATION_META_CLASS_NAME, /font-normal/)
+  assert.match(HOME_HERO_LOCATION_META_CLASS_NAME, /text-subtle-foreground/)
+  assert.doesNotMatch(HOME_HERO_LOCATION_META_CLASS_NAME, /text-\[0\.76rem\]/)
   assert.match(HOME_HERO_LOCATION_LABEL_CLASS_NAME, /uppercase/)
-  assert.match(HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME, /text-muted-foreground/)
+  assert.match(HOME_HERO_LOCATION_LABEL_CLASS_NAME, /tracking-\[0\.18em\]/)
+  assert.match(HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME, /text-subtle-foreground/)
   assert.match(HOME_HERO_LOCAL_TIME_CLASS_NAME, /tabular-nums/)
-  assert.match(HOME_HERO_LOCAL_TIME_CLASS_NAME, /text-muted-foreground/)
+  assert.match(HOME_HERO_LOCAL_TIME_CLASS_NAME, /text-subtle-foreground/)
   assert.doesNotMatch(HOME_HERO_LOCAL_TIME_CLASS_NAME, /underline|accent|uppercase/)
+})
+
+test('home hero name is one step larger with Swiss display tracking and the only 600 weight', () => {
+  assert.match(HOME_HERO_NAME_CLASS_NAME, /text-\[36px\]/)
+  assert.match(HOME_HERO_NAME_CLASS_NAME, /sm:text-\[44px\]/)
+  assert.match(HOME_HERO_NAME_CLASS_NAME, /font-semibold/)
+  assert.match(HOME_HERO_NAME_CLASS_NAME, /tracking-\[-0\.035em\]/)
+  assert.doesNotMatch(HOME_HERO_NAME_CLASS_NAME, /font-normal|text-\[30px\]/)
+  assert.match(HOME_HERO_INTRO_CLASS_NAME, /font-normal/)
+  assert.match(HOME_HERO_INTRO_CLASS_NAME, /leading-\[1\.5\]/)
+  assert.match(HOME_HERO_INTRO_CLASS_NAME, /text-foreground/)
+  assert.match(HOME_HERO_PRIMARY_ACTION_CLASS_NAME, /font-medium/)
+  assert.match(HOME_HERO_SECONDARY_ACTION_CLASS_NAME, /font-medium/)
 })
 
 test('home hero actions put Resume first as the primary CTA', () => {

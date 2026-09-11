@@ -12,6 +12,9 @@ import {
   getFeaturedProjectRowStyleVars,
   getHomeProjectDescription,
   getHomeProjectTitle,
+  HOME_FEATURED_ROW_META_CLASS_NAME,
+  HOME_FEATURED_ROW_OUTCOME_CLASS_NAME,
+  HOME_FEATURED_ROW_TITLE_CLASS_NAME,
   type FeaturedProjectHoveredState,
   type FeaturedProjectRowState,
   type HomeProject,
@@ -93,17 +96,17 @@ function FeaturedProjectCard({
     >
       <Link
         href={href}
-        className="featured-text-row group relative z-10 grid min-h-[44px] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border/85 py-3 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-3.5"
+        className="featured-text-row group relative z-10 grid min-h-[44px] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border py-3 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-3.5"
         onClick={handleClick}
       >
-        <span className="featured-text-row-meta pt-0.5 font-mono text-[0.62rem] font-medium leading-none tabular-nums text-muted-foreground/78 transition-colors duration-200 group-hover:text-foreground/72 sm:text-[0.66rem]">
+        <span className={HOME_FEATURED_ROW_META_CLASS_NAME}>
           {trailing}
         </span>
         <div className="featured-text-row-copy min-w-0 space-y-1.5 pr-2">
-          <h3 className="break-words text-pretty font-header text-[0.92rem] leading-[1.16] tracking-[-0.025em] text-foreground transition-colors duration-200 group-hover:text-[var(--editorial-accent)] sm:text-[0.98rem]">
+          <h3 className={HOME_FEATURED_ROW_TITLE_CLASS_NAME}>
             <span>{title}</span>
           </h3>
-          <p className="max-w-[42rem] font-mono text-[0.76rem] leading-[1.5] text-muted-foreground transition-colors duration-200 group-hover:text-foreground/74 sm:text-[0.8rem]">
+          <p className={HOME_FEATURED_ROW_OUTCOME_CLASS_NAME}>
             {description}
           </p>
         </div>

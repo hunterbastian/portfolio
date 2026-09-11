@@ -1,3 +1,5 @@
+import { CHROME_NAV_ACTIVE_CLASS, CHROME_NAV_INACTIVE_CLASS } from './chrome.ts'
+
 export const HOME_SECTION_NAV_ARIA_LABEL = 'On this page'
 export const HOME_SECTION_NAV_HAPTIC_STYLE = 'light'
 export const HOME_SECTION_NAV_SCROLL_OFFSET_PX = 88
@@ -7,11 +9,9 @@ export const HOME_SECTION_NAV_LIST_CLASS_NAME =
   'flex min-w-0 items-center justify-end gap-0.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-1'
 
 const HOME_SECTION_NAV_LINK_BASE_CLASS =
-  'justify-center rounded-[8px] px-1.5 text-[0.72rem] tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:px-2 sm:text-[0.82rem]'
-const HOME_SECTION_NAV_LINK_ACTIVE_CLASS =
-  'text-[#2f7d73] bg-[color-mix(in_srgb,#2f7d73_11%,transparent)]'
-const HOME_SECTION_NAV_LINK_INACTIVE_CLASS =
-  'text-muted-foreground/76 hover:bg-[color-mix(in_srgb,#2f7d73_8%,transparent)] hover:text-[#2f7d73] focus-visible:bg-[color-mix(in_srgb,#2f7d73_8%,transparent)] focus-visible:text-[#2f7d73]'
+  'justify-center rounded-[8px] px-1.5 text-[0.62rem] font-medium tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:px-2 sm:text-[0.68rem]'
+const HOME_SECTION_NAV_LINK_ACTIVE_CLASS = CHROME_NAV_ACTIVE_CLASS
+const HOME_SECTION_NAV_LINK_INACTIVE_CLASS = CHROME_NAV_INACTIVE_CLASS
 
 export const HOME_SECTION_NAV_ITEMS = [
   { id: 'home', name: 'Home', peek: 'Back to top' },

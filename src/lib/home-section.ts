@@ -37,6 +37,10 @@ export function getHomeRevealTransition(delayMs: number, prefersReducedMotion: b
   }
 }
 
+export const HOME_SECTION_TITLE_CLASS_NAME =
+  'font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-subtle-foreground sm:text-[11px]'
+export const HOME_SECTION_RULE_CLASS_NAME = 'h-px w-full bg-border'
+
 export function getHomeSectionClassName(scrollMarginClassName: string, contentGapClassName: string): string {
   return `${scrollMarginClassName} ${contentGapClassName}`
 }

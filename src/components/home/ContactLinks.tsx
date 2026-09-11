@@ -31,7 +31,7 @@ export function ContactLinks() {
   }
 
   return (
-    <div className="space-y-6 sm:space-y-12">
+    <div className="space-y-3 sm:space-y-4">
       {contactLinksView.emailLink ? (
         <EmailButton
           email={contactLinksView.emailAddress}

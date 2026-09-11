@@ -79,7 +79,7 @@ export function EditorialItem({
     : simpleHover
       ? 'text-[0.93rem] sm:text-[0.93rem]'
       : 'text-[0.82rem] sm:text-[0.96rem]'
-  const eyebrowSizeClassName = compact ? 'text-[0.58rem] sm:text-[0.62rem]' : 'text-[0.66rem]'
+  const eyebrowSizeClassName = compact ? 'text-[10px] sm:text-[11px]' : 'text-[0.66rem]'
   const rowSpacingClassName = compact
     ? 'gap-2.5 px-0 py-1.5 sm:-mx-2 sm:gap-5 sm:rounded-[7px] sm:px-2 sm:py-2'
     : 'gap-3 px-0 py-2 sm:-mx-3 sm:gap-10 sm:rounded-[8px] sm:px-3 sm:py-3'

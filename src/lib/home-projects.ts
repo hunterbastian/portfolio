@@ -42,7 +42,13 @@ export const HOME_PROJECT_DESCRIPTIONS: Record<string, string> = {
   nutricost: 'Product labels and marketing for Nutricost supplements.',
 }
 
-export const HOME_ROW_HOVER_ACCENT = '#2f7d73'
+export const HOME_ROW_HOVER_ACCENT = 'var(--foreground)'
+export const HOME_FEATURED_ROW_META_CLASS_NAME =
+  'featured-text-row-meta pt-0.5 font-mono text-[10px] font-normal leading-none tabular-nums text-subtle-foreground transition-colors duration-200 group-hover:text-muted-foreground sm:text-[11px]'
+export const HOME_FEATURED_ROW_OUTCOME_CLASS_NAME =
+  'max-w-[42rem] font-mono text-[0.68rem] font-normal leading-[1.5] text-muted-foreground transition-colors duration-200 group-hover:text-muted-foreground sm:text-[0.7rem]'
+export const HOME_FEATURED_ROW_TITLE_CLASS_NAME =
+  'break-words text-pretty font-header text-[0.92rem] font-medium leading-[1.16] tracking-[-0.025em] text-foreground transition-colors duration-200 group-hover:text-foreground sm:text-[0.98rem]'
 export const HOME_PROJECT_GRID_PROJECT_LIMIT = 8
 
 export type WorkFilter = 'all' | 'product' | 'visual' | 'web'
@@ -230,8 +236,8 @@ export function getFeaturedProjectRowStyleVars(
 ): FeaturedProjectRowStyleVars {
   return {
     '--editorial-accent': accent,
-    '--featured-row-highlight-bg': `color-mix(in srgb, ${accent} 5%, rgba(var(--background-rgb), 0.58))`,
-    '--featured-row-highlight-border': `color-mix(in srgb, ${accent} 16%, transparent)`,
-    '--featured-row-highlight-shadow': `color-mix(in srgb, ${accent} 10%, transparent)`,
+    '--featured-row-highlight-bg': 'var(--secondary)',
+    '--featured-row-highlight-border': 'var(--border)',
+    '--featured-row-highlight-shadow': 'transparent',
   }
 }

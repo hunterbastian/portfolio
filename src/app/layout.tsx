@@ -82,7 +82,7 @@ export default function RootLayout({
         
         {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: `html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark}}body{margin:0;background-color:var(--background,${siteConfig.themeColorDark})}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}::-moz-selection{background-color:rgba(35,131,226,.15)!important;color:inherit!important}`
+          __html: `html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${siteConfig.themeColorDark});line-height:1.5}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(230,230,230,.18)!important;color:inherit!important}::-moz-selection{background-color:rgba(230,230,230,.18)!important;color:inherit!important}`
         }} />
       </head>
       <body

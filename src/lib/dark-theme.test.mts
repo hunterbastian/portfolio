@@ -8,11 +8,19 @@ test('portfolio serves dark styling on first render without client theme hydrati
  assert.match(layout, /siteConfig.themeColorDark/)
  assert.match(layout, /name="color-scheme" content="dark"/)
  assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="black"/)
+ assert.doesNotMatch(layout, /35,\s*131,\s*226|#2383E2/i)
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
  assert.match(css, /color-scheme: dark/)
- assert.match(css, /--background: #17191b/)
+ assert.match(css, /--background: #191919/)
+ assert.match(css, /--card: #202020/)
+ assert.match(css, /--secondary: #2f2f2f/)
+ assert.match(css, /--border: #373737/)
+ assert.match(css, /--foreground: #e6e6e6/)
+ assert.match(css, /--muted-foreground: #9b9b9b/)
+ assert.match(css, /line-height: 1\.5/)
+ assert.doesNotMatch(css, /#2383E2/i)
  const site = readFileSync('src/lib/site.ts', 'utf8')
- assert.match(site, /themeColorDark: '#17191b'/)
+ assert.match(site, /themeColorDark: '#191919'/)
 })
 
 test('dark chrome pills drop the wet glass highlight and keep tokenized email accent', () => {
@@ -23,8 +31,16 @@ test('dark chrome pills drop the wet glass highlight and keep tokenized email ac
  assert.match(css, /\.chrome-scroll-top::before/)
 })
 
-test('mobile navigation uses the shared surface instead of a hardcoded light fill', () => {
+test('mobile navigation uses the shared elevated surface instead of a hardcoded light fill', () => {
  const source = readFileSync('src/lib/top-meta.ts', 'utf8')
- assert.ok(source.includes('bg-card/95'), 'mobile menu should use the theme card token')
+ assert.ok(source.includes('bg-card'), 'mobile menu should use the theme card token')
  assert.ok(!source.includes('bg-[#fffaf2]/95'), 'remove obsolete light surface')
+})
+
+test('dark focus ring stays visible without a green or Notion-blue accent', () => {
+ const css = readFileSync('src/app/dark-theme.css', 'utf8')
+ assert.match(css, /--ring: #c8c8c8/)
+ assert.doesNotMatch(css, /--ring: #b7cec3/)
+ assert.doesNotMatch(css, /--ring: #c8ced2/)
+ assert.doesNotMatch(css, /#2383E2/i)
 })

@@ -8,6 +8,8 @@ import {
   getHomeRevealShadowDelay,
   getHomeRevealTransition,
   getHomeSectionClassName,
+  HOME_SECTION_RULE_CLASS_NAME,
+  HOME_SECTION_TITLE_CLASS_NAME,
   shouldRevealHomeSection,
 } from '@/lib/home-section'
 
@@ -63,10 +65,10 @@ export function Section({
   return (
     <section id={id} className={getHomeSectionClassName(scrollMarginClassName, contentGapClassName)}>
       <div className="space-y-2 sm:space-y-3">
-        <div className="flex items-baseline gap-4 text-[0.85rem] tracking-[-0.02em] text-foreground/92">
+        <div className={`flex items-baseline gap-4 ${HOME_SECTION_TITLE_CLASS_NAME}`}>
           <h2>{title}</h2>
         </div>
-        {rule ? <div className="h-px w-full bg-border/90" /> : null}
+        {rule ? <div className={HOME_SECTION_RULE_CLASS_NAME} /> : null}
       </div>
       {children}
     </section>

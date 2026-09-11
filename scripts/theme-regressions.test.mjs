@@ -23,6 +23,7 @@ test('Tailwind emits alpha-aware text, surface, border, ring, and arbitrary util
     ['text-foreground/74', 'color', '--foreground', '0.74'],
     ['text-foreground/76', 'color', '--foreground', '0.76'],
     ['text-foreground/94', 'color', '--foreground', '0.94'],
+    ['bg-card/92', 'background-color', '--card', '0.92'],
     ['bg-card/95', 'background-color', '--card', '0.95'],
     ['bg-background/82', 'background-color', '--background', '0.82'],
     ['border-border/85', 'border-color', '--border', '0.85'],
@@ -55,7 +56,7 @@ test('manifest and initial page chrome agree with the dark site canvas', () => {
   assert.ok(siteSource.includes(`themeColorDark: '${background}'`))
   assert.ok(layoutSource.includes('name="color-scheme" content="dark"'))
   assert.ok(layoutSource.includes('name="apple-mobile-web-app-status-bar-style" content="black"'))
-  assert.ok(layoutSource.includes('html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark}}'))
+  assert.ok(layoutSource.includes('html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark};scrollbar-gutter:stable}'))
   assert.ok(layoutSource.includes('body{margin:0;background-color:var(--background,${siteConfig.themeColorDark})'))
   assert.equal(layoutSource.includes('body{margin:0;background:'), false)
 })
@@ -63,7 +64,7 @@ test('manifest and initial page chrome agree with the dark site canvas', () => {
 function assertDarkOffline(source) {
   assert.ok(source.includes(background), 'offline canvas must match the live dark background')
   assert.ok(source.includes('color-scheme: dark') || source.includes('color-scheme:dark'))
-  assert.ok(source.includes('name="theme-color" content="#17191b"'))
+  assert.ok(source.includes(`name="theme-color" content="${background}"`))
   assert.equal(source.includes('prefers-color-scheme'), false)
   assert.equal(source.includes('color-scheme: light'), false)
   assert.equal(source.includes('#f2f1ef'), false)

@@ -25,9 +25,9 @@ const links = [
 ]
 
 test('home endeavor display helpers provide stable accents and descriptions', () => {
-  assert.equal(getHomeEndeavorAccent('Studio Alpine'), '#2f7d73')
-  assert.equal(getHomeEndeavorAccent('Available for freelance'), '#2f7d73')
-  assert.equal(getHomeEndeavorAccent('Unknown'), '#2f7d73')
+  assert.equal(getHomeEndeavorAccent('Studio Alpine'), 'var(--foreground)')
+  assert.equal(getHomeEndeavorAccent('Available for freelance'), 'var(--foreground)')
+  assert.equal(getHomeEndeavorAccent('Unknown'), 'var(--foreground)')
   assert.equal(getHomeEndeavorDescription('Studio Alpine'), 'Photography and lifestyle.')
   assert.equal(getHomeEndeavorDescription('Available for freelance'), 'Design and web work.')
   assert.equal(getHomeEndeavorDescription('Unknown'), 'A current creative or professional thread.')
@@ -45,18 +45,15 @@ test('home endeavor display helpers provide stable accents and descriptions', ()
   assert.equal(getHomeEndeavorThumbnail(), null)
 })
 
-test('home endeavor row style vars reuse shared hover math with endeavor accents', () => {
+test('home endeavor row style vars reuse the shared grey hover surface', () => {
   assert.deepEqual(getHomeEndeavorRowStyleVars('Studio Alpine', 1), {
-    '--editorial-accent': '#2f7d73',
-    '--featured-row-highlight-bg': 'color-mix(in srgb, #2f7d73 5%, rgba(var(--background-rgb), 0.58))',
-    '--featured-row-highlight-border': 'color-mix(in srgb, #2f7d73 16%, transparent)',
-    '--featured-row-highlight-shadow': 'color-mix(in srgb, #2f7d73 10%, transparent)',
+    '--editorial-accent': 'var(--foreground)',
+    '--featured-row-highlight-bg': 'var(--secondary)',
+    '--featured-row-highlight-border': 'var(--border)',
+    '--featured-row-highlight-shadow': 'transparent',
   })
-  assert.equal(getHomeEndeavorRowStyleVars('Available for freelance', 0)['--editorial-accent'], '#2f7d73')
-  assert.equal(
-    getHomeEndeavorRowStyleVars('Unknown', 8)['--featured-row-highlight-border'],
-    'color-mix(in srgb, #2f7d73 16%, transparent)',
-  )
+  assert.equal(getHomeEndeavorRowStyleVars('Available for freelance', 0)['--editorial-accent'], 'var(--foreground)')
+  assert.equal(getHomeEndeavorRowStyleVars('Unknown', 8)['--featured-row-highlight-border'], 'var(--border)')
 })
 
 test('home endeavor hover distance resolves null and active row offsets', () => {

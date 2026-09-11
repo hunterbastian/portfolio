@@ -6,6 +6,7 @@ import {
   HOME_HERO_PRIMARY_ACTION_CLASS_NAME,
   HOME_HERO_SECONDARY_ACTION_CLASS_NAME,
 } from './home-hero.ts'
+import { HOME_FEATURED_ROW_TITLE_CLASS_NAME } from './home-projects.ts'
 import { getTopMetaMobileMenuClassName, getTopMetaShellClassName } from './top-meta.ts'
 
 test('sticky homepage header stays compact on mobile and respects the notch', () => {
@@ -42,7 +43,8 @@ test('mobile project collage stays clipped and does not steal taps from named ro
   assert.match(css, /overflow: hidden;/)
   assert.match(css, /min-height: 13\.25rem;/)
   assert.match(rows, /min-h-\[44px\]/)
-  assert.match(rows, /break-words/)
+  assert.match(rows, /HOME_FEATURED_ROW_TITLE_CLASS_NAME/)
+  assert.match(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /break-words/)
 })
 
 test('contact and scroll-to-top keep comfortable mobile padding and safe areas', () => {

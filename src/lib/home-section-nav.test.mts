@@ -168,9 +168,17 @@ test('top meta hosts homepage section jumps without dropping the mobile playgrou
   assert.match(source, /persistVisible/)
 })
 
-test('home section nav link classes reuse the calm header accent', () => {
-  assert.match(getHomeSectionNavLinkClassName(true), /text-\[#2f7d73\]/)
+test('home section nav link classes stay a quiet monochrome highlight', () => {
+  assert.match(getHomeSectionNavLinkClassName(true), /text-foreground/)
+  assert.match(getHomeSectionNavLinkClassName(true), /bg-secondary/)
+  assert.doesNotMatch(getHomeSectionNavLinkClassName(true), /#2f7d73|#2383E2|accent/)
   assert.match(getHomeSectionNavLinkClassName(false), /text-muted-foreground/)
+  assert.match(getHomeSectionNavLinkClassName(false), /hover:text-foreground/)
+  assert.match(getHomeSectionNavLinkClassName(false), /hover:bg-secondary/)
+  assert.doesNotMatch(getHomeSectionNavLinkClassName(false), /#2f7d73|#2383E2|accent/)
+  assert.match(getHomeSectionNavLinkClassName(false), /text-\[0\.62rem\]/)
+  assert.match(getHomeSectionNavLinkClassName(false), /sm:text-\[0\.68rem\]/)
+  assert.match(getHomeSectionNavLinkClassName(false), /font-medium/)
   assert.equal(getHomeSectionNavAriaCurrent(true), 'location')
   assert.equal(getHomeSectionNavAriaCurrent(false), undefined)
 })

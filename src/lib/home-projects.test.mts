@@ -5,10 +5,14 @@ import test from 'node:test'
 import {
   HOME_PROJECT_DESCRIPTIONS,
   HOME_WORK_FILTER_EVENT,
+  HOME_FEATURED_ROW_META_CLASS_NAME,
+  HOME_FEATURED_ROW_OUTCOME_CLASS_NAME,
+  HOME_FEATURED_ROW_TITLE_CLASS_NAME,
   HOME_PROJECT_GRID_PROJECT_LIMIT,
   HOME_PROJECT_CLEAR_FILTER_ANALYTICS_TARGET,
   HOME_PROJECT_CLEAR_FILTER_HAPTIC_STYLE,
   HOME_PROJECT_CLEAR_FILTER_TOAST,
+  HOME_ROW_HOVER_ACCENT,
   activateHomeProjectClearFilter,
   activateHomeWorkFilterChange,
   formatProjectYear,
@@ -227,33 +231,41 @@ test('getHomeProjectThumbnailImage prefers home-specific image before detail ima
   assert.equal(getHomeProjectThumbnailImage(thumbnailProject), '/images/home/lumo-object-icon.png')
 })
 
-test('formatProjectYear and getProjectAccent provide display fallbacks', () => {
+test('formatProjectYear and getProjectAccent stay monochrome for row chrome', () => {
   assert.equal(formatProjectYear('2023-01-01'), '2023')
   assert.equal(formatProjectYear('2026-02-03'), '2026')
-  assert.equal(getProjectAccent('lumo'), '#2f7d73')
-  assert.equal(getProjectAccent('unknown'), '#2f7d73')
+  assert.equal(HOME_ROW_HOVER_ACCENT, 'var(--foreground)')
+  assert.equal(getProjectAccent('lumo'), 'var(--foreground)')
+  assert.equal(getProjectAccent('unknown'), 'var(--foreground)')
+  assert.match(HOME_FEATURED_ROW_META_CLASS_NAME, /text-\[10px\]/)
+  assert.match(HOME_FEATURED_ROW_META_CLASS_NAME, /sm:text-\[11px\]/)
+  assert.match(HOME_FEATURED_ROW_META_CLASS_NAME, /font-normal/)
+  assert.match(HOME_FEATURED_ROW_META_CLASS_NAME, /text-subtle-foreground/)
+  assert.match(HOME_FEATURED_ROW_OUTCOME_CLASS_NAME, /text-\[0\.68rem\]/)
+  assert.match(HOME_FEATURED_ROW_OUTCOME_CLASS_NAME, /font-normal/)
+  assert.match(HOME_FEATURED_ROW_OUTCOME_CLASS_NAME, /text-muted-foreground/)
+  assert.match(HOME_FEATURED_ROW_OUTCOME_CLASS_NAME, /leading-\[1\.5\]/)
+  assert.match(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /text-\[0\.92rem\]/)
+  assert.match(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /sm:text-\[0\.98rem\]/)
+  assert.match(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /font-medium/)
+  assert.match(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /group-hover:text-foreground/)
+  assert.doesNotMatch(HOME_FEATURED_ROW_TITLE_CLASS_NAME, /editorial-accent|#2f7d73/)
 })
 
-test('featured project row style vars clamp hover distance and preserve accent math', () => {
+test('featured project row hover uses a solid grey surface instead of a color mix', () => {
   assert.deepEqual(getFeaturedProjectRowStyleVars('lumo', 2), {
-    '--editorial-accent': '#2f7d73',
-    '--featured-row-highlight-bg': 'color-mix(in srgb, #2f7d73 5%, rgba(var(--background-rgb), 0.58))',
-    '--featured-row-highlight-border': 'color-mix(in srgb, #2f7d73 16%, transparent)',
-    '--featured-row-highlight-shadow': 'color-mix(in srgb, #2f7d73 10%, transparent)',
+    '--editorial-accent': 'var(--foreground)',
+    '--featured-row-highlight-bg': 'var(--secondary)',
+    '--featured-row-highlight-border': 'var(--border)',
+    '--featured-row-highlight-shadow': 'transparent',
   })
-  assert.equal(
-    getFeaturedProjectRowStyleVars('unknown', -2)['--featured-row-highlight-bg'],
-    'color-mix(in srgb, #2f7d73 5%, rgba(var(--background-rgb), 0.58))',
-  )
-  assert.equal(
-    getFeaturedProjectRowStyleVars('lumo', 10)['--featured-row-highlight-border'],
-    'color-mix(in srgb, #2f7d73 16%, transparent)',
-  )
-  assert.deepEqual(getFeaturedProjectRowStyleVars('Studio Alpine', 1, '#2f7d73'), {
-    '--editorial-accent': '#2f7d73',
-    '--featured-row-highlight-bg': 'color-mix(in srgb, #2f7d73 5%, rgba(var(--background-rgb), 0.58))',
-    '--featured-row-highlight-border': 'color-mix(in srgb, #2f7d73 16%, transparent)',
-    '--featured-row-highlight-shadow': 'color-mix(in srgb, #2f7d73 10%, transparent)',
+  assert.equal(getFeaturedProjectRowStyleVars('unknown', -2)['--featured-row-highlight-bg'], 'var(--secondary)')
+  assert.equal(getFeaturedProjectRowStyleVars('lumo', 10)['--featured-row-highlight-border'], 'var(--border)')
+  assert.deepEqual(getFeaturedProjectRowStyleVars('Studio Alpine', 1, '#c8ced2'), {
+    '--editorial-accent': '#c8ced2',
+    '--featured-row-highlight-bg': 'var(--secondary)',
+    '--featured-row-highlight-border': 'var(--border)',
+    '--featured-row-highlight-shadow': 'transparent',
   })
 })
 
@@ -347,10 +359,12 @@ test('featured project list state packages project and playground rows', () => {
   })
 })
 
-test('featured project rows expose a visible focus ring that is not color-only', () => {
+test('featured project rows use tiny meta and a visible focus ring that is not color-only', () => {
   const source = readFileSync(new URL('../components/home/FeaturedProjectList.tsx', import.meta.url), 'utf8')
   const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8')
 
+  assert.match(source, /HOME_FEATURED_ROW_META_CLASS_NAME/)
+  assert.match(source, /HOME_FEATURED_ROW_OUTCOME_CLASS_NAME/)
   assert.match(source, /focus-visible:ring-2/)
   assert.match(source, /focus-visible:ring-ring\/70/)
   assert.match(source, /focus-visible:ring-offset-2/)

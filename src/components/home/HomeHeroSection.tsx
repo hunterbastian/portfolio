@@ -8,11 +8,13 @@ import { homeHeroContent } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
 import {
   HOME_HERO_ACTIONS,
+  HOME_HERO_INTRO_CLASS_NAME,
   HOME_HERO_LOCAL_TIME_CLASS_NAME,
   HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME,
   HOME_HERO_LOCAL_TIME_UPDATE_MS,
   HOME_HERO_LOCATION_LABEL_CLASS_NAME,
   HOME_HERO_LOCATION_META_CLASS_NAME,
+  HOME_HERO_NAME_CLASS_NAME,
   activateHomeHeroAction,
   formatHomeHeroLocalTime,
   getHomeHeroActionClassName,
@@ -51,8 +53,6 @@ function useHomeHeroLocalTime() {
 }
 
 const homeHeroIntroStackClassName = 'space-y-7 pt-5 sm:space-y-8 sm:pt-7'
-const homeHeroIntroParagraphClassName =
-  'w-full max-w-full text-pretty font-header text-[14px] font-normal leading-[1.62] tracking-[-0.012em] text-foreground/92 sm:text-[14px] sm:leading-[1.62]'
 
 export function HomeHeroSection() {
   const introParagraphs = getHomeHeroIntroParagraphs(homeHeroContent.intro)
@@ -119,7 +119,7 @@ export function HomeHeroSection() {
       <div className="relative z-10 space-y-5 sm:space-y-7">
         <div className="space-y-3.5 sm:space-y-4">
           <div className="space-y-1">
-            <h1 className="break-words text-pretty font-hero-name text-[30px] font-normal leading-[1.15] tracking-[-0.02em] text-foreground/94 sm:text-[36px]">
+            <h1 className={HOME_HERO_NAME_CLASS_NAME}>
               {homeHeroContent.headline}
             </h1>
             <p className={HOME_HERO_LOCATION_META_CLASS_NAME}>
@@ -145,7 +145,7 @@ export function HomeHeroSection() {
 
         <div className={homeHeroIntroStackClassName}>
           {introParagraphs.map((paragraph) => (
-            <p key={paragraph} className={homeHeroIntroParagraphClassName}>
+            <p key={paragraph} className={HOME_HERO_INTRO_CLASS_NAME}>
               {paragraph}
             </p>
           ))}

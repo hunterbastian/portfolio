@@ -16,16 +16,20 @@ export const HOME_HERO_PROFILE_DEFOCUS_IDLE_CLASS = 'translate-y-0 blur-0 opacit
 export const HOME_HERO_PROFILE_DEFOCUS_ACTIVE_CLASS = 'translate-y-[1px] blur-[1.35px] opacity-65'
 export const HOME_HERO_LOCAL_TIME_ZONE = 'America/Denver'
 export const HOME_HERO_LOCAL_TIME_UPDATE_MS = 60_000
+export const HOME_HERO_NAME_CLASS_NAME =
+  'break-words text-pretty font-hero-name text-[36px] font-semibold leading-[1.08] tracking-[-0.035em] text-foreground sm:text-[44px]'
+export const HOME_HERO_INTRO_CLASS_NAME =
+  'w-full max-w-full text-pretty font-header text-[14px] font-normal leading-[1.5] tracking-[-0.012em] text-foreground sm:text-[14px] sm:leading-[1.5]'
 export const HOME_HERO_LOCATION_META_CLASS_NAME =
-  'flex max-w-full items-baseline gap-x-2 overflow-hidden whitespace-nowrap font-mono text-[0.76rem] font-medium leading-none text-muted-foreground/68'
-export const HOME_HERO_LOCATION_LABEL_CLASS_NAME = 'uppercase tracking-[0.11em]'
+  'flex max-w-full items-baseline gap-x-1.5 overflow-hidden whitespace-nowrap font-mono text-[10px] font-normal leading-none text-subtle-foreground'
+export const HOME_HERO_LOCATION_LABEL_CLASS_NAME = 'uppercase tracking-[0.18em]'
 export const HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME =
-  'select-none font-normal tracking-normal text-muted-foreground/34'
+  'select-none font-normal tracking-normal text-subtle-foreground/70'
 export const HOME_HERO_LOCAL_TIME_CLASS_NAME =
-  'tabular-nums tracking-[0.05em] text-muted-foreground/50'
+  'tabular-nums tracking-[0.04em] text-subtle-foreground/80'
 
 const HOME_HERO_ACTION_BASE_CLASS_NAME =
-  'min-h-[44px] min-w-[44px] items-center sm:min-h-0 sm:min-w-0 text-[0.74rem] sm:text-[0.78rem]'
+  'min-h-[44px] min-w-[44px] items-center font-medium sm:min-h-0 sm:min-w-0 text-[0.74rem] sm:text-[0.78rem]'
 
 export const HOME_HERO_PRIMARY_ACTION_CLASS_NAME =
   `${HOME_HERO_ACTION_BASE_CLASS_NAME} text-foreground hover:text-foreground/80`

@@ -18,6 +18,11 @@ import {
   type HomeEndeavorRowState,
   type HomeEndeavorRowStyleVars,
 } from '@/lib/home-endeavors'
+import {
+  HOME_FEATURED_ROW_META_CLASS_NAME,
+  HOME_FEATURED_ROW_OUTCOME_CLASS_NAME,
+  HOME_FEATURED_ROW_TITLE_CLASS_NAME,
+} from '@/lib/home-projects'
 import { showJoyToast } from '@/lib/joy'
 import { BLANK_LINK_TARGET, getSafeExternalLinkRel } from '@/lib/link-safety'
 import { cn } from '@/lib/utils'
@@ -56,14 +61,14 @@ function HomeEndeavorRow({
   }
   const content = (
     <>
-      <span className="featured-text-row-meta pt-0.5 font-mono text-[0.62rem] font-medium leading-none text-muted-foreground/78 transition-colors duration-200 group-hover:text-foreground/72 sm:text-[0.66rem]">
+      <span className={HOME_FEATURED_ROW_META_CLASS_NAME}>
         {getHomeEndeavorMeta(link.label)}
       </span>
       <div className="featured-text-row-copy min-w-0 space-y-1.5 pr-2">
-        <h3 className="break-words text-pretty font-header text-[0.92rem] leading-[1.16] tracking-[-0.025em] text-foreground transition-colors duration-200 group-hover:text-[var(--editorial-accent)] sm:text-[0.98rem]">
+        <h3 className={HOME_FEATURED_ROW_TITLE_CLASS_NAME}>
           {link.label}
         </h3>
-        <p className="max-w-[42rem] font-mono text-[0.76rem] leading-[1.5] text-muted-foreground transition-colors duration-200 group-hover:text-foreground/74 sm:text-[0.8rem]">
+        <p className={HOME_FEATURED_ROW_OUTCOME_CLASS_NAME}>
           {getHomeEndeavorDescription(link.label)}
         </p>
       </div>
@@ -85,7 +90,7 @@ function HomeEndeavorRow({
       onMouseEnter={onHoverStart}
       style={style}
     >
-      <div className="relative z-10 flex items-center gap-2 border-t border-border/85 sm:gap-4">
+      <div className="relative z-10 flex items-center gap-2 border-t border-border sm:gap-4">
       {link.external ? (
         <a
           href={link.href}

@@ -20,8 +20,9 @@ export function HomeBackgroundSection() {
             <EditorialItem
               key={displayItem.key}
               eyebrow={displayItem.eyebrow}
-              eyebrowClassName="font-mono text-muted-foreground/45 group-hover:text-muted-foreground/58"
+              eyebrowClassName="font-mono font-normal text-muted-foreground/42 group-hover:text-muted-foreground/58"
               title={displayItem.title}
+              titleFontClassName="font-header font-medium"
               description={displayItem.description}
               compact
             />

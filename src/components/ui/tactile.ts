@@ -22,7 +22,7 @@ export function chromePillClassName({
 }
 
 export const chromePillLabelClassName =
-  'chrome-pill-label relative z-10 min-w-0 truncate translate-y-[0.01rem] font-header tracking-[-0.025em] text-[#403d38]'
+  'chrome-pill-label relative z-10 min-w-0 truncate translate-y-[0.01rem] font-header font-medium tracking-[-0.025em] text-[#403d38]'
 
 export const chromePillIconClassName =
   'chrome-pill-icon relative z-10 shrink-0 text-[#403d38] transition-transform duration-200 group-hover/chrome:translate-x-0.5 group-hover/chrome:-translate-y-[0.14rem]'

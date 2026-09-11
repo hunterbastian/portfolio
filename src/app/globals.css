@@ -78,6 +78,7 @@ html, body {
 html {
   scroll-behavior: auto;
   font-size: 14px;
+  scrollbar-gutter: stable;
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -1372,9 +1373,9 @@ button {
 }
 
 .featured-project-row {
-  --featured-row-highlight-bg: color-mix(in srgb, var(--background) 82%, white 18%);
-  --featured-row-highlight-border: color-mix(in srgb, var(--border) 78%, var(--editorial-accent, var(--accent-editorial-hover)) 22%);
-  --featured-row-highlight-shadow: color-mix(in srgb, var(--editorial-accent, var(--accent-editorial-hover)) 10%, transparent);
+  --featured-row-highlight-bg: var(--secondary);
+  --featured-row-highlight-border: var(--border);
+  --featured-row-highlight-shadow: transparent;
   animation: hb-text-row-settle 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: var(--featured-row-delay, 0ms);
   opacity: 1;
@@ -1398,7 +1399,7 @@ button {
 }
 
 .featured-project-row:last-child .featured-text-row {
-  border-bottom: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  border-bottom: 1px solid var(--border);
 }
 
 .featured-text-row-copy,
@@ -1419,7 +1420,7 @@ button {
 }
 
 .featured-project-row:focus-within::before {
-  opacity: 0.78;
+  opacity: 1;
   transform: scaleX(1);
 }
 
@@ -1457,7 +1458,7 @@ button {
   .featured-project-list-hovering .featured-project-row-active::before,
   .featured-project-row:hover::before,
   .featured-project-row:focus-within::before {
-    opacity: 0.78;
+    opacity: 1;
     transform: scaleX(1);
   }
 

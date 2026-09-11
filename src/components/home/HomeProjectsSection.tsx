@@ -41,7 +41,7 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
               </span>
               <button
                 type="button"
-                className="min-h-[40px] min-w-[40px] origin-center touch-manipulation text-foreground underline decoration-border underline-offset-[0.22em] transition-[color,transform,text-decoration-color] duration-150 hover:text-[var(--contact-accent)] hover:decoration-[color-mix(in_srgb,var(--contact-accent)_64%,transparent)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                className="min-h-[40px] min-w-[40px] origin-center touch-manipulation font-medium text-foreground underline decoration-border underline-offset-[0.22em] transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground/80 hover:decoration-foreground/40 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                 onClick={() =>
                   activateHomeProjectClearFilter({
                     setWorkFilter: onWorkFilterChange,

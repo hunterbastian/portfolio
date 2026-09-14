@@ -1,5 +1,3 @@
-import { siteProjectInquiryHref } from '@/lib/site'
-
 export interface ExperienceItem {
   year: string
   company: string
@@ -53,10 +51,32 @@ export const creatingLinks: HomeLinkItem[] = [
   },
   {
     label: 'Studio Cala',
-    href: siteProjectInquiryHref,
-    ariaLabel: 'Studio Cala — design inquiries',
+    href: 'https://studio-cala.hunter-bastian.chatgpt.site',
+    external: true,
+    ariaLabel: 'Studio Cala — web design studio',
     title: 'Studio Cala',
     iconType: 'handshake',
+  },
+  {
+    label: 'Above / Utah',
+    href: 'https://utah-summit-atlas.hunter-bastian.chatgpt.site',
+    external: true,
+    ariaLabel: 'Above / Utah — hiking app, private preview',
+    title: 'Above / Utah',
+  },
+  {
+    label: 'Alcove',
+    href: 'https://alcove.hunter-bastian.chatgpt.site',
+    external: true,
+    ariaLabel: 'Alcove — Utah coffee shop guide',
+    title: 'Alcove',
+  },
+  {
+    label: 'Glass Vault',
+    href: 'https://glass-vault-mobile.hunter-bastian.chatgpt.site',
+    external: true,
+    ariaLabel: 'Glass Vault — work in progress, private preview',
+    title: 'Glass Vault',
   },
 ]
 

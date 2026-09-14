@@ -44,7 +44,7 @@ const HOME_ENDEAVOR_DESCRIPTIONS: Record<string, string> = {
   'Studio Cala': 'Web design studio.',
   'Above / Utah': 'Utah hiking app and trail guide. Private preview.',
   Alcove: 'A guide to independent Utah coffee shops.',
-  'Glass Vault': 'Destiny-inspired environment and model viewer. Private preview.',
+  'parallax.': 'Destiny-inspired environment and model viewer. Private preview.',
 }
 
 const HOME_ENDEAVOR_META: Record<string, string> = {
@@ -53,7 +53,7 @@ const HOME_ENDEAVOR_META: Record<string, string> = {
   'Studio Cala': 'Studio',
   'Above / Utah': 'Project',
   Alcove: 'Project',
-  'Glass Vault': 'WIP',
+  'parallax.': 'Project',
 }
 
 export function getHomeEndeavorAccent(_label: string) {

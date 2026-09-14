@@ -72,11 +72,11 @@ export const creatingLinks: HomeLinkItem[] = [
     title: 'Alcove',
   },
   {
-    label: 'Glass Vault',
+    label: 'parallax.',
     href: 'https://glass-vault-mobile.hunter-bastian.chatgpt.site',
     external: true,
-    ariaLabel: 'Glass Vault — work in progress, private preview',
-    title: 'Glass Vault',
+    ariaLabel: 'parallax. — 3D model viewer, private preview',
+    title: 'parallax.',
   },
 ]
 

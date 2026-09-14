@@ -1,13 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { HomeBackgroundSection } from '@/components/home/HomeBackgroundSection'
 import { HomeEndeavorsSection } from '@/components/home/HomeEndeavorsSection'
-import { HomeHeroSection } from '@/components/home/HomeHeroSection'
-import { HomePhilosophySection } from '@/components/home/HomePhilosophySection'
 import { HomePlaygroundSection } from '@/components/home/HomePlaygroundSection'
 import { HomeProjectsSection } from '@/components/home/HomeProjectsSection'
-import { Reveal } from '@/components/home/HomeSection'
+import { Section } from '@/components/home/HomeSection'
+import { homePhilosophyContent } from '@/content/homepage'
+import { siteMailtoHref } from '@/lib/site'
 import { useWorkFilterUrlSync } from '@/lib/use-work-filter-url-sync'
 import {
   activateHomeWorkFilterChange,
@@ -41,46 +42,41 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
   }
 
   return (
-    <div className="relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
-      <div aria-hidden="true" className="home-painterly-washes">
-        <span className="home-painterly-wash home-painterly-wash-canvas" />
-        <span className="home-painterly-wash home-painterly-wash-dawn" />
-        <span className="home-painterly-wash home-painterly-wash-hero" />
-        <span className="home-painterly-wash home-painterly-wash-projects" />
-        <span className="home-painterly-wash home-painterly-wash-contact" />
-      </div>
-      <div aria-hidden="true" className="home-coast-outro" />
+    <div className="portfolio-home">
+      <section id="home" className="collection-intro">
+        <h1>Interaction design,<br />code & photography.</h1>
+        <p>I design and build digital products.<br />Currently studying Interaction Design at UVU.</p>
+      </section>
 
-      <div className="mx-auto max-w-[36rem] pt-[4.75rem] sm:pt-28">
-        <Reveal>
-          <HomeHeroSection />
-        </Reveal>
+      <div className="collection-sections">
+        <HomeProjectsSection
+          onWorkFilterChange={applyWorkFilter}
+          projects={projects}
+          workFilter={workFilter}
+        />
+        <HomePlaygroundSection projects={playgroundProjects} />
 
-        <div className="mt-5 space-y-11 sm:mt-6 sm:space-y-[4.25rem]">
-          <Reveal delayMs={20}>
-            <HomePhilosophySection />
-          </Reveal>
+        <Section id="photography" title="Photography">
+          <div className="collection-photography">
+            <div>
+              <h3>Studio Alpine</h3>
+              <p>My photography and lifestyle project.</p>
+            </div>
+            <a className="collection-text-link" href="https://instagram.com/studio.alpine" target="_blank" rel="noopener noreferrer">View photographs ↗</a>
+          </div>
+        </Section>
 
-          <Reveal delayMs={40}>
-            <HomeProjectsSection
-              onWorkFilterChange={applyWorkFilter}
-              projects={projects}
-              workFilter={workFilter}
-            />
-          </Reveal>
-
-          <Reveal delayMs={80}>
-            <HomeEndeavorsSection />
-          </Reveal>
-
-          <Reveal delayMs={100}>
-            <HomePlaygroundSection projects={playgroundProjects} />
-          </Reveal>
-
-          <Reveal delayMs={120}>
-            <HomeBackgroundSection />
-          </Reveal>
+        <HomeBackgroundSection />
+        <div className="collection-about-note">
+          <p>{homePhilosophyContent.body}</p>
+          <div id="contact" className="collection-contact">
+            <a className="collection-text-link" href={siteMailtoHref}>Email me ↗</a>
+            <Link className="collection-text-link" href="/cv">Résumé</Link>
+            <a className="collection-text-link" href="https://linkedin.com/in/hunterbastian" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a className="collection-text-link" href="https://github.com/hunterbastian" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          </div>
         </div>
+        <HomeEndeavorsSection />
       </div>
     </div>
   )

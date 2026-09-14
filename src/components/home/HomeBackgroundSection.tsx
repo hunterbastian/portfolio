@@ -9,7 +9,7 @@ export function HomeBackgroundSection() {
     <Section
       id="background"
       title="Background"
-      contentGapClassName="space-y-1.5 sm:space-y-2"
+      contentGapClassName="space-y-4"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
       <div className="space-y-1.5 sm:space-y-2.5">
@@ -20,7 +20,7 @@ export function HomeBackgroundSection() {
             <EditorialItem
               key={displayItem.key}
               eyebrow={displayItem.eyebrow}
-              eyebrowClassName="font-mono font-normal text-muted-foreground/42 group-hover:text-muted-foreground/58"
+              eyebrowClassName="font-mono font-normal text-subtle-foreground"
               title={displayItem.title}
               titleFontClassName="font-header font-medium"
               description={displayItem.description}

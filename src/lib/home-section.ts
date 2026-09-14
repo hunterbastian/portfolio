@@ -38,7 +38,7 @@ export function getHomeRevealTransition(delayMs: number, prefersReducedMotion: b
 }
 
 export const HOME_SECTION_TITLE_CLASS_NAME =
-  'font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-subtle-foreground sm:text-[11px]'
+  'font-mono text-[12px] font-normal uppercase tracking-[0.12em] text-subtle-foreground'
 export const HOME_SECTION_RULE_CLASS_NAME = 'h-px w-full bg-border'
 
 export function getHomeSectionClassName(scrollMarginClassName: string, contentGapClassName: string): string {

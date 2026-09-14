@@ -279,7 +279,7 @@ body {
   backface-visibility: hidden;
 }
 
-/* Body copy inherits the site-wide Geist Mono stack; keep pretty wrapping for readability. */
+/* Body copy inherits Apfel Grotezk; keep pretty wrapping for readability. */
 p, li, dd, blockquote, figcaption {
   text-wrap: pretty;
 }
@@ -666,7 +666,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .font-hero-name {
-  font-family: var(--font-geist-pixel-square), 'Geist Pixel Square', ui-monospace, SFMono-Regular, monospace;
+  font-family: var(--font-apfel-grotezk), Arial, sans-serif;
 }
 
 .hero-handwritten-preview {

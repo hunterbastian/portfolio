@@ -41,13 +41,19 @@ const HOME_ENDEAVOR_THUMBNAILS: Record<NonNullable<HomeLinkItem['iconType']>, Ho
 const HOME_ENDEAVOR_DESCRIPTIONS: Record<string, string> = {
   'Studio Alpine': 'Photography and lifestyle.',
   'Available for freelance': 'Design and web work.',
-  'Studio Cala': 'Design and web work.',
+  'Studio Cala': 'Web design studio.',
+  'Above / Utah': 'Utah hiking app and trail guide. Private preview.',
+  Alcove: 'A guide to independent Utah coffee shops.',
+  'Glass Vault': 'Destiny-inspired environment and model viewer. Private preview.',
 }
 
 const HOME_ENDEAVOR_META: Record<string, string> = {
   'Studio Alpine': 'Studio',
   'Available for freelance': 'Open',
   'Studio Cala': 'Studio',
+  'Above / Utah': 'Project',
+  Alcove: 'Project',
+  'Glass Vault': 'WIP',
 }
 
 export function getHomeEndeavorAccent(_label: string) {

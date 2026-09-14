@@ -8,7 +8,7 @@ export function HomeBackgroundSection() {
   return (
     <Section
       id="background"
-      title="About"
+      title="Background"
       contentGapClassName="space-y-1.5 sm:space-y-2"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >

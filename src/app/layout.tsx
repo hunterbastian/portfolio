@@ -1,11 +1,9 @@
 import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
 import './playground.css'
 import './viewport.css'
 import './dark-theme.css'
-import './silver-collection.css'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -16,10 +14,11 @@ import Script from 'next/script'
 import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
 import { Agentation } from 'agentation'
-import PortfolioSidebar from '@/components/PortfolioSidebar'
+import TopMeta from '@/components/TopMeta'
 import JoyfulLayer from '@/components/JoyfulLayer'
 import ScrollToTop from '@/components/ScrollToTop'
 import HoverSoundCue from '@/components/HoverSoundCue'
+import ProgressiveBlur from '@/components/ProgressiveBlur'
 import { getLauncherProjectSources } from '@/lib/launcher'
 import { getAllProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
@@ -27,7 +26,7 @@ import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
-// Geist Sans leads the portfolio; Mono is reserved for supporting metadata.
+// Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
 
 
 export const viewport = {
@@ -88,7 +87,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${GeistSans.className} ${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
+        className={`${GeistMono.className} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}
@@ -96,7 +95,7 @@ export default function RootLayout({
         <MotionProvider>
           <SoundProvider>
             <HoverSoundCue />
-            <PortfolioSidebar />
+            <TopMeta />
             <SmoothScroll>
               <a
                 href="#main-content"
@@ -104,8 +103,8 @@ export default function RootLayout({
               >
                 Skip to content
               </a>
-              <div className="portfolio-content min-h-screen flex flex-col">
-                <main id="main-content" role="main" className="portfolio-main flex-1">
+              <div className="min-h-screen flex flex-col">
+                <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
                   <PageTransition>{children}</PageTransition>
                 </main>
                 <Footer />
@@ -175,6 +174,7 @@ export default function RootLayout({
             </SmoothScroll>
             <JoyfulLayer projects={launcherProjects} />
             <ScrollToTop />
+            <ProgressiveBlur />
           </SoundProvider>
         </MotionProvider>
       </body>

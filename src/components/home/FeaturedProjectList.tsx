@@ -104,8 +104,8 @@ function FeaturedProjectCard({
       <Link
         href={href}
         className={cn(
-          'featured-text-row group relative z-10 grid min-h-[44px] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5',
-          quiet ? 'py-2.5 sm:py-3' : 'py-3 sm:py-3.5',
+          'featured-text-row group relative z-10 grid min-h-[44px] grid-cols-[3.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5',
+          quiet ? 'py-3 sm:py-4' : 'py-5 sm:py-6',
         )}
         onClick={handleClick}
       >

@@ -77,7 +77,7 @@ function HomeEndeavorRow({
       </span>
     </>
   )
-  const linkClassName = 'min-w-0 flex-1 featured-text-row group relative z-10 grid min-h-[6.75rem] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 py-4 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-5'
+  const linkClassName = 'min-w-0 flex-1 featured-text-row group relative z-10 grid min-h-[6.75rem] grid-cols-[3.5rem_minmax(0,1fr)_auto] items-start gap-x-3 py-5 text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5 sm:py-6'
 
   return (
     <div
@@ -132,7 +132,7 @@ export function HomeEndeavorsSection() {
   }
 
   return (
-    <Section title="Endeavors" contentGapClassName="space-y-1.5 sm:space-y-2">
+    <Section title="Endeavors" contentGapClassName="space-y-4">
       <div
         className={cn(
           'featured-project-list home-endeavor-list',

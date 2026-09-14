@@ -3,8 +3,8 @@ import { cn } from '@/lib/utils'
 type ChromePillSize = 'contact-primary' | 'contact-social'
 
 const chromePillSizes: Record<ChromePillSize, string> = {
-  'contact-primary': 'min-h-[44px] min-w-[7rem] gap-1.5 px-3.5 text-[0.76rem] sm:min-h-[38px] sm:px-4 sm:text-[0.8rem]',
-  'contact-social': 'min-h-[44px] min-w-[6.25rem] w-auto gap-1 px-3 text-[0.68rem] sm:min-h-[36px] sm:min-w-[5.85rem] sm:px-2 sm:text-[0.72rem]',
+  'contact-primary': 'min-h-[44px] min-w-[7rem] gap-1.5 px-3.5 text-[14px] sm:min-h-[38px] sm:px-4',
+  'contact-social': 'min-h-[44px] min-w-[6.25rem] w-auto gap-1 px-3 text-[13px] sm:min-h-[36px] sm:min-w-[5.85rem] sm:px-2',
 }
 
 export function chromePillClassName({

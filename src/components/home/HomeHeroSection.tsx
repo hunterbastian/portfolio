@@ -54,7 +54,7 @@ function useHomeHeroLocalTime() {
   return localTime
 }
 
-const homeHeroIntroStackClassName = 'space-y-7 pt-5 sm:space-y-8 sm:pt-7'
+const homeHeroIntroStackClassName = 'space-y-5'
 
 export function HomeHeroSection() {
   const introParagraphs = getHomeHeroIntroParagraphs(homeHeroContent.intro)
@@ -118,9 +118,9 @@ export function HomeHeroSection() {
         }}
       />
 
-      <div className="relative z-10 space-y-5 sm:space-y-7">
+      <div className="relative z-10 space-y-6">
         <div className="space-y-3.5 sm:space-y-4">
-          <div className="space-y-1">
+          <div className="space-y-3">
             <h1 className={HOME_HERO_NAME_CLASS_NAME}>
               {homeHeroContent.headline}
             </h1>
@@ -177,7 +177,7 @@ export function HomeHeroSection() {
 
         <div
           id="contact"
-          className={`${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME} space-y-4 pt-1 sm:space-y-5 sm:pt-2`}
+          className={`${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME} space-y-4 pt-2`}
         >
           <p className={HOME_HERO_CONTACT_LINE_CLASS_NAME}>{homeContactContent.line}</p>
           <ContactLinks />

@@ -38,7 +38,7 @@ test('footer constants preserve scroll and reveal timing behavior', () => {
 
 test('footer chrome constants preserve layout and visible copy', () => {
   assert.match(FOOTER_BASE_CLASS, /transition-\[transform,opacity\]/)
-  assert.match(FOOTER_INNER_CLASS, /max-w-\[36rem\]/)
+  assert.match(FOOTER_INNER_CLASS, /max-w-\[40rem\]/)
   assert.match(FOOTER_META_ROW_CLASS, /justify-between/)
   assert.match(FOOTER_META_ROW_CLASS, /text-\[10px\]/)
   assert.match(FOOTER_META_ROW_CLASS, /font-normal/)

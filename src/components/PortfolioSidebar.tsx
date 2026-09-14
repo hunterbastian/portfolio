@@ -44,7 +44,13 @@ export default function PortfolioSidebar() {
     }
   }, [pathname])
 
-  const current = pathname === '/' ? activeSection : pathname === '/archive' ? 'playground' : 'projects'
+  const current = pathname === '/'
+    ? activeSection
+    : pathname === '/archive'
+      ? 'playground'
+      : pathname.startsWith('/projects/')
+        ? 'projects'
+        : undefined
 
   return (
     <header className="portfolio-sidebar">

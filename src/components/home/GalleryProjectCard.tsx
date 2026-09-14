@@ -1,11 +1,18 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { analytics } from '@/lib/analytics'
 import { getHomeProjectTitle, type HomeProject } from '@/lib/home-projects'
 
 export function GalleryProjectCard({ project, priority = false }: { project: HomeProject; priority?: boolean }) {
   const title = getHomeProjectTitle(project)
   return (
-    <Link className="collection-card" href={`/projects/${project.slug}`}>
+    <Link
+      className="collection-card"
+      href={`/projects/${project.slug}`}
+      onClick={() => analytics.projectClick(project.slug, title)}
+    >
       <div className="collection-card-media">
         <Image
           src={project.frontmatter.image}

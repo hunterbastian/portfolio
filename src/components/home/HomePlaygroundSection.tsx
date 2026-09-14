@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useWebHaptics } from 'web-haptics/react'
 import { Section } from '@/components/home/HomeSection'
-import { WorkScatterStack } from '@/components/home/WorkScatterStack'
+import { GalleryProjectCard } from '@/components/home/GalleryProjectCard'
 import { analytics } from '@/lib/analytics'
 import { activateEditorialItem } from '@/lib/editorial-item'
 import type { HomeProject } from '@/lib/home-projects'
@@ -20,14 +20,16 @@ export function HomePlaygroundSection({ projects }: HomePlaygroundSectionProps) 
   return (
     <Section
       id="playground"
-      title="Playground"
+      title="Explorations"
       contentGapClassName="space-y-4 sm:space-y-5"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
-      <WorkScatterStack label="Playground" projects={projects} tone="playground" />
+      <div className="collection-grid collection-grid-explorations">
+        {projects.slice(0, 4).map((project) => <GalleryProjectCard key={project.slug} project={project} />)}
+      </div>
       <Link
         href="/archive"
-        className="inline-flex min-h-[44px] origin-center touch-manipulation items-center rounded-[8px] px-2.5 font-header text-[0.78rem] font-medium tracking-[-0.02em] text-muted-foreground shadow-[var(--shadow-raised-subtle)] transition-[color,box-shadow,transform] duration-200 ease-soft hover:-translate-y-[1px] hover:text-foreground hover:shadow-[var(--shadow-hover)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        className="collection-text-link"
         onClick={() =>
           activateEditorialItem({
             showToast: showJoyToast,

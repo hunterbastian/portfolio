@@ -3,7 +3,7 @@
 import { useWebHaptics } from 'web-haptics/react'
 import { FeaturedProjectList } from '@/components/home/FeaturedProjectList'
 import { Section } from '@/components/home/HomeSection'
-import { WorkScatterStack } from '@/components/home/WorkScatterStack'
+import { GalleryProjectCard } from '@/components/home/GalleryProjectCard'
 import { analytics } from '@/lib/analytics'
 import {
   WORK_FILTER_LABELS,
@@ -29,7 +29,7 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
   return (
     <Section
       id="projects"
-      title="Projects"
+      title="Work"
       contentGapClassName="space-y-3 sm:space-y-4"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
@@ -56,14 +56,15 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
               </button>
             </div>
           ) : null}
-          <FeaturedProjectList projects={featured} />
+          <div className="collection-grid">
+            {featured.map((project, index) => <GalleryProjectCard key={project.slug} project={project} priority={index < 2} />)}
+          </div>
           {more.length > 0 ? (
             <div className="space-y-2 pt-1 sm:space-y-3 sm:pt-2">
               <p className={HOME_SECTION_TITLE_CLASS_NAME}>More</p>
               <FeaturedProjectList density="quiet" projects={more} />
             </div>
           ) : null}
-          <WorkScatterStack decorative label="Projects" projects={featured} tone="projects" />
         </div>
       </div>
     </Section>

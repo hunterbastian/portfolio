@@ -1,9 +1,11 @@
 import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
 import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
 import './playground.css'
 import './viewport.css'
 import './dark-theme.css'
+import './silver-collection.css'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -14,7 +16,7 @@ import Script from 'next/script'
 import type { ReactNode } from 'react'
 import MotionProvider from '@/components/MotionProvider'
 import { Agentation } from 'agentation'
-import TopMeta from '@/components/TopMeta'
+import PortfolioSidebar from '@/components/PortfolioSidebar'
 import JoyfulLayer from '@/components/JoyfulLayer'
 import ScrollToTop from '@/components/ScrollToTop'
 import HoverSoundCue from '@/components/HoverSoundCue'
@@ -26,7 +28,7 @@ import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
-// Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
+// Geist Sans leads the portfolio; Mono is reserved for supporting metadata.
 
 
 export const viewport = {
@@ -87,7 +89,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${GeistMono.className} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
+        className={`${GeistSans.className} ${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}
@@ -95,7 +97,7 @@ export default function RootLayout({
         <MotionProvider>
           <SoundProvider>
             <HoverSoundCue />
-            <TopMeta />
+            <PortfolioSidebar />
             <SmoothScroll>
               <a
                 href="#main-content"
@@ -103,8 +105,8 @@ export default function RootLayout({
               >
                 Skip to content
               </a>
-              <div className="min-h-screen flex flex-col">
-                <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
+              <div className="portfolio-content min-h-screen flex flex-col">
+                <main id="main-content" role="main" className="portfolio-main flex-1">
                   <PageTransition>{children}</PageTransition>
                 </main>
                 <Footer />

@@ -1,9 +1,6 @@
 'use client'
 
-import { ArrowUpRight } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
-import { EmailButton } from '@/components/EmailButton'
-import { chromePillClassName, chromePillIconClassName, chromePillLabelClassName } from '@/components/ui/tactile'
 import { contactSocialLinks, homepageContactSocialLabels } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
 import {
@@ -13,7 +10,9 @@ import {
   type ContactLinkAction,
 } from '@/lib/contact-links'
 import { showJoyToast } from '@/lib/joy'
-import { cn } from '@/lib/utils'
+
+const contactLinkClassName =
+  'inline-flex min-h-[44px] min-w-[44px] items-center rounded-sm font-mono text-[0.8125rem] leading-relaxed text-foreground/80 underline decoration-transparent decoration-1 underline-offset-[0.3em] transition-colors duration-200 hover:text-foreground hover:decoration-foreground/50 focus-visible:text-foreground focus-visible:decoration-foreground/50 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-foreground/60 motion-reduce:transition-none'
 
 export function ContactLinks() {
   const haptic = useWebHaptics()
@@ -31,40 +30,35 @@ export function ContactLinks() {
   }
 
   return (
-    <div className="space-y-3 sm:space-y-4">
+    <div className="flex max-w-full flex-wrap items-center gap-x-6 gap-y-1 text-left sm:gap-x-7">
       {contactLinksView.emailLink ? (
-        <EmailButton
-          email={contactLinksView.emailAddress}
+        <a
+          href={contactLinksView.emailLink.href}
           aria-label={contactLinksView.emailAriaLabel}
-          className="w-auto max-w-full sm:max-w-[9.25rem]"
+          className={contactLinkClassName}
           onClick={() => {
             if (contactLinksView.emailAction) {
               handleContactClick(contactLinksView.emailAction)
             }
           }}
-        />
+        >
+          {contactLinksView.emailLink.label}
+        </a>
       ) : null}
 
-      <div className="flex flex-wrap gap-2 text-left sm:gap-2.5">
-        {contactLinksView.socialLinks.map((socialLink) => (
-          <a
-            key={socialLink.link.label}
-            href={socialLink.link.href}
-            target={socialLink.target}
-            rel={socialLink.rel}
-            aria-label={socialLink.ariaLabel}
-            className={chromePillClassName({ size: 'contact-social' })}
-            onClick={() => handleContactClick(socialLink)}
-          >
-            <span className={chromePillLabelClassName}>{socialLink.link.label}</span>
-            <ArrowUpRight
-              aria-hidden="true"
-              strokeWidth={1.7}
-              className={cn(chromePillIconClassName, 'h-[0.45rem] w-[0.45rem]')}
-            />
-          </a>
-        ))}
-      </div>
+      {contactLinksView.socialLinks.map((socialLink) => (
+        <a
+          key={socialLink.link.label}
+          href={socialLink.link.href}
+          target={socialLink.target}
+          rel={socialLink.rel}
+          aria-label={socialLink.ariaLabel}
+          className={contactLinkClassName}
+          onClick={() => handleContactClick(socialLink)}
+        >
+          {socialLink.link.label}
+        </a>
+      ))}
     </div>
   )
 }

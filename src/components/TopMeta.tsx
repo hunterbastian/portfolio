@@ -132,6 +132,8 @@ export default function TopMeta() {
   const [sunBlinking, setSunBlinking] = useState(false)
   const [activeSectionId, setActiveSectionId] = useState<string>(HOME_SECTION_NAV_ITEMS[0].id)
   const mobileMenuOpenRef = useRef(false)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
   const sunIdleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const sunBlinkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const haptic = useWebHaptics()
@@ -200,6 +202,37 @@ export default function TopMeta() {
   }, [mobileMenuOpen])
 
   useEffect(() => {
+    if (!mobileMenuOpen) return
+
+    const restoreMenuFocus = () => {
+      headerRef.current?.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')?.focus()
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      event.preventDefault()
+      setMobileMenuOpen(false)
+      restoreMenuFocus()
+    }
+    const handlePointerDown = (event: PointerEvent) => {
+      if (headerRef.current?.contains(event.target as Node)) return
+      if (mobileMenuRef.current?.contains(document.activeElement)) restoreMenuFocus()
+      setMobileMenuOpen(false)
+    }
+    const desktop = window.matchMedia('(min-width: 640px)')
+    const handleResize = () => {
+      if (desktop.matches) setMobileMenuOpen(false)
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('pointerdown', handlePointerDown)
+    desktop.addEventListener('change', handleResize)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('pointerdown', handlePointerDown)
+      desktop.removeEventListener('change', handleResize)
+    }
+  }, [mobileMenuOpen])
+
+  useEffect(() => {
     let ticking = false
 
     const updateHeaderVisibility = () => {
@@ -257,7 +290,11 @@ export default function TopMeta() {
 
   return (
     <div
+      ref={headerRef}
       className={getTopMetaShellClassName(headerHidden, mobileMenuOpen, headerFrosted)}
+      onClick={(event) => {
+        if ((event.target as Element).closest('a')) closeMobileMenu()
+      }}
     >
       <div
         className={cn(getTopMetaInnerClassName(headerHidden, mobileMenuOpen), persistVisible && 'gap-3 sm:gap-4')}
@@ -326,11 +363,12 @@ export default function TopMeta() {
             labelClassName="decoration-border underline underline-offset-[0.24em]"
             ariaLabel={getTopMetaMobileMenuAriaLabel(mobileMenuOpen)}
             ariaExpanded={mobileMenuOpen}
+            ariaControls="mobile-navigation"
           >
             {TOP_META_MOBILE_MENU_LABEL}
           </PeekAction>
 
-          <div className={getTopMetaMobileMenuClassName(mobileMenuOpen)} aria-hidden={!mobileMenuOpen}>
+          <div ref={mobileMenuRef} id="mobile-navigation" className={getTopMetaMobileMenuClassName(mobileMenuOpen)} aria-hidden={!mobileMenuOpen} inert={!mobileMenuOpen}>
             <div className="flex flex-col items-stretch gap-1.5 border-t border-border px-3.5 py-3">
               {persistVisible ? (
                 <nav aria-label={HOME_SECTION_NAV_ARIA_LABEL} className="flex flex-col items-stretch gap-2">

@@ -18,6 +18,7 @@ type PeekActionProps = {
   type?: 'button' | 'submit' | 'reset'
   ariaLabel?: string
   ariaExpanded?: boolean
+  ariaControls?: string
   className?: string
   labelClassName?: string
   tooltipClassName?: string
@@ -34,6 +35,7 @@ export function PeekAction({
   type = 'button',
   ariaLabel,
   ariaExpanded,
+  ariaControls,
   className,
   labelClassName,
   tooltipClassName,
@@ -91,6 +93,7 @@ export function PeekAction({
       type={type}
       aria-label={ariaLabel}
       aria-expanded={ariaExpanded}
+      aria-controls={ariaControls}
       className={actionClassName}
       onClick={onClick}
       onFocus={onFocus}

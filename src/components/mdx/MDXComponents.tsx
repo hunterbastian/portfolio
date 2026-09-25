@@ -78,8 +78,8 @@ export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, he
       alt={alt}
       width={width}
       height={height}
-      className="w-full shadow-lg"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+      className="h-auto w-full shadow-lg"
+      sizes="(max-width: 608px) calc(100vw - 48px), 560px"
       priority={false}
       {...props}
     />

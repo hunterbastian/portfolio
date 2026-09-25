@@ -81,7 +81,7 @@ test('getSiteMetadata builds social preview metadata', () => {
 test('getSiteMetadata defaults to the production site config', () => {
   const metadata = getSiteMetadata()
 
-  assert.equal(metadata.title, 'Hunter Bastian - Design Engineer')
+  assert.equal(metadata.title, 'Hunter Bastian — Interaction designer in Lehi, Utah')
   assert.equal(metadata.metadataBase?.toString(), 'https://hunterbastian.com/')
 })
 

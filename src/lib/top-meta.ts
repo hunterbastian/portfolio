@@ -17,7 +17,7 @@ const TOP_META_SHELL_FROSTED_CLASS =
   'bg-card/88 shadow-[0_1px_0_0_var(--border),0_10px_26px_-24px_rgba(0,0,0,0.58)] backdrop-blur-sm sm:backdrop-blur-md'
 
 const TOP_META_INNER_BASE_CLASS =
-  'relative isolate mx-auto flex max-w-[36rem] min-w-0 items-center justify-between gap-4 border-b border-border pb-2.5 sm:gap-6 sm:pb-4'
+  'relative isolate mx-auto flex max-w-[40rem] min-w-0 items-center justify-between gap-4 border-b border-border pb-2.5 sm:gap-6 sm:pb-4'
 const TOP_META_INNER_DISABLED_CLASS = 'pointer-events-none'
 const TOP_META_INNER_ENABLED_CLASS = 'pointer-events-auto'
 
@@ -29,7 +29,7 @@ const TOP_META_SUN_BASE_CLASS =
   'header-sun-shell text-muted-foreground/62 transition-[color,filter,transform] duration-200 ease-soft group-hover/peek:scale-[1.08] group-hover/peek:text-foreground/80 group-hover/peek:brightness-110 group-active:scale-[0.96]'
 const TOP_META_SUN_BLINK_CLASS = 'animate-hb-sun-blink'
 const TOP_META_NAV_LINK_BASE_CLASS =
-  'justify-center rounded-[8px] px-3 text-[0.62rem] font-medium tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:text-[0.7rem]'
+  'justify-center rounded-[8px] px-3 text-[13px] font-medium tracking-normal transition-[background-color,color,filter,transform] duration-150'
 const TOP_META_NAV_LINK_ACTIVE_CLASS = CHROME_NAV_ACTIVE_CLASS
 const TOP_META_NAV_LINK_INACTIVE_CLASS = CHROME_NAV_INACTIVE_CLASS
 const TOP_META_NAV_LABEL_BASE_CLASS =

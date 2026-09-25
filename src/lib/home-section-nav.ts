@@ -4,12 +4,12 @@ export const HOME_SECTION_NAV_ARIA_LABEL = 'On this page'
 export const HOME_SECTION_NAV_HAPTIC_STYLE = 'light'
 export const HOME_SECTION_NAV_SCROLL_OFFSET_PX = 88
 export const HOME_SECTION_NAV_PROBE_RATIO = 0.36
-export const HOME_SECTION_SCROLL_MARGIN_CLASS_NAME = 'scroll-mt-20 sm:scroll-mt-24'
+export const HOME_SECTION_SCROLL_MARGIN_CLASS_NAME = 'scroll-mt-28 sm:scroll-mt-36'
 export const HOME_SECTION_NAV_LIST_CLASS_NAME =
   'flex min-w-0 items-center justify-end gap-0.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-1'
 
 const HOME_SECTION_NAV_LINK_BASE_CLASS =
-  'justify-center rounded-[8px] px-1.5 text-[0.62rem] font-medium tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:px-2 sm:text-[0.68rem]'
+  'justify-center rounded-[8px] px-1.5 font-sans text-[13px] font-medium tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:px-2'
 const HOME_SECTION_NAV_LINK_ACTIVE_CLASS = CHROME_NAV_ACTIVE_CLASS
 const HOME_SECTION_NAV_LINK_INACTIVE_CLASS = CHROME_NAV_INACTIVE_CLASS
 

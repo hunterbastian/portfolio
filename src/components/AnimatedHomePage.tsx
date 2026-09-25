@@ -51,12 +51,12 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
       </div>
       <div aria-hidden="true" className="home-coast-outro" />
 
-      <div className="mx-auto max-w-[36rem] pt-[4.75rem] sm:pt-28">
+      <div className="mx-auto max-w-[40rem] pt-16 sm:pt-24">
         <Reveal>
           <HomeHeroSection />
         </Reveal>
 
-        <div className="mt-5 space-y-11 sm:mt-6 sm:space-y-[4.25rem]">
+        <div className="mt-12 space-y-14 sm:mt-14 sm:space-y-20">
           <Reveal delayMs={20}>
             <HomePhilosophySection />
           </Reveal>

@@ -302,7 +302,7 @@ export default function TopMeta() {
         <PeekAction
           href="/"
           peek="Start here"
-          className="z-10 shrink-0 text-[0.86rem] font-medium tracking-normal text-foreground/80 hover:text-foreground"
+          className="z-10 shrink-0 font-pixel text-[12px] font-normal tracking-normal text-foreground/80 hover:text-foreground"
           labelClassName="inline-flex items-center gap-2"
           onClick={() =>
             activateTopMetaBrandAction({
@@ -359,7 +359,7 @@ export default function TopMeta() {
                 triggerHaptic: (style) => haptic.trigger(style),
               })
             }
-            className="min-h-[44px] min-w-[44px] justify-center text-[0.68rem] text-muted-foreground hover:text-foreground"
+            className="min-h-[44px] min-w-[44px] justify-center text-[14px] text-muted-foreground hover:text-foreground"
             labelClassName="decoration-border underline underline-offset-[0.24em]"
             ariaLabel={getTopMetaMobileMenuAriaLabel(mobileMenuOpen)}
             ariaExpanded={mobileMenuOpen}

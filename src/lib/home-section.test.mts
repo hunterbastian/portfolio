@@ -55,14 +55,13 @@ test('home section class helper preserves scroll and content spacing composition
   assert.equal(getHomeSectionClassName('scroll-mt-24', 'space-y-4 sm:space-y-7'), 'scroll-mt-24 space-y-4 sm:space-y-7')
 })
 
-test('home section labels stay whisper-scale gray metadata', () => {
+test('home section labels stay readable gray metadata', () => {
   const source = readFileSync(new URL('../components/home/HomeSection.tsx', import.meta.url), 'utf8')
 
-  assert.match(HOME_SECTION_TITLE_CLASS_NAME, /text-\[10px\]/)
-  assert.match(HOME_SECTION_TITLE_CLASS_NAME, /sm:text-\[11px\]/)
+  assert.match(HOME_SECTION_TITLE_CLASS_NAME, /text-\[12px\]/)
   assert.match(HOME_SECTION_TITLE_CLASS_NAME, /font-normal/)
   assert.match(HOME_SECTION_TITLE_CLASS_NAME, /uppercase/)
-  assert.match(HOME_SECTION_TITLE_CLASS_NAME, /tracking-\[0\.18em\]/)
+  assert.match(HOME_SECTION_TITLE_CLASS_NAME, /tracking-\[0\.12em\]/)
   assert.match(HOME_SECTION_TITLE_CLASS_NAME, /text-subtle-foreground/)
   assert.match(HOME_SECTION_RULE_CLASS_NAME, /bg-border/)
   assert.doesNotMatch(HOME_SECTION_RULE_CLASS_NAME, /bg-border\//)

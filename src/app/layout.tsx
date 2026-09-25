@@ -1,3 +1,4 @@
+import localFont from 'next/font/local'
 import { GeistMono } from 'geist/font/mono'
 import { GeistPixelSquare } from 'geist/font/pixel'
 import './globals.css'
@@ -26,7 +27,17 @@ import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
-// Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
+// Apfel carries reading text; Mono handles metadata and Pixel adds small accents.
+const apfelGrotezk = localFont({
+  src: [
+    { path: './fonts/apfel/ApfelGrotezk-Regular.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/apfel/ApfelGrotezk-Mittel.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/apfel/ApfelGrotezk-Fett.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-apfel-grotezk',
+  display: 'swap',
+  fallback: ['Arial', 'sans-serif'],
+})
 
 
 export const viewport = {
@@ -87,7 +98,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${GeistMono.className} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
+        className={`${apfelGrotezk.className} ${apfelGrotezk.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}

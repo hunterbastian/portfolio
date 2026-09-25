@@ -20,9 +20,10 @@ const config: Config = {
     extend: {
       fontFamily: {
         'mono': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        'sans': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        'inter': ['var(--font-geist-mono)', 'Geist Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        'header': ['var(--font-geist-pixel-square)', 'Geist Pixel Square', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        'sans': ['var(--font-apfel-grotezk)', 'Arial', 'sans-serif'],
+        'inter': ['var(--font-apfel-grotezk)', 'Arial', 'sans-serif'],
+        'pixel': ['var(--font-geist-pixel-square)', 'Geist Pixel Square', 'monospace'],
+        'header': ['var(--font-apfel-grotezk)', 'Arial', 'sans-serif'],
         'redaction': ['HB Redaction', 'Redaction', 'Redaction 35', 'Georgia', 'serif'],
       },
       screens: {

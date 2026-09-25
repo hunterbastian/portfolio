@@ -1,20 +1,15 @@
 'use client'
 
-import { useWebHaptics } from 'web-haptics/react'
-import { FeaturedProjectList } from '@/components/home/FeaturedProjectList'
-import { Section } from '@/components/home/HomeSection'
-import { WorkScatterStack } from '@/components/home/WorkScatterStack'
-import { analytics } from '@/lib/analytics'
-import {
-  WORK_FILTER_LABELS,
-  activateHomeProjectClearFilter,
-  partitionHomeProjectRows,
-  type HomeProject,
-  type WorkFilter,
-} from '@/lib/home-projects'
-import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
-import { HOME_SECTION_TITLE_CLASS_NAME } from '@/lib/home-section'
-import { showJoyToast } from '@/lib/joy'
+import Link from 'next/link'
+import { EditorialProjectCard } from '@/components/home/EditorialProjectCard'
+import { formatProjectYear, getHomeProjectTitle, partitionHomeProjectRows, type HomeProject, type WorkFilter } from '@/lib/home-projects'
+
+const filters: { value: WorkFilter; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'product', label: 'Product' },
+  { value: 'web', label: 'Web' },
+  { value: 'visual', label: 'Visual' },
+]
 
 interface HomeProjectsSectionProps {
   onWorkFilterChange: (filter: WorkFilter) => void
@@ -23,49 +18,38 @@ interface HomeProjectsSectionProps {
 }
 
 export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }: HomeProjectsSectionProps) {
-  const haptic = useWebHaptics()
   const { featured, more } = partitionHomeProjectRows(projects, workFilter)
+  // Categories without a featured project still get an image-led view.
+  const visible = featured.length ? featured : more
+  const additional = featured.length ? more : []
 
   return (
-    <Section
-      id="projects"
-      title="Projects"
-      contentGapClassName="space-y-3 sm:space-y-4"
-      scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
-    >
-      <div className="relative">
-        <div className="relative z-10 space-y-5 sm:space-y-8">
-          {workFilter !== 'all' ? (
-            <div className="flex items-center justify-between gap-3 rounded-[8px] bg-card px-2.5 py-2 font-mono text-[0.68rem] text-muted-foreground shadow-[var(--shadow-raised-subtle)]">
-              <span>
-                Showing <span className="text-foreground">{WORK_FILTER_LABELS[workFilter]}</span>
-              </span>
-              <button
-                type="button"
-                className="min-h-[40px] min-w-[40px] origin-center touch-manipulation font-medium text-foreground underline decoration-border underline-offset-[0.22em] transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground/80 hover:decoration-foreground/40 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                onClick={() =>
-                  activateHomeProjectClearFilter({
-                    setWorkFilter: onWorkFilterChange,
-                    showToast: showJoyToast,
-                    trackNavigationClick: (target) => analytics.navigationClick(target),
-                    triggerHaptic: (style) => haptic.trigger(style),
-                  })
-                }
-              >
-                Clear
-              </button>
-            </div>
-          ) : null}
-          <FeaturedProjectList projects={featured} />
-          {more.length > 0 ? (
-            <div className="space-y-2 pt-1 sm:space-y-3 sm:pt-2">
-              <p className={HOME_SECTION_TITLE_CLASS_NAME}>More</p>
-              <FeaturedProjectList density="quiet" projects={more} />
-            </div>
-          ) : null}
-          <WorkScatterStack decorative label="Projects" projects={featured} tone="projects" />
+    <section id="projects" className="editorial-section" aria-labelledby="work-heading">
+      <div className="editorial-section-heading">
+        <h2 id="work-heading">Selected work</h2>
+        <div className="editorial-filters" aria-label="Filter work">
+          {filters.map((filter) => (
+            <button key={filter.value} type="button" aria-pressed={workFilter === filter.value} onClick={() => onWorkFilterChange(filter.value)}>
+              {filter.label}
+            </button>
+          ))}
         </div>
       </div>
-    </Section>
+      <div className="editorial-project-grid" aria-live="polite" aria-atomic="false">
+        {visible.map((project) => <EditorialProjectCard key={project.slug} project={project} />)}
+        {!visible.length && <p className="editorial-project-description">No projects in this category yet. Choose All to see the collection.</p>}
+      </div>
+      {additional.length > 0 && (
+        <div className="editorial-more-work">
+          <p className="editorial-eyebrow">More work</p>
+          {additional.map((project) => (
+            <Link key={project.slug} href={`/projects/${project.slug}`} className="editorial-index-row">
+              <span>{getHomeProjectTitle(project)}</span>
+              <span className="editorial-project-year">{formatProjectYear(project.frontmatter.date)}</span>
+            </Link>
+          ))}
+        </div>
+      )}
+    </section>
   )
 }

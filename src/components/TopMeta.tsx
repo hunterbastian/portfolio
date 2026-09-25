@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
-import { Summer as PixelSun } from '@/components/pixel/glyphs'
 import { PeekAction } from '@/components/PeekAction'
 import { showJoyToast } from '@/lib/joy'
 import { analytics } from '@/lib/analytics'
@@ -39,7 +38,6 @@ import {
   getTopMetaNavLinkClassName,
   getTopMetaPageNavItems,
   getTopMetaShellClassName,
-  getTopMetaSunClassName,
   getTopMetaSunIdleDelay,
   type TopMetaNavItem,
   isTopMetaNavItemActive,
@@ -129,7 +127,7 @@ export default function TopMeta() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [headerHidden, setHeaderHidden] = useState(false)
   const [headerFrosted, setHeaderFrosted] = useState(false)
-  const [sunBlinking, setSunBlinking] = useState(false)
+  const [, setSunBlinking] = useState(false)
   const [activeSectionId, setActiveSectionId] = useState<string>(HOME_SECTION_NAV_ITEMS[0].id)
   const mobileMenuOpenRef = useRef(false)
   const headerRef = useRef<HTMLDivElement>(null)
@@ -302,7 +300,7 @@ export default function TopMeta() {
         <PeekAction
           href="/"
           peek="Start here"
-          className="z-10 shrink-0 text-[0.86rem] font-medium tracking-normal text-foreground/80 hover:text-foreground"
+          className="editorial-header-brand z-10 shrink-0"
           labelClassName="inline-flex items-center gap-2"
           onClick={() =>
             activateTopMetaBrandAction({
@@ -315,9 +313,6 @@ export default function TopMeta() {
           }
         >
           <span>Hunter Bastian</span>
-          <span className={getTopMetaSunClassName(sunBlinking)}>
-            <PixelSun size={10} />
-          </span>
         </PeekAction>
 
         <div
@@ -328,7 +323,7 @@ export default function TopMeta() {
         >
           {persistVisible ? (
             <nav aria-label={HOME_SECTION_NAV_ARIA_LABEL} className={HOME_SECTION_NAV_LIST_CLASS_NAME}>
-              {HOME_SECTION_NAV_ITEMS.map((item) => (
+              {HOME_SECTION_NAV_ITEMS.filter((item) => item.id !== 'home').map((item) => (
                 <SectionNavLink
                   key={item.id}
                   active={item.id === activeSectionId}
@@ -359,20 +354,20 @@ export default function TopMeta() {
                 triggerHaptic: (style) => haptic.trigger(style),
               })
             }
-            className="min-h-[44px] min-w-[44px] justify-center text-[0.68rem] text-muted-foreground hover:text-foreground"
+            className="min-h-[44px] min-w-[44px] justify-center text-[14px] text-muted-foreground hover:text-foreground"
             labelClassName="decoration-border underline underline-offset-[0.24em]"
             ariaLabel={getTopMetaMobileMenuAriaLabel(mobileMenuOpen)}
             ariaExpanded={mobileMenuOpen}
             ariaControls="mobile-navigation"
           >
-            {TOP_META_MOBILE_MENU_LABEL}
+            {mobileMenuOpen ? 'Close' : TOP_META_MOBILE_MENU_LABEL}
           </PeekAction>
 
           <div ref={mobileMenuRef} id="mobile-navigation" className={getTopMetaMobileMenuClassName(mobileMenuOpen)} aria-hidden={!mobileMenuOpen} inert={!mobileMenuOpen}>
             <div className="flex flex-col items-stretch gap-1.5 border-t border-border px-3.5 py-3">
               {persistVisible ? (
                 <nav aria-label={HOME_SECTION_NAV_ARIA_LABEL} className="flex flex-col items-stretch gap-2">
-                  {HOME_SECTION_NAV_ITEMS.map((item) => (
+                  {HOME_SECTION_NAV_ITEMS.filter((item) => item.id !== 'home').map((item) => (
                     <SectionNavLink
                       key={item.id}
                       active={item.id === activeSectionId}

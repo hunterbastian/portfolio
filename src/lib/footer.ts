@@ -3,16 +3,16 @@ export const FOOTER_SCROLL_DELTA_THRESHOLD = 6
 export const FOOTER_PAGE_END_PADDING = 160
 export const FOOTER_SPARKLE_DURATION_MS = 1300
 export const FOOTER_REVEAL_OBSERVER_THRESHOLD = 0.35
-export const FOOTER_HOME_SHELL_CLASS = 'footer-coast-shell'
+export const FOOTER_HOME_SHELL_CLASS = ''
 export const FOOTER_VISIBLE_CLASS = 'translate-y-0 opacity-100'
 export const FOOTER_HIDDEN_CLASS = 'pointer-events-none translate-y-6 opacity-0'
 export const FOOTER_SPARKLE_BASE_CLASS = 'footer-pixel-sun transition-transform duration-200 ease-soft'
 export const FOOTER_SPARKLE_ACTIVE_CLASS = 'animate-hb-sun-blink'
 export const FOOTER_BASE_CLASS =
-  'px-5 pb-10 pt-12 transition-[transform,opacity] duration-300 ease-soft sm:px-8 sm:pb-14 sm:pt-20'
-export const FOOTER_INNER_CLASS = 'mx-auto max-w-[36rem] border-t border-border pt-6'
+  'editorial-footer transition-[transform,opacity] duration-300 motion-reduce:transition-none'
+export const FOOTER_INNER_CLASS = 'editorial-container border-t border-border pt-8'
 export const FOOTER_META_ROW_CLASS =
-  'flex flex-wrap items-start justify-between gap-x-4 gap-y-2 text-[10px] font-normal text-subtle-foreground'
+  'flex flex-wrap items-start justify-between gap-x-4 gap-y-2 text-[13px] font-normal text-muted-foreground'
 export const FOOTER_COPYRIGHT_CLASS = 'shrink-0 font-header transition-colors duration-150 hover:text-foreground/78'
 export const FOOTER_MADE_LINE_CLASS =
   'footer-made-line inline-flex items-center justify-end gap-2 text-right font-header transition-colors duration-150 hover:text-foreground/78'

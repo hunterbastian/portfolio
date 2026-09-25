@@ -7,23 +7,24 @@ import { ArrowUpRight, X } from 'lucide-react'
 import type { StudioWorkExample } from '@/content/studio-work'
 import styles from './StudioWorkStack.module.css'
 
-export function StudioWorkStack({ studio, examples, print }: {
+export function StudioWorkStack({ studio, examples, print, compact = false }: {
   studio: string
   examples: StudioWorkExample[]
   print: boolean
+  compact?: boolean
 }) {
   return (
     <Dialog.Root>
-      <Dialog.Trigger className={styles.trigger} aria-label={`View ${studio} work`}>
-        <span className={styles.stack} aria-hidden="true">
+      <Dialog.Trigger className={compact ? 'editorial-text-link' : styles.trigger} aria-label={`View ${studio} work`}>
+        {!compact && <span className={styles.stack} aria-hidden="true">
           {examples.map((example, index) => (
             <span key={example.title} className={`${styles.card} ${print ? styles.print : ''}`}
               style={{ '--index': index, '--offset': index - (examples.length - 1) / 2, zIndex: examples.length - index } as CSSProperties}>
               <Image src={example.image} alt="" fill sizes="80px" className={styles.thumbnail} />
             </span>
           ))}
-        </span>
-        <span className={styles.hint}>View work <ArrowUpRight size={12} aria-hidden="true" /></span>
+        </span>}
+        <span className={compact ? 'inline-flex items-center gap-2' : styles.hint}>View work <ArrowUpRight size={12} aria-hidden="true" /></span>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop className={styles.backdrop} />

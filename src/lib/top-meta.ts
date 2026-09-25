@@ -1,4 +1,3 @@
-import { CHROME_NAV_ACTIVE_CLASS, CHROME_NAV_INACTIVE_CLASS } from './chrome.ts'
 
 export const TOP_REVEAL_SCROLL_Y = 24
 export const TOP_META_SUN_BLINK_MS = 420
@@ -10,28 +9,26 @@ export const TOP_META_MOBILE_MENU_CLOSE_LABEL = 'Close menu'
 export const TOP_META_HAPTIC_STYLE = 'light'
 
 const TOP_META_SHELL_BASE_CLASS =
-  'fixed inset-x-0 top-0 z-50 px-5 py-2.5 pt-[max(0.625rem,env(safe-area-inset-top))] transition-[transform,opacity,filter] duration-300 ease-soft sm:px-8 sm:py-6 sm:pt-6'
+  'editorial-header fixed inset-x-0 top-0 z-50 transition-[transform,opacity] duration-300 motion-reduce:transition-none'
 const TOP_META_SHELL_HIDDEN_CLASS = 'pointer-events-none -translate-y-3 opacity-0 blur-[2px]'
 const TOP_META_SHELL_VISIBLE_CLASS = 'pointer-events-none translate-y-0 opacity-100 blur-0'
-const TOP_META_SHELL_FROSTED_CLASS =
-  'bg-card/88 shadow-[0_1px_0_0_var(--border),0_10px_26px_-24px_rgba(0,0,0,0.58)] backdrop-blur-sm sm:backdrop-blur-md'
+const TOP_META_SHELL_FROSTED_CLASS = 'editorial-header-scrolled'
 
 const TOP_META_INNER_BASE_CLASS =
-  'relative isolate mx-auto flex max-w-[36rem] min-w-0 items-center justify-between gap-4 border-b border-border pb-2.5 sm:gap-6 sm:pb-4'
+  'editorial-header-inner relative isolate mx-auto flex min-w-0 items-center justify-between gap-4'
 const TOP_META_INNER_DISABLED_CLASS = 'pointer-events-none'
 const TOP_META_INNER_ENABLED_CLASS = 'pointer-events-auto'
 
 const TOP_META_MOBILE_MENU_BASE_CLASS =
-  'fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[calc(3.15rem+env(safe-area-inset-top))] z-50 max-h-[calc(100dvh-5rem-env(safe-area-inset-top))] w-[min(14rem,calc(100vw-2.5rem))] origin-top-right overflow-y-auto overscroll-contain rounded-[8px] border border-border bg-[#252525] shadow-[0_20px_46px_-28px_rgba(0,0,0,0.72),0_1px_2px_rgba(0,0,0,0.32)] backdrop-blur-sm transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
+  'fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[calc(64px+env(safe-area-inset-top))] z-50 max-h-[calc(100dvh-5rem-env(safe-area-inset-top))] w-[min(14rem,calc(100vw-2.5rem))] origin-top-right overflow-y-auto overscroll-contain rounded-[8px] border border-border bg-[#252525] shadow-[0_20px_46px_-28px_rgba(0,0,0,0.72),0_1px_2px_rgba(0,0,0,0.32)] backdrop-blur-sm transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
 const TOP_META_MOBILE_MENU_OPEN_CLASS = 'pointer-events-auto visible translate-y-0 opacity-100'
 const TOP_META_MOBILE_MENU_CLOSED_CLASS = 'pointer-events-none invisible translate-y-1 opacity-0'
 const TOP_META_SUN_BASE_CLASS =
   'header-sun-shell text-muted-foreground/62 transition-[color,filter,transform] duration-200 ease-soft group-hover/peek:scale-[1.08] group-hover/peek:text-foreground/80 group-hover/peek:brightness-110 group-active:scale-[0.96]'
 const TOP_META_SUN_BLINK_CLASS = 'animate-hb-sun-blink'
-const TOP_META_NAV_LINK_BASE_CLASS =
-  'justify-center rounded-[8px] px-3 text-[0.62rem] font-medium tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:text-[0.7rem]'
-const TOP_META_NAV_LINK_ACTIVE_CLASS = CHROME_NAV_ACTIVE_CLASS
-const TOP_META_NAV_LINK_INACTIVE_CLASS = CHROME_NAV_INACTIVE_CLASS
+const TOP_META_NAV_LINK_BASE_CLASS = 'editorial-nav-link'
+const TOP_META_NAV_LINK_ACTIVE_CLASS = 'editorial-nav-active'
+const TOP_META_NAV_LINK_INACTIVE_CLASS = ''
 const TOP_META_NAV_LABEL_BASE_CLASS =
   'transition-[color,filter] duration-150 group-hover/peek:brightness-95'
 const TOP_META_NAV_LABEL_ACTIVE_CLASS = ''

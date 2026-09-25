@@ -22,7 +22,7 @@ const TOP_META_INNER_DISABLED_CLASS = 'pointer-events-none'
 const TOP_META_INNER_ENABLED_CLASS = 'pointer-events-auto'
 
 const TOP_META_MOBILE_MENU_BASE_CLASS =
-  'fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[calc(3.15rem+env(safe-area-inset-top))] z-50 w-[min(14rem,calc(100vw-2.5rem))] origin-top-right overflow-hidden rounded-[8px] border border-border bg-[#252525] shadow-[0_20px_46px_-28px_rgba(0,0,0,0.72),0_1px_2px_rgba(0,0,0,0.32)] backdrop-blur-sm transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
+  'fixed right-[max(1.25rem,env(safe-area-inset-right))] top-[calc(3.15rem+env(safe-area-inset-top))] z-50 max-h-[calc(100dvh-5rem-env(safe-area-inset-top))] w-[min(14rem,calc(100vw-2.5rem))] origin-top-right overflow-y-auto overscroll-contain rounded-[8px] border border-border bg-[#252525] shadow-[0_20px_46px_-28px_rgba(0,0,0,0.72),0_1px_2px_rgba(0,0,0,0.32)] backdrop-blur-sm transition-[opacity,transform] duration-200 ease-soft motion-reduce:transition-none motion-reduce:transform-none'
 const TOP_META_MOBILE_MENU_OPEN_CLASS = 'pointer-events-auto visible translate-y-0 opacity-100'
 const TOP_META_MOBILE_MENU_CLOSED_CLASS = 'pointer-events-none invisible translate-y-1 opacity-0'
 const TOP_META_SUN_BASE_CLASS =

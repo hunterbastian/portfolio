@@ -123,8 +123,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 fill
                 className="object-cover"
                 priority
-                quality={90}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
+                quality={80}
+                sizes="(max-width: 608px) calc(100vw - 48px), 560px"
               />
             </div>
           }

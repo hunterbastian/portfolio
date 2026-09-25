@@ -15,11 +15,9 @@ import {
   getProjectStructuredData,
   resolveProjectImageUrl,
 } from '@/lib/project-detail'
-import { IconTag } from 'nucleo-pixel-essential'
 import BreadcrumbPill from '@/components/BreadcrumbPill'
 import ProjectDetailContent from '@/components/ProjectDetailContent'
 import CaseStudyNav from '@/components/CaseStudyNav'
-import SectionMarker, { categoryToKind } from '@/components/pixel/SectionMarker'
 import TrackedExternalLink from '@/components/TrackedExternalLink'
 import ProjectContactCTA from '@/components/ProjectContactCTA'
 import ProjectEndNav from '@/components/ProjectEndNav'
@@ -89,7 +87,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const jsonLd = getProjectStructuredData({ frontmatter, imageUrl, projectUrl })
 
   return (
-    <article className="container mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6">
+    <article className="editorial-case editorial-container">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -103,20 +101,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         />
       </div>
 
-      <div className="relative mx-auto max-w-[560px]">
+      <div className="relative mx-auto max-w-[1040px]">
         <CaseStudyNav />
         <ProjectDetailContent
           slug={slug}
           projectTitle={displayTitle}
           header={
-            <header className="mb-8 flex flex-col items-center text-center">
-              <SectionMarker kind={categoryToKind(frontmatter.category)} label={frontmatter.category} className="mb-3" />
-              <h1 className="font-mono text-lg font-medium tracking-[0.01em] text-foreground sm:text-2xl">{displayTitle}</h1>
-              {formattedDate && <p className="mt-1 font-mono text-sm text-muted-foreground">{formattedDate}</p>}
+            <header className="editorial-page-heading">
+              <p className="editorial-eyebrow">{frontmatter.category}</p>
+              <h1 className="editorial-case-title">{displayTitle}</h1>
+              {formattedDate && <p className="editorial-case-date">{formattedDate}</p>}
             </header>
           }
           image={
-            <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden img-inset-outline shadow-card">
+            <div className="editorial-case-image relative aspect-[3/2] w-full overflow-hidden">
               <Image
                 src={frontmatter.image}
                 alt={frontmatter.title}
@@ -124,29 +122,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 className="object-cover"
                 priority
                 quality={80}
-                sizes="(max-width: 608px) calc(100vw - 48px), 560px"
+                sizes="(max-width: 1100px) calc(100vw - 48px), 1040px"
               />
             </div>
           }
           description={
-            <p className="mb-10 px-3 text-center text-balance font-inter text-[13px] leading-relaxed text-muted-foreground sm:px-2">
+            <p className="editorial-case-description">
               {frontmatter.description}
             </p>
           }
-          meta={
-            <div className="mb-12 flex flex-wrap gap-4">
-              <div className="group flex items-center gap-2 font-inter text-[13px] text-muted-foreground">
-                <IconTag size={11} className="shrink-0 opacity-50 transition-transform duration-200 ease-soft group-hover:rotate-[-6deg] group-hover:scale-110" aria-hidden />
-                <span className="font-medium">Category:</span>
-                <span className="bg-accent/10 text-accent px-3 py-1.5 sm:py-1">
-                  {frontmatter.category}
-                </span>
-              </div>
-            </div>
-          }
+          meta={null}
           links={
             projectLinks.length ? (
-              <div className="mb-12 flex flex-wrap gap-3">
+              <div className="editorial-case-links">
                 {projectLinks.map((link) => (
                   <TrackedExternalLink
                     key={link.kind}
@@ -166,7 +154,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           }
           content={
             <div>
-              <div className="prose max-w-none font-inter text-[14px] [&_li]:font-inter [&_ol]:font-inter [&_p]:font-inter [&_p]:text-[14px] [&_ul]:font-inter [&_li]:text-[14px] [&_h2]:font-mono [&_h3]:font-mono [&_h4]:font-mono">
+              <div className="prose editorial-case-prose">
                 <MDXRemote source={content} components={mdxComponents} />
               </div>
               <ProjectContactCTA projectSlug={slug} projectTitle={displayTitle} />

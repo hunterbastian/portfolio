@@ -41,7 +41,7 @@ function SectionHeading({
   const Glyph = kind ? CV_KIND_GLYPHS[kind] : null
   return (
     <h2 className="font-mono text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground mb-5 inline-flex items-center gap-2">
-      {Glyph ? <Glyph size={10} className="text-muted-foreground/70" /> : null}
+      {Glyph ? <Glyph size={10} className="text-muted-foreground" /> : null}
       <TextReveal text={children} as="span" trigger duration={0.4} staggerDelay={0.06} startDelay={delay} />
     </h2>
   )
@@ -72,18 +72,18 @@ export default function CVPageClient() {
   }
 
   return (
-    <div className="relative min-h-screen">
-      <div className="relative z-10 container mx-auto max-w-2xl px-4 sm:px-6">
+    <div className="editorial-cv relative min-h-screen">
+      <div className="editorial-container relative z-10">
         {/* Breadcrumb — hidden in print */}
         <div className="mb-10 sm:mb-14 flex justify-start pt-4 sm:pt-6 print:hidden">
           <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Resume" />
         </div>
 
         {/* Header */}
-        <header className="pb-8 sm:pb-10 pt-8 sm:pt-12 print:pt-0 print:pb-6">
+        <header className="editorial-cv-header print:pt-0 print:pb-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="font-mono text-[14px] font-semibold tracking-[0.08em] uppercase text-foreground sm:text-[15px]">
+              <h1 className="editorial-cv-name">
                 <TextReveal text="Hunter Bastian" as="span" trigger duration={0.5} staggerDelay={0.08} startDelay={0.1} filter />
               </h1>
               <p className="mt-2 text-[13px] text-muted-foreground">
@@ -125,9 +125,9 @@ export default function CVPageClient() {
         <Divider />
 
         {/* Experience */}
-        <section className="py-8 sm:py-10 print:py-5">
+        <section className="editorial-cv-section print:py-5">
           <SectionHeading delay={0.5} kind="work">Experience</SectionHeading>
-          <div className="space-y-5">
+          <div className="editorial-cv-entries">
             {experienceItems.map((item, i) => (
               <m.div
                 key={`${item.company}-${item.year}`}
@@ -139,13 +139,13 @@ export default function CVPageClient() {
               >
                 <div>
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                    <span className="text-[13px] font-medium text-foreground">{item.company}</span>
+                    <span className="text-[17px] font-medium text-foreground">{item.company}</span>
                     <span className="text-[11px] text-muted-foreground/60">·</span>
-                    <span className="text-[12px] text-muted-foreground">{item.title}</span>
+                    <span className="text-[15px] text-muted-foreground">{item.title}</span>
                   </div>
-                  <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground/70">{item.description}</p>
+                  <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">{item.description}</p>
                 </div>
-                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap sm:justify-self-end">{item.year}</span>
+                <span className="text-[12px] font-mono tracking-wide text-muted-foreground whitespace-nowrap sm:justify-self-end">{item.year}</span>
               </m.div>
             ))}
           </div>
@@ -154,9 +154,9 @@ export default function CVPageClient() {
         <Divider />
 
         {/* Education */}
-        <section className="py-8 sm:py-10 print:py-5">
+        <section className="editorial-cv-section print:py-5">
           <SectionHeading delay={0.8} kind="writing">Education</SectionHeading>
-          <div className="space-y-5">
+          <div className="editorial-cv-entries">
             {educationItems.map((item, i) => (
               <m.div
                 key={`${item.institution}-${item.year}`}
@@ -168,16 +168,16 @@ export default function CVPageClient() {
               >
                 <div>
                   <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                    <span className="text-[13px] font-medium text-foreground">{item.institution}</span>
+                    <span className="text-[17px] font-medium text-foreground">{item.institution}</span>
                     <span className="text-[11px] text-muted-foreground/60">·</span>
-                    <span className="text-[12px] text-muted-foreground">{item.degree}</span>
+                    <span className="text-[15px] text-muted-foreground">{item.degree}</span>
                   </div>
-                  <p className="mt-1 text-[12px] text-muted-foreground/70">
+                  <p className="mt-1 text-[15px] text-muted-foreground">
                     {item.level}
                     {item.note && <span className="ml-2 font-mono text-[10px] tracking-wider text-accent/80 uppercase">{item.note}</span>}
                   </p>
                 </div>
-                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap sm:justify-self-end">{item.year}</span>
+                <span className="text-[12px] font-mono tracking-wide text-muted-foreground whitespace-nowrap sm:justify-self-end">{item.year}</span>
               </m.div>
             ))}
           </div>

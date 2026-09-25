@@ -4,10 +4,8 @@ import { useState } from 'react'
 import { HomeBackgroundSection } from '@/components/home/HomeBackgroundSection'
 import { HomeEndeavorsSection } from '@/components/home/HomeEndeavorsSection'
 import { HomeHeroSection } from '@/components/home/HomeHeroSection'
-import { HomePhilosophySection } from '@/components/home/HomePhilosophySection'
 import { HomePlaygroundSection } from '@/components/home/HomePlaygroundSection'
 import { HomeProjectsSection } from '@/components/home/HomeProjectsSection'
-import { Reveal } from '@/components/home/HomeSection'
 import { useWorkFilterUrlSync } from '@/lib/use-work-filter-url-sync'
 import {
   activateHomeWorkFilterChange,
@@ -41,46 +39,13 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
   }
 
   return (
-    <div className="relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
-      <div aria-hidden="true" className="home-painterly-washes">
-        <span className="home-painterly-wash home-painterly-wash-canvas" />
-        <span className="home-painterly-wash home-painterly-wash-dawn" />
-        <span className="home-painterly-wash home-painterly-wash-hero" />
-        <span className="home-painterly-wash home-painterly-wash-projects" />
-        <span className="home-painterly-wash home-painterly-wash-contact" />
-      </div>
-      <div aria-hidden="true" className="home-coast-outro" />
-
-      <div className="mx-auto max-w-[36rem] pt-[4.75rem] sm:pt-28">
-        <Reveal>
-          <HomeHeroSection />
-        </Reveal>
-
-        <div className="mt-5 space-y-11 sm:mt-6 sm:space-y-[4.25rem]">
-          <Reveal delayMs={20}>
-            <HomePhilosophySection />
-          </Reveal>
-
-          <Reveal delayMs={40}>
-            <HomeProjectsSection
-              onWorkFilterChange={applyWorkFilter}
-              projects={projects}
-              workFilter={workFilter}
-            />
-          </Reveal>
-
-          <Reveal delayMs={80}>
-            <HomeEndeavorsSection />
-          </Reveal>
-
-          <Reveal delayMs={100}>
-            <HomePlaygroundSection projects={playgroundProjects} />
-          </Reveal>
-
-          <Reveal delayMs={120}>
-            <HomeBackgroundSection />
-          </Reveal>
-        </div>
+    <div className="editorial-home">
+      <HomeHeroSection />
+      <div className="editorial-container editorial-sections">
+        <HomeProjectsSection onWorkFilterChange={applyWorkFilter} projects={projects} workFilter={workFilter} />
+        <HomeEndeavorsSection />
+        <HomePlaygroundSection projects={playgroundProjects} />
+        <HomeBackgroundSection />
       </div>
     </div>
   )

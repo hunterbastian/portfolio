@@ -24,14 +24,9 @@ export default function ArchivePage() {
   const archivedProjects = sortProjectsForPlayground(getArchivedProjects())
 
   return (
-    <div className="playground-page relative -mt-14 min-h-screen px-3 pb-16 pt-14 sm:-mt-16 sm:px-5 sm:pb-24 sm:pt-16">
-      <div
-        className="pointer-events-none fixed inset-0 z-0 archive-glow"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto w-full max-w-[calc(100vw-7rem)]">
-        <div className="pt-8 sm:pt-12">
+    <div className="editorial-archive editorial-container">
+      <div className="relative w-full">
+        <div className="">
           {archivedProjects.length === 0 ? (
             <div className="pt-16">
               <p className="font-mono text-[0.96rem] text-muted-foreground">

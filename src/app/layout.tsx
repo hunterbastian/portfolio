@@ -1,9 +1,10 @@
 import { GeistMono } from 'geist/font/mono'
-import { GeistPixelSquare } from 'geist/font/pixel'
+import { GeistSans } from 'geist/font/sans'
 import './globals.css'
 import './playground.css'
 import './viewport.css'
 import './dark-theme.css'
+import './editorial.css'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -26,7 +27,7 @@ import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
-// Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
+// Geist Sans carries the portfolio; monospace is reserved for small metadata.
 
 
 export const viewport = {
@@ -87,7 +88,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${GeistMono.className} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
+        className={`${GeistSans.className} ${GeistSans.variable} ${GeistMono.variable} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}

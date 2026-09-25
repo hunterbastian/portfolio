@@ -1,23 +1,21 @@
-import { CHROME_NAV_ACTIVE_CLASS, CHROME_NAV_INACTIVE_CLASS } from './chrome.ts'
 
 export const HOME_SECTION_NAV_ARIA_LABEL = 'On this page'
 export const HOME_SECTION_NAV_HAPTIC_STYLE = 'light'
 export const HOME_SECTION_NAV_SCROLL_OFFSET_PX = 88
 export const HOME_SECTION_NAV_PROBE_RATIO = 0.36
 export const HOME_SECTION_SCROLL_MARGIN_CLASS_NAME = 'scroll-mt-20 sm:scroll-mt-24'
-export const HOME_SECTION_NAV_LIST_CLASS_NAME =
-  'flex min-w-0 items-center justify-end gap-0.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-1'
+export const HOME_SECTION_NAV_LIST_CLASS_NAME = 'editorial-header-links'
 
-const HOME_SECTION_NAV_LINK_BASE_CLASS =
-  'justify-center rounded-[8px] px-1.5 text-[0.62rem] font-medium tracking-normal transition-[background-color,color,filter,transform] duration-150 sm:px-2 sm:text-[0.68rem]'
-const HOME_SECTION_NAV_LINK_ACTIVE_CLASS = CHROME_NAV_ACTIVE_CLASS
-const HOME_SECTION_NAV_LINK_INACTIVE_CLASS = CHROME_NAV_INACTIVE_CLASS
+const HOME_SECTION_NAV_LINK_BASE_CLASS = 'editorial-nav-link'
+const HOME_SECTION_NAV_LINK_ACTIVE_CLASS = 'editorial-nav-active'
+const HOME_SECTION_NAV_LINK_INACTIVE_CLASS = ''
 
 export const HOME_SECTION_NAV_ITEMS = [
   { id: 'home', name: 'Home', peek: 'Back to top' },
-  { id: 'projects', name: 'Work', peek: 'Projects' },
-  { id: 'playground', name: 'Play', peek: 'Playground' },
-  { id: 'background', name: 'Background', peek: 'Timeline' },
+  { id: 'projects', name: 'Work', peek: 'Selected work' },
+  { id: 'studios', name: 'Studios', peek: 'Independent studios' },
+  { id: 'playground', name: 'Playground', peek: 'Experiments' },
+  { id: 'background', name: 'About', peek: 'About and background' },
 ] as const
 
 export type HomeSectionNavItem = (typeof HOME_SECTION_NAV_ITEMS)[number]

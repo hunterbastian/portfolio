@@ -96,10 +96,10 @@ export function HomeHeroSection() {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(25, 25, 25, 0.18) 0%, rgba(25, 25, 25, 0.42) 48%, rgba(25, 25, 25, 0.9) 100%)',
+              'linear-gradient(180deg, rgba(var(--background-rgb), 0.18) 0%, rgba(var(--background-rgb), 0.42) 48%, rgba(var(--background-rgb), 0.9) 100%)',
           }}
         />
-        <div className="absolute inset-0 bg-[#191919]/22" />
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(var(--background-rgb), 0.22)' }} />
       </div>
 
       <div

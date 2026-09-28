@@ -1,48 +1,48 @@
-/* Version B: dark field notebook. Keep layout, content and imagery intact. */
+/* Autumn field notebook: warm charcoal, paper, olive and a faded red accent. */
 :root {
   color-scheme: dark;
-  --background: #191919;
-  --background-rgb: 25, 25, 25;
-  --foreground: #e6e6e6;
-  --card: #202020;
-  --card-foreground: #e6e6e6;
-  --primary: #e6e6e6;
-  --primary-foreground: #191919;
-  --secondary: #2f2f2f;
-  --secondary-foreground: #e6e6e6;
-  --muted: #202020;
-  --muted-foreground: #9b9b9b;
-  --subtle-foreground: #6f6f6f;
+  --background: #1b1a17;
+  --background-rgb: 27, 26, 23;
+  --foreground: #e9e4d9;
+  --card: #23221e;
+  --card-foreground: var(--foreground);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --secondary: #302e28;
+  --secondary-foreground: var(--foreground);
+  --muted: var(--card);
+  --muted-foreground: #b8b1a4;
+  --subtle-foreground: #b0a99a;
   /* Soft scenic accents for ambience only — not UI chrome fills */
-  --accent: #b7a99a;
-  --accent-foreground: #191919;
-  --accent-subtle: #2a2622;
-  --accent-muted: #8a8178;
-  --accent-blue: #a8b0b8;
-  --accent-green: #a2b8ab;
-  --border: #373737;
-  --input: #373737;
-  --ring: #c8c8c8;
-  --surface-warm-rgb: 32, 32, 32;
-  --surface-paper-rgb: 32, 32, 32;
-  --grain-rgb: 155, 155, 155;
-  --ink-underline: #9b9b9b;
-  --contact-accent: #d0b7ab;
-  --contact-accent-soft: #2f2b28;
-  --contact-accent-rgb: 208, 183, 171;
-  --contact-email-accent: #c4b8ae;
-  --contact-email-accent-soft: #2c2926;
-  --contact-email-ink: #e6e6e6;
-  --contact-paper: #202020;
-  --contact-paper-hover: #2f2f2f;
-  --contact-rule: #373737;
-  --surface-glass-soft: rgba(32, 32, 32, 0.78);
-  --surface-glass-soft-border: rgba(55, 55, 55, 0.9);
+  --accent: #b8bd9e;
+  --accent-foreground: var(--background);
+  --accent-subtle: #2b2e25;
+  --accent-muted: #9b9e89;
+  --accent-blue: #a8b0ad;
+  --accent-green: #b0b69a;
+  --border: #3b3931;
+  --input: var(--border);
+  --ring: var(--accent);
+  --surface-warm-rgb: 48, 46, 40;
+  --surface-paper-rgb: 35, 34, 30;
+  --grain-rgb: 184, 177, 164;
+  --ink-underline: #b8bd9e;
+  --contact-accent: #c8a8a2;
+  --contact-accent-soft: #332826;
+  --contact-accent-rgb: 200, 168, 162;
+  --contact-email-accent: var(--accent);
+  --contact-email-accent-soft: var(--accent-subtle);
+  --contact-email-ink: var(--foreground);
+  --contact-paper: var(--card);
+  --contact-paper-hover: var(--secondary);
+  --contact-rule: var(--border);
+  --surface-glass-soft: rgba(var(--surface-paper-rgb), 0.78);
+  --surface-glass-soft-border: color-mix(in srgb, var(--border) 90%, transparent);
   --surface-glass-soft-shadow:
     0 0 0 1px var(--surface-glass-soft-border),
     0 10px 28px -18px rgba(0, 0, 0, 0.72);
-  --surface-glass-chrome: linear-gradient(180deg, #383838 0%, #2a2a2a 46%, #202020 100%);
-  --surface-glass-chrome-hover: linear-gradient(180deg, #424242 0%, #323232 48%, #252525 100%);
+  --surface-glass-chrome: linear-gradient(180deg, #3b3933 0%, #2e2c26 46%, var(--card) 100%);
+  --surface-glass-chrome-hover: linear-gradient(180deg, #46433b 0%, #353229 48%, #29271f 100%);
   --surface-glass-chrome-dark: var(--surface-glass-chrome);
   --surface-glass-chrome-shadow:
     inset 0 1px rgba(255, 255, 255, 0.14),
@@ -63,10 +63,10 @@
   --shadow-hover: 0 0 0 1px #4a4a4a, 0 8px 20px -4px #0005;
 }
 
-/* Scenic hero ambience: present, but seated on #191919 */
+/* A quieter landscape lets the warm canvas and reading text lead. */
 .animated-hero-glow {
-  opacity: 0.88;
-  filter: blur(5px) saturate(0.92) brightness(0.7);
+  opacity: 0.58;
+  filter: blur(5px) saturate(0.42) sepia(0.18) brightness(0.64);
 }
 .animated-hero-glow img {
   transform: none;
@@ -80,11 +80,24 @@
 .animated-hero-grain {
   mix-blend-mode: screen;
 }
+.home-painterly-wash-canvas {
+  filter: blur(16px) saturate(0.35) sepia(0.12) contrast(0.92);
+}
+.home-painterly-wash-hero {
+  background:
+    radial-gradient(ellipse at 44% 48%, rgba(176, 182, 154, 0.2) 0%, rgba(176, 182, 154, 0.08) 34%, transparent 70%),
+    radial-gradient(ellipse at 58% 48%, rgba(200, 168, 162, 0.12) 0%, transparent 68%);
+}
+.home-painterly-washes::after {
+  background-image:
+    radial-gradient(circle, rgba(var(--grain-rgb), 0.2) 0 0.55px, transparent 0.8px),
+    radial-gradient(circle, rgba(233, 228, 217, 0.2) 0 0.5px, transparent 0.76px);
+}
 .section-heading-rule {
-  background: linear-gradient(90deg, rgba(155, 155, 155, 0.28), transparent);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 28%, transparent), transparent);
 }
 
-/* Neutral focus — no cool blue */
+/* The olive focus ring remains distinct from the warm surfaces. */
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
@@ -101,7 +114,7 @@ a:focus-visible {
   outline: 2px solid var(--ring) !important;
   outline-offset: 2px;
   --tw-ring-color: var(--ring);
-  box-shadow: 0 0 0 2px rgba(25, 25, 25, 0.9), 0 0 0 4px rgba(200, 200, 200, 0.55);
+  box-shadow: 0 0 0 2px rgba(var(--background-rgb), 0.9), 0 0 0 4px color-mix(in srgb, var(--ring) 55%, transparent);
 }
 
 body {
@@ -111,7 +124,7 @@ body {
 /* Dark glass pills — gloss restored */
 .chrome-pill .chrome-pill-label,
 .chrome-pill .chrome-pill-icon {
-  color: #e6e6e6;
+  color: var(--foreground);
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
   filter: none;
 }

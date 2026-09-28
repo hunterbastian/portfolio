@@ -1,46 +1,105 @@
-// Small decorative sprites, drawn on an integer grid so their edges stay crisp.
-const LEAF_PIXELS = [
-  '.......1.......',
-  '......111......',
-  '..1...111...1..',
-  '..11.11111.11..',
-  '...111111111...',
-  '111111111111111',
-  '.1111111111111.',
-  '..11111111111..',
-  '...111111111...',
-  '..11111111111..',
-  '....1111111....',
-  '......11.......',
-  '......11.......',
-  '.....11........',
-]
+// Original autumn sprites: brown outlines, stepped shading, and tiny sunlit pixels.
+// Each cell renders at an integer scale; no rotation or smoothing is needed.
+const SPRITES = {
+  maple: [
+    '.......0........',
+    '......030.......',
+    '..0...0320..0...',
+    '..030.0320.030..',
+    '...03203200320..',
+    '.0003323223320..',
+    '032333222232000.',
+    '.03222212222220.',
+    '..032221222210..',
+    '...0322122110...',
+    '..03222122120...',
+    '...000212000....',
+    '......010.......',
+    '......010.......',
+    '.....010........',
+    '......0.........',
+  ],
+  oval: [
+    '..........00....',
+    '........00320...',
+    '......0033320...',
+    '.....03332220...',
+    '....033322210...',
+    '...0333222120...',
+    '..03332221210...',
+    '..0322221210....',
+    '..0322212110....',
+    '..032212110.....',
+    '...0212110......',
+    '...012110.......',
+    '...01000........',
+    '..010...........',
+    '..00............',
+    '................',
+  ],
+  curled: [
+    '................',
+    '................',
+    '.........000....',
+    '.......003330...',
+    '.....003332210..',
+    '...003333222210.',
+    '..0333222212210.',
+    '.03222221112210.',
+    '.03222110001210.',
+    '..021110..0310..',
+    '..01210....00...',
+    '.01000..........',
+    '..0.............',
+    '................',
+    '................',
+    '................',
+  ],
+}
 
-const paths = ['', '', '']
-LEAF_PIXELS.forEach((row, y) => {
-  Array.from(row).forEach((pixel, x) => {
-    if (pixel !== '1') return
-    const shade = x === 7 || y > 10 ? 2 : (x + y) % 3 === 0 ? 1 : 0
-    paths[shade] += `M${x} ${y}h1v1h-1z`
+function spritePaths(pixels: string[]) {
+  const paths = ['', '', '', '']
+  pixels.forEach((row, y) => {
+    Array.from(row).forEach((pixel, x) => {
+      if (pixel !== '.') paths[Number(pixel)] += `M${x} ${y}h1v1h-1z`
+    })
   })
-})
+  return paths
+}
+
+const spritePathsByShape = {
+  maple: spritePaths(SPRITES.maple),
+  oval: spritePaths(SPRITES.oval),
+  curled: spritePaths(SPRITES.curled),
+}
+
+const LEAVES = [
+  { tone: 'rust', shape: 'maple' },
+  { tone: 'ochre', shape: 'oval' },
+  { tone: 'olive', shape: 'curled' },
+  { tone: 'ochre', shape: 'curled' },
+  { tone: 'rust', shape: 'oval' },
+  { tone: 'olive', shape: 'maple' },
+  { tone: 'ochre', shape: 'maple' },
+] as const
 
 export function PixelAutumnLeaves() {
   return (
     <span className="footer-autumn-leaves" aria-hidden="true">
-      {['rust', 'ochre', 'olive', 'ochre', 'rust', 'olive', 'ochre'].map((tone, index) => (
+      {LEAVES.map(({ tone, shape }, index) => (
         <svg
           key={index}
           className={`footer-autumn-leaf footer-autumn-leaf--${tone}`}
-          viewBox="0 0 15 14"
-          width="30"
-          height="28"
+          viewBox="0 0 16 16"
+          width="32"
+          height="32"
           focusable="false"
           shapeRendering="crispEdges"
         >
-          <path d={paths[0]} fill="currentColor" />
-          <path d={paths[1]} fill="var(--leaf-highlight)" />
-          <path d={paths[2]} fill="var(--leaf-shadow)" />
+          <path d={spritePathsByShape[shape][0]} fill="var(--leaf-outline)" />
+          <path d={spritePathsByShape[shape][1]} fill="var(--leaf-shadow)" />
+          <path d={spritePathsByShape[shape][2]} fill="currentColor" />
+          <path d={spritePathsByShape[shape][3]} fill="var(--leaf-highlight)" />
         </svg>
       ))}
     </span>

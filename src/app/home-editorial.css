@@ -271,7 +271,7 @@ footer[data-home-editorial='true'] {
   position: absolute;
   inset-inline: 0;
   bottom: env(safe-area-inset-bottom, 0px);
-  height: 40px;
+  height: 48px;
   max-width: 960px;
   margin-inline: auto;
   pointer-events: none;
@@ -281,34 +281,35 @@ footer[data-home-editorial='true'] {
 .footer-autumn-leaf {
   position: absolute;
   bottom: 5px;
-  opacity: 0.8;
+  opacity: 0.95;
+  --leaf-outline: #50372b;
 }
 
 .footer-autumn-leaf--rust {
-  color: #99583f;
-  --leaf-highlight: #b77551;
-  --leaf-shadow: #653e2e;
+  color: #c77542;
+  --leaf-highlight: #e9a35d;
+  --leaf-shadow: #984d32;
 }
 
 .footer-autumn-leaf--ochre {
-  color: #a58a4f;
-  --leaf-highlight: #c1a36a;
-  --leaf-shadow: #6b5938;
+  color: #d6a54c;
+  --leaf-highlight: #efd080;
+  --leaf-shadow: #a47436;
 }
 
 .footer-autumn-leaf--olive {
-  color: #77794e;
-  --leaf-highlight: #99976a;
-  --leaf-shadow: #4f5438;
+  color: #939853;
+  --leaf-highlight: #c2bd73;
+  --leaf-shadow: #69703f;
 }
 
-.footer-autumn-leaf:nth-child(1) { left: 7%; bottom: 3px; }
+.footer-autumn-leaf:nth-child(1) { left: 7%; bottom: 3px; width: 48px; height: 48px; }
 .footer-autumn-leaf:nth-child(2) { left: 12%; bottom: 9px; transform: scaleX(-1); }
-.footer-autumn-leaf:nth-child(3) { left: 24%; width: 15px; height: 14px; }
-.footer-autumn-leaf:nth-child(4) { left: 49%; bottom: 2px; width: 15px; height: 14px; }
+.footer-autumn-leaf:nth-child(3) { left: 24%; }
+.footer-autumn-leaf:nth-child(4) { left: 49%; bottom: 2px; }
 .footer-autumn-leaf:nth-child(5) { right: 22%; bottom: 8px; transform: scaleX(-1); }
-.footer-autumn-leaf:nth-child(6) { right: 10%; width: 15px; height: 14px; }
-.footer-autumn-leaf:nth-child(7) { right: 6%; bottom: 4px; }
+.footer-autumn-leaf:nth-child(6) { right: 10%; }
+.footer-autumn-leaf:nth-child(7) { right: 6%; bottom: 4px; width: 48px; height: 48px; }
 
 @media (max-width: 639px) {
   .footer-autumn-leaf:nth-child(3),
@@ -316,6 +317,8 @@ footer[data-home-editorial='true'] {
 
   .footer-autumn-leaf:nth-child(2) { left: 15%; }
   .footer-autumn-leaf:nth-child(5) { right: 17%; }
+  .footer-autumn-leaf:nth-child(1),
+  .footer-autumn-leaf:nth-child(7) { width: 32px; height: 32px; }
 }
 
 @media (min-width: 640px) {

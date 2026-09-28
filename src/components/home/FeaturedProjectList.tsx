@@ -220,6 +220,7 @@ export function FeaturedProjectList({
 
   return (
     <div
+      data-density={density}
       className={cn(
         'featured-project-list',
         listState.hasHoveredProject && 'featured-project-list-hovering',

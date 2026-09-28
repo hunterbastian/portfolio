@@ -21,13 +21,14 @@ export function HomePlaygroundSection({ projects }: HomePlaygroundSectionProps) 
     <Section
       id="playground"
       title="Playground"
+      meta="Ongoing experiments"
       contentGapClassName="space-y-4 sm:space-y-5"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
       <WorkScatterStack label="Playground" projects={projects} tone="playground" />
       <Link
         href="/archive"
-        className="inline-flex min-h-[44px] origin-center touch-manipulation items-center rounded-[8px] px-2.5 font-header text-[0.78rem] font-medium tracking-[-0.02em] text-muted-foreground shadow-[var(--shadow-raised-subtle)] transition-[color,box-shadow,transform] duration-200 ease-soft hover:-translate-y-[1px] hover:text-foreground hover:shadow-[var(--shadow-hover)] active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        className="home-editorial-link inline-flex min-h-[44px] origin-center touch-manipulation items-center gap-3 font-header text-[0.78rem] font-medium text-muted-foreground transition-[color,transform] duration-150 ease-soft hover:text-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
         onClick={() =>
           activateEditorialItem({
             showToast: showJoyToast,
@@ -39,6 +40,7 @@ export function HomePlaygroundSection({ projects }: HomePlaygroundSectionProps) 
         }
       >
         See all experiments
+        <span aria-hidden="true">→</span>
       </Link>
     </Section>
   )

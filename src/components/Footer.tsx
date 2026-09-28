@@ -99,6 +99,7 @@ export default function Footer() {
   return (
     <footer
       ref={footerRef}
+      data-home-editorial={pathname === '/' || undefined}
       className={getFooterClassName(pathname, hidden)}
     >
       <div className={FOOTER_INNER_CLASS}>

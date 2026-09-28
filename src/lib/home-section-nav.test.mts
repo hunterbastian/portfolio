@@ -96,6 +96,23 @@ test('getActiveHomeSectionId follows the last section whose top has crossed the 
   assert.equal(getActiveHomeSectionId([], 120), '')
 })
 
+test('getActiveHomeSectionId keeps Home active before the entrance content expands the document', () => {
+  const sections = [
+    { id: 'home', top: 154 },
+    { id: 'projects', top: 894 },
+    { id: 'playground', top: 2841 },
+    { id: 'background', top: 3623 },
+  ]
+
+  assert.equal(
+    getActiveHomeSectionId(sections, 0, HOME_SECTION_NAV_SCROLL_OFFSET_PX, {
+      documentHeight: 926,
+      height: 926,
+    }),
+    'home',
+  )
+})
+
 test('getActiveHomeSectionId uses a reading-band probe so Background wins while it is in view', () => {
   const sections = [
     { id: 'home', top: 0 },

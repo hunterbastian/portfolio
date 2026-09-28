@@ -132,7 +132,7 @@ export function HomeEndeavorsSection() {
   }
 
   return (
-    <Section title="Endeavors" contentGapClassName="space-y-1.5 sm:space-y-2">
+    <Section title="Endeavors" meta="Independent projects" contentGapClassName="space-y-1.5 sm:space-y-2">
       <div
         className={cn(
           'featured-project-list home-endeavor-list',

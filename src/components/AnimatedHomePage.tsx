@@ -41,7 +41,7 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
   }
 
   return (
-    <div className="relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
+    <div className="home-editorial relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
       <div aria-hidden="true" className="home-painterly-washes">
         <span className="home-painterly-wash home-painterly-wash-canvas" />
         <span className="home-painterly-wash home-painterly-wash-dawn" />
@@ -51,12 +51,12 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
       </div>
       <div aria-hidden="true" className="home-coast-outro" />
 
-      <div className="mx-auto max-w-[36rem] pt-[4.75rem] sm:pt-28">
+      <div className="home-editorial-content mx-auto pt-[4.75rem] sm:pt-28">
         <Reveal>
           <HomeHeroSection />
         </Reveal>
 
-        <div className="mt-5 space-y-11 sm:mt-6 sm:space-y-[4.25rem]">
+        <div className="home-editorial-sections">
           <Reveal delayMs={20}>
             <HomePhilosophySection />
           </Reveal>

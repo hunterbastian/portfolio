@@ -5,68 +5,62 @@
   font-family: var(--font-editorial);
 }
 
-.heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
+.heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
 .heading h3 { font-size: 17px; font-weight: 400; letter-spacing: -0.03em; }
 .heading > span { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground); }
 
 .stage {
   position: relative;
   isolation: isolate;
-  height: clamp(290px, 65vw, 360px);
-  margin-top: 1rem;
+  height: clamp(320px, 82vw, 390px);
+  margin-top: 0.75rem;
+  overflow: clip;
 }
 
 .print {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(180px, 46vw, 220px);
+  width: min(236px, calc(100% - 64px));
   aspect-ratio: 4 / 5;
   padding: 0;
   border: 5px solid #625146;
   border-radius: 0;
   background: #e4ded1;
-  box-shadow: inset 0 0 0 1px #b4a38e, 0 1px 2px rgb(0 0 0 / 0.18), 0 10px 20px rgb(0 0 0 / 0.16);
+  box-shadow: inset 0 0 0 1px #b4a38e, 0 1px 2px rgb(0 0 0 / 0.18), 0 8px 16px rgb(0 0 0 / 0.16);
+  transform: translate(calc(-50% + var(--print-x)), calc(-50% + var(--print-y))) rotate(var(--print-angle)) scale(var(--print-scale));
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1), translate 150ms cubic-bezier(0.2, 0, 0, 1), scale 150ms cubic-bezier(0.2, 0, 0, 1), opacity 150ms ease-out, box-shadow 150ms ease-out;
+  pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
+}
+
+.print[data-front] { cursor: grab; touch-action: pan-y; pointer-events: auto; }
+.print[data-front]:active { scale: 0.96; }
+.print[data-front]:focus-visible { outline: 2px solid var(--ring); outline-offset: 6px; }
+.print[data-dragging] {
+  cursor: grabbing;
+  scale: 1;
+  translate: 0 0;
+  box-shadow: inset 0 0 0 1px #b4a38e, 0 3px 6px rgb(0 0 0 / 0.18), 0 20px 32px rgb(0 0 0 / 0.28);
+  transition: none;
+}
+.print[data-leaving] {
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 180ms ease-out, opacity 150ms ease-out;
 }
 
 .imageFrame {
   position: absolute;
   inset: 18px 18px 39px;
   overflow: hidden;
-  border-radius: 0;
   outline: 1px solid oklch(1 0 0 / 0.1);
   background: #e4ded1;
   pointer-events: none;
 }
-
 .imageFrame img { object-fit: contain; }
-.back { pointer-events: none; }
-.back[data-depth='2'] { transform: translate(calc(-50% - 12px), calc(-50% + 3px)) rotate(-5deg); }
-.back[data-depth='1'] { transform: translate(calc(-50% + 14px), calc(-50% + 2px)) rotate(4deg); }
-
-.front {
-  cursor: grab;
-  touch-action: pan-y;
-  transform: translate(calc(-50% + var(--print-x)), calc(-50% + var(--print-y))) rotate(var(--print-angle));
-  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1), scale 150ms cubic-bezier(0.2, 0, 0, 1), box-shadow 150ms ease-out;
-}
-
-.front:active { scale: 0.96; }
-.front[data-dragging] { cursor: grabbing; scale: 1; transition: none; }
-.front:focus-visible { outline: 2px solid var(--ring); outline-offset: 6px; }
-.front[data-switched] .imageFrame { animation: print-reveal 150ms ease-out; }
-
-@keyframes print-reveal { from { opacity: 0.65; } to { opacity: 1; } }
-
 .printNumber {
   position: absolute;
   inset-inline: 18px;
@@ -75,13 +69,20 @@
   font-family: var(--font-editorial);
   font-weight: 400;
   font-size: 8px;
-  text-align: left;
+  text-align: start;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.controls { display: flex; align-items: center; justify-content: center; gap: 1rem; }
-.controls button {
+.controls {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 1rem;
+  max-width: 400px;
+  margin-inline: auto;
+}
+.controls > button {
   display: grid;
   place-items: center;
   width: 44px;
@@ -92,22 +93,30 @@
   background: transparent;
   transition: scale 150ms cubic-bezier(0.2, 0, 0, 1), background-color 150ms ease-out;
 }
+.controls > button:active { scale: 0.96; }
+.controls > button:focus-visible, .note a:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
+.caption { min-width: 0; }
+.captionCopy { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 4px 10px; }
+.captionCopy[data-switched] { animation: caption-reveal 150ms ease-out; }
+.title { font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+.counter { color: var(--muted-foreground); font-size: 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.type { grid-column: 1 / -1; color: var(--muted-foreground); font-size: 11px; line-height: 1.5; }
 
-.controls button:active { scale: 0.96; }
-.controls button:focus-visible, .note a:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
-.controls p { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 140px; font-size: 12px; }
-.counter { font-size: 10px; font-variant-numeric: tabular-nums; color: var(--muted-foreground); }
-
-.note { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; column-gap: 14px; margin-top: 6px; font-size: 11px; color: var(--muted-foreground); }
+.note { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0 18px; margin-top: 12px; font-size: 11px; color: var(--muted-foreground); }
 .note a { display: inline-flex; min-height: 44px; align-items: center; gap: 4px; text-decoration: underline; text-underline-offset: 3px; }
-.type { text-align: center; color: var(--muted-foreground); font-size: 10px; }
+
+@keyframes caption-reveal { from { opacity: 0; translate: 0 2px; } to { opacity: 1; translate: 0 0; } }
 
 @media (hover: hover) and (pointer: fine) {
-  .front:hover { box-shadow: inset 0 0 0 1px #b4a38e, 0 2px 4px rgb(0 0 0 / 0.18), 0 14px 24px rgb(0 0 0 / 0.22); }
-  .controls button:hover { background: var(--secondary); }
+  .print[data-front]:not([data-dragging]):hover {
+    translate: 0 -4px;
+    box-shadow: inset 0 0 0 1px #b4a38e, 0 2px 4px rgb(0 0 0 / 0.18), 0 14px 24px rgb(0 0 0 / 0.22);
+  }
+  .controls > button:hover { background: var(--secondary); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .front, .controls button { transition: none; }
-  .front[data-switched] .imageFrame { animation: none; }
+  .print, .print[data-leaving], .controls > button { transition: none; }
+  .print[data-front]:not([data-dragging]):hover { translate: none; }
+  .captionCopy[data-switched] { animation: none; }
 }

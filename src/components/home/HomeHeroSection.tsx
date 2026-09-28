@@ -54,7 +54,7 @@ function useHomeHeroLocalTime() {
   return localTime
 }
 
-const homeHeroIntroStackClassName = 'space-y-7 pt-5 sm:space-y-8 sm:pt-7'
+const homeHeroIntroStackClassName = 'home-editorial-intro space-y-7 pt-5 sm:space-y-8 sm:pt-7'
 
 export function HomeHeroSection() {
   const introParagraphs = getHomeHeroIntroParagraphs(homeHeroContent.intro)
@@ -120,28 +120,11 @@ export function HomeHeroSection() {
 
       <div className="relative z-10 space-y-5 sm:space-y-7">
         <div className="space-y-3.5 sm:space-y-4">
+          <p className="home-editorial-kicker">Selected work &amp; experiments</p>
           <div className="space-y-1">
             <h1 className={HOME_HERO_NAME_CLASS_NAME}>
               {homeHeroContent.headline}
             </h1>
-            <p className={HOME_HERO_LOCATION_META_CLASS_NAME}>
-              <span className={HOME_HERO_LOCATION_LABEL_CLASS_NAME}>{homeHeroContent.subtitle}</span>
-              {localTime ? (
-                <>
-                  <span aria-hidden="true" className={HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME}>
-                    ·
-                  </span>
-                  <time
-                    dateTime={localTime}
-                    aria-live="off"
-                    aria-label={getHomeHeroLocalTimeAriaLabel(localTime)}
-                    className={HOME_HERO_LOCAL_TIME_CLASS_NAME}
-                  >
-                    {localTime}
-                  </time>
-                </>
-              ) : null}
-            </p>
           </div>
         </div>
 
@@ -152,6 +135,32 @@ export function HomeHeroSection() {
             </p>
           ))}
         </div>
+
+        <dl className="home-editorial-details">
+          <div>
+            <dt>Discipline</dt>
+            <dd>Interaction design &amp; development</dd>
+          </div>
+          <div>
+            <dt>Based in</dt>
+            <dd className={HOME_HERO_LOCATION_META_CLASS_NAME}>
+              <span className={HOME_HERO_LOCATION_LABEL_CLASS_NAME}>{homeHeroContent.subtitle}</span>
+              {localTime ? (
+                <>
+                  <span aria-hidden="true" className={HOME_HERO_LOCAL_TIME_SEPARATOR_CLASS_NAME}>·</span>
+                  <time
+                    dateTime={localTime}
+                    aria-live="off"
+                    aria-label={getHomeHeroLocalTimeAriaLabel(localTime)}
+                    className={HOME_HERO_LOCAL_TIME_CLASS_NAME}
+                  >
+                    {localTime}
+                  </time>
+                </>
+              ) : null}
+            </dd>
+          </div>
+        </dl>
 
         <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 sm:gap-x-5 sm:gap-y-2.5">
           {HOME_HERO_ACTIONS.map((action) => (

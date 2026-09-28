@@ -9,6 +9,7 @@ export function HomeBackgroundSection() {
     <Section
       id="background"
       title="Background"
+      meta="Experience & education"
       contentGapClassName="space-y-1.5 sm:space-y-2"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >

@@ -291,6 +291,7 @@ export default function TopMeta() {
   return (
     <div
       ref={headerRef}
+      data-home-editorial={persistVisible || undefined}
       className={getTopMetaShellClassName(headerHidden, mobileMenuOpen, headerFrosted)}
       onClick={(event) => {
         if ((event.target as Element).closest('a')) closeMobileMenu()
@@ -302,7 +303,7 @@ export default function TopMeta() {
         <PeekAction
           href="/"
           peek="Start here"
-          className="z-10 shrink-0 text-[0.86rem] font-medium tracking-normal text-foreground/80 hover:text-foreground"
+          className="home-brand-link z-10 shrink-0 text-[0.86rem] font-medium tracking-normal text-foreground/80 hover:text-foreground"
           labelClassName="inline-flex items-center gap-2"
           onClick={() =>
             activateTopMetaBrandAction({

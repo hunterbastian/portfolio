@@ -54,10 +54,8 @@ test('home hero keeps the design sentence and UVU line without a prose clock', (
   assert.doesNotMatch(hero, /text-\[30px\]/)
   assert.doesNotMatch(hero, /sm:text-\[36px\]/)
   assert.match(hero, /aria-live="off"/)
-  assert.match(
-    hero,
-    /homeHeroContent\.subtitle[\s\S]*getHomeHeroLocalTimeAriaLabel[\s\S]*introParagraphs\.map/,
-  )
+  assert.equal((hero.match(/<time\b/g) ?? []).length, 1)
+  assert.match(hero, /aria-label=\{getHomeHeroLocalTimeAriaLabel\(localTime\)\}/)
 })
 
 test('home hero local time stays a quiet 24-hour Mountain Time meta line', () => {

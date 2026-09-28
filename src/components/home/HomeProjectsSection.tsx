@@ -30,6 +30,7 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
     <Section
       id="projects"
       title="Projects"
+      meta={`${featured.length} selected`}
       contentGapClassName="space-y-3 sm:space-y-4"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >

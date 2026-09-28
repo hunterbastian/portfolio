@@ -73,33 +73,33 @@ export function HomeHeroSection() {
       <div
         ref={heroGlow.glowRef}
         aria-hidden="true"
-        className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-12 -z-10 h-[22rem] w-[112vw] -translate-x-1/2 overflow-hidden opacity-85 blur-[2.5px] transition-transform duration-[1600ms] ease-soft will-change-transform sm:-top-16 sm:h-[28rem] sm:w-[min(92rem,112vw)] sm:blur-[3.5px] ${
+        className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-24 -z-10 h-[18rem] w-[min(42rem,104vw)] -translate-x-1/2 overflow-hidden transition-transform duration-[1600ms] ease-soft sm:-top-20 sm:h-[24rem] sm:w-[min(60rem,94vw)] ${
           heroGlow.isActive ? 'is-active' : ''
         }`}
         style={{
           maskImage:
-            'radial-gradient(ellipse 54% 50% at 50% 38%, black 0%, rgba(0, 0, 0, 0.78) 28%, rgba(0, 0, 0, 0.34) 58%, rgba(0, 0, 0, 0.08) 78%, transparent 100%)',
+            'radial-gradient(ellipse 58% 66% at 50% 38%, black 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.12) 83%, transparent 100%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse 54% 50% at 50% 38%, black 0%, rgba(0, 0, 0, 0.78) 28%, rgba(0, 0, 0, 0.34) 58%, rgba(0, 0, 0, 0.08) 78%, transparent 100%)',
+            'radial-gradient(ellipse 58% 66% at 50% 38%, black 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.12) 83%, transparent 100%)',
         }}
       >
         <Image
-          src="/images/grainwave-b-preview.webp"
+          src="/images/mountain-autumn-dither.webp"
           alt=""
           fill
           loading="eager"
           fetchPriority="low"
-          className="scale-[1.02] object-cover object-[50%_48%] saturate-[1.02] brightness-[0.88] contrast-[0.97]"
-          sizes="100vw"
+          unoptimized
+          className="object-cover"
+          sizes="(min-width: 900px) 840px, 100vw"
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(var(--background-rgb), 0.18) 0%, rgba(var(--background-rgb), 0.42) 48%, rgba(var(--background-rgb), 0.9) 100%)',
+              'linear-gradient(180deg, rgba(var(--background-rgb), 0.08) 0%, rgba(var(--background-rgb), 0.4) 48%, rgba(var(--background-rgb), 0.94) 100%)',
           }}
         />
-        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(var(--background-rgb), 0.22)' }} />
       </div>
 
       <div

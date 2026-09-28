@@ -63,15 +63,17 @@
   --shadow-hover: 0 0 0 1px #4a4a4a, 0 8px 20px -4px #0005;
 }
 
-/* A quieter landscape lets the warm canvas and reading text lead. */
+/* Keep the dithered ridge crisp; only the edges fade into the warm canvas. */
 .animated-hero-glow {
-  opacity: 0.58;
-  filter: blur(5px) saturate(0.42) sepia(0.18) brightness(0.64);
+  animation: none;
+  opacity: 0.72;
+  filter: saturate(0.72) brightness(0.78);
 }
 .animated-hero-glow img {
   transform: none;
   object-position: center 52%;
   filter: none;
+  image-rendering: pixelated;
 }
 /* Keep wash overlays from HomeHeroSection so ambience fades into canvas */
 .animated-hero-glow > div {
@@ -82,6 +84,7 @@
 }
 .home-painterly-wash-canvas {
   filter: blur(16px) saturate(0.35) sepia(0.12) contrast(0.92);
+  opacity: 0.14;
 }
 .home-painterly-wash-hero {
   background:

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import { usePathname } from 'next/navigation'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
+import { PixelAutumnLeaves } from '@/components/home/PixelAutumnLeaves'
 import {
   FOOTER_COPYRIGHT_CLASS,
   FOOTER_INNER_CLASS,
@@ -119,6 +120,7 @@ export default function Footer() {
           </p>
         </div>
       </div>
+      {pathname === '/' && <PixelAutumnLeaves />}
     </footer>
   )
 }

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useWebHaptics } from 'web-haptics/react'
 import { Section } from '@/components/home/HomeSection'
 import { WorkScatterStack } from '@/components/home/WorkScatterStack'
+import { DraggablePrintStack } from '@/components/home/DraggablePrintStack'
 import { analytics } from '@/lib/analytics'
 import { activateEditorialItem } from '@/lib/editorial-item'
 import type { HomeProject } from '@/lib/home-projects'
@@ -25,6 +26,7 @@ export function HomePlaygroundSection({ projects }: HomePlaygroundSectionProps) 
       contentGapClassName="space-y-4 sm:space-y-5"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
+      <DraggablePrintStack />
       <WorkScatterStack label="Playground" projects={projects} tone="playground" />
       <Link
         href="/archive"

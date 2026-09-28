@@ -67,7 +67,7 @@ export function DraggablePrintStack() {
   const style = {
     '--print-x': `${offset.x}px`,
     '--print-y': `${offset.y}px`,
-    '--print-angle': `${-2 + offset.x / 24}deg`,
+    '--print-angle': `${-1 + offset.x / 48}deg`,
   } as CSSProperties
 
   return (

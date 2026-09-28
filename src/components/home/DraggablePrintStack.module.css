@@ -29,59 +29,29 @@
   width: clamp(180px, 46vw, 220px);
   aspect-ratio: 4 / 5;
   padding: 0;
-  border: 0;
+  border: 5px solid #625146;
   border-radius: 0;
-  background: transparent;
-  box-shadow: 0 2px 3px rgb(0 0 0 / 0.2), 0 12px 24px rgb(0 0 0 / 0.22);
+  background: #e4ded1;
+  box-shadow: inset 0 0 0 1px #b4a38e, 0 1px 2px rgb(0 0 0 / 0.18), 0 10px 20px rgb(0 0 0 / 0.16);
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
 
-/* Stepped timber silhouette leaves the button focus ring unclipped. */
-.print::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(#e6b875, #e6b875) 14px 7px / calc(100% - 28px) 3px no-repeat,
-    linear-gradient(#8a512f, #8a512f) 18px calc(100% - 10px) / calc(100% - 36px) 3px no-repeat,
-    repeating-linear-gradient(0deg, transparent 0 25px, #a96d3d 25px 28px, transparent 28px 47px),
-    #c28b50;
-  box-shadow: inset 0 0 0 4px #533824, inset 0 0 0 7px #986038, inset 0 10px #e6b875;
-  clip-path: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
-  pointer-events: none;
-}
-
-/* A tiny original pixel sprig, like a pressed leaf tucked into the frame. */
-.print::after {
-  content: '';
-  position: absolute;
-  right: 13px;
-  bottom: 20px;
-  width: 4px;
-  height: 4px;
-  background: #68462d;
-  box-shadow: -4px -4px #68462d, -4px -8px #a64e32, -8px -8px #df8646, -4px -12px #e6a353, -8px -12px #f0c375, -12px -12px #a64e32, -8px -16px #df8646;
-  pointer-events: none;
-}
-
 .imageFrame {
   position: absolute;
-  inset: 17px 17px 39px;
-  border: 4px solid #eee0bc;
-  box-shadow: 0 0 0 3px #75472d, 0 3px 0 3px #e0ad69;
+  inset: 18px 18px 39px;
   overflow: hidden;
   border-radius: 0;
   outline: 1px solid oklch(1 0 0 / 0.1);
-  background: #ede9df;
+  background: #e4ded1;
   pointer-events: none;
 }
 
 .imageFrame img { object-fit: contain; }
 .back { pointer-events: none; }
-.back[data-depth='2'] { transform: translate(calc(-50% - 17px), calc(-50% + 3px)) rotate(-9deg); }
-.back[data-depth='1'] { transform: translate(calc(-50% + 19px), calc(-50% + 2px)) rotate(8deg); }
+.back[data-depth='2'] { transform: translate(calc(-50% - 12px), calc(-50% + 3px)) rotate(-5deg); }
+.back[data-depth='1'] { transform: translate(calc(-50% + 14px), calc(-50% + 2px)) rotate(4deg); }
 
 .front {
   cursor: grab;
@@ -99,14 +69,14 @@
 
 .printNumber {
   position: absolute;
-  inset-inline: 18px 32px;
-  bottom: 14px;
-  color: #39291d;
-  font-family: ui-monospace, monospace;
-  font-weight: 600;
+  inset-inline: 18px;
+  bottom: 15px;
+  color: #6d6455;
+  font-family: var(--font-editorial);
+  font-weight: 400;
   font-size: 8px;
   text-align: left;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -133,7 +103,7 @@
 .type { text-align: center; color: var(--muted-foreground); font-size: 10px; }
 
 @media (hover: hover) and (pointer: fine) {
-  .front:hover { box-shadow: 0 3px 6px rgb(0 0 0 / 0.2), 0 16px 28px rgb(0 0 0 / 0.3); }
+  .front:hover { box-shadow: inset 0 0 0 1px #b4a38e, 0 2px 4px rgb(0 0 0 / 0.18), 0 14px 24px rgb(0 0 0 / 0.22); }
   .controls button:hover { background: var(--secondary); }
 }
 

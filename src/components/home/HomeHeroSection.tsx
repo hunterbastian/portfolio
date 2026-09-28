@@ -84,7 +84,7 @@ export function HomeHeroSection() {
         }}
       >
         <Image
-          src="/images/mountain-autumn-dither.webp"
+          src="/images/mountain-autumn-dither-v2.webp"
           alt=""
           fill
           loading="eager"

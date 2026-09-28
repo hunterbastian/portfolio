@@ -18,7 +18,7 @@
 }
 
 .home-editorial :is(#home, #projects, #playground, #background) {
-  scroll-margin-top: calc(6rem + env(safe-area-inset-top));
+  scroll-margin-top: calc(7rem + env(safe-area-inset-top));
 }
 
 .home-editorial-kicker,
@@ -30,6 +30,10 @@
   letter-spacing: 0.1em;
   line-height: 1.5;
   text-transform: uppercase;
+}
+
+.home-editorial-kicker {
+  color: var(--foreground);
 }
 
 .home-editorial #home h1 {
@@ -168,6 +172,11 @@
   padding-block: 1.5rem;
 }
 
+.home-editorial #projects .featured-project-list[data-density='default'] > .featured-project-row:first-child .featured-text-row,
+.home-editorial .home-endeavor-list > .home-endeavor-row:first-child > div {
+  border-block-start: 0;
+}
+
 .home-editorial .featured-project-list .featured-text-row-meta {
   padding-block-start: 0.35rem;
   font-family: var(--font-editorial);
@@ -264,7 +273,7 @@ footer[data-home-editorial='true'] p {
   }
 
   .home-editorial :is(#home, #projects, #playground, #background) {
-    scroll-margin-top: 8.5rem;
+    scroll-margin-top: 10rem;
   }
 
   .home-editorial-philosophy {

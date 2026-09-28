@@ -50,6 +50,7 @@ interface FeaturedProjectCardProps {
   hoverDistance: number
   href: string
   muted: boolean
+  metadata?: { role: string; year: string; builtWith?: string[] }
   onHoverEnd: () => void
   onHoverStart: () => void
   sequence: number
@@ -67,6 +68,7 @@ function FeaturedProjectCard({
   hoverDistance,
   href,
   muted,
+  metadata,
   onHoverEnd,
   onHoverStart,
   sequence,
@@ -103,15 +105,18 @@ function FeaturedProjectCard({
     >
       <Link
         href={href}
+        data-project-details={metadata ? true : undefined}
         className={cn(
           'featured-text-row group relative z-10 grid min-h-[44px] grid-cols-[4.5rem_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-border text-left transition-[color,transform] duration-200 ease-soft active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:grid-cols-[4.75rem_minmax(0,1fr)_auto] sm:gap-x-5',
           quiet ? 'py-2.5 sm:py-3' : 'py-3 sm:py-3.5',
         )}
         onClick={handleClick}
       >
-        <span className={quiet ? HOME_MORE_ROW_META_CLASS_NAME : HOME_FEATURED_ROW_META_CLASS_NAME}>
-          {trailing}
-        </span>
+        {!metadata && (
+          <span className={quiet ? HOME_MORE_ROW_META_CLASS_NAME : HOME_FEATURED_ROW_META_CLASS_NAME}>
+            {trailing}
+          </span>
+        )}
         <div className={cn('featured-text-row-copy min-w-0 pr-2', quiet ? 'space-y-0' : 'space-y-1.5')}>
           <h3 className={quiet ? HOME_MORE_ROW_TITLE_CLASS_NAME : HOME_FEATURED_ROW_TITLE_CLASS_NAME}>
             <span>{title}</span>
@@ -125,6 +130,22 @@ function FeaturedProjectCard({
         <span aria-hidden="true" className="featured-text-row-arrow pt-0.5 font-mono text-[0.78rem] text-muted-foreground/62">
           →
         </span>
+        {metadata && (
+          <dl className="home-project-details">
+            <div>
+              <dt>Role</dt>
+              <dd>{metadata.role}</dd>
+            </div>
+            <div>
+              <dt>Year</dt>
+              <dd>{metadata.year}</dd>
+            </div>
+            <div>
+              <dt>Built with</dt>
+              <dd>{metadata.builtWith?.length ? metadata.builtWith.join(' · ') : <><span aria-hidden="true">—</span><span className="sr-only">Not specified</span></>}</dd>
+            </div>
+          </dl>
+        )}
       </Link>
     </div>
   )
@@ -190,6 +211,11 @@ function FeaturedProjectRow({
       hoverDistance={rowState.hoverDistance}
       href={`/projects/${project.slug}`}
       muted={rowState.muted}
+      metadata={{
+        role: project.frontmatter.role ?? project.frontmatter.category,
+        year: formatProjectYear(project.frontmatter.date),
+        builtWith: project.frontmatter.builtWith,
+      }}
       onHoverEnd={onHoverEnd}
       onHoverStart={onHoverStart}
       sequence={rowState.index}

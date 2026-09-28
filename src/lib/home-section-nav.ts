@@ -99,6 +99,12 @@ export function getActiveHomeSectionId(
     return ''
   }
 
+  // The page can briefly fit in the viewport while its entrance content mounts.
+  // At the top, Home should stay active instead of triggering the bottom probe.
+  if (scrollY <= 0) {
+    return sections[0]?.id ?? ''
+  }
+
   if (viewport) {
     const bottomRemaining = viewport.documentHeight - (scrollY + viewport.height)
 

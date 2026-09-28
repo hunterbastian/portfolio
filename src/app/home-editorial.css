@@ -311,6 +311,28 @@ footer[data-home-editorial='true'] {
 .footer-autumn-leaf:nth-child(6) { right: 10%; }
 .footer-autumn-leaf:nth-child(7) { right: 6%; bottom: 4px; width: 48px; height: 48px; }
 
+/* Whole-pixel movement preserves the sprite edges and existing mirrored shapes. */
+@keyframes autumn-leaf-sway {
+  0%, 16%, 100% { translate: 0 0; }
+  32% { translate: 1px -1px; }
+  48% { translate: 3px -3px; }
+  64% { translate: 1px -2px; }
+  80% { translate: -1px -1px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .footer-autumn-leaf {
+    animation: autumn-leaf-sway 8s steps(1, end) infinite;
+  }
+
+  .footer-autumn-leaf:nth-child(2) { animation-duration: 9s; animation-delay: -3s; }
+  .footer-autumn-leaf:nth-child(3) { animation-duration: 7s; animation-delay: -5s; }
+  .footer-autumn-leaf:nth-child(4) { animation-duration: 10s; animation-delay: -2s; }
+  .footer-autumn-leaf:nth-child(5) { animation-duration: 8.5s; animation-delay: -6s; }
+  .footer-autumn-leaf:nth-child(6) { animation-duration: 9.5s; animation-delay: -4s; }
+  .footer-autumn-leaf:nth-child(7) { animation-duration: 7.5s; animation-delay: -1s; }
+}
+
 @media (max-width: 639px) {
   .footer-autumn-leaf:nth-child(3),
   .footer-autumn-leaf:nth-child(6) { display: none; }

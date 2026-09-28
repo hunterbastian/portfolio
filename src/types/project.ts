@@ -3,6 +3,8 @@ export interface ProjectFrontmatter {
   displayTitle?: string
   description: string
   category: string
+  role?: string
+  builtWith?: string[]
   tags: string[]
   image: string
   homeImage?: string

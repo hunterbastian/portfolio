@@ -1,7 +1,7 @@
 /* EME-inspired display type with Aesop-inspired spacing, rules and detail rows. */
 :root {
   --home-content-width: 42rem;
-  --font-editorial: Arial, Helvetica, sans-serif;
+  --font-editorial: var(--font-questrial), 'Questrial', Arial, Helvetica, sans-serif;
 }
 
 .home-editorial-content,

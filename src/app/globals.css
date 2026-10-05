@@ -9,6 +9,20 @@ html, body {
   overflow-x: clip;
 }
 
+:root {
+  --font-geist-mono: var(--font-questrial), 'Questrial', system-ui, sans-serif;
+  --font-geist-pixel-square: var(--font-questrial), 'Questrial', system-ui, sans-serif;
+  --font-geist-sans: var(--font-questrial), 'Questrial', system-ui, sans-serif;
+}
+
+/* Site-wide lowercase. Form fields are exempt so typed text shows as typed. */
+body,
+body *:not(input):not(textarea):not(select),
+body *::before,
+body *::after {
+  text-transform: lowercase !important;
+}
+
 @supports not (overflow: clip) {
   html,
   body {

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { useWebHaptics } from 'web-haptics/react'
 import { PeekAction } from '@/components/PeekAction'
 import { ContactLinks } from '@/components/home/ContactLinks'
@@ -70,38 +69,6 @@ export function HomeHeroSection() {
       onPointerMove={heroGlow.handlers.onPointerMove}
       onPointerLeave={heroGlow.handlers.onPointerLeave}
     >
-      <div
-        ref={heroGlow.glowRef}
-        aria-hidden="true"
-        className={`animated-hero-glow pointer-events-none absolute left-1/2 -top-24 -z-10 h-[18rem] w-[min(42rem,104vw)] -translate-x-1/2 overflow-hidden transition-transform duration-[1600ms] ease-soft sm:-top-20 sm:h-[24rem] sm:w-[min(60rem,94vw)] ${
-          heroGlow.isActive ? 'is-active' : ''
-        }`}
-        style={{
-          maskImage:
-            'radial-gradient(ellipse 58% 66% at 50% 38%, black 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.12) 83%, transparent 100%)',
-          WebkitMaskImage:
-            'radial-gradient(ellipse 58% 66% at 50% 38%, black 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.12) 83%, transparent 100%)',
-        }}
-      >
-        <Image
-          src="/images/mountain-autumn-dither-v2.webp"
-          alt=""
-          fill
-          loading="eager"
-          fetchPriority="low"
-          unoptimized
-          className="object-cover"
-          sizes="(min-width: 900px) 840px, 100vw"
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(180deg, rgba(var(--background-rgb), 0.08) 0%, rgba(var(--background-rgb), 0.4) 48%, rgba(var(--background-rgb), 0.94) 100%)',
-          }}
-        />
-      </div>
-
       <div
         ref={heroGlow.grainRef}
         aria-hidden="true"

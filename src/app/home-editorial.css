@@ -199,7 +199,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .home-editorial #home a[href='/cv'],
-  .home-editorial #contact a[href^='mailto:'] {
+  .home-editorial #home a[href='/cv']:is(:hover, :active),
+  .home-editorial #contact a[href^='mailto:'],
+  .home-editorial #contact a[href^='mailto:']:is(:hover, :active) {
     transition: none;
     transform: none;
   }

@@ -47,6 +47,7 @@ interface FeaturedProjectCardProps {
   active: boolean
   density: FeaturedProjectListDensity
   description: string
+  discipline?: string
   hoverDistance: number
   href: string
   muted: boolean
@@ -64,6 +65,7 @@ function FeaturedProjectCard({
   active,
   density,
   description,
+  discipline,
   hoverDistance,
   href,
   muted,
@@ -125,6 +127,9 @@ function FeaturedProjectCard({
         <span aria-hidden="true" className="featured-text-row-arrow pt-0.5 font-mono text-[0.78rem] text-muted-foreground/62">
           →
         </span>
+        {!quiet && discipline ? (
+          <span className="featured-text-row-discipline">{discipline}</span>
+        ) : null}
       </Link>
     </div>
   )
@@ -187,6 +192,7 @@ function FeaturedProjectRow({
       active={rowState.active}
       density={density}
       description={getHomeProjectDescription(project)}
+      discipline={project.frontmatter.category}
       hoverDistance={rowState.hoverDistance}
       href={`/projects/${project.slug}`}
       muted={rowState.muted}

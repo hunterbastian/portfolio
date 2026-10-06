@@ -9,6 +9,7 @@ test('STATIC_SITEMAP_ROUTES preserves route priorities and cadence', () => {
     { path: '/about', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/cv', changeFrequency: 'monthly', priority: 0.7 },
     { path: '/archive', changeFrequency: 'monthly', priority: 0.6 },
+    { path: '/tools/dither', changeFrequency: 'monthly', priority: 0.7 },
   ])
 })
 
@@ -20,6 +21,7 @@ test('getStaticSitemapEntries resolves static route URLs', () => {
     { url: 'https://hunterbastian.com/about', lastModified, changeFrequency: 'monthly', priority: 0.9 },
     { url: 'https://hunterbastian.com/cv', lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://hunterbastian.com/archive', lastModified, changeFrequency: 'monthly', priority: 0.6 },
+    { url: 'https://hunterbastian.com/tools/dither', lastModified, changeFrequency: 'monthly', priority: 0.7 },
   ])
 })
 
@@ -47,14 +49,15 @@ test('getSitemapEntries appends project entries after static routes', () => {
     { slug: 'wanderutah', frontmatter: { date: '2025-05-01' } },
   ], lastModified)
 
-  assert.equal(entries.length, 6)
-  assert.deepEqual(entries.slice(0, 4).map((entry) => entry.url), [
+  assert.equal(entries.length, 7)
+  assert.deepEqual(entries.slice(0, 5).map((entry) => entry.url), [
     'https://hunterbastian.com/',
     'https://hunterbastian.com/about',
     'https://hunterbastian.com/cv',
     'https://hunterbastian.com/archive',
+    'https://hunterbastian.com/tools/dither',
   ])
-  assert.deepEqual(entries.slice(4).map((entry) => entry.url), [
+  assert.deepEqual(entries.slice(5).map((entry) => entry.url), [
     'https://hunterbastian.com/projects/lumo',
     'https://hunterbastian.com/projects/wanderutah',
   ])

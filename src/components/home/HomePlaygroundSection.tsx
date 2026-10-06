@@ -1,5 +1,6 @@
 'use client'
 
+import DitherToolLink from '@/components/tools/DitherToolLink'
 import Link from 'next/link'
 import { useWebHaptics } from 'web-haptics/react'
 import { Section } from '@/components/home/HomeSection'
@@ -25,6 +26,7 @@ export function HomePlaygroundSection({ projects }: HomePlaygroundSectionProps) 
       contentGapClassName="space-y-4 sm:space-y-5"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
+      <DitherToolLink />
       <WorkScatterStack label="Playground" projects={projects} tone="playground" />
       <Link
         href="/archive"

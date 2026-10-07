@@ -4,6 +4,8 @@ import './playground.css'
 import './viewport.css'
 import './dark-theme.css'
 import './home-editorial.css'
+import './loading.css'
+import LoadingDots from '@/components/LoadingDots'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -101,6 +103,9 @@ export default function RootLayout({
           backgroundColor: 'var(--background)',
         }}
       >
+        <div className="site-intro-loader" aria-hidden="true">
+          <LoadingDots />
+        </div>
         <MotionProvider>
           <SoundProvider>
             <HoverSoundCue />

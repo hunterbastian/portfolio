@@ -1,7 +1,7 @@
 'use client'
 
 import { createElement, useEffect } from 'react'
-import DotMatrixLoader from './DotMatrixLoader'
+import LoadingDots from './LoadingDots'
 import {
   type LoaderType,
   LOADER_ICON_WRAPPER_CLASS,
@@ -51,13 +51,13 @@ export default function Loader({
 
 // Specialized loaders for common use cases
 export function PortfolioLoader({ className = '' }: { className?: string }) {
-  return <DotMatrixLoader className={className} />
+  return <LoadingDots fullscreen className={className} />
 }
 
 export function ProjectLoader({ className = '' }: { className?: string }) {
-  return <DotMatrixLoader className={className} />
+  return <LoadingDots fullscreen className={className} />
 }
 
 export function InlineLoader({ className = '' }: { className?: string }) {
-  return <DotMatrixLoader className={className} dotSize={3} fullscreen={false} size={24} />
+  return <LoadingDots className={className} />
 }

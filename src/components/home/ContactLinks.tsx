@@ -1,5 +1,6 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { contactSocialLinks, homepageContactSocialLabels } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
@@ -14,7 +15,7 @@ import { showJoyToast } from '@/lib/joy'
 const contactLinkClassName =
   'inline-flex min-h-[44px] min-w-[44px] items-center rounded-sm font-mono text-[0.8125rem] leading-relaxed text-foreground/80 underline decoration-transparent decoration-1 underline-offset-[0.3em] transition-colors duration-200 hover:text-foreground hover:decoration-foreground/50 focus-visible:text-foreground focus-visible:decoration-foreground/50 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-foreground/60 motion-reduce:transition-none'
 
-export function ContactLinks() {
+export function ContactLinks({ primaryAction, emailLabel }: { primaryAction?: ReactNode; emailLabel?: string }) {
   const haptic = useWebHaptics()
   const contactLinksView = getContactLinksView(
     getHomepageContactLinks(contactSocialLinks, homepageContactSocialLabels),
@@ -30,7 +31,8 @@ export function ContactLinks() {
   }
 
   return (
-    <div className="flex max-w-full flex-wrap items-center gap-x-6 gap-y-1 text-left sm:gap-x-7">
+    <div className="home-contact-links flex max-w-full flex-wrap items-center gap-x-6 gap-y-1 text-left sm:gap-x-7">
+      {primaryAction}
       {contactLinksView.emailLink ? (
         <a
           href={contactLinksView.emailLink.href}
@@ -42,7 +44,7 @@ export function ContactLinks() {
             }
           }}
         >
-          {contactLinksView.emailLink.label}
+          {emailLabel ?? contactLinksView.emailLink.label}
         </a>
       ) : null}
 

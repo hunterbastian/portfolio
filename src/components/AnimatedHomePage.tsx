@@ -40,7 +40,7 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
   }
 
   return (
-    <div className="home-editorial relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
+    <div className="home-editorial home-statement relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
       <div className="home-editorial-content mx-auto pt-[4.75rem] sm:pt-28">
         <Reveal>
           <HomeHeroSection />

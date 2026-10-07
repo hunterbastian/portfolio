@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import { HomeMasthead } from '@/components/home/HomeMasthead'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
@@ -124,7 +125,7 @@ function SectionNavLink({
   )
 }
 
-export default function TopMeta() {
+function PageTopMeta() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [headerHidden, setHeaderHidden] = useState(false)
@@ -400,4 +401,9 @@ export default function TopMeta() {
       </div>
     </div>
   )
+}
+
+export default function TopMeta() {
+  const pathname = usePathname()
+  return shouldShowHomeSectionNav(pathname) ? <HomeMasthead /> : <PageTopMeta />
 }

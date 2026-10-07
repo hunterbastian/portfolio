@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import type { CSSProperties, FocusEvent } from 'react'
 import { useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
@@ -12,6 +13,7 @@ import {
   getFeaturedProjectRowStyleVars,
   getHomeProjectDescription,
   getHomeProjectTitle,
+  getHomeProjectThumbnailImage,
   HOME_FEATURED_ROW_META_CLASS_NAME,
   HOME_FEATURED_ROW_OUTCOME_CLASS_NAME,
   HOME_FEATURED_ROW_TITLE_CLASS_NAME,
@@ -28,6 +30,7 @@ import { cn } from '@/lib/utils'
 interface FeaturedProjectListProps {
   density?: FeaturedProjectListDensity
   projects: HomeProject[]
+  showImages?: boolean
   showPlaygroundRow?: boolean
 }
 
@@ -44,6 +47,7 @@ function getFeaturedProjectRowStyle(slug: string, hoverDistance = 0, sequence = 
 }
 
 interface FeaturedProjectCardProps {
+  image?: string
   active: boolean
   density: FeaturedProjectListDensity
   description: string
@@ -62,6 +66,7 @@ interface FeaturedProjectCardProps {
 }
 
 function FeaturedProjectCard({
+  image,
   active,
   density,
   description,
@@ -95,6 +100,7 @@ function FeaturedProjectCard({
     <div
       className={cn(
         'featured-project-row featured-project-card relative isolate h-full',
+        image && 'featured-project-with-image',
         active && 'featured-project-row-active',
         muted && 'featured-project-row-muted',
       )}
@@ -111,6 +117,11 @@ function FeaturedProjectCard({
         )}
         onClick={handleClick}
       >
+        {image ? (
+          <div className="featured-project-image">
+            <Image src={image} alt="" fill sizes="(max-width: 639px) calc(100vw - 44px), 440px" />
+          </div>
+        ) : null}
         <span className={quiet ? HOME_MORE_ROW_META_CLASS_NAME : HOME_FEATURED_ROW_META_CLASS_NAME}>
           {trailing}
         </span>
@@ -173,12 +184,14 @@ function PlaygroundProjectRow({
 }
 
 function FeaturedProjectRow({
+  showImages,
   density,
   project,
   rowState,
   onHoverEnd,
   onHoverStart,
 }: {
+  showImages: boolean
   density: FeaturedProjectListDensity
   project: HomeProject
   rowState: FeaturedProjectRowState
@@ -189,6 +202,7 @@ function FeaturedProjectRow({
 
   return (
     <FeaturedProjectCard
+      image={showImages ? getHomeProjectThumbnailImage(project) : undefined}
       active={rowState.active}
       density={density}
       description={getHomeProjectDescription(project)}
@@ -210,6 +224,7 @@ function FeaturedProjectRow({
 
 export function FeaturedProjectList({
   density = 'default',
+  showImages = false,
   projects,
   showPlaygroundRow = false,
 }: FeaturedProjectListProps) {
@@ -242,6 +257,7 @@ export function FeaturedProjectList({
         return (
           <FeaturedProjectRow
             key={rowState.slug}
+            showImages={showImages}
             density={density}
             project={project}
             rowState={rowState}

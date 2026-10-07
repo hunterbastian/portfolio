@@ -10,13 +10,12 @@ test('featured projects appear once before studio endeavors', () => {
  assert.ok(source.indexOf('<HomeEndeavorsSection') < source.indexOf('<HomePlaygroundSection'))
 })
 
-test('homepage projects pair named rows with the collage', () => {
+test('homepage projects pair named rows with inline project images', () => {
  const source = readFileSync(new URL('../components/home/HomeProjectsSection.tsx', import.meta.url), 'utf8')
  assert.ok(source.includes('<FeaturedProjectList'))
- assert.ok(source.includes('<WorkScatterStack'))
- assert.ok(source.includes('decorative'))
+ assert.ok(source.includes('showImages'))
+ assert.equal(source.includes('<WorkScatterStack'), false)
  assert.equal(source.includes('showPlaygroundRow'), false)
- assert.ok(source.indexOf('<FeaturedProjectList') < source.indexOf('<WorkScatterStack'))
 })
 
 test('homepage uses a short background timeline instead of resume lists', () => {

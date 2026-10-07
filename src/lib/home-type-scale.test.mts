@@ -17,14 +17,13 @@ import {
 import { HOME_SECTION_TITLE_CLASS_NAME } from './home-section.ts'
 import { PEEK_ACTION_BASE_CLASS } from './peek-action.ts'
 
-test('homepage type scale keeps a louder Swiss name and whisper section labels', () => {
+test('homepage type scale keeps a prominent statement and quiet section labels', () => {
   const hero = readFileSync(new URL('../components/home/HomeHeroSection.tsx', import.meta.url), 'utf8')
   const philosophy = readFileSync(new URL('../components/home/HomePhilosophySection.tsx', import.meta.url), 'utf8')
   const playground = readFileSync(new URL('../components/home/HomePlaygroundSection.tsx', import.meta.url), 'utf8')
 
-  assert.match(hero, /HOME_HERO_NAME_CLASS_NAME/)
-  assert.match(hero, /HOME_HERO_INTRO_CLASS_NAME/)
-  assert.match(hero, /HOME_HERO_CONTACT_LINE_CLASS_NAME/)
+  assert.match(hero, /home-statement-title/)
+  assert.match(hero, /home-statement-meta/)
   assert.match(HOME_HERO_NAME_CLASS_NAME, /text-\[36px\]/)
   assert.match(HOME_HERO_NAME_CLASS_NAME, /sm:text-\[44px\]/)
   assert.match(HOME_HERO_NAME_CLASS_NAME, /font-semibold/)

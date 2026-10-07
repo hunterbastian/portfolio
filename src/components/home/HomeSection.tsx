@@ -22,7 +22,7 @@ export function Reveal({ children, delayMs = 0 }: { children: ReactNode; delayMs
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, {
     once: true,
-    amount: 0.2,
+    amount: 0.05,
     margin: '0px 0px -12% 0px',
   })
   const revealed = shouldRevealHomeSection(isInView, prefersReducedMotion)

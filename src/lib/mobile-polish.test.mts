@@ -31,13 +31,13 @@ test('homepage mobile chrome keeps 44px tap targets on primary actions', () => {
   assert.doesNotMatch(tactile, /'contact-social': 'min-h-\[44px\] w-\[5\.85rem\]/)
 })
 
-test('mobile project collage stays clipped and does not steal taps from named rows', () => {
+test('mobile projects use inline images with accessible named links', () => {
   const stack = readFileSync(new URL('../components/home/WorkScatterStack.tsx', import.meta.url), 'utf8')
   const css = readFileSync(new URL('../components/home/WorkScatterStack.module.css', import.meta.url), 'utf8')
   const projects = readFileSync(new URL('../components/home/HomeProjectsSection.tsx', import.meta.url), 'utf8')
   const rows = readFileSync(new URL('../components/home/FeaturedProjectList.tsx', import.meta.url), 'utf8')
 
-  assert.match(projects, /decorative/)
+  assert.match(projects, /showImages/)
   assert.match(stack, /styles\.decorative/)
   assert.match(css, /\.decorative \{\s*pointer-events: none;/)
   assert.match(css, /overflow: hidden;/)
@@ -54,7 +54,7 @@ test('contact and scroll-to-top keep comfortable mobile padding and safe areas',
   const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8')
 
   assert.match(contact, /max-w-full/)
-  assert.match(contact, /space-y-6/)
+  assert.match(contact, /min-h-\[44px\]/)
   assert.match(scroll, /safe-area-inset-bottom/)
   assert.match(scroll, /safe-area-inset-right/)
   assert.match(page, /pt-\[4\.75rem\]/)

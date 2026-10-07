@@ -607,7 +607,7 @@ footer[data-home-editorial='true'] {
 .home-statement #projects .featured-project-image {
   position: relative;
   grid-area: 1 / 1 / auto / -1;
-  aspect-ratio: 1.6;
+  aspect-ratio: 2;
   overflow: hidden;
   background: var(--card);
 }

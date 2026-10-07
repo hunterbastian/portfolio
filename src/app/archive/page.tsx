@@ -1,3 +1,4 @@
+import DitherToolLink from '@/components/tools/DitherToolLink'
 import PlaygroundGallery from '@/components/playground/PlaygroundGallery'
 import { PLAYGROUND_EMPTY_COPY, sortProjectsForPlayground } from '@/lib/playground'
 import { getArchivedProjects } from '@/lib/projects'
@@ -32,6 +33,7 @@ export default function ArchivePage() {
 
       <div className="relative z-10 mx-auto w-full max-w-[calc(100vw-7rem)]">
         <div className="pt-8 sm:pt-12">
+          <DitherToolLink />
           {archivedProjects.length === 0 ? (
             <div className="pt-16">
               <p className="font-mono text-[0.96rem] text-muted-foreground">

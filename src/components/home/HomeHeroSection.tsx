@@ -26,7 +26,6 @@ import {
 } from '@/lib/home-hero'
 import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
 import { showJoyToast } from '@/lib/joy'
-import { useHeroGlow } from '@/lib/use-hero-glow'
 
 function useHomeHeroLocalTime() {
   const [localTime, setLocalTime] = useState('')
@@ -57,7 +56,6 @@ const homeHeroIntroStackClassName = 'home-editorial-intro space-y-7 pt-5 sm:spac
 
 export function HomeHeroSection() {
   const introParagraphs = getHomeHeroIntroParagraphs(homeHeroContent.intro)
-  const heroGlow = useHeroGlow()
   const haptic = useWebHaptics()
   const localTime = useHomeHeroLocalTime()
 
@@ -65,26 +63,7 @@ export function HomeHeroSection() {
     <section
       id="home"
       className={`relative isolate ${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME} pb-2 sm:pb-3`}
-      onPointerEnter={heroGlow.handlers.onPointerEnter}
-      onPointerMove={heroGlow.handlers.onPointerMove}
-      onPointerLeave={heroGlow.handlers.onPointerLeave}
     >
-      <div
-        ref={heroGlow.grainRef}
-        aria-hidden="true"
-        className={`animated-hero-grain pointer-events-none absolute left-[calc(50%+2rem)] -top-10 -z-10 h-[22rem] w-[calc(100vw+2rem)] opacity-[0.04] mix-blend-multiply transition-transform duration-[1800ms] ease-soft will-change-transform sm:left-[calc(50%+7rem)] sm:-top-14 sm:h-[28rem] sm:w-[calc(100vw+14rem)] sm:opacity-[0.055] ${
-          heroGlow.isActive ? 'is-active' : ''
-        }`}
-        style={{
-          backgroundImage: "url('/images/hero-grain.svg')",
-          backgroundSize: '260px 260px',
-          maskImage:
-            'radial-gradient(ellipse 58% 46% at 50% 38%, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.24) 48%, transparent 78%)',
-          WebkitMaskImage:
-            'radial-gradient(ellipse 58% 46% at 50% 38%, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.24) 48%, transparent 78%)',
-        }}
-      />
-
       <div className="relative z-10 space-y-5 sm:space-y-7">
         <div className="space-y-3.5 sm:space-y-4">
           <p className="home-editorial-kicker">Selected work &amp; experiments</p>

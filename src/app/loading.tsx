@@ -1,5 +1,5 @@
-import LoadingDots from '@/components/LoadingDots'
+import LoadingIndicator from '@/components/LoadingIndicator'
 
 export default function Loading() {
-  return <LoadingDots fullscreen />
+  return <LoadingIndicator fullscreen />
 }

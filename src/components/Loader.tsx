@@ -1,7 +1,7 @@
 'use client'
 
 import { createElement, useEffect } from 'react'
-import LoadingDots from './LoadingDots'
+import LoadingIndicator from './LoadingIndicator'
 import {
   type LoaderType,
   LOADER_ICON_WRAPPER_CLASS,
@@ -51,13 +51,13 @@ export default function Loader({
 
 // Specialized loaders for common use cases
 export function PortfolioLoader({ className = '' }: { className?: string }) {
-  return <LoadingDots fullscreen className={className} />
+  return <LoadingIndicator fullscreen className={className} />
 }
 
 export function ProjectLoader({ className = '' }: { className?: string }) {
-  return <LoadingDots fullscreen className={className} />
+  return <LoadingIndicator fullscreen className={className} />
 }
 
 export function InlineLoader({ className = '' }: { className?: string }) {
-  return <LoadingDots className={className} />
+  return <LoadingIndicator className={className} />
 }

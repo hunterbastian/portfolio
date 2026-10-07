@@ -5,7 +5,7 @@ import './viewport.css'
 import './dark-theme.css'
 import './home-editorial.css'
 import './loading.css'
-import LoadingDots from '@/components/LoadingDots'
+import LoadingIndicator from '@/components/LoadingIndicator'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import PageTransition from '@/components/PageTransition'
@@ -104,7 +104,7 @@ export default function RootLayout({
         }}
       >
         <div className="site-intro-loader" aria-hidden="true">
-          <LoadingDots />
+          <LoadingIndicator />
         </div>
         <MotionProvider>
           <SoundProvider>

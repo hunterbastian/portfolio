@@ -1,11 +1,11 @@
-.portfolio-loading-dots,
-.portfolio-loading-dots-screen {
+.portfolio-loading-indicator,
+.portfolio-loading-indicator-screen {
   display: grid;
   place-items: center;
   color: var(--foreground);
 }
 
-.portfolio-loading-dots-screen,
+.portfolio-loading-indicator-screen,
 .site-intro-loader {
   position: fixed;
   inset: 0;
@@ -15,25 +15,16 @@
   background: var(--background);
 }
 
-.portfolio-loading-dots__icon {
+.portfolio-loading-indicator__icon {
   display: block;
-  width: 48px;
-  height: 48px;
-  overflow: visible;
+  width: 34px;
+  height: 34px;
+  opacity: 0.92;
+  animation: loading-ring-turn 1000ms linear infinite;
 }
 
-.portfolio-loading-dots__icon circle {
-  fill: currentColor;
-  stroke-width: 1;
-  animation: loading-dot-pulse 840ms ease-in-out infinite;
-}
-
-.portfolio-loading-dots__icon circle:nth-child(1) {
-  animation-delay: 140ms;
-}
-
-.portfolio-loading-dots__icon circle:nth-child(2) {
-  animation-delay: 280ms;
+.site-intro-loader .portfolio-loading-indicator__icon {
+  animation-iteration-count: 1;
 }
 
 /* The root layout persists across navigation, so this only plays on arrival.
@@ -48,9 +39,8 @@ body:has(:focus-visible) .site-intro-loader {
   display: none;
 }
 
-@keyframes loading-dot-pulse {
-  0%, 65%, 100% { opacity: 0.28; }
-  30% { opacity: 1; }
+@keyframes loading-ring-turn {
+  to { transform: rotate(360deg); }
 }
 
 @keyframes site-intro-reveal {
@@ -63,8 +53,8 @@ body:has(:focus-visible) .site-intro-loader {
     display: none;
   }
 
-  .portfolio-loading-dots__icon circle {
+  .portfolio-loading-indicator__icon {
     animation: none;
-    opacity: 0.7;
+    opacity: 0.92;
   }
 }

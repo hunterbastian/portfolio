@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { HomeBackgroundSection } from '@/components/home/HomeBackgroundSection'
 import { HomeEndeavorsSection } from '@/components/home/HomeEndeavorsSection'
 import { HomeHeroSection } from '@/components/home/HomeHeroSection'
-import { HomePhilosophySection } from '@/components/home/HomePhilosophySection'
 import { HomePlaygroundSection } from '@/components/home/HomePlaygroundSection'
 import { HomeProjectsSection } from '@/components/home/HomeProjectsSection'
 import { Reveal } from '@/components/home/HomeSection'
@@ -57,10 +56,6 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
         </Reveal>
 
         <div className="home-editorial-sections">
-          <Reveal delayMs={20}>
-            <HomePhilosophySection />
-          </Reveal>
-
           <Reveal delayMs={40}>
             <HomeProjectsSection
               onWorkFilterChange={applyWorkFilter}

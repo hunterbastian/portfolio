@@ -23,6 +23,12 @@ body *::after {
   text-transform: lowercase !important;
 }
 
+/* Proper-name exception to the lowercase visual style. */
+body .preserve-name-case,
+body .preserve-name-case * {
+  text-transform: none !important;
+}
+
 @supports not (overflow: clip) {
   html,
   body {

@@ -315,7 +315,7 @@ export default function TopMeta() {
             })
           }
         >
-          <span>Hunter Bastian</span>
+          <span className="preserve-name-case">Hunter Bastian</span>
           <span className={getTopMetaSunClassName(sunBlinking)}>
             <PixelSun size={10} />
           </span>

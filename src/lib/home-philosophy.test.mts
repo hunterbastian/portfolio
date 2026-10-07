@@ -29,13 +29,10 @@ test('homepage philosophy beat stays short and in Hunter’s voice', () => {
   assert.doesNotMatch(homepage, /Lorem ipsum/)
 })
 
-test('philosophy sits after the hero and before projects without a new nav item', () => {
-  const page = readFileSync(new URL('../components/AnimatedHomePage.tsx', import.meta.url), 'utf8')
+test('archived philosophy component retains its quiet typography', () => {
   const nav = readFileSync(new URL('./home-section-nav.ts', import.meta.url), 'utf8')
   const philosophy = readFileSync(new URL('../components/home/HomePhilosophySection.tsx', import.meta.url), 'utf8')
 
-  assert.ok(page.indexOf('<HomeHeroSection') < page.indexOf('<HomePhilosophySection'))
-  assert.ok(page.indexOf('<HomePhilosophySection') < page.indexOf('<HomeProjectsSection'))
   assert.doesNotMatch(nav, /philosophy/)
   assert.doesNotMatch(nav, /How I build/)
   assert.match(HOME_PHILOSOPHY_TITLE_CLASS_NAME, /text-\[10px\]/)

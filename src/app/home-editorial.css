@@ -481,3 +481,29 @@ footer[data-home-editorial='true'] {
     font-size: 1.286rem;
   }
 }
+
+/* Review-only minimal direction — not part of the production change. */
+.home-painterly-washes, .home-coast-outro, .home-editorial-kicker { display: none; }
+.home-editorial .home-editorial-intro { padding-top: 0; max-width: 30rem; }
+.home-editorial .home-editorial-details > div:first-child,
+.home-editorial .home-editorial-details dt,
+.home-editorial .home-editorial-details time,
+.home-editorial .home-editorial-details dd > span[aria-hidden],
+.home-editorial #contact > p { display: none; }
+.home-editorial .home-editorial-details > div { display: block; border: 0; padding: 0; }
+.home-editorial .home-editorial-details dd { color: var(--muted-foreground); }
+.home-editorial #home a[href='/cv'],
+.home-editorial #contact a[href^='mailto:'] {
+  min-width: 0; min-height: 44px; padding: 0; border: 0; border-radius: 0;
+  background: transparent; box-shadow: none; color: var(--foreground);
+  font-size: 1rem; text-decoration: underline; text-decoration-color: var(--border);
+  text-underline-offset: 0.3em; transform: none;
+}
+.home-editorial #contact a { font-size: 1rem; letter-spacing: 0; }
+.home-editorial #contact { padding-top: 0; }
+.home-editorial-sections { margin-block-start: 5rem; }
+@media (min-width: 640px) {
+  .home-editorial #home > div { display: grid; grid-template-columns: auto 1fr; column-gap: 2rem; row-gap: 1.75rem; }
+  .home-editorial #home > div > * { margin-top: 0; }
+  .home-editorial #home > div > :nth-child(-n+3) { grid-column: 1 / -1; }
+}

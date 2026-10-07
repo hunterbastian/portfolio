@@ -1,7 +1,7 @@
-/* Label: restrained sans-serif type, fine rules and aligned project details. */
+/* Label: restrained Paper Mono type, fine rules and aligned project details. */
 :root {
   --home-content-width: 42rem;
-  --font-editorial: var(--font-questrial), 'Questrial', Arial, Helvetica, sans-serif;
+  --font-editorial: var(--font-paper-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 .home-editorial-content,

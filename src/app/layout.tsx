@@ -1,4 +1,4 @@
-import { Questrial } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import './playground.css'
 import './viewport.css'
@@ -26,12 +26,15 @@ import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
-// Questrial is the only site face; globals.css aliases the older Geist font variables to it.
-const questrial = Questrial({
-  weight: '400',
-  subsets: ['latin'],
+// Self-hosted Paper Mono; existing font utilities share this variable face.
+const paperMono = localFont({
+  src: '../../public/fonts/paper-mono-variable.woff2',
+  weight: '100 800',
+  style: 'normal',
   display: 'swap',
-  variable: '--font-questrial',
+  variable: '--font-paper-mono',
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+  adjustFontFallback: false,
 })
 
 
@@ -55,7 +58,7 @@ export default function RootLayout({
   const launcherProjects = getLauncherProjectSources(getAllProjects())
 
   return (
-    <html lang="en" className={questrial.variable} suppressHydrationWarning>
+    <html lang="en" className={paperMono.variable} suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
         <meta name="theme-color" content={siteConfig.themeColorDark} />
@@ -93,7 +96,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${questrial.className} safe-area-padding text-foreground`}
+        className={`${paperMono.className} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}

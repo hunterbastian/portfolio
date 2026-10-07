@@ -10,9 +10,9 @@ html, body {
 }
 
 :root {
-  --font-geist-mono: var(--font-questrial), 'Questrial', system-ui, sans-serif;
-  --font-geist-pixel-square: var(--font-questrial), 'Questrial', system-ui, sans-serif;
-  --font-geist-sans: var(--font-questrial), 'Questrial', system-ui, sans-serif;
+  --font-geist-mono: var(--font-paper-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-geist-pixel-square: var(--font-paper-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-geist-sans: var(--font-paper-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /* Site-wide lowercase. Form fields are exempt so typed text shows as typed. */
@@ -293,7 +293,7 @@ body {
   backface-visibility: hidden;
 }
 
-/* Body copy inherits the site-wide Geist Mono stack; keep pretty wrapping for readability. */
+/* Body copy inherits the site-wide Paper Mono stack; keep pretty wrapping for readability. */
 p, li, dd, blockquote, figcaption {
   text-wrap: pretty;
 }

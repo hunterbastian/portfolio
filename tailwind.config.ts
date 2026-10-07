@@ -19,10 +19,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'mono': ['var(--font-questrial)', 'Questrial', 'system-ui', 'sans-serif'],
-        'sans': ['var(--font-questrial)', 'Questrial', 'system-ui', 'sans-serif'],
-        'inter': ['var(--font-questrial)', 'Questrial', 'system-ui', 'sans-serif'],
-        'header': ['var(--font-questrial)', 'Questrial', 'system-ui', 'sans-serif'],
+        'mono': ['var(--font-paper-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        'sans': ['var(--font-paper-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        'inter': ['var(--font-paper-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        'header': ['var(--font-paper-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
         'redaction': ['HB Redaction', 'Redaction', 'Redaction 35', 'Georgia', 'serif'],
       },
       screens: {

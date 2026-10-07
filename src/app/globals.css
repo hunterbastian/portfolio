@@ -23,6 +23,12 @@ body *::after {
   text-transform: lowercase !important;
 }
 
+/* Proper-name exception to the lowercase visual style. */
+body .preserve-name-case,
+body .preserve-name-case * {
+  text-transform: none !important;
+}
+
 @supports not (overflow: clip) {
   html,
   body {
@@ -279,7 +285,7 @@ html {
 
 body {
   background-color: var(--background);
-  background-image: linear-gradient(180deg, rgba(var(--surface-paper-rgb), 0.22) 0%, rgba(var(--surface-paper-rgb), 0) 36%);
+  background-image: none;
   background-size: 100% 100%;
   position: relative;
   min-height: 100vh;

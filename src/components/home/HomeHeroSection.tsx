@@ -68,7 +68,7 @@ export function HomeHeroSection() {
         <div className="space-y-3.5 sm:space-y-4">
           <p className="home-editorial-kicker">Selected work &amp; experiments</p>
           <div className="space-y-1">
-            <h1 className={HOME_HERO_NAME_CLASS_NAME}>
+            <h1 className={`preserve-name-case ${HOME_HERO_NAME_CLASS_NAME}`}>
               {homeHeroContent.headline}
             </h1>
           </div>

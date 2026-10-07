@@ -1,32 +1,32 @@
-/* Autumn field notebook: warm charcoal, paper, olive and a faded red accent. */
+/* Apothecary palette: warm charcoal, ivory labels, stone and aged brass. */
 :root {
   color-scheme: dark;
-  --background: #1b1a17;
-  --background-rgb: 27, 26, 23;
-  --foreground: #e9e4d9;
-  --card: #23221e;
+  --background: #26231e;
+  --background-rgb: 38, 35, 30;
+  --foreground: #f2ebdd;
+  --card: #2e2a24;
   --card-foreground: var(--foreground);
   --primary: var(--foreground);
   --primary-foreground: var(--background);
-  --secondary: #302e28;
+  --secondary: #3b352c;
   --secondary-foreground: var(--foreground);
   --muted: var(--card);
-  --muted-foreground: #b8b1a4;
-  --subtle-foreground: #b0a99a;
-  /* Soft scenic accents for ambience only — not UI chrome fills */
-  --accent: #b8bd9e;
+  --muted-foreground: #c4baab;
+  --subtle-foreground: #b7ad9d;
+  /* Muted brass accents for links and focus states. */
+  --accent: #c2ad85;
   --accent-foreground: var(--background);
-  --accent-subtle: #2b2e25;
-  --accent-muted: #9b9e89;
-  --accent-blue: #a8b0ad;
-  --accent-green: #b0b69a;
-  --border: #3b3931;
+  --accent-subtle: #373024;
+  --accent-muted: #ad9874;
+  --accent-blue: #b8b3a8;
+  --accent-green: #b2ae96;
+  --border: #4d463b;
   --input: var(--border);
   --ring: var(--accent);
-  --surface-warm-rgb: 48, 46, 40;
-  --surface-paper-rgb: 35, 34, 30;
-  --grain-rgb: 184, 177, 164;
-  --ink-underline: #b8bd9e;
+  --surface-warm-rgb: 59, 53, 44;
+  --surface-paper-rgb: 46, 42, 36;
+  --grain-rgb: 196, 186, 171;
+  --ink-underline: #c2ad85;
   --contact-accent: #c8a8a2;
   --contact-accent-soft: #332826;
   --contact-accent-rgb: 200, 168, 162;
@@ -100,7 +100,7 @@
   background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 28%, transparent), transparent);
 }
 
-/* The olive focus ring remains distinct from the warm surfaces. */
+/* A brass focus ring remains distinct from the warm surfaces. */
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;

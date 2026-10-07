@@ -105,7 +105,7 @@ export default function Footer() {
     >
       <div className={FOOTER_INNER_CLASS}>
         <div className={FOOTER_META_ROW_CLASS}>
-          <p className={FOOTER_COPYRIGHT_CLASS}>
+          <p className={`preserve-name-case ${FOOTER_COPYRIGHT_CLASS}`}>
             {getFooterCopyrightLabel(currentYear)}
           </p>
           <p className={FOOTER_MADE_LINE_CLASS}>

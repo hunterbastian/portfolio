@@ -43,7 +43,7 @@ export default function AboutPageClient() {
               />
             </div>
 
-            <h1 className="mt-8 font-mono text-[12px] font-medium tracking-[0.1em] uppercase text-foreground">
+            <h1 className="preserve-name-case mt-8 font-mono text-[12px] font-medium tracking-[0.1em] uppercase text-foreground">
               <TextReveal
                 text="Hunter Bastian"
                 as="span"

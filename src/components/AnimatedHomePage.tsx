@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { HomeBackgroundSection } from '@/components/home/HomeBackgroundSection'
 import { HomeEndeavorsSection } from '@/components/home/HomeEndeavorsSection'
 import { HomeHeroSection } from '@/components/home/HomeHeroSection'
-import { HomePhilosophySection } from '@/components/home/HomePhilosophySection'
 import { HomePlaygroundSection } from '@/components/home/HomePlaygroundSection'
 import { HomeProjectsSection } from '@/components/home/HomeProjectsSection'
 import { Reveal } from '@/components/home/HomeSection'
@@ -42,25 +41,12 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
 
   return (
     <div className="home-editorial relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
-      <div aria-hidden="true" className="home-painterly-washes">
-        <span className="home-painterly-wash home-painterly-wash-canvas" />
-        <span className="home-painterly-wash home-painterly-wash-dawn" />
-        <span className="home-painterly-wash home-painterly-wash-hero" />
-        <span className="home-painterly-wash home-painterly-wash-projects" />
-        <span className="home-painterly-wash home-painterly-wash-contact" />
-      </div>
-      <div aria-hidden="true" className="home-coast-outro" />
-
       <div className="home-editorial-content mx-auto pt-[4.75rem] sm:pt-28">
         <Reveal>
           <HomeHeroSection />
         </Reveal>
 
         <div className="home-editorial-sections">
-          <Reveal delayMs={20}>
-            <HomePhilosophySection />
-          </Reveal>
-
           <Reveal delayMs={40}>
             <HomeProjectsSection
               onWorkFilterChange={applyWorkFilter}

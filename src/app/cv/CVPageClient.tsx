@@ -83,7 +83,7 @@ export default function CVPageClient() {
         <header className="pb-8 sm:pb-10 pt-8 sm:pt-12 print:pt-0 print:pb-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="font-mono text-[14px] font-semibold tracking-[0.08em] uppercase text-foreground sm:text-[15px]">
+              <h1 className="preserve-name-case font-mono text-[14px] font-semibold tracking-[0.08em] uppercase text-foreground sm:text-[15px]">
                 <TextReveal text="Hunter Bastian" as="span" trigger duration={0.5} staggerDelay={0.08} startDelay={0.1} filter />
               </h1>
               <p className="mt-2 text-[13px] text-muted-foreground">

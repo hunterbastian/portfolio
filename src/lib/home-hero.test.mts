@@ -36,12 +36,11 @@ test('home hero intro helper preserves paragraph splitting', () => {
   assert.deepEqual(getHomeHeroIntroParagraphs('First\n\n'), ['First', ''])
 })
 
-test('home hero keeps the design sentence and UVU line without a prose clock', () => {
+test('home hero keeps a concise introduction without a prose clock', () => {
   const homepage = readFileSync(new URL('../content/homepage.ts', import.meta.url), 'utf8')
   const hero = readFileSync(new URL('../components/home/HomeHeroSection.tsx', import.meta.url), 'utf8')
 
-  assert.match(homepage, /calm interfaces, thoughtful motion, and visual restraint/)
-  assert.match(homepage, /Utah Valley University/)
+  assert.match(homepage, /I design and build thoughtful digital experiences\./)
   assert.doesNotMatch(homepage, /Local time is/)
   assert.doesNotMatch(hero, /Local time is/)
   assert.doesNotMatch(hero, /<button/)

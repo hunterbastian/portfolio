@@ -1,5 +1,4 @@
-import { GeistMono } from 'geist/font/mono'
-import { GeistPixelSquare } from 'geist/font/pixel'
+import { Questrial } from 'next/font/google'
 import './globals.css'
 import './playground.css'
 import './viewport.css'
@@ -27,7 +26,13 @@ import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
-// Geist Mono is the site-wide text face; Geist Pixel Square is reserved for the top header.
+// Questrial is the only site face; globals.css aliases the older Geist font variables to it.
+const questrial = Questrial({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-questrial',
+})
 
 
 export const viewport = {
@@ -50,7 +55,7 @@ export default function RootLayout({
   const launcherProjects = getLauncherProjectSources(getAllProjects())
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={questrial.variable} suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
         <meta name="theme-color" content={siteConfig.themeColorDark} />
@@ -88,7 +93,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${GeistMono.className} ${GeistMono.variable} ${GeistPixelSquare.variable} safe-area-padding text-foreground`}
+        className={`${questrial.className} safe-area-padding text-foreground`}
         style={{
           backgroundColor: 'var(--background)',
         }}

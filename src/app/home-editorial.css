@@ -1,7 +1,7 @@
 /* Label: restrained sans-serif type, fine rules and aligned project details. */
 :root {
   --home-content-width: 42rem;
-  --font-editorial: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-editorial: var(--font-questrial), 'Questrial', Arial, Helvetica, sans-serif;
 }
 
 .home-editorial-content,

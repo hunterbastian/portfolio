@@ -1,4 +1,4 @@
-.link { display: flex; align-items: center; gap: 18px; padding: 24px 0; margin-bottom: 24px; border-block: 1px solid var(--border); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: var(--foreground); }
+.link { display: flex; align-items: center; gap: 18px; padding: 24px 0; margin-bottom: 24px; border-block: 1px solid var(--border); font-family: inherit; color: var(--foreground); }
 .link > svg { flex-shrink: 0; }
 .link > span:nth-child(2) { min-width: 0; flex: 1; }
 .link strong { display: block; font-size: 18px; line-height: 1.4; font-weight: 400; letter-spacing: -.015em; }

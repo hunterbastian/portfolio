@@ -1,4 +1,4 @@
-.studio { max-width: 1160px; margin: 0 auto; padding: 38px 28px 80px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.studio { max-width: 1160px; margin: 0 auto; padding: 38px 28px 80px; font-family: inherit; }
 .back { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--muted-foreground); font-size: 14px; }
 .back:hover { color: var(--foreground); }
 .heading { margin: 30px 0 36px; }

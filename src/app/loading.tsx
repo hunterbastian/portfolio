@@ -1,5 +1,5 @@
-import DotMatrixLoader from '@/components/DotMatrixLoader'
+import LoadingDots from '@/components/LoadingDots'
 
 export default function Loading() {
-  return <DotMatrixLoader />
+  return <LoadingDots fullscreen />
 }

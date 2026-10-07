@@ -15,32 +15,91 @@
   background: var(--background);
 }
 
-.portfolio-loading-indicator__icon {
+.portfolio-loading-indicator__content {
+  display: grid;
+  justify-items: center;
+  gap: 26px;
+  max-width: calc(100vw - 48px);
+  text-align: center;
+}
+
+.portfolio-loading-indicator__identity {
+  display: grid;
+  gap: 13px;
+}
+
+.portfolio-loading-indicator__name {
   display: block;
-  width: 34px;
-  height: 34px;
-  opacity: 0.92;
-  animation: loading-ring-turn 1000ms linear infinite;
+  font-family: Didot, 'Bodoni MT', 'Times New Roman', serif;
+  font-size: clamp(30px, 8.6vw, 42px);
+  font-weight: 400;
+  font-style: normal;
+  font-kerning: normal;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  text-transform: none !important;
 }
 
-.site-intro-loader .portfolio-loading-indicator__icon {
-  animation-iteration-count: 1;
+.portfolio-loading-indicator__caption {
+  font-family: var(--font-paper-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+  text-transform: none !important;
 }
 
-/* The root layout persists across navigation, so this only plays on arrival.
-   CSS reveals the page even before hydration or when JavaScript is disabled. */
+.portfolio-loading-indicator__line {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 1px;
+  overflow: hidden;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.portfolio-loading-indicator__line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  transform-origin: left center;
+  animation: editorial-loading-pass 1500ms cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.site-intro-loader .portfolio-loading-indicator__identity {
+  animation: editorial-loading-name 440ms ease-out both;
+}
+
+.site-intro-loader .portfolio-loading-indicator__line::after {
+  animation: editorial-loading-draw 600ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+}
+
+/* The persistent layout plays this once on document arrival. CSS completes
+   the reveal independently of hydration, including when JavaScript is off. */
 .site-intro-loader {
   pointer-events: none;
   animation: site-intro-reveal 260ms ease-out 660ms forwards;
 }
 
-/* Keyboard users can reach the page immediately. */
 body:has(:focus-visible) .site-intro-loader {
   display: none;
 }
 
-@keyframes loading-ring-turn {
-  to { transform: rotate(360deg); }
+@keyframes editorial-loading-name {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes editorial-loading-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes editorial-loading-pass {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
 }
 
 @keyframes site-intro-reveal {
@@ -53,8 +112,10 @@ body:has(:focus-visible) .site-intro-loader {
     display: none;
   }
 
-  .portfolio-loading-indicator__icon {
+  .portfolio-loading-indicator__identity,
+  .portfolio-loading-indicator__line::after {
     animation: none;
-    opacity: 0.92;
+    transform: none;
+    opacity: 1;
   }
 }

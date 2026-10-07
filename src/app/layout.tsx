@@ -104,7 +104,7 @@ export default function RootLayout({
         }}
       >
         <div className="site-intro-loader" aria-hidden="true">
-          <LoadingIndicator />
+          <LoadingIndicator branded />
         </div>
         <MotionProvider>
           <SoundProvider>

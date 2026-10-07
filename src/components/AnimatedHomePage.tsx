@@ -41,15 +41,6 @@ export default function AnimatedHomePage({ playgroundProjects, projects }: Anima
 
   return (
     <div className="home-editorial relative isolate overflow-x-clip px-5 pb-10 sm:px-8 sm:pb-32">
-      <div aria-hidden="true" className="home-painterly-washes">
-        <span className="home-painterly-wash home-painterly-wash-canvas" />
-        <span className="home-painterly-wash home-painterly-wash-dawn" />
-        <span className="home-painterly-wash home-painterly-wash-hero" />
-        <span className="home-painterly-wash home-painterly-wash-projects" />
-        <span className="home-painterly-wash home-painterly-wash-contact" />
-      </div>
-      <div aria-hidden="true" className="home-coast-outro" />
-
       <div className="home-editorial-content mx-auto pt-[4.75rem] sm:pt-28">
         <Reveal>
           <HomeHeroSection />

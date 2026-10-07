@@ -14,7 +14,7 @@ export const siteConfig = {
   siteSeason: 'SPRING / 2026',
   faviconVersion: '20260506a',
   themeColorLight: '#f2f1ef',
-  themeColorDark: '#1b1a17',
+  themeColorDark: '#26231e',
   email: 'hunterbastianux@gmail.com',
   inquirySubject: 'Project Inquiry',
 } as const

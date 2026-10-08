@@ -3,6 +3,7 @@
 import { useWebHaptics } from 'web-haptics/react'
 import { PeekAction } from '@/components/PeekAction'
 import { ContactLinks } from '@/components/home/ContactLinks'
+import MichelangelusLettering from '@/components/typography/MichelangelusLettering'
 import { homeHeroContent } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
 import {
@@ -20,10 +21,10 @@ export function HomeHeroSection() {
   return (
     <section id="home" className={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}>
       <h1 className="home-statement-title preserve-name-case" aria-label={homeHeroContent.intro}>
-        <span>I design and</span>{' '}
-        <span>build thoughtful</span>{' '}
-        <span>digital</span>{' '}
-        <span>experiences.</span>
+        <span><MichelangelusLettering phrase="design" /></span>{' '}
+        <span><MichelangelusLettering phrase="build" /></span>{' '}
+        <span><MichelangelusLettering phrase="digital" /></span>{' '}
+        <span><MichelangelusLettering phrase="experiences" /></span>
       </h1>
       <p className="home-statement-meta preserve-name-case">
         Interaction design &amp; development<br />

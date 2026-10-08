@@ -1,3 +1,5 @@
+import MichelangelusLettering from '@/components/typography/MichelangelusLettering'
+
 interface LoadingIndicatorProps {
   fullscreen?: boolean
   branded?: boolean
@@ -17,7 +19,7 @@ export default function LoadingIndicator({
       <div className="portfolio-loading-indicator__content" aria-hidden="true">
         {branded ? (
           <div className="portfolio-loading-indicator__identity">
-            <span className="portfolio-loading-indicator__name preserve-name-case">Hunter Bastian</span>
+            <span className="portfolio-loading-indicator__name preserve-name-case"><MichelangelusLettering /></span>
             <span className="portfolio-loading-indicator__caption">Design &amp; development</span>
           </div>
         ) : null}

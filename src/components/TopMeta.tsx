@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { HomeMasthead } from '@/components/home/HomeMasthead'
+import MichelangelusLettering from '@/components/typography/MichelangelusLettering'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
@@ -316,7 +317,7 @@ function PageTopMeta() {
             })
           }
         >
-          <span className="preserve-name-case">Hunter Bastian</span>
+          <MichelangelusLettering className="michelangelus-nav-name preserve-name-case" />
           <span className={getTopMetaSunClassName(sunBlinking)}>
             <PixelSun size={10} />
           </span>

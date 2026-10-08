@@ -14,6 +14,7 @@ import { contactSocialLinks } from '@/content/homepage'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/#projects', label: 'Selected work' },
+  { href: '/#playground', label: 'Featured experiment' },
   { href: '/archive', label: 'Playground' },
   { href: '/#background', label: 'Background' },
 ]

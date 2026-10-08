@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import ImageViewer from '@/components/ImageViewer'
 import ComparisonSlider from './ComparisonSlider'
 import LiquidTabs from './LiquidTabs'
 import DesignDecision from './DesignDecision'
@@ -72,7 +73,7 @@ export const A: React.FC<AnchorProps> = ({ href = '', children, ...props }) => {
 }
 
 export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, height = 675, ...props }) => (
-  <div className="mb-8 mt-8">
+  <ImageViewer src={src} alt={alt} className="mb-8 mt-8">
     <Image
       src={src}
       alt={alt}
@@ -83,7 +84,7 @@ export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, he
       priority={false}
       {...props}
     />
-  </div>
+  </ImageViewer>
 )
 
 export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = ({ className = '', ...props }) => (
@@ -107,6 +108,7 @@ const mdxComponents = {
   li: LI,
   a: A,
   img: Img,
+  ProjectImage: Img,
   video: Video,
   ComparisonSlider,
   DesignDecision,

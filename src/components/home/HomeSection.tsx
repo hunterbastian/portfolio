@@ -65,15 +65,15 @@ export function Section({
   rule?: boolean
 }) {
   return (
-    <section id={id} className={getHomeSectionClassName(scrollMarginClassName, contentGapClassName)}>
-      <div className="space-y-2 sm:space-y-3">
+    <section id={id} className={getHomeSectionClassName(scrollMarginClassName, 'home-grid-section')}>
+      <div className="home-section-label space-y-2 sm:space-y-3">
         <div className="home-section-heading flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
           <h2 className={HOME_SECTION_TITLE_CLASS_NAME}>{title}</h2>
           {meta ? <p className="home-section-meta">{meta}</p> : null}
         </div>
-        {rule ? <div className={HOME_SECTION_RULE_CLASS_NAME} /> : null}
+        {rule ? <div className={`home-section-rule ${HOME_SECTION_RULE_CLASS_NAME}`} /> : null}
       </div>
-      {children}
+      <div className={`home-section-content ${contentGapClassName}`}>{children}</div>
     </section>
   )
 }

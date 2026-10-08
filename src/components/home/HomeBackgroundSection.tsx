@@ -1,4 +1,3 @@
-import { EditorialItem } from '@/components/home/EditorialItem'
 import { Section } from '@/components/home/HomeSection'
 import { backgroundBeats } from '@/content/homepage'
 import { getHomeBackgroundDisplayItem } from '@/lib/home-background'
@@ -13,23 +12,19 @@ export function HomeBackgroundSection() {
       contentGapClassName="space-y-1.5 sm:space-y-2"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
-      <div className="space-y-1.5 sm:space-y-2.5">
+      <ol className="home-background-list">
         {backgroundBeats.map((item) => {
           const displayItem = getHomeBackgroundDisplayItem(item)
 
           return (
-            <EditorialItem
-              key={displayItem.key}
-              eyebrow={displayItem.eyebrow}
-              eyebrowClassName="font-mono font-normal text-muted-foreground/42 group-hover:text-muted-foreground/58"
-              title={displayItem.title}
-              titleFontClassName="font-header font-medium"
-              description={displayItem.description}
-              compact
-            />
+            <li key={displayItem.key} className="home-background-row">
+              <p className="home-background-date">{displayItem.eyebrow}</p>
+              <h3>{displayItem.title}</h3>
+              <p className="home-background-description">{displayItem.description}</p>
+            </li>
           )
         })}
-      </div>
+      </ol>
     </Section>
   )
 }

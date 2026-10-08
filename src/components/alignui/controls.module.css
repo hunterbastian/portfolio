@@ -40,3 +40,14 @@
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeOut { to { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .button, .switchTrack, .switchThumb { transition: none; } .drawer, .overlay, .drawer[data-state=closed], .overlay[data-state=closed] { animation: none; } }
+
+.tag { display: inline-flex; align-items: center; min-height: 24px; max-width: 100%; padding: 2px 8px; border: 1px solid var(--border); border-radius: 6px; background: color-mix(in srgb, var(--foreground) 3%, var(--background)); color: var(--muted-foreground); font-size: 12px; line-height: 1.5; }
+.modalOverlay { display: grid; place-items: center; overflow-y: auto; overscroll-behavior: contain; padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+.modal { position: relative; width: 100%; max-width: 1200px; margin-block: auto; padding: 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--background); color: var(--foreground); box-shadow: 0 24px 80px #0006; outline: none; }
+.modalClose { position: absolute; inset-block-start: 8px; inset-inline-end: 8px; width: 44px; padding: 0; }
+.imageTitle { margin: 0; padding: 0 44px 16px 0; min-height: 36px; font-size: 13px; font-weight: 400; line-height: 1.5; }
+.imageCanvas { position: relative; height: min(72dvh, 800px); }
+.imageTrigger { position: relative; display: block; width: 100%; min-height: 44px; overflow: hidden; cursor: zoom-in; text-align: start; }
+.imageTrigger:focus-visible { outline: 2px solid var(--foreground); outline-offset: 4px; }
+.imageExpand { position: absolute; inset-inline-end: 12px; inset-block-end: 12px; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 12px; line-height: 1.5; box-shadow: 0 2px 8px #0003; }
+.imageTrigger:hover .imageExpand { background: var(--card); }

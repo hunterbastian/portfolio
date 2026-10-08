@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import * as Tag from '@/components/alignui/tag'
 import type { CSSProperties, FocusEvent } from 'react'
 import { useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
@@ -119,7 +120,7 @@ function FeaturedProjectCard({
       >
         {image ? (
           <div className="featured-project-image">
-            <Image src={image} alt="" fill sizes="(max-width: 639px) calc(100vw - 44px), 440px" />
+            <Image src={image} alt="" fill sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 104px) / 2), (max-width: 1279px) 38vw, 488px" />
           </div>
         ) : null}
         <span className={quiet ? HOME_MORE_ROW_META_CLASS_NAME : HOME_FEATURED_ROW_META_CLASS_NAME}>
@@ -139,7 +140,7 @@ function FeaturedProjectCard({
           →
         </span>
         {!quiet && discipline ? (
-          <span className="featured-text-row-discipline">{discipline}</span>
+          <Tag.Root className="featured-text-row-discipline">{discipline}</Tag.Root>
         ) : null}
       </Link>
     </div>

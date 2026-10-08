@@ -64,7 +64,8 @@ export default function MetricCard({
   const visibleValue = getMetricCardVisibleValue({
     animatedValue: displayValue,
     isNumeric,
-    prefersReducedMotion,
+    // Wait for the observer to mount so SSR and the first client render agree.
+    prefersReducedMotion: prefersReducedMotion && isInView,
     value,
   })
 

@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import ImageViewer from '@/components/ImageViewer'
+import * as Tag from '@/components/alignui/tag'
 import { getAllProjects, getArchivedProjects, getProjectBySlug } from '@/lib/projects'
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -116,7 +118,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </header>
           }
           image={
-            <div className="relative mb-12 aspect-[4/3] w-full overflow-hidden img-inset-outline shadow-card">
+            <ImageViewer src={frontmatter.image} alt={frontmatter.title} className="relative mb-12 aspect-[4/3] w-full img-inset-outline shadow-card">
               <Image
                 src={frontmatter.image}
                 alt={frontmatter.title}
@@ -126,7 +128,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 quality={80}
                 sizes="(max-width: 608px) calc(100vw - 48px), 560px"
               />
-            </div>
+            </ImageViewer>
           }
           description={
             <p className="mb-10 px-3 text-center text-balance font-inter text-[13px] leading-relaxed text-muted-foreground sm:px-2">
@@ -138,9 +140,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div className="group flex items-center gap-2 font-inter text-[13px] text-muted-foreground">
                 <IconTag size={11} className="shrink-0 opacity-50 transition-transform duration-200 ease-soft group-hover:rotate-[-6deg] group-hover:scale-110" aria-hidden />
                 <span className="font-medium">Category:</span>
-                <span className="bg-accent/10 text-accent px-3 py-1.5 sm:py-1">
+                <Tag.Root>
                   {frontmatter.category}
-                </span>
+                </Tag.Root>
               </div>
             </div>
           }

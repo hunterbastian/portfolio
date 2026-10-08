@@ -18,42 +18,44 @@ export function HomeHeroSection() {
   const haptic = useWebHaptics()
 
   return (
-    <section id="home" className={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}>
+    <section id="home" className={`home-hero-grid ${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}`}>
       <h1 className="home-statement-title preserve-name-case" aria-label={homeHeroContent.intro}>
         <span><MichelangelusLettering phrase="design" /></span>{' '}
         <span><MichelangelusLettering phrase="build" /></span>{' '}
         <span><MichelangelusLettering phrase="digital" /></span>{' '}
         <span><MichelangelusLettering phrase="experiences" /></span>
       </h1>
-      <p className="home-statement-meta preserve-name-case">
-        Interaction design &amp; development<br />
-        {homeHeroContent.subtitle}
-      </p>
-      <div id="contact" className={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}>
-        <ContactLinks
-          emailLabel="Email me"
-          primaryAction={
-            <>
-              {HOME_HERO_ACTIONS.map((action) => (
-                <Button.Root
-                  key={action.label}
-                  asChild
-                  mode="stroke"
-                  onClick={() =>
-                    activateHomeHeroAction({
-                      action,
-                      showToast: showJoyToast,
-                      trackNavigationClick: (target) => analytics.navigationClick(target),
-                      triggerHaptic: (style) => haptic.trigger(style),
-                    })
-                  }
-                >
-                  <Link href={action.href} title={action.peek}>{action.label}</Link>
-                </Button.Root>
-              ))}
-            </>
-          }
-        />
+      <div className="home-hero-aside">
+        <p className="home-statement-meta preserve-name-case">
+          Interaction design &amp; development<br />
+          {homeHeroContent.subtitle}
+        </p>
+        <div id="contact" className={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}>
+          <ContactLinks
+            emailLabel="Email me"
+            primaryAction={
+              <>
+                {HOME_HERO_ACTIONS.map((action) => (
+                  <Button.Root
+                    key={action.label}
+                    asChild
+                    mode="stroke"
+                    onClick={() =>
+                      activateHomeHeroAction({
+                        action,
+                        showToast: showJoyToast,
+                        trackNavigationClick: (target) => analytics.navigationClick(target),
+                        triggerHaptic: (style) => haptic.trigger(style),
+                      })
+                    }
+                  >
+                    <Link href={action.href} title={action.peek}>{action.label}</Link>
+                  </Button.Root>
+                ))}
+              </>
+            }
+          />
+        </div>
       </div>
     </section>
   )

@@ -99,7 +99,7 @@
   letter-spacing: 0;
 }
 
-.home-editorial #contact a,
+.home-editorial #contact a[target='_blank'],
 .home-editorial-link {
   font-family: var(--font-editorial);
   font-size: 11px;
@@ -112,99 +112,9 @@
   text-transform: uppercase;
 }
 
-.home-editorial #contact a:hover,
+.home-editorial #contact a[target='_blank']:hover,
 .home-editorial-link:hover {
   text-decoration-color: currentColor;
-}
-
-.home-editorial #contact a[href^='mailto:'] {
-  min-width: 7.5rem;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding-inline: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 0;
-  text-decoration: none;
-  transition: color 150ms ease-out, border-color 150ms ease-out;
-}
-
-.home-editorial #contact a[href^='mailto:']::after {
-  content: '↗';
-  font-size: 14px;
-}
-
-.home-editorial #contact a[href^='mailto:']:hover {
-  border-color: var(--muted-foreground);
-}
-
-/* Tactile actions: a shallow bevel and soft top light, inspired by the reference. */
-.home-editorial #home a[href='/cv'],
-.home-editorial #contact a[href^='mailto:'] {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  min-width: 7.5rem;
-  padding: 0.7rem 1.25rem;
-  border: 1px solid #756653;
-  border-radius: 12px;
-  background: linear-gradient(180deg, #574d41 0%, #413930 100%);
-  color: #f2ebdd;
-  box-shadow:
-    inset 0 1px 0 #ffffff24,
-    inset 0 -2px 0 #00000038,
-    0 2px 3px #00000024;
-  font-family: var(--font-editorial);
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.4;
-  text-transform: none;
-  text-decoration: none;
-  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
-}
-
-.home-editorial #home a[href='/cv'] {
-  border-color: #bcad90;
-  background: linear-gradient(180deg, #ebe2cd 0%, #d3c6ab 100%);
-  color: #302a23;
-  box-shadow:
-    inset 0 1px 0 #ffffffeb,
-    inset 0 -2px 0 #aa977580,
-    0 2px 3px #00000024;
-}
-
-.home-editorial #home a[href='/cv'] > span:first-child {
-  text-decoration: none;
-}
-
-.home-editorial #contact a[href^='mailto:']::after {
-  content: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .home-editorial #home a[href='/cv']:hover,
-  .home-editorial #contact a[href^='mailto:']:hover {
-    filter: brightness(1.08);
-    transform: translateY(-1px);
-  }
-}
-
-.home-editorial #home a[href='/cv']:active,
-.home-editorial #contact a[href^='mailto:']:active {
-  transform: translateY(1px);
-  filter: brightness(0.98);
-  box-shadow: inset 0 2px 3px #00000020, 0 1px 1px #00000014;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-editorial #home a[href='/cv'],
-  .home-editorial #home a[href='/cv']:is(:hover, :active),
-  .home-editorial #contact a[href^='mailto:'],
-  .home-editorial #contact a[href^='mailto:']:is(:hover, :active) {
-    transition: none;
-    transform: none;
-  }
 }
 
 .home-editorial-philosophy {
@@ -729,4 +639,14 @@ footer[data-home-editorial='true'] {
 body .home-statement *,
 body .home-masthead * {
   text-transform: none !important;
+}
+
+/* Keep the AlignUI contact actions readable alongside the editorial lettering. */
+.home-statement #home .home-contact-links > a { font-size: 14px; }
+.home-statement #home a[href='/cv'],
+.home-statement #contact a[href^='mailto:'] { border-radius: 8px; }
+@media (max-width: 359px) {
+  .home-masthead time { display: none; }
+  .home-statement .home-contact-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-statement #home a[href='/cv'], .home-statement #contact a[href^='mailto:'] { min-width: 0; padding-inline: 12px; }
 }

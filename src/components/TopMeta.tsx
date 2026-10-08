@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import MobileNavigation from '@/components/MobileNavigation'
 import { HomeMasthead } from '@/components/home/HomeMasthead'
 import MichelangelusLettering from '@/components/typography/MichelangelusLettering'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -26,16 +27,11 @@ import {
 import { getPeekActionClassName } from '@/lib/peek-action'
 import {
   TOP_META_BRAND_ACTION,
-  TOP_META_MOBILE_MENU_LABEL,
   activateTopMetaBrandAction,
-  activateTopMetaMobileMenuToggle,
   activateTopMetaNavAction,
   activateTopMetaSunBlink,
   getTopMetaInnerClassName,
-  getTopMetaMobileMenuAriaLabel,
-  getTopMetaMobileMenuClassName,
   getTopMetaHeaderState,
-  getTopMetaMobilePageNavItems,
   getTopMetaNavAction,
   getTopMetaNavLabelClassName,
   getTopMetaNavLinkClassName,
@@ -135,14 +131,12 @@ function PageTopMeta() {
   const [activeSectionId, setActiveSectionId] = useState<string>(HOME_SECTION_NAV_ITEMS[0].id)
   const mobileMenuOpenRef = useRef(false)
   const headerRef = useRef<HTMLDivElement>(null)
-  const mobileMenuRef = useRef<HTMLDivElement>(null)
   const sunIdleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const sunBlinkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const haptic = useWebHaptics()
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
   const persistVisible = shouldShowHomeSectionNav(pathname)
   const pageNavItems = getTopMetaPageNavItems(pathname)
-  const mobilePageNavItems = getTopMetaMobilePageNavItems(pathname)
   const closeMobileMenu = () => setMobileMenuOpen(false)
 
   const triggerSunBlink = useCallback(() => {
@@ -201,37 +195,6 @@ function PageTopMeta() {
 
   useEffect(() => {
     mobileMenuOpenRef.current = mobileMenuOpen
-  }, [mobileMenuOpen])
-
-  useEffect(() => {
-    if (!mobileMenuOpen) return
-
-    const restoreMenuFocus = () => {
-      headerRef.current?.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')?.focus()
-    }
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return
-      event.preventDefault()
-      setMobileMenuOpen(false)
-      restoreMenuFocus()
-    }
-    const handlePointerDown = (event: PointerEvent) => {
-      if (headerRef.current?.contains(event.target as Node)) return
-      if (mobileMenuRef.current?.contains(document.activeElement)) restoreMenuFocus()
-      setMobileMenuOpen(false)
-    }
-    const desktop = window.matchMedia('(min-width: 640px)')
-    const handleResize = () => {
-      if (desktop.matches) setMobileMenuOpen(false)
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    document.addEventListener('pointerdown', handlePointerDown)
-    desktop.addEventListener('change', handleResize)
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.removeEventListener('pointerdown', handlePointerDown)
-      desktop.removeEventListener('change', handleResize)
-    }
   }, [mobileMenuOpen])
 
   useEffect(() => {
@@ -355,49 +318,7 @@ function PageTopMeta() {
         </div>
 
         <div className="relative z-10 flex items-center gap-1 sm:hidden">
-          <PeekAction
-            onClick={() =>
-              activateTopMetaMobileMenuToggle({
-                toggleMobileMenu: () => setMobileMenuOpen((open) => !open),
-                triggerHaptic: (style) => haptic.trigger(style),
-              })
-            }
-            className="min-h-[44px] min-w-[44px] justify-center text-[0.68rem] text-muted-foreground hover:text-foreground"
-            labelClassName="decoration-border underline underline-offset-[0.24em]"
-            ariaLabel={getTopMetaMobileMenuAriaLabel(mobileMenuOpen)}
-            ariaExpanded={mobileMenuOpen}
-            ariaControls="mobile-navigation"
-          >
-            {TOP_META_MOBILE_MENU_LABEL}
-          </PeekAction>
-
-          <div ref={mobileMenuRef} id="mobile-navigation" className={getTopMetaMobileMenuClassName(mobileMenuOpen)} aria-hidden={!mobileMenuOpen} inert={!mobileMenuOpen}>
-            <div className="flex flex-col items-stretch gap-1.5 border-t border-border px-3.5 py-3">
-              {persistVisible ? (
-                <nav aria-label={HOME_SECTION_NAV_ARIA_LABEL} className="flex flex-col items-stretch gap-2">
-                  {HOME_SECTION_NAV_ITEMS.map((item) => (
-                    <SectionNavLink
-                      key={item.id}
-                      active={item.id === activeSectionId}
-                      className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-secondary active:bg-secondary/85 active:scale-[0.99]"
-                      closeMobileMenu={closeMobileMenu}
-                      item={item}
-                      onActivate={setActiveSectionId}
-                      prefersReducedMotion={prefersReducedMotion}
-                    />
-                  ))}
-                </nav>
-              ) : null}
-              {mobilePageNavItems.map((item) => (
-                <NavLink
-                  key={item.href}
-                  item={item}
-                  active={isTopMetaNavItemActive(pathname, item)}
-                  className="min-h-[44px] w-full justify-start rounded-[6px] px-2 text-left hover:bg-secondary active:bg-secondary/85 active:scale-[0.99]"
-                />
-              ))}
-            </div>
-          </div>
+          <MobileNavigation open={mobileMenuOpen} onOpenChange={setMobileMenuOpen} />
         </div>
       </div>
     </div>

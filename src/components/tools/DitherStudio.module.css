@@ -60,3 +60,9 @@
   .compare button { min-height: 40px; }
 }
 @media (prefers-reduced-motion: reduce) { .button, .button:not(:disabled):active { transition: none; transform: none; } }
+
+/* AlignUI comparison switch uses a full 44px hit area. */
+.compare { align-items: center; gap: 6px; padding: 0; border: 0; background: transparent; }
+.compare label { font-size: 13px; color: var(--muted-foreground); cursor: pointer; }
+.compare button { padding: 0; }
+@media (max-width: 380px) { .previewBar { flex-wrap: wrap; } }

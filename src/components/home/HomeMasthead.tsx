@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import MobileNavigation from '@/components/MobileNavigation'
 import MichelangelusLettering from '@/components/typography/MichelangelusLettering'
 import { useEffect, useState } from 'react'
 import {
@@ -41,9 +42,9 @@ export function HomeMasthead() {
     <header className="home-masthead preserve-name-case">
       <div className="home-masthead-inner">
         <Link href="/" className="home-masthead-name"><MichelangelusLettering /></Link>
-        <time dateTime={clock?.time} aria-live="off" aria-label={clock ? getHomeHeroLocalTimeAriaLabel(clock.time) : 'Local time in Lehi'}>
+        <div className="flex items-center gap-2 sm:gap-4"><time dateTime={clock?.time} aria-live="off" aria-label={clock ? getHomeHeroLocalTimeAriaLabel(clock.time) : 'Local time in Lehi'}>
           {clock ? `${clock.zone} ${clock.time}` : 'MT --:--'}
-        </time>
+        </time><div className="sm:hidden"><MobileNavigation /></div></div>
       </div>
     </header>
   )

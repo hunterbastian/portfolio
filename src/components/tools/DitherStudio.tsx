@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import * as Button from '@/components/alignui/button'
+import { Slider, Select, Switch } from '@/components/alignui/controls'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowLeft, Download, RotateCcw, Upload } from 'lucide-react'
 import { DEFAULT_DITHER_SETTINGS, DITHER_PALETTES, ditherPixels, fitDitherImage, type DitherPalette, type DitherSettings } from '@/lib/dither'
@@ -139,9 +141,9 @@ export default function DitherStudio() {
         <section className={styles.previewSection} aria-label="Image preview">
           <div className={styles.previewBar}>
             <span className={styles.filename}>{source?.name || 'Your image'}</span>
-            <div className={styles.compare} aria-label="Preview mode">
-              <button type="button" aria-pressed={!original} onClick={() => setOriginal(false)}>Dither</button>
-              <button type="button" aria-pressed={original} onClick={() => setOriginal(true)}>Original</button>
+            <div className={styles.compare}>
+              <label htmlFor="dither-original">Show original</label>
+              <Switch id="dither-original" checked={original} onCheckedChange={setOriginal} />
             </div>
           </div>
           <div
@@ -163,7 +165,7 @@ export default function DitherStudio() {
         </section>
         <aside className={styles.controls} aria-label="Dither controls">
           <input ref={fileRef} className={styles.fileInput} type="file" tabIndex={-1} accept="image/*" aria-label="Upload photo" onChange={event => { openFile(event.currentTarget.files?.[0]); event.currentTarget.value = '' }} />
-          <button type="button" className={`${styles.button} ${styles.silver}`} onClick={() => fileRef.current?.click()}><Upload size={16} aria-hidden="true" /> Upload photo</button>
+          <Button.Root type="button" mode="filled" className="w-full" onClick={() => fileRef.current?.click()}><Upload size={16} aria-hidden="true" /> Upload photo</Button.Root>
           <p className={styles.privacy}>Your photos stay on your device.</p>
           <fieldset className={styles.group}>
             <legend>01 / Palette</legend>
@@ -179,17 +181,14 @@ export default function DitherStudio() {
           <fieldset className={styles.group}>
             <legend>02 / Texture</legend>
             <label className={styles.selectLabel} htmlFor="dither-method">Pattern</label>
-            <select id="dither-method" value={settings.method} onChange={event => update('method', event.target.value as DitherSettings['method'])}>
-              <option value="ordered">Ordered / grid</option>
-              <option value="diffusion">Diffusion / organic</option>
-            </select>
-            <label className={styles.slider} htmlFor="dither-pixels"><span>Pixel size <output>{settings.pixelSize} px</output></span><input id="dither-pixels" type="range" min="1" max="12" step="1" value={settings.pixelSize} onChange={event => update('pixelSize', Number(event.target.value))} /></label>
-            <label className={styles.slider} htmlFor="dither-contrast"><span>Contrast <output>{settings.contrast}</output></span><input id="dither-contrast" type="range" min="-40" max="80" step="1" value={settings.contrast} onChange={event => update('contrast', Number(event.target.value))} /></label>
-            <label className={styles.slider} htmlFor="dither-grain"><span>Grain <output>{settings.grain}%</output></span><input id="dither-grain" type="range" min="0" max="60" step="1" value={settings.grain} onChange={event => update('grain', Number(event.target.value))} /></label>
+            <Select id="dither-method" value={settings.method} onValueChange={value => update('method', value as DitherSettings['method'])} options={[{ value: 'ordered', label: 'Ordered / grid' }, { value: 'diffusion', label: 'Diffusion / organic' }]} />
+            <Slider id="dither-pixels" label="Pixel size" min={1} max={12} value={settings.pixelSize} unit=" px" onValueChange={value => update('pixelSize', value)} />
+            <Slider id="dither-contrast" label="Contrast" min={-40} max={80} value={settings.contrast} onValueChange={value => update('contrast', value)} />
+            <Slider id="dither-grain" label="Grain" min={0} max={60} value={settings.grain} unit="%" onValueChange={value => update('grain', value)} />
           </fieldset>
           <button type="button" className={styles.reset} onClick={() => { setSettings({ ...DEFAULT_DITHER_SETTINGS }); setOriginal(false); setStatus('Settings reset.') }}><RotateCcw size={14} aria-hidden="true" /> Reset settings</button>
           <div className={styles.export}>
-            <button type="button" className={`${styles.button} ${styles.silver}`} disabled={!source || loading || exporting} onClick={() => { void download() }}><Download size={16} aria-hidden="true" /> {exporting ? 'Saving…' : 'Download PNG'}</button>
+            <Button.Root type="button" mode="filled" className="w-full" disabled={!source || loading || exporting} onClick={() => { void download() }}><Download size={16} aria-hidden="true" /> {exporting ? 'Saving…' : 'Download PNG'}</Button.Root>
             <p>Full image · up to 2400 px</p>
           </div>
           <p className={styles.error} role="alert">{error}</p>

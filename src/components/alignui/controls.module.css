@@ -1,0 +1,42 @@
+.button { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; font: inherit; font-size: 14px; line-height: 1.4; text-decoration: none; white-space: nowrap; transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+.stroke { color: var(--foreground); background: color-mix(in srgb, var(--foreground) 4%, var(--background)); border-color: color-mix(in srgb, var(--foreground) 20%, transparent); box-shadow: 0 1px 2px #0002, inset 0 1px #ffffff08; }
+.stroke:hover { background: color-mix(in srgb, var(--foreground) 9%, var(--background)); border-color: color-mix(in srgb, var(--foreground) 35%, transparent); }
+.filled { color: #242526; background: #e4e5e7; border-color: #f0f1f2; box-shadow: 0 1px 2px #0003; }
+.filled:hover { background: #f4f5f6; }
+.ghost { color: var(--muted-foreground); background: transparent; }
+.ghost:hover { background: color-mix(in srgb, var(--foreground) 7%, transparent); color: var(--foreground); }
+.button:disabled { pointer-events: none; opacity: .45; }
+.button:focus-visible, .select:focus-visible, .thumb:focus-visible, .switch:focus-visible, .navLink:focus-visible { outline: 2px solid var(--foreground); outline-offset: 4px; }
+.overlay { position: fixed; inset: 0; z-index: 200; background: #0008; backdrop-filter: blur(6px); animation: fadeIn 180ms ease; }
+.drawer { position: fixed; z-index: 201; top: 0; right: 0; bottom: 0; width: min(360px, calc(100vw - 24px)); overflow-y: auto; overscroll-behavior: contain; background: var(--background); color: var(--foreground); border-left: 1px solid var(--border); box-shadow: -12px 0 48px #0003; padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; outline: none; animation: slideIn 220ms cubic-bezier(.16,1,.3,1); }
+.drawer[data-state=closed] { animation: slideOut 160ms ease-in; }
+.overlay[data-state=closed] { animation: fadeOut 160ms ease-in; }
+.drawerHeader { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
+.drawerTitle { font-size: 14px; font-weight: 500; }
+.nav { display: grid; gap: 6px; padding: 24px 0; }
+.navLink { display: flex; align-items: center; min-height: 52px; padding: 12px; border-radius: 8px; font-size: 16px; color: var(--muted-foreground); }
+.navLink:hover, .navLink[aria-current=page] { background: color-mix(in srgb, var(--foreground) 6%, transparent); color: var(--foreground); }
+.drawerFooter { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; gap: 10px; }
+.sliderField { margin-top: 20px; }
+.sliderLabel { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 14px; }
+.sliderLabel output { color: var(--muted-foreground); font-size: 13px; font-variant-numeric: tabular-nums; }
+.slider { position: relative; display: flex; align-items: center; width: 100%; height: 44px; touch-action: none; user-select: none; }
+.track { position: relative; height: 6px; width: 100%; overflow: hidden; border-radius: 999px; background: color-mix(in srgb, var(--foreground) 15%, var(--background)); }
+.range { position: absolute; height: 100%; background: #c4c6ca; }
+.thumb { box-sizing: content-box; display: block; width: 8px; height: 8px; border: 5px solid #f0f1f2; border-radius: 50%; background: #6b6e73; box-shadow: 0 1px 4px #0007; cursor: grab; }
+.thumb:active { cursor: grabbing; }
+.select { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent); border-radius: 8px; background: var(--card); color: var(--foreground); font-size: 14px; text-align: left; }
+.select:hover { background: color-mix(in srgb, var(--foreground) 6%, var(--card)); }
+.options { z-index: 210; min-width: var(--radix-select-trigger-width); max-width: calc(100vw - 24px); max-height: var(--radix-select-content-available-height); overflow-y: auto; padding: 6px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 32px #0005; }
+.option { min-height: 44px; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 10px; border-radius: 6px; font-size: 14px; color: var(--foreground); cursor: pointer; outline: none; }
+.option[data-highlighted] { background: color-mix(in srgb, var(--foreground) 9%, var(--card)); }
+.switch { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; }
+.switchTrack { width: 36px; height: 22px; padding: 3px; border-radius: 999px; background: #54565b; transition: background 160ms ease; }
+.switch[data-state=checked] .switchTrack { background: #bfc2c8; }
+.switchThumb { display: block; width: 16px; height: 16px; border-radius: 50%; background: #f7f7f8; box-shadow: 0 1px 3px #0004; transition: transform 160ms ease; }
+.switchThumb[data-state=checked] { transform: translateX(14px); background: #292b2e; }
+@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes slideOut { to { transform: translateX(100%); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .button, .switchTrack, .switchThumb { transition: none; } .drawer, .overlay, .drawer[data-state=closed], .overlay[data-state=closed] { animation: none; } }

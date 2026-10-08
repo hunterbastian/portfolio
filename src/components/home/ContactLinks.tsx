@@ -1,6 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
+import * as Button from '@/components/alignui/button'
 import { useWebHaptics } from 'web-haptics/react'
 import { contactSocialLinks, homepageContactSocialLabels } from '@/content/homepage'
 import { analytics } from '@/lib/analytics'
@@ -34,10 +35,9 @@ export function ContactLinks({ primaryAction, emailLabel }: { primaryAction?: Re
     <div className="home-contact-links flex max-w-full flex-wrap items-center gap-x-6 gap-y-1 text-left sm:gap-x-7">
       {primaryAction}
       {contactLinksView.emailLink ? (
-        <a
+        <Button.Root asChild mode="filled"><a
           href={contactLinksView.emailLink.href}
           aria-label={contactLinksView.emailAriaLabel}
-          className={contactLinkClassName}
           onClick={() => {
             if (contactLinksView.emailAction) {
               handleContactClick(contactLinksView.emailAction)
@@ -45,7 +45,7 @@ export function ContactLinks({ primaryAction, emailLabel }: { primaryAction?: Re
           }}
         >
           {emailLabel ?? contactLinksView.emailLink.label}
-        </a>
+        </a></Button.Root>
       ) : null}
 
       {contactLinksView.socialLinks.map((socialLink) => (

@@ -1,7 +1,8 @@
 'use client'
 
 import { useWebHaptics } from 'web-haptics/react'
-import { PeekAction } from '@/components/PeekAction'
+import Link from 'next/link'
+import * as Button from '@/components/alignui/button'
 import { ContactLinks } from '@/components/home/ContactLinks'
 import MichelangelusLettering from '@/components/typography/MichelangelusLettering'
 import { homeHeroContent } from '@/content/homepage'
@@ -9,8 +10,6 @@ import { analytics } from '@/lib/analytics'
 import {
   HOME_HERO_ACTIONS,
   activateHomeHeroAction,
-  getHomeHeroActionClassName,
-  getHomeHeroActionLabelClassName,
 } from '@/lib/home-hero'
 import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
 import { showJoyToast } from '@/lib/joy'
@@ -36,12 +35,10 @@ export function HomeHeroSection() {
           primaryAction={
             <>
               {HOME_HERO_ACTIONS.map((action) => (
-                <PeekAction
+                <Button.Root
                   key={action.label}
-                  href={action.href}
-                  peek={action.peek}
-                  className={getHomeHeroActionClassName(action.variant)}
-                  labelClassName={getHomeHeroActionLabelClassName(action.variant)}
+                  asChild
+                  mode="stroke"
                   onClick={() =>
                     activateHomeHeroAction({
                       action,
@@ -51,8 +48,8 @@ export function HomeHeroSection() {
                     })
                   }
                 >
-                  {action.label}
-                </PeekAction>
+                  <Link href={action.href} title={action.peek}>{action.label}</Link>
+                </Button.Root>
               ))}
             </>
           }

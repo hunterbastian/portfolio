@@ -119,7 +119,7 @@ function FeaturedProjectCard({
       >
         {image ? (
           <div className="featured-project-image">
-            <Image src={image} alt="" fill sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 104px) / 2), (max-width: 1279px) 38vw, 488px" />
+            <Image src={image} alt="" fill sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 104px) / 2), (max-width: 1311px) calc((100vw - 160px) / 3), 384px" />
           </div>
         ) : null}
         <span className={quiet ? HOME_MORE_ROW_META_CLASS_NAME : HOME_FEATURED_ROW_META_CLASS_NAME}>

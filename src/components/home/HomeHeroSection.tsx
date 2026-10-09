@@ -19,9 +19,7 @@ export function HomeHeroSection() {
   return (
     <section id="home" className={`home-hero-grid ${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}`}>
       <h1 className="home-statement-title preserve-name-case" aria-label={homeHeroContent.intro}>
-        <span>I design and build</span>{' '}
-        <span><em>thoughtful</em></span>{' '}
-        <span>digital experiences.</span>
+        I design and build <em>thoughtful</em> digital experiences.
       </h1>
       <div className="home-hero-aside">
         <p className="home-statement-meta preserve-name-case">

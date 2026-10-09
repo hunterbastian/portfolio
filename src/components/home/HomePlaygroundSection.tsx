@@ -27,7 +27,9 @@ export function HomePlaygroundSection({ projects }: HomePlaygroundSectionProps) 
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
       <DitherToolLink />
-      <WorkScatterStack label="Playground" projects={projects} tone="playground" />
+      <div className="home-playground-collage">
+        <WorkScatterStack label="Playground" projects={projects} tone="playground" />
+      </div>
       <Link
         href="/archive"
         className="home-editorial-link inline-flex min-h-[44px] origin-center touch-manipulation items-center gap-3 font-header text-[0.78rem] font-medium text-muted-foreground transition-[color,transform] duration-150 ease-soft hover:text-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"

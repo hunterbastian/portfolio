@@ -433,13 +433,13 @@ test('featured project rows use tiny meta and a visible focus ring that is not c
   assert.match(css, /background: var\(--ring\)/)
 })
 
-test('homepage projects section renders featured then quiet More', () => {
+test('homepage projects section keeps curated order in one image gallery', () => {
   const source = readFileSync(new URL('../components/home/HomeProjectsSection.tsx', import.meta.url), 'utf8')
 
   assert.match(source, /partitionHomeProjectRows/)
-  assert.match(source, /density="quiet"/)
-  assert.match(source, />More</)
-  assert.match(source, /projects=\{featured\}/)
+  assert.match(source, /galleryProjects = \[\.\.\.featured, \.\.\.more\]/)
+  assert.match(source, /projects=\{galleryProjects\} showImages/)
+  assert.match(source, /meta=\{String\(galleryProjects.length\)/)
 })
 
 test('all filter matches every project', () => {

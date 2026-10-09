@@ -12,7 +12,6 @@ import {
   type WorkFilter,
 } from '@/lib/home-projects'
 import { HOME_SECTION_SCROLL_MARGIN_CLASS_NAME } from '@/lib/home-section-nav'
-import { HOME_SECTION_TITLE_CLASS_NAME } from '@/lib/home-section'
 import { showJoyToast } from '@/lib/joy'
 
 interface HomeProjectsSectionProps {
@@ -24,12 +23,13 @@ interface HomeProjectsSectionProps {
 export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }: HomeProjectsSectionProps) {
   const haptic = useWebHaptics()
   const { featured, more } = partitionHomeProjectRows(projects, workFilter)
+  const galleryProjects = [...featured, ...more]
 
   return (
     <Section
       id="projects"
       title="Selected work"
-      meta={String(featured.length).padStart(2, '0')}
+      meta={String(galleryProjects.length).padStart(2, '0')}
       contentGapClassName="space-y-3 sm:space-y-4"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}
     >
@@ -56,13 +56,7 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
               </button>
             </div>
           ) : null}
-          <FeaturedProjectList projects={featured} showImages />
-          {more.length > 0 ? (
-            <div className="space-y-2 pt-1 sm:space-y-3 sm:pt-2">
-              <p className={HOME_SECTION_TITLE_CLASS_NAME}>More</p>
-              <FeaturedProjectList density="quiet" projects={more} />
-            </div>
-          ) : null}
+          <FeaturedProjectList projects={galleryProjects} showImages />
         </div>
       </div>
     </Section>

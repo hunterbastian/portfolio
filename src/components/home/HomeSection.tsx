@@ -1,11 +1,10 @@
 'use client'
 
 import { m, useInView, useReducedMotion } from 'framer-motion'
-import { useRef, type CSSProperties, type ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
 import {
   getHomeRevealInitialState,
   getHomeRevealMotionState,
-  getHomeRevealShadowDelay,
   getHomeRevealTransition,
   getHomeSectionClassName,
   HOME_SECTION_RULE_CLASS_NAME,
@@ -13,22 +12,15 @@ import {
   shouldRevealHomeSection,
 } from '@/lib/home-section'
 
-type RevealStyle = CSSProperties & {
-  '--reveal-shadow-delay': string
-}
-
 export function Reveal({ children, delayMs = 0 }: { children: ReactNode; delayMs?: number }) {
   const prefersReducedMotion = useReducedMotion() ?? false
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, {
     once: true,
     amount: 0.05,
-    margin: '0px 0px -12% 0px',
+    margin: '0px 0px -32px 0px',
   })
   const revealed = shouldRevealHomeSection(isInView, prefersReducedMotion)
-  const revealStyle: RevealStyle = {
-    '--reveal-shadow-delay': getHomeRevealShadowDelay(delayMs, prefersReducedMotion),
-  }
 
   return (
     <m.div
@@ -36,12 +28,10 @@ export function Reveal({ children, delayMs = 0 }: { children: ReactNode; delayMs
       className="home-reveal-shell"
       data-home-reveal
       data-revealed={revealed ? 'true' : 'false'}
-      style={revealStyle}
       initial={getHomeRevealInitialState(prefersReducedMotion)}
       animate={getHomeRevealMotionState(revealed)}
       transition={getHomeRevealTransition(delayMs, prefersReducedMotion)}
     >
-      <span aria-hidden="true" className="home-reveal-cloud-shadow" />
       {children}
     </m.div>
   )

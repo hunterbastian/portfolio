@@ -1199,38 +1199,6 @@ button {
   position: relative;
 }
 
-.home-reveal-cloud-shadow {
-  background:
-    linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.18) 18%, rgba(181, 199, 213, 0.09) 42%, rgba(255, 182, 132, 0.07) 66%, transparent 100%),
-    radial-gradient(ellipse at 46% 50%, rgba(126, 143, 157, 0.09) 0%, rgba(126, 143, 157, 0.035) 42%, transparent 76%),
-    radial-gradient(ellipse at 76% 46%, rgba(255, 132, 80, 0.055) 0%, transparent 62%);
-  border-radius: 999px;
-  clip-path: none;
-  filter: blur(17px) saturate(1.06);
-  inset: -1.25rem -2.55rem -1rem;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transform: translate3d(-9%, 0.28rem, 0) scaleX(0.78);
-  z-index: -1;
-}
-
-.home-reveal-cloud-shadow::before {
-  background:
-    linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.42) 42%, rgba(255, 255, 255, 0.08) 52%, transparent 68%),
-    radial-gradient(circle at 78% 38%, rgba(133, 192, 212, 0.12) 0 1px, transparent 1.5px);
-  background-size: 100% 100%, 37px 29px;
-  border-radius: inherit;
-  content: "";
-  inset: 0;
-  opacity: 0.22;
-  position: absolute;
-}
-
-.home-reveal-shell[data-revealed="true"] > .home-reveal-cloud-shadow {
-  animation: hb-section-cloud-shadow 1050ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-shadow-delay, 0ms) both;
-}
-
 .nature-link-glint {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0)),
@@ -1348,28 +1316,6 @@ button {
         calc(var(--hero-grain-cursor-y, 0px) - 3px)
       )
       rotate(0.08deg);
-  }
-}
-
-@keyframes hb-section-cloud-shadow {
-  0% {
-    opacity: 0;
-    transform: translate3d(-10%, 0.28rem, 0) scaleX(0.78);
-  }
-
-  42% {
-    opacity: 0.3;
-    transform: translate3d(-1%, 0.08rem, 0) scaleX(0.98);
-  }
-
-  72% {
-    opacity: 0.18;
-    transform: translate3d(6%, -0.02rem, 0) scaleX(1.08);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate3d(12%, -0.14rem, 0) scaleX(1.18);
   }
 }
 
@@ -1711,7 +1657,6 @@ button {
   .animated-hero-grain,
   .project-hover-dust,
   .home-painterly-wash,
-  .home-reveal-cloud-shadow,
   .nature-link-glint,
   .header-sun-shell,
   .header-sun-shell::before,

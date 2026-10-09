@@ -4,7 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import * as Tag from '@/components/alignui/tag'
 import type { CSSProperties, FocusEvent } from 'react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { m, useInView, useReducedMotion } from 'framer-motion'
 import { useWebHaptics } from 'web-haptics/react'
 import { analytics } from '@/lib/analytics'
 import { activateEditorialItem } from '@/lib/editorial-item'
@@ -26,6 +27,7 @@ import {
 } from '@/lib/home-projects'
 import { showJoyToast } from '@/lib/joy'
 import { cn } from '@/lib/utils'
+import { MOTION_EASE_SOFT } from '@/lib/motion'
 
 interface FeaturedProjectListProps {
   density?: FeaturedProjectListDensity
@@ -85,6 +87,11 @@ function FeaturedProjectCard({
 }: FeaturedProjectCardProps) {
   const haptic = useWebHaptics()
   const quiet = density === 'quiet'
+  const ref = useRef<HTMLDivElement>(null)
+  const prefersReducedMotion = useReducedMotion() ?? false
+  const isInView = useInView(ref, { once: true, amount: 0.12, margin: '0px 0px -24px 0px' })
+  const [hasFocused, setHasFocused] = useState(false)
+  const revealed = !image || prefersReducedMotion || isInView || hasFocused
 
   const handleClick = () => {
     activateEditorialItem({
@@ -97,14 +104,26 @@ function FeaturedProjectCard({
   }
 
   return (
-    <div
+    <m.div
+      ref={ref}
+      data-project-revealed={revealed}
+      initial={image && !prefersReducedMotion ? { opacity: 0, y: 20 } : false}
+      animate={{ opacity: revealed ? 1 : 0, y: revealed ? 0 : 20 }}
+      transition={{
+        duration: prefersReducedMotion ? 0 : 0.56,
+        delay: prefersReducedMotion || hasFocused ? 0 : (sequence % 3) * 0.06,
+        ease: MOTION_EASE_SOFT,
+      }}
       className={cn(
         'featured-project-row featured-project-card relative isolate h-full',
         image && 'featured-project-with-image',
         active && 'featured-project-row-active',
         muted && 'featured-project-row-muted',
       )}
-      onFocus={onHoverStart}
+      onFocus={() => {
+        setHasFocused(true)
+        onHoverStart()
+      }}
       onMouseLeave={onHoverEnd}
       onMouseEnter={onHoverStart}
       style={getFeaturedProjectRowStyle(slug, hoverDistance, sequence)}
@@ -142,7 +161,7 @@ function FeaturedProjectCard({
           <Tag.Root className="featured-text-row-discipline">{discipline}</Tag.Root>
         ) : null}
       </Link>
-    </div>
+    </m.div>
   )
 }
 

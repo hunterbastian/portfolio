@@ -15,17 +15,17 @@ interface LauncherCommandListProps {
 
 function LauncherCommandFooter() {
   return (
-    <div className="flex items-center justify-between border-t border-[#373737] bg-[#252525] px-3 py-2.5 font-mono text-[0.56rem] text-muted-foreground/58">
+    <div className="flex items-center justify-between border-t border-border bg-card px-3 py-2.5 font-mono text-[0.56rem] text-muted-foreground/58">
       <span className="inline-flex items-center gap-1.5">
-        <kbd className="rounded-[4px] border border-[#373737] bg-[#202020] px-1 py-0.5 text-[0.54rem] leading-none text-muted-foreground/64">↑↓</kbd>
+        <kbd className="rounded-[4px] border border-border bg-background px-1 py-0.5 text-[0.54rem] leading-none text-muted-foreground/64">↑↓</kbd>
         <span>move</span>
       </span>
       <span className="inline-flex items-center gap-1.5">
-        <kbd className="rounded-[4px] border border-[#373737] bg-[#202020] px-1 py-0.5 text-[0.54rem] leading-none text-muted-foreground/64">return</kbd>
+        <kbd className="rounded-[4px] border border-border bg-background px-1 py-0.5 text-[0.54rem] leading-none text-muted-foreground/64">return</kbd>
         <span>open</span>
       </span>
       <span className="inline-flex items-center gap-1.5">
-        <kbd className="rounded-[4px] border border-[#373737] bg-[#202020] px-1 py-0.5 text-[0.54rem] leading-none text-muted-foreground/64">esc</kbd>
+        <kbd className="rounded-[4px] border border-border bg-background px-1 py-0.5 text-[0.54rem] leading-none text-muted-foreground/64">esc</kbd>
         <span>close</span>
       </span>
     </div>
@@ -75,8 +75,8 @@ export function LauncherCommandList({
                         aria-selected={active}
                         className={`group/launcher-command relative flex min-h-[48px] w-full origin-center touch-manipulation items-center justify-between gap-3 overflow-hidden rounded-[7px] border border-transparent px-3 py-2 text-left transition-[background-color,border-color,color,transform,filter] duration-150 active:translate-y-0 active:scale-[0.97] ${
                           active
-                            ? 'border-[#373737] bg-[#2f2f2f] text-foreground'
-                            : 'text-foreground hover:border-[#373737] hover:bg-[#2f2f2f]'
+                            ? 'border-border bg-secondary text-foreground'
+                            : 'text-foreground hover:border-border hover:bg-secondary'
                         }`}
                         onMouseEnter={() => onActivate(rowIndex)}
                         onClick={() => onRunCommand(command)}
@@ -92,10 +92,10 @@ export function LauncherCommandList({
                         <span className="flex min-w-0 items-center gap-2.5">
                           <span
                             aria-hidden="true"
-                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] border border-[#373737] text-muted-foreground transition-[color,background-color,transform] duration-150 group-hover/launcher-command:-translate-y-[1px] ${
+                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] border border-border text-muted-foreground transition-[color,background-color,transform] duration-150 group-hover/launcher-command:-translate-y-[1px] ${
                               active
-                                ? 'bg-[#202020] text-foreground'
-                                : 'bg-[#252525]'
+                                ? 'bg-background text-foreground'
+                                : 'bg-card'
                             }`}
                           >
                             <Icon size={11} />
@@ -109,7 +109,7 @@ export function LauncherCommandList({
                             </span>
                           </span>
                         </span>
-                        <span className="shrink-0 rounded-[999px] border border-[#373737] bg-[#202020] px-2 py-1 font-mono text-[0.56rem] leading-none text-muted-foreground/68">
+                        <span className="shrink-0 rounded-[999px] border border-border bg-background px-2 py-1 font-mono text-[0.56rem] leading-none text-muted-foreground/68">
                           {command.keys ?? command.kind}
                         </span>
                       </button>

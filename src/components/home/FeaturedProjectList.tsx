@@ -14,7 +14,6 @@ import {
   getFeaturedProjectRowStyleVars,
   getHomeProjectDescription,
   getHomeProjectTitle,
-  getHomeProjectThumbnailImage,
   HOME_FEATURED_ROW_META_CLASS_NAME,
   HOME_FEATURED_ROW_OUTCOME_CLASS_NAME,
   HOME_FEATURED_ROW_TITLE_CLASS_NAME,
@@ -203,7 +202,7 @@ function FeaturedProjectRow({
 
   return (
     <FeaturedProjectCard
-      image={showImages ? getHomeProjectThumbnailImage(project) : undefined}
+      image={showImages ? project.frontmatter.image : undefined}
       active={rowState.active}
       density={density}
       description={getHomeProjectDescription(project)}

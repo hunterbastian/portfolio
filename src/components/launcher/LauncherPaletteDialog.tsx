@@ -84,7 +84,7 @@ export function LauncherPaletteDialog({
             role="dialog"
             aria-modal="true"
             aria-label={LAUNCHER_DIALOG_ARIA_LABEL}
-            className="relative flex max-h-[78dvh] w-full max-w-[30rem] flex-col overflow-hidden rounded-t-[10px] border border-[#373737] border-b-0 bg-[#252525] pb-[env(safe-area-inset-bottom)] shadow-[0_24px_56px_-40px_rgba(0,0,0,0.72),0_2px_8px_rgba(0,0,0,0.3)] sm:max-h-[min(34rem,72vh)] sm:rounded-[8px] sm:border-b sm:pb-0"
+            className="relative flex max-h-[78dvh] w-full max-w-[30rem] flex-col overflow-hidden rounded-t-[10px] border border-border border-b-0 bg-card pb-[env(safe-area-inset-bottom)] shadow-[0_24px_56px_-40px_rgba(0,0,0,0.72),0_2px_8px_rgba(0,0,0,0.3)] sm:max-h-[min(34rem,72vh)] sm:rounded-[8px] sm:border-b sm:pb-0"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 18, scale: 0.97, filter: 'blur(3px)' }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: prefersReducedMotion ? 0 : 12, scale: 0.985, filter: 'blur(2px)' }}

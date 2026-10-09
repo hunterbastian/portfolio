@@ -280,86 +280,6 @@ footer[data-home-editorial='true'] p {
   font-size: 11px;
 }
 
-footer[data-home-editorial='true'] {
-  padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
-}
-
-.footer-autumn-leaves {
-  position: absolute;
-  inset-inline: 0;
-  bottom: env(safe-area-inset-bottom, 0px);
-  height: 48px;
-  max-width: 960px;
-  margin-inline: auto;
-  pointer-events: none;
-  user-select: none;
-}
-
-.footer-autumn-leaf {
-  position: absolute;
-  bottom: 5px;
-  opacity: 0.95;
-  --leaf-outline: #50372b;
-}
-
-.footer-autumn-leaf--rust {
-  color: #c77542;
-  --leaf-highlight: #e9a35d;
-  --leaf-shadow: #984d32;
-}
-
-.footer-autumn-leaf--ochre {
-  color: #d6a54c;
-  --leaf-highlight: #efd080;
-  --leaf-shadow: #a47436;
-}
-
-.footer-autumn-leaf--olive {
-  color: #939853;
-  --leaf-highlight: #c2bd73;
-  --leaf-shadow: #69703f;
-}
-
-.footer-autumn-leaf:nth-child(1) { left: 7%; bottom: 3px; width: 48px; height: 48px; }
-.footer-autumn-leaf:nth-child(2) { left: 12%; bottom: 9px; transform: scaleX(-1); }
-.footer-autumn-leaf:nth-child(3) { left: 24%; }
-.footer-autumn-leaf:nth-child(4) { left: 49%; bottom: 2px; }
-.footer-autumn-leaf:nth-child(5) { right: 22%; bottom: 8px; transform: scaleX(-1); }
-.footer-autumn-leaf:nth-child(6) { right: 10%; }
-.footer-autumn-leaf:nth-child(7) { right: 6%; bottom: 4px; width: 48px; height: 48px; }
-
-/* Whole-pixel movement preserves the sprite edges and existing mirrored shapes. */
-@keyframes autumn-leaf-sway {
-  0%, 16%, 100% { translate: 0 0; }
-  32% { translate: 1px -1px; }
-  48% { translate: 3px -3px; }
-  64% { translate: 1px -2px; }
-  80% { translate: -1px -1px; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .footer-autumn-leaf {
-    animation: autumn-leaf-sway 8s steps(1, end) infinite;
-  }
-
-  .footer-autumn-leaf:nth-child(2) { animation-duration: 9s; animation-delay: -3s; }
-  .footer-autumn-leaf:nth-child(3) { animation-duration: 7s; animation-delay: -5s; }
-  .footer-autumn-leaf:nth-child(4) { animation-duration: 10s; animation-delay: -2s; }
-  .footer-autumn-leaf:nth-child(5) { animation-duration: 8.5s; animation-delay: -6s; }
-  .footer-autumn-leaf:nth-child(6) { animation-duration: 9.5s; animation-delay: -4s; }
-  .footer-autumn-leaf:nth-child(7) { animation-duration: 7.5s; animation-delay: -1s; }
-}
-
-@media (max-width: 639px) {
-  .footer-autumn-leaf:nth-child(3),
-  .footer-autumn-leaf:nth-child(6) { display: none; }
-
-  .footer-autumn-leaf:nth-child(2) { left: 15%; }
-  .footer-autumn-leaf:nth-child(5) { right: 17%; }
-  .footer-autumn-leaf:nth-child(1),
-  .footer-autumn-leaf:nth-child(7) { width: 32px; height: 32px; }
-}
-
 @media (min-width: 640px) {
   .home-editorial-sections {
     margin-block-start: 4rem;
@@ -487,7 +407,7 @@ footer[data-home-editorial='true'] {
 .home-statement .home-section-heading h2 { color: var(--foreground); }
 .home-statement .home-section-meta { color: var(--muted-foreground); }
 .home-statement .home-section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
-.home-statement #projects .featured-project-list[data-density='default'] { display: grid; gap: 40px var(--home-grid-gap); }
+.home-statement #projects .featured-project-list[data-density='default'] { display: grid; gap: 32px var(--home-grid-gap); }
 .home-statement #projects .featured-project-list[data-density='default'] .featured-project-with-image .featured-text-row {
   grid-template-columns: minmax(0, 1fr) auto;
   padding: 0;
@@ -498,7 +418,7 @@ footer[data-home-editorial='true'] {
 .home-statement #projects .featured-project-image {
   position: relative;
   grid-area: 1 / 1 / auto / -1;
-  aspect-ratio: 8 / 7;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--card);
 }
@@ -558,7 +478,7 @@ footer[data-home-editorial='true'] {
   .home-statement-meta { font-size: 13px; }
   .home-statement .home-editorial-sections { margin-block-start: 48px; }
   .home-statement .home-editorial-sections > * + * { margin-block-start: 80px; }
-  .home-statement #projects .featured-project-list[data-density='default'] { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 48px; }
+  .home-statement #projects .featured-project-list[data-density='default'] { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
   .home-background-row { grid-template-columns: repeat(6, minmax(0, 1fr)); row-gap: 4px; }
   .home-background-date { grid-column: 1 / 3; grid-row: 1 / 3; }
   .home-background-row h3, .home-background-description { grid-column: 3 / -1; }

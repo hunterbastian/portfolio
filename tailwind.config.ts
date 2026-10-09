@@ -20,9 +20,9 @@ const config: Config = {
     extend: {
       fontFamily: {
         'mono': ['var(--font-paper-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
-        'sans': ['var(--font-paper-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
-        'inter': ['var(--font-paper-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
-        'header': ['var(--font-paper-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        'sans': ['var(--font-dm-sans)', 'Arial', 'sans-serif'],
+        'inter': ['var(--font-dm-sans)', 'Arial', 'sans-serif'],
+        'header': ['var(--font-dm-sans)', 'Arial', 'sans-serif'],
         'redaction': ['HB Redaction', 'Redaction', 'Redaction 35', 'Georgia', 'serif'],
       },
       screens: {

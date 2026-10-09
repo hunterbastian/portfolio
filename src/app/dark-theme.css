@@ -1,260 +1,101 @@
-/* Apothecary palette: warm charcoal, ivory labels, stone and aged brass. */
+/* Alcove-inspired paper, espresso ink, and muted wine. The theme is fixed light. */
 :root {
-  color-scheme: dark;
-  --background: #26231e;
-  --background-rgb: 38, 35, 30;
-  --foreground: #f2ebdd;
-  --card: #2e2a24;
+  color-scheme: light;
+  --background: #eee8dd;
+  --background-rgb: 238, 232, 221;
+  --foreground: #342e27;
+  --card: #f5f0e7;
   --card-foreground: var(--foreground);
   --primary: var(--foreground);
   --primary-foreground: var(--background);
-  --secondary: #3b352c;
+  --secondary: #e4dbcf;
   --secondary-foreground: var(--foreground);
-  --muted: var(--card);
-  --muted-foreground: #c4baab;
-  --subtle-foreground: #b7ad9d;
-  /* Muted brass accents for links and focus states. */
-  --accent: #c2ad85;
-  --accent-foreground: var(--background);
-  --accent-subtle: #373024;
-  --accent-muted: #ad9874;
-  --accent-blue: #b8b3a8;
-  --accent-green: #b2ae96;
-  --border: #4d463b;
-  --input: var(--border);
+  --muted: var(--secondary);
+  --muted-foreground: #6e6258;
+  --subtle-foreground: #716458;
+  --accent: #774c45;
+  --accent-foreground: #f5f0e7;
+  --accent-subtle: #e9ddd3;
+  --accent-muted: #80574c;
+  --accent-blue: #6c7774;
+  --accent-green: #6b725d;
+  --border: #ccc1b2;
+  --input: #a99b8a;
   --ring: var(--accent);
-  --surface-warm-rgb: 59, 53, 44;
-  --surface-paper-rgb: 46, 42, 36;
-  --grain-rgb: 196, 186, 171;
-  --ink-underline: #c2ad85;
-  --contact-accent: #c8a8a2;
-  --contact-accent-soft: #332826;
-  --contact-accent-rgb: 200, 168, 162;
+  --surface-warm-rgb: 228, 219, 207;
+  --surface-paper-rgb: 245, 240, 231;
+  --grain-rgb: 70, 53, 35;
+  --ink-underline: var(--accent);
+  --contact-accent: var(--accent);
+  --contact-accent-soft: var(--accent-subtle);
+  --contact-accent-rgb: 119, 76, 69;
   --contact-email-accent: var(--accent);
   --contact-email-accent-soft: var(--accent-subtle);
   --contact-email-ink: var(--foreground);
   --contact-paper: var(--card);
   --contact-paper-hover: var(--secondary);
   --contact-rule: var(--border);
-  --surface-glass-soft: rgba(var(--surface-paper-rgb), 0.78);
-  --surface-glass-soft-border: color-mix(in srgb, var(--border) 90%, transparent);
-  --surface-glass-soft-shadow:
-    0 0 0 1px var(--surface-glass-soft-border),
-    0 10px 28px -18px rgba(0, 0, 0, 0.72);
-  --surface-glass-chrome: linear-gradient(180deg, #3b3933 0%, #2e2c26 46%, var(--card) 100%);
-  --surface-glass-chrome-hover: linear-gradient(180deg, #46433b 0%, #353229 48%, #29271f 100%);
+  --surface-glass-soft: rgba(var(--surface-paper-rgb), 0.86);
+  --surface-glass-soft-border: var(--border);
+  --surface-glass-soft-shadow: inset 0 1px #ffffffb3, 0 2px 8px #342e270a;
+  --surface-glass-chrome: linear-gradient(180deg, #faf6ee, #eae1d5);
+  --surface-glass-chrome-hover: linear-gradient(180deg, #fcf9f2, #e6dbcd);
   --surface-glass-chrome-dark: var(--surface-glass-chrome);
-  --surface-glass-chrome-shadow:
-    inset 0 1px rgba(255, 255, 255, 0.14),
-    inset 0 -1px rgba(0, 0, 0, 0.35),
-    0 0 0 1px #373737,
-    0 12px 28px -16px rgba(0, 0, 0, 0.78);
-  --surface-glass-chrome-shadow-hover:
-    inset 0 1px rgba(255, 255, 255, 0.18),
-    inset 0 -1px rgba(0, 0, 0, 0.28),
-    0 0 0 1px #4a4a4a,
-    0 16px 34px -16px rgba(0, 0, 0, 0.82);
-  --surface-glass-chrome-shadow-active:
-    inset 0 2px 6px rgba(0, 0, 0, 0.55),
-    inset 0 1px rgba(255, 255, 255, 0.06),
-    0 0 0 1px #373737;
-  --shadow-raised: 0 0 0 1px #373737, 0 2px 4px #0003;
-  --shadow-raised-subtle: 0 0 0 1px #373737;
-  --shadow-hover: 0 0 0 1px #4a4a4a, 0 8px 20px -4px #0005;
+  --surface-glass-chrome-shadow: inset 0 1px #ffffffcc, 0 1px 3px #342e2714;
+  --surface-glass-chrome-shadow-hover: inset 0 1px #ffffffcc, 0 3px 9px #342e2714;
+  --surface-glass-chrome-shadow-active: inset 0 1px 3px #342e2714;
+  --shadow-raised: 0 0 0 1px var(--border), 0 3px 10px #342e270a;
+  --shadow-raised-subtle: 0 0 0 1px var(--border);
+  --shadow-hover: 0 0 0 1px var(--border), 0 8px 24px #342e2714;
+  --font-display: var(--font-instrument-serif), Georgia, serif;
 }
-
-/* Keep the dithered ridge crisp; only the edges fade into the warm canvas. */
-.animated-hero-glow {
-  animation: none;
-  opacity: 0.72;
-  filter: saturate(0.72) brightness(0.78);
+body { line-height: 1.5; }
+/* Static paper grain, kept faint and completely outside hit testing. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.7' filter='url(%23paper)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
 }
-.animated-hero-glow img {
-  transform: none;
-  object-position: center 52%;
-  filter: none;
-  image-rendering: pixelated;
-}
-/* Keep wash overlays from HomeHeroSection so ambience fades into canvas */
-.animated-hero-glow > div {
-  visibility: visible;
-}
-.animated-hero-grain {
-  mix-blend-mode: screen;
-}
-.home-painterly-wash-canvas {
-  filter: blur(16px) saturate(0.35) sepia(0.12) contrast(0.92);
-  opacity: 0.14;
-}
-.home-painterly-wash-hero {
-  background:
-    radial-gradient(ellipse at 44% 48%, rgba(176, 182, 154, 0.2) 0%, rgba(176, 182, 154, 0.08) 34%, transparent 70%),
-    radial-gradient(ellipse at 58% 48%, rgba(200, 168, 162, 0.12) 0%, transparent 68%);
-}
-.home-painterly-washes::after {
-  background-image:
-    radial-gradient(circle, rgba(var(--grain-rgb), 0.2) 0 0.55px, transparent 0.8px),
-    radial-gradient(circle, rgba(233, 228, 217, 0.2) 0 0.5px, transparent 0.76px);
-}
-.section-heading-rule {
-  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 28%, transparent), transparent);
-}
-
-/* A brass focus ring remains distinct from the warm surfaces. */
-:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-.header-nav-link:focus-visible,
-.chrome-pill:focus-visible,
-.nord-button:focus-visible,
-.status-pill-action:focus-visible,
-[cmdk-input]:focus,
-[cmdk-input]:focus-visible,
-input:focus-visible,
-button:focus-visible,
-a:focus-visible {
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
+a:focus-visible, button:focus-visible, input:focus-visible {
   outline: 2px solid var(--ring) !important;
-  outline-offset: 2px;
+  outline-offset: 4px;
   --tw-ring-color: var(--ring);
-  box-shadow: 0 0 0 2px rgba(var(--background-rgb), 0.9), 0 0 0 4px color-mix(in srgb, var(--ring) 55%, transparent);
 }
-
-body {
-  line-height: 1.5;
-}
-
-/* Dark glass pills — gloss restored */
-.chrome-pill .chrome-pill-label,
-.chrome-pill .chrome-pill-icon {
+.chrome-pill, .chrome-pill-contact-accent, .chrome-scroll-top {
   color: var(--foreground);
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-glass-chrome);
+  box-shadow: var(--surface-glass-chrome-shadow);
+}
+.chrome-pill .chrome-pill-label, .chrome-pill .chrome-pill-icon {
+  color: var(--foreground);
+  text-shadow: none;
   filter: none;
 }
-
-.chrome-pill {
-  background: var(--surface-glass-chrome);
-  border: 1px solid #373737;
-  box-shadow: var(--surface-glass-chrome-shadow);
-  border-radius: 8px;
-}
-
-.chrome-pill::before,
-.chrome-pill::after {
-  opacity: 1;
-}
-
-.chrome-pill::before {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.16) 0%,
-    rgba(255, 255, 255, 0.04) 52%,
-    rgba(0, 0, 0, 0.12) 100%
-  );
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
-}
-
-.chrome-pill::after {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 100%);
-}
-
-/* Primary contact pill: darker glass with a whisper of warm ambience */
-.chrome-pill-contact-accent {
-  background:
-    linear-gradient(180deg, #3a3734 0%, #2c2926 48%, #221f1d 100%),
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 62%);
-  border-color: #45403c;
-  box-shadow:
-    inset 0 1px rgba(255, 255, 255, 0.16),
-    inset 0 -1px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(69, 64, 60, 0.9),
-    0 14px 30px -18px rgba(0, 0, 0, 0.8);
-}
-
-.chrome-pill-contact-accent::before {
-  opacity: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.2) 0%,
-    rgba(255, 255, 255, 0.05) 55%,
-    rgba(208, 183, 171, 0.08) 100%
-  );
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-}
-
-.chrome-pill-contact-accent::after {
-  opacity: 1;
-}
-
-.chrome-pill-contact-accent .chrome-pill-label,
-.chrome-pill-contact-accent .chrome-pill-icon {
-  color: var(--foreground);
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .chrome-pill:hover,
-  .group\/chrome:hover .chrome-pill {
-    background: var(--surface-glass-chrome-hover);
-    border-color: #4a4a4a;
-    box-shadow: var(--surface-glass-chrome-shadow-hover);
-    filter: saturate(1.02);
-  }
-
-  .chrome-pill-contact-accent:hover {
-    background:
-      linear-gradient(180deg, #433f3b 0%, #332f2c 48%, #282422 100%),
-      radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.16) 0%, transparent 62%);
-    border-color: #5a534c;
-    box-shadow:
-      inset 0 1px rgba(255, 255, 255, 0.2),
-      inset 0 -1px rgba(0, 0, 0, 0.35),
-      0 0 0 1px rgba(90, 83, 76, 0.95),
-      0 18px 36px -18px rgba(0, 0, 0, 0.85);
-  }
-}
-
-.chrome-pill:active,
-.group\/chrome:active .chrome-pill,
-.chrome-pill-contact-accent:active {
-  box-shadow: var(--surface-glass-chrome-shadow-active);
-  filter: none;
-}
-
-/* Scroll-top: same dark glass language */
-.chrome-scroll-top::before,
-.chrome-scroll-top::after {
-  opacity: 1;
-}
-
-.chrome-scroll-top {
-  background: var(--surface-glass-chrome);
-  border: 1px solid #373737;
-  box-shadow: var(--surface-glass-chrome-shadow);
-  color: var(--foreground);
-  backdrop-filter: blur(10px) saturate(1.05);
-  -webkit-backdrop-filter: blur(10px) saturate(1.05);
-}
-
-.chrome-scroll-top:hover {
+.chrome-pill::before, .chrome-pill::after,
+.chrome-scroll-top::before, .chrome-scroll-top::after { opacity: 0; }
+.chrome-pill:hover, .chrome-scroll-top:hover {
   background: var(--surface-glass-chrome-hover);
-  border-color: #4a4a4a;
   box-shadow: var(--surface-glass-chrome-shadow-hover);
 }
+.chrome-pill:active, .chrome-scroll-top:active { box-shadow: var(--surface-glass-chrome-shadow-active); }
+.portfolio-wordmark { font-family: var(--font-display); font-size: 32px; font-weight: 400; letter-spacing: -0.025em; }
+.brand-period { color: var(--accent); }
+.portfolio-loading-indicator__name { font-family: var(--font-display); }
+article header h1 { font-family: var(--font-display); font-size: clamp(36px, 6vw, 56px); line-height: 1.1; font-weight: 400; letter-spacing: -0.02em; }
+.prose :is(h2, h3) { font-family: var(--font-display); font-weight: 400; }
+.prose h2 { font-size: 32px; }
+.prose h3 { font-size: 26px; }
 
-.chrome-scroll-top:active {
-  box-shadow: var(--surface-glass-chrome-shadow-active);
-}
-
-.chrome-scroll-top .chrome-scroll-top-arrow {
-  filter: none;
-}
-
-/* Playground archive: keep ambient color washes (ambience welcome) */
+/* Archive surfaces share the paper palette. */
 .playground-page {
   --playground-blue: #a1b7c9;
   --playground-cyan: #7aa3ae;

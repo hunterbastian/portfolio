@@ -12,15 +12,15 @@ html, body {
 :root {
   --font-geist-mono: var(--font-paper-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-geist-pixel-square: var(--font-paper-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-geist-sans: var(--font-paper-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-geist-sans: var(--font-dm-sans), Arial, sans-serif;
 }
 
-/* Site-wide lowercase. Form fields are exempt so typed text shows as typed. */
+/* Preserve authored casing throughout the editorial portfolio. */
 body,
 body *:not(input):not(textarea):not(select),
 body *::before,
 body *::after {
-  text-transform: lowercase !important;
+  text-transform: none !important;
 }
 
 /* Proper-name exception to the lowercase visual style. */

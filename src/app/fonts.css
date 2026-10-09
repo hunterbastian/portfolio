@@ -1,6 +1,7 @@
-/*
- * Paper Mono v1.000 is self-hosted through next/font/local in layout.tsx.
- * Its variable WOFF2 provides weights 100–800 for UI, headings, and body copy.
- * License: public/fonts/paper-mono-OFL.txt (SIL Open Font License 1.1).
- * OG image fonts remain separate in src/lib/og-fonts.ts.
+/* Self-hosted via next/font/local in layout.tsx.
+ * Instrument Serif (400 regular and italic): display and project titles.
+ * DM Sans (100–1000): body copy and interface text.
+ * Paper Mono (100–800): dates, technical labels, and keyboard shortcuts.
+ * SIL OFL licenses are included beside the font files in public/fonts.
+ * Instrument Serif and DM Sans sourced from Fontsource packages v5.3.0.
  */

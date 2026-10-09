@@ -41,7 +41,7 @@ function SectionHeading({
   const Glyph = kind ? CV_KIND_GLYPHS[kind] : null
   return (
     <h2 className="font-mono text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground mb-5 inline-flex items-center gap-2">
-      {Glyph ? <Glyph size={10} className="text-muted-foreground/70" /> : null}
+      {Glyph ? <Glyph size={10} className="text-muted-foreground" /> : null}
       <TextReveal text={children} as="span" trigger duration={0.4} staggerDelay={0.06} startDelay={delay} />
     </h2>
   )
@@ -143,9 +143,9 @@ export default function CVPageClient() {
                     <span className="text-[11px] text-muted-foreground/60">·</span>
                     <span className="text-[12px] text-muted-foreground">{item.title}</span>
                   </div>
-                  <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground/70">{item.description}</p>
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground">{item.description}</p>
                 </div>
-                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap sm:justify-self-end">{item.year}</span>
+                <span className="text-[11px] font-mono tracking-wide text-muted-foreground whitespace-nowrap sm:justify-self-end">{item.year}</span>
               </m.div>
             ))}
           </div>
@@ -172,12 +172,12 @@ export default function CVPageClient() {
                     <span className="text-[11px] text-muted-foreground/60">·</span>
                     <span className="text-[12px] text-muted-foreground">{item.degree}</span>
                   </div>
-                  <p className="mt-1 text-[12px] text-muted-foreground/70">
+                  <p className="mt-1 text-[12px] text-muted-foreground">
                     {item.level}
                     {item.note && <span className="ml-2 font-mono text-[10px] tracking-wider text-accent/80 uppercase">{item.note}</span>}
                   </p>
                 </div>
-                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap sm:justify-self-end">{item.year}</span>
+                <span className="text-[11px] font-mono tracking-wide text-muted-foreground whitespace-nowrap sm:justify-self-end">{item.year}</span>
               </m.div>
             ))}
           </div>

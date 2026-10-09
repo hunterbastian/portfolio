@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import { m, AnimatePresence, useInView, useReducedMotion } from 'framer-motion'
+import { useState } from 'react'
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import {
   DESIGN_DECISION_DESCRIPTION_DURATION_MS,
   DESIGN_DECISION_DESCRIPTION_EXIT_STATE,
@@ -22,28 +22,27 @@ interface DesignDecisionProps {
   /** Available options — accepts an array or a JSON string (for MDX compatibility) */
   options: DesignDecisionOption[] | string
   /** Index of the chosen option (0-based) */
-  chosen: number
+  chosen: number | string
 }
 
 export default function DesignDecision({
   question,
   options: optionsInput,
-  chosen,
+  chosen: chosenInput,
 }: DesignDecisionProps) {
   const options = parseDesignDecisionOptions(optionsInput)
+  const chosen = Number(chosenInput)
   const [activeIndex, setActiveIndex] = useState(chosen)
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px 0px -60px 0px' })
   const prefersReducedMotion = useReducedMotion() ?? false
 
   const activeOption = options[activeIndex]
 
   return (
-    <figure ref={ref} className="not-prose my-10">
+    <figure className="not-prose my-10">
       <m.div
         className="border border-border bg-card/50 p-5 sm:p-6 shadow-card-subtle"
-        initial={getDesignDecisionPanelAnimationState(false)}
-        animate={getDesignDecisionPanelAnimationState(isInView)}
+        initial={false}
+        animate={getDesignDecisionPanelAnimationState(true)}
         transition={{
           duration: motionDurationMs(DESIGN_DECISION_PANEL_DURATION_MS, prefersReducedMotion),
           ease: MOTION_EASE_SOFT,
@@ -55,7 +54,7 @@ export default function DesignDecision({
         </p>
 
         {/* Option toggles */}
-        <div className="mb-4 flex flex-wrap gap-2" role="radiogroup" aria-label={question}>
+        <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label={question}>
           {options.map((option, i) => {
             const isActive = i === activeIndex
             const isChosen = i === chosen
@@ -64,18 +63,17 @@ export default function DesignDecision({
               <button
                 key={option.label}
                 type="button"
-                role="radio"
-                aria-checked={isActive}
+                aria-pressed={isActive}
                 onClick={() => setActiveIndex(i)}
                 className={getDesignDecisionOptionButtonClassName(isActive)}
               >
                 {option.label}
                 {isChosen && (
                   <span
-                    className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                    className="inline-block shrink-0 text-foreground"
                     title="Chosen direction"
                     aria-label="Chosen direction"
-                  />
+                  >✓</span>
                 )}
               </button>
             )
@@ -83,18 +81,18 @@ export default function DesignDecision({
         </div>
 
         {/* Description */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           <m.div
             key={activeIndex}
-            initial={DESIGN_DECISION_DESCRIPTION_INITIAL_STATE}
+            initial={prefersReducedMotion ? false : DESIGN_DECISION_DESCRIPTION_INITIAL_STATE}
             animate={DESIGN_DECISION_DESCRIPTION_VISIBLE_STATE}
-            exit={DESIGN_DECISION_DESCRIPTION_EXIT_STATE}
+            exit={prefersReducedMotion ? undefined : DESIGN_DECISION_DESCRIPTION_EXIT_STATE}
             transition={{
               duration: motionDurationMs(DESIGN_DECISION_DESCRIPTION_DURATION_MS, prefersReducedMotion),
               ease: MOTION_EASE_SOFT,
             }}
           >
-            <p className="font-inter text-[13px] leading-relaxed text-muted-foreground">
+            <p aria-live="polite" className="font-inter text-[13px] leading-relaxed text-muted-foreground">
               {activeOption?.description}
             </p>
           </m.div>
@@ -102,7 +100,7 @@ export default function DesignDecision({
 
         {/* Chosen indicator */}
         {shouldShowDesignDecisionChosenIndicator(activeIndex, chosen) && (
-          <p className="mt-3 font-mono text-[10px] tracking-[0.1em] uppercase text-accent">
+          <p className="mt-3 font-mono text-[10px] tracking-[0.1em] uppercase text-foreground">
             Chosen direction
           </p>
         )}

@@ -69,18 +69,18 @@
 }
 
 .site-intro-loader .portfolio-loading-indicator__identity {
-  animation: editorial-loading-name 440ms ease-out both;
+  animation: editorial-loading-name 240ms ease-out both;
 }
 
 .site-intro-loader .portfolio-loading-indicator__line::after {
-  animation: editorial-loading-draw 600ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+  animation: editorial-loading-draw 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* The persistent layout plays this once on document arrival. CSS completes
    the reveal independently of hydration, including when JavaScript is off. */
 .site-intro-loader {
   pointer-events: none;
-  animation: site-intro-reveal 260ms ease-out 660ms forwards;
+  animation: site-intro-reveal 360ms cubic-bezier(0.22, 1, 0.36, 1) 200ms forwards;
 }
 
 body:has(:focus-visible) .site-intro-loader {

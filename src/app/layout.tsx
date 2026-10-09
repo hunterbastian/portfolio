@@ -109,16 +109,17 @@ export default function RootLayout({
         <MotionProvider>
           <SoundProvider>
             <HoverSoundCue />
-            <TopMeta />
-            <SmoothScroll>
               <a
                 href="#main-content"
                 className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2 focus:text-foreground"
               >
                 Skip to content
               </a>
+            <TopMeta />
+            <SmoothScroll>
+
               <div className="min-h-screen flex flex-col">
-                <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
+                <main id="main-content" tabIndex={-1} className="flex-1 pt-14 sm:pt-16">
                   <PageTransition>{children}</PageTransition>
                 </main>
                 <Footer />

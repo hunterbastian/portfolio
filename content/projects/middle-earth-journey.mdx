@@ -12,13 +12,15 @@ date: "2025-12-01"
 
 <ScrollStage chapter="01" title="Overview">
 
+**My role:** Visual design, interaction design, and Framer prototyping. **Scope:** A UVU Immersive Experiences class project.
+
 A Journey through Middle-Earth is an interactive mini website that guides users through key locations from Tolkien's Lord of the Rings and The Hobbit. Built in Framer as a final project for my Immersive Experiences I Design class at UVU, the site centers on an interactive map where clicking a location scrolls you to a detailed card about that place.
 
 I'm a big Lord of the Rings fan, and I wanted to make something that helps people understand where the story is set — the geography, the scale, and the character of each place — in a way that feels immersive rather than encyclopedic.
 
 <div className="flex flex-wrap gap-3 justify-center my-8">
-<MetricCard value={8} label="locations mapped" />
-<MetricCard value={2} label="Tolkien sagas covered" />
+<MetricCard value="8" label="locations mapped" />
+<MetricCard value="2" label="Tolkien sagas covered" />
 </div>
 
 </ScrollStage>
@@ -44,7 +46,7 @@ Early sketches focused on how the map interaction should work — how to surface
 <DesignDecision
   question="How should the map navigation work?"
   options='[{"label":"Grid of cards","description":"Show all locations in a flat grid. Simple and scannable, but loses the geographic relationship between places. Users would browse a list rather than explore a world."},{"label":"Interactive map to scroll","description":"Click pins on the map to scroll to detailed location cards below. Preserves spatial context and invites exploration — you discover locations by navigating the geography, not reading a list."},{"label":"Separate pages","description":"Each location gets its own page with full depth. Maximum detail per location, but loses the sense of a connected world. Navigation becomes linear rather than exploratory."}]'
-  chosen={1}
+  chosen="1"
 />
 
 </ScrollStage>
@@ -74,7 +76,7 @@ Each location card follows the same structure: a header with the place name, a l
 <DesignDecision
   question="What visual direction captures Tolkien's world?"
   options='[{"label":"Film-accurate realism","description":"Dark, cinematic tones matching the Peter Jackson films. Dramatic and immersive, but potentially heavy — risks feeling like a movie fansite rather than an exploration tool."},{"label":"Ancient cartography","description":"Warm parchment tones, hand-drawn textures, deep teals and muted golds. Evokes Tolkien own illustrations and the feeling of opening an old book. Grounded in the source material rather than any single adaptation."},{"label":"Modern editorial","description":"Clean whites, sharp typography, minimal imagery. Contemporary and readable, but risks stripping away the atmosphere that makes Middle-Earth feel like a real place."}]'
-  chosen={1}
+  chosen="1"
 />
 
 </ScrollStage>
@@ -89,6 +91,6 @@ If I were to revisit this, I'd probably rebuild it in code. Framer was great for
 
 <ScrollStage chapter="07" title="Outcome">
 
-The map-first approach ended up being the right call. People explore at their own pace instead of reading a wiki, and the cartography aesthetic ties the whole thing together in a way that a card grid never would have.
+The prototype pairs a geographic overview with detailed location cards. Choosing a map preserved the relationship between places; keeping the cards on the same page avoided repeated navigation. The tradeoff is discoverability: a future iteration should provide a clearly labeled list alongside the map and test both paths with keyboard and touch users.
 
 </ScrollStage>

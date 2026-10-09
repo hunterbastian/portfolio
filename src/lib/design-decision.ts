@@ -12,7 +12,7 @@ export const DESIGN_DECISION_DESCRIPTION_VISIBLE_STATE = { opacity: 1, y: 0 } as
 export const DESIGN_DECISION_DESCRIPTION_EXIT_STATE = { opacity: 0, y: -4 } as const
 
 export const DESIGN_DECISION_OPTION_BUTTON_BASE_CLASS =
-  'relative flex items-center gap-1.5 px-3 py-2 font-mono text-[12px] tracking-[0.04em] transition-[color,background-color,border-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50'
+  'relative flex items-center gap-1.5 px-3 py-2 font-mono text-[12px] tracking-[0.04em] transition-[color,background-color,border-color] duration-200 focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2'
 export const DESIGN_DECISION_OPTION_BUTTON_ACTIVE_CLASS =
   'bg-foreground/10 text-foreground border border-foreground/20'
 export const DESIGN_DECISION_OPTION_BUTTON_INACTIVE_CLASS =

@@ -19,6 +19,7 @@ export interface HomeLinkItem {
   external?: boolean
   ariaLabel?: string
   title?: string
+  socialLinks?: { label: string; href: string }[]
   /** Identifier for a special icon/image to render alongside the label */
   iconType?: 'studio-alpine' | 'handshake'
 }
@@ -48,6 +49,10 @@ export const creatingLinks: HomeLinkItem[] = [
     ariaLabel: 'Photography Studio Studio Alpine',
     title: 'Photography Studio Studio Alpine',
     iconType: 'studio-alpine',
+    socialLinks: [
+      { label: 'Instagram', href: 'https://instagram.com/studio.alpine' },
+      { label: 'X', href: 'https://x.com/thestudioalpine' },
+    ],
   },
   {
     label: 'Studio Cala',
@@ -56,6 +61,9 @@ export const creatingLinks: HomeLinkItem[] = [
     ariaLabel: 'Studio Cala — web design studio',
     title: 'Studio Cala',
     iconType: 'handshake',
+    socialLinks: [
+      { label: 'Website', href: 'https://studio-cala.hunter-bastian.chatgpt.site' },
+    ],
   },
   {
     label: 'Above / Utah',

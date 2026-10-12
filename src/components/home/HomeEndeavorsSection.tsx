@@ -116,13 +116,29 @@ function HomeEndeavorRow({
       )}
       {examples && <StudioWorkStack studio={link.label} examples={examples} print={link.iconType === 'studio-alpine'} />}
       </div>
+      {link.socialLinks && (
+        <nav aria-label={`${link.label} links`} className="relative z-10 flex flex-wrap gap-x-5 gap-y-1 pb-4 pl-[5.25rem] sm:pl-[6rem]">
+          {link.socialLinks.map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              target={BLANK_LINK_TARGET}
+              rel={getSafeExternalLinkRel(BLANK_LINK_TARGET)}
+              aria-label={social.label === 'Website' ? `${link.label} website` : `${link.label} on ${social.label}`}
+              className="inline-flex min-h-11 items-center gap-1.5 text-sm text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              {social.label}<span aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </nav>
+      )}
     </div>
   )
 }
 
-export function HomeEndeavorsSection() {
+function EndeavorGroup({ id, title, meta, links }: { id?: string; title: string; meta: string; links: HomeLinkItem[] }) {
   const [hoveredEndeavor, setHoveredEndeavor] = useState<HomeEndeavorHoveredState | null>(null)
-  const listState = getHomeEndeavorListState(creatingLinks, hoveredEndeavor)
+  const listState = getHomeEndeavorListState(links, hoveredEndeavor)
   const clearHoveredEndeavor = () => setHoveredEndeavor(null)
 
   const handleListBlur = (event: FocusEvent<HTMLDivElement>) => {
@@ -132,7 +148,7 @@ export function HomeEndeavorsSection() {
   }
 
   return (
-    <Section title="Endeavors" meta="Independent projects" contentGapClassName="space-y-1.5 sm:space-y-2">
+    <Section id={id} title={title} meta={meta} contentGapClassName="space-y-1.5 sm:space-y-2">
       <div
         className={cn(
           'featured-project-list home-endeavor-list',
@@ -142,7 +158,7 @@ export function HomeEndeavorsSection() {
         onMouseLeave={clearHoveredEndeavor}
       >
         {listState.rows.map((rowState) => {
-          const link = creatingLinks[rowState.index]
+          const link = links[rowState.index]
 
           if (!link) return null
 
@@ -160,5 +176,14 @@ export function HomeEndeavorsSection() {
         })}
       </div>
     </Section>
+  )
+}
+
+export function HomeEndeavorsSection() {
+  return (
+    <div className="space-y-20 sm:space-y-[6.5rem]">
+      <EndeavorGroup id="studios" title="Studios" meta="Photography & web design" links={creatingLinks.filter((link) => link.socialLinks)} />
+      <EndeavorGroup title="Endeavors" meta="Independent projects" links={creatingLinks.filter((link) => !link.socialLinks)} />
+    </div>
   )
 }

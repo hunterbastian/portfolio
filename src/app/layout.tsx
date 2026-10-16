@@ -39,14 +39,6 @@ const paperMono = localFont({
   adjustFontFallback: false,
 })
 
-const instrumentSerif = localFont({
-  src: [
-    { path: '../../public/fonts/instrument-serif-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/instrument-serif-latin-400-italic.woff2', weight: '400', style: 'italic' },
-  ],
-  variable: '--font-instrument-serif',
-  display: 'swap',
-})
 const dmSans = localFont({
   src: '../../public/fonts/dm-sans-latin-wght-normal.woff2',
   weight: '100 1000',
@@ -75,11 +67,11 @@ export default function RootLayout({
   const launcherProjects = getLauncherProjectSources(getAllProjects())
 
   return (
-    <html lang="en" className={`${paperMono.variable} ${instrumentSerif.variable} ${dmSans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${paperMono.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <meta name="theme-color" content={siteConfig.themeColorLight} />
-        <meta name="color-scheme" content="light" />
+        <meta name="theme-color" content={siteConfig.themeColorDark} />
+        <meta name="color-scheme" content="dark" />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
@@ -95,7 +87,7 @@ export default function RootLayout({
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
         
         {/* Resource Hints - Optimized for performance */}
@@ -108,7 +100,7 @@ export default function RootLayout({
         
         {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: `html:root{color-scheme:light;background-color:${siteConfig.themeColorLight};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${siteConfig.themeColorLight});line-height:1.5}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(119,76,69,.18)!important;color:inherit!important}::-moz-selection{background-color:rgba(119,76,69,.18)!important;color:inherit!important}`
+          __html: `html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${siteConfig.themeColorDark});line-height:1.5}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}::-moz-selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}`
         }} />
       </head>
       <body

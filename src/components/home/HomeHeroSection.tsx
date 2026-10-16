@@ -18,12 +18,15 @@ export function HomeHeroSection() {
 
   return (
     <section id="home" className={`home-hero-grid ${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}`}>
-      <h1 className="home-statement-title preserve-name-case" aria-label={homeHeroContent.intro}>
-        I design and build <em>thoughtful</em> digital experiences.
-      </h1>
+      <div className="home-hero-heading">
+        <p className="home-hero-role">Design engineer</p>
+        <h1 className="home-statement-title preserve-name-case" aria-label={homeHeroContent.intro}>
+          I design and build <span>thoughtful digital experiences.</span>
+        </h1>
+      </div>
       <div className="home-hero-aside">
         <p className="home-statement-meta preserve-name-case">
-          Interaction design &amp; development<br />
+          Interaction design &amp;<br />front-end development.<br />
           {homeHeroContent.subtitle}
         </p>
         <div id="contact" className={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}>

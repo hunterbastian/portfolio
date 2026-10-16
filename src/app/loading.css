@@ -30,13 +30,13 @@
 
 .portfolio-loading-indicator__name {
   display: block;
-  font-family: Didot, 'Bodoni MT', 'Times New Roman', serif;
+  font-family: var(--font-display);
   font-size: clamp(30px, 8.6vw, 42px);
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
   font-kerning: normal;
   line-height: 1.05;
-  letter-spacing: 0;
+  letter-spacing: -0.03em;
   text-transform: none !important;
 }
 

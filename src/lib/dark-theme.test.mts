@@ -2,28 +2,28 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 
-test('portfolio serves paper styling on first render without client theme hydration', () => {
+test('portfolio serves dark styling on first render without client theme hydration', () => {
  const layout = readFileSync('src/app/layout.tsx', 'utf8')
  assert.match(layout, /import '\.\/dark-theme.css'/)
- assert.match(layout, /siteConfig.themeColorLight/)
- assert.match(layout, /name="color-scheme" content="light"/)
- assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="default"/)
+ assert.match(layout, /siteConfig.themeColorDark/)
+ assert.match(layout, /name="color-scheme" content="dark"/)
+ assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="black"/)
  assert.doesNotMatch(layout, /35,\s*131,\s*226|#2383E2/i)
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
- assert.match(css, /color-scheme: light/)
- assert.match(css, /--background: #eee8dd/)
- assert.match(css, /--card: #f5f0e7/)
- assert.match(css, /--secondary: #e4dbcf/)
- assert.match(css, /--border: #ccc1b2/)
- assert.match(css, /--foreground: #342e27/)
- assert.match(css, /--muted-foreground: #6e6258/)
+ assert.match(css, /color-scheme: dark/)
+ assert.match(css, /--background: #111214/)
+ assert.match(css, /--card: #191b1f/)
+ assert.match(css, /--secondary: #22252b/)
+ assert.match(css, /--border: #343840/)
+ assert.match(css, /--foreground: #edf0f5/)
+ assert.match(css, /--muted-foreground: #aaafb9/)
  assert.match(css, /line-height: 1\.5/)
  assert.doesNotMatch(css, /#2383E2/i)
  const site = readFileSync('src/lib/site.ts', 'utf8')
- assert.match(site, /themeColorLight: '#eee8dd'/)
+ assert.match(site, /themeColorDark: '#111214'/)
 })
 
-test('paper chrome pills share tokenized surfaces and email accent', () => {
+test('dark chrome pills share tokenized surfaces and email accent', () => {
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
  assert.match(css, /background: var\(--surface-glass-chrome\)/)
  assert.match(css, /--contact-email-accent-soft/)
@@ -37,7 +37,7 @@ test('mobile navigation uses the shared elevated surface instead of a hardcoded 
  assert.ok(!source.includes('bg-[#fffaf2]/95'), 'remove obsolete light surface')
 })
 
-test('wine focus ring stays visible without a green or Notion-blue accent', () => {
+test('accent focus ring stays visible without a green or Notion-blue accent', () => {
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
  assert.match(css, /--ring: var\(--accent\)/)
  assert.doesNotMatch(css, /--ring: #b7cec3/)
@@ -58,7 +58,7 @@ test('launcher palette keeps elevated monochrome surfaces and compact command ro
  assert.doesNotMatch(`${dialog}\n${header}\n${list}`, /#2383E2|contact-email-accent/i)
 })
 
-test('selection and custom focus rings stay neutral on paper', () => {
+test('selection and custom focus rings stay neutral on dark', () => {
  const globals = readFileSync('src/app/globals.css', 'utf8')
  const arcButton = readFileSync('src/components/ArcGlossUploadButton.module.css', 'utf8')
 

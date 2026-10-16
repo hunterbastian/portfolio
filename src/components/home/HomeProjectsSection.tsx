@@ -28,7 +28,7 @@ export function HomeProjectsSection({ onWorkFilterChange, projects, workFilter }
   return (
     <Section
       id="projects"
-      title="Selected work"
+      title="Selected work" index="01"
       meta={String(galleryProjects.length).padStart(2, '0')}
       contentGapClassName="space-y-3 sm:space-y-4"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}

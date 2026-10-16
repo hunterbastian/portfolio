@@ -1,12 +1,12 @@
-.button { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 10px 16px; border: 1px solid transparent; border-radius: 999px; font: inherit; font-size: 14px; line-height: 1.4; text-decoration: none; white-space: nowrap; transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+.button { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 10px 16px; border: 1px solid transparent; border-radius: 8px; font: inherit; font-size: 14px; line-height: 1.4; text-decoration: none; white-space: nowrap; transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
 .stroke { color: var(--foreground); background: var(--surface-glass-chrome); border-color: color-mix(in srgb, var(--foreground) 20%, transparent); box-shadow: 0 1px 2px #0002, inset 0 1px #ffffff08; }
 .stroke:hover { background: color-mix(in srgb, var(--foreground) 9%, var(--background)); border-color: color-mix(in srgb, var(--foreground) 35%, transparent); }
 .filled { color: var(--accent-foreground); background: var(--accent); border-color: var(--accent); box-shadow: 0 1px 2px #0003; }
-.filled:hover { background: #633d38; }
+.filled:hover { background: color-mix(in srgb, var(--accent) 85%, white); }
 .ghost { color: var(--muted-foreground); background: transparent; }
 .ghost:hover { background: color-mix(in srgb, var(--foreground) 7%, transparent); color: var(--foreground); }
 .button:disabled { pointer-events: none; opacity: .45; }
-.button:focus-visible, .select:focus-visible, .thumb:focus-visible, .switch:focus-visible, .navLink:focus-visible { outline: 2px solid var(--foreground); outline-offset: 4px; }
+.button:focus-visible, .select:focus-visible, .thumb:focus-visible, .switch:focus-visible, .navLink:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
 .overlay { position: fixed; inset: 0; z-index: 200; background: #0008; backdrop-filter: blur(6px); animation: fadeIn 180ms ease; }
 .drawer { position: fixed; z-index: 201; top: 0; right: 0; bottom: 0; width: min(360px, calc(100vw - 24px)); overflow-y: auto; overscroll-behavior: contain; background: var(--background); color: var(--foreground); border-left: 1px solid var(--border); box-shadow: -12px 0 48px #0003; padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; outline: none; animation: slideIn 220ms cubic-bezier(.16,1,.3,1); }
 .drawer[data-state=closed] { animation: slideOut 160ms ease-in; }
@@ -31,9 +31,9 @@
 .option { min-height: 44px; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 10px; border-radius: 6px; font-size: 14px; color: var(--foreground); cursor: pointer; outline: none; }
 .option[data-highlighted] { background: color-mix(in srgb, var(--foreground) 9%, var(--card)); }
 .switch { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; }
-.switchTrack { width: 36px; height: 22px; padding: 3px; border-radius: 999px; background: #938677; transition: background 160ms ease; }
+.switchTrack { width: 36px; height: 22px; padding: 3px; border-radius: 999px; background: var(--input); transition: background 160ms ease; }
 .switch[data-state=checked] .switchTrack { background: var(--accent); }
-.switchThumb { display: block; width: 16px; height: 16px; border-radius: 50%; background: #f7f7f8; box-shadow: 0 1px 3px #0004; transition: transform 160ms ease; }
+.switchThumb { display: block; width: 16px; height: 16px; border-radius: 50%; background: var(--foreground); box-shadow: 0 1px 3px #0004; transition: transform 160ms ease; }
 .switchThumb[data-state=checked] { transform: translateX(14px); background: var(--card); }
 @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
 @keyframes slideOut { to { transform: translateX(100%); } }
@@ -48,7 +48,7 @@
 .imageTitle { margin: 0; padding: 0 44px 16px 0; min-height: 36px; font-size: 13px; font-weight: 400; line-height: 1.5; }
 .imageCanvas { position: relative; height: min(72dvh, 800px); }
 .imageTrigger { position: relative; display: block; width: 100%; min-height: 44px; overflow: hidden; cursor: zoom-in; text-align: start; }
-.imageTrigger:focus-visible { outline: 2px solid var(--foreground); outline-offset: 4px; }
+.imageTrigger:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
 .imageExpand { position: absolute; inset-inline-end: 12px; inset-block-end: 12px; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--background); color: var(--foreground); font-size: 12px; line-height: 1.5; box-shadow: 0 2px 8px #0003; }
 .imageTrigger:hover .imageExpand { background: var(--card); }
 

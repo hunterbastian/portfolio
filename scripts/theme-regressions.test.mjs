@@ -49,44 +49,44 @@ test('Tailwind emits alpha-aware text, surface, border, ring, and arbitrary util
   }
 })
 
-test('manifest and initial page chrome agree with the paper site canvas', () => {
+test('manifest and initial page chrome agree with the dark site canvas', () => {
   const manifest = JSON.parse(manifestSource)
   assert.equal(manifest.background_color, background)
   assert.equal(manifest.theme_color, background)
-  assert.ok(siteSource.includes(`themeColorLight: '${background}'`))
-  assert.ok(layoutSource.includes('name="color-scheme" content="light"'))
-  assert.ok(layoutSource.includes('name="apple-mobile-web-app-status-bar-style" content="default"'))
-  assert.ok(layoutSource.includes('html:root{color-scheme:light;background-color:${siteConfig.themeColorLight};scrollbar-gutter:stable}'))
-  assert.ok(layoutSource.includes('body{margin:0;background-color:var(--background,${siteConfig.themeColorLight})'))
+  assert.ok(siteSource.includes(`themeColorDark: '${background}'`))
+  assert.ok(layoutSource.includes('name="color-scheme" content="dark"'))
+  assert.ok(layoutSource.includes('name="apple-mobile-web-app-status-bar-style" content="black"'))
+  assert.ok(layoutSource.includes('html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark};scrollbar-gutter:stable}'))
+  assert.ok(layoutSource.includes('body{margin:0;background-color:var(--background,${siteConfig.themeColorDark})'))
   assert.equal(layoutSource.includes('body{margin:0;background:'), false)
 })
 
-function assertPaperOffline(source) {
-  assert.ok(source.includes(background), 'offline canvas must match the live paper background')
-  assert.ok(source.includes('color-scheme: light') || source.includes('color-scheme:light'))
+function assertDarkOffline(source) {
+  assert.ok(source.includes(background), 'offline canvas must match the live dark background')
+  assert.ok(source.includes('color-scheme: dark') || source.includes('color-scheme:dark'))
   assert.ok(source.includes(`name="theme-color" content="${background}"`))
   assert.equal(source.includes('prefers-color-scheme'), false)
-  assert.equal(source.includes('color-scheme: dark'), false)
+  assert.equal(source.includes('color-scheme: light'), false)
   assert.equal(source.includes('#f2f1ef'), false)
 }
 
-test('offline document remains light regardless of the OS color preference', () => {
-  assertPaperOffline(offlineSource)
+test('offline document remains dark regardless of the OS color preference', () => {
+  assertDarkOffline(offlineSource)
 })
 
-test('playground archive board stays on the paper canvas tokens', () => {
+test('playground archive board stays on the dark canvas tokens', () => {
   const playgroundSource = readFileSync('src/app/playground.css', 'utf8')
   const galleryOverride = '.playground-gallery-shell {\n  background: var(--card);\n  box-shadow: var(--shadow-raised);\n}'
 
   assert.ok(playgroundSource.includes('linear-gradient(180deg, rgba(255, 255, 255, 0.96)'))
   assert.ok(darkThemeSource.includes(galleryOverride))
-  assert.ok(darkThemeSource.includes('--foreground: #342e27'))
+  assert.ok(darkThemeSource.includes('--foreground: #edf0f5'))
 })
 
-test('service worker advances the cache and keeps paper offline fallbacks', () => {
+test('service worker advances the cache and keeps dark offline fallbacks', () => {
   const cacheName = workerSource.match(/CACHE_NAME = '([^']+)'/)?.[1]
   assert.ok(cacheName, 'service worker must declare a cache name')
-  assert.notEqual(cacheName, 'portfolio-assets-v14')
+  assert.notEqual(cacheName, 'portfolio-assets-v18')
   assert.ok(workerSource.includes("'/offline.html'"))
   assert.ok(workerSource.includes('cacheName !== CACHE_NAME'))
   assert.ok(workerSource.includes('caches.delete(cacheName)'))
@@ -95,5 +95,5 @@ test('service worker advances the cache and keeps paper offline fallbacks', () =
 
   const fallback = workerSource.match(/new Response\('([^']+)'/)?.[1]
   assert.ok(fallback, 'service worker must include an emergency HTML fallback')
-  assertPaperOffline(fallback)
+  assertDarkOffline(fallback)
 })

@@ -41,9 +41,16 @@ export function HomeMasthead() {
     <header className="home-masthead preserve-name-case">
       <div className="home-masthead-inner">
         <Link href="/" className="home-masthead-name"><span>Hunter Bastian<span className="brand-period">.</span></span></Link>
-        <div className="flex items-center gap-2 sm:gap-4"><time dateTime={clock?.time} aria-live="off" aria-label={clock ? getHomeHeroLocalTimeAriaLabel(clock.time) : 'Local time in Lehi'}>
-          {clock ? `${clock.zone} ${clock.time}` : 'MT --:--'}
-        </time><div className="sm:hidden"><MobileNavigation /></div></div>
+        <div className="home-masthead-tools">
+          <nav className="home-masthead-nav" aria-label="On this page">
+            <a href="#projects">Work</a>
+            <a href="#background">About</a>
+          </nav>
+          <time dateTime={clock?.time} aria-live="off" aria-label={clock ? getHomeHeroLocalTimeAriaLabel(clock.time) : 'Local time in Lehi'}>
+            {clock ? `${clock.zone} ${clock.time}` : 'MT --:--'}
+          </time>
+          <div className="sm:hidden"><MobileNavigation /></div>
+        </div>
       </div>
     </header>
   )

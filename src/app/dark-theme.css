@@ -1,67 +1,56 @@
-/* Alcove-inspired paper, espresso ink, and muted wine. The theme is fixed light. */
+/* Fixed dark canvas. Shared tokens also cover dialogs, tools, and loading states. */
 :root {
-  color-scheme: light;
-  --background: #eee8dd;
-  --background-rgb: 238, 232, 221;
-  --foreground: #342e27;
-  --card: #f5f0e7;
+  color-scheme: dark;
+  --background: #111214;
+  --background-rgb: 17, 18, 20;
+  --foreground: #edf0f5;
+  --card: #191b1f;
   --card-foreground: var(--foreground);
   --primary: var(--foreground);
   --primary-foreground: var(--background);
-  --secondary: #e4dbcf;
+  --secondary: #22252b;
   --secondary-foreground: var(--foreground);
   --muted: var(--secondary);
-  --muted-foreground: #6e6258;
-  --subtle-foreground: #716458;
-  --accent: #774c45;
-  --accent-foreground: #f5f0e7;
-  --accent-subtle: #e9ddd3;
-  --accent-muted: #80574c;
-  --accent-blue: #6c7774;
-  --accent-green: #6b725d;
-  --border: #ccc1b2;
-  --input: #a99b8a;
+  --muted-foreground: #aaafb9;
+  --subtle-foreground: #9299a6;
+  --accent: #a9c1ff;
+  --accent-foreground: #111a30;
+  --accent-subtle: #242e45;
+  --accent-muted: #8da5df;
+  --accent-blue: var(--accent);
+  --accent-green: #9bc9b1;
+  --destructive: #f3a6a6;
+  --border: #343840;
+  --input: #737b89;
   --ring: var(--accent);
-  --surface-warm-rgb: 228, 219, 207;
-  --surface-paper-rgb: 245, 240, 231;
-  --grain-rgb: 70, 53, 35;
+  --surface-warm-rgb: 34, 37, 43;
+  --surface-paper-rgb: 25, 27, 31;
+  --grain-rgb: 237, 240, 245;
   --ink-underline: var(--accent);
   --contact-accent: var(--accent);
   --contact-accent-soft: var(--accent-subtle);
-  --contact-accent-rgb: 119, 76, 69;
+  --contact-accent-rgb: 169, 193, 255;
   --contact-email-accent: var(--accent);
   --contact-email-accent-soft: var(--accent-subtle);
   --contact-email-ink: var(--foreground);
   --contact-paper: var(--card);
   --contact-paper-hover: var(--secondary);
   --contact-rule: var(--border);
-  --surface-glass-soft: rgba(var(--surface-paper-rgb), 0.86);
+  --surface-glass-soft: rgba(var(--surface-paper-rgb), 0.94);
   --surface-glass-soft-border: var(--border);
-  --surface-glass-soft-shadow: inset 0 1px #ffffffb3, 0 2px 8px #342e270a;
-  --surface-glass-chrome: linear-gradient(180deg, #faf6ee, #eae1d5);
-  --surface-glass-chrome-hover: linear-gradient(180deg, #fcf9f2, #e6dbcd);
-  --surface-glass-chrome-dark: var(--surface-glass-chrome);
-  --surface-glass-chrome-shadow: inset 0 1px #ffffffcc, 0 1px 3px #342e2714;
-  --surface-glass-chrome-shadow-hover: inset 0 1px #ffffffcc, 0 3px 9px #342e2714;
-  --surface-glass-chrome-shadow-active: inset 0 1px 3px #342e2714;
-  --shadow-raised: 0 0 0 1px var(--border), 0 3px 10px #342e270a;
+  --surface-glass-soft-shadow: inset 0 1px #ffffff05, 0 2px 8px #0002;
+  --surface-glass-chrome: var(--card);
+  --surface-glass-chrome-hover: var(--secondary);
+  --surface-glass-chrome-dark: var(--card);
+  --surface-glass-chrome-shadow: inset 0 1px #ffffff05;
+  --surface-glass-chrome-shadow-hover: inset 0 1px #ffffff08, 0 3px 9px #0002;
+  --surface-glass-chrome-shadow-active: inset 0 1px 3px #0003;
+  --shadow-raised: 0 0 0 1px var(--border), 0 3px 10px #0002;
   --shadow-raised-subtle: 0 0 0 1px var(--border);
-  --shadow-hover: 0 0 0 1px var(--border), 0 8px 24px #342e2714;
-  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --shadow-hover: 0 0 0 1px var(--input), 0 8px 24px #0003;
+  --font-display: var(--font-dm-sans), Arial, sans-serif;
 }
 body { line-height: 1.5; }
-/* Static paper grain, kept faint and completely outside hit testing. */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.055;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.7' filter='url(%23paper)'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-}
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
 a:focus-visible, button:focus-visible, input:focus-visible {
   outline: 2px solid var(--ring) !important;
@@ -71,7 +60,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .chrome-pill, .chrome-pill-contact-accent, .chrome-scroll-top {
   color: var(--foreground);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 8px;
   background: var(--surface-glass-chrome);
   box-shadow: var(--surface-glass-chrome-shadow);
 }
@@ -87,20 +76,20 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   box-shadow: var(--surface-glass-chrome-shadow-hover);
 }
 .chrome-pill:active, .chrome-scroll-top:active { box-shadow: var(--surface-glass-chrome-shadow-active); }
-.portfolio-wordmark { font-family: var(--font-display); font-size: 32px; font-weight: 400; letter-spacing: -0.025em; }
+.portfolio-wordmark { font-family: var(--font-geist-mono); font-size: 18px; font-weight: 500; letter-spacing: -0.04em; }
 .brand-period { color: var(--accent); }
 .portfolio-loading-indicator__name { font-family: var(--font-display); }
-article header h1 { font-family: var(--font-display); font-size: clamp(36px, 6vw, 56px); line-height: 1.1; font-weight: 400; letter-spacing: -0.02em; }
-.prose :is(h2, h3) { font-family: var(--font-display); font-weight: 400; }
+article header h1 { font-family: var(--font-display); font-size: clamp(36px, 6vw, 56px); line-height: 1.1; font-weight: 550; letter-spacing: -0.035em; }
+.prose :is(h2, h3) { font-family: var(--font-display); font-weight: 550; }
 .prose h2 { font-size: 32px; }
 .prose h3 { font-size: 26px; }
 
-/* Archive surfaces share the paper palette. */
+/* Archive surfaces share the dark canvas and elevation tokens. */
 .playground-page {
-  --playground-blue: #a1b7c9;
-  --playground-cyan: #7aa3ae;
-  --playground-amber: #d0b7ab;
-  --playground-green: #a2b8ab;
+  --playground-blue: #a9c1ff;
+  --playground-cyan: #8ac7d5;
+  --playground-amber: #d8b98d;
+  --playground-green: #9bc9b1;
   --playground-ink: var(--foreground);
   --playground-muted: var(--muted-foreground);
   background:
@@ -153,7 +142,7 @@ article header h1 { font-family: var(--font-display); font-size: clamp(36px, 6vw
 
 .playground-gallery-caption,
 .playground-gallery-title {
-  color: color-mix(in srgb, var(--muted-foreground) 82%, transparent);
+  color: var(--muted-foreground);
 }
 
 .playground-gallery-tile:hover .playground-gallery-caption,

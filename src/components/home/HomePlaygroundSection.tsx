@@ -21,7 +21,7 @@ export function HomePlaygroundSection({ projects }: HomePlaygroundSectionProps) 
   return (
     <Section
       id="playground"
-      title="Playground"
+      title="Playground" index="03"
       meta="Ongoing experiments"
       contentGapClassName="space-y-4 sm:space-y-5"
       scrollMarginClassName={HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}

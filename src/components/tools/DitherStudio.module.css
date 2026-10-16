@@ -43,7 +43,7 @@
 .export { padding-top: 24px; border-top: 1px solid var(--border); margin-top: 16px; }
 .export p { color: var(--muted-foreground); text-align: center; margin-top: 10px; font-size: 12px; }
 .error, .status { font-size: 13px; line-height: 1.5; margin-top: 12px; }
-.error { color: #8b342e; }
+.error { color: var(--destructive); }
 .status { color: var(--muted-foreground); }
 .error:empty, .status:empty { display: none; }
 .note { max-width: 540px; color: var(--muted-foreground); font-size: 14px; line-height: 1.7; margin: 36px 0 24px; }

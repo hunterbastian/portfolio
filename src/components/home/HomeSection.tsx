@@ -40,6 +40,7 @@ export function Reveal({ children, delayMs = 0 }: { children: ReactNode; delayMs
 export function Section({
   id,
   title,
+  index,
   meta,
   children,
   contentGapClassName = 'space-y-4 sm:space-y-7',
@@ -48,6 +49,7 @@ export function Section({
 }: {
   id?: string
   title: string
+  index?: string
   meta?: string
   children: ReactNode
   contentGapClassName?: string
@@ -58,7 +60,7 @@ export function Section({
     <section id={id} className={getHomeSectionClassName(scrollMarginClassName, 'home-grid-section')}>
       <div className="home-section-label space-y-2 sm:space-y-3">
         <div className="home-section-heading flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-          <h2 className={HOME_SECTION_TITLE_CLASS_NAME}>{title}</h2>
+          <h2 className={HOME_SECTION_TITLE_CLASS_NAME}>{index ? <span className="home-section-index" aria-hidden="true">{index} /</span> : null}{title}</h2>
           {meta ? <p className="home-section-meta">{meta}</p> : null}
         </div>
         {rule ? <div className={`home-section-rule ${HOME_SECTION_RULE_CLASS_NAME}`} /> : null}

@@ -53,7 +53,7 @@ export const CASE_STUDY_NAV_ARIA_LABEL = 'Case study chapters'
 export const CASE_STUDY_NAV_ROOT_CLASS_NAME = 'absolute -left-20 top-0 bottom-0 hidden xl:block w-14'
 export const CASE_STUDY_NAV_LIST_CLASS_NAME = 'sticky top-[33vh] flex flex-col gap-3'
 export const CASE_STUDY_CHAPTER_BUTTON_CLASS_NAME =
-  'group flex min-h-[40px] origin-center touch-manipulation items-center gap-2 text-left transition-transform duration-150 active:translate-y-0 active:scale-[0.96] focus-visible:outline-none'
+  'group flex min-h-[40px] origin-center touch-manipulation items-center gap-2 text-left transition-transform duration-150 active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-4'
 export const CASE_STUDY_CHAPTER_MARKER_CLASS_NAME = 'block rounded-full'
 export const CASE_STUDY_CHAPTER_HAPTIC_STYLE = 'light'
 export const CASE_STUDY_CHAPTER_SCROLL_OPTIONS = { behavior: 'smooth', block: 'start' } as const

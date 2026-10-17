@@ -72,7 +72,7 @@ export default function ImageAnnotation({
               >
                 {/* Ping animation */}
                 <span
-                  className="absolute h-6 w-6 rounded-full animate-ping opacity-30"
+                  className="absolute h-6 w-6 rounded-full motion-safe:animate-ping opacity-30"
                   style={{ background: 'var(--accent)', animationDuration: '2.5s' }}
                   aria-hidden
                 />

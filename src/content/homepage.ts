@@ -100,14 +100,24 @@ export interface BackgroundBeat {
 
 export const backgroundBeats: BackgroundBeat[] = [
   {
-    year: '2026',
-    title: 'Founder, Studio Alpine',
-    description: 'Photography and design project. Continuing Interaction Design at UVU.',
+    year: 'Jul 2026 - Present',
+    title: 'AI Data Labeler at Tesla',
+    description: 'Review and label data against detailed quality standards in Draper, Utah.',
   },
   {
-    year: '2024 - Present',
-    title: 'Video Producer at Catapult',
-    description: "Department Representative for UVU's Web Design and Development program.",
+    year: '2026',
+    title: 'Founder, Studio Cala',
+    description: 'Independent web design and development for small businesses.',
+  },
+  {
+    year: '2026',
+    title: 'Founder, Studio Alpine',
+    description: 'Photography and design project.',
+  },
+  {
+    year: 'Aug 2024 - Present',
+    title: 'Department Representative at UVU',
+    description: 'Help Web Design and Development students navigate internships and coursework.',
   },
   {
     year: '2023',
@@ -119,14 +129,21 @@ export const backgroundBeats: BackgroundBeat[] = [
     title: 'Graphic Design A.A., Columbus State',
     description: 'Google IT Support Professional Certificate the same year.',
   },
-  {
-    year: '2017',
-    title: 'Digital Design Intern, Clutch',
-    description: 'Early branding and UX process work.',
-  },
 ]
 
 export const experienceItems: ExperienceItem[] = [
+  {
+    year: 'Jul 2026 - Present',
+    company: 'Tesla',
+    title: 'AI Data Labeler',
+    description: 'Review and label data for AI systems against detailed quality standards, applying feedback and consistent judgment.',
+  },
+  {
+    year: '2026 - Present',
+    company: 'Studio Cala',
+    title: 'Founder',
+    description: 'Independent web design and front-end development for small businesses.',
+  },
   {
     year: '2026 - Present',
     company: 'Studio Alpine',
@@ -163,10 +180,10 @@ export const experienceItems: ExperienceItem[] = [
 
 export const educationItems: EducationItem[] = [
   {
-    year: '2023 - 2027',
+    year: 'Started 2023',
     institution: 'Utah Valley University',
-    degree: 'B.S. Interaction Design',
-    level: "Bachelor's Degree",
+    degree: 'B.S. Interaction Design studies',
+    level: "Undergraduate studies",
     note: "ProdUX at UVU · Dean's List Fall 2024",
   },
   {

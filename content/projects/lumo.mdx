@@ -14,26 +14,17 @@ date: "2026-03-19"
 
 <ScrollStage chapter="01" title="Overview">
 
-<BlurHighlight
-  highlightedBits={["calm", "simplicity", "presence over productivity"]}
-  highlightColor="hsla(90, 25%, 65%, 0.3)"
-  highlightDirection="left"
-  blurDuration={1}
-  highlightDelay={0.6}
-  highlightDuration={1.2}
-  viewportOptions={{ once: true, amount: 0.3 }}
-  className="font-inter text-[14px] leading-relaxed"
->
+**My role:** Product design, Figma prototyping, and informal usability testing. **Scope:** A mindfulness app concept explored across mobile, tablet, and desktop.
+
 Lumo is a mindfulness app that helps you focus on what matters most. Reflect in a personal journal, track your mood, and set goals to aim towards — all in one calm, intentional space built around simplicity and presence over productivity.
-</BlurHighlight>
 
 <div className="mt-8 grid grid-cols-3 gap-3">
   <MetricCard value="3" label="Platforms" suffix="" />
-  <MetricCard value="10" label="Screens" suffix="+" />
+  <MetricCard value="10" label="Mapped screens" />
   <MetricCard value="Figma" label="Tool" suffix="" />
 </div>
 
-<ProjectImage src="/images/optimized/projects/lumo.webp" alt="Lumo app visual preview" />
+<ProjectImage src="/images/optimized/projects/lumo.webp" alt="Lumo onboarding concept with create account and sign in actions" />
 
 </ScrollStage>
 
@@ -89,7 +80,7 @@ Looking at what other apps were doing helped give direction to where Lumo could 
 
 ### Methodology
 
-Conducted usability testing using a low-fidelity prototype in Figma with a small group of family and friends. Participants were asked to complete tasks such as logging in, choosing a focus, journaling, and checking goals and milestones. Observed their interactions, recorded paths, noted confusion points, and collected feedback.
+Conducted usability testing using a low-fidelity prototype in Figma with a small group of family and friends. Participants were asked to complete tasks such as logging in, choosing a focus, journaling, and checking goals and milestones. Observed their interactions, recorded paths, noted confusion points, and collected feedback. This was a small convenience sample, so I treated the findings as directional feedback rather than evidence of broader product demand.
 
 </ScrollReveal>
 
@@ -99,16 +90,16 @@ Conducted usability testing using a low-fidelity prototype in Figma with a small
 
 <ScrollReveal>
 
-Three friction points discovered through usability testing shaped the final design.
+Feedback from the informal usability sessions shaped three revisions to the prototype.
 
 </ScrollReveal>
 
 <ScrollReveal delay={200}>
 
 <DesignDecision
-  chosen="Move notifications to Settings"
-  alternative="Prompt during onboarding"
-  reasoning="Users were being interrupted by notification permission prompts during app introduction, which broke focus. Moving notifications to a dedicated settings page promotes a smoother, less disruptive first experience."
+  question="How should notification permissions enter the experience?"
+  chosen="0"
+  options='[{"label": "Move notifications to Settings", "description": "Users were being interrupted by notification permission prompts during app introduction, which broke focus. Moving notifications to a dedicated settings page promotes a smoother, less disruptive first experience."}, {"label": "Prompt during onboarding", "description": "Alternative considered before the revision."}]'
 />
 
 </ScrollReveal>
@@ -116,9 +107,9 @@ Three friction points discovered through usability testing shaped the final desi
 <ScrollReveal delay={400}>
 
 <DesignDecision
-  chosen="Customizable tab order in Rewind"
-  alternative="Fixed default tab layout"
-  reasoning="Users couldn't change the order of Rewind items or tailor the experience. Adding drag-to-reorder with custom tabs gives users ownership over their daily review without adding complexity."
+  question="How should people organize their daily review?"
+  chosen="0"
+  options='[{"label": "Customizable tab order in Rewind", "description": "Users could not change the order of Rewind items or tailor the experience. Adding drag-to-reorder with custom tabs gives users ownership over their daily review without adding complexity."}, {"label": "Fixed default tab layout", "description": "Alternative considered before the revision."}]'
 />
 
 </ScrollReveal>
@@ -126,9 +117,9 @@ Three friction points discovered through usability testing shaped the final desi
 <ScrollReveal delay={600}>
 
 <DesignDecision
-  chosen="Add keyboard arrow for accessibility"
-  alternative="Standard keyboard without nav access"
-  reasoning="The keyboard covered important content and navigation, making it difficult for users to continue or exit. An arrow key gives quick access to the bottom navigation while the keyboard is open."
+  question="How should navigation behave while the keyboard is open?"
+  chosen="0"
+  options='[{"label": "Keep navigation reachable above the keyboard", "description": "The keyboard covered important content and navigation, making it difficult for users to continue or exit. The revised prototype includes an arrow control to reach the bottom navigation while the keyboard is open; this addresses visibility, rather than demonstrating a complete accessibility audit."}, {"label": "Standard keyboard without nav access", "description": "Alternative considered before the revision."}]'
 />
 
 </ScrollReveal>
@@ -143,7 +134,6 @@ A 6-color palette and Swiza type scale kept the visual language calm and distrac
 
 </ScrollReveal>
 
-<ProjectImage src="/images/optimized/projects/lumo.webp" alt="Lumo app visual preview" />
 
 <ScrollReveal delay={200}>
 
@@ -156,7 +146,6 @@ Designed across 3 platforms including mobile, tablet, and desktop to explore how
 
 </ScrollReveal>
 
-<ProjectImage src="/images/optimized/projects/lumo.webp" alt="Lumo app visual preview" />
 
 </ScrollStage>
 
@@ -168,7 +157,6 @@ The high-fidelity prototype represents the final visual and interaction design f
 
 </ScrollReveal>
 
-<ProjectImage src="/images/optimized/projects/lumo.webp" alt="Lumo app visual preview" />
 
 </ScrollStage>
 

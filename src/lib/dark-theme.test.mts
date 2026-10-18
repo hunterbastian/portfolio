@@ -2,28 +2,28 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 
-test('portfolio serves dark styling on first render without client theme hydration', () => {
+test('portfolio serves light styling on first render without client theme hydration', () => {
  const layout = readFileSync('src/app/layout.tsx', 'utf8')
  assert.match(layout, /import '\.\/dark-theme.css'/)
- assert.match(layout, /siteConfig.themeColorDark/)
- assert.match(layout, /name="color-scheme" content="dark"/)
- assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="black"/)
+ assert.match(layout, /siteConfig.themeColorLight/)
+ assert.match(layout, /name="color-scheme" content="light"/)
+ assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="default"/)
  assert.doesNotMatch(layout, /35,\s*131,\s*226|#2383E2/i)
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
- assert.match(css, /color-scheme: dark/)
- assert.match(css, /--background: #111214/)
- assert.match(css, /--card: #191b1f/)
- assert.match(css, /--secondary: #22252b/)
- assert.match(css, /--border: #343840/)
- assert.match(css, /--foreground: #edf0f5/)
- assert.match(css, /--muted-foreground: #aaafb9/)
+ assert.match(css, /color-scheme: light/)
+ assert.match(css, /--background: #ffffff/)
+ assert.match(css, /--card: #f6f6f4/)
+ assert.match(css, /--secondary: #eeeeec/)
+ assert.match(css, /--border: #d4d4d1/)
+ assert.match(css, /--foreground: #111111/)
+ assert.match(css, /--muted-foreground: #595959/)
  assert.match(css, /line-height: 1\.5/)
  assert.doesNotMatch(css, /#2383E2/i)
  const site = readFileSync('src/lib/site.ts', 'utf8')
- assert.match(site, /themeColorDark: '#111214'/)
+ assert.match(site, /themeColorLight: '#ffffff'/)
 })
 
-test('dark chrome pills share tokenized surfaces and email accent', () => {
+test('monochrome chrome pills share tokenized surfaces and email accent', () => {
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
  assert.match(css, /background: var\(--surface-glass-chrome\)/)
  assert.match(css, /--contact-email-accent-soft/)
@@ -58,7 +58,7 @@ test('launcher palette keeps elevated monochrome surfaces and compact command ro
  assert.doesNotMatch(`${dialog}\n${header}\n${list}`, /#2383E2|contact-email-accent/i)
 })
 
-test('selection and custom focus rings stay neutral on dark', () => {
+test('selection and custom focus rings stay neutral on white', () => {
  const globals = readFileSync('src/app/globals.css', 'utf8')
  const arcButton = readFileSync('src/components/ArcGlossUploadButton.module.css', 'utf8')
 

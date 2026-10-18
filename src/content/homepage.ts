@@ -26,8 +26,13 @@ export interface HomeLinkItem {
 export const homeHeroContent = {
   headline: 'Hunter Bastian',
   subtitle: 'Lehi, Utah',
+  discipline: 'Design, code & photography',
   intro:
-    'I design and build thoughtful digital experiences.',
+    'I’m a design engineer based in Utah, working across interaction design, development, and photography.',
+  bio: [
+    'I turn ideas into websites and digital products. I’m studying interaction design at Utah Valley University and building independent projects through Studio Cala.',
+    'From the first sketch to the final interaction, I care about making things clear, useful, and considered.',
+  ],
   handwrittenNote: 'A little page on the internet all about me',
 } as const
 

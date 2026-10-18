@@ -1,5 +1,5 @@
 // Service Worker for Portfolio - media assets only, fresh HTML/code always
-const CACHE_NAME = 'portfolio-assets-v19'
+const CACHE_NAME = 'portfolio-assets-v20'
 const STATIC_ASSETS = [
   '/offline.html',
   '/favicon.ico',
@@ -87,7 +87,7 @@ self.addEventListener('fetch', event => {
           if (event.request.mode === 'navigate') {
             const offlinePage = await caches.match('/offline.html')
             if (offlinePage) return offlinePage
-            return new Response('<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#111214"><meta name="color-scheme" content="dark"><title>Offline | Hunter Bastian Portfolio</title><style>html{color-scheme:dark;background:#111214;color:#edf0f5}body{margin:0;padding:24px;font-family:system-ui,sans-serif;line-height:1.5}</style></head><body><h1>Offline</h1><p>Please check your connection</p></body></html>', {
+            return new Response('<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#ffffff"><meta name="color-scheme" content="light"><title>Offline | Hunter Bastian Portfolio</title><style>html{color-scheme:light;background:#ffffff;color:#111111}body{margin:0;padding:24px;font-family:system-ui,sans-serif;line-height:1.5}</style></head><body><h1>Offline</h1><p>Please check your connection</p></body></html>', {
               headers: { 'Content-Type': 'text/html' },
             })
           }

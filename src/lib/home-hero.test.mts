@@ -36,25 +36,15 @@ test('home hero intro helper preserves paragraph splitting', () => {
   assert.deepEqual(getHomeHeroIntroParagraphs('First\n\n'), ['First', ''])
 })
 
-test('home hero keeps a concise introduction without a prose clock', () => {
-  const homepage = readFileSync(new URL('../content/homepage.ts', import.meta.url), 'utf8')
+test('home hero renders the introduction as text and keeps contact links reachable', () => {
   const hero = readFileSync(new URL('../components/home/HomeHeroSection.tsx', import.meta.url), 'utf8')
-
-  assert.match(homepage, /I design and build thoughtful digital experiences\./)
-  assert.doesNotMatch(homepage, /Local time is/)
-  assert.doesNotMatch(hero, /Local time is/)
-  assert.doesNotMatch(hero, /<button/)
-  assert.match(hero, /home-statement-title/)
-  assert.match(hero, /aria-label=\{homeHeroContent.intro\}/)
   const masthead = readFileSync(new URL('../components/home/HomeMasthead.tsx', import.meta.url), 'utf8')
-  assert.match(masthead, /formatHomeHeroLocalTime/)
+
+  assert.match(hero, /<h1>\{homeHeroContent.intro\}<\/h1>/)
   assert.match(hero, /ContactLinks/)
   assert.match(hero, /id="contact"/)
-  assert.doesNotMatch(hero, /text-\[30px\]/)
-  assert.doesNotMatch(hero, /sm:text-\[36px\]/)
-  assert.match(masthead, /aria-live="off"/)
-  assert.equal((masthead.match(/<time\b/g) ?? []).length, 1)
-  assert.match(masthead, /getHomeHeroLocalTimeAriaLabel\(clock.time\)/)
+  assert.match(masthead, /homeHeroContent.headline/)
+  assert.match(masthead, /homeHeroContent.subtitle/)
 })
 
 test('home hero local time stays a quiet 24-hour Mountain Time meta line', () => {

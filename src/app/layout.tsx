@@ -70,8 +70,8 @@ export default function RootLayout({
     <html lang="en" className={`${paperMono.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <meta name="theme-color" content={siteConfig.themeColorDark} />
-        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content={siteConfig.themeColorLight} />
+        <meta name="color-scheme" content="light" />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
@@ -87,7 +87,7 @@ export default function RootLayout({
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
         
         {/* Resource Hints - Optimized for performance */}
@@ -100,7 +100,7 @@ export default function RootLayout({
         
         {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: `html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${siteConfig.themeColorDark});line-height:1.5}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}::-moz-selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}`
+          __html: `html:root{color-scheme:light;background-color:${siteConfig.themeColorLight};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${siteConfig.themeColorLight});line-height:1.5}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(17,17,17,.16)!important;color:inherit!important}::-moz-selection{background-color:rgba(17,17,17,.16)!important;color:inherit!important}`
         }} />
       </head>
       <body

@@ -1,0 +1,346 @@
+'use client'
+
+import Link from 'next/link'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {
+  HOME_SHOWCASE_CANVAS,
+  HOME_SHOWCASE_LOCATION,
+  HOME_SHOWCASE_ROLE,
+  formatDenverClock,
+  getShowcaseBio,
+  getShowcaseCaption,
+  getShowcaseEndeavors,
+  getShowcaseHash,
+  getShowcaseIndexFromHash,
+  getShowcaseLinks,
+  type ShowcaseSlide,
+} from '@/lib/home-showcase'
+import { siteConfig } from '@/lib/site'
+
+const endeavors = getShowcaseEndeavors()
+const links = getShowcaseLinks()
+const bio = getShowcaseBio()
+
+interface HomeShowcaseProps {
+  className?: string
+  slides: ShowcaseSlide[]
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduced(media.matches)
+    update()
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
+
+  return reduced
+}
+
+function DenverClock() {
+  const [label, setLabel] = useState('--:--:--')
+
+  useEffect(() => {
+    const tick = () => setLabel(formatDenverClock(new Date()))
+    tick()
+    const timer = window.setInterval(tick, 1000)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  return (
+    <time className="home-showcase-clock" dateTime={label} suppressHydrationWarning>
+      {label}
+    </time>
+  )
+}
+
+function applyHomeShowcaseTheme() {
+  const root = document.documentElement
+  root.dataset.homeShowcase = 'true'
+
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', HOME_SHOWCASE_CANVAS)
+  document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', 'light')
+  document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', 'default')
+}
+
+function clearHomeShowcaseTheme() {
+  const root = document.documentElement
+  delete root.dataset.homeShowcase
+
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', siteConfig.themeColorDark)
+  document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', 'dark')
+  document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', 'black')
+}
+
+export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
+  const count = slides.length
+  const [index, setIndex] = useState(0)
+  const [previousIndex, setPreviousIndex] = useState<number | null>(null)
+  const [ready, setReady] = useState(false)
+  const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set([0]))
+  const [direction, setDirection] = useState<1 | -1>(1)
+  const indexRef = useRef(0)
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const suppressClick = useRef(false)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const reducedMotion = usePrefersReducedMotion()
+
+  const markSeen = useCallback((nextIndex: number) => {
+    setSeen((current) => {
+      if (current.has(nextIndex)) return current
+      const next = new Set(current)
+      next.add(nextIndex)
+      return next
+    })
+  }, [])
+
+  const go = useCallback((nextIndex: number) => {
+    if (count < 1) return
+
+    const normalized = (nextIndex % count + count) % count
+    const current = indexRef.current
+    let nextDirection: 1 | -1 = normalized >= current ? 1 : -1
+    if (current === count - 1 && normalized === 0) nextDirection = 1
+    if (current === 0 && normalized === count - 1) nextDirection = -1
+
+    setPreviousIndex(current)
+    indexRef.current = normalized
+    setDirection(nextDirection)
+    setIndex(normalized)
+    markSeen(normalized)
+
+    const hash = getShowcaseHash(normalized)
+    if (window.location.hash !== hash) {
+      window.history.replaceState(null, '', hash)
+    }
+  }, [count, markSeen])
+
+  useLayoutEffect(() => {
+    applyHomeShowcaseTheme()
+    const nextIndex = getShowcaseIndexFromHash(window.location.hash, count)
+    indexRef.current = nextIndex
+    setIndex(nextIndex)
+    markSeen(nextIndex)
+
+    const hash = getShowcaseHash(nextIndex)
+    if (window.location.hash !== hash) {
+      window.history.replaceState(null, '', hash)
+    }
+
+    setReady(true)
+
+    return () => {
+      clearHomeShowcaseTheme()
+    }
+  }, [count, markSeen])
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const nextIndex = getShowcaseIndexFromHash(window.location.hash, count)
+      indexRef.current = nextIndex
+      setIndex(nextIndex)
+      markSeen(nextIndex)
+    }
+
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [count, markSeen])
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.altKey || event.metaKey || event.ctrlKey) return
+
+      const target = event.target
+      if (target instanceof HTMLElement) {
+        const tag = target.tagName
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable) return
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        go(indexRef.current + 1)
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        go(indexRef.current - 1)
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [go])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || reducedMotion !== false) return
+
+    video.muted = true
+    const pending = video.play()
+    if (pending) pending.catch(() => {})
+  }, [index, reducedMotion])
+
+  const active = slides[index]
+  const caption = active ? getShowcaseCaption(index, count, active) : null
+
+  return (
+    <div className={className ? `home-showcase ${className}` : 'home-showcase'} data-ready={ready ? 'true' : undefined}>
+      <aside className="home-showcase-aside">
+        <div className="home-showcase-identity">
+          <h1>{siteConfig.personName}</h1>
+          <p>{HOME_SHOWCASE_ROLE}</p>
+          <p>
+            {HOME_SHOWCASE_LOCATION}{' '}
+            <span className="home-showcase-mute">—</span>{' '}
+            <DenverClock />
+          </p>
+        </div>
+
+        <div className="home-showcase-bottom">
+          <p className="home-showcase-bio">{bio}</p>
+          <div>
+            <p className="home-showcase-label">Endeavors</p>
+            <ul className="home-showcase-list">
+              {endeavors.map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} target="_blank" rel="noopener noreferrer">
+                    {item.label} <span aria-hidden="true">↗</span>
+                  </a>
+                  <span className="home-showcase-mute">{item.meta}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <nav className="home-showcase-links" aria-label="Contact">
+            {links.map((item) => item.external ? (
+              <a key={item.label} href={item.href} {...(item.href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
+                {item.label}
+              </a>
+            ) : (
+              <Link key={item.label} href={item.href}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </aside>
+
+      <section className="home-showcase-stage" aria-label="Selected work">
+        <div
+          className="home-showcase-panel"
+          aria-roledescription="carousel"
+          aria-label="Selected work"
+          onTouchStart={(event) => {
+            const touch = event.touches[0]
+            if (!touch) return
+            touchStart.current = { x: touch.clientX, y: touch.clientY }
+          }}
+          onTouchEnd={(event) => {
+            const start = touchStart.current
+            const touch = event.changedTouches[0]
+            touchStart.current = null
+            if (!start || !touch) return
+
+            const deltaX = touch.clientX - start.x
+            const deltaY = touch.clientY - start.y
+            if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+              suppressClick.current = true
+              go(indexRef.current + (deltaX < 0 ? 1 : -1))
+            }
+          }}
+          onClickCapture={(event) => {
+            if (!suppressClick.current) return
+            event.preventDefault()
+            event.stopPropagation()
+            suppressClick.current = false
+          }}
+        >
+          {slides.map((slide, slideIndex) => {
+            const current = slideIndex === index
+            const position = current
+              ? 'current'
+              : previousIndex !== null && slideIndex === previousIndex
+                ? direction > 0 ? 'left' : 'right'
+                : slideIndex < index ? 'left' : 'right'
+            const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false
+            const loaded = current || seen.has(slideIndex)
+
+            return (
+              <div
+                key={slide.slug}
+                className="home-showcase-slide"
+                data-pos={position}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${slideIndex + 1} of ${count}: ${slide.title}`}
+                aria-hidden={current ? undefined : true}
+              >
+                <Link
+                  href={slide.href}
+                  tabIndex={current ? 0 : -1}
+                  aria-label={`Open ${slide.title}`}
+                >
+                  {loaded && showVideo ? (
+                    <video
+                      ref={videoRef}
+                      src={slide.videoSrc ?? undefined}
+                      poster={slide.imageSrc}
+                      muted
+                      autoPlay
+                      loop
+                      playsInline
+                      preload="metadata"
+                      aria-hidden="true"
+                      tabIndex={-1}
+                    />
+                  ) : loaded ? (
+                    // The mockups are already 2400×1600 webp on #F7F7F5. Skipping the optimizer keeps that canvas exact.
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={slide.imageSrc}
+                      alt={slide.imageAlt}
+                      draggable={false}
+                      decoding="async"
+                      fetchPriority={current ? 'high' : 'low'}
+                      loading={current ? 'eager' : 'lazy'}
+                    />
+                  ) : null}
+                </Link>
+              </div>
+            )
+          })}
+        </div>
+
+        {active ? (
+          <div className="home-showcase-bar">
+            <p className="home-showcase-caption" aria-live="polite">
+              {caption?.lead}
+              <span className="home-showcase-mute"> · {caption?.tag}</span>
+            </p>
+            <div className="home-showcase-dots" role="group" aria-label="Choose a project">
+              {slides.map((slide, slideIndex) => (
+                <button
+                  key={slide.slug}
+                  type="button"
+                  className="home-showcase-dot"
+                  aria-label={`Show ${slide.title}`}
+                  aria-current={slideIndex === index ? 'true' : undefined}
+                  onClick={() => go(slideIndex)}
+                />
+              ))}
+            </div>
+            <div className="home-showcase-controls">
+              <button type="button" aria-label="Previous project" onClick={() => go(indexRef.current - 1)}>
+                Prev
+              </button>
+              <button type="button" aria-label="Next project" onClick={() => go(indexRef.current + 1)}>
+                Next
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </section>
+    </div>
+  )
+}

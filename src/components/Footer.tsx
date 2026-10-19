@@ -96,9 +96,12 @@ export default function Footer() {
     setCurrentYear(getFooterCopyrightYear())
   }, [])
 
+  if (pathname === '/') return null
+
   return (
     <footer
       ref={footerRef}
+      data-site-chrome=""
       data-home-editorial={pathname === '/' || undefined}
       className={getFooterClassName(pathname, hidden)}
     >

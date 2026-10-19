@@ -1,9 +1,18 @@
-import AnimatedHomePage from '@/components/AnimatedHomePage'
+import { Inter } from 'next/font/google'
 import ErrorBoundary from '@/components/ErrorBoundary'
-import { sortProjectsForPlayground } from '@/lib/playground'
-import { getAllProjects, getArchivedProjects } from '@/lib/projects'
+import HomeShowcase from '@/components/home/HomeShowcase'
+import { buildShowcaseSlides } from '@/lib/home-showcase'
+import { getAllProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
 import { getStaticPageMetadata } from '@/lib/site-metadata'
+
+const showcaseFont = Inter({
+  subsets: ['latin'],
+  weight: '500',
+  display: 'swap',
+  fallback: ['Helvetica Neue', 'Arial', 'sans-serif'],
+  adjustFontFallback: false,
+})
 
 const previewTitle = siteConfig.siteTitle
 const previewDescription = siteConfig.siteDescription
@@ -23,12 +32,11 @@ export const metadata = getStaticPageMetadata({
 export const revalidate = 60
 
 export default function HomePage() {
-  const projects = getAllProjects()
-  const playgroundProjects = sortProjectsForPlayground(getArchivedProjects())
+  const slides = buildShowcaseSlides(getAllProjects())
 
   return (
     <ErrorBoundary>
-      <AnimatedHomePage playgroundProjects={playgroundProjects} projects={projects} />
+      <HomeShowcase className={showcaseFont.className} slides={slides} />
     </ErrorBoundary>
   )
 }

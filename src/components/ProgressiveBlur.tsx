@@ -1,3 +1,7 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
+
 /**
  * Fixed top viewport blur. Each masked layer increases the backdrop blur
  * toward the top edge, producing a smooth optical falloff.
@@ -12,8 +16,12 @@ const BLUR_LAYERS = [
 ]
 
 export default function ProgressiveBlur() {
+  const pathname = usePathname()
+  if (pathname === '/') return null
+
   return (
     <div
+      data-site-chrome=""
       className="pointer-events-none fixed inset-x-0 top-0 z-30 h-[4.75rem] sm:h-[5.625rem]"
       aria-hidden="true"
     >

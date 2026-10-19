@@ -4,6 +4,7 @@ import './playground.css'
 import './viewport.css'
 import './dark-theme.css'
 import './home-editorial.css'
+import './home-showcase.css'
 import './loading.css'
 import LoadingIndicator from '@/components/LoadingIndicator'
 import Footer from '@/components/Footer'
@@ -69,6 +70,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${paperMono.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if(location.pathname==="/"){document.documentElement.dataset.homeShowcase="true";var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute("content","#F7F7F5");var s=document.querySelector('meta[name="color-scheme"]');if(s)s.setAttribute("content","light");}`,
+          }}
+        />
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
         <meta name="theme-color" content={siteConfig.themeColorDark} />
         <meta name="color-scheme" content="dark" />
@@ -124,7 +130,7 @@ export default function RootLayout({
               >
                 Skip to content
               </a>
-              <div className="min-h-screen flex flex-col">
+              <div className="site-shell min-h-screen flex flex-col">
                 <main id="main-content" role="main" className="flex-1 pt-14 sm:pt-16">
                   <PageTransition>{children}</PageTransition>
                 </main>

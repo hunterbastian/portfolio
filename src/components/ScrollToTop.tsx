@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { MOTION_EASE_EXIT, MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 import { useWebHaptics } from 'web-haptics/react'
@@ -45,6 +46,7 @@ function ScrollArrowMark({ className }: { className?: string }) {
 }
 
 export default function ScrollToTop() {
+  const pathname = usePathname()
   const [visible, setVisible] = useState(false)
   const visibleRef = useRef(false)
   const frameRef = useRef<number | null>(null)
@@ -108,10 +110,13 @@ export default function ScrollToTop() {
     })
   }
 
+  if (pathname === '/') return null
+
   return (
     <AnimatePresence initial={false}>
       {visible && (
         <m.div
+          data-site-chrome=""
           className="fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] z-50 origin-center sm:bottom-[5.5rem] sm:right-10 lg:right-12"
           initial={getScrollToTopInitialFrame(prefersReducedMotion)}
           animate={{ ...getScrollToTopAnimateFrame(), transition: enterTransition }}

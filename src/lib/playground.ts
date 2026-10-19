@@ -249,6 +249,21 @@ export function getPlaygroundProjectDisplayMeta(
   }
 }
 
+export function formatPlaygroundShowcaseCaption(
+  meta: Pick<PlaygroundProjectDisplayMeta, 'category' | 'routeCode' | 'title' | 'year'>,
+): string {
+  return `${meta.routeCode} · ${meta.title}, ${meta.year} · ${meta.category}`
+}
+
+export function getPlaygroundShowcaseHref(project: Pick<Project, 'frontmatter' | 'slug'>): {
+  external: boolean
+  href: string
+} {
+  const demo = project.frontmatter.demo?.trim()
+  if (demo) return { external: true, href: demo }
+  return { external: false, href: `/projects/${project.slug}` }
+}
+
 export function getPlaygroundProjectCardDisplayState(
   project: Project,
   index: number,

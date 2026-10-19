@@ -2,6 +2,7 @@ export const ALLOWED_REVALIDATE_PATHS = [
   '/',
   '/about',
   '/archive',
+  '/playground',
   '/cv',
   '/logo',
   '/opengraph-image',

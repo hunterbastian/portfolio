@@ -163,6 +163,7 @@ test('showcase slide motion drifts from the visible slide and does not restart a
   assert.equal(forward?.easing, 'cubic-bezier(0.22, 1, 0.36, 1)')
   assert.equal(forward?.exit[1]?.transform, 'translate3d(-8px, 0, 0)')
   assert.equal(forward?.enter[0]?.transform, 'translate3d(8px, 0, 0)')
+  assert.deepEqual(forward?.departures, [])
   assert.deepEqual(forward?.hidden, [2])
 
   const backward = planShowcaseSlideMotion({
@@ -188,7 +189,13 @@ test('showcase slide motion drifts from the visible slide and does not restart a
   assert.equal(interrupted?.exit[0]?.transform, 'matrix(1, 0, 0, 1, -2, 0)')
   assert.equal(interrupted?.exit[0]?.opacity, 0.7)
   assert.equal(interrupted?.enter[0]?.transform, 'translate3d(8px, 0, 0)')
-  assert.deepEqual(interrupted?.hidden, [1])
+  assert.deepEqual(interrupted?.hidden, [])
+  assert.equal(interrupted?.departures.length, 1)
+  assert.equal(interrupted?.departures[0]?.index, 1)
+  assert.equal(interrupted?.departures[0]?.keyframes[0]?.opacity, 0.3)
+  assert.equal(interrupted?.departures[0]?.keyframes[0]?.transform, 'matrix(1, 0, 0, 1, 4, 0)')
+  assert.equal(interrupted?.departures[0]?.keyframes[1]?.opacity, 0)
+  assert.equal(interrupted?.departures[0]?.keyframes[1]?.transform, 'matrix(1, 0, 0, 1, 4, 0)')
 
   const reduced = planShowcaseSlideMotion({
     direction: 1,

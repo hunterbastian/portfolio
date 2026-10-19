@@ -258,6 +258,9 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
       element.style.zIndex = zIndex
       animations.push(element.animate(frames, options))
     }
+    plan.departures.forEach((departure) => {
+      hold(elements[departure.index], departure.keyframes, '0')
+    })
     hold(elements[plan.source], plan.exit, '1')
     hold(elements[plan.nextIndex], plan.enter, '2')
 

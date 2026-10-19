@@ -204,7 +204,13 @@ export function pickShowcaseMotionSource(opacities: number[], nextIndex: number,
   return source === nextIndex ? previousIndex : source
 }
 
+export interface ShowcaseSlideDeparture {
+  index: number
+  keyframes: Keyframe[]
+}
+
 export interface ShowcaseSlideMotionPlan {
+  departures: ShowcaseSlideDeparture[]
   duration: number
   easing: string
   enter: Keyframe[]
@@ -221,7 +227,9 @@ function showcaseDrift(px: number) {
 /**
  * Crossfade from the captured on-screen styles. A hidden incoming slide starts
  * one drift away; a slide that is already partly visible keeps its current
- * transform so a second click does not snap it back to the start.
+ * transform so a second click does not snap it back to the start. Other slides
+ * that are still visible fade out from that captured frame instead of popping
+ * to zero.
  */
 export function planShowcaseSlideMotion(input: {
   direction: 1 | -1
@@ -239,10 +247,29 @@ export function planShowcaseSlideMotion(input: {
   const enterTransform = enterOpacity < 0.05
     ? showcaseDrift(drift)
     : input.transforms[input.nextIndex] || 'none'
-  const hidden = input.opacities.map((_, index) => index).filter((index) => index !== source && index !== input.nextIndex)
+  const departures: ShowcaseSlideDeparture[] = []
+  const hidden: number[] = []
+
+  input.opacities.forEach((opacity, index) => {
+    if (index === source || index === input.nextIndex) return
+    if (opacity < 0.05) {
+      hidden.push(index)
+      return
+    }
+
+    const transform = input.reduced ? 'none' : input.transforms[index] || 'none'
+    departures.push({
+      index,
+      keyframes: [
+        { opacity, transform },
+        { opacity: 0, transform },
+      ],
+    })
+  })
 
   if (input.reduced) {
     return {
+      departures,
       duration: 0,
       easing: 'linear',
       enter: [
@@ -260,6 +287,7 @@ export function planShowcaseSlideMotion(input: {
   }
 
   return {
+    departures,
     duration: HOME_SHOWCASE_SLIDE_DURATION_MS,
     easing: HOME_SHOWCASE_SLIDE_EASING,
     enter: [

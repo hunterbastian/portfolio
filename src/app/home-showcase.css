@@ -469,8 +469,12 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase {
   --showcase-line: #262624;
 }
 
-html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-dot::before {
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-dot:not([aria-current='true'])::before {
   background: #3c3c38;
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-dot[aria-current='true']::before {
+  background: var(--showcase-ink);
 }
 
 html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-controls button:hover {
@@ -498,8 +502,12 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
     visibility: visible;
   }
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot::before {
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot:not([aria-current='true'])::before {
     background: #3c3c38;
+  }
+
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot[aria-current='true']::before {
+    background: var(--showcase-ink);
   }
 
   html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-controls button:hover {

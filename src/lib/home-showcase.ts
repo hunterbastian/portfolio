@@ -177,6 +177,133 @@ export function getShowcaseHash(index: number) {
   return `#${index + 1}`
 }
 
+export const HOME_SHOWCASE_SLIDE_DRIFT_PX = 8
+export const HOME_SHOWCASE_SLIDE_DURATION_MS = 250
+export const HOME_SHOWCASE_SLIDE_EASING = 'cubic-bezier(0.22, 1, 0.36, 1)'
+
+/** Forward travel exits left. Backward travel, including the wrap from the first slide, exits right. */
+export function getShowcaseTravelDirection(current: number, next: number, count: number): 1 | -1 {
+  if (current === count - 1 && next === 0) return 1
+  if (current === 0 && next === count - 1) return -1
+  return next >= current ? 1 : -1
+}
+
+/** The slide that is actually on screen should leave, even if an older fade is still running. */
+export function pickShowcaseMotionSource(opacities: number[], nextIndex: number, previousIndex: number) {
+  let source = previousIndex
+  let best = opacities[previousIndex] ?? -1
+
+  opacities.forEach((opacity, index) => {
+    if (index === nextIndex) return
+    if (opacity > best) {
+      best = opacity
+      source = index
+    }
+  })
+
+  return source === nextIndex ? previousIndex : source
+}
+
+export interface ShowcaseSlideDeparture {
+  index: number
+  keyframes: Keyframe[]
+}
+
+export interface ShowcaseSlideMotionPlan {
+  departures: ShowcaseSlideDeparture[]
+  duration: number
+  easing: string
+  enter: Keyframe[]
+  exit: Keyframe[]
+  hidden: number[]
+  nextIndex: number
+  source: number
+}
+
+function showcaseDrift(px: number) {
+  return `translate3d(${px}px, 0, 0)`
+}
+
+/**
+ * Crossfade from the captured on-screen styles. A hidden incoming slide starts
+ * one drift away; a slide that is already partly visible keeps its current
+ * transform so a second click does not snap it back to the start. Other slides
+ * that are still visible fade out from that captured frame instead of popping
+ * to zero.
+ */
+export function planShowcaseSlideMotion(input: {
+  direction: 1 | -1
+  nextIndex: number
+  opacities: number[]
+  previousIndex: number
+  reduced: boolean
+  transforms: string[]
+}): ShowcaseSlideMotionPlan | null {
+  const source = pickShowcaseMotionSource(input.opacities, input.nextIndex, input.previousIndex)
+  if (source === input.nextIndex) return null
+
+  const drift = input.direction > 0 ? HOME_SHOWCASE_SLIDE_DRIFT_PX : -HOME_SHOWCASE_SLIDE_DRIFT_PX
+  const enterOpacity = input.opacities[input.nextIndex] ?? 0
+  const enterTransform = enterOpacity < 0.05
+    ? showcaseDrift(drift)
+    : input.transforms[input.nextIndex] || 'none'
+  const departures: ShowcaseSlideDeparture[] = []
+  const hidden: number[] = []
+
+  input.opacities.forEach((opacity, index) => {
+    if (index === source || index === input.nextIndex) return
+    if (opacity < 0.05) {
+      hidden.push(index)
+      return
+    }
+
+    const transform = input.reduced ? 'none' : input.transforms[index] || 'none'
+    departures.push({
+      index,
+      keyframes: [
+        { opacity, transform },
+        { opacity: 0, transform },
+      ],
+    })
+  })
+
+  if (input.reduced) {
+    return {
+      departures,
+      duration: 0,
+      easing: 'linear',
+      enter: [
+        { opacity: enterOpacity, transform: 'none' },
+        { opacity: 1, transform: 'none' },
+      ],
+      exit: [
+        { opacity: input.opacities[source] ?? 1, transform: 'none' },
+        { opacity: 0, transform: 'none' },
+      ],
+      hidden,
+      nextIndex: input.nextIndex,
+      source,
+    }
+  }
+
+  return {
+    departures,
+    duration: HOME_SHOWCASE_SLIDE_DURATION_MS,
+    easing: HOME_SHOWCASE_SLIDE_EASING,
+    enter: [
+      { opacity: enterOpacity, transform: enterTransform },
+      { opacity: 1, transform: showcaseDrift(0) },
+    ],
+    exit: [
+      { opacity: input.opacities[source] ?? 1, transform: input.transforms[source] || 'none' },
+      { opacity: 0, transform: showcaseDrift(-drift) },
+    ],
+    hidden,
+    nextIndex: input.nextIndex,
+    source,
+  }
+}
+
 export function formatDenverClock(date: Date) {
   const parts = new Intl.DateTimeFormat('en-US', {
     hour: '2-digit',

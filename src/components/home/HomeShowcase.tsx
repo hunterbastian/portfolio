@@ -5,6 +5,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import {
   HOME_SHOWCASE_LOCATION,
   HOME_SHOWCASE_ROLE,
+  HOME_SHOWCASE_THEME_STORAGE_KEY,
   formatDenverClock,
   getShowcaseBio,
   getShowcaseCaption,
@@ -13,7 +14,11 @@ import {
   getShowcaseHash,
   getShowcaseIndexFromHash,
   getShowcaseLinks,
+  parseShowcaseThemePreference,
+  resolveShowcaseTheme,
   type ShowcaseSlide,
+  type ShowcaseTheme,
+  type ShowcaseThemePreference,
 } from '@/lib/home-showcase'
 import { siteConfig } from '@/lib/site'
 
@@ -57,35 +62,51 @@ function DenverClock() {
   )
 }
 
-function applyHomeShowcaseTheme(prefersDark: boolean) {
-  const chrome = getShowcaseChrome(prefersDark)
-  document.documentElement.dataset.homeShowcase = 'true'
+function readShowcaseThemePreference(): ShowcaseThemePreference {
+  try {
+    return parseShowcaseThemePreference(localStorage.getItem(HOME_SHOWCASE_THEME_STORAGE_KEY))
+  } catch {
+    return 'system'
+  }
+}
+
+function writeShowcaseThemePreference(theme: ShowcaseTheme) {
+  try {
+    localStorage.setItem(HOME_SHOWCASE_THEME_STORAGE_KEY, theme)
+  } catch {
+    // Private browsing can reject storage. The choice still applies for this view.
+  }
+}
+
+function applyHomeShowcaseTheme(theme: ShowcaseTheme) {
+  const chrome = getShowcaseChrome(theme === 'dark')
+  const root = document.documentElement
+  root.dataset.homeShowcase = 'true'
+  root.dataset.homeShowcaseTheme = theme
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', chrome.canvas)
   document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', chrome.colorScheme)
   document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', chrome.statusBar)
 }
 
-function usePrefersDarkScheme() {
-  const [dark, setDark] = useState<boolean | null>(null)
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const update = () => setDark(media.matches)
-    update()
-    media.addEventListener('change', update)
-    return () => media.removeEventListener('change', update)
-  }, [])
-
-  return dark
-}
-
 function clearHomeShowcaseTheme() {
   const root = document.documentElement
   delete root.dataset.homeShowcase
+  delete root.dataset.homeShowcaseTheme
 
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', siteConfig.themeColorDark)
   document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', 'dark')
   document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', 'black')
+}
+
+function ExternalArrow() {
+  return (
+    <svg className="home-showcase-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+      <path
+        fill="currentColor"
+        d="M1.7 7.45 6.45 2.7l.85.85L2.55 8.3l-.85-.85ZM4.05 2.15h3.8v1H5.05v2.8h-1V2.15Z"
+      />
+    </svg>
+  )
 }
 
 export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
@@ -100,7 +121,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const suppressClick = useRef(false)
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const reducedMotion = usePrefersReducedMotion()
-  const prefersDark = usePrefersDarkScheme()
+  const [theme, setTheme] = useState<ShowcaseTheme>('light')
 
   const markSeen = useCallback((nextIndex: number) => {
     setSeen((current) => {
@@ -132,9 +153,19 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     }
   }, [count, markSeen])
 
+  const chooseTheme = useCallback((next: ShowcaseTheme) => {
+    writeShowcaseThemePreference(next)
+    applyHomeShowcaseTheme(next)
+    setTheme(next)
+  }, [])
+
   useLayoutEffect(() => {
     const scheme = window.matchMedia('(prefers-color-scheme: dark)')
-    const syncChrome = () => applyHomeShowcaseTheme(scheme.matches)
+    const syncChrome = () => {
+      const next = resolveShowcaseTheme(readShowcaseThemePreference(), scheme.matches)
+      applyHomeShowcaseTheme(next)
+      setTheme(next)
+    }
     syncChrome()
     scheme.addEventListener('change', syncChrome)
 
@@ -193,12 +224,12 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video || reducedMotion !== false) return
+    if (!video || reducedMotion !== false || theme !== 'light') return
 
     video.muted = true
     const pending = video.play()
     if (pending) pending.catch(() => {})
-  }, [index, reducedMotion, prefersDark])
+  }, [index, reducedMotion, theme])
 
   const active = slides[index]
   const caption = active ? getShowcaseCaption(index, count, active) : null
@@ -224,24 +255,35 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               {endeavors.map((item) => (
                 <li key={item.label}>
                   <a href={item.href} target="_blank" rel="noopener noreferrer">
-                    {item.label} <span aria-hidden="true">↗</span>
+                    {item.label} <ExternalArrow />
                   </a>
                   <span className="home-showcase-mute">{item.meta}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <nav className="home-showcase-links" aria-label="Contact">
-            {links.map((item) => item.external ? (
-              <a key={item.label} href={item.href} {...(item.href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
-                {item.label}
-              </a>
-            ) : (
-              <Link key={item.label} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <div className="home-showcase-actions">
+            <nav className="home-showcase-links" aria-label="Contact">
+              {links.map((item) => item.external ? (
+                <a key={item.label} href={item.href} {...(item.href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
+                  {item.label}
+                </a>
+              ) : (
+                <Link key={item.label} href={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="home-showcase-theme" role="group" aria-label="Color theme">
+              <button type="button" aria-pressed={theme === 'light'} onClick={() => chooseTheme('light')}>
+                Light
+              </button>
+              <span aria-hidden="true">/</span>
+              <button type="button" aria-pressed={theme === 'dark'} onClick={() => chooseTheme('dark')}>
+                Dark
+              </button>
+            </div>
+          </div>
         </div>
       </aside>
 
@@ -282,7 +324,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               : previousIndex !== null && slideIndex === previousIndex
                 ? direction > 0 ? 'left' : 'right'
                 : slideIndex < index ? 'left' : 'right'
-            const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false && prefersDark === false
+            const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false && theme === 'light'
             const loaded = current || seen.has(slideIndex)
 
             return (
@@ -300,23 +342,25 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                   tabIndex={current ? 0 : -1}
                   aria-label={`Open ${slide.title}`}
                 >
-                  {loaded && showVideo ? (
-                    <video
-                      ref={videoRef}
-                      src={slide.videoSrc ?? undefined}
-                      poster={slide.imageSrc}
-                      muted
-                      autoPlay
-                      loop
-                      playsInline
-                      preload="metadata"
-                      aria-hidden="true"
-                      tabIndex={-1}
-                    />
-                  ) : loaded ? (
-                    <picture>
-                      <source media="(prefers-color-scheme: dark)" srcSet={slide.darkImageSrc} />
+                  {loaded ? (
+                    <span className="home-showcase-frame">
+                      {showVideo ? (
+                        <video
+                          className="home-showcase-motion"
+                          ref={videoRef}
+                          src={slide.videoSrc ?? undefined}
+                          poster={slide.imageSrc}
+                          muted
+                          autoPlay
+                          loop
+                          playsInline
+                          preload="metadata"
+                          aria-hidden="true"
+                          tabIndex={-1}
+                        />
+                      ) : null}
                       <img
+                        className="home-showcase-still home-showcase-still-light"
                         src={slide.imageSrc}
                         alt={slide.imageAlt}
                         draggable={false}
@@ -324,7 +368,16 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                         fetchPriority={current ? 'high' : 'low'}
                         loading={current ? 'eager' : 'lazy'}
                       />
-                    </picture>
+                      <img
+                        className="home-showcase-still home-showcase-still-dark"
+                        src={slide.darkImageSrc}
+                        alt=""
+                        draggable={false}
+                        decoding="async"
+                        fetchPriority={current ? 'high' : 'low'}
+                        loading={current ? 'eager' : 'lazy'}
+                      />
+                    </span>
                   ) : null}
                 </Link>
               </div>

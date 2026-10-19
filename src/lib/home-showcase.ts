@@ -24,6 +24,11 @@ export const HOME_SHOWCASE_LINE_DARK = '#262624'
 export const HOME_SHOWCASE_TIME_ZONE = 'America/Denver'
 export const HOME_SHOWCASE_ROLE = 'Design Engineer'
 export const HOME_SHOWCASE_LOCATION = 'Lehi, Utah'
+/** Persisted homepage theme override. Absent means follow the system scheme. */
+export const HOME_SHOWCASE_THEME_STORAGE_KEY = 'hb-showcase-theme'
+
+export type ShowcaseTheme = 'light' | 'dark'
+export type ShowcaseThemePreference = ShowcaseTheme | 'system'
 
 const SHOWCASE_MEDIA_DIRECTORY = '/showcase'
 
@@ -101,6 +106,17 @@ export function getShowcaseChrome(prefersDark: boolean): ShowcaseChrome {
     colorScheme: 'light',
     statusBar: 'default',
   }
+}
+
+export function parseShowcaseThemePreference(value: string | null | undefined): ShowcaseThemePreference {
+  if (value === 'light' || value === 'dark') return value
+  return 'system'
+}
+
+/** A saved light or dark choice wins. Otherwise the system scheme decides. */
+export function resolveShowcaseTheme(preference: ShowcaseThemePreference, prefersDark: boolean): ShowcaseTheme {
+  if (preference === 'light' || preference === 'dark') return preference
+  return prefersDark ? 'dark' : 'light'
 }
 
 export function getShowcaseVideoSrc(slug: string) {

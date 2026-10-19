@@ -15,6 +15,9 @@ import {
   getShowcaseIndexFromHash,
   getShowcaseLinks,
   getShowcaseVideoSrc,
+  HOME_SHOWCASE_THEME_STORAGE_KEY,
+  parseShowcaseThemePreference,
+  resolveShowcaseTheme,
 } from './home-showcase.ts'
 
 test('showcase slides follow the homepage order and MDX fields', () => {
@@ -119,6 +122,19 @@ test('homepage chrome follows the system color scheme', () => {
     colorScheme: 'dark',
     statusBar: 'black',
   })
+})
+
+test('a saved theme overrides the system color scheme', () => {
+  assert.equal(HOME_SHOWCASE_THEME_STORAGE_KEY, 'hb-showcase-theme')
+  assert.equal(parseShowcaseThemePreference(null), 'system')
+  assert.equal(parseShowcaseThemePreference(''), 'system')
+  assert.equal(parseShowcaseThemePreference('auto'), 'system')
+  assert.equal(parseShowcaseThemePreference('light'), 'light')
+  assert.equal(parseShowcaseThemePreference('dark'), 'dark')
+  assert.equal(resolveShowcaseTheme('system', false), 'light')
+  assert.equal(resolveShowcaseTheme('system', true), 'dark')
+  assert.equal(resolveShowcaseTheme('light', true), 'light')
+  assert.equal(resolveShowcaseTheme('dark', false), 'dark')
 })
 
 test('Denver clock uses 24-hour time and a short zone name', () => {

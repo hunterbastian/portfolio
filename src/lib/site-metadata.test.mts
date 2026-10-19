@@ -62,7 +62,7 @@ test('getSiteMetadata builds social preview metadata', () => {
     siteName: 'Hunter Bastian Portfolio',
     images: [
       {
-        url: '/images/profilepicture.webp',
+        url: 'https://hunterbastian.com/images/profilepicture.webp',
         width: 1200,
         height: 630,
         alt: 'Hunter Bastian Portfolio - design engineer portfolio',
@@ -74,7 +74,7 @@ test('getSiteMetadata builds social preview metadata', () => {
     title: 'Hunter Bastian - Design Engineer',
     description: 'Design engineer portfolio.',
     creator: '@thestudioalpine',
-    images: ['/images/profilepicture.webp'],
+    images: ['https://hunterbastian.com/images/profilepicture.webp'],
   })
 })
 
@@ -111,7 +111,7 @@ test('getStaticPageMetadata builds repeated route metadata with absolute title s
         type: 'website',
         images: [
           {
-            url: '/opengraph-image',
+            url: 'https://hunterbastian.com/opengraph-image',
             width: 1200,
             height: 630,
             alt: 'Hunter Bastian LEHI UT',
@@ -122,7 +122,7 @@ test('getStaticPageMetadata builds repeated route metadata with absolute title s
         card: 'summary_large_image',
         title: 'Hunter Bastian',
         description: 'LEHI UT',
-        images: ['/opengraph-image'],
+        images: ['https://hunterbastian.com/opengraph-image'],
       },
     },
   )
@@ -153,7 +153,7 @@ test('getStaticPageMetadata supports robots and default social image', () => {
     type: 'website',
     images: [
       {
-        url: '/images/profilepicture.webp',
+        url: 'https://hunterbastian.com/images/profilepicture.webp',
         width: 1200,
         height: 630,
         alt: 'Hunter Bastian Portfolio',

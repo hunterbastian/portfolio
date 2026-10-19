@@ -18,6 +18,8 @@ const playgroundDescription = `Experiments and side projects by ${siteConfig.per
 export const metadata = getStaticPageMetadata({
   absoluteTitle: true,
   description: playgroundDescription,
+  image: '/playground/opengraph-image',
+  imageAlt: `Playground — ${siteConfig.personName}`,
   openGraphType: 'website',
   path: '/playground',
   siteName: siteConfig.personName,

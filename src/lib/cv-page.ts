@@ -1,5 +1,4 @@
 import { getEmailButtonHref } from './email-button.ts'
-import { MOTION_EASE_SOFT } from './motion.ts'
 
 type CvExternalContactAnalytics = {
   kind: 'external'
@@ -17,7 +16,6 @@ export interface CvContactLink {
   label: string
   href: string
   analytics: CvContactAnalytics
-  printNoUnderline?: boolean
 }
 
 export type CvContactAnalyticsEvent =
@@ -52,18 +50,6 @@ export const CV_PRINT_BUTTON_LABEL = 'Print'
 export const CV_PRINT_ARIA_LABEL = 'Print or save as PDF'
 export const CV_RESUME_VIEW_ACTION = 'view'
 export const CV_RESUME_PRINT_ACTION = 'print'
-export const CV_ITEM_STAGGER_DELAY = 0.06
-export const CV_ITEM_ENTRANCE_BASE_DELAY = 0.3
-export const CV_ITEM_ENTRANCE_DURATION = 0.4
-export const CV_ITEM_HIDDEN_MOTION = { opacity: 0, y: 8 } as const
-export const CV_PRINT_BUTTON_CLASS_NAME =
-  'print:hidden ml-4 inline-flex min-h-[40px] origin-center touch-manipulation shrink-0 items-center border border-border bg-card px-3 py-1.5 text-[10px] font-mono tracking-[0.12em] text-muted-foreground transition-[color,transform,border-color] duration-150 hover:border-foreground/20 hover:text-foreground active:translate-y-0 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2'
-export const CV_CONTACT_LIST_CLASS_NAME =
-  'mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-mono tracking-wide text-muted-foreground/70'
-
-const CV_CONTACT_LINK_BASE_CLASS_NAME =
-  'origin-center touch-manipulation underline-offset-4 transition-[color,transform,text-decoration-color] duration-150 hover:text-foreground hover:underline active:translate-y-0 active:scale-[0.96]'
-const CV_CONTACT_LINK_PRINT_CLASS_NAME = 'print:no-underline'
 
 export const CV_CONTACT_LINKS: CvContactLink[] = [
   {
@@ -75,7 +61,6 @@ export const CV_CONTACT_LINKS: CvContactLink[] = [
     label: CV_PORTFOLIO_LABEL,
     href: CV_PORTFOLIO_URL,
     analytics: { kind: 'navigation', target: 'portfolio_link' },
-    printNoUnderline: true,
   },
   {
     label: CV_LINKEDIN_LABEL,
@@ -122,18 +107,19 @@ export function activateCvPrint({
   printPage()
 }
 
-export function getCvContactLinkClassName(printNoUnderline?: boolean) {
-  return `${CV_CONTACT_LINK_BASE_CLASS_NAME}${printNoUnderline ? ` ${CV_CONTACT_LINK_PRINT_CLASS_NAME}` : ''}`
+/** Empty dates stay out of the row so the title does not shift. */
+export function getCvEntryDate(year: string) {
+  const trimmed = year.trim()
+  return trimmed.length > 0 ? trimmed : null
 }
 
-export function getCvItemVisibleMotion(index: number, prefersReducedMotion: boolean) {
-  return {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: prefersReducedMotion ? 0 : CV_ITEM_ENTRANCE_BASE_DELAY + index * CV_ITEM_STAGGER_DELAY,
-      duration: prefersReducedMotion ? 0 : CV_ITEM_ENTRANCE_DURATION,
-      ease: MOTION_EASE_SOFT,
-    },
-  }
+/** Empty descriptions stay out of the row so they do not add a blank line. */
+export function getCvEntryDetail(description: string) {
+  const trimmed = description.trim()
+  return trimmed.length > 0 ? trimmed : null
+}
+
+export function formatCvEducationDetail(item: { level: string; note?: string }) {
+  const note = item.note?.trim()
+  return note ? `${item.level} · ${note}` : item.level
 }

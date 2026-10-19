@@ -12,10 +12,10 @@
 }
 
 /*
- * Homepage-only canvas. The rest of the site keeps the dark theme.
- * html[data-home-showcase] is set before paint on "/" and removed when the
- * homepage unmounts. html[data-home-showcase-theme] is the active light/dark
- * choice: a saved override, otherwise the system scheme.
+ * Showcase canvas for "/" and "/cv". The rest of the site keeps the dark theme.
+ * html[data-home-showcase] is set before paint and removed when that page
+ * unmounts. html[data-home-showcase-theme] is the active light/dark choice:
+ * a saved override, otherwise the system scheme.
  */
 
 html:root[data-home-showcase] {
@@ -84,6 +84,13 @@ html[data-home-showcase] ::-moz-selection {
   html[data-home-showcase] body {
     height: 100%;
     overflow: hidden;
+  }
+
+  html[data-home-showcase][data-cv-showcase],
+  html[data-home-showcase][data-cv-showcase] body {
+    height: auto;
+    min-height: 100%;
+    overflow: auto;
   }
 }
 
@@ -496,7 +503,8 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-still-d
   }
 }
 
-html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase {
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase,
+html[data-home-showcase][data-home-showcase-theme="dark"] .cv-showcase {
   --showcase-bg: #0e0e0d;
   --showcase-ink: #ededea;
   --showcase-mute: #84847f;
@@ -518,7 +526,8 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase {
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase,
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .cv-showcase {
     --showcase-bg: #0e0e0d;
     --showcase-ink: #ededea;
     --showcase-mute: #84847f;
@@ -555,5 +564,228 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
   .home-showcase-slide {
     transform: none !important;
     transition: opacity 0.2s linear;
+  }
+}
+
+html[data-cv-showcase] .cv-showcase,
+html[data-cv-showcase] .cv-showcase *:not(input, textarea, select),
+html[data-cv-showcase] .cv-showcase *::before,
+html[data-cv-showcase] .cv-showcase *::after {
+  text-transform: uppercase !important;
+}
+
+.cv-showcase {
+  --showcase-bg: #f7f7f5;
+  --showcase-ink: #0a0a0a;
+  --showcase-mute: #8a8a86;
+  --showcase-line: #e4e4e0;
+  box-sizing: border-box;
+  min-height: 100dvh;
+  padding:
+    max(28px, env(safe-area-inset-top))
+    max(28px, env(safe-area-inset-right))
+    max(28px, env(safe-area-inset-bottom))
+    max(28px, env(safe-area-inset-left));
+  background: var(--showcase-bg);
+  color: var(--showcase-ink);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cv-showcase * {
+  box-sizing: border-box;
+}
+
+.cv-showcase h1,
+.cv-showcase h2,
+.cv-showcase p,
+.cv-showcase button,
+.cv-showcase a {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+.cv-showcase a {
+  text-decoration: none;
+}
+
+.cv-showcase a:hover,
+.cv-showcase button:hover,
+.cv-showcase button:focus-visible {
+  color: var(--showcase-mute);
+  filter: none;
+}
+
+.cv-showcase a:focus-visible,
+.cv-showcase button:focus-visible {
+  outline: 1px solid var(--showcase-ink);
+  outline-offset: 3px;
+}
+
+.cv-showcase-sheet {
+  width: min(640px, 100%);
+}
+
+.cv-showcase-bar,
+.cv-showcase-tools,
+.cv-showcase-theme {
+  display: flex;
+  align-items: baseline;
+}
+
+.cv-showcase-bar {
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cv-showcase-tools,
+.cv-showcase-theme {
+  gap: 16px;
+}
+
+.cv-showcase-theme {
+  gap: 6px;
+  color: var(--showcase-mute);
+}
+
+.cv-showcase-print,
+.cv-showcase-theme button {
+  margin: -6px -2px;
+  padding: 6px 2px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cv-showcase .cv-showcase-theme,
+.cv-showcase .cv-showcase-theme button {
+  color: var(--showcase-mute);
+}
+
+.cv-showcase .cv-showcase-theme button[aria-pressed='true'],
+.cv-showcase .cv-showcase-theme button:hover,
+.cv-showcase .cv-showcase-theme button:focus-visible,
+.cv-showcase .cv-showcase-print:hover,
+.cv-showcase .cv-showcase-print:focus-visible {
+  color: var(--showcase-ink);
+}
+
+.cv-showcase-role {
+  margin-top: 22px;
+}
+
+.cv-showcase-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em 0.75em;
+  margin-top: 8px;
+}
+
+.cv-showcase .cv-showcase-dot {
+  color: var(--showcase-mute);
+}
+
+.cv-showcase-section {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--showcase-line);
+}
+
+.cv-showcase .cv-showcase-section h2 {
+  margin-bottom: 12px;
+  color: var(--showcase-mute);
+}
+
+.cv-showcase-entry + .cv-showcase-entry {
+  margin-top: 14px;
+}
+
+.cv-showcase-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.cv-showcase-title {
+  min-width: 0;
+}
+
+.cv-showcase p.cv-showcase-dates {
+  flex: none;
+  color: var(--showcase-mute);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+html[data-cv-showcase] .cv-showcase p.cv-showcase-detail {
+  margin-top: 2px;
+  color: var(--showcase-mute);
+  text-transform: none !important;
+}
+
+@media (max-width: 820px) {
+  .cv-showcase {
+    padding:
+      max(20px, env(safe-area-inset-top))
+      max(20px, env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom))
+      max(20px, env(safe-area-inset-left));
+  }
+}
+
+@media print {
+  html[data-cv-showcase],
+  html[data-cv-showcase] body {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .cv-showcase {
+    --showcase-bg: #fff;
+    --showcase-ink: #000;
+    --showcase-mute: #222;
+    --showcase-line: #d4d4d4;
+    min-height: 0;
+    padding: 0;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .cv-showcase-sheet {
+    width: 100%;
+  }
+
+  .cv-showcase-tools {
+    display: none !important;
+  }
+
+  .cv-showcase a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+
+  .cv-showcase-section {
+    margin-top: 12px;
+    padding-top: 8px;
+    break-inside: avoid;
+  }
+
+  .cv-showcase-entry {
+    break-inside: avoid;
+  }
+
+  .cv-showcase-entry + .cv-showcase-entry {
+    margin-top: 8px;
   }
 }

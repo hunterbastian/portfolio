@@ -1,54 +1,71 @@
 'use client'
 
-import { Fragment, useEffect } from 'react'
-import { m, useReducedMotion } from 'framer-motion'
-import BreadcrumbPill from '@/components/BreadcrumbPill'
-import TextReveal from '@/components/TextReveal'
-import * as Glyphs from '@/components/pixel/glyphs'
-import { experienceItems, educationItems } from '@/content/homepage'
+import { Fragment, useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import Link from 'next/link'
+import { educationItems, experienceItems } from '@/content/homepage'
+import {
+  HOME_SHOWCASE_ROLE,
+  HOME_SHOWCASE_THEME_STORAGE_KEY,
+  getShowcaseChrome,
+  parseShowcaseThemePreference,
+  resolveShowcaseTheme,
+  type ShowcaseTheme,
+} from '@/lib/home-showcase'
 import { siteConfig } from '@/lib/site'
 import { analytics } from '@/lib/analytics'
 import {
   CV_CONTACT_LINKS,
-  CV_CONTACT_LIST_CLASS_NAME,
-  CV_ITEM_HIDDEN_MOTION,
   CV_LOCATION_LABEL,
   CV_PRINT_ARIA_LABEL,
-  CV_PRINT_BUTTON_CLASS_NAME,
   CV_PRINT_BUTTON_LABEL,
   CV_RESUME_VIEW_ACTION,
   activateCvContactClick,
   activateCvPrint,
-  getCvContactLinkClassName,
-  getCvItemVisibleMotion,
+  formatCvEducationDetail,
+  getCvEntryDate,
+  getCvEntryDetail,
   type CvContactLink,
 } from '@/lib/cv-page'
 
-const CV_KIND_GLYPHS = {
-  work: Glyphs.Work,
-  writing: Glyphs.Writing,
-} as const
-
-function SectionHeading({
-  children,
-  delay = 0,
-  kind,
-}: {
-  children: string
-  delay?: number
-  kind?: keyof typeof CV_KIND_GLYPHS
-}) {
-  const Glyph = kind ? CV_KIND_GLYPHS[kind] : null
-  return (
-    <h2 className="font-mono text-[11px] font-medium tracking-[0.16em] uppercase text-muted-foreground mb-5 inline-flex items-center gap-2">
-      {Glyph ? <Glyph size={10} className="text-muted-foreground/70" /> : null}
-      <TextReveal text={children} as="span" trigger duration={0.4} staggerDelay={0.06} startDelay={delay} />
-    </h2>
-  )
+interface CvShowcaseProps {
+  className?: string
 }
 
-function Divider() {
-  return <div className="border-t border-border/40 print:border-border/20" />
+function readShowcaseThemePreference() {
+  try {
+    return parseShowcaseThemePreference(localStorage.getItem(HOME_SHOWCASE_THEME_STORAGE_KEY))
+  } catch {
+    return 'system' as const
+  }
+}
+
+function writeShowcaseThemePreference(theme: ShowcaseTheme) {
+  try {
+    localStorage.setItem(HOME_SHOWCASE_THEME_STORAGE_KEY, theme)
+  } catch {
+    // Private browsing can reject storage. The choice still applies for this view.
+  }
+}
+
+function applyCvShowcaseTheme(theme: ShowcaseTheme) {
+  const chrome = getShowcaseChrome(theme === 'dark')
+  const root = document.documentElement
+  root.dataset.homeShowcase = 'true'
+  root.dataset.cvShowcase = 'true'
+  root.dataset.homeShowcaseTheme = theme
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', chrome.canvas)
+  document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', chrome.colorScheme)
+  document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', chrome.statusBar)
+}
+
+function clearCvShowcaseTheme() {
+  const root = document.documentElement
+  delete root.dataset.homeShowcase
+  delete root.dataset.cvShowcase
+  delete root.dataset.homeShowcaseTheme
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', siteConfig.themeColorDark)
+  document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', 'dark')
+  document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', 'black')
 }
 
 function trackCvContactClick(link: CvContactLink) {
@@ -59,132 +76,114 @@ function trackCvContactClick(link: CvContactLink) {
   })
 }
 
-export default function CVPageClient() {
-  const prefersReducedMotion = useReducedMotion() ?? false
+export default function CVPageClient({ className }: CvShowcaseProps) {
+  const [theme, setTheme] = useState<ShowcaseTheme>('light')
+
+  const chooseTheme = useCallback((next: ShowcaseTheme) => {
+    writeShowcaseThemePreference(next)
+    applyCvShowcaseTheme(next)
+    setTheme(next)
+  }, [])
+
+  useLayoutEffect(() => {
+    const scheme = window.matchMedia('(prefers-color-scheme: dark)')
+    const sync = () => {
+      const next = resolveShowcaseTheme(readShowcaseThemePreference(), scheme.matches)
+      applyCvShowcaseTheme(next)
+      setTheme(next)
+    }
+
+    sync()
+    scheme.addEventListener('change', sync)
+    return () => {
+      scheme.removeEventListener('change', sync)
+      clearCvShowcaseTheme()
+    }
+  }, [])
 
   useEffect(() => {
     analytics.resumeAction(CV_RESUME_VIEW_ACTION)
   }, [])
 
-  const itemVariants = {
-    hidden: CV_ITEM_HIDDEN_MOTION,
-    visible: (i: number) => getCvItemVisibleMotion(i, prefersReducedMotion),
-  }
-
   return (
-    <div className="relative min-h-screen">
-      <div className="relative z-10 container mx-auto max-w-2xl px-4 sm:px-6">
-        {/* Breadcrumb — hidden in print */}
-        <div className="mb-10 sm:mb-14 flex justify-start pt-4 sm:pt-6 print:hidden">
-          <BreadcrumbPill href="/" parentLabel="Home" currentLabel="Resume" />
-        </div>
-
-        {/* Header */}
-        <header className="pb-8 sm:pb-10 pt-8 sm:pt-12 print:pt-0 print:pb-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="preserve-name-case font-mono text-[14px] font-semibold tracking-[0.08em] uppercase text-foreground sm:text-[15px]">
-                <TextReveal text="Hunter Bastian" as="span" trigger duration={0.5} staggerDelay={0.08} startDelay={0.1} filter />
-              </h1>
-              <p className="mt-2 text-[13px] text-muted-foreground">
-                <TextReveal text={siteConfig.siteDescription} as="span" trigger duration={0.4} staggerDelay={0.03} startDelay={0.4} />
-              </p>
-            </div>
+    <div className={className ? `cv-showcase ${className}` : 'cv-showcase'}>
+      <div className="cv-showcase-sheet">
+        <header className="cv-showcase-bar">
+          <h1>
+            <Link href="/">{siteConfig.personName}</Link>
+          </h1>
+          <div className="cv-showcase-tools">
+            <Link href="/">Back</Link>
             <button
+              type="button"
+              className="cv-showcase-print"
+              aria-label={CV_PRINT_ARIA_LABEL}
               onClick={() => {
                 activateCvPrint({
                   printPage: () => window.print(),
                   trackResumeAction: (action) => analytics.resumeAction(action),
                 })
               }}
-              className={CV_PRINT_BUTTON_CLASS_NAME}
-              aria-label={CV_PRINT_ARIA_LABEL}
             >
               {CV_PRINT_BUTTON_LABEL}
             </button>
-          </div>
-
-          {/* Contact links */}
-          <div className={CV_CONTACT_LIST_CLASS_NAME}>
-            <span>{CV_LOCATION_LABEL}</span>
-            {CV_CONTACT_LINKS.map((link) => (
-              <Fragment key={link.href}>
-                <span className="text-border">·</span>
-                <a
-                  href={link.href}
-                  className={getCvContactLinkClassName(link.printNoUnderline)}
-                  onClick={() => trackCvContactClick(link)}
-                >
-                  {link.label}
-                </a>
-              </Fragment>
-            ))}
+            <div className="cv-showcase-theme" role="group" aria-label="Color theme">
+              <button type="button" aria-pressed={theme === 'light'} onClick={() => chooseTheme('light')}>
+                Light
+              </button>
+              <span aria-hidden="true">/</span>
+              <button type="button" aria-pressed={theme === 'dark'} onClick={() => chooseTheme('dark')}>
+                Dark
+              </button>
+            </div>
           </div>
         </header>
 
-        <Divider />
+        <p className="cv-showcase-role">{HOME_SHOWCASE_ROLE}</p>
+        <p className="cv-showcase-contact">
+          <span>{CV_LOCATION_LABEL}</span>
+          {CV_CONTACT_LINKS.map((link) => (
+            <Fragment key={link.href}>
+              <span className="cv-showcase-dot" aria-hidden="true">·</span>
+              <a href={link.href} onClick={() => trackCvContactClick(link)}>
+                {link.label}
+              </a>
+            </Fragment>
+          ))}
+        </p>
 
-        {/* Experience */}
-        <section className="py-8 sm:py-10 print:py-5">
-          <SectionHeading delay={0.5} kind="work">Experience</SectionHeading>
-          <div className="space-y-5">
-            {experienceItems.map((item, i) => (
-              <m.div
-                key={`${item.company}-${item.year}`}
-                className="group grid gap-y-1 sm:grid-cols-[1fr_auto] sm:gap-x-4 sm:items-baseline"
-                variants={itemVariants}
-                custom={i}
-                initial="hidden"
-                animate="visible"
-              >
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                    <span className="text-[13px] font-medium text-foreground">{item.company}</span>
-                    <span className="text-[11px] text-muted-foreground/60">·</span>
-                    <span className="text-[12px] text-muted-foreground">{item.title}</span>
-                  </div>
-                  <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground/70">{item.description}</p>
+        <section className="cv-showcase-section" aria-labelledby="cv-experience">
+          <h2 id="cv-experience">Experience</h2>
+          {experienceItems.map((item) => {
+            const date = getCvEntryDate(item.year)
+            const detail = getCvEntryDetail(item.description)
+            return (
+              <article key={`${item.company}-${item.title}`} className="cv-showcase-entry">
+                <div className="cv-showcase-line">
+                  <p className="cv-showcase-title">{item.company} · {item.title}</p>
+                  {date ? <p className="cv-showcase-dates">{date}</p> : null}
                 </div>
-                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap sm:justify-self-end">{item.year}</span>
-              </m.div>
-            ))}
-          </div>
+                {detail ? <p className="cv-showcase-detail">{detail}</p> : null}
+              </article>
+            )
+          })}
         </section>
 
-        <Divider />
-
-        {/* Education */}
-        <section className="py-8 sm:py-10 print:py-5">
-          <SectionHeading delay={0.8} kind="writing">Education</SectionHeading>
-          <div className="space-y-5">
-            {educationItems.map((item, i) => (
-              <m.div
-                key={`${item.institution}-${item.year}`}
-                className="group grid gap-y-1 sm:grid-cols-[1fr_auto] sm:gap-x-4 sm:items-baseline"
-                variants={itemVariants}
-                custom={i + experienceItems.length}
-                initial="hidden"
-                animate="visible"
-              >
-                <div>
-                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                    <span className="text-[13px] font-medium text-foreground">{item.institution}</span>
-                    <span className="text-[11px] text-muted-foreground/60">·</span>
-                    <span className="text-[12px] text-muted-foreground">{item.degree}</span>
-                  </div>
-                  <p className="mt-1 text-[12px] text-muted-foreground/70">
-                    {item.level}
-                    {item.note && <span className="ml-2 font-mono text-[10px] tracking-wider text-accent/80 uppercase">{item.note}</span>}
-                  </p>
+        <section className="cv-showcase-section" aria-labelledby="cv-education">
+          <h2 id="cv-education">Education</h2>
+          {educationItems.map((item) => {
+            const date = getCvEntryDate(item.year)
+            return (
+              <article key={`${item.institution}-${item.degree}-${item.year}`} className="cv-showcase-entry">
+                <div className="cv-showcase-line">
+                  <p className="cv-showcase-title">{item.institution} · {item.degree}</p>
+                  {date ? <p className="cv-showcase-dates">{date}</p> : null}
                 </div>
-                <span className="text-[11px] font-mono tracking-wide text-muted-foreground/50 whitespace-nowrap sm:justify-self-end">{item.year}</span>
-              </m.div>
-            ))}
-          </div>
+                <p className="cv-showcase-detail">{formatCvEducationDetail(item)}</p>
+              </article>
+            )
+          })}
         </section>
-
-        {/* Bottom spacer */}
-        <div className="pb-16 sm:pb-24 print:pb-4" />
       </div>
     </div>
   )

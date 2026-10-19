@@ -179,7 +179,7 @@ test('shared mobile drawer retains homepage section jumps and the full playgroun
   assert.match(source, /HOME_SECTION_NAV_ITEMS/)
   assert.match(source, /MobileNavigation/)
   const drawer = readFileSync(new URL('../components/MobileNavigation.tsx', import.meta.url), 'utf8')
-  for (const href of ['/#projects', '/#playground', '/#background', '/archive']) {
+  for (const href of ['/#projects', '/playground', '/#background', '/archive']) {
     assert.ok(drawer.includes(`href: '${href}'`), `Missing mobile destination: ${href}`)
   }
   assert.match(source, /persistVisible/)

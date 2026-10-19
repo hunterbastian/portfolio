@@ -275,9 +275,15 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
             <ul className="home-showcase-list">
               {endeavors.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} target="_blank" rel="noopener noreferrer">
-                    {item.label} <ExternalArrow />
-                  </a>
+                  {item.external ? (
+                    <a href={item.href} target="_blank" rel="noopener noreferrer">
+                      {item.label} <ExternalArrow />
+                    </a>
+                  ) : (
+                    <Link href={item.href}>
+                      {item.label} <ExternalArrow />
+                    </Link>
+                  )}
                   <span className="home-showcase-mute">{item.meta}</span>
                 </li>
               ))}

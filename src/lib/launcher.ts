@@ -627,7 +627,7 @@ export function scheduleLauncherPaletteFocus<TFrame = number>({
 
 export function getLauncherPageLabel(pathname: string) {
   if (pathname.startsWith('/projects/')) return 'Project Space'
-  if (pathname.startsWith('/archive')) return 'Playground Space'
+  if (pathname.startsWith('/playground') || pathname.startsWith('/archive')) return 'Playground Space'
   if (pathname.startsWith('/cv')) return 'Resume Space'
   if (pathname.startsWith('/about')) return 'About Space'
 

@@ -207,6 +207,11 @@ export function getShowcaseEndeavors(): ShowcaseEndeavor[] {
       label: link.label,
       meta,
     }]
+  }).concat({
+    external: false,
+    href: '/playground',
+    label: 'Playground',
+    meta: 'Experiments',
   })
 }
 

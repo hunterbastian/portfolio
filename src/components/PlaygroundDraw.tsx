@@ -22,21 +22,21 @@ import {
   type PlaygroundDrawTool,
 } from '@/lib/playground-draw'
 
+function isPlaygroundDrawTarget(target: EventTarget | null) {
+  return target instanceof Element && Boolean(target.closest('a, button, input, textarea, select, [data-site-chrome]'))
+}
+
 export default function PlaygroundDraw() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [tool, setTool] = useState<PlaygroundDrawTool>(PLAYGROUND_DRAW_INITIAL_TOOL)
-  const [drawing, setDrawing] = useState(false)
+  const toolRef = useRef(tool)
   const lastPos = useRef<{ x: number; y: number } | null>(null)
 
-  const getPos = useCallback((e: React.PointerEvent) => {
-    const canvas = canvasRef.current
-    if (!canvas) return { x: 0, y: 0 }
-    const rect = canvas.getBoundingClientRect()
-    const dpr = window.devicePixelRatio || 1
-    return getPlaygroundDrawPoint(e.clientX, e.clientY, rect, dpr)
-  }, [])
+  useEffect(() => {
+    toolRef.current = tool
+  }, [tool])
 
-  // Size canvas to viewport
+  // Size canvas to viewport and draw on empty space without blocking links or touch scrolling.
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -51,52 +51,62 @@ export default function PlaygroundDraw() {
       canvas!.style.height = h + 'px'
     }
 
-    resize()
-    window.addEventListener('resize', resize)
-    return () => window.removeEventListener('resize', resize)
-  }, [])
+    function pointFrom(event: PointerEvent) {
+      const rect = canvas!.getBoundingClientRect()
+      const dpr = window.devicePixelRatio || 1
+      return getPlaygroundDrawPoint(event.clientX, event.clientY, rect, dpr)
+    }
 
-  const startDraw = useCallback(
-    (e: React.PointerEvent) => {
-      setDrawing(true)
-      lastPos.current = getPos(e)
-      ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
-    },
-    [getPos]
-  )
-
-  const draw = useCallback(
-    (e: React.PointerEvent) => {
-      if (!drawing) return
-      const canvas = canvasRef.current
-      const ctx = canvas?.getContext('2d')
-      if (!ctx || !lastPos.current) return
-
-      const pos = getPos(e)
+    function paint(from: { x: number; y: number }, to: { x: number; y: number }) {
+      const ctx = canvas!.getContext('2d')
+      if (!ctx) return
 
       ctx.lineCap = 'round'
       ctx.lineJoin = 'round'
 
-      const strokeConfig = getPlaygroundDrawStrokeConfig(tool, window.devicePixelRatio || 1)
+      const strokeConfig = getPlaygroundDrawStrokeConfig(toolRef.current, window.devicePixelRatio || 1)
       ctx.globalCompositeOperation = strokeConfig.globalCompositeOperation
       if (strokeConfig.strokeStyle) {
-        ctx.strokeStyle = strokeConfig.strokeStyle
+        ctx.strokeStyle = document.documentElement.dataset.playgroundTheme === 'light'
+          ? strokeConfig.strokeStyle
+          : 'rgba(237, 240, 245, 0.85)'
       }
       ctx.lineWidth = strokeConfig.lineWidth
-
       ctx.beginPath()
-      ctx.moveTo(lastPos.current.x, lastPos.current.y)
-      ctx.lineTo(pos.x, pos.y)
+      ctx.moveTo(from.x, from.y)
+      ctx.lineTo(to.x, to.y)
       ctx.stroke()
+    }
 
+    function startDraw(event: PointerEvent) {
+      if (event.pointerType === 'touch' || event.button !== 0 || isPlaygroundDrawTarget(event.target)) return
+      lastPos.current = pointFrom(event)
+    }
+
+    function draw(event: PointerEvent) {
+      if (!lastPos.current) return
+      const pos = pointFrom(event)
+      paint(lastPos.current, pos)
       lastPos.current = pos
-    },
-    [drawing, tool, getPos]
-  )
+    }
 
-  const stopDraw = useCallback(() => {
-    setDrawing(false)
-    lastPos.current = null
+    function stopDraw() {
+      lastPos.current = null
+    }
+
+    resize()
+    window.addEventListener('resize', resize)
+    window.addEventListener('pointerdown', startDraw)
+    window.addEventListener('pointermove', draw)
+    window.addEventListener('pointerup', stopDraw)
+    window.addEventListener('pointercancel', stopDraw)
+    return () => {
+      window.removeEventListener('resize', resize)
+      window.removeEventListener('pointerdown', startDraw)
+      window.removeEventListener('pointermove', draw)
+      window.removeEventListener('pointerup', stopDraw)
+      window.removeEventListener('pointercancel', stopDraw)
+    }
   }, [])
 
   const clearAll = useCallback(() => {
@@ -113,10 +123,7 @@ export default function PlaygroundDraw() {
         ref={canvasRef}
         className={PLAYGROUND_DRAW_CANVAS_CLASS_NAME}
         style={getPlaygroundDrawCanvasStyle(tool)}
-        onPointerDown={startDraw}
-        onPointerMove={draw}
-        onPointerUp={stopDraw}
-        onPointerLeave={stopDraw}
+        aria-hidden="true"
       />
 
       {/* Tool tray */}

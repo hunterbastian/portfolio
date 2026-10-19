@@ -14,7 +14,9 @@ import {
   getShowcaseHash,
   getShowcaseIndexFromHash,
   getShowcaseLinks,
+  getShowcaseTravelDirection,
   getShowcaseVideoSrc,
+  planShowcaseSlideMotion,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
   parseShowcaseThemePreference,
   resolveShowcaseTheme,
@@ -138,6 +140,67 @@ test('a saved theme overrides the system color scheme', () => {
   assert.equal(resolveShowcaseTheme('system', true), 'dark')
   assert.equal(resolveShowcaseTheme('light', true), 'light')
   assert.equal(resolveShowcaseTheme('dark', false), 'dark')
+})
+
+test('showcase travel direction follows the click, including wrap', () => {
+  assert.equal(getShowcaseTravelDirection(0, 1, 7), 1)
+  assert.equal(getShowcaseTravelDirection(3, 1, 7), -1)
+  assert.equal(getShowcaseTravelDirection(6, 0, 7), 1)
+  assert.equal(getShowcaseTravelDirection(0, 6, 7), -1)
+})
+
+test('showcase slide motion drifts from the visible slide and does not restart a partial fade', () => {
+  const forward = planShowcaseSlideMotion({
+    direction: 1,
+    nextIndex: 1,
+    opacities: [1, 0, 0],
+    previousIndex: 0,
+    reduced: false,
+    transforms: ['none', 'none', 'none'],
+  })
+  assert.equal(forward?.source, 0)
+  assert.equal(forward?.duration, 250)
+  assert.equal(forward?.easing, 'cubic-bezier(0.22, 1, 0.36, 1)')
+  assert.equal(forward?.exit[1]?.transform, 'translate3d(-8px, 0, 0)')
+  assert.equal(forward?.enter[0]?.transform, 'translate3d(8px, 0, 0)')
+  assert.deepEqual(forward?.hidden, [2])
+
+  const backward = planShowcaseSlideMotion({
+    direction: -1,
+    nextIndex: 0,
+    opacities: [0, 1],
+    previousIndex: 1,
+    reduced: false,
+    transforms: ['none', 'none'],
+  })
+  assert.equal(backward?.exit[1]?.transform, 'translate3d(8px, 0, 0)')
+  assert.equal(backward?.enter[0]?.transform, 'translate3d(-8px, 0, 0)')
+
+  const interrupted = planShowcaseSlideMotion({
+    direction: 1,
+    nextIndex: 2,
+    opacities: [0.7, 0.3, 0],
+    previousIndex: 1,
+    reduced: false,
+    transforms: ['matrix(1, 0, 0, 1, -2, 0)', 'matrix(1, 0, 0, 1, 4, 0)', 'none'],
+  })
+  assert.equal(interrupted?.source, 0)
+  assert.equal(interrupted?.exit[0]?.transform, 'matrix(1, 0, 0, 1, -2, 0)')
+  assert.equal(interrupted?.exit[0]?.opacity, 0.7)
+  assert.equal(interrupted?.enter[0]?.transform, 'translate3d(8px, 0, 0)')
+  assert.deepEqual(interrupted?.hidden, [1])
+
+  const reduced = planShowcaseSlideMotion({
+    direction: 1,
+    nextIndex: 1,
+    opacities: [1, 0],
+    previousIndex: 0,
+    reduced: true,
+    transforms: ['none', 'none'],
+  })
+  assert.equal(reduced?.duration, 0)
+  assert.equal(reduced?.exit[1]?.transform, 'none')
+  assert.equal(reduced?.enter[1]?.transform, 'none')
 })
 
 test('Denver clock uses 24-hour time and a short zone name', () => {

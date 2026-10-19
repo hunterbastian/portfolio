@@ -14,6 +14,8 @@ import {
   getShowcaseHash,
   getShowcaseIndexFromHash,
   getShowcaseLinks,
+  getShowcaseTravelDirection,
+  planShowcaseSlideMotion,
   parseShowcaseThemePreference,
   resolveShowcaseTheme,
   type ShowcaseSlide,
@@ -114,6 +116,15 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set([0]))
   const [direction, setDirection] = useState<1 | -1>(1)
   const indexRef = useRef(0)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const motionGeneration = useRef(0)
+  const motionRef = useRef<{
+    direction: 1 | -1
+    next: number
+    opacities: number[]
+    previous: number
+    transforms: string[]
+  } | null>(null)
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const suppressClick = useRef(false)
   const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -136,9 +147,23 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
     const normalized = (nextIndex % count + count) % count
     const current = indexRef.current
-    let nextDirection: 1 | -1 = normalized >= current ? 1 : -1
-    if (current === count - 1 && normalized === 0) nextDirection = 1
-    if (current === 0 && normalized === count - 1) nextDirection = -1
+    if (normalized === current) return
+    const nextDirection = getShowcaseTravelDirection(current, normalized, count)
+    const panel = panelRef.current
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (panel && !reduced) {
+      const elements = [...panel.querySelectorAll<HTMLElement>('.home-showcase-slide')]
+      motionRef.current = {
+        direction: nextDirection,
+        next: normalized,
+        opacities: elements.map((element) => Number(getComputedStyle(element).opacity) || 0),
+        previous: current,
+        transforms: elements.map((element) => getComputedStyle(element).transform || 'none'),
+      }
+    } else {
+      motionRef.current = null
+    }
 
     setPreviousIndex(current)
     indexRef.current = normalized
@@ -188,17 +213,74 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     }
   }, [count, markSeen])
 
+  useLayoutEffect(() => {
+    const motion = motionRef.current
+    motionRef.current = null
+    const panel = panelRef.current
+    if (!motion || !panel) return
+
+    const plan = planShowcaseSlideMotion({
+      direction: motion.direction,
+      nextIndex: motion.next,
+      opacities: motion.opacities,
+      previousIndex: motion.previous,
+      reduced: false,
+      transforms: motion.transforms,
+    })
+    if (!plan) return
+
+    const elements = [...panel.querySelectorAll<HTMLElement>('.home-showcase-slide')]
+    elements.forEach((element) => {
+      element.getAnimations().forEach((animation) => animation.cancel())
+    })
+
+    const hidden = new Set(plan.hidden)
+    elements.forEach((element, elementIndex) => {
+      if (!hidden.has(elementIndex)) return
+      element.style.opacity = '0'
+      element.style.transform = 'none'
+      element.style.zIndex = ''
+    })
+
+    const options: KeyframeAnimationOptions = {
+      duration: plan.duration,
+      easing: plan.easing,
+      fill: 'both',
+    }
+    const animations: Animation[] = []
+    const hold = (element: HTMLElement | undefined, frames: Keyframe[], zIndex: string) => {
+      if (!element) return
+      const from = frames[0] ?? {}
+      // Hold the captured frame in inline style so a pending animation cannot
+      // flash the new slide at full opacity before the first animation frame.
+      element.style.opacity = String(from.opacity ?? 0)
+      element.style.transform = typeof from.transform === 'string' ? from.transform : 'none'
+      element.style.zIndex = zIndex
+      animations.push(element.animate(frames, options))
+    }
+    hold(elements[plan.source], plan.exit, '1')
+    hold(elements[plan.nextIndex], plan.enter, '2')
+
+    const generation = ++motionGeneration.current
+    Promise.all(animations.map((animation) => animation.finished.catch(() => undefined))).then(() => {
+      if (generation !== motionGeneration.current) return
+      elements.forEach((element) => {
+        element.getAnimations().forEach((animation) => animation.cancel())
+        element.style.opacity = ''
+        element.style.transform = ''
+        element.style.zIndex = ''
+      })
+    })
+  }, [index])
+
   useEffect(() => {
     const onHashChange = () => {
-      const nextIndex = getShowcaseIndexFromHash(window.location.hash, count)
-      indexRef.current = nextIndex
-      setIndex(nextIndex)
-      markSeen(nextIndex)
+      go(getShowcaseIndexFromHash(window.location.hash, count))
     }
 
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
-  }, [count, markSeen])
+  }, [count, go])
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -270,7 +352,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
         <div className="home-showcase-bottom">
           <p className="home-showcase-bio">{bio}</p>
-          <div>
+          <div className="home-showcase-endeavors">
             <p className="home-showcase-label">Endeavors</p>
             <ul className="home-showcase-list">
               {endeavors.map((item) => (
@@ -316,6 +398,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
       <section className="home-showcase-stage" aria-label="Selected work">
         <div
+          ref={panelRef}
           className="home-showcase-panel"
           aria-roledescription="carousel"
           aria-label="Selected work"

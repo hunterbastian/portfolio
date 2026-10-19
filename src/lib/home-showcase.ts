@@ -15,7 +15,12 @@ export const HOME_SHOWCASE_SLUGS = [
 ] as const
 
 export const HOME_SHOWCASE_CANVAS = '#F7F7F5'
+export const HOME_SHOWCASE_CANVAS_DARK = '#0E0E0D'
 export const HOME_SHOWCASE_INK = '#0A0A0A'
+export const HOME_SHOWCASE_INK_DARK = '#EDEDEA'
+/** Slightly lifted from #7E7E79 so 11px caps clear WCAG AA on the dark canvas. */
+export const HOME_SHOWCASE_MUTE_DARK = '#84847F'
+export const HOME_SHOWCASE_LINE_DARK = '#262624'
 export const HOME_SHOWCASE_TIME_ZONE = 'America/Denver'
 export const HOME_SHOWCASE_ROLE = 'Design Engineer'
 export const HOME_SHOWCASE_LOCATION = 'Lehi, Utah'
@@ -44,6 +49,7 @@ const SHOWCASE_ENDEAVOR_META: Record<string, string> = {
 
 export interface ShowcaseSlide {
   category: string
+  darkImageSrc: string
   description: string
   href: string
   imageAlt: string
@@ -52,6 +58,12 @@ export interface ShowcaseSlide {
   title: string
   videoSrc: string | null
   year: string
+}
+
+export interface ShowcaseChrome {
+  canvas: string
+  colorScheme: 'light' | 'dark'
+  statusBar: 'default' | 'black'
 }
 
 export interface ShowcaseEndeavor {
@@ -69,6 +81,26 @@ export interface ShowcaseLink {
 
 export function getShowcaseImageSrc(slug: string) {
   return `${SHOWCASE_MEDIA_DIRECTORY}/${slug}.webp`
+}
+
+export function getShowcaseDarkImageSrc(slug: string) {
+  return `${SHOWCASE_MEDIA_DIRECTORY}/${slug}-transparent.webp`
+}
+
+export function getShowcaseChrome(prefersDark: boolean): ShowcaseChrome {
+  if (prefersDark) {
+    return {
+      canvas: HOME_SHOWCASE_CANVAS_DARK,
+      colorScheme: 'dark',
+      statusBar: 'black',
+    }
+  }
+
+  return {
+    canvas: HOME_SHOWCASE_CANVAS,
+    colorScheme: 'light',
+    statusBar: 'default',
+  }
 }
 
 export function getShowcaseVideoSrc(slug: string) {
@@ -93,6 +125,7 @@ export function buildShowcaseSlides(projects: readonly Pick<Project, 'frontmatte
 
     return {
       category: getShowcaseCategoryLabel(category),
+      darkImageSrc: getShowcaseDarkImageSrc(slug),
       description,
       href: `/projects/${slug}`,
       imageAlt: '',

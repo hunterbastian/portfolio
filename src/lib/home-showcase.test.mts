@@ -9,6 +9,7 @@ import {
   formatDenverClock,
   getShowcaseBio,
   getShowcaseCaption,
+  getShowcaseChrome,
   getShowcaseEndeavors,
   getShowcaseHash,
   getShowcaseIndexFromHash,
@@ -58,6 +59,8 @@ test('showcase slides follow the homepage order and MDX fields', () => {
   assert.equal(slides[0]?.year, '2026')
   assert.equal(slides[0]?.category, 'Web Design')
   assert.equal(slides[0]?.imageSrc, '/showcase/mentalhealth-minisite.webp')
+  assert.equal(slides[0]?.darkImageSrc, '/showcase/mentalhealth-minisite-transparent.webp')
+  assert.equal(slides.at(-1)?.darkImageSrc, '/showcase/nutricost-transparent.webp')
   assert.equal(slides[0]?.videoSrc, '/showcase/mentalhealth-minisite-loop.mp4')
   assert.equal(slides.at(-1)?.category, 'Graphic')
   assert.equal(slides.at(-1)?.videoSrc, '/showcase/nutricost-loop.mp4')
@@ -103,6 +106,19 @@ test('endeavors and links reuse the existing site URLs', () => {
   assert.equal(links[3]?.href, contactSocialLinks.find((link) => link.label === 'GitHub')?.href)
   assert.equal(getShowcaseBio(), siteConfig.siteDescription)
   assert.equal(getShowcaseBio().includes('from first sketch to shipped code'), false)
+})
+
+test('homepage chrome follows the system color scheme', () => {
+  assert.deepEqual(getShowcaseChrome(false), {
+    canvas: '#F7F7F5',
+    colorScheme: 'light',
+    statusBar: 'default',
+  })
+  assert.deepEqual(getShowcaseChrome(true), {
+    canvas: '#0E0E0D',
+    colorScheme: 'dark',
+    statusBar: 'black',
+  })
 })
 
 test('Denver clock uses 24-hour time and a short zone name', () => {

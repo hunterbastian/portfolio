@@ -3,12 +3,12 @@
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
-  HOME_SHOWCASE_CANVAS,
   HOME_SHOWCASE_LOCATION,
   HOME_SHOWCASE_ROLE,
   formatDenverClock,
   getShowcaseBio,
   getShowcaseCaption,
+  getShowcaseChrome,
   getShowcaseEndeavors,
   getShowcaseHash,
   getShowcaseIndexFromHash,
@@ -57,13 +57,26 @@ function DenverClock() {
   )
 }
 
-function applyHomeShowcaseTheme() {
-  const root = document.documentElement
-  root.dataset.homeShowcase = 'true'
+function applyHomeShowcaseTheme(prefersDark: boolean) {
+  const chrome = getShowcaseChrome(prefersDark)
+  document.documentElement.dataset.homeShowcase = 'true'
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', chrome.canvas)
+  document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', chrome.colorScheme)
+  document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', chrome.statusBar)
+}
 
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', HOME_SHOWCASE_CANVAS)
-  document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', 'light')
-  document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', 'default')
+function usePrefersDarkScheme() {
+  const [dark, setDark] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    const update = () => setDark(media.matches)
+    update()
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
+
+  return dark
 }
 
 function clearHomeShowcaseTheme() {
@@ -87,6 +100,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const suppressClick = useRef(false)
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const reducedMotion = usePrefersReducedMotion()
+  const prefersDark = usePrefersDarkScheme()
 
   const markSeen = useCallback((nextIndex: number) => {
     setSeen((current) => {
@@ -119,7 +133,11 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   }, [count, markSeen])
 
   useLayoutEffect(() => {
-    applyHomeShowcaseTheme()
+    const scheme = window.matchMedia('(prefers-color-scheme: dark)')
+    const syncChrome = () => applyHomeShowcaseTheme(scheme.matches)
+    syncChrome()
+    scheme.addEventListener('change', syncChrome)
+
     const nextIndex = getShowcaseIndexFromHash(window.location.hash, count)
     indexRef.current = nextIndex
     setIndex(nextIndex)
@@ -133,6 +151,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     setReady(true)
 
     return () => {
+      scheme.removeEventListener('change', syncChrome)
       clearHomeShowcaseTheme()
     }
   }, [count, markSeen])
@@ -179,7 +198,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     video.muted = true
     const pending = video.play()
     if (pending) pending.catch(() => {})
-  }, [index, reducedMotion])
+  }, [index, reducedMotion, prefersDark])
 
   const active = slides[index]
   const caption = active ? getShowcaseCaption(index, count, active) : null
@@ -263,7 +282,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               : previousIndex !== null && slideIndex === previousIndex
                 ? direction > 0 ? 'left' : 'right'
                 : slideIndex < index ? 'left' : 'right'
-            const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false
+            const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false && prefersDark === false
             const loaded = current || seen.has(slideIndex)
 
             return (
@@ -295,16 +314,17 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                       tabIndex={-1}
                     />
                   ) : loaded ? (
-                    // The mockups are already 2400×1600 webp on #F7F7F5. Skipping the optimizer keeps that canvas exact.
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={slide.imageSrc}
-                      alt={slide.imageAlt}
-                      draggable={false}
-                      decoding="async"
-                      fetchPriority={current ? 'high' : 'low'}
-                      loading={current ? 'eager' : 'lazy'}
-                    />
+                    <picture>
+                      <source media="(prefers-color-scheme: dark)" srcSet={slide.darkImageSrc} />
+                      <img
+                        src={slide.imageSrc}
+                        alt={slide.imageAlt}
+                        draggable={false}
+                        decoding="async"
+                        fetchPriority={current ? 'high' : 'low'}
+                        loading={current ? 'eager' : 'lazy'}
+                      />
+                    </picture>
                   ) : null}
                 </Link>
               </div>

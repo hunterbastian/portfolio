@@ -16,6 +16,24 @@ html[data-home-showcase] body {
   padding: 0 !important;
 }
 
+@media (prefers-color-scheme: dark) {
+  html:root[data-home-showcase] {
+    color-scheme: dark;
+    background-color: #0e0e0d;
+  }
+
+  html[data-home-showcase] body {
+    background-color: #0e0e0d !important;
+    color: #ededea;
+  }
+
+  html[data-home-showcase] ::selection,
+  html[data-home-showcase] ::-moz-selection {
+    background-color: rgba(237, 237, 234, 0.24) !important;
+    color: #0e0e0d !important;
+  }
+}
+
 html[data-home-showcase] #main-content {
   padding-top: 0 !important;
 }
@@ -215,6 +233,14 @@ html[data-home-showcase] .home-showcase *::after {
   justify-content: center;
 }
 
+.home-showcase-slide picture {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 .home-showcase-slide img,
 .home-showcase-slide video {
   display: block;
@@ -354,6 +380,25 @@ html[data-home-showcase] .home-showcase *::after {
 
   .home-showcase-caption {
     flex: 1 1 100%;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .home-showcase {
+    --showcase-bg: #0e0e0d;
+    --showcase-ink: #ededea;
+    --showcase-mute: #84847f;
+    --showcase-line: #262624;
+  }
+
+  .home-showcase-dot::before {
+    background: #3c3c38;
+  }
+
+  .home-showcase-controls button:hover {
+    border-color: #3a3a36;
+    background: #191918;
+    color: var(--showcase-ink);
   }
 }
 

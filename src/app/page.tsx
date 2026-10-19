@@ -14,11 +14,6 @@ const showcaseFont = Inter({
   adjustFontFallback: false,
 })
 
-// Inter's latin subset includes ↑ and ↓, not ↗. This face adds that one glyph
-// to the same family so the inherited text arrow stays in Inter.
-const showcaseArrowFamily = showcaseFont.style.fontFamily.split(',')[0].trim().replace(/^['"]|['"]$/g, '')
-const showcaseArrowFace = `@font-face{font-family:"${showcaseArrowFamily}";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/inter-northeast-500.woff2) format("woff2");unicode-range:U+2197}`
-
 const previewTitle = siteConfig.siteTitle
 const previewDescription = siteConfig.siteDescription
 
@@ -41,7 +36,6 @@ export default function HomePage() {
 
   return (
     <ErrorBoundary>
-      <style dangerouslySetInnerHTML={{ __html: showcaseArrowFace }} />
       <HomeShowcase className={showcaseFont.className} slides={slides} />
     </ErrorBoundary>
   )

@@ -1,4 +1,17 @@
 /*
+ * Inter's latin subset includes ↑ and ↓, not ↗. This face adds that one glyph
+ * to the same family the homepage already uses.
+ */
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/inter-northeast-500.woff2) format("woff2");
+  unicode-range: U+2197;
+}
+
+/*
  * Homepage-only canvas. The rest of the site keeps the dark theme.
  * html[data-home-showcase] is set before paint on "/" and removed when the
  * homepage unmounts. html[data-home-showcase-theme] is the active light/dark

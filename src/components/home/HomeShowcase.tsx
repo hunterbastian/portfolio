@@ -100,12 +100,9 @@ function clearHomeShowcaseTheme() {
 
 function ExternalArrow() {
   return (
-    <svg className="home-showcase-arrow" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
-      <path
-        fill="currentColor"
-        d="M1.7 7.45 6.45 2.7l.85.85L2.55 8.3l-.85-.85ZM4.05 2.15h3.8v1H5.05v2.8h-1V2.15Z"
-      />
-    </svg>
+    <span className="home-showcase-arrow" aria-hidden="true">
+      {'↗\uFE0E'}
+    </span>
   )
 }
 
@@ -265,9 +262,8 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
         <div className="home-showcase-identity">
           <h1>{siteConfig.personName}</h1>
           <p>{HOME_SHOWCASE_ROLE}</p>
-          <p>
-            {HOME_SHOWCASE_LOCATION}{' '}
-            <span className="home-showcase-mute">—</span>{' '}
+          <p className="home-showcase-place">
+            <span>{HOME_SHOWCASE_LOCATION}</span>
             <DenverClock />
           </p>
         </div>

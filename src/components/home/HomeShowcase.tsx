@@ -122,6 +122,8 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const reducedMotion = usePrefersReducedMotion()
   const [theme, setTheme] = useState<ShowcaseTheme>('light')
+  // Null until the pre-paint sync, so SSR does not mark either still as the LCP image.
+  const [prioritizedTheme, setPrioritizedTheme] = useState<ShowcaseTheme | null>(null)
 
   const markSeen = useCallback((nextIndex: number) => {
     setSeen((current) => {
@@ -157,6 +159,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     writeShowcaseThemePreference(next)
     applyHomeShowcaseTheme(next)
     setTheme(next)
+    setPrioritizedTheme(next)
   }, [])
 
   useLayoutEffect(() => {
@@ -165,6 +168,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
       const next = resolveShowcaseTheme(readShowcaseThemePreference(), scheme.matches)
       applyHomeShowcaseTheme(next)
       setTheme(next)
+      setPrioritizedTheme(next)
     }
     syncChrome()
     scheme.addEventListener('change', syncChrome)
@@ -230,6 +234,27 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     const pending = video.play()
     if (pending) pending.catch(() => {})
   }, [index, reducedMotion, theme])
+
+  useEffect(() => {
+    const slide = slides[index]
+    if (!slide || prioritizedTheme === null) return
+
+    const hiddenSrc = prioritizedTheme === 'dark' ? slide.imageSrc : slide.darkImageSrc
+    const warm = () => {
+      const image = new Image()
+      image.decoding = 'async'
+      image.fetchPriority = 'low'
+      image.src = hiddenSrc
+    }
+
+    if (typeof window.requestIdleCallback === 'function') {
+      const id = window.requestIdleCallback(warm, { timeout: 1500 })
+      return () => window.cancelIdleCallback(id)
+    }
+
+    const id = window.setTimeout(warm, 400)
+    return () => window.clearTimeout(id)
+  }, [index, prioritizedTheme, slides])
 
   const active = slides[index]
   const caption = active ? getShowcaseCaption(index, count, active) : null
@@ -326,6 +351,8 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 : slideIndex < index ? 'left' : 'right'
             const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false && theme === 'light'
             const loaded = current || seen.has(slideIndex)
+            const eagerLight = current && prioritizedTheme === 'light'
+            const eagerDark = current && prioritizedTheme === 'dark'
 
             return (
               <div
@@ -365,8 +392,8 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                         alt={slide.imageAlt}
                         draggable={false}
                         decoding="async"
-                        fetchPriority={current ? 'high' : 'low'}
-                        loading={current ? 'eager' : 'lazy'}
+                        fetchPriority={eagerLight ? 'high' : 'low'}
+                        loading={eagerLight ? 'eager' : 'lazy'}
                       />
                       <img
                         className="home-showcase-still home-showcase-still-dark"
@@ -374,8 +401,8 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                         alt=""
                         draggable={false}
                         decoding="async"
-                        fetchPriority={current ? 'high' : 'low'}
-                        loading={current ? 'eager' : 'lazy'}
+                        fetchPriority={eagerDark ? 'high' : 'low'}
+                        loading={eagerDark ? 'eager' : 'lazy'}
                       />
                     </span>
                   ) : null}

@@ -1,29 +1,25 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
+import { educationItems, experienceItems } from '../content/homepage.ts'
 import {
   CV_CONTACT_LINKS,
-  CV_CONTACT_LIST_CLASS_NAME,
   CV_EMAIL_ADDRESS,
   CV_LINKEDIN_LABEL,
   CV_LINKEDIN_URL,
   CV_LOCATION_LABEL,
-  CV_ITEM_ENTRANCE_BASE_DELAY,
-  CV_ITEM_ENTRANCE_DURATION,
-  CV_ITEM_HIDDEN_MOTION,
-  CV_ITEM_STAGGER_DELAY,
   CV_PORTFOLIO_LABEL,
   CV_PORTFOLIO_URL,
   CV_PRINT_ARIA_LABEL,
-  CV_PRINT_BUTTON_CLASS_NAME,
   CV_PRINT_BUTTON_LABEL,
   CV_RESUME_PRINT_ACTION,
   CV_RESUME_VIEW_ACTION,
   activateCvContactClick,
   activateCvPrint,
+  formatCvEducationDetail,
   getCvContactAnalyticsEvent,
-  getCvContactLinkClassName,
-  getCvItemVisibleMotion,
+  getCvEntryDate,
+  getCvEntryDetail,
 } from './cv-page.ts'
 
 test('cv page constants preserve visible contact and print copy', () => {
@@ -32,9 +28,6 @@ test('cv page constants preserve visible contact and print copy', () => {
   assert.equal(CV_PRINT_ARIA_LABEL, 'Print or save as PDF')
   assert.equal(CV_RESUME_VIEW_ACTION, 'view')
   assert.equal(CV_RESUME_PRINT_ACTION, 'print')
-  assert.match(CV_PRINT_BUTTON_CLASS_NAME, /print:hidden/)
-  assert.match(CV_PRINT_BUTTON_CLASS_NAME, /min-h-\[40px\]/)
-  assert.match(CV_CONTACT_LIST_CLASS_NAME, /flex flex-wrap/)
 })
 
 test('cv contact links preserve hrefs and analytics routes', () => {
@@ -48,7 +41,6 @@ test('cv contact links preserve hrefs and analytics routes', () => {
       label: CV_PORTFOLIO_LABEL,
       href: CV_PORTFOLIO_URL,
       analytics: { kind: 'navigation', target: 'portfolio_link' },
-      printNoUnderline: true,
     },
     {
       label: CV_LINKEDIN_LABEL,
@@ -112,34 +104,36 @@ test('activateCvPrint tracks the print action before opening print', () => {
   ])
 })
 
-test('cv contact link class helper preserves print and interaction states', () => {
-  assert.match(getCvContactLinkClassName(), /touch-manipulation/)
-  assert.match(getCvContactLinkClassName(), /active:scale-\[0\.96\]/)
-  assert.doesNotMatch(getCvContactLinkClassName(), /print:no-underline/)
-  assert.match(getCvContactLinkClassName(true), /print:no-underline/)
+test('cv entry helpers omit blank dates and descriptions', () => {
+  assert.equal(getCvEntryDate(''), null)
+  assert.equal(getCvEntryDate('   '), null)
+  assert.equal(getCvEntryDate('2024 - Present'), '2024 - Present')
+  assert.equal(getCvEntryDetail(''), null)
+  assert.equal(getCvEntryDetail('  '), null)
+  assert.equal(getCvEntryDetail('Produced and edited marketing and product videos for Catapult.'), 'Produced and edited marketing and product videos for Catapult.')
 })
 
-test('cv item motion helpers preserve staggered and reduced-motion timing', () => {
-  assert.equal(CV_ITEM_STAGGER_DELAY, 0.06)
-  assert.equal(CV_ITEM_ENTRANCE_BASE_DELAY, 0.3)
-  assert.equal(CV_ITEM_ENTRANCE_DURATION, 0.4)
-  assert.deepEqual(CV_ITEM_HIDDEN_MOTION, { opacity: 0, y: 8 })
-  assert.deepEqual(getCvItemVisibleMotion(2, false), {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.42,
-      duration: 0.4,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  })
-  assert.deepEqual(getCvItemVisibleMotion(2, true), {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0,
-      duration: 0,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  })
+test('cv education detail keeps the level and optional note', () => {
+  assert.equal(formatCvEducationDetail({ level: 'Certification' }), 'Certification')
+  assert.equal(
+    formatCvEducationDetail({ level: "Bachelor's Degree", note: "ProdUX at UVU · Dean's List Fall 2024" }),
+    "Bachelor's Degree · ProdUX at UVU · Dean's List Fall 2024",
+  )
+})
+
+test('cv experience keeps every existing role and leads with undated Tesla', () => {
+  assert.deepEqual(
+    experienceItems.map((item) => [item.company, item.title, item.year, item.description]),
+    [
+      ['Tesla', 'Data Labeler', '', ''],
+      ['Studio Alpine', 'Founder', '2026 - Present', 'Founder of Studio Alpine, a photography and design project.'],
+      ['Catapult', 'Video Producer', '2024 - Present', 'Produced and edited marketing and product videos for Catapult.'],
+      ['Utah Valley University', 'Department Representative', '2024 - Present', 'Helped new students with internship opportunities in the Web Design and Development program.'],
+      ['Nutricost', 'Graphic Design Intern', '2023', 'At Nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue.'],
+      ['Clutch', 'Digital Design Intern', '2017', 'At Clutch, I helped with design branding and further improved my knowledge about the UX design process.'],
+    ],
+  )
+  assert.equal(educationItems.length, 6)
+  assert.equal(educationItems[0]?.institution, 'Utah Valley University')
+  assert.equal(educationItems[0]?.degree, 'B.S. Interaction Design')
 })

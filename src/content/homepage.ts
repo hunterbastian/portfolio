@@ -128,6 +128,12 @@ export const backgroundBeats: BackgroundBeat[] = [
 
 export const experienceItems: ExperienceItem[] = [
   {
+    year: '',
+    company: 'Tesla',
+    title: 'Data Labeler',
+    description: '',
+  },
+  {
     year: '2026 - Present',
     company: 'Studio Alpine',
     title: 'Founder',

@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation'
 import MobileNavigation from '@/components/MobileNavigation'
-import { HomeMasthead } from '@/components/home/HomeMasthead'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
@@ -255,6 +254,7 @@ function PageTopMeta() {
   return (
     <div
       ref={headerRef}
+      data-site-chrome=""
       data-home-editorial={persistVisible || undefined}
       className={getTopMetaShellClassName(headerHidden, mobileMenuOpen, headerFrosted)}
       onClick={(event) => {
@@ -326,5 +326,6 @@ function PageTopMeta() {
 
 export default function TopMeta() {
   const pathname = usePathname()
-  return shouldShowHomeSectionNav(pathname) ? <HomeMasthead /> : <PageTopMeta />
+  if (pathname === '/') return null
+  return <PageTopMeta />
 }

@@ -92,7 +92,7 @@ export function getSiteMetadata(
       siteName: portfolioName,
       images: [
         {
-          url: config.defaultOgImage,
+          url: absoluteMetadataUrl(config.defaultOgImage, config.url),
           width: 1200,
           height: 630,
           alt: `${config.appName} - design engineer portfolio`,
@@ -104,7 +104,7 @@ export function getSiteMetadata(
       title: config.siteTitle,
       description: config.siteDescription,
       creator: '@thestudioalpine',
-      images: [config.defaultOgImage],
+      images: [absoluteMetadataUrl(config.defaultOgImage, config.url)],
     },
     alternates: {
       canonical: config.url,
@@ -125,6 +125,7 @@ export function getStaticPageMetadata({
   title,
 }: StaticPageMetadataOptions): Metadata {
   const canonical = resolveStaticPageCanonical(path, site.url)
+  const imageUrl = absoluteMetadataUrl(image, site.url)
   const metadataTitle = absoluteTitle ? { absolute: title } : title
 
   return {
@@ -142,7 +143,7 @@ export function getStaticPageMetadata({
       ...(openGraphType ? { type: openGraphType } : {}),
       images: [
         {
-          url: image,
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: imageAlt || site.appName,
@@ -153,11 +154,15 @@ export function getStaticPageMetadata({
       card: 'summary_large_image',
       title,
       description,
-      images: [image],
+      images: [imageUrl],
     },
   }
 }
 
 function resolveStaticPageCanonical(path: string, url: string) {
   return new URL(path, url).toString()
+}
+
+function absoluteMetadataUrl(value: string, baseUrl: string) {
+  return new URL(value, baseUrl).toString()
 }

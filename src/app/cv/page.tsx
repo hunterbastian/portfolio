@@ -16,6 +16,8 @@ const cvDescription = `${siteConfig.personName} - design engineer resume. Experi
 
 export const metadata = getStaticPageMetadata({
   description: cvDescription,
+  image: '/cv/opengraph-image',
+  imageAlt: `Resume — ${siteConfig.personName}`,
   path: '/cv',
   siteName: sitePortfolioName,
   title: cvTitle,

@@ -4,6 +4,8 @@ import test from 'node:test'
 import { MOTION_EASE_SOFT } from './motion.ts'
 import {
   formatPlaygroundRange,
+  formatPlaygroundShowcaseCaption,
+  getPlaygroundShowcaseHref,
   formatPlaygroundYear,
   formatPlaygroundProjectCount,
   formatPlaygroundPosition,
@@ -153,6 +155,15 @@ test('playground display helpers provide stable fallbacks', () => {
   assert.equal(getPlaygroundRouteCode(titled, 1), 'SF-02')
   assert.equal(getPlaygroundRouteCode(fallback, 0), 'PG-01')
   assert.equal(formatPlaygroundPosition(0, 8), '01/08')
+  assert.equal(
+    formatPlaygroundShowcaseCaption(getPlaygroundProjectDisplayMeta(titled, 1, 11)),
+    'SF-02 · Sky Farm Lab, 2026 · Creative Coding',
+  )
+  assert.deepEqual(getPlaygroundShowcaseHref(titled), { external: false, href: '/projects/sky-farm' })
+  assert.deepEqual(
+    getPlaygroundShowcaseHref({ ...titled, frontmatter: { ...titled.frontmatter, demo: ' https://path.example ' } }),
+    { external: true, href: 'https://path.example' },
+  )
   assert.equal(formatPlaygroundPosition(11, 12), '12/12')
   assert.deepEqual(getPlaygroundProjectDisplayMeta(titled, 1, 8), {
     category: 'Creative Coding',

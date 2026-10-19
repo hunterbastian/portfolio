@@ -27,6 +27,7 @@ import { getAllProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
 import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
+import { getShowcaseChrome, HOME_SHOWCASE_SLUGS, HOME_SHOWCASE_THEME_STORAGE_KEY } from '@/lib/home-showcase'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
 // Self-hosted Paper Mono; existing font utilities share this variable face.
@@ -57,6 +58,10 @@ export const viewport = {
 }
 
 const faviconVersion = siteConfig.faviconVersion
+const homeShowcaseLight = getShowcaseChrome(false)
+const homeShowcaseDark = getShowcaseChrome(true)
+const homeShowcaseSlugs = JSON.stringify([...HOME_SHOWCASE_SLUGS])
+const homeShowcaseBoot = `if(location.pathname==="/"){document.documentElement.dataset.homeShowcase="true";var pref=null;try{pref=localStorage.getItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")}catch(e){}var dark=pref==="dark"||(pref!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.dataset.homeShowcaseTheme=dark?"dark":"light";var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute("content",dark?"${homeShowcaseDark.canvas}":"${homeShowcaseLight.canvas}");var s=document.querySelector('meta[name="color-scheme"]');if(s)s.setAttribute("content",dark?"${homeShowcaseDark.colorScheme}":"${homeShowcaseLight.colorScheme}");var a=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(a)a.setAttribute("content",dark?"${homeShowcaseDark.statusBar}":"${homeShowcaseLight.statusBar}");var slugs=${homeShowcaseSlugs};var hm=/^#(\\d+)$/.exec(location.hash||"");var hi=0;if(hm){var sn=+hm[1];hi=sn>=1?Math.min(sn,slugs.length)-1:0}var pl=document.createElement("link");pl.rel="preload";pl.as="image";pl.href="/showcase/"+slugs[hi]+(dark?"-transparent.webp":".webp");pl.setAttribute("fetchpriority","high");document.head.appendChild(pl);}`
 
 export const metadata = getSiteMetadata()
 
@@ -70,11 +75,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${paperMono.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `if(location.pathname==="/"){document.documentElement.dataset.homeShowcase="true";var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute("content","#F7F7F5");var s=document.querySelector('meta[name="color-scheme"]');if(s)s.setAttribute("content","light");}`,
-          }}
-        />
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
         <meta name="theme-color" content={siteConfig.themeColorDark} />
         <meta name="color-scheme" content="dark" />
@@ -95,6 +95,11 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: homeShowcaseBoot,
+          }}
+        />
         
         {/* Resource Hints - Optimized for performance */}
         {telemetryConfig.enableSpeedInsights && (

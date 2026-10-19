@@ -1,7 +1,8 @@
 /*
- * Homepage-only light canvas. The rest of the site keeps the dark theme.
- * Activated by html[data-home-showcase], set before paint on "/" and removed
- * when the homepage unmounts.
+ * Homepage-only canvas. The rest of the site keeps the dark theme.
+ * html[data-home-showcase] is set before paint on "/" and removed when the
+ * homepage unmounts. html[data-home-showcase-theme] is the active light/dark
+ * choice: a saved override, otherwise the system scheme.
  */
 
 html:root[data-home-showcase] {
@@ -14,6 +15,40 @@ html[data-home-showcase] body {
   background-color: #f7f7f5 !important;
   color: #0a0a0a;
   padding: 0 !important;
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] {
+  color-scheme: dark;
+  background-color: #0e0e0d;
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] body {
+  background-color: #0e0e0d !important;
+  color: #ededea;
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] ::selection,
+html[data-home-showcase][data-home-showcase-theme="dark"] ::-moz-selection {
+  background-color: rgba(237, 237, 234, 0.24) !important;
+  color: #0e0e0d !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:root[data-home-showcase]:not([data-home-showcase-theme="light"]) {
+    color-scheme: dark;
+    background-color: #0e0e0d;
+  }
+
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) body {
+    background-color: #0e0e0d !important;
+    color: #ededea;
+  }
+
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) ::selection,
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) ::-moz-selection {
+    background-color: rgba(237, 237, 234, 0.24) !important;
+    color: #0e0e0d !important;
+  }
 }
 
 html[data-home-showcase] #main-content {
@@ -143,6 +178,13 @@ html[data-home-showcase] .home-showcase *::after {
   filter: none;
 }
 
+.home-showcase-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 16px;
+}
+
 .home-showcase-links {
   display: flex;
   flex-wrap: wrap;
@@ -152,6 +194,41 @@ html[data-home-showcase] .home-showcase *::after {
 .home-showcase-links a {
   border-bottom: 1px solid var(--showcase-line);
   padding-bottom: 1px;
+}
+
+.home-showcase-arrow {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 3px;
+  overflow: visible;
+  vertical-align: -1px;
+}
+
+.home-showcase-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--showcase-mute);
+}
+
+.home-showcase-theme button {
+  margin: -6px -2px;
+  padding: 6px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--showcase-mute);
+  cursor: pointer;
+}
+
+.home-showcase-theme button[aria-pressed='true'] {
+  color: var(--showcase-ink);
+}
+
+.home-showcase-theme button:hover,
+.home-showcase-theme button:focus-visible {
+  color: var(--showcase-ink);
+  filter: none;
 }
 
 .home-showcase-stage {
@@ -215,8 +292,16 @@ html[data-home-showcase] .home-showcase *::after {
   justify-content: center;
 }
 
+.home-showcase-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .home-showcase-slide img,
 .home-showcase-slide video {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -224,6 +309,26 @@ html[data-home-showcase] .home-showcase *::after {
   background: transparent;
   border-radius: 0;
   box-shadow: none;
+  transition: none;
+}
+
+.home-showcase-motion {
+  z-index: 1;
+}
+
+.home-showcase-still-dark {
+  opacity: 0;
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-still-light,
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-motion {
+  opacity: 0;
+  visibility: hidden;
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-still-dark {
+  opacity: 1;
+  visibility: visible;
 }
 
 .home-showcase-bar {
@@ -354,6 +459,61 @@ html[data-home-showcase] .home-showcase *::after {
 
   .home-showcase-caption {
     flex: 1 1 100%;
+  }
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase {
+  --showcase-bg: #0e0e0d;
+  --showcase-ink: #ededea;
+  --showcase-mute: #84847f;
+  --showcase-line: #262624;
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-dot:not([aria-current='true'])::before {
+  background: #3c3c38;
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-dot[aria-current='true']::before {
+  background: var(--showcase-ink);
+}
+
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-controls button:hover {
+  border-color: #3a3a36;
+  background: #191918;
+  color: var(--showcase-ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase {
+    --showcase-bg: #0e0e0d;
+    --showcase-ink: #ededea;
+    --showcase-mute: #84847f;
+    --showcase-line: #262624;
+  }
+
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-still-light,
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-motion {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-still-dark {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot:not([aria-current='true'])::before {
+    background: #3c3c38;
+  }
+
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot[aria-current='true']::before {
+    background: var(--showcase-ink);
+  }
+
+  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-controls button:hover {
+    border-color: #3a3a36;
+    background: #191918;
+    color: var(--showcase-ink);
   }
 }
 

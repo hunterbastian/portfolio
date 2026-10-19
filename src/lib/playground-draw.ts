@@ -32,7 +32,7 @@ export const PLAYGROUND_DRAW_PENCIL_STROKE_STYLE = 'rgba(60, 60, 60, 0.7)'
 export const PLAYGROUND_DRAW_PENCIL_WIDTH = 2.5
 export const PLAYGROUND_DRAW_ERASER_WIDTH = 24
 
-export const PLAYGROUND_DRAW_CANVAS_CLASS_NAME = 'fixed inset-0 z-[5]'
+export const PLAYGROUND_DRAW_CANVAS_CLASS_NAME = 'pointer-events-none fixed inset-0 z-[5]'
 export const PLAYGROUND_DRAW_TOOL_TRAY_CLASS_NAME =
   'fixed bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-end gap-1 border border-black/[0.05] bg-card/60 px-3 pb-2 pt-2 shadow-[0_2px_20px_rgba(0,0,0,0.08)] backdrop-blur-xl'
 export const PLAYGROUND_DRAW_TOOL_BUTTON_CLASS_NAME =

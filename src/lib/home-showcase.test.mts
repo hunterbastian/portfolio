@@ -86,7 +86,7 @@ test('endeavors and links reuse the existing site URLs', () => {
   const endeavors = getShowcaseEndeavors()
   assert.deepEqual(
     endeavors.map((item) => item.label),
-    ['Studio Alpine', 'Studio Cala', 'Above / Utah', 'Alcove', 'parallax.'],
+    ['Studio Alpine', 'Studio Cala', 'Above / Utah', 'Alcove', 'parallax.', 'Playground'],
   )
   assert.deepEqual(endeavors.map((item) => item.meta), [
     'Photography',
@@ -94,9 +94,12 @@ test('endeavors and links reuse the existing site URLs', () => {
     'Hiking app',
     'Coffee guide',
     'Model viewer',
+    'Experiments',
   ])
+  assert.equal(endeavors.at(-1)?.href, '/playground')
+  assert.equal(endeavors.at(-1)?.external, false)
 
-  for (const endeavor of endeavors) {
+  for (const endeavor of endeavors.slice(0, -1)) {
     const source = creatingLinks.find((link) => link.label === endeavor.label)
     assert.equal(endeavor.href, source?.href)
   }

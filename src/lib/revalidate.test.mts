@@ -12,6 +12,7 @@ test('revalidate path allowlist preserves static routes', () => {
     '/',
     '/about',
     '/archive',
+    '/playground',
     '/cv',
     '/logo',
     '/opengraph-image',
@@ -21,6 +22,7 @@ test('revalidate path allowlist preserves static routes', () => {
   assert.equal(isAllowedRevalidatePath('/'), true)
   assert.equal(isAllowedRevalidatePath('/cv'), true)
   assert.equal(isAllowedRevalidatePath('/sitemap.xml'), true)
+  assert.equal(isAllowedRevalidatePath('/playground'), true)
 })
 
 test('project revalidate paths allow canonical project and opengraph routes only', () => {

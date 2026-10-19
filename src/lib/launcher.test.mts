@@ -734,6 +734,7 @@ test('launcher project source helpers preserve project data and display title fa
 test('getLauncherPageLabel maps route families to launcher copy', () => {
   assert.equal(getLauncherPageLabel('/projects/lumo'), 'Project Space')
   assert.equal(getLauncherPageLabel('/archive'), 'Playground Space')
+  assert.equal(getLauncherPageLabel('/playground'), 'Playground Space')
   assert.equal(getLauncherPageLabel('/cv'), 'Resume Space')
   assert.equal(getLauncherPageLabel('/about'), 'About Space')
   assert.equal(getLauncherPageLabel('/'), 'Home Space')

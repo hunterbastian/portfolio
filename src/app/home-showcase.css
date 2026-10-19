@@ -568,7 +568,7 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
 }
 
 html[data-playground-showcase] .playground-showcase,
-html[data-playground-showcase] .playground-showcase *:not(input):not(textarea):not(select),
+html[data-playground-showcase] .playground-showcase *:not(input, textarea, select),
 html[data-playground-showcase] .playground-showcase *::before,
 html[data-playground-showcase] .playground-showcase *::after {
   text-transform: uppercase !important;

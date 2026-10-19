@@ -568,7 +568,7 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
 }
 
 html[data-cv-showcase] .cv-showcase,
-html[data-cv-showcase] .cv-showcase *:not(input, textarea, select),
+html[data-cv-showcase] .cv-showcase *,
 html[data-cv-showcase] .cv-showcase *::before,
 html[data-cv-showcase] .cv-showcase *::after {
   text-transform: uppercase !important;

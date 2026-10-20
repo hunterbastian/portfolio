@@ -121,11 +121,11 @@ test('cv education detail keeps the level and optional note', () => {
   )
 })
 
-test('cv experience keeps every existing role and leads with undated Tesla', () => {
+test('cv experience keeps every existing role and dates the Tesla entry', () => {
   assert.deepEqual(
     experienceItems.map((item) => [item.company, item.title, item.year, item.description]),
     [
-      ['Tesla', 'Data Labeler', '', ''],
+      ['Tesla', 'Data Labeler', '2026 - Present', ''],
       ['Studio Alpine', 'Founder', '2026 - Present', 'Founder of Studio Alpine, a photography and design project.'],
       ['Catapult', 'Video Producer', '2024 - Present', 'Produced and edited marketing and product videos for Catapult.'],
       ['Utah Valley University', 'Department Representative', '2024 - Present', 'Helped new students with internship opportunities in the Web Design and Development program.'],

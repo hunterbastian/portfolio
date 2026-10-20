@@ -43,6 +43,7 @@ import {
   getPlaygroundOrbitOpacity,
   getPlaygroundOrbitQuickSwapTransition,
   getPlaygroundOrbitRestFilter,
+  getPlaygroundOrbitResponsiveCardSize,
   getPlaygroundOrbitResponsiveRadius,
   getPlaygroundOrbitScale,
   getPlaygroundOrbitRenderState,
@@ -485,6 +486,18 @@ test('responsive orbit radius clamps against viewport width and height', () => {
     }),
     214,
   )
+  assert.equal(
+    getPlaygroundOrbitResponsiveRadius({
+      radiusDesktop: 230,
+      radiusLarge: 262,
+      viewportHeight: 844,
+      viewportWidth: 390,
+    }),
+    143,
+  )
+  assert.equal(getPlaygroundOrbitResponsiveCardSize(11, 1440), 112)
+  assert.equal(getPlaygroundOrbitResponsiveCardSize(11, 390), 64)
+  assert.equal(getPlaygroundOrbitResponsiveCardSize(11, 700), 88)
 })
 
 test('orbit viewport snapshot prefers visual viewport height when present', () => {

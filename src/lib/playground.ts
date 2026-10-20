@@ -43,6 +43,10 @@ export const PLAYGROUND_GALLERY_TILE_VARIANTS = [
 ] as const
 export const PLAYGROUND_ORBIT_RADIUS_DESKTOP = 230
 export const PLAYGROUND_ORBIT_RADIUS_LARGE = 262
+export const PLAYGROUND_ORBIT_STACK_WIDTH = 820
+export const PLAYGROUND_ORBIT_NARROW_WIDTH = 520
+export const PLAYGROUND_ORBIT_NARROW_CARD_SIZE = 64
+export const PLAYGROUND_ORBIT_COMPACT_CARD_SIZE = 88
 export const PLAYGROUND_DEFAULT_ORBIT_RADIUS_DESKTOP = 300
 export const PLAYGROUND_DEFAULT_ORBIT_RADIUS_LARGE = 360
 export const PLAYGROUND_ORBIT_LARGE_VIEWPORT_WIDTH = 1280
@@ -579,6 +583,13 @@ export function getPlaygroundOrbitCardSize(count: number): number {
   return 144
 }
 
+export function getPlaygroundOrbitResponsiveCardSize(count: number, viewportWidth: number): number {
+  const base = getPlaygroundOrbitCardSize(count)
+  if (viewportWidth > PLAYGROUND_ORBIT_STACK_WIDTH) return base
+  if (viewportWidth < PLAYGROUND_ORBIT_NARROW_WIDTH) return Math.min(base, PLAYGROUND_ORBIT_NARROW_CARD_SIZE)
+  return Math.min(base, PLAYGROUND_ORBIT_COMPACT_CARD_SIZE)
+}
+
 export function getPlaygroundOrbitSelection({
   hoveredIndex,
   projectCount,
@@ -675,7 +686,15 @@ export function getPlaygroundOrbitResponsiveRadius({
         ? PLAYGROUND_ORBIT_MEDIUM_RADIUS
         : widthRadius
 
-  return Math.min(widthRadius, heightRadius)
+  const base = Math.min(widthRadius, heightRadius)
+  if (viewportWidth > PLAYGROUND_ORBIT_STACK_WIDTH) return base
+
+  const card =
+    viewportWidth < PLAYGROUND_ORBIT_NARROW_WIDTH
+      ? PLAYGROUND_ORBIT_NARROW_CARD_SIZE
+      : PLAYGROUND_ORBIT_COMPACT_CARD_SIZE
+  const fit = Math.floor((viewportWidth - 40 - card) / 2)
+  return Math.max(96, Math.min(base, fit))
 }
 
 export function getPlaygroundOrbitViewportSnapshot(

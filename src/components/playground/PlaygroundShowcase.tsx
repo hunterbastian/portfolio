@@ -17,6 +17,7 @@ import {
   PLAYGROUND_EMPTY_COPY,
   PLAYGROUND_ORBIT_ENTRANCE,
   PLAYGROUND_ORBIT_NORMAL_SPEED,
+  PLAYGROUND_ORBIT_LARGE_VIEWPORT_WIDTH,
   PLAYGROUND_ORBIT_RADIUS_DESKTOP,
   PLAYGROUND_ORBIT_RADIUS_LARGE,
   PLAYGROUND_ORBIT_SLOW_SPEED,
@@ -24,6 +25,7 @@ import {
   getNextPlaygroundOrbitAnimationFrame,
   getPlaygroundOrbitCardFrame,
   getPlaygroundOrbitCardZIndex,
+  getPlaygroundOrbitResponsiveCardSize,
   getPlaygroundOrbitViewState,
   getPlaygroundShowcaseHref,
   schedulePlaygroundOrbitActivation,
@@ -84,25 +86,104 @@ function TextArrow() {
 function ExperimentLink({
   children,
   className,
+  hidden,
+  onAnimationEnd,
   project,
 }: {
   children: ReactNode
   className?: string
+  hidden?: boolean
+  onAnimationEnd?: () => void
   project: Project
 }) {
   const destination = getPlaygroundShowcaseHref(project)
+  const hiddenProps = hidden ? { 'aria-hidden': true as const, tabIndex: -1 } : {}
   if (destination.external) {
     return (
-      <a className={className} href={destination.href} rel="noopener noreferrer" target="_blank">
+      <a
+        className={className}
+        href={destination.href}
+        onAnimationEnd={onAnimationEnd}
+        rel="noopener noreferrer"
+        target="_blank"
+        {...hiddenProps}
+      >
         {children}
       </a>
     )
   }
 
   return (
-    <Link className={className} href={destination.href}>
+    <Link className={className} href={destination.href} onAnimationEnd={onAnimationEnd} {...hiddenProps}>
       {children}
     </Link>
+  )
+}
+
+function CaptionLabel({ caption, external }: { caption: string; external: boolean }) {
+  return (
+    <>
+      {caption}
+      {external ? <> <TextArrow /></> : null}
+    </>
+  )
+}
+
+function ShowcaseCaption({
+  caption,
+  external,
+  project,
+  reducedMotion,
+}: {
+  caption: string
+  external: boolean
+  project: Project
+  reducedMotion: boolean
+}) {
+  const [view, setView] = useState({
+    caption,
+    external,
+    outgoing: null as { caption: string; external: boolean; project: Project } | null,
+    project,
+  })
+
+  if (view.project.slug !== project.slug || view.caption !== caption || view.external !== external) {
+    setView({
+      caption,
+      external,
+      outgoing: reducedMotion ? null : { caption: view.caption, external: view.external, project: view.project },
+      project,
+    })
+  }
+
+  const clearOutgoing = useCallback(() => {
+    setView((current) => (current.outgoing ? { ...current, outgoing: null } : current))
+  }, [])
+
+  useEffect(() => {
+    if (!view.outgoing) return
+    const timer = window.setTimeout(clearOutgoing, 280)
+    return () => window.clearTimeout(timer)
+  }, [clearOutgoing, view.outgoing])
+
+  const enteringClass = view.outgoing ? 'playground-showcase-caption is-entering' : 'playground-showcase-caption'
+
+  return (
+    <div aria-live="polite" className="playground-showcase-caption-stack">
+      {view.outgoing ? (
+        <ExperimentLink
+          className="playground-showcase-caption is-leaving"
+          hidden
+          onAnimationEnd={clearOutgoing}
+          project={view.outgoing.project}
+        >
+          <CaptionLabel caption={view.outgoing.caption} external={view.outgoing.external} />
+        </ExperimentLink>
+      ) : null}
+      <ExperimentLink className={enteringClass} key={view.project.slug} project={view.project}>
+        <CaptionLabel caption={view.caption} external={view.external} />
+      </ExperimentLink>
+    </div>
   )
 }
 
@@ -169,7 +250,12 @@ export default function PlaygroundShowcase({ className, projects }: PlaygroundSh
   const orbitState = getPlaygroundOrbitViewState(projects, hoveredIndex)
   const rotation = useMotionValue(0)
   const speedRef = useRef(0)
-  const orbitRadius = useOrbitRadius(PLAYGROUND_ORBIT_RADIUS_DESKTOP, PLAYGROUND_ORBIT_RADIUS_LARGE)
+  const orbitMetrics = useOrbitRadius(PLAYGROUND_ORBIT_RADIUS_DESKTOP, PLAYGROUND_ORBIT_RADIUS_LARGE)
+  const orbitRadius = orbitMetrics.radius
+  const cardSize = getPlaygroundOrbitResponsiveCardSize(
+    orbitState.count,
+    orbitMetrics.viewportWidth ?? PLAYGROUND_ORBIT_LARGE_VIEWPORT_WIDTH,
+  )
 
   const chooseTheme = useCallback((next: ShowcaseTheme) => {
     writeShowcaseThemePreference(next)
@@ -262,10 +348,12 @@ export default function PlaygroundShowcase({ className, projects }: PlaygroundSh
             <div aria-hidden="true" className="playground-showcase-ring" />
             <div className="playground-showcase-center">
               {activeProject ? (
-                <ExperimentLink className="playground-showcase-caption" project={activeProject}>
-                  {activeCaption}
-                  {activeExternal ? <> <TextArrow /></> : null}
-                </ExperimentLink>
+                <ShowcaseCaption
+                  caption={activeCaption}
+                  external={activeExternal}
+                  project={activeProject}
+                  reducedMotion={prefersReducedMotion}
+                />
               ) : null}
             </div>
             {mounted
@@ -274,7 +362,7 @@ export default function PlaygroundShowcase({ className, projects }: PlaygroundSh
                     key={card.project.slug}
                     baseAngle={card.baseAngle}
                     caption={formatPlaygroundShowcaseCaption(card.meta)}
-                    cardSize={orbitState.cardSize}
+                    cardSize={cardSize}
                     orbitRadius={orbitRadius}
                     priorityImage={card.priorityImage}
                     project={card.project}

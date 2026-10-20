@@ -702,6 +702,8 @@ html[data-playground-showcase] .playground-showcase *::after {
   --showcase-mute: #8a8a86;
   --showcase-line: #e4e4e0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   min-height: 100dvh;
   padding:
     max(28px, env(safe-area-inset-top))
@@ -793,8 +795,8 @@ html[data-playground-showcase] .playground-showcase *::after {
 
 .playground-showcase-orbit {
   position: relative;
-  height: min(760px, calc(100dvh - 92px));
-  min-height: 620px;
+  flex: 1 1 auto;
+  min-height: min(520px, calc(100dvh - 120px));
 }
 
 .playground-showcase-ring {
@@ -819,8 +821,48 @@ html[data-playground-showcase] .playground-showcase *::after {
   pointer-events: none;
 }
 
+.playground-showcase-caption-stack {
+  display: grid;
+  min-height: 2.9em;
+  align-items: center;
+}
+
 .playground-showcase-caption {
+  grid-area: 1 / 1;
   pointer-events: auto;
+}
+
+.playground-showcase-caption.is-entering {
+  animation: playground-caption-in 220ms ease-out both;
+}
+
+.playground-showcase-caption.is-leaving {
+  animation: playground-caption-out 220ms ease-out both;
+  pointer-events: none;
+}
+
+@keyframes playground-caption-in {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes playground-caption-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
 }
 
 .playground-showcase-orbit-card {
@@ -895,12 +937,44 @@ html[data-playground-showcase] .playground-showcase .playground-showcase-arrow {
   }
 
   .playground-showcase-orbit {
-    display: none;
+    flex: none;
+    height: calc(100dvh - 108px);
+    min-height: calc(100dvh - 108px);
   }
 
   .playground-showcase-list {
     display: block;
     margin-top: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playground-showcase-caption.is-entering {
+    animation: playground-caption-fade-in 180ms ease-out both;
+  }
+
+  .playground-showcase-caption.is-leaving {
+    animation: playground-caption-fade-out 180ms ease-out both;
+  }
+}
+
+@keyframes playground-caption-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes playground-caption-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }
 

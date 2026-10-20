@@ -55,6 +55,7 @@ test('home section href and hash helpers keep shareable anchors', () => {
 
 test('section nav is homepage-only', () => {
   assert.equal(isHomeSectionNavPath('/'), true)
+  assert.equal(isHomeSectionNavPath('/index'), true)
   assert.equal(isHomeSectionNavPath('/archive'), false)
   assert.equal(shouldShowHomeSectionNav('/'), true)
   assert.equal(shouldShowHomeSectionNav('/cv'), false)

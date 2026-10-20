@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { normalizeAppPathname } from '@/lib/pathname'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { MOTION_EASE_EXIT, MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 import { useWebHaptics } from 'web-haptics/react'
@@ -46,7 +47,7 @@ function ScrollArrowMark({ className }: { className?: string }) {
 }
 
 export default function ScrollToTop() {
-  const pathname = usePathname()
+  const pathname = normalizeAppPathname(usePathname())
   const [visible, setVisible] = useState(false)
   const visibleRef = useRef(false)
   const frameRef = useRef<number | null>(null)

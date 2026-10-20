@@ -2,6 +2,7 @@
 
 import { useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
+import { normalizeAppPathname } from '@/lib/pathname'
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
 import { LauncherPaletteDialog } from '@/components/launcher/LauncherPaletteDialog'
@@ -43,7 +44,7 @@ interface JoyfulLayerPanelProps {
 }
 
 export default function JoyfulLayerPanel({ projects = [], openSignal = 0 }: JoyfulLayerPanelProps) {
-  const pathname = usePathname()
+  const pathname = normalizeAppPathname(usePathname())
   const prefersReducedMotion = useReducedMotion() ?? false
   const haptic = useWebHaptics()
   const [paletteOpen, setPaletteOpen] = useState(false)

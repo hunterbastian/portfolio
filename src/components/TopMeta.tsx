@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import { normalizeAppPathname } from '@/lib/pathname'
 import MobileNavigation from '@/components/MobileNavigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useWebHaptics } from 'web-haptics/react'
@@ -121,7 +122,7 @@ function SectionNavLink({
 }
 
 function PageTopMeta() {
-  const pathname = usePathname()
+  const pathname = normalizeAppPathname(usePathname())
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [headerHidden, setHeaderHidden] = useState(false)
   const [headerFrosted, setHeaderFrosted] = useState(false)
@@ -325,7 +326,7 @@ function PageTopMeta() {
 }
 
 export default function TopMeta() {
-  const pathname = usePathname()
+  const pathname = normalizeAppPathname(usePathname())
   if (pathname === '/') return null
   return <PageTopMeta />
 }

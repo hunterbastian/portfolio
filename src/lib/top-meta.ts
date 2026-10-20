@@ -1,4 +1,5 @@
 import { CHROME_NAV_ACTIVE_CLASS, CHROME_NAV_INACTIVE_CLASS } from './chrome.ts'
+import { isHomePathname } from './pathname.ts'
 
 export const TOP_REVEAL_SCROLL_Y = 24
 export const TOP_META_SUN_BLINK_MS = 420
@@ -92,7 +93,7 @@ export const TOP_META_BRAND_ACTION = {
 } as const satisfies TopMetaActionState
 
 export function isTopMetaNavItemActive(pathname: string, item: Pick<TopMetaNavItem, 'href'>) {
-  return item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
+  return item.href === '/' ? isHomePathname(pathname) : pathname.startsWith(item.href)
 }
 
 export function getTopMetaAnalyticsTarget(name: string) {
@@ -189,11 +190,11 @@ export function getTopMetaHeaderState({
 }
 
 export function getTopMetaPageNavItems(pathname: string) {
-  return pathname === '/' ? [] : [...TOP_META_NAV_ITEMS]
+  return isHomePathname(pathname) ? [] : [...TOP_META_NAV_ITEMS]
 }
 
 export function getTopMetaMobilePageNavItems(pathname: string) {
-  if (pathname !== '/') {
+  if (!isHomePathname(pathname)) {
     return [...TOP_META_NAV_ITEMS]
   }
 

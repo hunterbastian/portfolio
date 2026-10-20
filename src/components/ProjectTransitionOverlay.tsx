@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import { usePathname } from 'next/navigation'
 import { normalizeAppPathname } from '@/lib/pathname'
 import {
@@ -114,7 +114,7 @@ export default function ProjectTransitionOverlay() {
       }}
       onAnimationComplete={handleAnimationComplete}
     >
-      <Image
+      <BlurImage
         src={transition.imageSrc}
         alt=""
         fill

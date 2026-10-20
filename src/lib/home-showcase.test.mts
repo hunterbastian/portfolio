@@ -13,6 +13,7 @@ import {
   getShowcaseEndeavors,
   getShowcaseHash,
   getShowcaseIndexFromHash,
+  getShowcaseKeyboardAction,
   getShowcaseLinks,
   getShowcaseTravelDirection,
   getShowcaseVideoSrc,
@@ -72,6 +73,20 @@ test('showcase slides follow the homepage order and MDX fields', () => {
   assert.equal(getShowcaseVideoSrc('lumo'), null)
   assert.equal(getShowcaseCaption(0, slides.length, slides[0]!).lead, '1 of 7 — Mental Health Mini Site, 2026')
   assert.equal(getShowcaseCaption(0, slides.length, slides[0]!).tag, 'Web Design')
+})
+
+test('arrow keys move the showcase and ignore typing or modifiers', () => {
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowRight' }), 'next')
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowLeft' }), 'previous')
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowUp' }), null)
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowRight', shiftKey: true }), null)
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowLeft', altKey: true }), null)
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowRight', metaKey: true }), null)
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowLeft', ctrlKey: true }), null)
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowRight', target: { tagName: 'INPUT' } }), null)
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowLeft', target: { tagName: 'textarea' } }), null)
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowRight', target: { tagName: 'DIV', isContentEditable: true } }), null)
+  assert.equal(getShowcaseKeyboardAction({ key: 'ArrowRight', target: { tagName: 'BUTTON' } }), 'next')
 })
 
 test('hash indexes clamp to the showcase length', () => {

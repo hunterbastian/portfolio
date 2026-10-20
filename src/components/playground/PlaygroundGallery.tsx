@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import Link from 'next/link'
 import {
   PLAYGROUND_GALLERY_LABEL,
@@ -32,7 +32,7 @@ export default function PlaygroundGallery({ projects }: PlaygroundGalleryProps) 
               </span>
 
               <span className="playground-gallery-media">
-                <Image
+                <BlurImage
                   src={project.frontmatter.image}
                   alt={`Preview of ${project.frontmatter.title}`}
                   fill

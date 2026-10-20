@@ -342,6 +342,31 @@ export function getShowcaseEndeavors(): ShowcaseEndeavor[] {
   })
 }
 
+export interface ShowcaseKeyboardInput {
+  altKey?: boolean
+  ctrlKey?: boolean
+  key: string
+  metaKey?: boolean
+  shiftKey?: boolean
+  target?: { isContentEditable?: boolean; tagName?: string } | null
+}
+
+export type ShowcaseKeyboardAction = 'next' | 'previous'
+
+/** Left/Right move the homepage carousel. Typing targets and modifier keys do not. */
+export function getShowcaseKeyboardAction(input: ShowcaseKeyboardInput): ShowcaseKeyboardAction | null {
+  if (input.altKey || input.ctrlKey || input.metaKey || input.shiftKey) return null
+
+  const tag = input.target?.tagName?.toUpperCase()
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || input.target?.isContentEditable) {
+    return null
+  }
+
+  if (input.key === 'ArrowRight') return 'next'
+  if (input.key === 'ArrowLeft') return 'previous'
+  return null
+}
+
 export function getShowcaseLinks(): ShowcaseLink[] {
   const socialHref = new Map(contactSocialLinks.map((link) => [link.label, link.href]))
 

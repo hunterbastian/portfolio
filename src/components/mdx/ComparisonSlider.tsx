@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import { useId, useState } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
 import {
@@ -44,7 +44,7 @@ export default function ComparisonSlider({
     <figure className="my-10">
       <div className="relative w-full overflow-hidden border border-border bg-card/80 shadow-sm">
         <div className="relative aspect-[16/10] w-full">
-          <Image
+          <BlurImage
             src={beforeSrc}
             alt={beforeAlt}
             fill
@@ -61,7 +61,7 @@ export default function ComparisonSlider({
             }}
           >
             <div className="relative h-full w-full">
-              <Image
+              <BlurImage
                 src={afterSrc}
                 alt={afterAlt}
                 fill

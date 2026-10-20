@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
+import ProjectVideo from '@/components/media/ProjectVideo'
 import ImageViewer from '@/components/ImageViewer'
 import ComparisonSlider from './ComparisonSlider'
 import LiquidTabs from './LiquidTabs'
@@ -21,7 +22,7 @@ type OrderedListProps = React.HTMLAttributes<HTMLOListElement>
 type ListItemProps = React.HTMLAttributes<HTMLLIElement>
 type AnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>
 type InternalLinkProps = Omit<React.ComponentProps<typeof Link>, 'href' | 'children'>
-type ImageProps = Omit<React.ComponentProps<typeof Image>, 'src' | 'alt' | 'width' | 'height'> & {
+type ImageProps = Omit<React.ComponentProps<typeof BlurImage>, 'src' | 'alt' | 'width' | 'height'> & {
   src?: string
   alt?: string
   width?: number
@@ -74,7 +75,7 @@ export const A: React.FC<AnchorProps> = ({ href = '', children, ...props }) => {
 
 export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, height = 675, ...props }) => (
   <ImageViewer src={src} alt={alt} className="mb-8 mt-8">
-    <Image
+    <BlurImage
       src={src}
       alt={alt}
       width={width}
@@ -87,15 +88,8 @@ export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, he
   </ImageViewer>
 )
 
-export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = ({ className = '', ...props }) => (
-  <div className="mb-8 mt-8">
-    <video
-      controls
-      playsInline
-      className={`w-full shadow-lg ${className}`}
-      {...props}
-    />
-  </div>
+export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = (props) => (
+  <ProjectVideo controls playsInline {...props} />
 )
 
 const mdxComponents = {

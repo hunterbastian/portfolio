@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 import {
@@ -46,7 +46,7 @@ export default function ImageAnnotation({
         className="relative w-full overflow-hidden shadow-card"
         style={{ aspectRatio: aspect }}
       >
-        <Image
+        <BlurImage
           src={src}
           alt={alt}
           fill

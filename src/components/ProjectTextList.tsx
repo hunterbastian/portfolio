@@ -4,7 +4,7 @@ import type { MouseEvent } from 'react'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AnimatePresence, m, useMotionValue, useSpring } from 'framer-motion'
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import { MOTION_SPRING_SNAPPY } from '@/lib/motion'
 import { analytics } from '@/lib/analytics'
 import {
@@ -131,7 +131,7 @@ export default function ProjectTextList({ projects }: ProjectTextListProps) {
             exit={CASE_STUDY_TEXT_LIST_PREVIEW_EXIT}
             transition={getCaseStudyTextListPreviewTransition()}
           >
-            <Image
+            <BlurImage
               src={viewState.preview.image}
               alt={viewState.preview.alt}
               width={CASE_STUDY_TEXT_LIST_PREVIEW_IMAGE_WIDTH}

@@ -1,7 +1,7 @@
 'use client'
 
 import { memo, useState, useCallback, useRef } from 'react'
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import Link from 'next/link'
 import TrackedExternalLink from '@/components/TrackedExternalLink'
 import type { ProjectFrontmatter } from '@/types/project'
@@ -75,7 +75,7 @@ function ProjectCardComponent({ slug, frontmatter, index, hideLiveBadge, hideLab
                 className="absolute inset-0 h-full w-full"
                 style={getProjectCardImageZoomStyle(frontmatter.imageZoom)}
               >
-                <Image
+                <BlurImage
                   src={imgSrc}
                   alt={getProjectCardImageAlt(frontmatter)}
                   fill

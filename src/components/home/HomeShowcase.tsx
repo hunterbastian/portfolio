@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import BlurImage from '@/components/media/BlurImage'
+import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
 import {
   HOME_SHOWCASE_LOCATION,
@@ -14,6 +16,7 @@ import {
   getShowcaseEndeavors,
   getShowcaseHash,
   getShowcaseIndexFromHash,
+  getShowcaseKeyboardAction,
   getShowcaseLinks,
   getShowcaseTravelDirection,
   planShowcaseSlideMotion,
@@ -129,6 +132,11 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const suppressClick = useRef(false)
   const videoRef = useRef<HTMLVideoElement | null>(null)
+  const [videoGate, setVideoGate] = useState({ index: 0, ready: false })
+  if (videoGate.index !== index) {
+    setVideoGate({ index, ready: false })
+  }
+  const videoReady = videoGate.ready && videoGate.index === index
   const reducedMotion = usePrefersReducedMotion()
   const [theme, setTheme] = useState<ShowcaseTheme>('light')
   // Null until the pre-paint sync, so SSR does not mark either still as the LCP image.
@@ -288,21 +296,20 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.altKey || event.metaKey || event.ctrlKey) return
+      const action = getShowcaseKeyboardAction({
+        altKey: event.altKey,
+        ctrlKey: event.ctrlKey,
+        key: event.key,
+        metaKey: event.metaKey,
+        shiftKey: event.shiftKey,
+        target: event.target instanceof HTMLElement
+          ? { isContentEditable: event.target.isContentEditable, tagName: event.target.tagName }
+          : null,
+      })
+      if (!action) return
 
-      const target = event.target
-      if (target instanceof HTMLElement) {
-        const tag = target.tagName
-        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable) return
-      }
-
-      if (event.key === 'ArrowRight') {
-        event.preventDefault()
-        go(indexRef.current + 1)
-      } else if (event.key === 'ArrowLeft') {
-        event.preventDefault()
-        go(indexRef.current - 1)
-      }
+      event.preventDefault()
+      go(indexRef.current + (action === 'next' ? 1 : -1))
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -314,6 +321,9 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     if (!video || reducedMotion !== false) return
 
     video.muted = true
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      setVideoGate({ index, ready: true })
+    }
     const pending = video.play()
     if (pending) pending.catch(() => {})
   }, [index, reducedMotion])
@@ -377,8 +387,12 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
           </div>
           <div className="home-showcase-actions">
             <nav className="home-showcase-links" aria-label="Contact">
-              {links.map((item) => item.external ? (
-                <a key={item.label} href={item.href} {...(item.href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
+              {links.map((item) => item.href.startsWith('mailto:') ? (
+                <EmailCopyLink key={item.label} href={item.href}>
+                  {item.label}
+                </EmailCopyLink>
+              ) : item.external ? (
+                <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer">
                   {item.label}
                 </a>
               ) : (
@@ -465,23 +479,32 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                           preload="metadata"
                           aria-hidden="true"
                           tabIndex={-1}
+                          data-ready={videoReady ? 'true' : undefined}
+                          onLoadedData={() => setVideoGate({ index, ready: true })}
+                          onPlaying={() => setVideoGate({ index, ready: true })}
                         />
                       ) : null}
-                      <img
+                      <BlurImage
                         className="home-showcase-still home-showcase-still-light"
                         src={slide.imageSrc}
                         alt={slide.imageAlt}
+                        fill
+                        sizes="(max-width: 820px) calc(100vw - 40px), 68vw"
                         draggable={false}
-                        decoding="async"
+                        quality={80}
+                        style={{ objectFit: 'contain' }}
                         fetchPriority={eagerLight ? 'high' : 'low'}
                         loading={eagerLight ? 'eager' : 'lazy'}
                       />
-                      <img
+                      <BlurImage
                         className="home-showcase-still home-showcase-still-dark"
                         src={slide.darkImageSrc}
                         alt=""
+                        fill
+                        sizes="(max-width: 820px) calc(100vw - 40px), 68vw"
                         draggable={false}
-                        decoding="async"
+                        quality={80}
+                        style={{ objectFit: 'contain' }}
                         fetchPriority={eagerDark ? 'high' : 'low'}
                         loading={eagerDark ? 'eager' : 'lazy'}
                       />

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
 import {
   HOME_SHOWCASE_LOCATION,
   HOME_SHOWCASE_ROLE,
@@ -386,15 +387,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 </Link>
               ))}
             </nav>
-            <div className="home-showcase-theme" role="group" aria-label="Color theme">
-              <button type="button" aria-pressed={theme === 'light'} onClick={() => chooseTheme('light')}>
-                Light
-              </button>
-              <span aria-hidden="true">/</span>
-              <button type="button" aria-pressed={theme === 'dark'} onClick={() => chooseTheme('dark')}>
-                Dark
-              </button>
-            </div>
+            <ShowcaseThemeSwitch className="home-showcase-theme" theme={theme} onChange={chooseTheme} />
           </div>
         </div>
       </aside>

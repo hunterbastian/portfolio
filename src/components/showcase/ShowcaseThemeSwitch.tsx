@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Switch } from '@/components/ui/switch'
 import type { ShowcaseTheme } from '@/lib/home-showcase'
 
@@ -11,6 +12,7 @@ interface ShowcaseThemeSwitchProps {
 
 export default function ShowcaseThemeSwitch({ className, theme, onChange }: ShowcaseThemeSwitchProps) {
   const dark = theme === 'dark'
+  const [travel, setTravel] = useState<'to-dark' | 'to-light' | null>(null)
 
   return (
     <div
@@ -24,7 +26,11 @@ export default function ShowcaseThemeSwitch({ className, theme, onChange }: Show
       <Switch
         size="sm"
         checked={dark}
-        onCheckedChange={(checked) => onChange(checked ? 'dark' : 'light')}
+        data-travel={travel ?? undefined}
+        onCheckedChange={(checked) => {
+          setTravel(checked ? 'to-dark' : 'to-light')
+          onChange(checked ? 'dark' : 'light')
+        }}
         aria-label="Dark theme"
       />
       <span className={dark ? 'is-current' : undefined} aria-hidden="true">

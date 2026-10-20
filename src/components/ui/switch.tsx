@@ -21,6 +21,10 @@ function Switch({
       )}
       {...props}
     >
+      <span data-slot="switch-glass" data-glass="light" aria-hidden="true" />
+      <span data-slot="switch-glass" data-glass="dark" aria-hidden="true" />
+      <span data-slot="switch-wash" aria-hidden="true" />
+      <span data-slot="switch-press" aria-hidden="true" />
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
         className="pointer-events-none block rounded-full"

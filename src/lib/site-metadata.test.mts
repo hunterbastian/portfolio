@@ -9,8 +9,8 @@ const config = {
   defaultOgImage: '/images/profilepicture.webp',
   faviconVersion: 'test-version',
   personName: 'Hunter Bastian',
-  siteDescription: 'Design engineer portfolio.',
-  siteTitle: 'Hunter Bastian - Design Engineer',
+  siteDescription: 'Product designer portfolio.',
+  siteTitle: 'Hunter Bastian - Product Designer',
   studioName: 'Studio Alpine',
   themeColorDark: '#232527',
   url: 'https://hunterbastian.com',
@@ -19,9 +19,9 @@ const config = {
 test('getSiteMetadata builds root title, authors, and canonical metadata', () => {
   const metadata = getSiteMetadata(config, 'Hunter Bastian Portfolio')
 
-  assert.equal(metadata.title, 'Hunter Bastian - Design Engineer')
+  assert.equal(metadata.title, 'Hunter Bastian - Product Designer')
   assert.equal(metadata.applicationName, 'Hunter Bastian Portfolio')
-  assert.equal(metadata.description, 'Design engineer portfolio.')
+  assert.equal(metadata.description, 'Product designer portfolio.')
   assert.deepEqual(metadata.keywords, SITE_METADATA_KEYWORDS)
   assert.deepEqual(metadata.authors, [{ name: 'Hunter Bastian', url: 'https://hunterbastian.com' }])
   assert.equal(metadata.creator, 'Hunter Bastian')
@@ -57,22 +57,22 @@ test('getSiteMetadata builds social preview metadata', () => {
     type: 'website',
     locale: 'en_US',
     url: 'https://hunterbastian.com',
-    title: 'Hunter Bastian - Design Engineer',
-    description: 'Design engineer portfolio.',
+    title: 'Hunter Bastian - Product Designer',
+    description: 'Product designer portfolio.',
     siteName: 'Hunter Bastian Portfolio',
     images: [
       {
         url: 'https://hunterbastian.com/images/profilepicture.webp',
         width: 1200,
         height: 630,
-        alt: 'Hunter Bastian Portfolio - design engineer portfolio',
+        alt: 'Hunter Bastian Portfolio - product designer portfolio',
       },
     ],
   })
   assert.deepEqual(metadata.twitter, {
     card: 'summary_large_image',
-    title: 'Hunter Bastian - Design Engineer',
-    description: 'Design engineer portfolio.',
+    title: 'Hunter Bastian - Product Designer',
+    description: 'Product designer portfolio.',
     creator: '@thestudioalpine',
     images: ['https://hunterbastian.com/images/profilepicture.webp'],
   })

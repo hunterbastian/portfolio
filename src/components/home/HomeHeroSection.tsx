@@ -19,7 +19,7 @@ export function HomeHeroSection() {
   return (
     <section id="home" className={`home-hero-grid ${HOME_SECTION_SCROLL_MARGIN_CLASS_NAME}`}>
       <div className="home-hero-heading">
-        <p className="home-hero-role">Design engineer</p>
+        <p className="home-hero-role">Product designer</p>
         <h1 className="home-statement-title preserve-name-case" aria-label={homeHeroContent.intro}>
           I design and build <span>thoughtful digital experiences.</span>
         </h1>

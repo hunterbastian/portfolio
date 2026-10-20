@@ -35,7 +35,7 @@ interface StaticPageMetadataOptions {
 
 export const SITE_METADATA_KEYWORDS = [
   'Hunter Bastian',
-  'design engineer',
+  'product designer',
   'portfolio',
   'interaction design',
   'UI design',
@@ -95,7 +95,7 @@ export function getSiteMetadata(
           url: absoluteMetadataUrl(config.defaultOgImage, config.url),
           width: 1200,
           height: 630,
-          alt: `${config.appName} - design engineer portfolio`,
+          alt: `${config.appName} - product designer portfolio`,
         },
       ],
     },

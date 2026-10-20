@@ -22,7 +22,7 @@ export const HOME_SHOWCASE_INK_DARK = '#EDEDEA'
 export const HOME_SHOWCASE_MUTE_DARK = '#84847F'
 export const HOME_SHOWCASE_LINE_DARK = '#262624'
 export const HOME_SHOWCASE_TIME_ZONE = 'America/Denver'
-export const HOME_SHOWCASE_ROLE = 'Design Engineer'
+export const HOME_SHOWCASE_ROLE = 'Product Designer'
 export const HOME_SHOWCASE_LOCATION = 'Lehi, Utah'
 /** Persisted homepage theme override. Absent means follow the system scheme. */
 export const HOME_SHOWCASE_THEME_STORAGE_KEY = 'hb-showcase-theme'

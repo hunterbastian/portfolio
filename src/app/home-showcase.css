@@ -209,7 +209,6 @@ html[data-home-showcase] .home-showcase *::after {
   width: 100%;
 }
 
-.home-showcase-list a:hover,
 .home-showcase-links a:hover {
   color: var(--showcase-mute);
   filter: none;
@@ -333,8 +332,8 @@ html[data-home-showcase] .home-showcase .home-showcase-arrow {
 
 .home-showcase-frame {
   position: relative;
-  width: calc(100% / 1.01);
-  height: calc(100% / 1.01);
+  width: 100%;
+  height: 100%;
 }
 
 .home-showcase-frame::before {
@@ -648,20 +647,90 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
   animation: home-showcase-fade 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.home-showcase-slide[data-pos='current'] .home-showcase-frame,
-.home-showcase-frame::before {
-  transition:
-    opacity 250ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+@media (not (pointer: coarse)) {
+  .home-showcase-identity,
+  .home-showcase-bio,
+  .home-showcase-endeavors,
+  .home-showcase-label,
+  .home-showcase-list li,
+  .home-showcase-links,
+  .home-showcase-theme,
+  .home-showcase-panel,
+  .home-showcase-caption,
+  .home-showcase-dots,
+  .home-showcase-controls {
+    transition:
+      filter 280ms ease-out,
+      opacity 280ms ease-out;
+  }
+
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-identity,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-bio,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-endeavors,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-links,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-theme,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-caption,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-dots,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-controls,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-identity,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-bio,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-label,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-list li:not(:hover),
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-links,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-theme,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-panel,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-caption,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-dots,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-controls {
+    filter: blur(4px);
+    opacity: 0.82 !important;
+  }
+
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-theme:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-theme:focus-within,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-controls:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-controls:focus-within {
+    filter: none;
+    opacity: 1 !important;
+  }
 }
 
-.home-showcase-panel:hover .home-showcase-slide[data-pos='current'] .home-showcase-frame {
-  transform: scale(1.01);
-}
+@media (not (pointer: coarse)) and (prefers-reduced-motion: reduce) {
+  .home-showcase-identity,
+  .home-showcase-bio,
+  .home-showcase-endeavors,
+  .home-showcase-label,
+  .home-showcase-list li,
+  .home-showcase-links,
+  .home-showcase-theme,
+  .home-showcase-panel,
+  .home-showcase-caption,
+  .home-showcase-dots,
+  .home-showcase-controls {
+    transition: none;
+  }
 
-.home-showcase-panel:hover .home-showcase-slide[data-pos='current'] .home-showcase-frame::before {
-  opacity: 0.9;
-  transform: translateY(10px) scale(1);
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-identity,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-bio,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-endeavors,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-links,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-theme,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-caption,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-dots,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-controls,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-identity,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-bio,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-label,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-list li:not(:hover),
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-links,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-theme,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-panel,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-caption,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-dots,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-controls {
+    filter: none;
+    opacity: 0.72 !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

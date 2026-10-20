@@ -310,12 +310,12 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video || reducedMotion !== false || theme !== 'light') return
+    if (!video || reducedMotion !== false) return
 
     video.muted = true
     const pending = video.play()
     if (pending) pending.catch(() => {})
-  }, [index, reducedMotion, theme])
+  }, [index, reducedMotion])
 
   useEffect(() => {
     const slide = slides[index]
@@ -437,7 +437,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               : previousIndex !== null && slideIndex === previousIndex
                 ? direction > 0 ? 'left' : 'right'
                 : slideIndex < index ? 'left' : 'right'
-            const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false && theme === 'light'
+            const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false
             const loaded = current || seen.has(slideIndex)
             const eagerLight = current && prioritizedTheme === 'light'
             const eagerDark = current && prioritizedTheme === 'dark'
@@ -464,7 +464,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                           className="home-showcase-motion"
                           ref={videoRef}
                           src={slide.videoSrc ?? undefined}
-                          poster={slide.imageSrc}
+                          poster={theme === 'dark' ? slide.darkImageSrc : slide.imageSrc}
                           muted
                           autoPlay
                           loop

@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
@@ -73,7 +73,7 @@ function ProjectEndNavLink({
     >
       <div className={PROJECT_END_NAV_LINK_LAYOUT_CLASS_NAME}>
         <div className={PROJECT_END_NAV_IMAGE_FRAME_CLASS_NAME}>
-          <Image
+          <BlurImage
             src={item.image}
             alt=""
             fill

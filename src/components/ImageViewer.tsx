@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import type { ReactNode } from 'react'
 import { Expand } from 'lucide-react'
 import * as Modal from '@/components/alignui/modal'
@@ -27,7 +27,7 @@ export default function ImageViewer({ src, alt, children, className }: {
         <Modal.Title className={styles.imageTitle}>{title}</Modal.Title>
         <Modal.Description className="sr-only">Enlarged project image. Press Escape or use the close button to return.</Modal.Description>
         <div className={styles.imageCanvas}>
-          <Image src={src} alt={alt} fill sizes="(max-width: 1279px) calc(100vw - 64px), 1168px" className="object-contain" quality={90} />
+          <BlurImage src={src} alt={alt} fill sizes="(max-width: 1279px) calc(100vw - 64px), 1168px" className="object-contain" quality={90} style={{ objectFit: 'contain' }} />
         </div>
       </Modal.Content>
     </Modal.Root>

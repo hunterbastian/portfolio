@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import Link from 'next/link'
+import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
 import { educationItems, experienceItems } from '@/content/homepage'
 import {
@@ -138,9 +139,15 @@ export default function CVPageClient({ className }: CvShowcaseProps) {
           {CV_CONTACT_LINKS.map((link) => (
             <Fragment key={link.href}>
               <span className="cv-showcase-dot" aria-hidden="true">·</span>
-              <a href={link.href} onClick={() => trackCvContactClick(link)}>
-                {link.label}
-              </a>
+              {link.href.startsWith('mailto:') ? (
+                <EmailCopyLink href={link.href} onClick={() => trackCvContactClick(link)}>
+                  {link.label}
+                </EmailCopyLink>
+              ) : (
+                <a href={link.href} onClick={() => trackCvContactClick(link)}>
+                  {link.label}
+                </a>
+              )}
             </Fragment>
           ))}
         </p>

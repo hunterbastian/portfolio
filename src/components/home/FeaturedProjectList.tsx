@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import * as Tag from '@/components/alignui/tag'
 import type { CSSProperties, FocusEvent } from 'react'
 import { useRef, useState } from 'react'
@@ -138,7 +138,7 @@ function FeaturedProjectCard({
       >
         {image ? (
           <div className="featured-project-image">
-            <Image src={image} alt="" fill sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 104px) / 2), (max-width: 1311px) calc((100vw - 160px) / 3), 384px" />
+            <BlurImage src={image} alt="" fill sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 104px) / 2), (max-width: 1311px) calc((100vw - 160px) / 3), 384px" />
           </div>
         ) : null}
         <span className={quiet ? HOME_MORE_ROW_META_CLASS_NAME : HOME_FEATURED_ROW_META_CLASS_NAME}>

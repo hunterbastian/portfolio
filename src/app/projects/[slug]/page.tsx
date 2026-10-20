@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import ImageViewer from '@/components/ImageViewer'
 import * as Tag from '@/components/alignui/tag'
 import { getAllProjects, getArchivedProjects, getProjectBySlug } from '@/lib/projects'
@@ -119,7 +119,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           }
           image={
             <ImageViewer src={frontmatter.image} alt={frontmatter.title} className="relative mb-12 aspect-[4/3] w-full img-inset-outline shadow-card">
-              <Image
+              <BlurImage
                 src={frontmatter.image}
                 alt={frontmatter.title}
                 fill

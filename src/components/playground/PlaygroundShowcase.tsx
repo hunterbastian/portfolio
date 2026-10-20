@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
-import Image from 'next/image'
+import BlurImage from '@/components/media/BlurImage'
 import Link from 'next/link'
 import { m, useAnimationFrame, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
 import type { MotionValue } from 'framer-motion'
@@ -234,7 +234,7 @@ function OrbitCard({
     >
       <ExperimentLink className="playground-showcase-thumb-link" project={project}>
         <span className="playground-showcase-thumb">
-          <Image alt="" fill priority={priorityImage} sizes="120px" src={project.frontmatter.image} />
+          <BlurImage alt="" fill priority={priorityImage} sizes="120px" src={project.frontmatter.image} />
         </span>
         <span className="sr-only">{caption}</span>
       </ExperimentLink>
@@ -374,7 +374,7 @@ export default function PlaygroundShowcase({ className, projects }: PlaygroundSh
                 <li key={card.project.slug}>
                   <ExperimentLink className="playground-showcase-row" project={card.project}>
                     <span className="playground-showcase-thumb">
-                      <Image
+                      <BlurImage
                         alt=""
                         fill
                         priority={card.priorityImage}

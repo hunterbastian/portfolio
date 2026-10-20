@@ -140,9 +140,14 @@ test('homepage keeps the header sticky so section jumps stay reachable', () => {
 
 test('homepage desktop nav yields to section jumps while mobile keeps Playground', () => {
   assert.deepEqual(getTopMetaPageNavItems('/'), [])
+  assert.deepEqual(getTopMetaPageNavItems('/index'), [])
   assert.deepEqual(getTopMetaPageNavItems('/archive'), [...TOP_META_NAV_ITEMS])
   assert.deepEqual(
     getTopMetaMobilePageNavItems('/').map((item) => item.href),
+    ['/archive'],
+  )
+  assert.deepEqual(
+    getTopMetaMobilePageNavItems('/index').map((item) => item.href),
     ['/archive'],
   )
   assert.deepEqual(

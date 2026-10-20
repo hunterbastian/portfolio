@@ -1,3 +1,5 @@
+import { isHomePathname } from './pathname.ts'
+
 export const FOOTER_SCROLL_REVEAL_THRESHOLD = 24
 export const FOOTER_SCROLL_DELTA_THRESHOLD = 6
 export const FOOTER_PAGE_END_PADDING = 160
@@ -151,7 +153,7 @@ export function activateFooterSparkle({
 }
 
 export function getFooterShellClassName(pathname: string) {
-  return pathname === '/' ? FOOTER_HOME_SHELL_CLASS : ''
+  return isHomePathname(pathname) ? FOOTER_HOME_SHELL_CLASS : ''
 }
 
 export function getFooterVisibilityClassName(hidden: boolean) {

@@ -638,22 +638,20 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
   animation: home-showcase-fade 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@media (hover: hover) {
-  .home-showcase-slide[data-pos='current'] .home-showcase-frame,
-  .home-showcase-frame::before {
-    transition:
-      opacity 250ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
+.home-showcase-slide[data-pos='current'] .home-showcase-frame,
+.home-showcase-frame::before {
+  transition:
+    opacity 250ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-  .home-showcase-panel:hover .home-showcase-slide[data-pos='current'] .home-showcase-frame {
-    transform: scale(1.01);
-  }
+.home-showcase-panel:hover .home-showcase-slide[data-pos='current'] .home-showcase-frame {
+  transform: scale(1.01);
+}
 
-  .home-showcase-panel:hover .home-showcase-slide[data-pos='current'] .home-showcase-frame::before {
-    opacity: 0.9;
-    transform: translateY(10px) scale(1);
-  }
+.home-showcase-panel:hover .home-showcase-slide[data-pos='current'] .home-showcase-frame::before {
+  opacity: 0.9;
+  transform: translateY(10px) scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {

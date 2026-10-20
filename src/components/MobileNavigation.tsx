@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { normalizeAppPathname } from '@/lib/pathname'
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { useWebHaptics } from 'web-haptics/react'
@@ -23,7 +24,7 @@ export default function MobileNavigation({ open: controlledOpen, onOpenChange }:
   const [localOpen, setLocalOpen] = useState(false)
   const open = controlledOpen ?? localOpen
   const setOpen = onOpenChange ?? setLocalOpen
-  const pathname = usePathname()
+  const pathname = normalizeAppPathname(usePathname())
   const haptic = useWebHaptics()
   const email = contactSocialLinks.find(link => link.href.startsWith('mailto:'))
 

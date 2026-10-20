@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import { usePathname } from 'next/navigation'
+import { normalizeAppPathname } from '@/lib/pathname'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
 import {
   FOOTER_COPYRIGHT_CLASS,
@@ -86,7 +87,7 @@ function useSparkleOnReveal(targetRef: RefObject<HTMLElement | null>) {
 }
 
 export default function Footer() {
-  const pathname = usePathname()
+  const pathname = normalizeAppPathname(usePathname())
   const footerRef = useRef<HTMLElement | null>(null)
   const hidden = useHideOnScroll()
   const sparkleActive = useSparkleOnReveal(footerRef)

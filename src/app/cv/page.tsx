@@ -12,7 +12,7 @@ const showcaseFont = Inter({
 })
 
 const cvTitle = `Resume | ${sitePortfolioName}`
-const cvDescription = `${siteConfig.personName} - design engineer resume. Experience, education, and skills.`
+const cvDescription = `${siteConfig.personName} - product designer resume. Experience, education, and skills.`
 
 export const metadata = getStaticPageMetadata({
   description: cvDescription,

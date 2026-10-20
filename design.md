@@ -1,6 +1,6 @@
 ---
 name: "Hunter Bastian Portfolio"
-description: "Warm minimal portfolio for a Utah-based design engineer, built around calm craft, tactile interaction, and restrained project storytelling."
+description: "Warm minimal portfolio for a Utah-based product designer, built around calm craft, tactile interaction, and restrained project storytelling."
 colors:
   canvas-warm: "#f9f7f2"
   surface-paper: "#fbfaf6"

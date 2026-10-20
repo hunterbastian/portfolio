@@ -40,7 +40,7 @@ export function getSiteStructuredData(config: SiteStructuredDataConfig = siteCon
         '@id': `${config.url}/#person`,
         name: config.personName,
         url: config.url,
-        jobTitle: 'Design Engineer',
+        jobTitle: 'Product Designer',
         description: config.siteDescription,
         sameAs: SITE_PERSON_SAME_AS,
         knowsAbout: SITE_PERSON_KNOWS_ABOUT,

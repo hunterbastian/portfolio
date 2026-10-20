@@ -1,4 +1,5 @@
 import { CHROME_NAV_ACTIVE_CLASS, CHROME_NAV_INACTIVE_CLASS } from './chrome.ts'
+import { isHomePathname } from './pathname.ts'
 
 export const HOME_SECTION_NAV_ARIA_LABEL = 'On this page'
 export const HOME_SECTION_NAV_HAPTIC_STYLE = 'light'
@@ -48,7 +49,7 @@ export interface HomeSectionNavigationInput {
 }
 
 export function isHomeSectionNavPath(pathname: string) {
-  return pathname === '/'
+  return isHomePathname(pathname)
 }
 
 export function shouldShowHomeSectionNav(pathname: string) {

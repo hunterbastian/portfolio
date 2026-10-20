@@ -76,8 +76,8 @@ export default function RootLayout({
     <html lang="en" className={`${paperMono.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <meta name="theme-color" content={siteConfig.themeColorDark} />
-        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content={siteConfig.themeColorDark} suppressHydrationWarning />
+        <meta name="color-scheme" content="dark" suppressHydrationWarning />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
@@ -93,7 +93,7 @@ export default function RootLayout({
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" suppressHydrationWarning />
         <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
         <script
           dangerouslySetInnerHTML={{

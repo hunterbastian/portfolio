@@ -148,6 +148,7 @@ test('activateFooterSparkle marks fired, activates, and schedules cleanup', () =
 
 test('footer class helpers preserve route, visibility, and sparkle states', () => {
   assert.equal(getFooterShellClassName('/'), 'footer-coast-shell')
+  assert.equal(getFooterShellClassName('/index'), 'footer-coast-shell')
   assert.equal(getFooterShellClassName('/archive'), '')
   assert.equal(getFooterVisibilityClassName(false), 'translate-y-0 opacity-100')
   assert.equal(getFooterVisibilityClassName(true), 'pointer-events-none translate-y-6 opacity-0')

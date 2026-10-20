@@ -16,7 +16,7 @@ Most visitors scan first. They should be able to understand who Hunter is, what 
 
 ## Product Purpose
 
-The site is a personal portfolio for Hunter Bastian, a design engineer and interaction design student based in Utah. It exists to show calm interface craft, thoughtful motion, visual restraint, and credible product judgment through the site itself and the selected project work.
+The site is a personal portfolio for Hunter Bastian, a product designer and interaction design student based in Utah. It exists to show calm interface craft, thoughtful motion, visual restraint, and credible product judgment through the site itself and the selected project work.
 
 Success means the site feels designed, current, and personal without becoming decorative or loud. It should make a recruiter comfortable moving Hunter forward, make a client comfortable reaching out, and make a peer notice that the details were intentionally built.
 

@@ -2,6 +2,7 @@
 
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
+import { normalizeAppPathname } from '@/lib/pathname'
 import type { ReactNode } from 'react'
 import { MOTION_EASE_SOFT, MOTION_EASE_EXIT } from '@/lib/motion'
 import { useIsInitialLoad } from '@/lib/initial-load'
@@ -36,7 +37,7 @@ function RouteScene({ children, pathname }: { children: ReactNode; pathname: str
 }
 
 export default function PageTransition({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
+  const pathname = normalizeAppPathname(usePathname())
 
   return (
     <AnimatePresence mode="wait" initial={false}>

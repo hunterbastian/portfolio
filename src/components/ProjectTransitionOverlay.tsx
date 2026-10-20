@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from '
 import { m, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { normalizeAppPathname } from '@/lib/pathname'
 import {
   getProjectTransition,
   subscribeProjectTransition,
@@ -44,7 +45,7 @@ export default function ProjectTransitionOverlay() {
   const prefersReducedMotion = useReducedMotion() ?? false
   const [phase, setPhase] = useState<ProjectTransitionOverlayPhase>('hold')
   const phaseRef = useRef<ProjectTransitionOverlayPhase>('hold')
-  const pathname = usePathname()
+  const pathname = normalizeAppPathname(usePathname())
 
   const setOverlayPhase = useCallback((nextPhase: ProjectTransitionOverlayPhase) => {
     setPhase(nextPhase)

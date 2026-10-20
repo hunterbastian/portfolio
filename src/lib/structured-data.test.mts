@@ -6,7 +6,7 @@ import { SITE_PERSON_KNOWS_ABOUT, SITE_PERSON_SAME_AS, getSiteStructuredData } f
 test('getSiteStructuredData builds person and organization schema from site config', () => {
   const structuredData = getSiteStructuredData({
     personName: 'Hunter Bastian',
-    siteDescription: 'Design engineer portfolio.',
+    siteDescription: 'Product designer portfolio.',
     studioName: 'Studio Alpine',
     url: 'https://hunterbastian.com',
   })
@@ -16,7 +16,7 @@ test('getSiteStructuredData builds person and organization schema from site conf
   assert.equal(person?.['@type'], 'Person')
   assert.equal(person?.['@id'], 'https://hunterbastian.com/#person')
   assert.equal(person?.name, 'Hunter Bastian')
-  assert.equal(person?.jobTitle, 'Design Engineer')
+  assert.equal(person?.jobTitle, 'Product Designer')
   assert.deepEqual(person?.sameAs, SITE_PERSON_SAME_AS)
   assert.deepEqual(person?.knowsAbout, SITE_PERSON_KNOWS_ABOUT)
 

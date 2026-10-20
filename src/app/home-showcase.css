@@ -647,7 +647,7 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
   animation: home-showcase-fade 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@media (not (pointer: coarse)) {
+@media (hover: hover) and (pointer: fine) {
   .home-showcase-identity,
   .home-showcase-bio,
   .home-showcase-endeavors,
@@ -686,8 +686,14 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
     opacity: 0.82 !important;
   }
 
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-links:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-links:focus-within,
   .home-showcase:has(.home-showcase-panel:hover) .home-showcase-theme:focus-within,
   .home-showcase:has(.home-showcase-list li:hover) .home-showcase-theme:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-list li:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-panel:focus-within,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-dots:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-dots:focus-within,
   .home-showcase:has(.home-showcase-panel:hover) .home-showcase-controls:focus-within,
   .home-showcase:has(.home-showcase-list li:hover) .home-showcase-controls:focus-within {
     filter: none;
@@ -695,7 +701,7 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
   }
 }
 
-@media (not (pointer: coarse)) and (prefers-reduced-motion: reduce) {
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
   .home-showcase-identity,
   .home-showcase-bio,
   .home-showcase-endeavors,
@@ -730,6 +736,19 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-control
   .home-showcase:has(.home-showcase-list li:hover) .home-showcase-controls {
     filter: none;
     opacity: 0.72 !important;
+  }
+
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-links:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-links:focus-within,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-theme:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-theme:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-list li:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-panel:focus-within,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-dots:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-dots:focus-within,
+  .home-showcase:has(.home-showcase-panel:hover) .home-showcase-controls:focus-within,
+  .home-showcase:has(.home-showcase-list li:hover) .home-showcase-controls:focus-within {
+    opacity: 1 !important;
   }
 }
 

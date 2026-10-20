@@ -8,11 +8,13 @@ import {
 
 export function useOrbitRadius(radiusDesktop: number, radiusLarge: number) {
   const [radius, setRadius] = useState(radiusDesktop)
+  const [viewportWidth, setViewportWidth] = useState<number | null>(null)
 
   useEffect(() => {
     function update() {
       const viewport = getPlaygroundOrbitViewportSnapshot(window)
 
+      setViewportWidth(viewport.viewportWidth)
       setRadius(
         getPlaygroundOrbitResponsiveRadius({
           radiusDesktop,
@@ -32,5 +34,5 @@ export function useOrbitRadius(radiusDesktop: number, radiusLarge: number) {
     }
   }, [radiusDesktop, radiusLarge])
 
-  return radius
+  return { radius, viewportWidth }
 }

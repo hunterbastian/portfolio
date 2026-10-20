@@ -14,7 +14,7 @@ const INK = '#0E0E0D'
 const MUTED = '#84847F'
 const LINE = '#E4E4E0'
 const CAPTION = 'Calm interfaces, thoughtful motion.'
-const RENDER_PATH = path.join(process.cwd(), 'public/showcase/lumo-transparent.webp')
+const RENDER_PATH = path.join(process.cwd(), 'public/showcase/og-lumo-device.png')
 const FONT_PATH = path.join(process.cwd(), 'public/fonts/inter-latin-500.ttf')
 
 interface ShowcaseOgOptions {

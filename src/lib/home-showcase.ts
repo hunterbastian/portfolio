@@ -32,13 +32,6 @@ export type ShowcaseThemePreference = ShowcaseTheme | 'system'
 
 const SHOWCASE_MEDIA_DIRECTORY = '/showcase'
 
-const SHOWCASE_VIDEO_SLUGS = new Set<string>([
-  'mentalhealth-minisite',
-  'middle-earth-journey',
-  'nutricost',
-  'porsche-app',
-])
-
 /** Short labels used in the homepage caption. Nutricost's MDX category is "Graphic Design". */
 const SHOWCASE_CATEGORY_LABELS: Record<string, string> = {
   'Graphic Design': 'Graphic',
@@ -62,6 +55,7 @@ export interface ShowcaseSlide {
   slug: string
   title: string
   videoSrc: string | null
+  videoWebmSrc: string | null
   year: string
 }
 
@@ -88,8 +82,9 @@ export function getShowcaseImageSrc(slug: string) {
   return `${SHOWCASE_MEDIA_DIRECTORY}/${slug}.webp`
 }
 
+/** Dark mode restyles the device frame. The screen still is shared. */
 export function getShowcaseDarkImageSrc(slug: string) {
-  return `${SHOWCASE_MEDIA_DIRECTORY}/${slug}-transparent.webp`
+  return getShowcaseImageSrc(slug)
 }
 
 export function getShowcaseChrome(prefersDark: boolean): ShowcaseChrome {
@@ -119,9 +114,18 @@ export function resolveShowcaseTheme(preference: ShowcaseThemePreference, prefer
   return prefersDark ? 'dark' : 'light'
 }
 
+function isShowcaseSlug(slug: string) {
+  return (HOME_SHOWCASE_SLUGS as readonly string[]).includes(slug)
+}
+
 export function getShowcaseVideoSrc(slug: string) {
-  if (!SHOWCASE_VIDEO_SLUGS.has(slug)) return null
+  if (!isShowcaseSlug(slug)) return null
   return `${SHOWCASE_MEDIA_DIRECTORY}/${slug}-loop.mp4`
+}
+
+export function getShowcaseVideoWebmSrc(slug: string) {
+  if (!isShowcaseSlug(slug)) return null
+  return `${SHOWCASE_MEDIA_DIRECTORY}/${slug}-loop.webm`
 }
 
 export function getShowcaseCategoryLabel(category: string) {
@@ -149,6 +153,7 @@ export function buildShowcaseSlides(projects: readonly Pick<Project, 'frontmatte
       slug,
       title,
       videoSrc: getShowcaseVideoSrc(slug),
+      videoWebmSrc: getShowcaseVideoWebmSrc(slug),
       year: formatYearFromDate(date),
     }
   })

@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import Link from 'next/link'
+import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
 import { educationItems, experienceItems } from '@/content/homepage'
 import {
   HOME_SHOWCASE_ROLE,
@@ -127,15 +128,7 @@ export default function CVPageClient({ className }: CvShowcaseProps) {
             >
               {CV_PRINT_BUTTON_LABEL}
             </button>
-            <div className="cv-showcase-theme" role="group" aria-label="Color theme">
-              <button type="button" aria-pressed={theme === 'light'} onClick={() => chooseTheme('light')}>
-                Light
-              </button>
-              <span aria-hidden="true">/</span>
-              <button type="button" aria-pressed={theme === 'dark'} onClick={() => chooseTheme('dark')}>
-                Dark
-              </button>
-            </div>
+            <ShowcaseThemeSwitch className="cv-showcase-theme" theme={theme} onChange={chooseTheme} />
           </div>
         </header>
 

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { m, useAnimationFrame, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
 import type { MotionValue } from 'framer-motion'
 import { useOrbitRadius } from '@/components/playground/useOrbitRadius'
+import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
 import {
   HOME_SHOWCASE_THEME_STORAGE_KEY,
   getShowcaseChrome,
@@ -321,15 +322,7 @@ export default function PlaygroundShowcase({ className, projects }: PlaygroundSh
         <Link href="/">{siteConfig.personName}</Link>
         <div className="playground-showcase-tools">
           <Link href="/">Back</Link>
-          <div className="playground-showcase-theme" role="group" aria-label="Color theme">
-            <button type="button" aria-pressed={theme === 'light'} onClick={() => chooseTheme('light')}>
-              Light
-            </button>
-            <span aria-hidden="true">/</span>
-            <button type="button" aria-pressed={theme === 'dark'} onClick={() => chooseTheme('dark')}>
-              Dark
-            </button>
-          </div>
+          <ShowcaseThemeSwitch className="playground-showcase-theme" theme={theme} onChange={chooseTheme} />
         </div>
       </header>
 

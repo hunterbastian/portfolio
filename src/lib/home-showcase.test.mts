@@ -17,6 +17,7 @@ import {
   getShowcaseLinks,
   getShowcaseTravelDirection,
   getShowcaseVideoSrc,
+  getShowcaseVideoWebmSrc,
   planShowcaseSlideMotion,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
   parseShowcaseThemePreference,
@@ -65,12 +66,16 @@ test('showcase slides follow the homepage order and MDX fields', () => {
   assert.equal(slides[0]?.year, '2026')
   assert.equal(slides[0]?.category, 'Web Design')
   assert.equal(slides[0]?.imageSrc, '/showcase/mentalhealth-minisite.webp')
-  assert.equal(slides[0]?.darkImageSrc, '/showcase/mentalhealth-minisite-transparent.webp')
-  assert.equal(slides.at(-1)?.darkImageSrc, '/showcase/nutricost-transparent.webp')
+  assert.equal(slides[0]?.darkImageSrc, '/showcase/mentalhealth-minisite.webp')
+  assert.equal(slides.at(-1)?.darkImageSrc, '/showcase/nutricost.webp')
   assert.equal(slides[0]?.videoSrc, '/showcase/mentalhealth-minisite-loop.mp4')
+  assert.equal(slides[0]?.videoWebmSrc, '/showcase/mentalhealth-minisite-loop.webm')
   assert.equal(slides.at(-1)?.category, 'Graphic')
   assert.equal(slides.at(-1)?.videoSrc, '/showcase/nutricost-loop.mp4')
-  assert.equal(getShowcaseVideoSrc('lumo'), null)
+  assert.equal(getShowcaseVideoSrc('lumo'), '/showcase/lumo-loop.mp4')
+  assert.equal(getShowcaseVideoWebmSrc('lumo'), '/showcase/lumo-loop.webm')
+  assert.equal(getShowcaseVideoSrc('missing'), null)
+  assert.equal(getShowcaseVideoWebmSrc('missing'), null)
   assert.equal(getShowcaseCaption(0, slides.length, slides[0]!).lead, '1 of 7 — Mental Health Mini Site, 2026')
   assert.equal(getShowcaseCaption(0, slides.length, slides[0]!).tag, 'Web Design')
 })

@@ -329,15 +329,14 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   }, [index, reducedMotion])
 
   useEffect(() => {
-    const slide = slides[index]
-    if (!slide || prioritizedTheme === null) return
+    const next = slides[(index + 1) % count]
+    if (!next) return
 
-    const hiddenSrc = prioritizedTheme === 'dark' ? slide.imageSrc : slide.darkImageSrc
     const warm = () => {
       const image = new Image()
       image.decoding = 'async'
       image.fetchPriority = 'low'
-      image.src = hiddenSrc
+      image.src = next.imageSrc
     }
 
     if (typeof window.requestIdleCallback === 'function') {
@@ -347,7 +346,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
     const id = window.setTimeout(warm, 400)
     return () => window.clearTimeout(id)
-  }, [index, prioritizedTheme, slides])
+  }, [count, index, slides])
 
   const active = slides[index]
   const caption = active ? getShowcaseCaption(index, count, active) : null
@@ -446,8 +445,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 : slideIndex < index ? 'left' : 'right'
             const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false
             const loaded = current || seen.has(slideIndex)
-            const eagerLight = current && prioritizedTheme === 'light'
-            const eagerDark = current && prioritizedTheme === 'dark'
+            const eager = current && prioritizedTheme !== null
 
             return (
               <div
@@ -465,49 +463,42 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                   aria-label={`Open ${slide.title}`}
                 >
                   {loaded ? (
-                    <span className="home-showcase-frame">
-                      {showVideo ? (
-                        <video
-                          className="home-showcase-motion"
-                          ref={videoRef}
-                          src={slide.videoSrc ?? undefined}
-                          poster={theme === 'dark' ? slide.darkImageSrc : slide.imageSrc}
-                          muted
-                          autoPlay
-                          loop
-                          playsInline
-                          preload="metadata"
-                          aria-hidden="true"
-                          tabIndex={-1}
-                          data-ready={videoReady ? 'true' : undefined}
-                          onLoadedData={() => setVideoGate({ index, ready: true })}
-                          onPlaying={() => setVideoGate({ index, ready: true })}
+                    <span className="home-showcase-device">
+                      <span className="home-showcase-screen">
+                        {showVideo ? (
+                          <video
+                            className="home-showcase-motion"
+                            ref={videoRef}
+                            poster={slide.imageSrc}
+                            muted
+                            autoPlay
+                            loop
+                            playsInline
+                            preload="auto"
+                            aria-hidden="true"
+                            tabIndex={-1}
+                            data-ready={videoReady ? 'true' : undefined}
+                            onLoadedData={() => setVideoGate({ index, ready: true })}
+                            onPlaying={() => setVideoGate({ index, ready: true })}
+                          >
+                            {slide.videoWebmSrc ? <source src={slide.videoWebmSrc} type="video/webm" /> : null}
+                            {slide.videoSrc ? <source src={slide.videoSrc} type="video/mp4" /> : null}
+                          </video>
+                        ) : null}
+                        <BlurImage
+                          className="home-showcase-still"
+                          src={slide.imageSrc}
+                          alt={slide.imageAlt}
+                          fill
+                          sizes="(max-width: 820px) calc(100vw - 64px), 920px"
+                          draggable={false}
+                          quality={80}
+                          style={{ objectFit: 'cover' }}
+                          fetchPriority={eager ? 'high' : 'low'}
+                          loading={eager ? 'eager' : 'lazy'}
                         />
-                      ) : null}
-                      <BlurImage
-                        className="home-showcase-still home-showcase-still-light"
-                        src={slide.imageSrc}
-                        alt={slide.imageAlt}
-                        fill
-                        sizes="(max-width: 820px) calc(100vw - 40px), 68vw"
-                        draggable={false}
-                        quality={80}
-                        style={{ objectFit: 'contain' }}
-                        fetchPriority={eagerLight ? 'high' : 'low'}
-                        loading={eagerLight ? 'eager' : 'lazy'}
-                      />
-                      <BlurImage
-                        className="home-showcase-still home-showcase-still-dark"
-                        src={slide.darkImageSrc}
-                        alt=""
-                        fill
-                        sizes="(max-width: 820px) calc(100vw - 40px), 68vw"
-                        draggable={false}
-                        quality={80}
-                        style={{ objectFit: 'contain' }}
-                        fetchPriority={eagerDark ? 'high' : 'low'}
-                        loading={eagerDark ? 'eager' : 'lazy'}
-                      />
+                      </span>
+                      <span className="home-showcase-glass" aria-hidden="true" />
                     </span>
                   ) : null}
                 </Link>

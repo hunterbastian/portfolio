@@ -5,6 +5,7 @@ import { siteConfig, siteMailtoHref } from './site.ts'
 
 /** Homepage showcase order. Captions and years still come from each project's MDX. */
 export const HOME_SHOWCASE_SLUGS = [
+  'rain',
   'mentalhealth-minisite',
   'lumo',
   'middle-earth-journey',
@@ -39,9 +40,6 @@ const SHOWCASE_CATEGORY_LABELS: Record<string, string> = {
 const SHOWCASE_ENDEAVOR_META: Record<string, string> = {
   'Studio Alpine': 'Photography',
   'Studio Cala': 'Web studio',
-  'Above / Utah': 'Hiking app',
-  Alcove: 'Coffee guide',
-  'parallax.': 'Model viewer',
 }
 
 export interface ShowcaseSlide {

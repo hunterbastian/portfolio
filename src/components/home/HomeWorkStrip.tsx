@@ -152,7 +152,7 @@ function StripPiece({
             sizes="84px"
             quality={60}
             draggable={false}
-            loading={index < 6 && !copy ? 'eager' : 'lazy'}
+            loading="lazy"
             style={{ objectFit: 'cover' }}
           />
         ) : null}

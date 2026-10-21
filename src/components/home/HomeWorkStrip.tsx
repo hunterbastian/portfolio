@@ -3,7 +3,13 @@
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from 'react'
 import BlurImage from '@/components/media/BlurImage'
+import { nextDialogTabIndex } from '@/lib/dialog-tab'
 import { useBodyScrollLock } from '@/lib/use-body-scroll-lock'
+import {
+  DESKTOP_MARQUEE_PX_PER_SECOND,
+  MOBILE_MARQUEE_PX_PER_SECOND,
+  marqueeFrameDelta,
+} from '@/lib/work-marquee'
 import {
   HOME_GRID_PIECES,
   getHomeGridProjectHref,
@@ -19,9 +25,6 @@ interface HomeWorkStripProps {
   onLightboxChange: (open: boolean) => void
   onSelectShowcase: (index: number) => void
 }
-
-const DESKTOP_CYCLE_SECONDS = 50
-const MOBILE_CYCLE_SECONDS = 60
 
 function wrapOffset(offset: number, width: number) {
   if (!(width > 0)) return 0
@@ -192,7 +195,7 @@ export default function HomeWorkStrip({
   const openerRef = useRef<HTMLButtonElement | null>(null)
   const offsetRef = useRef(0)
   const setWidthRef = useRef(0)
-  const cycleRef = useRef(DESKTOP_CYCLE_SECONDS)
+  const speedRef = useRef(DESKTOP_MARQUEE_PX_PER_SECOND)
   const hoverRef = useRef(false)
   const focusRef = useRef(false)
   const dragPausedRef = useRef(false)
@@ -294,18 +297,20 @@ export default function HomeWorkStrip({
       if (!real || !dup) return
       const width = dup.offsetLeft - real.offsetLeft
       if (width > 0) setWidthRef.current = width
-      cycleRef.current = window.matchMedia('(max-width: 820px)').matches ? MOBILE_CYCLE_SECONDS : DESKTOP_CYCLE_SECONDS
+      speedRef.current = window.matchMedia('(max-width: 820px)').matches
+        ? MOBILE_MARQUEE_PX_PER_SECOND
+        : DESKTOP_MARQUEE_PX_PER_SECOND
     }
 
     const paused = () => hoverRef.current || focusRef.current || dragPausedRef.current || hiddenRef.current || offscreenRef.current || nudgeRef.current
 
     const tick = (now: number) => {
       if (!alive) return
-      const dt = Math.min(0.05, (now - last) / 1000)
+      const dt = (now - last) / 1000
       last = now
       const width = setWidthRef.current
       if (!paused() && width > 0) {
-        offsetRef.current -= (width / cycleRef.current) * dt
+        offsetRef.current -= marqueeFrameDelta(speedRef.current, dt)
         applyOffset()
         raf = requestAnimationFrame(tick)
         return
@@ -404,6 +409,24 @@ export default function HomeWorkStrip({
       if (event.key === 'Escape') {
         event.preventDefault()
         close()
+        return
+      }
+      if (event.key === 'Tab') {
+        const dialog = closeRef.current?.closest<HTMLElement>('.home-grid-lightbox')
+        if (!dialog) return
+        const focusable = [...dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])',
+        )].filter((el) => el.tabIndex !== -1 && !el.hasAttribute('disabled'))
+        if (focusable.length === 0) {
+          event.preventDefault()
+          return
+        }
+        const active = document.activeElement
+        const current = active instanceof HTMLElement ? focusable.indexOf(active) : -1
+        const next = nextDialogTabIndex(current, focusable.length, event.shiftKey, dialog.contains(active))
+        if (next === null) return
+        event.preventDefault()
+        focusable[next]?.focus()
         return
       }
       if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return

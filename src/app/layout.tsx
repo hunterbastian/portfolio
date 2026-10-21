@@ -27,7 +27,7 @@ import { getAllProjects } from '@/lib/projects'
 import { siteConfig } from '@/lib/site'
 import { getSiteMetadata } from '@/lib/site-metadata'
 import { SoundProvider } from '@/lib/sounds/context'
-import { getShowcaseChrome, HOME_SHOWCASE_INK, HOME_SHOWCASE_INK_DARK, HOME_SHOWCASE_SLUGS, HOME_SHOWCASE_THEME_STORAGE_KEY } from '@/lib/home-showcase'
+import { HOME_SHOWCASE_CANVAS, HOME_SHOWCASE_INK, HOME_SHOWCASE_SLUGS, HOME_SHOWCASE_THEME_STORAGE_KEY } from '@/lib/home-showcase'
 import { getSiteStructuredData } from '@/lib/structured-data'
 import { telemetryConfig } from '@/lib/telemetry'
 // Self-hosted Paper Mono; existing font utilities share this variable face.
@@ -58,10 +58,8 @@ export const viewport = {
 }
 
 const faviconVersion = siteConfig.faviconVersion
-const homeShowcaseLight = getShowcaseChrome(false)
-const homeShowcaseDark = getShowcaseChrome(true)
 const homeShowcaseSlugs = JSON.stringify([...HOME_SHOWCASE_SLUGS])
-const homeShowcaseBoot = `if(location.pathname==="/"){document.documentElement.dataset.homeShowcase="true";var pref=null;try{pref=localStorage.getItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")}catch(e){}var dark=pref!=="light";document.documentElement.dataset.homeShowcaseTheme=dark?"dark":"light";var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute("content",dark?"${homeShowcaseDark.canvas}":"${homeShowcaseLight.canvas}");var s=document.querySelector('meta[name="color-scheme"]');if(s)s.setAttribute("content",dark?"${homeShowcaseDark.colorScheme}":"${homeShowcaseLight.colorScheme}");var a=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(a)a.setAttribute("content",dark?"${homeShowcaseDark.statusBar}":"${homeShowcaseLight.statusBar}");var slugs=${homeShowcaseSlugs};var hm=/^#(\\d+)$/.exec(location.hash||"");var hi=0;if(hm){var sn=+hm[1];hi=sn>=1?Math.min(sn,slugs.length)-1:0}var pl=document.createElement("link");pl.rel="preload";pl.as="image";pl.href="/showcase/"+slugs[hi]+(dark?"-transparent.webp":".webp");pl.setAttribute("fetchpriority","high");document.head.appendChild(pl);}if(location.pathname==="/playground"){document.documentElement.dataset.homeShowcase="true";document.documentElement.dataset.playgroundShowcase="true";var p=null;try{p=localStorage.getItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")}catch(e){}var pd=p!=="light";document.documentElement.dataset.homeShowcaseTheme=pd?"dark":"light";var pt=document.querySelector('meta[name="theme-color"]');if(pt)pt.setAttribute("content",pd?"${homeShowcaseDark.canvas}":"${homeShowcaseLight.canvas}");var ps=document.querySelector('meta[name="color-scheme"]');if(ps)ps.setAttribute("content",pd?"${homeShowcaseDark.colorScheme}":"${homeShowcaseLight.colorScheme}");var pa=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(pa)pa.setAttribute("content",pd?"${homeShowcaseDark.statusBar}":"${homeShowcaseLight.statusBar}");}if(location.pathname==="/cv"){document.documentElement.dataset.homeShowcase="true";document.documentElement.dataset.cvShowcase="true";var cpref=null;try{cpref=localStorage.getItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")}catch(e){}var cdark=cpref!=="light";document.documentElement.dataset.homeShowcaseTheme=cdark?"dark":"light";var ct=document.querySelector('meta[name="theme-color"]');if(ct)ct.setAttribute("content",cdark?"${homeShowcaseDark.canvas}":"${homeShowcaseLight.canvas}");var cs=document.querySelector('meta[name="color-scheme"]');if(cs)cs.setAttribute("content",cdark?"${homeShowcaseDark.colorScheme}":"${homeShowcaseLight.colorScheme}");var ca=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(ca)ca.setAttribute("content",cdark?"${homeShowcaseDark.statusBar}":"${homeShowcaseLight.statusBar}");}var np=(location.pathname||"/").replace(/\\/+$/,"")||"/";var known=np==="/"||np==="/playground"||np==="/cv"||np==="/about"||np==="/archive"||np==="/logo"||np.indexOf("/projects/")===0||np.indexOf("/tools/")===0;if(!known){document.documentElement.dataset.homeShowcase="true";document.documentElement.dataset.notFoundShowcase="true";var npref=null;try{npref=localStorage.getItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")}catch(e){}var ndark=npref!=="light";document.documentElement.dataset.homeShowcaseTheme=ndark?"dark":"light";var nt=document.querySelector('meta[name="theme-color"]');if(nt)nt.setAttribute("content",ndark?"${homeShowcaseDark.canvas}":"${homeShowcaseLight.canvas}");var ns=document.querySelector('meta[name="color-scheme"]');if(ns)ns.setAttribute("content",ndark?"${homeShowcaseDark.colorScheme}":"${homeShowcaseLight.colorScheme}");var na=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(na)na.setAttribute("content",ndark?"${homeShowcaseDark.statusBar}":"${homeShowcaseLight.statusBar}");}`
+const homeShowcaseBoot = `try{localStorage.removeItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")}catch(e){}function hbLight(extra){document.documentElement.dataset.homeShowcase="true";if(extra)document.documentElement.dataset[extra]="true";var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute("content","${HOME_SHOWCASE_CANVAS}");var s=document.querySelector('meta[name="color-scheme"]');if(s)s.setAttribute("content","light");var a=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(a)a.setAttribute("content","default");}if(location.pathname==="/"){hbLight();var slugs=${homeShowcaseSlugs};var hm=/^#(\\d+)$/.exec(location.hash||"");var hi=0;if(hm){var sn=+hm[1];hi=sn>=1?Math.min(sn,slugs.length)-1:0}var pl=document.createElement("link");pl.rel="preload";pl.as="image";pl.href="/showcase/"+slugs[hi]+".webp";pl.setAttribute("fetchpriority","high");document.head.appendChild(pl);}if(location.pathname==="/playground"){hbLight("playgroundShowcase");}if(location.pathname==="/cv"){hbLight("cvShowcase");}var np=(location.pathname||"/").replace(/\\/+$/,"")||"/";var known=np==="/"||np==="/playground"||np==="/cv"||np==="/about"||np==="/archive"||np==="/logo"||np.indexOf("/projects/")===0||np.indexOf("/tools/")===0;if(!known){hbLight("notFoundShowcase");}`
 
 export const metadata = getSiteMetadata()
 
@@ -76,8 +74,8 @@ export default function RootLayout({
     <html lang="en" className={`${paperMono.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
-        <meta name="theme-color" content={siteConfig.themeColorDark} suppressHydrationWarning />
-        <meta name="color-scheme" content="dark" suppressHydrationWarning />
+        <meta name="theme-color" content={HOME_SHOWCASE_CANVAS} suppressHydrationWarning />
+        <meta name="color-scheme" content="light" suppressHydrationWarning />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
@@ -93,7 +91,7 @@ export default function RootLayout({
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" suppressHydrationWarning />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" suppressHydrationWarning />
         <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
         <script
           dangerouslySetInnerHTML={{
@@ -111,7 +109,7 @@ export default function RootLayout({
         
         {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: `html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${siteConfig.themeColorDark});line-height:1.5}html[data-home-showcase][data-home-showcase-theme=dark]{color-scheme:dark;background-color:${homeShowcaseDark.canvas}!important}html[data-home-showcase][data-home-showcase-theme=dark] body{background-color:${homeShowcaseDark.canvas}!important;color:${HOME_SHOWCASE_INK_DARK}!important}html[data-home-showcase][data-home-showcase-theme=light]{color-scheme:light;background-color:${homeShowcaseLight.canvas}!important}html[data-home-showcase][data-home-showcase-theme=light] body{background-color:${homeShowcaseLight.canvas}!important;color:${HOME_SHOWCASE_INK}!important}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}::-moz-selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}`
+          __html: `html:root{color-scheme:light;background-color:${HOME_SHOWCASE_CANVAS};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${HOME_SHOWCASE_CANVAS});line-height:1.5}html[data-home-showcase],html[data-home-showcase] body{color-scheme:light;background-color:${HOME_SHOWCASE_CANVAS}!important}html[data-home-showcase] body{color:${HOME_SHOWCASE_INK}!important}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}::-moz-selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}`
         }} />
       </head>
       <body

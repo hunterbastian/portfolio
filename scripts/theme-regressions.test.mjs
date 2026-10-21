@@ -49,16 +49,18 @@ test('Tailwind emits alpha-aware text, surface, border, ring, and arbitrary util
   }
 })
 
-test('manifest and initial page chrome agree with the dark site canvas', () => {
+test('manifest stays on the archive canvas and document chrome is light', () => {
   const manifest = JSON.parse(manifestSource)
   assert.equal(manifest.background_color, background)
   assert.equal(manifest.theme_color, background)
   assert.ok(siteSource.includes(`themeColorDark: '${background}'`))
-  assert.ok(layoutSource.includes('name="color-scheme" content="dark"'))
-  assert.ok(layoutSource.includes('name="apple-mobile-web-app-status-bar-style" content="black"'))
-  assert.ok(layoutSource.includes('html:root{color-scheme:dark;background-color:${siteConfig.themeColorDark};scrollbar-gutter:stable}'))
-  assert.ok(layoutSource.includes('body{margin:0;background-color:var(--background,${siteConfig.themeColorDark})'))
+  assert.ok(layoutSource.includes('name="color-scheme" content="light"'))
+  assert.ok(layoutSource.includes('name="apple-mobile-web-app-status-bar-style" content="default"'))
+  assert.ok(layoutSource.includes('html:root{color-scheme:light;background-color:${HOME_SHOWCASE_CANVAS};scrollbar-gutter:stable}'))
+  assert.ok(layoutSource.includes('body{margin:0;background-color:var(--background,${HOME_SHOWCASE_CANVAS})'))
   assert.equal(layoutSource.includes('body{margin:0;background:'), false)
+  assert.equal(layoutSource.includes('content="dark"'), false)
+  assert.equal(layoutSource.includes('content="black"'), false)
 })
 
 function assertDarkOffline(source) {

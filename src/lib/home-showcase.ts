@@ -15,21 +15,12 @@ export const HOME_SHOWCASE_SLUGS = [
 ] as const
 
 export const HOME_SHOWCASE_CANVAS = '#F7F7F5'
-export const HOME_SHOWCASE_CANVAS_DARK = '#232323'
-export const HOME_SHOWCASE_RAISED_DARK = '#262626'
 export const HOME_SHOWCASE_INK = '#0A0A0A'
-export const HOME_SHOWCASE_INK_DARK = '#EDEDEA'
-/** Secondary gray tuned for WCAG AA on #232323 and the #262626 raised surfaces. */
-export const HOME_SHOWCASE_MUTE_DARK = '#A1A19C'
-export const HOME_SHOWCASE_LINE_DARK = '#333333'
 export const HOME_SHOWCASE_TIME_ZONE = 'America/Denver'
 export const HOME_SHOWCASE_ROLE = 'Product Designer'
 export const HOME_SHOWCASE_LOCATION = 'Lehi, Utah'
-/** Persisted theme override. Absent means dark, including for first-time visitors. */
+/** Old theme override. The site is light-only and clears this key. */
 export const HOME_SHOWCASE_THEME_STORAGE_KEY = 'hb-showcase-theme'
-
-export type ShowcaseTheme = 'light' | 'dark'
-export type ShowcaseThemePreference = ShowcaseTheme | 'system'
 
 const SHOWCASE_MEDIA_DIRECTORY = '/showcase'
 
@@ -55,7 +46,6 @@ const SHOWCASE_ENDEAVOR_META: Record<string, string> = {
 
 export interface ShowcaseSlide {
   category: string
-  darkImageSrc: string
   description: string
   href: string
   imageAlt: string
@@ -89,35 +79,12 @@ export function getShowcaseImageSrc(slug: string) {
   return `${SHOWCASE_MEDIA_DIRECTORY}/${slug}.webp`
 }
 
-export function getShowcaseDarkImageSrc(slug: string) {
-  return `${SHOWCASE_MEDIA_DIRECTORY}/${slug}-transparent.webp`
-}
-
-export function getShowcaseChrome(prefersDark: boolean): ShowcaseChrome {
-  if (prefersDark) {
-    return {
-      canvas: HOME_SHOWCASE_CANVAS_DARK,
-      colorScheme: 'dark',
-      statusBar: 'black',
-    }
-  }
-
+export function getShowcaseChrome(): ShowcaseChrome {
   return {
     canvas: HOME_SHOWCASE_CANVAS,
     colorScheme: 'light',
     statusBar: 'default',
   }
-}
-
-export function parseShowcaseThemePreference(value: string | null | undefined): ShowcaseThemePreference {
-  if (value === 'light' || value === 'dark') return value
-  return 'system'
-}
-
-/** A saved light or dark choice wins. With no stored preference, dark is the default. */
-export function resolveShowcaseTheme(preference: ShowcaseThemePreference, _prefersDark: boolean): ShowcaseTheme {
-  if (preference === 'light' || preference === 'dark') return preference
-  return 'dark'
 }
 
 export function getShowcaseVideoSrc(slug: string) {
@@ -142,7 +109,6 @@ export function buildShowcaseSlides(projects: readonly Pick<Project, 'frontmatte
 
     return {
       category: getShowcaseCategoryLabel(category),
-      darkImageSrc: getShowcaseDarkImageSrc(slug),
       description,
       href: `/projects/${slug}`,
       imageAlt: '',

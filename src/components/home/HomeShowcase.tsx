@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import BlurImage from '@/components/media/BlurImage'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
-import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
 import HomeGrid from '@/components/home/HomeGrid'
 import {
   HOME_SHOWCASE_LOCATION,
@@ -20,11 +19,7 @@ import {
   getShowcaseLinks,
   getShowcaseTravelDirection,
   planShowcaseSlideMotion,
-  parseShowcaseThemePreference,
-  resolveShowcaseTheme,
   type ShowcaseSlide,
-  type ShowcaseTheme,
-  type ShowcaseThemePreference,
 } from '@/lib/home-showcase'
 import {
   buildShowcaseViewUrl,
@@ -76,40 +71,25 @@ function DenverClock() {
   )
 }
 
-function readShowcaseThemePreference(): ShowcaseThemePreference {
-  try {
-    return parseShowcaseThemePreference(localStorage.getItem(HOME_SHOWCASE_THEME_STORAGE_KEY))
-  } catch {
-    return 'system'
-  }
-}
-
-function writeShowcaseThemePreference(theme: ShowcaseTheme) {
-  try {
-    localStorage.setItem(HOME_SHOWCASE_THEME_STORAGE_KEY, theme)
-  } catch {
-    // Private browsing can reject storage. The choice still applies for this view.
-  }
-}
-
-function applyHomeShowcaseTheme(theme: ShowcaseTheme) {
-  const chrome = getShowcaseChrome(theme === 'dark')
+function applyHomeShowcaseChrome() {
+  const chrome = getShowcaseChrome()
   const root = document.documentElement
   root.dataset.homeShowcase = 'true'
-  root.dataset.homeShowcaseTheme = theme
+  delete root.dataset.homeShowcaseTheme
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', chrome.canvas)
   document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', chrome.colorScheme)
   document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', chrome.statusBar)
+  try {
+    localStorage.removeItem(HOME_SHOWCASE_THEME_STORAGE_KEY)
+  } catch {
+    // Private browsing can reject storage. The page still stays light.
+  }
 }
 
 function clearHomeShowcaseTheme() {
   const root = document.documentElement
   delete root.dataset.homeShowcase
   delete root.dataset.homeShowcaseTheme
-
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', siteConfig.themeColorDark)
-  document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', 'dark')
-  document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', 'black')
 }
 
 function ExternalArrow() {
@@ -146,9 +126,6 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   }
   const videoReady = videoGate.ready && videoGate.index === index
   const reducedMotion = usePrefersReducedMotion()
-  const [theme, setTheme] = useState<ShowcaseTheme>('light')
-  // Null until the pre-paint sync, so SSR does not mark either still as the LCP image.
-  const [prioritizedTheme, setPrioritizedTheme] = useState<ShowcaseTheme | null>(null)
   const [workView, setWorkView] = useState<HomeWorkView>('grid')
   const [gridFilter, setGridFilter] = useState<HomeGridFilter>('all')
   const workViewRef = useRef<HomeWorkView>('grid')
@@ -221,23 +198,8 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     }
   }, [])
 
-  const chooseTheme = useCallback((next: ShowcaseTheme) => {
-    writeShowcaseThemePreference(next)
-    applyHomeShowcaseTheme(next)
-    setTheme(next)
-    setPrioritizedTheme(next)
-  }, [])
-
   useLayoutEffect(() => {
-    const scheme = window.matchMedia('(prefers-color-scheme: dark)')
-    const syncChrome = () => {
-      const next = resolveShowcaseTheme(readShowcaseThemePreference(), scheme.matches)
-      applyHomeShowcaseTheme(next)
-      setTheme(next)
-      setPrioritizedTheme(next)
-    }
-    syncChrome()
-    scheme.addEventListener('change', syncChrome)
+    applyHomeShowcaseChrome()
 
     const nextView = resolveHomeWorkView(window.location.search, window.location.hash, HOME_SHOWCASE_SLUGS)
     const nextIndex = getHomeShowcaseIndex(window.location.hash, HOME_SHOWCASE_SLUGS)
@@ -258,7 +220,6 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     setReady(true)
 
     return () => {
-      scheme.removeEventListener('change', syncChrome)
       clearHomeShowcaseTheme()
     }
   }, [count, markSeen])
@@ -376,27 +337,6 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     if (pending) pending.catch(() => {})
   }, [index, reducedMotion, workView])
 
-  useEffect(() => {
-    const slide = slides[index]
-    if (!slide || prioritizedTheme === null) return
-
-    const hiddenSrc = prioritizedTheme === 'dark' ? slide.imageSrc : slide.darkImageSrc
-    const warm = () => {
-      const image = new Image()
-      image.decoding = 'async'
-      image.fetchPriority = 'low'
-      image.src = hiddenSrc
-    }
-
-    if (typeof window.requestIdleCallback === 'function') {
-      const id = window.requestIdleCallback(warm, { timeout: 1500 })
-      return () => window.cancelIdleCallback(id)
-    }
-
-    const id = window.setTimeout(warm, 400)
-    return () => window.clearTimeout(id)
-  }, [index, prioritizedTheme, slides])
-
   const active = slides[index]
   const caption = active ? getShowcaseCaption(index, count, active) : null
 
@@ -449,7 +389,6 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 </Link>
               ))}
             </nav>
-            <ShowcaseThemeSwitch className="home-showcase-theme" theme={theme} onChange={chooseTheme} />
           </div>
         </div>
       </aside>
@@ -503,8 +442,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 : slideIndex < index ? 'left' : 'right'
             const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false
             const loaded = current || seen.has(slideIndex)
-            const eagerLight = current && prioritizedTheme === 'light'
-            const eagerDark = current && prioritizedTheme === 'dark'
+            const eager = current
 
             return (
               <div
@@ -528,7 +466,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                           className="home-showcase-motion"
                           ref={videoRef}
                           src={slide.videoSrc ?? undefined}
-                          poster={theme === 'dark' ? slide.darkImageSrc : slide.imageSrc}
+                          poster={slide.imageSrc}
                           muted
                           autoPlay
                           loop
@@ -550,20 +488,8 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                         draggable={false}
                         quality={80}
                         style={{ objectFit: 'contain' }}
-                        fetchPriority={eagerLight ? 'high' : 'low'}
-                        loading={eagerLight ? 'eager' : 'lazy'}
-                      />
-                      <BlurImage
-                        className="home-showcase-still home-showcase-still-dark"
-                        src={slide.darkImageSrc}
-                        alt=""
-                        fill
-                        sizes="(max-width: 820px) calc(100vw - 40px), 68vw"
-                        draggable={false}
-                        quality={80}
-                        style={{ objectFit: 'contain' }}
-                        fetchPriority={eagerDark ? 'high' : 'low'}
-                        loading={eagerDark ? 'eager' : 'lazy'}
+                        fetchPriority={eager ? 'high' : 'low'}
+                        loading={eager ? 'eager' : 'lazy'}
                       />
                     </span>
                   ) : null}

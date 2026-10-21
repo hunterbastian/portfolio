@@ -1,17 +1,13 @@
 'use client'
 
-import { Fragment, useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect } from 'react'
 import Link from 'next/link'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
-import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
 import { cvSelectedWork, cvTools, educationItems, experienceItems } from '@/content/homepage'
 import {
   HOME_SHOWCASE_ROLE,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
   getShowcaseChrome,
-  parseShowcaseThemePreference,
-  resolveShowcaseTheme,
-  type ShowcaseTheme,
 } from '@/lib/home-showcase'
 import { siteConfig } from '@/lib/site'
 import { analytics } from '@/lib/analytics'
@@ -33,31 +29,20 @@ interface CvShowcaseProps {
   className?: string
 }
 
-function readShowcaseThemePreference() {
-  try {
-    return parseShowcaseThemePreference(localStorage.getItem(HOME_SHOWCASE_THEME_STORAGE_KEY))
-  } catch {
-    return 'system' as const
-  }
-}
-
-function writeShowcaseThemePreference(theme: ShowcaseTheme) {
-  try {
-    localStorage.setItem(HOME_SHOWCASE_THEME_STORAGE_KEY, theme)
-  } catch {
-    // Private browsing can reject storage. The choice still applies for this view.
-  }
-}
-
-function applyCvShowcaseTheme(theme: ShowcaseTheme) {
-  const chrome = getShowcaseChrome(theme === 'dark')
+function applyCvShowcaseChrome() {
+  const chrome = getShowcaseChrome()
   const root = document.documentElement
   root.dataset.homeShowcase = 'true'
   root.dataset.cvShowcase = 'true'
-  root.dataset.homeShowcaseTheme = theme
+  delete root.dataset.homeShowcaseTheme
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', chrome.canvas)
   document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', chrome.colorScheme)
   document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', chrome.statusBar)
+  try {
+    localStorage.removeItem(HOME_SHOWCASE_THEME_STORAGE_KEY)
+  } catch {
+    // Private browsing can reject storage. The page still stays light.
+  }
 }
 
 function clearCvShowcaseTheme() {
@@ -65,9 +50,6 @@ function clearCvShowcaseTheme() {
   delete root.dataset.homeShowcase
   delete root.dataset.cvShowcase
   delete root.dataset.homeShowcaseTheme
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', siteConfig.themeColorDark)
-  document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', 'dark')
-  document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.setAttribute('content', 'black')
 }
 
 function trackCvContactClick(link: CvContactLink) {
@@ -79,26 +61,9 @@ function trackCvContactClick(link: CvContactLink) {
 }
 
 export default function CVPageClient({ className }: CvShowcaseProps) {
-  const [theme, setTheme] = useState<ShowcaseTheme>('light')
-
-  const chooseTheme = useCallback((next: ShowcaseTheme) => {
-    writeShowcaseThemePreference(next)
-    applyCvShowcaseTheme(next)
-    setTheme(next)
-  }, [])
-
   useLayoutEffect(() => {
-    const scheme = window.matchMedia('(prefers-color-scheme: dark)')
-    const sync = () => {
-      const next = resolveShowcaseTheme(readShowcaseThemePreference(), scheme.matches)
-      applyCvShowcaseTheme(next)
-      setTheme(next)
-    }
-
-    sync()
-    scheme.addEventListener('change', sync)
+    applyCvShowcaseChrome()
     return () => {
-      scheme.removeEventListener('change', sync)
       clearCvShowcaseTheme()
     }
   }, [])
@@ -129,7 +94,6 @@ export default function CVPageClient({ className }: CvShowcaseProps) {
             >
               {CV_PRINT_BUTTON_LABEL}
             </button>
-            <ShowcaseThemeSwitch className="cv-showcase-theme" theme={theme} onChange={chooseTheme} />
           </div>
         </header>
 

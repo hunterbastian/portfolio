@@ -19,13 +19,8 @@ import {
   getShowcaseTravelDirection,
   getShowcaseVideoSrc,
   planShowcaseSlideMotion,
-  HOME_SHOWCASE_CANVAS_DARK,
-  HOME_SHOWCASE_LINE_DARK,
-  HOME_SHOWCASE_MUTE_DARK,
-  HOME_SHOWCASE_RAISED_DARK,
+  HOME_SHOWCASE_CANVAS,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
-  parseShowcaseThemePreference,
-  resolveShowcaseTheme,
 } from './home-showcase.ts'
 
 test('showcase slides follow the homepage order and MDX fields', () => {
@@ -70,8 +65,7 @@ test('showcase slides follow the homepage order and MDX fields', () => {
   assert.equal(slides[0]?.year, '2026')
   assert.equal(slides[0]?.category, 'Web Design')
   assert.equal(slides[0]?.imageSrc, '/showcase/mentalhealth-minisite.webp')
-  assert.equal(slides[0]?.darkImageSrc, '/showcase/mentalhealth-minisite-transparent.webp')
-  assert.equal(slides.at(-1)?.darkImageSrc, '/showcase/nutricost-transparent.webp')
+  assert.equal('darkImageSrc' in (slides[0] ?? {}), false)
   assert.equal(slides[0]?.videoSrc, '/showcase/mentalhealth-minisite-loop.mp4')
   assert.equal(slides.at(-1)?.category, 'Graphic')
   assert.equal(slides.at(-1)?.videoSrc, '/showcase/nutricost-loop.mp4')
@@ -134,46 +128,33 @@ test('endeavors and links reuse the existing site URLs', () => {
   assert.equal(getShowcaseBio().includes('from first sketch to shipped code'), false)
 })
 
-test('homepage chrome keeps a light canvas and the dark gray canvas', () => {
-  assert.deepEqual(getShowcaseChrome(false), {
+test('homepage chrome is the light canvas only', () => {
+  assert.equal(HOME_SHOWCASE_CANVAS, '#F7F7F5')
+  assert.deepEqual(getShowcaseChrome(), {
     canvas: '#F7F7F5',
     colorScheme: 'light',
     statusBar: 'default',
   })
-  assert.deepEqual(getShowcaseChrome(true), {
-    canvas: '#232323',
-    colorScheme: 'dark',
-    statusBar: 'black',
-  })
-  assert.equal(HOME_SHOWCASE_CANVAS_DARK, '#232323')
-  assert.equal(HOME_SHOWCASE_RAISED_DARK, '#262626')
-  assert.equal(HOME_SHOWCASE_LINE_DARK, '#333333')
-  assert.equal(HOME_SHOWCASE_MUTE_DARK, '#A1A19C')
 })
 
-test('a saved theme wins and a missing preference stays dark', () => {
+test('a stored theme is cleared and the page stays light', () => {
   assert.equal(HOME_SHOWCASE_THEME_STORAGE_KEY, 'hb-showcase-theme')
-  assert.equal(parseShowcaseThemePreference(null), 'system')
-  assert.equal(parseShowcaseThemePreference(''), 'system')
-  assert.equal(parseShowcaseThemePreference('auto'), 'system')
-  assert.equal(parseShowcaseThemePreference('light'), 'light')
-  assert.equal(parseShowcaseThemePreference('dark'), 'dark')
-  assert.equal(resolveShowcaseTheme('system', false), 'dark')
-  assert.equal(resolveShowcaseTheme('system', true), 'dark')
-  assert.equal(resolveShowcaseTheme('light', true), 'light')
-  assert.equal(resolveShowcaseTheme('dark', false), 'dark')
 
   const css = readFileSync(new URL('../app/home-showcase.css', import.meta.url), 'utf8')
   const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8')
-  for (const token of ['#232323', '#262626', '#333333', '#a1a19c']) {
-    assert.ok(css.includes(token), `${token} should be in the showcase stylesheet`)
-  }
-  assert.equal(css.includes('#0e0e0d'), false)
-  assert.equal(css.includes('#1a1a18'), false)
+  assert.ok(css.includes('#f7f7f5'))
+  assert.equal(css.includes('#232323'), false)
+  assert.equal(css.includes('#262626'), false)
+  assert.equal(css.includes('data-home-showcase-theme'), false)
+  assert.equal(css.includes('showcase-theme-switch'), false)
   assert.equal(css.includes('prefers-color-scheme'), false)
   assert.equal(layout.includes('prefers-color-scheme'), false)
-  assert.ok(layout.includes('pref!=="light"'))
-  assert.ok(layout.includes('background-color:${homeShowcaseDark.canvas}!important'))
+  assert.equal(layout.includes('pref!=="light"'), false)
+  assert.equal(layout.includes('-transparent.webp'), false)
+  assert.ok(layout.includes('localStorage.removeItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")'))
+  assert.ok(layout.includes('content="light"'))
+  assert.ok(layout.includes('content="default"'))
+  assert.ok(layout.includes('background-color:${HOME_SHOWCASE_CANVAS}'))
 })
 
 test('showcase travel direction follows the click, including wrap', () => {

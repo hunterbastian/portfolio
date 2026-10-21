@@ -4,6 +4,7 @@ import BlurImage from '@/components/media/BlurImage'
 import DeviceFrame from '@/components/media/DeviceFrame'
 import ProjectVideo from '@/components/media/ProjectVideo'
 import { getDeviceFrameForSrc } from '@/lib/device-frames'
+import FramedProjectImage from '@/components/media/FramedProjectImage'
 import ImageViewer from '@/components/ImageViewer'
 import ComparisonSlider from './ComparisonSlider'
 import LiquidTabs from './LiquidTabs'
@@ -80,16 +81,7 @@ export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, he
   if (frame) {
     return (
       <div className="project-device-stage">
-        <DeviceFrame spec={frame}>
-          <BlurImage
-            src={src}
-            alt={alt}
-            fill
-            sizes="(max-width: 608px) 90vw, 960px"
-            priority={false}
-            {...props}
-          />
-        </DeviceFrame>
+        <FramedProjectImage src={src} alt={alt} spec={frame} />
       </div>
     )
   }

@@ -171,6 +171,21 @@ export function getDeviceFrameForSrc(src: string | undefined | null) {
   return MEDIA_DEVICES[src] ?? null
 }
 
+/**
+ * `sizes` for the image element inside a frame.
+ * A fill crop is drawn at `1 / crop.w` of the glass, so the request has to match that element, not the visible slot.
+ * Cover frames keep the glass size.
+ */
+export function deviceImageSizes(spec: DeviceFrameSpec, presentation: 'inline' | 'enlarged' = 'inline') {
+  const bezel = spec.kind === 'laptop' ? LAPTOP_SIDE : spec.kind === 'iphone' ? IPHONE_BEZEL : IPAD_BEZEL
+  const zoom = spec.fit === 'cover' ? 1 : 1 / spec.crop.w
+  const factor = Number(((1 - 2 * bezel) * zoom).toFixed(3))
+  const slot = presentation === 'enlarged'
+    ? spec.kind === 'iphone' ? 'min(420px, 78vw)' : 'min(960px, 92vw)'
+    : spec.kind === 'iphone' ? 'min(232px, 68vw)' : 'min(520px, 100vw)'
+  return `calc(${slot} * ${factor})`
+}
+
 export function listShowcaseDeviceSlugs() {
   return Object.keys(SHOWCASE_DEVICES)
 }

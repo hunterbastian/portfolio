@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import BlurImage from '@/components/media/BlurImage'
-import DeviceFrame from '@/components/media/DeviceFrame'
 import ImageViewer from '@/components/ImageViewer'
 import * as Tag from '@/components/alignui/tag'
 import { getAllProjects, getArchivedProjects, getProjectBySlug } from '@/lib/projects'
@@ -27,6 +26,7 @@ import TrackedExternalLink from '@/components/TrackedExternalLink'
 import ProjectContactCTA from '@/components/ProjectContactCTA'
 import ProjectEndNav from '@/components/ProjectEndNav'
 import { getProjectEndNavigation } from '@/lib/project-navigation'
+import FramedProjectImage from '@/components/media/FramedProjectImage'
 import { getDeviceFrameForSrc } from '@/lib/device-frames'
 
 // Revalidate every 5 minutes for individual project pages
@@ -123,16 +123,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           image={
             heroFrame ? (
               <div className="project-device-stage mb-12">
-                <DeviceFrame spec={heroFrame}>
-                  <BlurImage
-                    src={frontmatter.image}
-                    alt={frontmatter.title}
-                    fill
-                    priority
-                    quality={80}
-                    sizes={heroFrame.kind === 'iphone' ? '(max-width: 608px) 90vw, 960px' : '(max-width: 608px) 100vw, 1200px'}
-                  />
-                </DeviceFrame>
+                <FramedProjectImage
+                  src={frontmatter.image}
+                  alt={frontmatter.title}
+                  spec={heroFrame}
+                  priority
+                  quality={80}
+                />
               </div>
             ) : (
               <ImageViewer src={frontmatter.image} alt={frontmatter.title} className="relative mb-12 aspect-[4/3] w-full img-inset-outline shadow-card">

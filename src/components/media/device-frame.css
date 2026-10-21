@@ -174,13 +174,44 @@
   margin: 2rem auto 2.5rem;
 }
 
-.project-device-stage .device-iphone {
+.project-device-stage > .device-iphone,
+.project-device-stage > .project-device-trigger:has(.device-iphone) {
   width: min(232px, 68%);
 }
 
-.project-device-stage .device-ipad,
-.project-device-stage .device-laptop {
+.project-device-stage > .device-ipad,
+.project-device-stage > .device-laptop,
+.project-device-stage > .project-device-trigger:has(.device-ipad),
+.project-device-stage > .project-device-trigger:has(.device-laptop) {
   width: min(100%, 520px);
+}
+
+.project-device-stage > .project-device-trigger {
+  min-height: 0;
+  overflow: visible;
+}
+
+.project-device-stage > .project-device-trigger .device {
+  width: 100%;
+}
+
+.project-device-stage-enlarged {
+  height: 100%;
+  margin: 0;
+  align-items: center;
+}
+
+.project-device-stage-enlarged .device-iphone {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+}
+
+.project-device-stage-enlarged .device-ipad,
+.project-device-stage-enlarged .device-laptop {
+  width: min(100%, 960px);
+  height: auto;
+  max-height: 100%;
 }
 
 .home-showcase-frame {

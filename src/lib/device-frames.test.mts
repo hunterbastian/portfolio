@@ -4,6 +4,7 @@ import { HOME_SHOWCASE_SLUGS } from './home-showcase.ts'
 import {
   IPHONE_SCREEN_ASPECT,
   IPAD_SCREEN_ASPECT,
+  deviceImageSizes,
   deviceShellAspect,
   getDeviceFrameForSrc,
   getShowcaseDevice,
@@ -45,4 +46,23 @@ test('project mockups that already use a frame resolve to the same shells', () =
   assert.equal(getDeviceFrameForSrc('/images/projects/porscheapp-screen.mp4')?.kind, 'iphone')
   assert.equal(getDeviceFrameForSrc('/showcase/rain.webp')?.kind, 'laptop')
   assert.equal(getDeviceFrameForSrc('/images/projects/nutricost-case-study.webp'), null)
+})
+
+test('cropped frames request a source large enough for the zoomed glass', () => {
+  const porsche = getDeviceFrameForSrc('/images/projects/porscheapp.webp')
+  const lumo = getDeviceFrameForSrc('/images/optimized/projects/lumo.webp')
+  const rainPhone = getDeviceFrameForSrc('/images/optimized/projects/rain/phone-play.webp')
+  const rainLaptop = getDeviceFrameForSrc('/showcase/rain.webp')
+  assert.ok(porsche && lumo && rainPhone && rainLaptop)
+
+  const factor = (sizes: string) => Number(sizes.match(/\* ([0-9.]+)\)/)?.[1])
+  const porscheSizes = deviceImageSizes(porsche)
+  assert.match(porscheSizes, /min\(232px, 68vw\)/)
+  assert.ok(factor(porscheSizes) > 4)
+  assert.ok(factor(deviceImageSizes(lumo)) > 3)
+  assert.ok(factor(deviceImageSizes(lumo)) < factor(porscheSizes))
+
+  assert.match(deviceImageSizes(rainPhone), /min\(232px, 68vw\) \* 0\.948\)/)
+  assert.match(deviceImageSizes(rainLaptop), /min\(520px, 100vw\)/)
+  assert.match(deviceImageSizes(porsche, 'enlarged'), /min\(420px, 78vw\)/)
 })

@@ -90,14 +90,6 @@ function clearHomeShowcaseTheme() {
   delete root.dataset.homeShowcaseTheme
 }
 
-function ExternalArrow() {
-  return (
-    <span className="home-showcase-arrow" aria-hidden="true">
-      {'↗\uFE0E'}
-    </span>
-  )
-}
-
 export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const count = slides.length
   const [index, setIndex] = useState(0)
@@ -326,39 +318,40 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
         <div className="home-showcase-bottom">
           <p className="home-showcase-bio">{bio}</p>
           <div className="home-showcase-endeavors">
-            <p className="home-showcase-label">Endeavors</p>
             <ul className="home-showcase-list">
               {endeavors.map((item) => (
                 <li key={item.label}>
                   {item.external ? (
                     <a href={item.href} target="_blank" rel="noopener noreferrer">
-                      {item.label} <ExternalArrow />
+                      {item.label}
                     </a>
                   ) : (
                     <Link href={item.href}>
-                      {item.label} <ExternalArrow />
+                      {item.label}
                     </Link>
                   )}
-                  <span className="home-showcase-mute">{item.meta}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div className="home-showcase-actions">
             <nav className="home-showcase-links" aria-label="Contact">
-              {links.map((item) => item.href.startsWith('mailto:') ? (
-                <EmailCopyLink key={item.label} href={item.href}>
-                  {item.label}
-                </EmailCopyLink>
-              ) : item.external ? (
-                <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer">
-                  {item.label}
-                </a>
-              ) : (
-                <Link key={item.label} href={item.href}>
-                  {item.label}
-                </Link>
-              ))}
+              {links.map((item) => {
+                const pill = item.label === 'Resume' ? 'home-showcase-pill is-primary' : 'home-showcase-pill'
+                return item.href.startsWith('mailto:') ? (
+                  <EmailCopyLink key={item.label} className={pill} href={item.href}>
+                    {item.label}
+                  </EmailCopyLink>
+                ) : item.external ? (
+                  <a key={item.label} className={pill} href={item.href} target="_blank" rel="noopener noreferrer">
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link key={item.label} className={pill} href={item.href}>
+                    {item.label}
+                  </Link>
+                )
+              })}
             </nav>
           </div>
         </div>
@@ -480,10 +473,10 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               ))}
             </div>
             <div className="home-showcase-controls">
-              <button type="button" aria-label="Previous project" onClick={() => go(indexRef.current - 1)}>
+              <button type="button" className="home-showcase-pill" aria-label="Previous project" onClick={() => go(indexRef.current - 1)}>
                 Prev
               </button>
-              <button type="button" aria-label="Next project" onClick={() => go(indexRef.current + 1)}>
+              <button type="button" className="home-showcase-pill is-primary" aria-label="Next project" onClick={() => go(indexRef.current + 1)}>
                 Next
               </button>
             </div>

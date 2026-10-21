@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
   // Enhanced Image Optimization
   images: {
     formats: ['image/avif', 'image/webp'],
-    qualities: [75, 80, 90],
+    qualities: [60, 75, 80, 90],
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {

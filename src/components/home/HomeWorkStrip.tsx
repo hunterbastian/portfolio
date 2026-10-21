@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from 'react'
 import BlurImage from '@/components/media/BlurImage'
+import { nextDialogTabIndex } from '@/lib/dialog-tab'
 import { useBodyScrollLock } from '@/lib/use-body-scroll-lock'
 import {
   HOME_GRID_PIECES,
@@ -404,6 +405,24 @@ export default function HomeWorkStrip({
       if (event.key === 'Escape') {
         event.preventDefault()
         close()
+        return
+      }
+      if (event.key === 'Tab') {
+        const dialog = closeRef.current?.closest<HTMLElement>('.home-grid-lightbox')
+        if (!dialog) return
+        const focusable = [...dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])',
+        )].filter((el) => el.tabIndex !== -1 && !el.hasAttribute('disabled'))
+        if (focusable.length === 0) {
+          event.preventDefault()
+          return
+        }
+        const active = document.activeElement
+        const current = active instanceof HTMLElement ? focusable.indexOf(active) : -1
+        const next = nextDialogTabIndex(current, focusable.length, event.shiftKey, dialog.contains(active))
+        if (next === null) return
+        event.preventDefault()
+        focusable[next]?.focus()
         return
       }
       if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return

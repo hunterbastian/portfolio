@@ -68,8 +68,8 @@ export const IMAGE_BLUR_DATA = {
   "/images/optimized/projects/rain/overview.webp": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAACwAQCdASoQAAkABUB8JZwC7ACvXOLgAO65H/dhDBFqgmiKYAA=",
   "/images/optimized/projects/rain/phone-dusk.webp": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoHABAABUB8JQBOgBtkaM2QQAD30TTRDaGaZs0gc5vgCznXHFjagAAA",
   "/images/optimized/projects/rain/phone-play.webp": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACwAQCdASoHABAABUB8JZwC7ABfkIoAAOheoy5PP77QYf95EjPAAA==",
-  "/images/optimized/projects/rain/phone-title.webp": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACwAQCdASoHABAABUB8JZwC7AEOYTH4AP55NnPxi08XlCpD12mEmZiCAAA=",
-  "/images/optimized/projects/rain/phone-trophies.webp": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAACwAQCdASoHABAABUB8JaQAAudFy7wAAP7pUXTs3m9HUIAA",
+  "/images/optimized/projects/rain/phone-title.webp": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACwAQCdASoIABAABUB8JZwC7ABp16RAAOhet9Fvs6Xyn1vjsqGUAA==",
+  "/images/optimized/projects/rain/phone-trophies.webp": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACwAQCdASoJABAABUB8JaQAAt0L/00AAP7Zmmt2QYcGmb9njPGIAAAA",
   "/images/optimized/projects/rain/scene-dusk.webp": "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADwAQCdASoQAAkABUB8JQBOgCIaN0bDiAAA/U53L0NsfFTGHhlUSTTD+RCS3uAA",
   "/images/optimized/projects/rain/tall-dusk.webp": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAADQAQCdASoJABAABUB8JYwCdAEekJJoAADyUeE6i4XdzTXr1F7RZvcAAAA=",
   "/images/optimized/projects/rain/tap-waves.webp": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAABwAQCdASoQAAkABUB8JZQAAVzTAADvLX/qIpVUNzzbKZQAAAA=",
@@ -121,6 +121,6 @@ export const IMAGE_BLUR_DATA = {
   "/showcase/middle-earth-journey.webp": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAsABUB8JZwAAuQiAFUGAAD+yji/O4msMCIEJq4seK0oEN/3I1giY98xwN3jnh6Ht6dwItreAAAA",
   "/showcase/nutricost.webp": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACQAQCdASoQAAsABUB8JZQAAqo3NQAA/u/XOdNjj5r9qPEUJKzu7LZCiEbRWPHwABAAAA==",
   "/showcase/porsche-app.webp": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAACwAQCdASoQAAsABUB8JaQAAsf0pqoAAP7v1HH+s3hhxItYzfzlBIu7zRelTZ7752yFEAAA",
-  "/showcase/rain.webp": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAADQAQCdASoQAAkABUB8JZwAAudDVj7UAAD9Ukcs5MtwpsS98xkDVhAA",
+  "/showcase/rain.webp": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAABwAQCdASoQAAgABUB8JZwAAVs2AAD6MbEEIFmHfMJHJYQUAAA=",
   "/showcase/wander-utah.webp": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAsABUB8JaQAAsf2AxQAAP7v15pa/5F3D8fXKLuzvb5N7oAAAA==",
 } as const

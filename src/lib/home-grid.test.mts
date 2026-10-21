@@ -33,7 +33,9 @@ test('homepage grid uses real repo assets across the visible categories', () => 
     }
   }
 
-  assert.equal(HOME_GRID_PIECES.length, 50)
+  assert.equal(HOME_GRID_PIECES.length, 41)
+  const rainIds = HOME_GRID_PIECES.filter((piece) => piece.projectSlug === 'rain').map((piece) => piece.id)
+  assert.deepEqual(rainIds, ['rain', 'rain-desktop-dusk', 'rain-phone-play', 'rain-koi-feeding'])
   const camping = HOME_GRID_PIECES.find((piece) => piece.id === 'camping')
   const skiing = HOME_GRID_PIECES.find((piece) => piece.id === 'skiing')
   assert.equal(camping?.title, 'Camping')

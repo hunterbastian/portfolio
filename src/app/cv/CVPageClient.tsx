@@ -4,7 +4,7 @@ import { Fragment, useCallback, useEffect, useLayoutEffect, useState } from 'rea
 import Link from 'next/link'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
-import { educationItems, experienceItems } from '@/content/homepage'
+import { cvSelectedWork, cvTools, educationItems, experienceItems } from '@/content/homepage'
 import {
   HOME_SHOWCASE_ROLE,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
@@ -169,6 +169,18 @@ export default function CVPageClient({ className }: CvShowcaseProps) {
           })}
         </section>
 
+        <section className="cv-showcase-section" aria-labelledby="cv-selected-work">
+          <h2 id="cv-selected-work">Selected work</h2>
+          {cvSelectedWork.map((item) => (
+            <article key={item.slug} className="cv-showcase-entry">
+              <p className="cv-showcase-title">
+                <Link href={`/projects/${item.slug}`}>{item.title} <span aria-hidden="true">{'↗︎'}</span></Link>
+              </p>
+              <p className="cv-showcase-detail">{item.summary}</p>
+            </article>
+          ))}
+        </section>
+
         <section className="cv-showcase-section" aria-labelledby="cv-education">
           <h2 id="cv-education">Education</h2>
           {educationItems.map((item) => {
@@ -183,6 +195,11 @@ export default function CVPageClient({ className }: CvShowcaseProps) {
               </article>
             )
           })}
+        </section>
+
+        <section className="cv-showcase-section" aria-labelledby="cv-tools">
+          <h2 id="cv-tools">Tools</h2>
+          <p className="cv-showcase-detail">{cvTools.join(' · ')}</p>
         </section>
       </div>
     </div>

@@ -5,9 +5,9 @@ export const siteConfig = {
   brandName: 'Hunter Bastian',
   appName: 'Hunter Bastian Portfolio',
   shortName: 'HB Portfolio',
-  siteTitle: 'Hunter Bastian — Interaction designer in Lehi, Utah',
+  siteTitle: 'Hunter Bastian — Product designer in Lehi, Utah',
   siteDescription:
-    'I design and build digital products with calm interfaces, thoughtful motion, and visual restraint. Interaction Design student at Utah Valley University, based in Lehi, Utah.',
+    'I design and build digital products with calm interfaces, thoughtful motion, and visual restraint. Interaction Design student at Utah Valley University and data labeler on Tesla’s AI team. Based in Lehi, Utah, and open to product design roles.',
   defaultOgImage: '/images/profilepicture.webp',
   siteCoordinates: '40.7608° N / 111.8910° W',
   siteLocation: 'LEHI UT',

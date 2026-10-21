@@ -1588,29 +1588,14 @@ html[data-home-showcase] .home-showcase .home-work-strip-caption {
     overflow-x: clip;
   }
 
-  .home-work-strip-head {
-    height: 16px;
-    min-height: 0;
-    align-items: flex-end;
-  }
-
-  .home-work-strip-nav {
-    height: 16px;
-    align-items: flex-end;
+  .home-work-strip {
+    margin-top: -4px;
   }
 
   .home-showcase .home-showcase-controls button,
   .home-showcase .home-grid-lightbox-nav {
     min-width: 40px;
     min-height: 40px;
-  }
-
-  .home-showcase .home-work-strip-nav button {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 0;
-    margin-top: -24px;
   }
 
   .home-showcase .home-grid-lightbox-close {
@@ -1624,6 +1609,12 @@ html[data-home-showcase] .home-showcase .home-work-strip-caption {
 
   .home-work-strip-edge span:nth-child(4) {
     --blur: 5px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-work-strip-nav {
+    display: none;
   }
 }
 

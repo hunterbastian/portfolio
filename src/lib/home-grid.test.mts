@@ -5,14 +5,13 @@ import test from 'node:test'
 import { HOME_SHOWCASE_SLUGS } from './home-showcase.ts'
 import {
   HOME_GRID_PIECES,
-  buildShowcaseViewUrl,
-  getHomeGridFilters,
-  getHomeGridPieces,
   getHomeGridProjectHref,
   getHomeShowcaseIndex,
+  getWorkStripAction,
   isShowcaseProjectHash,
-  resolveHomeWorkView,
   stepHomeGridIndex,
+  withoutHomeViewParam,
+  workStripMatchesSlide,
 } from './home-grid.ts'
 
 test('homepage grid uses real repo assets across the visible categories', () => {
@@ -34,25 +33,28 @@ test('homepage grid uses real repo assets across the visible categories', () => 
     }
   }
 
-  assert.deepEqual(getHomeGridFilters(), ['all', 'apps', 'web', 'experiments', 'graphic'])
-  assert.equal(getHomeGridPieces('all').length, HOME_GRID_PIECES.length)
-  assert.ok(getHomeGridPieces('apps').every((piece) => piece.category === 'apps'))
-  assert.ok(getHomeGridPieces('apps').length > 0)
-  assert.ok(getHomeGridPieces('experiments').length > 0)
+  assert.equal(HOME_GRID_PIECES.length, 35)
+  assert.ok(HOME_GRID_PIECES.some((piece) => piece.category === 'apps'))
+  assert.ok(HOME_GRID_PIECES.some((piece) => piece.category === 'experiments'))
 })
 
-test('work view stays on the grid unless the url asks for the showcase', () => {
-  assert.equal(resolveHomeWorkView('', ''), 'grid')
-  assert.equal(resolveHomeWorkView('?view=showcase', ''), 'showcase')
-  assert.equal(resolveHomeWorkView('?view=grid', '#3'), 'grid')
-  assert.equal(resolveHomeWorkView('', '#3'), 'showcase')
-  assert.equal(resolveHomeWorkView('', '#0'), 'grid')
-  assert.equal(resolveHomeWorkView('', '#lumo'), 'showcase')
+test('a thumbnail jumps the showcase only when it belongs to a carousel project', () => {
+  const lumo = HOME_GRID_PIECES.find((piece) => piece.projectSlug === 'lumo')
+  const loose = HOME_GRID_PIECES.find((piece) => !piece.projectSlug)
+  assert.ok(lumo)
+  assert.ok(loose)
+  assert.deepEqual(getWorkStripAction(lumo), { type: 'showcase', index: HOME_SHOWCASE_SLUGS.indexOf('lumo') })
+  assert.deepEqual(getWorkStripAction(loose), { type: 'lightbox' })
+  assert.equal(workStripMatchesSlide(lumo, 'lumo'), true)
+  assert.equal(workStripMatchesSlide(lumo, 'porsche-app'), false)
+  assert.equal(workStripMatchesSlide(loose, 'lumo'), false)
   assert.equal(isShowcaseProjectHash('#0'), false)
   assert.equal(isShowcaseProjectHash('#lumo'), true)
   assert.equal(getHomeShowcaseIndex('#lumo'), HOME_SHOWCASE_SLUGS.indexOf('lumo'))
   assert.equal(getHomeShowcaseIndex('#3'), 2)
-  assert.equal(buildShowcaseViewUrl(0), '?view=showcase#1')
+  assert.equal(withoutHomeViewParam('?view=grid'), '')
+  assert.equal(withoutHomeViewParam('?view=showcase&ref=1'), '?ref=1')
+  assert.equal(withoutHomeViewParam(''), '')
   assert.equal(stepHomeGridIndex(0, -1, 4), 3)
   assert.equal(stepHomeGridIndex(3, 1, 4), 0)
 })

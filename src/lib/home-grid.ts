@@ -1,8 +1,6 @@
-import { HOME_SHOWCASE_SLUGS, getShowcaseHash, getShowcaseIndexFromHash } from './home-showcase.ts'
+import { HOME_SHOWCASE_SLUGS, getShowcaseIndexFromHash } from './home-showcase.ts'
 
-export type HomeWorkView = 'grid' | 'showcase'
 export type HomeGridCategory = 'apps' | 'web' | 'experiments' | 'graphic'
-export type HomeGridFilter = 'all' | HomeGridCategory
 
 export interface HomeGridPiece {
   id: string
@@ -16,8 +14,6 @@ export interface HomeGridPiece {
   /** Set only when the piece belongs to a homepage carousel project. */
   projectSlug?: (typeof HOME_SHOWCASE_SLUGS)[number]
 }
-
-export const HOME_GRID_FILTERS = ['all', 'apps', 'web', 'experiments', 'graphic'] as const satisfies readonly HomeGridFilter[]
 
 const carouselSlug = new Set<string>(HOME_SHOWCASE_SLUGS)
 
@@ -370,18 +366,34 @@ export const HOME_GRID_PIECES: readonly HomeGridPiece[] = [
   }),
 ]
 
-export function getHomeGridFilters(pieces: readonly HomeGridPiece[] = HOME_GRID_PIECES): HomeGridFilter[] {
-  const present = new Set(pieces.map((item) => item.category))
-  return HOME_GRID_FILTERS.filter((filter) => filter === 'all' || present.has(filter))
-}
-
-export function getHomeGridPieces(filter: HomeGridFilter, pieces: readonly HomeGridPiece[] = HOME_GRID_PIECES) {
-  if (filter === 'all') return pieces
-  return pieces.filter((item) => item.category === filter)
-}
-
 export function getHomeGridProjectHref(item: Pick<HomeGridPiece, 'projectSlug'>) {
   return item.projectSlug ? `/projects/${item.projectSlug}` : null
+}
+
+export type WorkStripAction =
+  | { type: 'showcase'; index: number }
+  | { type: 'lightbox' }
+
+/** Carousel projects jump the showcase. Every other piece opens the lightbox. */
+export function getWorkStripAction(
+  item: Pick<HomeGridPiece, 'projectSlug'>,
+  slugs: readonly string[] = HOME_SHOWCASE_SLUGS,
+): WorkStripAction {
+  if (!item.projectSlug) return { type: 'lightbox' }
+  const index = slugs.indexOf(item.projectSlug)
+  return index >= 0 ? { type: 'showcase', index } : { type: 'lightbox' }
+}
+
+export function workStripMatchesSlide(item: Pick<HomeGridPiece, 'projectSlug'>, slug: string | null) {
+  return Boolean(slug) && item.projectSlug === slug
+}
+
+/** Drop a leftover ?view= from the old grid switcher. Other query params stay. */
+export function withoutHomeViewParam(search: string) {
+  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search)
+  params.delete('view')
+  const next = params.toString()
+  return next ? `?${next}` : ''
 }
 
 export function stepHomeGridIndex(index: number, delta: number, count: number) {
@@ -410,15 +422,3 @@ export function getHomeShowcaseIndex(hash: string, slugs: readonly string[] = HO
   return index >= 0 ? index : 0
 }
 
-/** Grid is the landing view. A project hash or ?view=showcase opens the carousel. ?view=grid wins. */
-export function resolveHomeWorkView(search: string, hash: string, slugs: readonly string[] = HOME_SHOWCASE_SLUGS): HomeWorkView {
-  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search)
-  const view = params.get('view')
-  if (view === 'grid') return 'grid'
-  if (view === 'showcase') return 'showcase'
-  return isShowcaseProjectHash(hash, slugs) ? 'showcase' : 'grid'
-}
-
-export function buildShowcaseViewUrl(index: number) {
-  return `?view=showcase${getShowcaseHash(index)}`
-}

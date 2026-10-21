@@ -27,7 +27,6 @@ export const STATIC_SITEMAP_ROUTES: SitemapRoute[] = [
   { path: '/about', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/cv', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/archive', changeFrequency: 'monthly', priority: 0.6 },
-  { path: '/playground', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/tools/dither', changeFrequency: 'monthly', priority: 0.7 },
 ]
 

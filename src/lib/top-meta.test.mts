@@ -36,9 +36,9 @@ import {
 } from './top-meta.ts'
 
 test('TOP_META_NAV_ITEMS keeps primary header navigation stable', () => {
-  assert.deepEqual(TOP_META_NAV_ITEMS.map((item) => item.href), ['/', '/archive'])
+  assert.deepEqual(TOP_META_NAV_ITEMS.map((item) => item.href), ['/'])
   assert.equal(TOP_META_NAV_ITEMS[0]?.toast, 'Opening home')
-  assert.equal(TOP_META_NAV_ITEMS[1]?.peek, 'Open experiments')
+  assert.equal(TOP_META_NAV_ITEMS.some((item) => item.name === 'Playground'), false)
 })
 
 test('top meta copy constants preserve menu labels without Launchpad chrome', () => {
@@ -56,13 +56,14 @@ test('top meta copy constants preserve menu labels without Launchpad chrome', ()
 })
 
 test('isTopMetaNavItemActive handles exact home and nested route matches', () => {
-  const [home, archive] = TOP_META_NAV_ITEMS
+  const home = TOP_META_NAV_ITEMS[0]!
+  const archive = { href: '/archive' }
 
-  assert.equal(isTopMetaNavItemActive('/', home!), true)
-  assert.equal(isTopMetaNavItemActive('/projects/lumo', home!), false)
-  assert.equal(isTopMetaNavItemActive('/archive', archive!), true)
-  assert.equal(isTopMetaNavItemActive('/archive?from=home', archive!), true)
-  assert.equal(isTopMetaNavItemActive('/projects/lumo', archive!), false)
+  assert.equal(isTopMetaNavItemActive('/', home), true)
+  assert.equal(isTopMetaNavItemActive('/projects/lumo', home), false)
+  assert.equal(isTopMetaNavItemActive('/archive', archive), true)
+  assert.equal(isTopMetaNavItemActive('/archive?from=home', archive), true)
+  assert.equal(isTopMetaNavItemActive('/projects/lumo', archive), false)
 })
 
 test('TOP_REVEAL_SCROLL_Y documents header hide threshold', () => {
@@ -138,21 +139,21 @@ test('homepage keeps the header sticky so section jumps stay reachable', () => {
   assert.doesNotMatch(getTopMetaShellClassName(false, false, false), /bg-card\/88/)
 })
 
-test('homepage desktop nav yields to section jumps while mobile keeps Playground', () => {
+test('homepage desktop nav yields to section jumps', () => {
   assert.deepEqual(getTopMetaPageNavItems('/'), [])
   assert.deepEqual(getTopMetaPageNavItems('/index'), [])
   assert.deepEqual(getTopMetaPageNavItems('/archive'), [...TOP_META_NAV_ITEMS])
   assert.deepEqual(
     getTopMetaMobilePageNavItems('/').map((item) => item.href),
-    ['/archive'],
+    [],
   )
   assert.deepEqual(
     getTopMetaMobilePageNavItems('/index').map((item) => item.href),
-    ['/archive'],
+    [],
   )
   assert.deepEqual(
     getTopMetaMobilePageNavItems('/cv').map((item) => item.href),
-    ['/', '/archive'],
+    ['/'],
   )
 })
 
@@ -266,9 +267,9 @@ test('top meta action helpers centralize nav analytics and toast copy', () => {
     analyticsTarget: 'home',
     toast: 'Opening home',
   })
-  assert.deepEqual(getTopMetaNavAction(TOP_META_NAV_ITEMS[1]!), {
-    analyticsTarget: 'playground',
-    toast: 'Opening playground',
+  assert.deepEqual(getTopMetaNavAction(TOP_META_NAV_ITEMS[0]!), {
+    analyticsTarget: 'home',
+    toast: 'Opening home',
   })
 })
 
@@ -276,7 +277,7 @@ test('activateTopMetaNavAction preserves haptic, analytics, and toast ordering',
   const calls: unknown[] = []
 
   activateTopMetaNavAction({
-    action: getTopMetaNavAction(TOP_META_NAV_ITEMS[1]!),
+    action: getTopMetaNavAction({ name: 'Notes', toast: 'Opening notes' }),
     showToast: (message) => calls.push(['toast', message]),
     trackNavigationClick: (target) => calls.push(['navigation', target]),
     triggerHaptic: (style) => calls.push(['haptic', style]),
@@ -284,8 +285,8 @@ test('activateTopMetaNavAction preserves haptic, analytics, and toast ordering',
 
   assert.deepEqual(calls, [
     ['haptic', 'light'],
-    ['navigation', 'playground'],
-    ['toast', 'Opening playground'],
+    ['navigation', 'notes'],
+    ['toast', 'Opening notes'],
   ])
 })
 

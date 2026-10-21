@@ -40,7 +40,6 @@ const TOP_META_NAV_LABEL_INACTIVE_CLASS = ''
 
 export const TOP_META_NAV_ITEMS = [
   { name: 'Home', href: '/', peek: 'Go home', toast: 'Opening home' },
-  { name: 'Playground', href: '/archive', peek: 'Open experiments', toast: 'Opening playground' },
 ] as const
 
 export type TopMetaNavItem = (typeof TOP_META_NAV_ITEMS)[number]
@@ -92,7 +91,7 @@ export const TOP_META_BRAND_ACTION = {
   toast: 'Opening home',
 } as const satisfies TopMetaActionState
 
-export function isTopMetaNavItemActive(pathname: string, item: Pick<TopMetaNavItem, 'href'>) {
+export function isTopMetaNavItemActive(pathname: string, item: { href: string }) {
   return item.href === '/' ? isHomePathname(pathname) : pathname.startsWith(item.href)
 }
 
@@ -100,7 +99,7 @@ export function getTopMetaAnalyticsTarget(name: string) {
   return name.toLowerCase()
 }
 
-export function getTopMetaNavAction(item: Pick<TopMetaNavItem, 'name' | 'toast'>): TopMetaActionState {
+export function getTopMetaNavAction(item: { name: string; toast: string }): TopMetaActionState {
   return {
     analyticsTarget: getTopMetaAnalyticsTarget(item.name),
     toast: item.toast,

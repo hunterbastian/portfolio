@@ -5,17 +5,17 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import BlurImage from '@/components/media/BlurImage'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import ShowcaseThemeSwitch from '@/components/showcase/ShowcaseThemeSwitch'
+import HomeGrid from '@/components/home/HomeGrid'
 import {
   HOME_SHOWCASE_LOCATION,
   HOME_SHOWCASE_ROLE,
+  HOME_SHOWCASE_SLUGS,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
   formatDenverClock,
   getShowcaseBio,
   getShowcaseCaption,
   getShowcaseChrome,
   getShowcaseEndeavors,
-  getShowcaseHash,
-  getShowcaseIndexFromHash,
   getShowcaseKeyboardAction,
   getShowcaseLinks,
   getShowcaseTravelDirection,
@@ -26,6 +26,14 @@ import {
   type ShowcaseTheme,
   type ShowcaseThemePreference,
 } from '@/lib/home-showcase'
+import {
+  buildShowcaseViewUrl,
+  getHomeGridFilters,
+  getHomeShowcaseIndex,
+  resolveHomeWorkView,
+  type HomeGridFilter,
+  type HomeWorkView,
+} from '@/lib/home-grid'
 import { siteConfig } from '@/lib/site'
 
 const endeavors = getShowcaseEndeavors()
@@ -141,6 +149,11 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const [theme, setTheme] = useState<ShowcaseTheme>('light')
   // Null until the pre-paint sync, so SSR does not mark either still as the LCP image.
   const [prioritizedTheme, setPrioritizedTheme] = useState<ShowcaseTheme | null>(null)
+  const [workView, setWorkView] = useState<HomeWorkView>('grid')
+  const [gridFilter, setGridFilter] = useState<HomeGridFilter>('all')
+  const workViewRef = useRef<HomeWorkView>('grid')
+  const lightboxOpenRef = useRef(false)
+  const gridFilters = getHomeGridFilters()
 
   const markSeen = useCallback((nextIndex: number) => {
     setSeen((current) => {
@@ -180,11 +193,33 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     setIndex(normalized)
     markSeen(normalized)
 
-    const hash = getShowcaseHash(normalized)
-    if (window.location.hash !== hash) {
-      window.history.replaceState(null, '', hash)
+    if (workViewRef.current !== 'showcase') return
+
+    const url = buildShowcaseViewUrl(normalized)
+    if (`${window.location.search}${window.location.hash}` !== url) {
+      window.history.replaceState(null, '', url)
     }
   }, [count, markSeen])
+
+  const onLightboxChange = useCallback((open: boolean) => {
+    lightboxOpenRef.current = open
+  }, [])
+
+  const showView = useCallback((next: HomeWorkView) => {
+    workViewRef.current = next
+    setWorkView(next)
+    if (next === 'showcase') {
+      const url = buildShowcaseViewUrl(indexRef.current)
+      if (`${window.location.search}${window.location.hash}` !== url) {
+        window.history.replaceState(null, '', url)
+      }
+      return
+    }
+
+    if (window.location.search || window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+  }, [])
 
   const chooseTheme = useCallback((next: ShowcaseTheme) => {
     writeShowcaseThemePreference(next)
@@ -204,14 +239,20 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     syncChrome()
     scheme.addEventListener('change', syncChrome)
 
-    const nextIndex = getShowcaseIndexFromHash(window.location.hash, count)
-    indexRef.current = nextIndex
-    setIndex(nextIndex)
-    markSeen(nextIndex)
-
-    const hash = getShowcaseHash(nextIndex)
-    if (window.location.hash !== hash) {
-      window.history.replaceState(null, '', hash)
+    const nextView = resolveHomeWorkView(window.location.search, window.location.hash, HOME_SHOWCASE_SLUGS)
+    const nextIndex = getHomeShowcaseIndex(window.location.hash, HOME_SHOWCASE_SLUGS)
+    if (nextIndex !== indexRef.current) {
+      indexRef.current = nextIndex
+      setIndex(nextIndex)
+      markSeen(nextIndex)
+    }
+    workViewRef.current = nextView
+    setWorkView(nextView)
+    if (nextView === 'showcase') {
+      const url = buildShowcaseViewUrl(nextIndex)
+      if (`${window.location.search}${window.location.hash}` !== url) {
+        window.history.replaceState(null, '', url)
+      }
     }
 
     setReady(true)
@@ -287,7 +328,11 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
   useEffect(() => {
     const onHashChange = () => {
-      go(getShowcaseIndexFromHash(window.location.hash, count))
+      const nextView = resolveHomeWorkView(window.location.search, window.location.hash, HOME_SHOWCASE_SLUGS)
+      if (nextView !== 'showcase') return
+      workViewRef.current = 'showcase'
+      setWorkView('showcase')
+      go(getHomeShowcaseIndex(window.location.hash, HOME_SHOWCASE_SLUGS))
     }
 
     window.addEventListener('hashchange', onHashChange)
@@ -306,7 +351,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
           ? { isContentEditable: event.target.isContentEditable, tagName: event.target.tagName }
           : null,
       })
-      if (!action) return
+      if (!action || workViewRef.current !== 'showcase' || lightboxOpenRef.current) return
 
       event.preventDefault()
       go(indexRef.current + (action === 'next' ? 1 : -1))
@@ -318,7 +363,10 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video || reducedMotion !== false) return
+    if (!video || reducedMotion !== false || workView !== 'showcase') {
+      video?.pause()
+      return
+    }
 
     video.muted = true
     if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
@@ -326,7 +374,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     }
     const pending = video.play()
     if (pending) pending.catch(() => {})
-  }, [index, reducedMotion])
+  }, [index, reducedMotion, workView])
 
   useEffect(() => {
     const slide = slides[index]
@@ -353,7 +401,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const caption = active ? getShowcaseCaption(index, count, active) : null
 
   return (
-    <div className={className ? `home-showcase ${className}` : 'home-showcase'} data-ready={ready ? 'true' : undefined}>
+    <div className={className ? `home-showcase ${className}` : 'home-showcase'} data-ready={ready ? 'true' : undefined} data-work-view={workView}>
       <aside className="home-showcase-aside">
         <div className="home-showcase-identity">
           <h1>{siteConfig.personName}</h1>
@@ -406,7 +454,16 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
         </div>
       </aside>
 
-      <section className="home-showcase-stage" aria-label="Selected work">
+      <section className="home-showcase-stage" aria-label="Work">
+        <div className="home-work-pane" hidden={workView !== 'grid'}>
+          <HomeGrid
+            active={workView === 'grid'}
+            filter={gridFilter}
+            reducedMotion={reducedMotion}
+            onLightboxChange={onLightboxChange}
+          />
+        </div>
+        <div className="home-work-pane" hidden={workView !== 'showcase'}>
         <div
           ref={panelRef}
           className="home-showcase-panel"
@@ -425,7 +482,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
             const deltaX = touch.clientX - start.x
             const deltaY = touch.clientY - start.y
-            if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) && workViewRef.current === 'showcase') {
               suppressClick.current = true
               go(indexRef.current + (deltaX < 0 ? 1 : -1))
             }
@@ -515,9 +572,33 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
             )
           })}
         </div>
+        </div>
 
-        {active ? (
-          <div className="home-showcase-bar">
+        <div className="home-view-bar">
+          <div className="home-view-switch" role="group" aria-label="Work view">
+            <button type="button" aria-label="Previous view" onClick={() => showView(workView === 'grid' ? 'showcase' : 'grid')}>
+              ‹
+            </button>
+            <span className="home-view-label">{workView}</span>
+            <button type="button" aria-label="Next view" onClick={() => showView(workView === 'grid' ? 'showcase' : 'grid')}>
+              ›
+            </button>
+          </div>
+          {workView === 'grid' ? (
+            <div className="home-grid-filters" role="group" aria-label="Filter work">
+              {gridFilters.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  aria-pressed={gridFilter === item}
+                  onClick={() => setGridFilter(item)}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          ) : active ? (
+            <div className="home-showcase-bar">
             <p className="home-showcase-caption" aria-live="polite">
               {caption?.lead}
               <span className="home-showcase-mute"> · {caption?.tag}</span>
@@ -542,8 +623,9 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 Next
               </button>
             </div>
-          </div>
-        ) : null}
+            </div>
+          ) : null}
+        </div>
       </section>
     </div>
   )

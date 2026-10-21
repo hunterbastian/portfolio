@@ -1288,19 +1288,29 @@ html[data-home-showcase] .email-copy-toast {
   cursor: default;
 }
 
-.home-work-strip-scroller {
-  display: flex;
-  gap: 6px;
+.home-work-strip-frame {
+  position: relative;
   height: 52px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  min-width: 0;
+}
+
+.home-work-strip-scroller {
+  height: 100%;
+  overflow: hidden;
   overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 2px;
   scrollbar-width: none;
   cursor: grab;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 12px), transparent);
-  mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 12px), transparent);
+}
+
+.home-work-strip-scroller.is-static {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 2px;
+}
+
+.home-work-strip-scroller.is-marquee {
+  touch-action: pan-y;
 }
 
 .home-work-strip-scroller::-webkit-scrollbar {
@@ -1310,19 +1320,82 @@ html[data-home-showcase] .email-copy-toast {
 .home-work-strip-scroller.is-dragging {
   cursor: grabbing;
   scroll-snap-type: none;
+  user-select: none;
 }
 
-.home-work-strip-scroller[data-start='true'] {
-  -webkit-mask-image: linear-gradient(to right, #000, #000 calc(100% - 12px), transparent);
-  mask-image: linear-gradient(to right, #000, #000 calc(100% - 12px), transparent);
+.home-work-strip-track {
+  display: flex;
+  gap: 6px;
+  height: 100%;
+  width: max-content;
 }
 
-.home-work-strip-scroller[data-end='true'] {
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 12px, #000 100%);
-  mask-image: linear-gradient(to right, transparent, #000 12px, #000 100%);
+.home-work-strip-track.is-marquee {
+  will-change: transform;
 }
 
-.home-work-strip-scroller[data-start='true'][data-end='true'] {
+.home-work-strip-set {
+  display: flex;
+  gap: 6px;
+  height: 100%;
+}
+
+.home-work-strip-edge {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  width: 56px;
+  pointer-events: none;
+}
+
+.home-work-strip-edge.is-left {
+  left: 0;
+}
+
+.home-work-strip-edge.is-right {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.home-work-strip-edge span {
+  position: absolute;
+  inset: 0;
+  -webkit-backdrop-filter: blur(var(--blur));
+  backdrop-filter: blur(var(--blur));
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 var(--stop), transparent var(--end));
+  mask-image: linear-gradient(to right, #000 0, #000 var(--stop), transparent var(--end));
+}
+
+.home-work-strip-edge span:nth-child(1) {
+  --blur: 1px;
+  --stop: 0%;
+  --end: 100%;
+}
+
+.home-work-strip-edge span:nth-child(2) {
+  --blur: 2px;
+  --stop: 0%;
+  --end: 72%;
+}
+
+.home-work-strip-edge span:nth-child(3) {
+  --blur: 4px;
+  --stop: 0%;
+  --end: 46%;
+}
+
+.home-work-strip-edge span:nth-child(4) {
+  --blur: 7px;
+  --stop: 0%;
+  --end: 24%;
+}
+
+.home-work-strip-edge span.is-fade {
+  --blur: 0px;
+  background: linear-gradient(to right, #f7f7f5 0%, rgba(247, 247, 245, 0.55) 32%, rgba(247, 247, 245, 0) 100%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   -webkit-mask-image: none;
   mask-image: none;
 }
@@ -1346,6 +1419,7 @@ html[data-home-showcase] .email-copy-toast {
   z-index: 1;
 }
 
+.home-work-strip-item.is-active::after,
 .home-work-strip-item[aria-current='true']::after,
 .home-showcase .home-work-strip-item:focus-visible::after {
   content: "";
@@ -1497,8 +1571,59 @@ html[data-home-showcase] .home-showcase .home-work-strip-caption {
     gap: 8px;
   }
 
-  .home-work-strip-scroller {
-    height: 52px;
+  .home-showcase-place,
+  .home-showcase-list li,
+  .home-showcase-caption,
+  .home-showcase-links {
+    min-width: 0;
+  }
+
+  .home-showcase-caption,
+  .home-showcase-bio {
+    overflow-wrap: break-word;
+  }
+
+  html[data-home-showcase],
+  html[data-home-showcase] body {
+    overflow-x: clip;
+  }
+
+  .home-work-strip-head {
+    height: 16px;
+    min-height: 0;
+    align-items: flex-end;
+  }
+
+  .home-work-strip-nav {
+    height: 16px;
+    align-items: flex-end;
+  }
+
+  .home-showcase .home-showcase-controls button,
+  .home-showcase .home-grid-lightbox-nav {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .home-showcase .home-work-strip-nav button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 0;
+    margin-top: -24px;
+  }
+
+  .home-showcase .home-grid-lightbox-close {
+    min-height: 40px;
+    padding: 0 12px;
+  }
+
+  .home-work-strip-edge {
+    width: 28px;
+  }
+
+  .home-work-strip-edge span:nth-child(4) {
+    --blur: 5px;
   }
 }
 

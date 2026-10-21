@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState, type RefObject } from 'react'
 import BlurImage from '@/components/media/BlurImage'
+import { useBodyScrollLock } from '@/lib/use-body-scroll-lock'
 import {
   HOME_GRID_PIECES,
   getHomeGridProjectHref,
@@ -106,6 +107,7 @@ export default function HomeWorkStrip({
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)
   const openPiece = openIndex !== null ? pieces[openIndex] ?? null : null
+  useBodyScrollLock(openIndex !== null)
 
   useEffect(() => {
     const node = scrollerRef.current
@@ -129,6 +131,9 @@ export default function HomeWorkStrip({
     if (!node) return
     const onWheel = (event: WheelEvent) => {
       if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.deltaY === 0) return
+      const max = node.scrollWidth - node.clientWidth
+      const atBound = event.deltaY < 0 ? node.scrollLeft <= 1 : node.scrollLeft >= max - 1
+      if (atBound) return
       node.scrollLeft += event.deltaY
       event.preventDefault()
     }

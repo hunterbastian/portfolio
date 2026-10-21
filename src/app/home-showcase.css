@@ -1241,35 +1241,39 @@ html[data-home-showcase] .email-copy-toast {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
 .home-work-strip-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
 }
 
 .home-work-strip-head .home-showcase-label {
   margin: 0;
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.08em;
 }
 
 .home-work-strip-nav {
   display: flex;
-  gap: 6px;
+  gap: 4px;
 }
 
 .home-work-strip-nav button {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   padding: 0;
   border: 1px solid var(--showcase-line);
   border-radius: 999px;
   background: transparent;
   color: var(--showcase-ink);
   cursor: pointer;
+  font-size: 9px;
   line-height: 1;
 }
 
@@ -1286,8 +1290,8 @@ html[data-home-showcase] .email-copy-toast {
 
 .home-work-strip-scroller {
   display: flex;
-  gap: 8px;
-  height: clamp(92px, 13vh, 118px);
+  gap: 6px;
+  height: 52px;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
@@ -1295,8 +1299,8 @@ html[data-home-showcase] .email-copy-toast {
   scroll-padding-inline: 2px;
   scrollbar-width: none;
   cursor: grab;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 18px, #000 calc(100% - 18px), transparent);
-  mask-image: linear-gradient(to right, transparent, #000 18px, #000 calc(100% - 18px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 12px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 12px), transparent);
 }
 
 .home-work-strip-scroller::-webkit-scrollbar {
@@ -1309,13 +1313,13 @@ html[data-home-showcase] .email-copy-toast {
 }
 
 .home-work-strip-scroller[data-start='true'] {
-  -webkit-mask-image: linear-gradient(to right, #000, #000 calc(100% - 18px), transparent);
-  mask-image: linear-gradient(to right, #000, #000 calc(100% - 18px), transparent);
+  -webkit-mask-image: linear-gradient(to right, #000, #000 calc(100% - 12px), transparent);
+  mask-image: linear-gradient(to right, #000, #000 calc(100% - 12px), transparent);
 }
 
 .home-work-strip-scroller[data-end='true'] {
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 18px, #000 100%);
-  mask-image: linear-gradient(to right, transparent, #000 18px, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12px, #000 100%);
+  mask-image: linear-gradient(to right, transparent, #000 12px, #000 100%);
 }
 
 .home-work-strip-scroller[data-start='true'][data-end='true'] {
@@ -1339,8 +1343,24 @@ html[data-home-showcase] .email-copy-toast {
 }
 
 .home-work-strip-item[aria-current='true'] {
-  outline: 1px solid var(--showcase-ink);
-  outline-offset: 2px;
+  z-index: 1;
+}
+
+.home-work-strip-item[aria-current='true']::after,
+.home-showcase .home-work-strip-item:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 2px var(--showcase-ink),
+    inset 0 0 0 3px #f7f7f5;
+}
+
+.home-showcase .home-work-strip-item:focus-visible {
+  outline: none !important;
 }
 
 .home-work-strip-media {
@@ -1376,12 +1396,22 @@ html[data-home-showcase] .email-copy-toast {
   left: 0;
   display: flex;
   justify-content: space-between;
-  gap: 8px;
-  padding: 16px 6px 5px;
-  background: linear-gradient(to top, rgba(10, 10, 10, 0.58), transparent);
+  gap: 4px;
+  padding: 10px 4px 3px;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.62), transparent);
   color: #f7f7f5;
+  font-size: 8px;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
   opacity: 0;
   pointer-events: none;
+}
+
+.home-work-strip-caption span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .home-work-strip-item:hover .home-work-strip-caption,
@@ -1468,7 +1498,7 @@ html[data-home-showcase] .home-showcase .home-work-strip-caption {
   }
 
   .home-work-strip-scroller {
-    height: 96px;
+    height: 52px;
   }
 }
 

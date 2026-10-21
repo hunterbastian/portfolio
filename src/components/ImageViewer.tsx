@@ -7,11 +7,13 @@ import * as Modal from '@/components/alignui/modal'
 import { cn } from '@/lib/utils'
 import styles from '@/components/alignui/controls.module.css'
 
-export default function ImageViewer({ src, alt, children, className }: {
+export default function ImageViewer({ src, alt, children, className, preview }: {
   src: string
   alt: string
   children: ReactNode
   className?: string
+  /** Replaces the raw image inside the modal. Cropped media passes the same window, enlarged. */
+  preview?: ReactNode
 }) {
   const title = alt || 'Project image'
 
@@ -27,7 +29,9 @@ export default function ImageViewer({ src, alt, children, className }: {
         <Modal.Title className={styles.imageTitle}>{title}</Modal.Title>
         <Modal.Description className="sr-only">Enlarged project image. Press Escape or use the close button to return.</Modal.Description>
         <div className={styles.imageCanvas}>
-          <BlurImage src={src} alt={alt} fill sizes="(max-width: 1279px) calc(100vw - 64px), 1168px" className="object-contain" quality={90} style={{ objectFit: 'contain' }} />
+          {preview ?? (
+            <BlurImage src={src} alt={alt} fill sizes="(max-width: 1279px) calc(100vw - 64px), 1168px" className="object-contain" quality={90} style={{ objectFit: 'contain' }} />
+          )}
         </div>
       </Modal.Content>
     </Modal.Root>

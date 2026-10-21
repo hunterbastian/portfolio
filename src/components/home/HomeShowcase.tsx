@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import BlurImage from '@/components/media/BlurImage'
+import CroppedMedia from '@/components/media/CroppedMedia'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import HomeWorkStrip from '@/components/home/HomeWorkStrip'
 import {
@@ -27,6 +28,7 @@ import {
   isShowcaseProjectHash,
   withoutHomeViewParam,
 } from '@/lib/home-grid'
+import { getShowcaseCrop, showcaseImageSizes } from '@/lib/media-crops'
 import { siteConfig } from '@/lib/site'
 
 const endeavors = getShowcaseEndeavors()
@@ -50,6 +52,76 @@ function usePrefersReducedMotion() {
   }, [])
 
   return reduced
+}
+
+function ShowcaseSlideVideo({ active, src }: { active: boolean; src: string }) {
+  const ref = useRef<HTMLVideoElement>(null)
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    const video = ref.current
+    if (!video) return
+
+    if (!active) {
+      video.pause()
+      return
+    }
+
+    let cancelled = false
+    const play = () => {
+      if (cancelled) return
+      video.defaultMuted = true
+      video.muted = true
+      video.playsInline = true
+      video.setAttribute('playsinline', '')
+      video.setAttribute('webkit-playsinline', '')
+      if (!video.getAttribute('src')) {
+        video.preload = 'auto'
+        video.src = src
+      }
+      const pending = video.play()
+      if (pending) {
+        pending.catch(() => {
+          if (!cancelled) setReady(false)
+        })
+      }
+    }
+
+    const still = video.closest('.home-showcase-frame')?.querySelector('img')
+    if (still && !(still.complete && still.naturalWidth >= 40)) {
+      still.addEventListener('load', play, { once: true })
+      still.addEventListener('error', play, { once: true })
+      return () => {
+        cancelled = true
+        still.removeEventListener('load', play)
+        still.removeEventListener('error', play)
+        video.pause()
+      }
+    }
+
+    play()
+    return () => {
+      cancelled = true
+      video.pause()
+    }
+  }, [active, src])
+
+  return (
+    <video
+      ref={ref}
+      className="home-showcase-motion"
+      muted
+      autoPlay
+      loop
+      playsInline
+      preload="none"
+      aria-hidden="true"
+      tabIndex={-1}
+      disablePictureInPicture
+      data-ready={ready ? 'true' : undefined}
+      onPlaying={() => setReady(true)}
+    />
+  )
 }
 
 function DenverClock() {
@@ -109,12 +181,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   } | null>(null)
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const suppressClick = useRef(false)
-  const videoRef = useRef<HTMLVideoElement | null>(null)
-  const [videoGate, setVideoGate] = useState({ index: 0, ready: false })
-  if (videoGate.index !== index) {
-    setVideoGate({ index, ready: false })
-  }
-  const videoReady = videoGate.ready && videoGate.index === index
+  const [panelVisible, setPanelVisible] = useState(true)
   const reducedMotion = usePrefersReducedMotion()
   const lightboxOpenRef = useRef(false)
 
@@ -286,19 +353,14 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   }, [go])
 
   useEffect(() => {
-    const video = videoRef.current
-    if (!video || reducedMotion !== false) {
-      video?.pause()
-      return
-    }
-
-    video.muted = true
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      setVideoGate({ index, ready: true })
-    }
-    const pending = video.play()
-    if (pending) pending.catch(() => {})
-  }, [index, reducedMotion])
+    const panel = panelRef.current
+    if (!panel) return
+    const observer = new IntersectionObserver(([entry]) => {
+      setPanelVisible(entry.isIntersecting)
+    }, { threshold: 0.2 })
+    observer.observe(panel)
+    return () => observer.disconnect()
+  }, [])
 
   const active = slides[index]
   const caption = active ? getShowcaseCaption(index, count, active) : null
@@ -395,7 +457,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               : previousIndex !== null && slideIndex === previousIndex
                 ? direction > 0 ? 'left' : 'right'
                 : slideIndex < index ? 'left' : 'right'
-            const showVideo = current && Boolean(slide.videoSrc) && reducedMotion === false
+            const mountVideo = reducedMotion === false && Boolean(slide.videoSrc) && (current || seen.has(slideIndex))
             const loaded = current || seen.has(slideIndex)
             const eager = current
 
@@ -416,42 +478,29 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 >
                   {loaded ? (
                     <span className="home-showcase-frame">
-                      {showVideo ? (
-                        <video
-                          className="home-showcase-motion"
-                          ref={videoRef}
-                          src={slide.videoSrc ?? undefined}
-                          poster={slide.imageSrc}
-                          muted
-                          autoPlay
-                          loop
-                          playsInline
-                          preload="metadata"
-                          aria-hidden="true"
-                          tabIndex={-1}
-                          data-ready={videoReady ? 'true' : undefined}
-                          onLoadedData={() => setVideoGate({ index, ready: true })}
-                          onPlaying={() => setVideoGate({ index, ready: true })}
+                      <CroppedMedia className="home-showcase-shot" spec={getShowcaseCrop(slide.slug)}>
+                        {mountVideo && slide.videoSrc ? (
+                          <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />
+                        ) : null}
+                        <BlurImage
+                          className="home-showcase-still home-showcase-still-light"
+                          src={slide.imageSrc}
+                          alt={slide.imageAlt}
+                          fill
+                          sizes={showcaseImageSizes(getShowcaseCrop(slide.slug))}
+                          draggable={false}
+                          quality={slide.slug === 'rain' ? 80 : 90}
+                          fetchPriority={eager ? 'high' : 'low'}
+                          loading={eager ? 'eager' : 'lazy'}
                         />
-                      ) : null}
-                      <BlurImage
-                        className="home-showcase-still home-showcase-still-light"
-                        src={slide.imageSrc}
-                        alt={slide.imageAlt}
-                        fill
-                        sizes="(max-width: 820px) calc(100vw - 40px), 68vw"
-                        draggable={false}
-                        quality={80}
-                        style={{ objectFit: 'contain' }}
-                        fetchPriority={eager ? 'high' : 'low'}
-                        loading={eager ? 'eager' : 'lazy'}
-                      />
+                      </CroppedMedia>
                     </span>
                   ) : null}
                 </Link>
               </div>
             )
           })}
+          <div className="home-showcase-veil" aria-hidden="true" />
         </div>
 
         {active ? (

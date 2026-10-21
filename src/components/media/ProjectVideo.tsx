@@ -35,7 +35,7 @@ export default function ProjectVideo({ poster, className = '', onCanPlay, onPlay
           markReady()
           onPlaying?.(event)
         }}
-        className={`relative w-full shadow-lg transition-opacity duration-300 ease-out motion-reduce:transition-none ${ready ? 'opacity-100' : 'opacity-0'} ${className}`}
+        className={`relative w-full transition-opacity duration-300 ease-out motion-reduce:transition-none ${ready ? 'opacity-100' : 'opacity-0'} ${className}`}
       />
     </div>
   )

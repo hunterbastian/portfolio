@@ -276,7 +276,7 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
   z-index: 3;
   top: 0;
   bottom: 0;
-  width: 168px;
+  width: clamp(40px, 18%, 168px);
   pointer-events: none;
 }
 
@@ -466,11 +466,6 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
 
   .home-showcase-bottom {
     gap: 16px;
-  }
-
-  .home-showcase-panel::before,
-  .home-showcase-panel::after {
-    width: 64px;
   }
 
   .home-showcase-bio {

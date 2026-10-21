@@ -12,7 +12,7 @@ export default function ImageViewer({ src, alt, children, className, preview }: 
   alt: string
   children: ReactNode
   className?: string
-  /** Replaces the raw image inside the modal. Framed media passes the same device shell, enlarged. */
+  /** Replaces the raw image inside the modal. Cropped media passes the same window, enlarged. */
   preview?: ReactNode
 }) {
   const title = alt || 'Project image'

@@ -69,7 +69,6 @@ html[data-home-showcase] .home-showcase *::after {
   --showcase-ink: #0a0a0a;
   --showcase-mute: #8a8a86;
   --showcase-line: #e4e4e0;
-  --showcase-shadow: rgba(10, 10, 10, 0.16);
   box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
@@ -322,24 +321,22 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
 
 .home-showcase-frame {
   position: relative;
+  display: grid;
   width: 100%;
   height: 100%;
+  place-items: center;
 }
 
-.home-showcase-frame::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  left: 16%;
-  right: 16%;
-  bottom: 8%;
-  height: 16%;
-  border-radius: 50%;
-  background: var(--showcase-shadow);
-  opacity: 0;
-  transform: translateY(6px) scale(0.96);
-  filter: blur(18px);
-  pointer-events: none;
+.home-showcase-shot[data-shape='phone'] {
+  height: 84%;
+  width: auto;
+  max-width: 42%;
+}
+
+.home-showcase-shot[data-shape='wide'] {
+  width: min(74%, 680px);
+  height: auto;
+  max-height: 84%;
 }
 
 .home-showcase-slide img,
@@ -622,15 +619,11 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
 @media (prefers-reduced-motion: reduce) {
   .home-showcase-slide,
   .home-showcase-frame,
-  .home-showcase-frame::before,
+  .home-showcase-shot,
   .home-showcase-arrow,
   .home-showcase-motion {
     transform: none !important;
     transition: none !important;
-  }
-
-  .home-showcase-frame::before {
-    opacity: 0 !important;
   }
 
   .home-showcase-identity,

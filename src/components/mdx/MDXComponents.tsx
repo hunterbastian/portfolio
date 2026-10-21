@@ -1,10 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
 import BlurImage from '@/components/media/BlurImage'
-import DeviceFrame from '@/components/media/DeviceFrame'
 import ProjectVideo from '@/components/media/ProjectVideo'
-import { getDeviceFrameForSrc } from '@/lib/device-frames'
-import FramedProjectImage from '@/components/media/FramedProjectImage'
+import { getMediaCrop } from '@/lib/media-crops'
+import CroppedMedia from '@/components/media/CroppedMedia'
+import CroppedProjectImage from '@/components/media/CroppedProjectImage'
 import ImageViewer from '@/components/ImageViewer'
 import ComparisonSlider from './ComparisonSlider'
 import LiquidTabs from './LiquidTabs'
@@ -77,23 +77,23 @@ export const A: React.FC<AnchorProps> = ({ href = '', children, ...props }) => {
 }
 
 export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, height = 675, ...props }) => {
-  const frame = getDeviceFrameForSrc(src)
-  if (frame) {
+  const crop = getMediaCrop(src)
+  if (crop) {
     return (
-      <div className="project-device-stage">
-        <FramedProjectImage src={src} alt={alt} spec={frame} />
+      <div className="project-shot">
+        <CroppedProjectImage src={src} alt={alt} spec={crop} />
       </div>
     )
   }
 
   return (
-    <ImageViewer src={src} alt={alt} className="mb-8 mt-8">
+    <ImageViewer src={src} alt={alt} className="media-plain mb-8 mt-8">
       <BlurImage
         src={src}
         alt={alt}
         width={width}
         height={height}
-        className="h-auto w-full shadow-lg"
+        className="h-auto w-full"
         sizes="(max-width: 608px) calc(100vw - 48px), 560px"
         priority={false}
         {...props}
@@ -103,13 +103,13 @@ export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, he
 }
 
 export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = (props) => {
-  const frame = getDeviceFrameForSrc(typeof props.src === 'string' ? props.src : undefined)
-  if (frame) {
+  const crop = getMediaCrop(typeof props.src === 'string' ? props.src : undefined)
+  if (crop) {
     return (
-      <div className="project-device-stage">
-        <DeviceFrame spec={frame}>
+      <div className="project-shot">
+        <CroppedMedia spec={crop}>
           <video controls playsInline preload="metadata" {...props} />
-        </DeviceFrame>
+        </CroppedMedia>
       </div>
     )
   }

@@ -26,8 +26,8 @@ import TrackedExternalLink from '@/components/TrackedExternalLink'
 import ProjectContactCTA from '@/components/ProjectContactCTA'
 import ProjectEndNav from '@/components/ProjectEndNav'
 import { getProjectEndNavigation } from '@/lib/project-navigation'
-import FramedProjectImage from '@/components/media/FramedProjectImage'
-import { getDeviceFrameForSrc } from '@/lib/device-frames'
+import CroppedProjectImage from '@/components/media/CroppedProjectImage'
+import { getMediaCrop } from '@/lib/media-crops'
 
 // Revalidate every 5 minutes for individual project pages
 export const revalidate = 300
@@ -89,7 +89,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const breadcrumb = getProjectDetailBreadcrumb({ isPlayground })
   const projectLinks = getProjectDetailLinks(frontmatter)
   const projectCollection = isPlayground ? getArchivedProjects() : getAllProjects()
-  const heroFrame = getDeviceFrameForSrc(frontmatter.image)
+  const heroCrop = getMediaCrop(frontmatter.image)
   const projectEndNavigation = getProjectEndNavigation(projectCollection, project)
   const jsonLd = getProjectStructuredData({ frontmatter, imageUrl, projectUrl })
 
@@ -121,18 +121,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </header>
           }
           image={
-            heroFrame ? (
-              <div className="project-device-stage mb-12">
-                <FramedProjectImage
+            heroCrop ? (
+              <div className="project-shot mb-12">
+                <CroppedProjectImage
                   src={frontmatter.image}
                   alt={frontmatter.title}
-                  spec={heroFrame}
+                  spec={heroCrop}
                   priority
                   quality={80}
                 />
               </div>
             ) : (
-              <ImageViewer src={frontmatter.image} alt={frontmatter.title} className="relative mb-12 aspect-[4/3] w-full img-inset-outline shadow-card">
+              <ImageViewer src={frontmatter.image} alt={frontmatter.title} className="media-plain relative mb-12 aspect-[4/3] w-full">
                 <BlurImage
                   src={frontmatter.image}
                   alt={frontmatter.title}

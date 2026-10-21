@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import BlurImage from '@/components/media/BlurImage'
-import DeviceFrame from '@/components/media/DeviceFrame'
+import CroppedMedia from '@/components/media/CroppedMedia'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import HomeWorkStrip from '@/components/home/HomeWorkStrip'
 import {
@@ -28,7 +28,7 @@ import {
   isShowcaseProjectHash,
   withoutHomeViewParam,
 } from '@/lib/home-grid'
-import { getShowcaseDevice, showcaseImageSizes } from '@/lib/device-frames'
+import { getShowcaseCrop, showcaseImageSizes } from '@/lib/media-crops'
 import { siteConfig } from '@/lib/site'
 
 const endeavors = getShowcaseEndeavors()
@@ -478,7 +478,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 >
                   {loaded ? (
                     <span className="home-showcase-frame">
-                      <DeviceFrame spec={getShowcaseDevice(slide.slug)}>
+                      <CroppedMedia className="home-showcase-shot" spec={getShowcaseCrop(slide.slug)}>
                         {mountVideo && slide.videoSrc ? (
                           <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />
                         ) : null}
@@ -487,13 +487,13 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                           src={slide.imageSrc}
                           alt={slide.imageAlt}
                           fill
-                          sizes={showcaseImageSizes(getShowcaseDevice(slide.slug))}
+                          sizes={showcaseImageSizes(getShowcaseCrop(slide.slug))}
                           draggable={false}
                           quality={slide.slug === 'rain' ? 80 : 90}
                           fetchPriority={eager ? 'high' : 'low'}
                           loading={eager ? 'eager' : 'lazy'}
                         />
-                      </DeviceFrame>
+                      </CroppedMedia>
                     </span>
                   ) : null}
                 </Link>

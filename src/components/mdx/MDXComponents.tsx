@@ -1,7 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 import BlurImage from '@/components/media/BlurImage'
+import DeviceFrame from '@/components/media/DeviceFrame'
 import ProjectVideo from '@/components/media/ProjectVideo'
+import { getDeviceFrameForSrc } from '@/lib/device-frames'
 import ImageViewer from '@/components/ImageViewer'
 import ComparisonSlider from './ComparisonSlider'
 import LiquidTabs from './LiquidTabs'
@@ -73,24 +75,55 @@ export const A: React.FC<AnchorProps> = ({ href = '', children, ...props }) => {
   )
 }
 
-export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, height = 675, ...props }) => (
-  <ImageViewer src={src} alt={alt} className="mb-8 mt-8">
-    <BlurImage
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      className="h-auto w-full shadow-lg"
-      sizes="(max-width: 608px) calc(100vw - 48px), 560px"
-      priority={false}
-      {...props}
-    />
-  </ImageViewer>
-)
+export const Img: React.FC<ImageProps> = ({ src = '', alt = '', width = 1200, height = 675, ...props }) => {
+  const frame = getDeviceFrameForSrc(src)
+  if (frame) {
+    return (
+      <div className="project-device-stage">
+        <DeviceFrame spec={frame}>
+          <BlurImage
+            src={src}
+            alt={alt}
+            fill
+            sizes="(max-width: 608px) 90vw, 960px"
+            priority={false}
+            {...props}
+          />
+        </DeviceFrame>
+      </div>
+    )
+  }
 
-export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = (props) => (
-  <ProjectVideo controls playsInline {...props} />
-)
+  return (
+    <ImageViewer src={src} alt={alt} className="mb-8 mt-8">
+      <BlurImage
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        className="h-auto w-full shadow-lg"
+        sizes="(max-width: 608px) calc(100vw - 48px), 560px"
+        priority={false}
+        {...props}
+      />
+    </ImageViewer>
+  )
+}
+
+export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = (props) => {
+  const frame = getDeviceFrameForSrc(typeof props.src === 'string' ? props.src : undefined)
+  if (frame) {
+    return (
+      <div className="project-device-stage">
+        <DeviceFrame spec={frame}>
+          <video controls playsInline preload="metadata" {...props} />
+        </DeviceFrame>
+      </div>
+    )
+  }
+
+  return <ProjectVideo controls playsInline {...props} />
+}
 
 const mdxComponents = {
   h1: H1,
@@ -104,6 +137,7 @@ const mdxComponents = {
   img: Img,
   ProjectImage: Img,
   video: Video,
+  DeviceVideo: Video,
   ComparisonSlider,
   DesignDecision,
   ImageAnnotation,

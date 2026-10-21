@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import BlurImage from '@/components/media/BlurImage'
+import DeviceFrame from '@/components/media/DeviceFrame'
 import ImageViewer from '@/components/ImageViewer'
 import * as Tag from '@/components/alignui/tag'
 import { getAllProjects, getArchivedProjects, getProjectBySlug } from '@/lib/projects'
@@ -26,6 +27,7 @@ import TrackedExternalLink from '@/components/TrackedExternalLink'
 import ProjectContactCTA from '@/components/ProjectContactCTA'
 import ProjectEndNav from '@/components/ProjectEndNav'
 import { getProjectEndNavigation } from '@/lib/project-navigation'
+import { getDeviceFrameForSrc } from '@/lib/device-frames'
 
 // Revalidate every 5 minutes for individual project pages
 export const revalidate = 300
@@ -87,6 +89,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const breadcrumb = getProjectDetailBreadcrumb({ isPlayground })
   const projectLinks = getProjectDetailLinks(frontmatter)
   const projectCollection = isPlayground ? getArchivedProjects() : getAllProjects()
+  const heroFrame = getDeviceFrameForSrc(frontmatter.image)
   const projectEndNavigation = getProjectEndNavigation(projectCollection, project)
   const jsonLd = getProjectStructuredData({ frontmatter, imageUrl, projectUrl })
 
@@ -118,17 +121,32 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </header>
           }
           image={
-            <ImageViewer src={frontmatter.image} alt={frontmatter.title} className="relative mb-12 aspect-[4/3] w-full img-inset-outline shadow-card">
-              <BlurImage
-                src={frontmatter.image}
-                alt={frontmatter.title}
-                fill
-                className="object-cover"
-                priority
-                quality={80}
-                sizes="(max-width: 608px) calc(100vw - 48px), 560px"
-              />
-            </ImageViewer>
+            heroFrame ? (
+              <div className="project-device-stage mb-12">
+                <DeviceFrame spec={heroFrame}>
+                  <BlurImage
+                    src={frontmatter.image}
+                    alt={frontmatter.title}
+                    fill
+                    priority
+                    quality={80}
+                    sizes={heroFrame.kind === 'iphone' ? '(max-width: 608px) 90vw, 960px' : '(max-width: 608px) 100vw, 1200px'}
+                  />
+                </DeviceFrame>
+              </div>
+            ) : (
+              <ImageViewer src={frontmatter.image} alt={frontmatter.title} className="relative mb-12 aspect-[4/3] w-full img-inset-outline shadow-card">
+                <BlurImage
+                  src={frontmatter.image}
+                  alt={frontmatter.title}
+                  fill
+                  className="object-cover"
+                  priority
+                  quality={80}
+                  sizes="(max-width: 608px) calc(100vw - 48px), 560px"
+                />
+              </ImageViewer>
+            )
           }
           description={
             <p className="mb-10 px-3 text-center text-balance font-inter text-[13px] leading-relaxed text-muted-foreground sm:px-2">

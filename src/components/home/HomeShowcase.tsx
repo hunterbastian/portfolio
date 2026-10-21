@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import BlurImage from '@/components/media/BlurImage'
+import DeviceFrame from '@/components/media/DeviceFrame'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import HomeWorkStrip from '@/components/home/HomeWorkStrip'
 import {
@@ -27,6 +28,7 @@ import {
   isShowcaseProjectHash,
   withoutHomeViewParam,
 } from '@/lib/home-grid'
+import { getShowcaseDevice } from '@/lib/device-frames'
 import { siteConfig } from '@/lib/site'
 
 const endeavors = getShowcaseEndeavors()
@@ -416,42 +418,44 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 >
                   {loaded ? (
                     <span className="home-showcase-frame">
-                      {showVideo ? (
-                        <video
-                          className="home-showcase-motion"
-                          ref={videoRef}
-                          src={slide.videoSrc ?? undefined}
-                          poster={slide.imageSrc}
-                          muted
-                          autoPlay
-                          loop
-                          playsInline
-                          preload="metadata"
-                          aria-hidden="true"
-                          tabIndex={-1}
-                          data-ready={videoReady ? 'true' : undefined}
-                          onLoadedData={() => setVideoGate({ index, ready: true })}
-                          onPlaying={() => setVideoGate({ index, ready: true })}
+                      <DeviceFrame spec={getShowcaseDevice(slide.slug)}>
+                        {showVideo ? (
+                          <video
+                            className="home-showcase-motion"
+                            ref={videoRef}
+                            src={slide.videoSrc ?? undefined}
+                            poster={slide.imageSrc}
+                            muted
+                            autoPlay
+                            loop
+                            playsInline
+                            preload="metadata"
+                            aria-hidden="true"
+                            tabIndex={-1}
+                            data-ready={videoReady ? 'true' : undefined}
+                            onLoadedData={() => setVideoGate({ index, ready: true })}
+                            onPlaying={() => setVideoGate({ index, ready: true })}
+                          />
+                        ) : null}
+                        <BlurImage
+                          className="home-showcase-still home-showcase-still-light"
+                          src={slide.imageSrc}
+                          alt={slide.imageAlt}
+                          fill
+                          sizes="(max-width: 820px) 150vw, 1200px"
+                          draggable={false}
+                          quality={80}
+                          fetchPriority={eager ? 'high' : 'low'}
+                          loading={eager ? 'eager' : 'lazy'}
                         />
-                      ) : null}
-                      <BlurImage
-                        className="home-showcase-still home-showcase-still-light"
-                        src={slide.imageSrc}
-                        alt={slide.imageAlt}
-                        fill
-                        sizes="(max-width: 820px) calc(100vw - 40px), 68vw"
-                        draggable={false}
-                        quality={80}
-                        style={{ objectFit: 'contain' }}
-                        fetchPriority={eager ? 'high' : 'low'}
-                        loading={eager ? 'eager' : 'lazy'}
-                      />
+                      </DeviceFrame>
                     </span>
                   ) : null}
                 </Link>
               </div>
             )
           })}
+          <div className="home-showcase-veil" aria-hidden="true" />
         </div>
 
         {active ? (

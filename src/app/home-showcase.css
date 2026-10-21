@@ -502,8 +502,14 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
   }
 }
 
-.home-showcase-panel {
-  animation: home-showcase-enter 2s cubic-bezier(0.44, 0, 0.56, 1) both;
+.home-showcase-veil {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  background: var(--showcase-bg);
+  pointer-events: none;
+  /* The image stays at full opacity so it can be the LCP element. The veil carries the same 2s fade. */
+  animation: home-showcase-enter 2s cubic-bezier(0.44, 0, 0.56, 1) reverse both;
 }
 
 .home-showcase-identity {
@@ -633,6 +639,11 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .home-showcase-veil {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
 

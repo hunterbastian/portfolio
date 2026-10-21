@@ -43,12 +43,11 @@ function GridVideo({
   reducedMotion: boolean | null
   src: string
 }) {
-  const ref = useRef<HTMLVideoElement>(null)
+  const [node, setNode] = useState<HTMLVideoElement | null>(null)
   const [inView, setInView] = useState(false)
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    const node = ref.current
     if (!node || !active) return
 
     const mobile = window.matchMedia('(max-width: 820px)').matches
@@ -57,29 +56,31 @@ function GridVideo({
       setInView(Boolean(entry?.isIntersecting))
     }, { root, threshold: 0.45 })
     observer.observe(node)
-    return () => observer.disconnect()
-  }, [active])
+    return () => {
+      observer.disconnect()
+      setInView(false)
+    }
+  }, [active, node])
 
   useEffect(() => {
-    const video = ref.current
-    if (!video) return
+    if (!node) return
 
     if (!active || !inView || reducedMotion !== false) {
-      video.pause()
+      node.pause()
       return
     }
 
-    if (!video.getAttribute('src')) video.src = src
-    video.muted = true
-    const pending = video.play()
+    if (!node.getAttribute('src')) node.src = src
+    node.muted = true
+    const pending = node.play()
     if (pending) pending.catch(() => {})
-  }, [active, inView, reducedMotion, src])
+  }, [active, inView, node, reducedMotion, src])
 
   if (reducedMotion !== false) return null
 
   return (
     <video
-      ref={ref}
+      ref={setNode}
       poster={poster}
       muted
       loop

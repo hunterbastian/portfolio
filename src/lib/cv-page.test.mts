@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { educationItems, experienceItems } from '../content/homepage.ts'
+import { existsSync } from 'node:fs'
+
+import { cvSelectedWork, cvTools, educationItems, experienceItems } from '../content/homepage.ts'
 import {
   CV_CONTACT_LINKS,
   CV_EMAIL_ADDRESS,
@@ -125,15 +127,27 @@ test('cv experience keeps every existing role and dates the Tesla entry', () => 
   assert.deepEqual(
     experienceItems.map((item) => [item.company, item.title, item.year, item.description]),
     [
-      ['Tesla', 'Data Labeler', '2026 - Present', ''],
+      ['Tesla', 'Data Labeler', '2026 - Present', 'Labeling data for Tesla’s AI team in Draper, Utah.'],
       ['Studio Alpine', 'Founder', '2026 - Present', 'Founder of Studio Alpine, a photography and design project.'],
       ['Catapult', 'Video Producer', '2024 - Present', 'Produced and edited marketing and product videos for Catapult.'],
       ['Utah Valley University', 'Department Representative', '2024 - Present', 'Helped new students with internship opportunities in the Web Design and Development program.'],
-      ['Nutricost', 'Graphic Design Intern', '2023', 'At Nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue.'],
-      ['Clutch', 'Digital Design Intern', '2017', 'At Clutch, I helped with design branding and further improved my knowledge about the UX design process.'],
+      ['Nutricost', 'Graphic Design Intern', '2023', 'Redesigned product labels and marketing materials for the supplement line, working the graphic design queue with the marketing team.'],
+      ['Clutch', 'Digital Design Intern', '2017', 'Supported branding work and learned the UX design process.'],
     ],
   )
   assert.equal(educationItems.length, 6)
   assert.equal(educationItems[0]?.institution, 'Utah Valley University')
   assert.equal(educationItems[0]?.degree, 'B.S. Interaction Design')
+})
+
+test('cv selected work links only to case studies that exist', () => {
+  assert.ok(cvSelectedWork.length > 0)
+  for (const item of cvSelectedWork) {
+    assert.ok(
+      existsSync(new URL(`../../content/projects/${item.slug}.mdx`, import.meta.url)),
+      `missing case study for ${item.slug}`,
+    )
+    assert.ok(item.summary.length > 0)
+  }
+  assert.ok(cvTools.includes('Figma'))
 })

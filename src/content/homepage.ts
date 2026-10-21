@@ -131,7 +131,7 @@ export const experienceItems: ExperienceItem[] = [
     year: '2026 - Present',
     company: 'Tesla',
     title: 'Data Labeler',
-    description: '',
+    description: 'Labeling data for Tesla’s AI team in Draper, Utah.',
   },
   {
     year: '2026 - Present',
@@ -156,16 +156,49 @@ export const experienceItems: ExperienceItem[] = [
     company: 'Nutricost',
     title: 'Graphic Design Intern',
     description:
-      'At Nutricost, I assisted the marketing team and strengthened my knowledge as I worked in the graphic design queue.',
+      'Redesigned product labels and marketing materials for the supplement line, working the graphic design queue with the marketing team.',
   },
   {
     year: '2017',
     company: 'Clutch',
     title: 'Digital Design Intern',
     description:
-      'At Clutch, I helped with design branding and further improved my knowledge about the UX design process.',
+      'Supported branding work and learned the UX design process.',
   },
 ]
+
+export interface CvSelectedWorkItem {
+  slug: string
+  title: string
+  summary: string
+}
+
+/** Case studies listed on the resume page, in homepage showcase order. Slugs must match content/projects. */
+export const cvSelectedWork: CvSelectedWorkItem[] = [
+  {
+    slug: 'mentalhealth-minisite',
+    title: 'Mental Health Mini Site',
+    summary: 'Resource hub giving UVU students a clear starting point for urgent help and support. Next.js, accessibility.',
+  },
+  {
+    slug: 'lumo',
+    title: 'Lumo',
+    summary: 'Mindfulness app designed to help people find calm and refocus. Research through UI.',
+  },
+  {
+    slug: 'wander-utah',
+    title: 'WanderUtah',
+    summary: 'Trip-planning app concept for Utah’s five national parks.',
+  },
+  {
+    slug: 'porsche-app',
+    title: 'Porsche Boutique',
+    summary: 'Mobile app concept, designed and coded, for browsing Porsche vehicles.',
+  },
+]
+
+/** Tools listed on the resume page. */
+export const cvTools = ['Figma', 'FigJam', 'Framer', 'React', 'Next.js', 'TypeScript', 'Three.js', 'Claude Code'] as const
 
 export const educationItems: EducationItem[] = [
   {

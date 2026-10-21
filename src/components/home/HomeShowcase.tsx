@@ -28,7 +28,7 @@ import {
   isShowcaseProjectHash,
   withoutHomeViewParam,
 } from '@/lib/home-grid'
-import { getShowcaseDevice } from '@/lib/device-frames'
+import { getShowcaseDevice, showcaseImageSizes } from '@/lib/device-frames'
 import { siteConfig } from '@/lib/site'
 
 const endeavors = getShowcaseEndeavors()
@@ -442,9 +442,9 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                           src={slide.imageSrc}
                           alt={slide.imageAlt}
                           fill
-                          sizes="(max-width: 820px) 150vw, 1200px"
+                          sizes={showcaseImageSizes(getShowcaseDevice(slide.slug))}
                           draggable={false}
-                          quality={80}
+                          quality={slide.slug === 'rain' ? 80 : 90}
                           fetchPriority={eager ? 'high' : 'low'}
                           loading={eager ? 'eager' : 'lazy'}
                         />

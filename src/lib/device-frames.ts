@@ -20,29 +20,38 @@ export interface DeviceFrameSpec {
   fit?: 'fill' | 'cover'
 }
 
-/** iPhone 16 glass is 19.5:9. Showcase phones are cropped to this. */
-export const IPHONE_SCREEN_ASPECT = 560 / 1202
+/** iPhone 16 Pro glass, 2622×1206. */
+export const IPHONE_SCREEN_ASPECT = 1206 / 2622
 
 /** 13-inch iPad Pro landscape glass is 4:3. */
 export const IPAD_SCREEN_ASPECT = 4 / 3
 
-const IPHONE_BEZEL = 0.026
-const IPAD_BEZEL = 0.02
-const LAPTOP_SIDE = 0.016
+const IPHONE_BEZEL = 0.025
+const IPAD_BEZEL = 0.016
+const LAPTOP_SIDE = 0.018
 /** Bottom chin, as a multiple of the side bezel. */
-const LAPTOP_CHIN = 2.35
+const LAPTOP_CHIN = 1.85
 
 const FULL: ScreenCrop = { x: 0, y: 0, w: 1, h: 1 }
 
 /**
- * Glass inside the old 2400×1600 phone mockups.
- * Straight edges sit at x 920–1480 and y 200–1402; the shell radius clips the old corner.
+ * UI inside the old 2400×1600 phone mockups.
+ * The window sits 28px inside the baked glass so the black corner pixels stay outside the new shell.
  */
+const SHOWCASE_PHONE_GLASS = { x: 920, y: 200, w: 560, h: 1202 }
+const SHOWCASE_PHONE_WIDTH = 504
+const SHOWCASE_PHONE_HEIGHT = SHOWCASE_PHONE_WIDTH / IPHONE_SCREEN_ASPECT
+/** Drops the black pill baked into the old mockup so the new Dynamic Island is the only one. */
+const SHOWCASE_PHONE_ISLAND_CLEARANCE = 18
 const SHOWCASE_PHONE_CROP: ScreenCrop = {
-  x: 920 / 2400,
-  y: 200 / 1600,
-  w: 560 / 2400,
-  h: 1202 / 1600,
+  x: (SHOWCASE_PHONE_GLASS.x + (SHOWCASE_PHONE_GLASS.w - SHOWCASE_PHONE_WIDTH) / 2) / 2400,
+  y:
+    (SHOWCASE_PHONE_GLASS.y +
+      (SHOWCASE_PHONE_GLASS.h - SHOWCASE_PHONE_HEIGHT) / 2 +
+      SHOWCASE_PHONE_ISLAND_CLEARANCE) /
+    1600,
+  w: SHOWCASE_PHONE_WIDTH / 2400,
+  h: SHOWCASE_PHONE_HEIGHT / 1600,
 }
 
 /** Shared laptop mockup used by the two desktop website slides. */
@@ -55,12 +64,15 @@ const SHOWCASE_LAPTOP_CROP: ScreenCrop = {
 
 const SHOWCASE_LAPTOP_ASPECT = 1822 / 1224
 
-/** White product board inside the Nutricost still, trimmed to 4:3. */
+/**
+ * Nutricost product spread, not the white card around it.
+ * The colored header and bottles already sit at 4:3.
+ */
 const SHOWCASE_IPAD_CROP: ScreenCrop = {
-  x: 420 / 2400,
-  y: 216 / 1600,
-  w: 1558 / 2400,
-  h: (1558 / IPAD_SCREEN_ASPECT) / 1600,
+  x: 640 / 2400,
+  y: 322 / 1600,
+  w: 1120 / 2400,
+  h: 840 / 1600,
 }
 
 const SHOWCASE_PHONE: DeviceFrameSpec = {
@@ -92,9 +104,9 @@ const LUMO_PROJECT: DeviceFrameSpec = {
   kind: 'iphone',
   crop: {
     x: 451 / 1200,
-    y: 80 / 800,
+    y: 76 / 800,
     w: 298 / 1200,
-    h: 640 / 800,
+    h: (298 / IPHONE_SCREEN_ASPECT) / 800,
   },
   aspect: IPHONE_SCREEN_ASPECT,
 }
@@ -184,6 +196,17 @@ export function deviceImageSizes(spec: DeviceFrameSpec, presentation: 'inline' |
     ? spec.kind === 'iphone' ? 'min(420px, 78vw)' : 'min(960px, 92vw)'
     : spec.kind === 'iphone' ? 'min(232px, 68vw)' : 'min(520px, 100vw)'
   return `calc(${slot} * ${factor})`
+}
+
+/** `sizes` for a homepage slide. The value is the CSS width of the zoomed image, so a 2× screen can select the full source. */
+export function showcaseImageSizes(spec: DeviceFrameSpec) {
+  const bezel = spec.kind === 'laptop' ? LAPTOP_SIDE : spec.kind === 'iphone' ? IPHONE_BEZEL : IPAD_BEZEL
+  const zoom = spec.fit === 'cover' ? 1 : 1 / spec.crop.w
+  const factor = Number(((1 - 2 * bezel) * zoom).toFixed(3))
+  if (spec.kind === 'iphone') {
+    return `(max-width: 820px) calc(min(46vw, 160px) * ${factor}), calc(min(24vw, 290px) * ${factor})`
+  }
+  return `(max-width: 820px) calc(min(78vw, 460px) * ${factor}), calc(min(50vw, 700px) * ${factor})`
 }
 
 export function listShowcaseDeviceSlugs() {

@@ -22,11 +22,13 @@ export default function DeviceFrame({ children, className = '', spec }: DeviceFr
     <div className={`device device-${spec.kind} ${className}`.trim()} data-fit={spec.fit ?? 'fill'} style={style}>
       {spec.kind === 'iphone' ? (
         <>
-          <span className="device-button device-button-silent" />
-          <span className="device-button device-button-volume" />
+          <span className="device-button device-button-action" />
+          <span className="device-button device-button-volume-up" />
+          <span className="device-button device-button-volume-down" />
           <span className="device-button device-button-power" />
         </>
       ) : null}
+      {spec.kind === 'ipad' ? <span className="device-button device-button-top" /> : null}
       <div className="device-body">
         <div className="device-screen">
           {children}

@@ -33,8 +33,12 @@ test('phone slides share an iPhone and Nutricost is an iPad', () => {
     assert.equal(spec.aspect, IPHONE_SCREEN_ASPECT)
   }
 
-  assert.equal(getShowcaseDevice('nutricost').kind, 'ipad')
-  assert.equal(getShowcaseDevice('nutricost').aspect, IPAD_SCREEN_ASPECT)
+  const nutricost = getShowcaseDevice('nutricost')
+  assert.equal(nutricost.kind, 'ipad')
+  assert.equal(nutricost.aspect, IPAD_SCREEN_ASPECT)
+  const nutricostPixels = (nutricost.crop.w * 2400) / (nutricost.crop.h * 1600)
+  assert.ok(Math.abs(nutricostPixels - 4 / 3) < 0.01)
+  assert.ok(nutricost.crop.w < 0.5)
   assert.equal(getShowcaseDevice('rain').kind, 'laptop')
   assert.equal(getShowcaseDevice('mentalhealth-minisite').kind, 'laptop')
   assert.equal(getShowcaseDevice('middle-earth-journey').kind, 'laptop')
@@ -62,7 +66,7 @@ test('cropped frames request a source large enough for the zoomed glass', () => 
   assert.ok(factor(deviceImageSizes(lumo)) > 3)
   assert.ok(factor(deviceImageSizes(lumo)) < factor(porscheSizes))
 
-  assert.match(deviceImageSizes(rainPhone), /min\(232px, 68vw\) \* 0\.948\)/)
+  assert.match(deviceImageSizes(rainPhone), /min\(232px, 68vw\) \* 0\.95\)/)
   assert.match(deviceImageSizes(rainLaptop), /min\(520px, 100vw\)/)
   assert.match(deviceImageSizes(porsche, 'enlarged'), /min\(420px, 78vw\)/)
 })

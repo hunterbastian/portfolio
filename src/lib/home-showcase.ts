@@ -26,6 +26,7 @@ export const HOME_SHOWCASE_THEME_STORAGE_KEY = 'hb-showcase-theme'
 const SHOWCASE_MEDIA_DIRECTORY = '/showcase'
 
 const SHOWCASE_VIDEO_SLUGS = new Set<string>([
+  'rain',
   'mentalhealth-minisite',
   'middle-earth-journey',
   'nutricost',

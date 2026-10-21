@@ -358,13 +358,17 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
 }
 
 .home-showcase-slide .home-showcase-motion {
+  z-index: 1;
+  opacity: 1;
+}
+
+.home-showcase-slide .home-showcase-still {
   z-index: 2;
-  opacity: 0;
   transition: opacity 280ms ease-out;
 }
 
-.home-showcase-slide .home-showcase-motion[data-ready='true'] {
-  opacity: 1;
+.home-showcase-slide .home-showcase-motion[data-ready='true'] ~ .home-showcase-still {
+  opacity: 0;
 }
 
 .home-showcase-bar {

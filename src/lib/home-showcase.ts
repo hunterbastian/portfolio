@@ -15,16 +15,17 @@ export const HOME_SHOWCASE_SLUGS = [
 ] as const
 
 export const HOME_SHOWCASE_CANVAS = '#F7F7F5'
-export const HOME_SHOWCASE_CANVAS_DARK = '#0E0E0D'
+export const HOME_SHOWCASE_CANVAS_DARK = '#232323'
+export const HOME_SHOWCASE_RAISED_DARK = '#262626'
 export const HOME_SHOWCASE_INK = '#0A0A0A'
 export const HOME_SHOWCASE_INK_DARK = '#EDEDEA'
-/** Slightly lifted from #7E7E79 so 11px caps clear WCAG AA on the dark canvas. */
-export const HOME_SHOWCASE_MUTE_DARK = '#84847F'
-export const HOME_SHOWCASE_LINE_DARK = '#262624'
+/** Secondary gray tuned for WCAG AA on #232323 and the #262626 raised surfaces. */
+export const HOME_SHOWCASE_MUTE_DARK = '#A1A19C'
+export const HOME_SHOWCASE_LINE_DARK = '#333333'
 export const HOME_SHOWCASE_TIME_ZONE = 'America/Denver'
 export const HOME_SHOWCASE_ROLE = 'Product Designer'
 export const HOME_SHOWCASE_LOCATION = 'Lehi, Utah'
-/** Persisted homepage theme override. Absent means follow the system scheme. */
+/** Persisted theme override. Absent means dark, including for first-time visitors. */
 export const HOME_SHOWCASE_THEME_STORAGE_KEY = 'hb-showcase-theme'
 
 export type ShowcaseTheme = 'light' | 'dark'
@@ -113,10 +114,10 @@ export function parseShowcaseThemePreference(value: string | null | undefined): 
   return 'system'
 }
 
-/** A saved light or dark choice wins. Otherwise the system scheme decides. */
-export function resolveShowcaseTheme(preference: ShowcaseThemePreference, prefersDark: boolean): ShowcaseTheme {
+/** A saved light or dark choice wins. With no stored preference, dark is the default. */
+export function resolveShowcaseTheme(preference: ShowcaseThemePreference, _prefersDark: boolean): ShowcaseTheme {
   if (preference === 'light' || preference === 'dark') return preference
-  return prefersDark ? 'dark' : 'light'
+  return 'dark'
 }
 
 export function getShowcaseVideoSrc(slug: string) {

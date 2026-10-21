@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import { contactSocialLinks, creatingLinks } from '../content/homepage.ts'
@@ -18,6 +19,10 @@ import {
   getShowcaseTravelDirection,
   getShowcaseVideoSrc,
   planShowcaseSlideMotion,
+  HOME_SHOWCASE_CANVAS_DARK,
+  HOME_SHOWCASE_LINE_DARK,
+  HOME_SHOWCASE_MUTE_DARK,
+  HOME_SHOWCASE_RAISED_DARK,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
   parseShowcaseThemePreference,
   resolveShowcaseTheme,
@@ -129,30 +134,46 @@ test('endeavors and links reuse the existing site URLs', () => {
   assert.equal(getShowcaseBio().includes('from first sketch to shipped code'), false)
 })
 
-test('homepage chrome follows the system color scheme', () => {
+test('homepage chrome keeps a light canvas and the dark gray canvas', () => {
   assert.deepEqual(getShowcaseChrome(false), {
     canvas: '#F7F7F5',
     colorScheme: 'light',
     statusBar: 'default',
   })
   assert.deepEqual(getShowcaseChrome(true), {
-    canvas: '#0E0E0D',
+    canvas: '#232323',
     colorScheme: 'dark',
     statusBar: 'black',
   })
+  assert.equal(HOME_SHOWCASE_CANVAS_DARK, '#232323')
+  assert.equal(HOME_SHOWCASE_RAISED_DARK, '#262626')
+  assert.equal(HOME_SHOWCASE_LINE_DARK, '#333333')
+  assert.equal(HOME_SHOWCASE_MUTE_DARK, '#A1A19C')
 })
 
-test('a saved theme overrides the system color scheme', () => {
+test('a saved theme wins and a missing preference stays dark', () => {
   assert.equal(HOME_SHOWCASE_THEME_STORAGE_KEY, 'hb-showcase-theme')
   assert.equal(parseShowcaseThemePreference(null), 'system')
   assert.equal(parseShowcaseThemePreference(''), 'system')
   assert.equal(parseShowcaseThemePreference('auto'), 'system')
   assert.equal(parseShowcaseThemePreference('light'), 'light')
   assert.equal(parseShowcaseThemePreference('dark'), 'dark')
-  assert.equal(resolveShowcaseTheme('system', false), 'light')
+  assert.equal(resolveShowcaseTheme('system', false), 'dark')
   assert.equal(resolveShowcaseTheme('system', true), 'dark')
   assert.equal(resolveShowcaseTheme('light', true), 'light')
   assert.equal(resolveShowcaseTheme('dark', false), 'dark')
+
+  const css = readFileSync(new URL('../app/home-showcase.css', import.meta.url), 'utf8')
+  const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8')
+  for (const token of ['#232323', '#262626', '#333333', '#a1a19c']) {
+    assert.ok(css.includes(token), `${token} should be in the showcase stylesheet`)
+  }
+  assert.equal(css.includes('#0e0e0d'), false)
+  assert.equal(css.includes('#1a1a18'), false)
+  assert.equal(css.includes('prefers-color-scheme'), false)
+  assert.equal(layout.includes('prefers-color-scheme'), false)
+  assert.ok(layout.includes('pref!=="light"'))
+  assert.ok(layout.includes('background-color:${homeShowcaseDark.canvas}!important'))
 })
 
 test('showcase travel direction follows the click, including wrap', () => {

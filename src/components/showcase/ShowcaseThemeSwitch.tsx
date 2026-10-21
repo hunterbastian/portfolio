@@ -22,7 +22,7 @@ export default function ShowcaseThemeSwitch({ className, theme, onChange }: Show
     >
       <span className="showcase-theme-label" aria-hidden="true">
         <span className="showcase-theme-label-mute">Light</span>
-        <span className={dark ? 'showcase-theme-label-ink' : 'showcase-theme-label-ink is-current'}>Light</span>
+        <span className={dark ? 'showcase-theme-label-ink' : 'showcase-theme-label-ink is-current'} data-theme="light">Light</span>
       </span>
       <Switch
         size="sm"
@@ -36,7 +36,7 @@ export default function ShowcaseThemeSwitch({ className, theme, onChange }: Show
       />
       <span className="showcase-theme-label" aria-hidden="true">
         <span className="showcase-theme-label-mute">Dark</span>
-        <span className={dark ? 'showcase-theme-label-ink is-current' : 'showcase-theme-label-ink'}>Dark</span>
+        <span className={dark ? 'showcase-theme-label-ink is-current' : 'showcase-theme-label-ink'} data-theme="dark">Dark</span>
       </span>
     </div>
   )

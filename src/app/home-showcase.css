@@ -15,7 +15,7 @@
  * Showcase canvas for "/", "/playground", "/cv", and the not-found page. The rest of the site
  * keeps the dark theme. html[data-home-showcase] is set before paint and
  * removed when that page unmounts. html[data-home-showcase-theme] is the
- * active light/dark choice: a saved override, otherwise the system scheme.
+ * active light/dark choice: a saved override, otherwise dark.
  */
 
 html:root[data-home-showcase] {
@@ -32,36 +32,34 @@ html[data-home-showcase] body {
 
 html[data-home-showcase][data-home-showcase-theme="dark"] {
   color-scheme: dark;
-  background-color: #0e0e0d;
+  background-color: #232323;
 }
 
 html[data-home-showcase][data-home-showcase-theme="dark"] body {
-  background-color: #0e0e0d !important;
+  background-color: #232323 !important;
   color: #ededea;
 }
 
 html[data-home-showcase][data-home-showcase-theme="dark"] ::selection,
 html[data-home-showcase][data-home-showcase-theme="dark"] ::-moz-selection {
   background-color: rgba(237, 237, 234, 0.24) !important;
-  color: #0e0e0d !important;
+  color: #232323 !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  html:root[data-home-showcase]:not([data-home-showcase-theme="light"]) {
-    color-scheme: dark;
-    background-color: #0e0e0d;
-  }
+html:root[data-home-showcase]:not([data-home-showcase-theme="light"]) {
+  color-scheme: dark;
+  background-color: #232323;
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) body {
-    background-color: #0e0e0d !important;
-    color: #ededea;
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) body {
+  background-color: #232323 !important;
+  color: #ededea;
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) ::selection,
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) ::-moz-selection {
-    background-color: rgba(237, 237, 234, 0.24) !important;
-    color: #0e0e0d !important;
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) ::selection,
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) ::-moz-selection {
+  background-color: rgba(237, 237, 234, 0.24) !important;
+  color: #232323 !important;
 }
 
 html[data-home-showcase] #main-content {
@@ -521,10 +519,10 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase,
 html[data-home-showcase][data-home-showcase-theme="dark"] .playground-showcase,
 html[data-home-showcase][data-home-showcase-theme="dark"] .cv-showcase,
 html[data-home-showcase][data-home-showcase-theme="dark"] .not-found-showcase {
-  --showcase-bg: #0e0e0d;
+  --showcase-bg: #232323;
   --showcase-ink: #ededea;
-  --showcase-mute: #84847f;
-  --showcase-line: #262624;
+  --showcase-mute: #a1a19c;
+  --showcase-line: #333333;
 }
 
 html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase {
@@ -532,7 +530,7 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase {
 }
 
 html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-dot:not([aria-current='true'])::before {
-  background: #3c3c38;
+  background: #4a4a4a;
 }
 
 html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-dot[aria-current='true']::before {
@@ -540,59 +538,57 @@ html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-dot[ari
 }
 
 html[data-home-showcase][data-home-showcase-theme="dark"] .home-showcase-controls button:hover {
-  border-color: #3a3a36;
-  background: #191918;
+  border-color: #404040;
+  background: #2e2e2e;
   color: var(--showcase-ink);
 }
 
-@media (prefers-color-scheme: dark) {
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase,
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .playground-showcase,
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .cv-showcase,
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .not-found-showcase {
-    --showcase-bg: #0e0e0d;
-    --showcase-ink: #ededea;
-    --showcase-mute: #84847f;
-    --showcase-line: #262624;
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase,
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .playground-showcase,
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .cv-showcase,
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .not-found-showcase {
+  --showcase-bg: #232323;
+  --showcase-ink: #ededea;
+  --showcase-mute: #a1a19c;
+  --showcase-line: #333333;
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase {
-    --showcase-shadow: rgba(237, 237, 234, 0.14);
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase {
+  --showcase-shadow: rgba(237, 237, 234, 0.14);
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-still-light {
-    opacity: 0;
-    visibility: hidden;
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-still-light {
+  opacity: 0;
+  visibility: hidden;
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-motion {
-    opacity: 0;
-    visibility: visible;
-    filter: brightness(0.92);
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-motion {
+  opacity: 0;
+  visibility: visible;
+  filter: brightness(0.92);
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-motion[data-ready='true'] {
-    opacity: 1;
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-motion[data-ready='true'] {
+  opacity: 1;
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-still-dark {
-    opacity: 1;
-    visibility: visible;
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-still-dark {
+  opacity: 1;
+  visibility: visible;
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot:not([aria-current='true'])::before {
-    background: #3c3c38;
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot:not([aria-current='true'])::before {
+  background: #4a4a4a;
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot[aria-current='true']::before {
-    background: var(--showcase-ink);
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-dot[aria-current='true']::before {
+  background: var(--showcase-ink);
+}
 
-  html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-controls button:hover {
-    border-color: #3a3a36;
-    background: #191918;
-    color: var(--showcase-ink);
-  }
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-showcase-controls button:hover {
+  border-color: #404040;
+  background: #2e2e2e;
+  color: var(--showcase-ink);
 }
 
 @keyframes home-showcase-rise {
@@ -1481,6 +1477,20 @@ html[data-home-showcase] .email-copy-toast {
   opacity: 1;
 }
 
+html[data-home-showcase-theme="dark"] .home-showcase .showcase-theme-label-ink[data-theme="dark"],
+html[data-home-showcase-theme="dark"] .playground-showcase .showcase-theme-label-ink[data-theme="dark"],
+html[data-home-showcase-theme="dark"] .cv-showcase .showcase-theme-label-ink[data-theme="dark"],
+html[data-home-showcase-theme="dark"] .not-found-showcase .showcase-theme-label-ink[data-theme="dark"] {
+  opacity: 1;
+}
+
+html[data-home-showcase-theme="dark"] .home-showcase .showcase-theme-label-ink[data-theme="light"],
+html[data-home-showcase-theme="dark"] .playground-showcase .showcase-theme-label-ink[data-theme="light"],
+html[data-home-showcase-theme="dark"] .cv-showcase .showcase-theme-label-ink[data-theme="light"],
+html[data-home-showcase-theme="dark"] .not-found-showcase .showcase-theme-label-ink[data-theme="light"] {
+  opacity: 0;
+}
+
 .home-showcase .showcase-theme-switch,
 .playground-showcase .showcase-theme-switch,
 .cv-showcase .showcase-theme-switch,
@@ -1583,6 +1593,13 @@ html[data-home-showcase-theme="dark"] .playground-showcase .showcase-theme-switc
 html[data-home-showcase-theme="dark"] .cv-showcase .showcase-theme-switch [data-slot='switch-thumb'],
 html[data-home-showcase-theme="dark"] .not-found-showcase .showcase-theme-switch [data-slot='switch-thumb'] {
   background: rgba(255, 255, 255, 0.9);
+}
+
+html[data-home-showcase-theme="dark"] .home-showcase .showcase-theme-switch:not([data-travel]) [data-slot='switch-thumb'],
+html[data-home-showcase-theme="dark"] .playground-showcase .showcase-theme-switch:not([data-travel]) [data-slot='switch-thumb'],
+html[data-home-showcase-theme="dark"] .cv-showcase .showcase-theme-switch:not([data-travel]) [data-slot='switch-thumb'],
+html[data-home-showcase-theme="dark"] .not-found-showcase .showcase-theme-switch:not([data-travel]) [data-slot='switch-thumb'] {
+  transform: translate3d(16px, 0, 0) scale(1);
 }
 
 .home-showcase .showcase-theme-switch[data-checked] [data-slot='switch-thumb'],
@@ -1848,8 +1865,11 @@ html[data-home-showcase] .home-showcase .home-grid-caption {
 
 html[data-home-showcase][data-home-showcase-theme="dark"] .home-grid-tile,
 html[data-home-showcase][data-home-showcase-theme="dark"] .home-grid-media,
-html[data-home-showcase][data-home-showcase-theme="dark"] .home-grid-lightbox-media {
-  background: #1a1a18;
+html[data-home-showcase][data-home-showcase-theme="dark"] .home-grid-lightbox-media,
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-grid-tile,
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-grid-media,
+html[data-home-showcase]:not([data-home-showcase-theme="light"]) .home-grid-lightbox-media {
+  background: #262626;
 }
 
 html[data-home-showcase][data-home-showcase-theme="dark"] .home-grid-media video {

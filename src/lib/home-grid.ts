@@ -1,6 +1,6 @@
 import { HOME_SHOWCASE_SLUGS, getShowcaseIndexFromHash } from './home-showcase.ts'
 
-export type HomeGridCategory = 'apps' | 'web' | 'experiments' | 'graphic'
+export type HomeGridCategory = 'apps' | 'web' | 'experiments' | 'graphic' | 'illustration'
 
 export interface HomeGridPiece {
   id: string
@@ -26,6 +26,37 @@ function piece(input: HomeGridPiece): HomeGridPiece {
 
 /** Real files already in the repo. Dimensions match the encoded assets. */
 export const HOME_GRID_PIECES: readonly HomeGridPiece[] = [
+  piece({
+    id: 'rain',
+    title: 'RAIN',
+    year: '2026',
+    category: 'experiments',
+    src: '/showcase/rain.webp',
+    width: 1920,
+    height: 940,
+    videoSrc: '/showcase/rain-loop.mp4',
+    projectSlug: 'rain',
+  }),
+  piece({
+    id: 'camping',
+    title: 'Camping',
+    year: '2026',
+    category: 'illustration',
+    src: '/images/optimized/projects/camping.webp',
+    width: 1080,
+    height: 1080,
+    videoSrc: '/images/projects/camping-loop.mp4',
+  }),
+  piece({
+    id: 'skiing',
+    title: 'Skiing',
+    year: '2026',
+    category: 'illustration',
+    src: '/images/optimized/projects/skiing.webp',
+    width: 1080,
+    height: 1080,
+    videoSrc: '/images/projects/skiing-loop.mp4',
+  }),
   piece({
     id: 'mentalhealth-minisite',
     title: 'Mental Health Mini Site',
@@ -55,6 +86,16 @@ export const HOME_GRID_PIECES: readonly HomeGridPiece[] = [
     src: '/images/projects/alpine-01.jpeg',
     width: 1024,
     height: 1536,
+  }),
+  piece({
+    id: 'rain-desktop-dusk',
+    title: 'RAIN dusk',
+    year: '2026',
+    category: 'experiments',
+    src: '/images/optimized/projects/rain/desktop-dusk.webp',
+    width: 1600,
+    height: 900,
+    projectSlug: 'rain',
   }),
   piece({
     id: 'wander-utah',
@@ -116,6 +157,16 @@ export const HOME_GRID_PIECES: readonly HomeGridPiece[] = [
     projectSlug: 'porsche-app',
   }),
   piece({
+    id: 'rain-phone-play',
+    title: 'RAIN phone',
+    year: '2026',
+    category: 'experiments',
+    src: '/images/optimized/projects/rain/phone-play.webp',
+    width: 900,
+    height: 1948,
+    projectSlug: 'rain',
+  }),
+  piece({
     id: 'obsidian-vault',
     title: 'My Obsidian Vault',
     year: '2026',
@@ -172,6 +223,16 @@ export const HOME_GRID_PIECES: readonly HomeGridPiece[] = [
     width: 1200,
     height: 860,
     videoSrc: '/images/projects/path-hover.mp4',
+  }),
+  piece({
+    id: 'rain-koi-feeding',
+    title: 'RAIN koi',
+    year: '2026',
+    category: 'experiments',
+    src: '/images/optimized/projects/rain/koi-feeding.webp',
+    width: 1600,
+    height: 900,
+    projectSlug: 'rain',
   }),
   piece({
     id: 'aol-redesign',

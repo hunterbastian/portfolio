@@ -37,6 +37,17 @@ test('showcase slides follow the homepage order and MDX fields', () => {
       },
     },
     {
+      slug: 'rain',
+      frontmatter: {
+        title: 'RAIN',
+        description: 'A calm rain and koi-pond game.',
+        category: 'Game',
+        tags: [],
+        image: '/old.webp',
+        date: '2026-01-01',
+      },
+    },
+    {
       slug: 'mentalhealth-minisite',
       frontmatter: {
         title: 'Mental Health Mini Site',
@@ -47,7 +58,7 @@ test('showcase slides follow the homepage order and MDX fields', () => {
         date: '2026-05-05',
       },
     },
-    ...HOME_SHOWCASE_SLUGS.filter((slug) => slug !== 'nutricost' && slug !== 'mentalhealth-minisite').map((slug) => ({
+    ...HOME_SHOWCASE_SLUGS.filter((slug) => slug !== 'nutricost' && slug !== 'mentalhealth-minisite' && slug !== 'rain').map((slug) => ({
       slug,
       frontmatter: {
         title: slug,
@@ -61,17 +72,19 @@ test('showcase slides follow the homepage order and MDX fields', () => {
   ])
 
   assert.deepEqual(slides.map((slide) => slide.slug), [...HOME_SHOWCASE_SLUGS])
-  assert.equal(slides[0]?.title, 'Mental Health Mini Site')
+  assert.equal(slides[0]?.title, 'RAIN')
   assert.equal(slides[0]?.year, '2026')
-  assert.equal(slides[0]?.category, 'Web Design')
-  assert.equal(slides[0]?.imageSrc, '/showcase/mentalhealth-minisite.webp')
+  assert.equal(slides[0]?.category, 'Game')
+  assert.equal(slides[0]?.imageSrc, '/showcase/rain.webp')
   assert.equal('darkImageSrc' in (slides[0] ?? {}), false)
-  assert.equal(slides[0]?.videoSrc, '/showcase/mentalhealth-minisite-loop.mp4')
+  assert.equal(slides[0]?.videoSrc, null)
+  assert.equal(getShowcaseVideoSrc('rain'), null)
+  assert.equal(slides[1]?.title, 'Mental Health Mini Site')
   assert.equal(slides.at(-1)?.category, 'Graphic')
   assert.equal(slides.at(-1)?.videoSrc, '/showcase/nutricost-loop.mp4')
   assert.equal(getShowcaseVideoSrc('lumo'), null)
-  assert.equal(getShowcaseCaption(0, slides.length, slides[0]!).lead, '1 of 7 — Mental Health Mini Site, 2026')
-  assert.equal(getShowcaseCaption(0, slides.length, slides[0]!).tag, 'Web Design')
+  assert.equal(getShowcaseCaption(0, slides.length, slides[0]!).lead, '1 of 8 — RAIN, 2026')
+  assert.equal(getShowcaseCaption(0, slides.length, slides[0]!).tag, 'Game')
 })
 
 test('arrow keys move the showcase and ignore typing or modifiers', () => {
@@ -102,14 +115,11 @@ test('endeavors and links reuse the existing site URLs', () => {
   const endeavors = getShowcaseEndeavors()
   assert.deepEqual(
     endeavors.map((item) => item.label),
-    ['Studio Alpine', 'Studio Cala', 'Above / Utah', 'Alcove', 'parallax.'],
+    ['Studio Alpine', 'Studio Cala'],
   )
   assert.deepEqual(endeavors.map((item) => item.meta), [
     'Photography',
     'Web studio',
-    'Hiking app',
-    'Coffee guide',
-    'Model viewer',
   ])
   assert.equal(endeavors.some((item) => item.label === 'Playground'), false)
 

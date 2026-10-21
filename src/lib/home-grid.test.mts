@@ -33,7 +33,19 @@ test('homepage grid uses real repo assets across the visible categories', () => 
     }
   }
 
-  assert.equal(HOME_GRID_PIECES.length, 35)
+  assert.equal(HOME_GRID_PIECES.length, 41)
+  const rainIds = HOME_GRID_PIECES.filter((piece) => piece.projectSlug === 'rain').map((piece) => piece.id)
+  assert.deepEqual(rainIds, ['rain', 'rain-desktop-dusk', 'rain-phone-play', 'rain-koi-feeding'])
+  const camping = HOME_GRID_PIECES.find((piece) => piece.id === 'camping')
+  const skiing = HOME_GRID_PIECES.find((piece) => piece.id === 'skiing')
+  assert.equal(camping?.title, 'Camping')
+  assert.equal(skiing?.title, 'Skiing')
+  assert.equal(camping?.year, '2026')
+  assert.equal(skiing?.year, '2026')
+  assert.equal(camping?.category, 'illustration')
+  assert.equal(skiing?.category, 'illustration')
+  assert.equal(camping?.videoSrc, '/images/projects/camping-loop.mp4')
+  assert.equal(skiing?.videoSrc, '/images/projects/skiing-loop.mp4')
   assert.ok(HOME_GRID_PIECES.some((piece) => piece.category === 'apps'))
   assert.ok(HOME_GRID_PIECES.some((piece) => piece.category === 'experiments'))
 })

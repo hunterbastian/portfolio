@@ -100,21 +100,6 @@ export function useLauncherCommands(projects: LauncherProject[]) {
         },
       },
       {
-        id: 'playground',
-        label: 'Playground',
-        hint: 'Open experiments',
-        icon: Archive,
-        section: 'navigate',
-        priority: 50,
-        keys: 'G',
-        kind: 'Navigate',
-        keywords: ['archive', 'experiments', 'prototypes', 'play'],
-        run: () => {
-          router.push('/playground')
-          showJoyToast('Opening playground')
-        },
-      },
-      {
         id: 'email',
         label: 'Copy Email',
         hint: LAUNCHER_EMAIL_ADDRESS,

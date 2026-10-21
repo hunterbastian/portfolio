@@ -174,13 +174,13 @@ test('activateHomeSectionNavigation scrolls, updates the hash, and skips toasts'
   ])
 })
 
-test('shared mobile drawer retains homepage section jumps and the full playground link', () => {
+test('shared mobile drawer retains homepage section jumps', () => {
   const source = readFileSync(new URL('../components/TopMeta.tsx', import.meta.url), 'utf8')
 
   assert.match(source, /HOME_SECTION_NAV_ITEMS/)
   assert.match(source, /MobileNavigation/)
   const drawer = readFileSync(new URL('../components/MobileNavigation.tsx', import.meta.url), 'utf8')
-  for (const href of ['/#projects', '/playground', '/#background', '/archive']) {
+  for (const href of ['/', '/#projects', '/#background']) {
     assert.ok(drawer.includes(`href: '${href}'`), `Missing mobile destination: ${href}`)
   }
   assert.match(source, /persistVisible/)

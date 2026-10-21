@@ -155,6 +155,12 @@ const nextConfig: NextConfig = {
       ...sharedHeaders,
     ]
   },
+
+  async redirects() {
+    return [
+      { source: '/playground', destination: '/', permanent: true },
+    ]
+  },
 }
 
 const withMDX = createMDX({

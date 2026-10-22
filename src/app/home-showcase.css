@@ -1499,38 +1499,26 @@ html[data-home-showcase] .email-copy-toast {
   opacity: 1;
 }
 
-.home-work-strip-caption {
+.home-work-strip-tag {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  z-index: 5;
+  top: calc(100% + 6px);
   left: 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 4px;
-  padding: 10px 4px 3px;
-  background: linear-gradient(to top, rgba(10, 10, 10, 0.62), transparent);
-  color: #f7f7f5;
-  font-size: 8px;
-  line-height: 1.15;
-  letter-spacing: 0.03em;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.home-work-strip-caption span:first-child {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--showcase-ink);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
   white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition: opacity 200ms ease, transform 200ms ease;
 }
 
-.home-work-strip-item:hover .home-work-strip-caption,
-.home-work-strip-item:focus-visible .home-work-strip-caption {
+.home-work-strip-tag.is-on {
   opacity: 1;
-}
-
-html[data-home-showcase] .home-showcase .home-work-strip-caption {
-  color: #f7f7f5 !important;
+  transform: translate(-50%, 0);
 }
 
 .home-grid-lightbox {
@@ -1668,7 +1656,13 @@ html[data-home-showcase] .home-showcase .home-work-strip-caption {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-work-strip-media video {
+  .home-work-strip-media video,
+  .home-work-strip-tag {
     transition: none;
+  }
+
+  .home-work-strip-tag,
+  .home-work-strip-tag.is-on {
+    transform: translate(-50%, 0);
   }
 }

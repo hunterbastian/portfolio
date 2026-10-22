@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import { HOME_SHOWCASE_SLUGS } from './home-showcase.ts'
@@ -34,8 +34,11 @@ test('homepage grid uses real repo assets across the visible categories', () => 
   }
 
   assert.equal(HOME_GRID_PIECES.length, 41)
+  assert.equal(HOME_GRID_PIECES[0]?.id, 'mentalhealth-minisite')
+  const skyFarm = ids.indexOf('sky-farm')
+  assert.deepEqual(ids.slice(skyFarm + 1, skyFarm + 4), ['camping', 'skiing', 'rain'])
   const rainIds = HOME_GRID_PIECES.filter((piece) => piece.projectSlug === 'rain').map((piece) => piece.id)
-  assert.deepEqual(rainIds, ['rain', 'rain-desktop-dusk', 'rain-phone-play', 'rain-koi-feeding'])
+  assert.deepEqual(rainIds, ['rain-desktop-dusk', 'rain-phone-play', 'rain', 'rain-koi-feeding'])
   const camping = HOME_GRID_PIECES.find((piece) => piece.id === 'camping')
   const skiing = HOME_GRID_PIECES.find((piece) => piece.id === 'skiing')
   assert.equal(camping?.title, 'Camping')
@@ -63,10 +66,31 @@ test('a thumbnail jumps the showcase only when it belongs to a carousel project'
   assert.equal(isShowcaseProjectHash('#0'), false)
   assert.equal(isShowcaseProjectHash('#lumo'), true)
   assert.equal(getHomeShowcaseIndex('#lumo'), HOME_SHOWCASE_SLUGS.indexOf('lumo'))
+  assert.equal(getHomeShowcaseIndex('#rain'), HOME_SHOWCASE_SLUGS.indexOf('rain'))
+  assert.equal(getHomeShowcaseIndex('#RAIN'), HOME_SHOWCASE_SLUGS.indexOf('rain'))
+  assert.equal(getHomeShowcaseIndex('#mentalhealth-minisite'), 0)
+  assert.equal(isShowcaseProjectHash('#rain'), true)
   assert.equal(getHomeShowcaseIndex('#3'), 2)
   assert.equal(withoutHomeViewParam('?view=grid'), '')
   assert.equal(withoutHomeViewParam('?view=showcase&ref=1'), '?ref=1')
   assert.equal(withoutHomeViewParam(''), '')
   assert.equal(stepHomeGridIndex(0, -1, 4), 3)
   assert.equal(stepHomeGridIndex(3, 1, 4), 0)
+})
+
+test('homepage boot preloads slug hashes the same way as the showcase index', () => {
+  const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8')
+  const start = layout.indexOf('var slugs=${homeShowcaseSlugs};')
+  const end = layout.indexOf('if(hi>0){', start)
+  assert.ok(start > 0 && end > start)
+  const snippet = layout
+    .slice(start, end)
+    .replace('${homeShowcaseSlugs}', JSON.stringify([...HOME_SHOWCASE_SLUGS]))
+    .replace(/\\\\/g, '\\')
+  const bootIndex = new Function('location', `${snippet}; return hi;`) as (location: { hash: string }) => number
+  const hashes = ['', '#1', '#4', '#8', '#9', '#0', '#rain', '#RAIN', '#mentalhealth-minisite', '#nope', ' #lumo ']
+  for (const hash of hashes) {
+    assert.equal(bootIndex({ hash }), getHomeShowcaseIndex(hash), hash)
+  }
+  assert.ok(layout.includes('pl.href="/showcase/"+slugs[hi]+".webp"'))
 })

@@ -6,6 +6,9 @@ export const MOBILE_MARQUEE_PX_PER_SECOND = 10
 export const HOVER_SPEED_SCALE = 0.3
 export const HOVER_EASE_SECONDS = 0.4
 
+/** Ignore the mouse event a phone synthesizes immediately after a tap. */
+export const TOUCH_HOVER_SUPPRESS_MS = 750
+
 const MAX_FRAME_SECONDS = 0.05
 
 /** Pixels to subtract from the track offset this frame. Independent of set width. */
@@ -23,4 +26,21 @@ function smoothstep(t: number) {
 export function marqueeEasedSpeed(from: number, to: number, elapsedSeconds: number, durationSeconds = HOVER_EASE_SECONDS) {
   if (!(durationSeconds > 0)) return to
   return from + (to - from) * smoothstep(elapsedSeconds / durationSeconds)
+}
+
+/**
+ * A mouse or pen hover counts even when the primary pointer is a touchscreen.
+ * The mouse event that follows a tap does not.
+ */
+export function acceptsHoverPointer(pointerType: string, msSinceTouch: number) {
+  if (pointerType !== 'mouse' && pointerType !== 'pen') return false
+  return !(msSinceTouch >= 0 && msSinceTouch < TOUCH_HOVER_SUPPRESS_MS)
+}
+
+/** Keep a centered label inside the frame. `center` and the result are the label's midpoint. */
+export function clampTagCenter(center: number, tagWidth: number, frameWidth: number, margin = 8) {
+  if (!(tagWidth > 0) || !(frameWidth > 0)) return center
+  const half = tagWidth / 2
+  if (tagWidth + margin * 2 >= frameWidth) return frameWidth / 2
+  return Math.min(frameWidth - margin - half, Math.max(margin + half, center))
 }

@@ -6,6 +6,9 @@ import {
   HOVER_EASE_SECONDS,
   HOVER_SPEED_SCALE,
   MOBILE_MARQUEE_PX_PER_SECOND,
+  TOUCH_HOVER_SUPPRESS_MS,
+  acceptsHoverPointer,
+  clampTagCenter,
   marqueeEasedSpeed,
   marqueeFrameDelta,
 } from './work-marquee.ts'
@@ -36,4 +39,19 @@ test('hover eases the row to about 30% speed over 400ms', () => {
   assert.ok(Math.abs(marqueeEasedSpeed(12, slow, 0.4) - slow) < 1e-9)
   assert.ok(Math.abs(marqueeEasedSpeed(slow, 12, 0.4) - 12) < 1e-9)
   assert.equal(marqueeEasedSpeed(12, slow, 1), slow)
+})
+
+test('a mouse or pen hover works on a touchscreen, and a tap does not', () => {
+  assert.equal(acceptsHoverPointer('mouse', TOUCH_HOVER_SUPPRESS_MS), true)
+  assert.equal(acceptsHoverPointer('pen', Number.POSITIVE_INFINITY), true)
+  assert.equal(acceptsHoverPointer('touch', Number.POSITIVE_INFINITY), false)
+  assert.equal(acceptsHoverPointer('mouse', 0), false)
+  assert.equal(acceptsHoverPointer('mouse', TOUCH_HOVER_SUPPRESS_MS - 1), false)
+})
+
+test('the hover tag stays inside the frame', () => {
+  assert.equal(clampTagCenter(400, 120, 1000), 400)
+  assert.equal(clampTagCenter(20, 120, 1000), 68)
+  assert.equal(clampTagCenter(980, 120, 1000), 932)
+  assert.equal(clampTagCenter(10, 200, 100), 50)
 })

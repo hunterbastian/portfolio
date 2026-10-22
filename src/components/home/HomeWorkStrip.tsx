@@ -9,6 +9,8 @@ import {
   DESKTOP_MARQUEE_PX_PER_SECOND,
   HOVER_SPEED_SCALE,
   MOBILE_MARQUEE_PX_PER_SECOND,
+  acceptsHoverPointer,
+  clampTagCenter,
   marqueeEasedSpeed,
   marqueeFrameDelta,
 } from '@/lib/work-marquee'
@@ -105,10 +107,15 @@ function StripVideo({
   )
 }
 
+let lastTouchAt = Number.NEGATIVE_INFINITY
+
+function rememberTouch(pointerType: string) {
+  if (pointerType === 'touch') lastTouchAt = performance.now()
+}
+
 function fineHover(event: ReactPointerEvent<HTMLButtonElement>) {
-  if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return false
-  // Phones report a coarse pointer and also emit mouse events after a tap.
-  return !window.matchMedia('(pointer: coarse)').matches
+  rememberTouch(event.pointerType)
+  return acceptsHoverPointer(event.pointerType, performance.now() - lastTouchAt)
 }
 
 function StripPiece({
@@ -279,7 +286,8 @@ export default function HomeWorkStrip({
     }
     const frameBox = frame.getBoundingClientRect()
     const box = anchor.getBoundingClientRect()
-    tag.style.left = `${box.left + box.width / 2 - frameBox.left}px`
+    const center = box.left + box.width / 2 - frameBox.left
+    tag.style.left = `${clampTagCenter(center, tag.offsetWidth, frameBox.width)}px`
     tag.classList.add('is-on')
   }, [])
 
@@ -601,6 +609,7 @@ export default function HomeWorkStrip({
   }
 
   function onPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    rememberTouch(event.pointerType)
     if (event.button !== 0) return
     const node = scrollerRef.current
     if (!node) return

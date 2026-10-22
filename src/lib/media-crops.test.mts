@@ -8,11 +8,12 @@ import {
   mediaImageSizes,
 } from './media-crops.ts'
 
-test('every showcase slide has one bare crop', () => {
+test('every showcase slide has one crop inside a simple frame', () => {
   assert.deepEqual(listShowcaseCropSlugs().sort(), [...HOME_SHOWCASE_SLUGS].sort())
 
   for (const slug of HOME_SHOWCASE_SLUGS) {
     const spec = getShowcaseCrop(slug)
+    assert.ok(spec.frame === 'iphone' || spec.frame === 'ipad' || spec.frame === 'laptop')
     assert.ok(spec.aspect > 0.3 && spec.aspect < 2.2)
     assert.ok(spec.crop.w > 0 && spec.crop.h > 0)
     assert.ok(spec.crop.x >= 0 && spec.crop.y >= 0)

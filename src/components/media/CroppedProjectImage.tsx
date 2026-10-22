@@ -2,6 +2,7 @@ import ImageViewer from '@/components/ImageViewer'
 import { mediaImageSizes, type MediaCrop } from '@/lib/media-crops'
 import BlurImage from './BlurImage'
 import CroppedMedia from './CroppedMedia'
+import DeviceFrame from './DeviceFrame'
 
 interface CroppedProjectImageProps {
   src: string
@@ -13,16 +14,18 @@ interface CroppedProjectImageProps {
 
 export default function CroppedProjectImage({ src, alt, spec, priority = false, quality }: CroppedProjectImageProps) {
   const picture = (presentation: 'inline' | 'enlarged') => (
-    <CroppedMedia spec={spec}>
-      <BlurImage
-        src={src}
-        alt={alt}
-        fill
-        sizes={mediaImageSizes(spec, presentation)}
-        priority={priority}
-        quality={quality}
-      />
-    </CroppedMedia>
+    <DeviceFrame spec={spec}>
+      <CroppedMedia spec={spec}>
+        <BlurImage
+          src={src}
+          alt={alt}
+          fill
+          sizes={mediaImageSizes(spec, presentation)}
+          priority={priority}
+          quality={quality}
+        />
+      </CroppedMedia>
+    </DeviceFrame>
   )
 
   return (

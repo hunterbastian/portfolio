@@ -331,18 +331,6 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
   place-items: center;
 }
 
-.home-showcase-shot[data-shape='phone'] {
-  height: 84%;
-  width: auto;
-  max-width: 42%;
-}
-
-.home-showcase-shot[data-shape='wide'] {
-  width: min(74%, 680px);
-  height: auto;
-  max-height: 84%;
-}
-
 .home-showcase-slide img,
 .home-showcase-slide video {
   position: absolute;

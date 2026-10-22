@@ -5,12 +5,16 @@ export interface ScreenCrop {
   h: number
 }
 
+export type DeviceKind = 'iphone' | 'ipad' | 'laptop'
+
 export interface MediaCrop {
   /** Window of the source, as fractions of its width and height. */
   crop: ScreenCrop
   /** Visible width / height. The picture keeps this shape, so a phone shot is not stretched. */
   aspect: number
   shape: 'phone' | 'wide'
+  /** Simple shell around the crop. Phones are iPhones, Nutricost is an iPad, wide sites are laptops. */
+  frame: DeviceKind
   /**
    * `fill` maps the crop window onto the picture.
    * `cover` scales the whole source and crops the overflow.
@@ -64,24 +68,28 @@ const SHOWCASE_PHONE: MediaCrop = {
   crop: SHOWCASE_PHONE_CROP,
   aspect: PHONE_ASPECT,
   shape: 'phone',
+  frame: 'iphone',
 }
 
 const SHOWCASE_WIDE: MediaCrop = {
   crop: SHOWCASE_WIDE_CROP,
   aspect: SHOWCASE_WIDE_ASPECT,
   shape: 'wide',
+  frame: 'laptop',
 }
 
 const NUTRICOST: MediaCrop = {
   crop: NUTRICOST_CROP,
   aspect: 4 / 3,
   shape: 'wide',
+  frame: 'ipad',
 }
 
 const RAIN: MediaCrop = {
   crop: FULL,
   aspect: 1920 / 940,
   shape: 'wide',
+  frame: 'laptop',
 }
 
 const LUMO_PROJECT: MediaCrop = {
@@ -93,6 +101,7 @@ const LUMO_PROJECT: MediaCrop = {
   },
   aspect: PHONE_ASPECT,
   shape: 'phone',
+  frame: 'iphone',
 }
 
 const PORSCHE_STILL: MediaCrop = {
@@ -104,12 +113,14 @@ const PORSCHE_STILL: MediaCrop = {
   },
   aspect: PHONE_ASPECT,
   shape: 'phone',
+  frame: 'iphone',
 }
 
 const PORSCHE_SCREEN_VIDEO: MediaCrop = {
   crop: FULL,
   aspect: 426 / 916,
   shape: 'phone',
+  frame: 'iphone',
   fit: 'cover',
 }
 
@@ -117,6 +128,7 @@ const RAIN_PHONE: MediaCrop = {
   crop: FULL,
   aspect: PHONE_ASPECT,
   shape: 'phone',
+  frame: 'iphone',
   fit: 'cover',
 }
 

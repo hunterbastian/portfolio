@@ -34,8 +34,11 @@ test('homepage grid uses real repo assets across the visible categories', () => 
   }
 
   assert.equal(HOME_GRID_PIECES.length, 41)
+  assert.equal(HOME_GRID_PIECES[0]?.id, 'mentalhealth-minisite')
+  const skyFarm = ids.indexOf('sky-farm')
+  assert.deepEqual(ids.slice(skyFarm + 1, skyFarm + 4), ['camping', 'skiing', 'rain'])
   const rainIds = HOME_GRID_PIECES.filter((piece) => piece.projectSlug === 'rain').map((piece) => piece.id)
-  assert.deepEqual(rainIds, ['rain', 'rain-desktop-dusk', 'rain-phone-play', 'rain-koi-feeding'])
+  assert.deepEqual(rainIds, ['rain-desktop-dusk', 'rain-phone-play', 'rain', 'rain-koi-feeding'])
   const camping = HOME_GRID_PIECES.find((piece) => piece.id === 'camping')
   const skiing = HOME_GRID_PIECES.find((piece) => piece.id === 'skiing')
   assert.equal(camping?.title, 'Camping')
@@ -63,6 +66,9 @@ test('a thumbnail jumps the showcase only when it belongs to a carousel project'
   assert.equal(isShowcaseProjectHash('#0'), false)
   assert.equal(isShowcaseProjectHash('#lumo'), true)
   assert.equal(getHomeShowcaseIndex('#lumo'), HOME_SHOWCASE_SLUGS.indexOf('lumo'))
+  assert.equal(getHomeShowcaseIndex('#rain'), HOME_SHOWCASE_SLUGS.indexOf('rain'))
+  assert.equal(getHomeShowcaseIndex('#mentalhealth-minisite'), 0)
+  assert.equal(isShowcaseProjectHash('#rain'), true)
   assert.equal(getHomeShowcaseIndex('#3'), 2)
   assert.equal(withoutHomeViewParam('?view=grid'), '')
   assert.equal(withoutHomeViewParam('?view=showcase&ref=1'), '?ref=1')

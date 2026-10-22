@@ -69,9 +69,27 @@ export interface ShowcaseEndeavor {
 }
 
 export interface ShowcaseLink {
+  /** Copy the address instead of opening the mail client. */
+  copyOnClick?: boolean
   external: boolean
   href: string
   label: string
+  primary?: boolean
+}
+
+/** Shown under the homepage bio. The site description itself stays unchanged. */
+export const SHOWCASE_WEBSITE_PROJECT_LINE =
+  'Also taking on website design projects for small brands and studios.'
+
+const SHOWCASE_WEBSITE_PROJECT_BODY =
+  'Hi Hunter,\n\nI would like to hire you for a website. A little about the project, timeline, and budget:\n\n'
+
+export function getShowcaseWebsiteProjectHref() {
+  const query = new URLSearchParams({
+    body: SHOWCASE_WEBSITE_PROJECT_BODY,
+    subject: 'Website project',
+  })
+  return `mailto:${siteConfig.email}?${query.toString().replace(/\+/g, '%20')}`
 }
 
 export function getShowcaseImageSrc(slug: string) {
@@ -285,8 +303,16 @@ export function formatDenverClock(date: Date) {
   return `${value('hour')}:${value('minute')}:${value('second')} ${value('timeZoneName')}`
 }
 
+export function getShowcaseBioParts() {
+  return {
+    body: siteConfig.siteDescription,
+    hire: SHOWCASE_WEBSITE_PROJECT_LINE,
+  }
+}
+
 export function getShowcaseBio() {
-  return siteConfig.siteDescription
+  const parts = getShowcaseBioParts()
+  return `${parts.body} ${parts.hire}`
 }
 
 export function getShowcaseEndeavors(): ShowcaseEndeavor[] {
@@ -332,8 +358,9 @@ export function getShowcaseLinks(): ShowcaseLink[] {
   const socialHref = new Map(contactSocialLinks.map((link) => [link.label, link.href]))
 
   return [
+    { external: true, href: getShowcaseWebsiteProjectHref(), label: 'Start a project', primary: true },
     { external: false, href: '/cv', label: 'Resume' },
-    { external: true, href: siteMailtoHref, label: 'Email' },
+    { copyOnClick: true, external: true, href: siteMailtoHref, label: 'Email' },
     { external: true, href: socialHref.get('LinkedIn') ?? '', label: 'LinkedIn' },
     { external: true, href: socialHref.get('GitHub') ?? '', label: 'GitHub' },
   ].filter((link) => link.href.length > 0)

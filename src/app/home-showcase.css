@@ -150,6 +150,8 @@ html[data-home-showcase] .home-showcase *::after {
 }
 
 .home-showcase-bio {
+  display: grid;
+  gap: 8px;
   max-width: 280px;
 }
 
@@ -193,6 +195,7 @@ html[data-home-showcase] .home-showcase *::after {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   min-width: 24px;
   min-height: 36px;
   height: 36px;
@@ -201,6 +204,7 @@ html[data-home-showcase] .home-showcase *::after {
   border-radius: 64px;
   background: #ebebe8;
   color: var(--showcase-ink);
+  white-space: nowrap;
   cursor: pointer;
   transition:
     background-color 0.4s cubic-bezier(0.44, 0, 0.56, 1),

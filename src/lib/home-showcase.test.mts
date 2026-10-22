@@ -17,6 +17,8 @@ import {
   getShowcaseKeyboardAction,
   getShowcaseLinks,
   getShowcaseTravelDirection,
+  getShowcaseWebsiteProjectHref,
+  SHOWCASE_WEBSITE_PROJECT_LINE,
   getShowcaseVideoSrc,
   planShowcaseSlideMotion,
   HOME_SHOWCASE_CANVAS,
@@ -129,13 +131,25 @@ test('endeavors and links reuse the existing site URLs', () => {
   }
 
   const links = getShowcaseLinks()
-  assert.deepEqual(links.map((link) => link.label), ['Resume', 'Email', 'LinkedIn', 'GitHub'])
-  assert.equal(links[0]?.href, '/cv')
-  assert.equal(links[1]?.href, siteMailtoHref)
-  assert.equal(links[2]?.href, contactSocialLinks.find((link) => link.label === 'LinkedIn')?.href)
-  assert.equal(links[3]?.href, contactSocialLinks.find((link) => link.label === 'GitHub')?.href)
-  assert.equal(getShowcaseBio(), siteConfig.siteDescription)
+  assert.deepEqual(links.map((link) => link.label), ['Start a project', 'Resume', 'Email', 'LinkedIn', 'GitHub'])
+  assert.deepEqual(links.filter((link) => link.primary).map((link) => link.label), ['Start a project'])
+  assert.equal(links[1]?.primary, undefined)
+  const project = new URL(links[0]?.href ?? '')
+  assert.equal(project.protocol, 'mailto:')
+  assert.equal(project.pathname, siteConfig.email)
+  assert.equal(project.searchParams.get('subject'), 'Website project')
+  assert.match(project.searchParams.get('body') ?? '', /project, timeline, and budget/i)
+  assert.equal(links[0]?.href, getShowcaseWebsiteProjectHref())
+  assert.equal(links[0]?.copyOnClick, undefined)
+  assert.equal(links[1]?.href, '/cv')
+  assert.equal(links[2]?.href, siteMailtoHref)
+  assert.equal(links[2]?.copyOnClick, true)
+  assert.equal(links[3]?.href, contactSocialLinks.find((link) => link.label === 'LinkedIn')?.href)
+  assert.equal(links[4]?.href, contactSocialLinks.find((link) => link.label === 'GitHub')?.href)
+  assert.equal(getShowcaseBio(), `${siteConfig.siteDescription} ${SHOWCASE_WEBSITE_PROJECT_LINE}`)
+  assert.equal(getShowcaseBio().includes('open to product design roles'), true)
   assert.equal(getShowcaseBio().includes('from first sketch to shipped code'), false)
+  assert.equal(siteConfig.siteDescription.includes(SHOWCASE_WEBSITE_PROJECT_LINE), false)
 })
 
 test('homepage chrome is the light canvas only', () => {

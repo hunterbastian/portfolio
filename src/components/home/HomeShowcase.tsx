@@ -12,7 +12,7 @@ import {
   HOME_SHOWCASE_SLUGS,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
   formatDenverClock,
-  getShowcaseBio,
+  getShowcaseBioParts,
   getShowcaseCaption,
   getShowcaseChrome,
   getShowcaseEndeavors,
@@ -33,7 +33,7 @@ import { siteConfig } from '@/lib/site'
 
 const endeavors = getShowcaseEndeavors()
 const links = getShowcaseLinks()
-const bio = getShowcaseBio()
+const bio = getShowcaseBioParts()
 
 interface HomeShowcaseProps {
   className?: string
@@ -378,7 +378,10 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
         </div>
 
         <div className="home-showcase-bottom">
-          <p className="home-showcase-bio">{bio}</p>
+          <div className="home-showcase-bio">
+            <p>{bio.body}</p>
+            <p>{bio.hire}</p>
+          </div>
           <div className="home-showcase-endeavors">
             <ul className="home-showcase-list">
               {endeavors.map((item) => (
@@ -399,16 +402,29 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
           <div className="home-showcase-actions">
             <nav className="home-showcase-links" aria-label="Contact">
               {links.map((item) => {
-                const pill = item.label === 'Resume' ? 'home-showcase-pill is-primary' : 'home-showcase-pill'
-                return item.href.startsWith('mailto:') ? (
-                  <EmailCopyLink key={item.label} className={pill} href={item.href}>
-                    {item.label}
-                  </EmailCopyLink>
-                ) : item.external ? (
-                  <a key={item.label} className={pill} href={item.href} target="_blank" rel="noopener noreferrer">
-                    {item.label}
-                  </a>
-                ) : (
+                const pill = item.primary ? 'home-showcase-pill is-primary' : 'home-showcase-pill'
+                if (item.copyOnClick) {
+                  return (
+                    <EmailCopyLink key={item.label} className={pill} href={item.href}>
+                      {item.label}
+                    </EmailCopyLink>
+                  )
+                }
+                if (item.external) {
+                  const newTab = item.href.startsWith('http')
+                  return (
+                    <a
+                      key={item.label}
+                      className={pill}
+                      href={item.href}
+                      target={newTab ? '_blank' : undefined}
+                      rel={newTab ? 'noopener noreferrer' : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  )
+                }
+                return (
                   <Link key={item.label} className={pill} href={item.href}>
                     {item.label}
                   </Link>

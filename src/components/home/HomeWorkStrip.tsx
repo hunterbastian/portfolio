@@ -7,7 +7,9 @@ import { nextDialogTabIndex } from '@/lib/dialog-tab'
 import { useBodyScrollLock } from '@/lib/use-body-scroll-lock'
 import {
   DESKTOP_MARQUEE_PX_PER_SECOND,
+  HOVER_SPEED_SCALE,
   MOBILE_MARQUEE_PX_PER_SECOND,
+  marqueeEasedSpeed,
   marqueeFrameDelta,
 } from '@/lib/work-marquee'
 import {
@@ -103,20 +105,32 @@ function StripVideo({
   )
 }
 
+function fineHover(event: ReactPointerEvent<HTMLButtonElement>) {
+  if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return false
+  // Phones report a coarse pointer and also emit mouse events after a tap.
+  return !window.matchMedia('(pointer: coarse)').matches
+}
+
 function StripPiece({
   active,
   copy,
   index,
   item,
   showVideo,
+  onFocusTag,
+  onHoverTag,
   onOpen,
+  onReleaseTag,
 }: {
   active: boolean
   copy: boolean
   index: number
   item: HomeGridPiece
   showVideo: boolean
+  onFocusTag: (button: HTMLButtonElement) => void
+  onHoverTag: (button: HTMLButtonElement) => void
   onOpen: (item: HomeGridPiece, index: number, button: HTMLButtonElement) => void
+  onReleaseTag: (button: HTMLButtonElement, source: 'hover' | 'focus') => void
 }) {
   const ref = useRef<HTMLButtonElement>(null)
   const [near, setNear] = useState(!copy && index < 6)
@@ -138,10 +152,24 @@ function StripPiece({
       type="button"
       className={active ? 'home-work-strip-item is-active' : 'home-work-strip-item'}
       aria-label={`${item.title}, ${item.year}`}
+      data-tag={`${item.title}, ${item.year}`}
       aria-current={!copy && active ? 'true' : undefined}
       aria-hidden={copy ? true : undefined}
       tabIndex={copy ? -1 : undefined}
       onClick={(event) => onOpen(item, index, event.currentTarget)}
+      onPointerEnter={(event) => {
+        if (!fineHover(event)) return
+        onHoverTag(event.currentTarget)
+      }}
+      onPointerLeave={(event) => {
+        if (event.pointerType === 'touch') return
+        onReleaseTag(event.currentTarget, 'hover')
+      }}
+      onFocus={(event) => {
+        if (!event.currentTarget.matches(':focus-visible')) return
+        onFocusTag(event.currentTarget)
+      }}
+      onBlur={(event) => onReleaseTag(event.currentTarget, 'focus')}
     >
       <span className="home-work-strip-media">
         {near ? (
@@ -159,10 +187,6 @@ function StripPiece({
         {near && showVideo && item.videoSrc ? (
           <StripVideo poster={item.src} src={item.videoSrc} />
         ) : null}
-        <span className="home-work-strip-caption">
-          <span>{item.title}</span>
-          <span>{item.year}</span>
-        </span>
       </span>
     </button>
   )
@@ -196,8 +220,15 @@ export default function HomeWorkStrip({
   const offsetRef = useRef(0)
   const setWidthRef = useRef(0)
   const speedRef = useRef(DESKTOP_MARQUEE_PX_PER_SECOND)
-  const hoverRef = useRef(false)
-  const focusRef = useRef(false)
+  const shownSpeedRef = useRef(DESKTOP_MARQUEE_PX_PER_SECOND)
+  const easeFromRef = useRef(DESKTOP_MARQUEE_PX_PER_SECOND)
+  const easeTargetRef = useRef(DESKTOP_MARQUEE_PX_PER_SECOND)
+  const easeStartRef = useRef(0)
+  const hoverAnchorRef = useRef<HTMLButtonElement | null>(null)
+  const focusAnchorRef = useRef<HTMLButtonElement | null>(null)
+  const tagAnchorRef = useRef<HTMLButtonElement | null>(null)
+  const thumbHeldRef = useRef(false)
+  const tagRef = useRef<HTMLSpanElement>(null)
   const dragPausedRef = useRef(false)
   const hiddenRef = useRef(false)
   const offscreenRef = useRef(true)
@@ -214,6 +245,7 @@ export default function HomeWorkStrip({
   const suppressClick = useRef(false)
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const [dragging, setDragging] = useState(false)
+  const [tagText, setTagText] = useState('')
   const [compact, setCompact] = useState(true)
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const [atStart, setAtStart] = useState(true)
@@ -229,6 +261,59 @@ export default function HomeWorkStrip({
     offsetRef.current = next
     track.style.transform = `translate3d(${next}px,0,0)`
   }, [])
+
+  const placeTag = useCallback(() => {
+    const frame = frameRef.current
+    const tag = tagRef.current
+    const anchor = tagAnchorRef.current
+    if (!frame || !tag) return
+    if (!anchor?.isConnected) {
+      tag.classList.remove('is-on')
+      if (anchor) {
+        hoverAnchorRef.current = null
+        focusAnchorRef.current = null
+        tagAnchorRef.current = null
+        thumbHeldRef.current = false
+      }
+      return
+    }
+    const frameBox = frame.getBoundingClientRect()
+    const box = anchor.getBoundingClientRect()
+    tag.style.left = `${box.left + box.width / 2 - frameBox.left}px`
+    tag.classList.add('is-on')
+  }, [])
+
+  const syncHold = useCallback((button: HTMLButtonElement | null) => {
+    tagAnchorRef.current = button
+    thumbHeldRef.current = Boolean(button)
+    if (button) {
+      const label = button.getAttribute('data-tag')
+      if (label) setTagText(label)
+    }
+    placeTag()
+    kickRef.current()
+  }, [placeTag])
+
+  const onHoverTag = useCallback((button: HTMLButtonElement) => {
+    hoverAnchorRef.current = button
+    syncHold(button)
+  }, [syncHold])
+
+  const onFocusTag = useCallback((button: HTMLButtonElement) => {
+    focusAnchorRef.current = button
+    syncHold(hoverAnchorRef.current ?? button)
+  }, [syncHold])
+
+  const onReleaseTag = useCallback((button: HTMLButtonElement, source: 'hover' | 'focus') => {
+    if (source === 'hover') {
+      if (hoverAnchorRef.current !== button) return
+      hoverAnchorRef.current = null
+    } else {
+      if (focusAnchorRef.current !== button) return
+      focusAnchorRef.current = null
+    }
+    syncHold(hoverAnchorRef.current ?? focusAnchorRef.current)
+  }, [syncHold])
 
   useEffect(() => {
     const query = window.matchMedia('(max-width: 820px)')
@@ -247,14 +332,18 @@ export default function HomeWorkStrip({
       setAtEnd(node.scrollLeft + node.clientWidth >= node.scrollWidth - 1)
     }
     sync()
-    node.addEventListener('scroll', sync, { passive: true })
-    const observer = new ResizeObserver(sync)
+    const onScroll = () => {
+      sync()
+      placeTag()
+    }
+    node.addEventListener('scroll', onScroll, { passive: true })
+    const observer = new ResizeObserver(onScroll)
     observer.observe(node)
     return () => {
-      node.removeEventListener('scroll', sync)
+      node.removeEventListener('scroll', onScroll)
       observer.disconnect()
     }
-  }, [marquee])
+  }, [marquee, placeTag])
 
   useEffect(() => {
     const node = scrollerRef.current
@@ -297,21 +386,42 @@ export default function HomeWorkStrip({
       if (!real || !dup) return
       const width = dup.offsetLeft - real.offsetLeft
       if (width > 0) setWidthRef.current = width
-      speedRef.current = window.matchMedia('(max-width: 820px)').matches
+      const next = window.matchMedia('(max-width: 820px)').matches
         ? MOBILE_MARQUEE_PX_PER_SECOND
         : DESKTOP_MARQUEE_PX_PER_SECOND
+      speedRef.current = next
+      if (!thumbHeldRef.current && easeTargetRef.current === shownSpeedRef.current) {
+        shownSpeedRef.current = next
+        easeFromRef.current = next
+        easeTargetRef.current = next
+      }
     }
 
-    const paused = () => hoverRef.current || focusRef.current || dragPausedRef.current || hiddenRef.current || offscreenRef.current || nudgeRef.current
+    const blocked = () => dragPausedRef.current || hiddenRef.current || offscreenRef.current || nudgeRef.current
 
     const tick = (now: number) => {
       if (!alive) return
       const dt = (now - last) / 1000
       last = now
       const width = setWidthRef.current
-      if (!paused() && width > 0) {
-        offsetRef.current -= marqueeFrameDelta(speedRef.current, dt)
+      if (!blocked() && width > 0) {
+        const base = speedRef.current
+        const target = thumbHeldRef.current ? base * HOVER_SPEED_SCALE : base
+        if (target !== easeTargetRef.current) {
+          easeFromRef.current = shownSpeedRef.current
+          easeTargetRef.current = target
+          easeStartRef.current = now
+        }
+        shownSpeedRef.current = marqueeEasedSpeed(
+          easeFromRef.current,
+          easeTargetRef.current,
+          (now - easeStartRef.current) / 1000,
+        )
+        offsetRef.current -= marqueeFrameDelta(shownSpeedRef.current, dt)
         applyOffset()
+      }
+      placeTag()
+      if ((!blocked() && width > 0) || thumbHeldRef.current) {
         raf = requestAnimationFrame(tick)
         return
       }
@@ -319,7 +429,7 @@ export default function HomeWorkStrip({
     }
 
     const kick = () => {
-      if (!alive || raf || paused()) return
+      if (!alive || raf || (blocked() && !thumbHeldRef.current)) return
       last = performance.now()
       raf = requestAnimationFrame(tick)
     }
@@ -357,7 +467,7 @@ export default function HomeWorkStrip({
       document.removeEventListener('visibilitychange', onVisibility)
       intersection.disconnect()
     }
-  }, [applyOffset, marquee])
+  }, [applyOffset, marquee, placeTag])
 
   useLayoutEffect(() => {
     if (!marquee || !activeSlug) return
@@ -528,6 +638,7 @@ export default function HomeWorkStrip({
     if (marquee) {
       offsetRef.current = state.left + deltaX
       applyOffset()
+      placeTag()
       return
     }
     node.scrollLeft = state.left - deltaX
@@ -544,28 +655,7 @@ export default function HomeWorkStrip({
   }
 
   return (
-    <div
-      className="home-work-strip"
-      onPointerEnter={(event) => {
-        if (event.pointerType === 'touch') return
-        hoverRef.current = true
-      }}
-      onPointerLeave={(event) => {
-        if (event.pointerType === 'touch') return
-        hoverRef.current = false
-        kickRef.current()
-      }}
-      onFocusCapture={() => {
-        focusRef.current = true
-      }}
-      onBlurCapture={(event) => {
-        const next = event.relatedTarget
-        if (!(next instanceof Node) || !event.currentTarget.contains(next)) {
-          focusRef.current = false
-          kickRef.current()
-        }
-      }}
-    >
+    <div className="home-work-strip">
       <div className="home-work-strip-head">
         <p className="home-showcase-label">
           All work <span className="home-showcase-mute">{pieces.length}</span>
@@ -606,7 +696,10 @@ export default function HomeWorkStrip({
                   index={index}
                   item={item}
                   showVideo={showVideo}
+                  onFocusTag={onFocusTag}
+                  onHoverTag={onHoverTag}
                   onOpen={openPieceAction}
+                  onReleaseTag={onReleaseTag}
                 />
               ))}
             </div>
@@ -620,7 +713,10 @@ export default function HomeWorkStrip({
                     index={index}
                     item={item}
                     showVideo={showVideo}
+                    onFocusTag={onFocusTag}
+                    onHoverTag={onHoverTag}
                     onOpen={openPieceAction}
+                    onReleaseTag={onReleaseTag}
                   />
                 ))}
               </div>
@@ -629,6 +725,7 @@ export default function HomeWorkStrip({
         </div>
         <EdgeFade side="left" />
         <EdgeFade side="right" />
+        <span ref={tagRef} className="home-work-strip-tag" aria-hidden="true">{tagText}</span>
       </div>
       {openPiece ? (
         <WorkStripLightbox

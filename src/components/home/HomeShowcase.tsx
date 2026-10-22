@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import BlurImage from '@/components/media/BlurImage'
 import CroppedMedia from '@/components/media/CroppedMedia'
+import DeviceFrame from '@/components/media/DeviceFrame'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import HomeWorkStrip from '@/components/home/HomeWorkStrip'
 import {
@@ -473,6 +474,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               : previousIndex !== null && slideIndex === previousIndex
                 ? direction > 0 ? 'left' : 'right'
                 : slideIndex < index ? 'left' : 'right'
+            const crop = getShowcaseCrop(slide.slug)
             const mountVideo = reducedMotion === false && Boolean(slide.videoSrc) && (current || seen.has(slideIndex))
             const loaded = current || seen.has(slideIndex)
             const eager = current
@@ -494,22 +496,24 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 >
                   {loaded ? (
                     <span className="home-showcase-frame">
-                      <CroppedMedia className="home-showcase-shot" spec={getShowcaseCrop(slide.slug)}>
-                        {mountVideo && slide.videoSrc ? (
-                          <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />
-                        ) : null}
-                        <BlurImage
-                          className="home-showcase-still home-showcase-still-light"
-                          src={slide.imageSrc}
-                          alt={slide.imageAlt}
-                          fill
-                          sizes={showcaseImageSizes(getShowcaseCrop(slide.slug))}
-                          draggable={false}
-                          quality={slide.slug === 'rain' ? 80 : 90}
-                          fetchPriority={eager ? 'high' : 'low'}
-                          loading={eager ? 'eager' : 'lazy'}
-                        />
-                      </CroppedMedia>
+                      <DeviceFrame className="home-showcase-shot" spec={crop}>
+                        <CroppedMedia spec={crop}>
+                          {mountVideo && slide.videoSrc ? (
+                            <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />
+                          ) : null}
+                          <BlurImage
+                            className="home-showcase-still home-showcase-still-light"
+                            src={slide.imageSrc}
+                            alt={slide.imageAlt}
+                            fill
+                            sizes={showcaseImageSizes(crop)}
+                            draggable={false}
+                            quality={slide.slug === 'rain' ? 80 : 90}
+                            fetchPriority={eager ? 'high' : 'low'}
+                            loading={eager ? 'eager' : 'lazy'}
+                          />
+                        </CroppedMedia>
+                      </DeviceFrame>
                     </span>
                   ) : null}
                 </Link>

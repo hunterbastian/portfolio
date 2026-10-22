@@ -5,6 +5,7 @@ import ProjectVideo from '@/components/media/ProjectVideo'
 import { getMediaCrop } from '@/lib/media-crops'
 import CroppedMedia from '@/components/media/CroppedMedia'
 import CroppedProjectImage from '@/components/media/CroppedProjectImage'
+import DeviceFrame from '@/components/media/DeviceFrame'
 import ImageViewer from '@/components/ImageViewer'
 import ComparisonSlider from './ComparisonSlider'
 import LiquidTabs from './LiquidTabs'
@@ -107,9 +108,11 @@ export const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = (pro
   if (crop) {
     return (
       <div className="project-shot">
-        <CroppedMedia spec={crop}>
-          <video controls playsInline preload="metadata" {...props} />
-        </CroppedMedia>
+        <DeviceFrame spec={crop}>
+          <CroppedMedia spec={crop}>
+            <video controls playsInline preload="metadata" {...props} />
+          </CroppedMedia>
+        </DeviceFrame>
       </div>
     )
   }

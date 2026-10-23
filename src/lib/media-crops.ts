@@ -46,15 +46,19 @@ const SHOWCASE_PHONE_CROP: ScreenCrop = {
   h: SHOWCASE_PHONE_HEIGHT / 1600,
 }
 
-/** Screen inside the shared desktop mockup. */
+/**
+ * Website inside the shared desktop mockup.
+ * The source screen starts at y=188 and includes a Safari toolbar through y=239.
+ * The crop starts on the first content row so the laptop shows the site, not a browser.
+ */
 const SHOWCASE_WIDE_CROP: ScreenCrop = {
   x: 286 / 2400,
-  y: 188 / 1600,
+  y: 240 / 1600,
   w: 1822 / 2400,
-  h: 1224 / 1600,
+  h: 1172 / 1600,
 }
 
-const SHOWCASE_WIDE_ASPECT = 1822 / 1224
+const SHOWCASE_WIDE_ASPECT = 1822 / 1172
 
 /** Nutricost product spread. The colored header and bottles already sit at 4:3. */
 const NUTRICOST_CROP: ScreenCrop = {
@@ -186,9 +190,9 @@ export function mediaImageSizes(spec: MediaCrop, presentation: 'inline' | 'enlar
 export function showcaseImageSizes(spec: MediaCrop) {
   const factor = zoomFactor(spec)
   if (spec.shape === 'phone') {
-    return `(max-width: 820px) calc(min(34vw, 140px) * ${factor}), calc(min(18vw, 260px) * ${factor})`
+    return `(max-width: 820px) calc(min(28vw, 140px) * ${factor}), calc(min(22vw, 320px) * ${factor})`
   }
-  return `(max-width: 820px) calc(min(74vw, 340px) * ${factor}), calc(min(48vw, 720px) * ${factor})`
+  return `(max-width: 820px) calc(min(86vw, 360px) * ${factor}), calc(min(58vw, 980px) * ${factor})`
 }
 
 export function listShowcaseCropSlugs() {

@@ -37,8 +37,16 @@ test('phone slides stay tall and Nutricost stays a wide 4:3 spread', () => {
 
   assert.equal(getShowcaseCrop('rain').shape, 'wide')
   assert.equal(getShowcaseCrop('rain').crop.w, 1)
-  assert.equal(getShowcaseCrop('mentalhealth-minisite').shape, 'wide')
-  assert.equal(getShowcaseCrop('middle-earth-journey').shape, 'wide')
+
+  for (const slug of ['mentalhealth-minisite', 'middle-earth-journey']) {
+    const spec = getShowcaseCrop(slug)
+    assert.equal(spec.shape, 'wide')
+    assert.equal(spec.frame, 'laptop')
+    assert.equal(spec.crop.y, 240 / 1600)
+    assert.ok(Math.abs(spec.aspect - 1822 / 1172) < 1e-9)
+    const pixels = (spec.crop.w * 2400) / (spec.crop.h * 1600)
+    assert.ok(Math.abs(pixels - spec.aspect) < 0.001)
+  }
 })
 
 test('project mockups that need a crop resolve, and plain artwork does not', () => {

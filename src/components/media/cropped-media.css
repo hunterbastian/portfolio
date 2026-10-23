@@ -14,7 +14,7 @@
   max-height: none !important;
   margin: 0 !important;
   object-fit: cover !important;
-  object-position: center !important;
+  object-position: top center !important;
   width: calc(100% / var(--crop-w)) !important;
   height: calc(100% / var(--crop-h)) !important;
   left: calc(var(--crop-x) / var(--crop-w) * -100%) !important;

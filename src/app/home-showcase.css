@@ -279,7 +279,7 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
   z-index: 3;
   top: 0;
   bottom: 0;
-  width: clamp(40px, 18%, 168px);
+  width: clamp(16px, 3.5%, 36px);
   pointer-events: none;
 }
 

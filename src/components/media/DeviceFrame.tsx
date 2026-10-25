@@ -22,11 +22,13 @@ export default function DeviceFrame({ children, className = '', spec }: DeviceFr
         </>
       ) : null}
       <div className="device-body">
+        {spec.frame === 'laptop' ? <span className="device-camera" /> : null}
         <div className="device-screen">
           {children}
           {spec.frame === 'iphone' ? <span className="device-island" /> : null}
         </div>
       </div>
+      {spec.frame === 'laptop' ? <div className="device-base" /> : null}
     </div>
   )
 }

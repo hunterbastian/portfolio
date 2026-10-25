@@ -1,37 +1,46 @@
 import type { DeviceKind } from './media-crops.ts'
 
 /**
- * Bezel, chin, and radius are fractions of the shell width.
- * Top and side insets match, so the rim is even. A laptop chin is taller than the
- * side bezel, which is what makes the wide shell a laptop rather than a tablet.
- * Inner corner radius is the outer radius minus the side bezel.
+ * Fractions of the shell width.
+ * Phones and iPads are an even silver rim. A laptop lid is a thin dark bezel
+ * with a taller top (camera) and a wider aluminum lip underneath.
+ * Inner screen radius is the outer radius minus the side bezel.
  */
 export const DEVICE_FRAME = {
-  iphone: { bezel: 0.03, chin: 0.03, radius: 0.148 },
-  ipad: { bezel: 0.015, chin: 0.015, radius: 0.03 },
-  laptop: { bezel: 0.011, chin: 0.022, radius: 0.018 },
+  iphone: { bezel: 0.024, top: 0.024, chin: 0.024, radius: 0.125, lip: 0, base: 0 },
+  ipad: { bezel: 0.014, top: 0.014, chin: 0.014, radius: 0.028, lip: 0, base: 0 },
+  laptop: { bezel: 0.011, top: 0.02, chin: 0.01, radius: 0.016, lip: 0.02, base: 0.038 },
 } as const
 
 /** Outer shell width / height. The screen keeps its own aspect inside the bezel. */
 export function deviceShellAspect(kind: DeviceKind, screenAspect: number) {
   const frame = DEVICE_FRAME[kind]
-  return 1 / (frame.bezel + frame.chin + (1 - 2 * frame.bezel) / screenAspect)
+  const screenW = 1 - 2 * (frame.lip + frame.bezel)
+  const screenH = screenW / screenAspect
+  return 1 / (frame.top + screenH + frame.chin + frame.base)
 }
 
 /** Screen corner radius as a fraction of the screen width. */
 export function deviceInnerRadius(kind: DeviceKind) {
   const frame = DEVICE_FRAME[kind]
-  return Math.max(0, (frame.radius - frame.bezel) / (1 - 2 * frame.bezel))
+  const screenW = 1 - 2 * (frame.lip + frame.bezel)
+  return Math.max(0, (frame.radius - frame.bezel) / screenW)
 }
 
 export function deviceFrameVars(kind: DeviceKind, screenAspect: number) {
   const frame = DEVICE_FRAME[kind]
+  const shell = deviceShellAspect(kind, screenAspect)
+  const lidH = 1 / shell - frame.base
   return {
-    '--device-aspect': deviceShellAspect(kind, screenAspect),
+    '--device-aspect': shell,
     '--screen-aspect': screenAspect,
     '--bezel': frame.bezel,
+    '--top': frame.top,
     '--chin': frame.chin,
+    '--lip': frame.lip,
+    '--base': frame.base,
     '--radius': frame.radius,
     '--inner-radius': deviceInnerRadius(kind),
+    '--lid-height': lidH,
   }
 }

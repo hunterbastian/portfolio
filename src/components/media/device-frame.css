@@ -6,20 +6,16 @@
 
 .device-body {
   position: absolute;
-  inset: 0;
   overflow: hidden;
-  background: #1a1a1a;
-  border-radius: calc(var(--radius) * 100%) / calc(var(--radius) * var(--device-aspect) * 100%);
-  box-shadow: 0 16px 36px rgba(28, 28, 26, 0.12);
 }
 
 .device-screen {
   position: absolute;
   overflow: hidden;
-  left: calc(var(--bezel) * 100%);
-  right: calc(var(--bezel) * 100%);
-  top: calc(var(--bezel) * var(--device-aspect) * 100%);
-  bottom: calc(var(--chin) * var(--device-aspect) * 100%);
+  left: calc(var(--bezel) / (1 - 2 * var(--lip)) * 100%);
+  right: calc(var(--bezel) / (1 - 2 * var(--lip)) * 100%);
+  top: calc(var(--top) / var(--lid-height) * 100%);
+  bottom: calc(var(--chin) / var(--lid-height) * 100%);
   border-radius: calc(var(--inner-radius) * 100%) / calc(var(--inner-radius) * var(--screen-aspect) * 100%);
   background: #111214;
 }
@@ -34,43 +30,110 @@
   border-radius: 0;
 }
 
+.device-iphone .device-body,
+.device-ipad .device-body {
+  inset: 0;
+  background: #d7d7d3;
+  border-radius: calc(var(--radius) * 100%) / calc(var(--radius) * var(--device-aspect) * 100%);
+  box-shadow: 0 14px 30px rgba(28, 28, 26, 0.1);
+}
+
+.device-ipad .device-body {
+  background: #cfcfcb;
+}
+
+.device-laptop .device-body {
+  top: 0;
+  right: calc(var(--lip) * 100%);
+  bottom: calc(var(--base) * var(--device-aspect) * 100%);
+  left: calc(var(--lip) * 100%);
+  background: #2c2c2e;
+  border-radius:
+    calc(var(--radius) / (1 - 2 * var(--lip)) * 100%)
+    calc(var(--radius) / (1 - 2 * var(--lip)) * 100%)
+    3px
+    3px
+    /
+    calc(var(--radius) / var(--lid-height) * 100%)
+    calc(var(--radius) / var(--lid-height) * 100%)
+    3px
+    3px;
+}
+
+.device-base {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: calc(var(--base) * var(--device-aspect) * 100%);
+  border-radius: 2px 2px 10px 10px;
+  background: #d8d8d4;
+  box-shadow:
+    inset 0 1px 0 #eeebe6,
+    0 14px 30px rgba(28, 28, 26, 0.1);
+}
+
+.device-base::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 8%;
+  left: 8%;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: #bdbdb8;
+}
+
+.device-camera {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: calc(var(--top) / var(--lid-height) * 50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6d6d70;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
 .device-island {
   position: absolute;
   z-index: 5;
-  left: 32%;
-  top: 1.2%;
-  width: 36%;
-  height: 4.4%;
+  left: 36%;
+  top: 1.15%;
+  width: 28%;
+  height: 2.8%;
   border-radius: 999px;
-  background: #050505;
+  background: #161616;
   pointer-events: none;
 }
 
 .device-button {
   position: absolute;
   z-index: 2;
-  width: 0.9%;
-  border-radius: 2px;
-  background: #3a3a3a;
+  width: 0.65%;
+  border-radius: 1px;
+  background: #b7b7b2;
   pointer-events: none;
 }
 
 .device-button-silent {
-  left: -0.45%;
-  top: 14.6%;
-  height: 2.7%;
+  left: -0.32%;
+  top: 15%;
+  height: 2.4%;
 }
 
 .device-button-volume {
-  left: -0.55%;
-  top: 19.2%;
-  height: 8.4%;
+  left: -0.4%;
+  top: 19.4%;
+  height: 7.2%;
 }
 
 .device-button-power {
-  right: -0.55%;
-  top: 22.4%;
-  height: 6.6%;
+  right: -0.4%;
+  top: 22%;
+  height: 5.6%;
 }
 
 .project-shot > .device-iphone,
@@ -121,29 +184,22 @@
   container-type: size;
 }
 
-.home-showcase-frame .device-iphone {
-  width: auto;
-  height: min(86cqb, calc(42cqi / var(--device-aspect)));
-  max-width: 42cqi;
-}
-
+.home-showcase-frame .device-iphone,
 .home-showcase-frame .device-ipad,
 .home-showcase-frame .device-laptop {
-  width: min(90cqi, calc(86cqb * var(--device-aspect)));
-  height: auto;
-  max-height: 86cqb;
+  width: auto;
+  height: min(74cqb, calc(78cqi / var(--device-aspect)));
+  max-width: 78cqi;
+  max-height: 74cqb;
 }
 
 @media (max-width: 820px) {
-  .home-showcase-frame .device-iphone {
-    height: min(78cqb, calc(46cqi / var(--device-aspect)));
-    max-width: 46cqi;
-  }
-
+  .home-showcase-frame .device-iphone,
   .home-showcase-frame .device-ipad,
   .home-showcase-frame .device-laptop {
-    width: min(88cqi, calc(74cqb * var(--device-aspect)));
-    max-height: 74cqb;
+    height: min(70cqb, calc(88cqi / var(--device-aspect)));
+    max-width: 88cqi;
+    max-height: 70cqb;
   }
 
   .project-shot > .device-iphone,

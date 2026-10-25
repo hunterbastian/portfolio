@@ -27,6 +27,8 @@ test('phone slides stay tall and Nutricost stays a wide 4:3 spread', () => {
     const spec = getShowcaseCrop(slug)
     assert.equal(spec.shape, 'phone')
     assert.ok(spec.aspect < 0.7)
+    assert.ok(spec.crop.w * 2400 > 540, slug)
+    assert.ok(Math.abs(spec.aspect - (spec.crop.w * 2400) / (spec.crop.h * 1600)) < 0.001, slug)
   }
 
   const nutricost = getShowcaseCrop('nutricost')

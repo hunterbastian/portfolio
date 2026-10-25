@@ -29,22 +29,16 @@ const FULL: ScreenCrop = { x: 0, y: 0, w: 1, h: 1 }
 
 /**
  * UI inside the old 2400×1600 phone mockups.
- * The window sits inside the baked glass, below its black pill, so the bare shot has no chrome and no bars.
+ * The window is the full screen, just under the baked pill, so side controls are not cut off.
  */
-const SHOWCASE_PHONE_GLASS = { x: 920, y: 200, w: 560, h: 1202 }
-const SHOWCASE_PHONE_WIDTH = 504
-const SHOWCASE_PHONE_HEIGHT = SHOWCASE_PHONE_WIDTH / PHONE_ASPECT
-const SHOWCASE_PHONE_ISLAND_CLEARANCE = 18
 const SHOWCASE_PHONE_CROP: ScreenCrop = {
-  x: (SHOWCASE_PHONE_GLASS.x + (SHOWCASE_PHONE_GLASS.w - SHOWCASE_PHONE_WIDTH) / 2) / 2400,
-  y:
-    (SHOWCASE_PHONE_GLASS.y +
-      (SHOWCASE_PHONE_GLASS.h - SHOWCASE_PHONE_HEIGHT) / 2 +
-      SHOWCASE_PHONE_ISLAND_CLEARANCE) /
-    1600,
-  w: SHOWCASE_PHONE_WIDTH / 2400,
-  h: SHOWCASE_PHONE_HEIGHT / 1600,
+  x: 924 / 2400,
+  y: 266 / 1600,
+  w: 552 / 2400,
+  h: 1130 / 1600,
 }
+
+const SHOWCASE_PHONE_ASPECT = 552 / 1130
 
 /**
  * Website inside the shared desktop mockup.
@@ -70,7 +64,7 @@ const NUTRICOST_CROP: ScreenCrop = {
 
 const SHOWCASE_PHONE: MediaCrop = {
   crop: SHOWCASE_PHONE_CROP,
-  aspect: PHONE_ASPECT,
+  aspect: SHOWCASE_PHONE_ASPECT,
   shape: 'phone',
   frame: 'iphone',
 }

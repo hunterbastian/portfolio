@@ -23,16 +23,21 @@ test('showcase frames are the simple iPhone, iPad, and laptop shells', () => {
   }
 })
 
-test('shells use one thin rim, and a laptop chin is taller than its sides', () => {
+test('phones are a thin silver rim and laptops include an aluminum base', () => {
+  assert.equal(DEVICE_FRAME.iphone.chin, DEVICE_FRAME.iphone.bezel)
+  assert.equal(DEVICE_FRAME.iphone.base, 0)
+  assert.ok(DEVICE_FRAME.iphone.bezel < 0.03)
   assert.equal(DEVICE_FRAME.ipad.chin, DEVICE_FRAME.ipad.bezel)
-  assert.ok(DEVICE_FRAME.laptop.chin > DEVICE_FRAME.laptop.bezel * 1.6)
-  assert.ok(DEVICE_FRAME.laptop.bezel < 0.02)
-  assert.ok(DEVICE_FRAME.ipad.bezel < 0.02)
+  assert.equal(DEVICE_FRAME.ipad.base, 0)
+  assert.ok(DEVICE_FRAME.laptop.base > DEVICE_FRAME.laptop.bezel * 2)
+  assert.ok(DEVICE_FRAME.laptop.lip > 0)
+  assert.ok(DEVICE_FRAME.laptop.top > DEVICE_FRAME.laptop.bezel)
 
   for (const kind of ['iphone', 'ipad', 'laptop'] as const) {
     const frame = DEVICE_FRAME[kind]
+    const screenW = 1 - 2 * (frame.lip + frame.bezel)
     const inner = deviceInnerRadius(kind)
-    assert.ok(Math.abs(inner - (frame.radius - frame.bezel) / (1 - 2 * frame.bezel)) < 1e-9)
+    assert.ok(Math.abs(inner - (frame.radius - frame.bezel) / screenW) < 1e-9)
     assert.ok(inner > 0)
   }
 })

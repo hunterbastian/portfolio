@@ -32,9 +32,8 @@ export const HOME_GRID_PIECES: readonly HomeGridPiece[] = [
     year: '2026',
     category: 'web',
     src: '/showcase/mentalhealth-minisite.webp',
-    width: 2400,
-    height: 1600,
-    videoSrc: '/showcase/mentalhealth-minisite-loop.mp4',
+    width: 2272,
+    height: 1462,
     projectSlug: 'mentalhealth-minisite',
   }),
   piece({

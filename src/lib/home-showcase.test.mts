@@ -79,7 +79,8 @@ test('showcase slides follow the homepage order and MDX fields', () => {
   assert.equal(slides[0]?.category, 'Web Design')
   assert.equal(slides[0]?.imageSrc, '/showcase/mentalhealth-minisite.webp')
   assert.equal('darkImageSrc' in (slides[0] ?? {}), false)
-  assert.equal(slides[0]?.videoSrc, '/showcase/mentalhealth-minisite-loop.mp4')
+  assert.equal(slides[0]?.videoSrc, null)
+  assert.equal(getShowcaseVideoSrc('mentalhealth-minisite'), null)
   const rain = slides[HOME_SHOWCASE_SLUGS.indexOf('rain')]
   assert.equal(rain?.title, 'RAIN')
   assert.equal(rain?.year, '2026')

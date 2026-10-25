@@ -42,7 +42,7 @@ const SHOWCASE_PHONE_ASPECT = 552 / 1106
 
 /**
  * Website inside the shared desktop mockup, below the baked Safari bar.
- * Middle-earth fills that screen. Mental Health has wide empty page margins, so its crop is the layout.
+ * Middle-earth fills that screen.
  */
 const SHOWCASE_WIDE_CROP: ScreenCrop = {
   x: 286 / 2400,
@@ -53,14 +53,8 @@ const SHOWCASE_WIDE_CROP: ScreenCrop = {
 
 const SHOWCASE_WIDE_ASPECT = 1822 / 1172
 
-const MENTAL_HEALTH_CROP: ScreenCrop = {
-  x: 576 / 2400,
-  y: 240 / 1600,
-  w: 1280 / 2400,
-  h: 1172 / 1600,
-}
-
-const MENTAL_HEALTH_ASPECT = 1280 / 1172
+/** Top of the UVU page (header and hero). 2272×1462, the same shape as the other website slide. */
+const MENTAL_HEALTH_ASPECT = 1136 / 731
 
 /** Nutricost product spread. The colored header and bottles already sit at 4:3. */
 const NUTRICOST_CROP: ScreenCrop = {
@@ -85,7 +79,7 @@ const SHOWCASE_WIDE: MediaCrop = {
 }
 
 const MENTAL_HEALTH: MediaCrop = {
-  crop: MENTAL_HEALTH_CROP,
+  crop: FULL,
   aspect: MENTAL_HEALTH_ASPECT,
   shape: 'wide',
   frame: 'laptop',

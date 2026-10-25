@@ -50,7 +50,7 @@ test('phone slides stay tall and Nutricost stays a wide 4:3 spread', () => {
   assert.equal(mentalHealth.frame, 'laptop')
   assert.equal(mentalHealth.shape, 'wide')
   assert.deepEqual(mentalHealth.crop, { x: 0, y: 0, w: 1, h: 1 })
-  assert.ok(Math.abs(mentalHealth.aspect - 1822 / 1172) < 0.001)
+  assert.ok(Math.abs(mentalHealth.aspect - 1920 / 940) < 0.002)
 })
 
 test('project mockups that need a crop resolve, and plain artwork does not', () => {

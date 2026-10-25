@@ -53,8 +53,8 @@ const SHOWCASE_WIDE_CROP: ScreenCrop = {
 
 const SHOWCASE_WIDE_ASPECT = 1822 / 1172
 
-/** Top of the UVU page (header and hero). 2272×1462, the same shape as the other website slide. */
-const MENTAL_HEALTH_ASPECT = 1136 / 731
+/** Top of the UVU page, edge to edge. 2048×1002, the same window as RAIN. */
+const MENTAL_HEALTH_ASPECT = 1024 / 501
 
 /** Nutricost product spread. The colored header and bottles already sit at 4:3. */
 const NUTRICOST_CROP: ScreenCrop = {

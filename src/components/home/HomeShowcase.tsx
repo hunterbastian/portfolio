@@ -40,14 +40,31 @@ interface HomeShowcaseProps {
   slides: ShowcaseSlide[]
 }
 
+/** Light washes of each project's own color. Strong enough to read, still calm on #F7F7F5. */
+const SHOWCASE_TINTS: Record<string, [string, string]> = {
+  'mentalhealth-minisite': ['#f3f6f7', '#d5e0e6'],
+  lumo: ['#f6f4f1', '#ddd6ce'],
+  'middle-earth-journey': ['#f1f6f2', '#d4e3da'],
+  rain: ['#f5f3ef', '#ddd6cc'],
+  'wander-utah': ['#f7f2ee', '#e6d3c6'],
+  'porsche-app': ['#f4f4f4', '#dcdcdc'],
+  'aol-redesign': ['#f7f4ec', '#e7dcc6'],
+  nutricost: ['#eef4f7', '#cedee8'],
+}
+
 /** Web mockups get a window bar. Full-bleed shots and phones stay a plain rounded screen. */
-function ShowcaseScreen({ spec, children }: { spec: MediaCrop; children: ReactNode }) {
+function ShowcaseScreen({ spec, slug, children }: { spec: MediaCrop; slug: string; children: ReactNode }) {
   const browser = spec.frame === 'laptop' && spec.crop.w < 1
-  const style = { '--screen-aspect': spec.aspect } as CSSProperties
+  const [from, to] = SHOWCASE_TINTS[slug] ?? ['#f4f4f2', '#e8e8e6']
+  const style = {
+    '--screen-aspect': spec.aspect,
+    '--sheet-from': from,
+    '--sheet-to': to,
+  } as CSSProperties
 
   return (
-    <div className="showcase-sheet home-showcase-shot">
-      <div className={`showcase-screen${browser ? ' is-browser' : ''}`} data-shape={spec.shape} style={style}>
+    <div className="showcase-sheet home-showcase-shot" data-shape={spec.shape} style={style}>
+      <div className={`showcase-screen${browser ? ' is-browser' : ''}`} data-shape={spec.shape}>
         {browser ? (
           <div className="showcase-screen-bar" aria-hidden="true">
             <span />
@@ -516,7 +533,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 >
                   {loaded ? (
                     <span className="home-showcase-frame">
-                      <ShowcaseScreen spec={crop}>
+                      <ShowcaseScreen spec={crop} slug={slide.slug}>
                         <CroppedMedia spec={crop}>
                           {mountVideo && slide.videoSrc ? (
                             <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />

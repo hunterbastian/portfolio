@@ -35,15 +35,14 @@ const SHOWCASE_PHONE_CROP: ScreenCrop = {
   x: 924 / 2400,
   y: 266 / 1600,
   w: 552 / 2400,
-  h: 1130 / 1600,
+  h: 1106 / 1600,
 }
 
-const SHOWCASE_PHONE_ASPECT = 552 / 1130
+const SHOWCASE_PHONE_ASPECT = 552 / 1106
 
 /**
- * Website inside the shared desktop mockup.
- * The source screen starts at y=188 and includes a Safari toolbar through y=239.
- * The crop starts on the first content row so the laptop shows the site, not a browser.
+ * Website inside the shared desktop mockup, below the baked Safari bar.
+ * Middle-earth fills that screen. Mental Health has wide empty page margins, so its crop is the layout.
  */
 const SHOWCASE_WIDE_CROP: ScreenCrop = {
   x: 286 / 2400,
@@ -53,6 +52,15 @@ const SHOWCASE_WIDE_CROP: ScreenCrop = {
 }
 
 const SHOWCASE_WIDE_ASPECT = 1822 / 1172
+
+const MENTAL_HEALTH_CROP: ScreenCrop = {
+  x: 576 / 2400,
+  y: 240 / 1600,
+  w: 1280 / 2400,
+  h: 1172 / 1600,
+}
+
+const MENTAL_HEALTH_ASPECT = 1280 / 1172
 
 /** Nutricost product spread. The colored header and bottles already sit at 4:3. */
 const NUTRICOST_CROP: ScreenCrop = {
@@ -72,6 +80,13 @@ const SHOWCASE_PHONE: MediaCrop = {
 const SHOWCASE_WIDE: MediaCrop = {
   crop: SHOWCASE_WIDE_CROP,
   aspect: SHOWCASE_WIDE_ASPECT,
+  shape: 'wide',
+  frame: 'laptop',
+}
+
+const MENTAL_HEALTH: MediaCrop = {
+  crop: MENTAL_HEALTH_CROP,
+  aspect: MENTAL_HEALTH_ASPECT,
   shape: 'wide',
   frame: 'laptop',
 }
@@ -132,7 +147,7 @@ const RAIN_PHONE: MediaCrop = {
 
 const SHOWCASE_CROPS: Record<string, MediaCrop> = {
   rain: RAIN,
-  'mentalhealth-minisite': SHOWCASE_WIDE,
+  'mentalhealth-minisite': MENTAL_HEALTH,
   lumo: SHOWCASE_PHONE,
   'middle-earth-journey': SHOWCASE_WIDE,
   'wander-utah': SHOWCASE_PHONE,
@@ -184,9 +199,9 @@ export function mediaImageSizes(spec: MediaCrop, presentation: 'inline' | 'enlar
 export function showcaseImageSizes(spec: MediaCrop) {
   const factor = zoomFactor(spec)
   if (spec.shape === 'phone') {
-    return `(max-width: 820px) calc(min(28vw, 140px) * ${factor}), calc(min(22vw, 320px) * ${factor})`
+    return `(max-width: 820px) calc(min(46vw, 200px) * ${factor}), calc(min(32vw, 480px) * ${factor})`
   }
-  return `(max-width: 820px) calc(min(86vw, 360px) * ${factor}), calc(min(58vw, 980px) * ${factor})`
+  return `(max-width: 820px) calc(min(96vw, 480px) * ${factor}), calc(min(72vw, 1400px) * ${factor})`
 }
 
 export function listShowcaseCropSlugs() {

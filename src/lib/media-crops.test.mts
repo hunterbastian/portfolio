@@ -28,6 +28,7 @@ test('phone slides stay tall and Nutricost stays a wide 4:3 spread', () => {
     assert.equal(spec.shape, 'phone')
     assert.ok(spec.aspect < 0.7)
     assert.ok(spec.crop.w * 2400 > 540, slug)
+    assert.ok(spec.crop.y * 1600 + spec.crop.h * 1600 < 1380, slug)
     assert.ok(Math.abs(spec.aspect - (spec.crop.w * 2400) / (spec.crop.h * 1600)) < 0.001, slug)
   }
 
@@ -40,15 +41,18 @@ test('phone slides stay tall and Nutricost stays a wide 4:3 spread', () => {
   assert.equal(getShowcaseCrop('rain').shape, 'wide')
   assert.equal(getShowcaseCrop('rain').crop.w, 1)
 
-  for (const slug of ['mentalhealth-minisite', 'middle-earth-journey']) {
-    const spec = getShowcaseCrop(slug)
-    assert.equal(spec.shape, 'wide')
-    assert.equal(spec.frame, 'laptop')
-    assert.equal(spec.crop.y, 240 / 1600)
-    assert.ok(Math.abs(spec.aspect - 1822 / 1172) < 1e-9)
-    const pixels = (spec.crop.w * 2400) / (spec.crop.h * 1600)
-    assert.ok(Math.abs(pixels - spec.aspect) < 0.001)
-  }
+  const middleEarth = getShowcaseCrop('middle-earth-journey')
+  assert.equal(middleEarth.frame, 'laptop')
+  assert.equal(middleEarth.crop.y, 240 / 1600)
+  assert.ok(Math.abs(middleEarth.aspect - 1822 / 1172) < 1e-9)
+
+  const mentalHealth = getShowcaseCrop('mentalhealth-minisite')
+  assert.equal(mentalHealth.frame, 'laptop')
+  assert.equal(mentalHealth.crop.y, 240 / 1600)
+  assert.ok(mentalHealth.crop.w < 1822 / 2400)
+  assert.ok(Math.abs(mentalHealth.aspect - 1280 / 1172) < 1e-9)
+  const mentalPixels = (mentalHealth.crop.w * 2400) / (mentalHealth.crop.h * 1600)
+  assert.ok(Math.abs(mentalPixels - mentalHealth.aspect) < 0.001)
 })
 
 test('project mockups that need a crop resolve, and plain artwork does not', () => {

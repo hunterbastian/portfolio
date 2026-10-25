@@ -1,10 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import BlurImage from '@/components/media/BlurImage'
 import CroppedMedia from '@/components/media/CroppedMedia'
-import DeviceFrame from '@/components/media/DeviceFrame'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import HomeWorkStrip from '@/components/home/HomeWorkStrip'
 import {
@@ -29,7 +28,7 @@ import {
   isShowcaseProjectHash,
   withoutHomeViewParam,
 } from '@/lib/home-grid'
-import { getShowcaseCrop, showcaseImageSizes } from '@/lib/media-crops'
+import { getShowcaseCrop, showcaseImageSizes, type MediaCrop } from '@/lib/media-crops'
 import { siteConfig } from '@/lib/site'
 
 const endeavors = getShowcaseEndeavors()
@@ -39,6 +38,16 @@ const bio = getShowcaseBioParts()
 interface HomeShowcaseProps {
   className?: string
   slides: ShowcaseSlide[]
+}
+
+/** The screenshot itself, on the page. No card, tint, or device frame. */
+function ShowcaseShot({ spec, children }: { spec: MediaCrop; children: ReactNode }) {
+  const style = { '--shot-aspect': spec.aspect } as CSSProperties
+  return (
+    <div className="showcase-shot home-showcase-shot" data-shape={spec.shape} style={style}>
+      {children}
+    </div>
+  )
 }
 
 function usePrefersReducedMotion() {
@@ -367,7 +376,10 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const caption = active ? getShowcaseCaption(index, count, active) : null
 
   return (
-    <div className={className ? `home-showcase ${className}` : 'home-showcase'} data-ready={ready ? 'true' : undefined}>
+    <div
+      className={className ? `home-showcase ${className}` : 'home-showcase'}
+      data-ready={ready ? 'true' : undefined}
+    >
       <aside className="home-showcase-aside">
         <div className="home-showcase-identity">
           <h1>{siteConfig.personName}</h1>
@@ -496,7 +508,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 >
                   {loaded ? (
                     <span className="home-showcase-frame">
-                      <DeviceFrame className="home-showcase-shot" spec={crop}>
+                      <ShowcaseShot spec={crop}>
                         <CroppedMedia spec={crop}>
                           {mountVideo && slide.videoSrc ? (
                             <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />
@@ -513,7 +525,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                             loading={eager ? 'eager' : 'lazy'}
                           />
                         </CroppedMedia>
-                      </DeviceFrame>
+                      </ShowcaseShot>
                     </span>
                   ) : null}
                 </Link>

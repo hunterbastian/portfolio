@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { deviceShellAspect } from '@/lib/device-frames'
+import { deviceFrameVars } from '@/lib/device-frames'
 import type { MediaCrop } from '@/lib/media-crops'
 import './device-frame.css'
 
@@ -10,10 +10,7 @@ interface DeviceFrameProps {
 }
 
 export default function DeviceFrame({ children, className = '', spec }: DeviceFrameProps) {
-  const style = {
-    '--device-aspect': deviceShellAspect(spec.frame, spec.aspect),
-    '--screen-aspect': spec.aspect,
-  } as CSSProperties
+  const style = deviceFrameVars(spec.frame, spec.aspect) as CSSProperties
 
   return (
     <div className={`device device-${spec.frame} ${className}`.trim()} data-frame={spec.frame} style={style}>
@@ -25,11 +22,13 @@ export default function DeviceFrame({ children, className = '', spec }: DeviceFr
         </>
       ) : null}
       <div className="device-body">
+        {spec.frame === 'laptop' ? <span className="device-camera" /> : null}
         <div className="device-screen">
           {children}
           {spec.frame === 'iphone' ? <span className="device-island" /> : null}
         </div>
       </div>
+      {spec.frame === 'laptop' ? <div className="device-base" /> : null}
     </div>
   )
 }

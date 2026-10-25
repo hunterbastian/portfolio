@@ -27,7 +27,6 @@ const SHOWCASE_MEDIA_DIRECTORY = '/showcase'
 
 const SHOWCASE_VIDEO_SLUGS = new Set<string>([
   'rain',
-  'mentalhealth-minisite',
   'middle-earth-journey',
   'nutricost',
   'porsche-app',

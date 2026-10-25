@@ -6,13 +6,17 @@
 
 .device-body {
   position: absolute;
-  inset: 0;
   overflow: hidden;
 }
 
 .device-screen {
   position: absolute;
   overflow: hidden;
+  left: calc(var(--bezel) / (1 - 2 * var(--lip)) * 100%);
+  right: calc(var(--bezel) / (1 - 2 * var(--lip)) * 100%);
+  top: calc(var(--top) / var(--lid-height) * 100%);
+  bottom: calc(var(--chin) / var(--lid-height) * 100%);
+  border-radius: calc(var(--inner-radius) * 100%) / calc(var(--inner-radius) * var(--screen-aspect) * 100%);
   background: #111214;
 }
 
@@ -26,127 +30,110 @@
   border-radius: 0;
 }
 
-.device-screen::after {
-  content: "";
-  position: absolute;
-  z-index: 4;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(118deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 14%, transparent 32%),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent 10%);
-}
-
 .device-iphone .device-body,
 .device-ipad .device-body {
-  background: #0c0c0c;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.72),
-    0 0 0 2px #b7b7b1,
-    0 0 0 3px #6f6f6b,
-    0 18px 36px rgba(28, 28, 26, 0.16),
-    0 2px 8px rgba(28, 28, 26, 0.08);
-}
-
-.device-iphone .device-body {
-  border-radius: 12.4% / calc(12.4% * var(--device-aspect));
-}
-
-.device-iphone .device-screen {
-  left: 2.6%;
-  right: 2.6%;
-  top: calc(2.6% * var(--device-aspect));
-  bottom: calc(2.6% * var(--device-aspect));
-  border-radius: 10.2% / calc(10.2% * var(--screen-aspect));
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.45);
+  inset: 0;
+  background: #d7d7d3;
+  border-radius: calc(var(--radius) * 100%) / calc(var(--radius) * var(--device-aspect) * 100%);
+  box-shadow: 0 14px 30px rgba(28, 28, 26, 0.1);
 }
 
 .device-ipad .device-body {
-  border-radius: 4.6% / calc(4.6% * var(--device-aspect));
-}
-
-.device-ipad .device-screen {
-  left: 2%;
-  right: 2%;
-  top: calc(2% * var(--device-aspect));
-  bottom: calc(2% * var(--device-aspect));
-  border-radius: 3.2% / calc(3.2% * var(--screen-aspect));
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+  background: #cfcfcb;
 }
 
 .device-laptop .device-body {
-  background: #141414;
-  border-radius: 3.6% / calc(3.6% * var(--device-aspect));
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.78),
-    0 0 0 3px #c5c5bf,
-    0 0 0 4px #7a7a76,
-    0 18px 40px rgba(28, 28, 26, 0.16),
-    0 2px 8px rgba(28, 28, 26, 0.08);
+  top: 0;
+  right: calc(var(--lip) * 100%);
+  bottom: calc(var(--base) * var(--device-aspect) * 100%);
+  left: calc(var(--lip) * 100%);
+  background: #2c2c2e;
+  border-radius:
+    calc(var(--radius) / (1 - 2 * var(--lip)) * 100%)
+    calc(var(--radius) / (1 - 2 * var(--lip)) * 100%)
+    3px
+    3px
+    /
+    calc(var(--radius) / var(--lid-height) * 100%)
+    calc(var(--radius) / var(--lid-height) * 100%)
+    3px
+    3px;
 }
 
-.device-laptop .device-screen {
-  left: 1.6%;
-  right: 1.6%;
-  top: calc(1.6% * var(--device-aspect));
-  bottom: calc(1.6% * var(--device-aspect) * 2.35);
-  border-radius: 1.8% / calc(1.8% * var(--screen-aspect));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+.device-base {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: calc(var(--base) * var(--device-aspect) * 100%);
+  border-radius: 2px 2px 10px 10px;
+  background: #d8d8d4;
+  box-shadow:
+    inset 0 1px 0 #eeebe6,
+    0 14px 30px rgba(28, 28, 26, 0.1);
+}
+
+.device-base::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 8%;
+  left: 8%;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: #bdbdb8;
+}
+
+.device-camera {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: calc(var(--top) / var(--lid-height) * 50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6d6d70;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .device-island {
   position: absolute;
   z-index: 5;
-  left: 31%;
+  left: 36%;
   top: 1.15%;
-  width: 38%;
-  height: 4.7%;
+  width: 28%;
+  height: 2.8%;
   border-radius: 999px;
-  background: #050505;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 1px 1px rgba(0, 0, 0, 0.35);
+  background: #161616;
   pointer-events: none;
-}
-
-.device-island::before {
-  content: "";
-  position: absolute;
-  top: 22%;
-  right: 14%;
-  width: 16%;
-  height: 56%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 36%, #3a3a40 0%, #16161a 42%, #050506 70%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
 .device-button {
   position: absolute;
   z-index: 2;
-  width: 1.05%;
-  border-radius: 2px;
-  background: linear-gradient(90deg, #7e7e7a, #d8d8d2 46%, #8f8f8a);
-  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.28);
+  width: 0.65%;
+  border-radius: 1px;
+  background: #b7b7b2;
   pointer-events: none;
 }
 
 .device-button-silent {
-  left: -0.55%;
-  top: 14.6%;
-  height: 2.7%;
+  left: -0.32%;
+  top: 15%;
+  height: 2.4%;
 }
 
 .device-button-volume {
-  left: -0.7%;
-  top: 19.2%;
-  height: 8.4%;
+  left: -0.4%;
+  top: 19.4%;
+  height: 7.2%;
 }
 
 .device-button-power {
-  right: -0.7%;
-  top: 22.4%;
-  height: 6.6%;
+  right: -0.4%;
+  top: 22%;
+  height: 5.6%;
 }
 
 .project-shot > .device-iphone,
@@ -193,29 +180,26 @@
   max-height: none;
 }
 
-.home-showcase-frame .device-iphone {
-  width: auto;
-  height: 84%;
-  max-width: 70%;
+.home-showcase-frame {
+  container-type: size;
 }
 
+.home-showcase-frame .device-iphone,
 .home-showcase-frame .device-ipad,
 .home-showcase-frame .device-laptop {
-  width: min(74%, 680px);
-  height: auto;
-  max-height: 84%;
+  width: auto;
+  height: min(74cqb, calc(78cqi / var(--device-aspect)));
+  max-width: 78cqi;
+  max-height: 74cqb;
 }
 
 @media (max-width: 820px) {
-  .home-showcase-frame .device-iphone {
-    height: 76%;
-    max-width: 58%;
-  }
-
+  .home-showcase-frame .device-iphone,
   .home-showcase-frame .device-ipad,
   .home-showcase-frame .device-laptop {
-    width: min(88%, 340px);
-    max-height: 70%;
+    height: min(70cqb, calc(88cqi / var(--device-aspect)));
+    max-width: 88cqi;
+    max-height: 70cqb;
   }
 
   .project-shot > .device-iphone,

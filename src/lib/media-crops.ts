@@ -29,32 +29,32 @@ const FULL: ScreenCrop = { x: 0, y: 0, w: 1, h: 1 }
 
 /**
  * UI inside the old 2400×1600 phone mockups.
- * The window sits inside the baked glass, below its black pill, so the bare shot has no chrome and no bars.
+ * The window is the full screen, just under the baked pill, so side controls are not cut off.
  */
-const SHOWCASE_PHONE_GLASS = { x: 920, y: 200, w: 560, h: 1202 }
-const SHOWCASE_PHONE_WIDTH = 504
-const SHOWCASE_PHONE_HEIGHT = SHOWCASE_PHONE_WIDTH / PHONE_ASPECT
-const SHOWCASE_PHONE_ISLAND_CLEARANCE = 18
 const SHOWCASE_PHONE_CROP: ScreenCrop = {
-  x: (SHOWCASE_PHONE_GLASS.x + (SHOWCASE_PHONE_GLASS.w - SHOWCASE_PHONE_WIDTH) / 2) / 2400,
-  y:
-    (SHOWCASE_PHONE_GLASS.y +
-      (SHOWCASE_PHONE_GLASS.h - SHOWCASE_PHONE_HEIGHT) / 2 +
-      SHOWCASE_PHONE_ISLAND_CLEARANCE) /
-    1600,
-  w: SHOWCASE_PHONE_WIDTH / 2400,
-  h: SHOWCASE_PHONE_HEIGHT / 1600,
+  x: 924 / 2400,
+  y: 266 / 1600,
+  w: 552 / 2400,
+  h: 1106 / 1600,
 }
 
-/** Screen inside the shared desktop mockup. */
+const SHOWCASE_PHONE_ASPECT = 552 / 1106
+
+/**
+ * Website inside the shared desktop mockup, below the baked Safari bar.
+ * Middle-earth fills that screen.
+ */
 const SHOWCASE_WIDE_CROP: ScreenCrop = {
   x: 286 / 2400,
-  y: 188 / 1600,
+  y: 240 / 1600,
   w: 1822 / 2400,
-  h: 1224 / 1600,
+  h: 1172 / 1600,
 }
 
-const SHOWCASE_WIDE_ASPECT = 1822 / 1224
+const SHOWCASE_WIDE_ASPECT = 1822 / 1172
+
+/** Top of the UVU page (header and hero). 2272×1462, the same shape as the other website slide. */
+const MENTAL_HEALTH_ASPECT = 1136 / 731
 
 /** Nutricost product spread. The colored header and bottles already sit at 4:3. */
 const NUTRICOST_CROP: ScreenCrop = {
@@ -66,7 +66,7 @@ const NUTRICOST_CROP: ScreenCrop = {
 
 const SHOWCASE_PHONE: MediaCrop = {
   crop: SHOWCASE_PHONE_CROP,
-  aspect: PHONE_ASPECT,
+  aspect: SHOWCASE_PHONE_ASPECT,
   shape: 'phone',
   frame: 'iphone',
 }
@@ -74,6 +74,13 @@ const SHOWCASE_PHONE: MediaCrop = {
 const SHOWCASE_WIDE: MediaCrop = {
   crop: SHOWCASE_WIDE_CROP,
   aspect: SHOWCASE_WIDE_ASPECT,
+  shape: 'wide',
+  frame: 'laptop',
+}
+
+const MENTAL_HEALTH: MediaCrop = {
+  crop: FULL,
+  aspect: MENTAL_HEALTH_ASPECT,
   shape: 'wide',
   frame: 'laptop',
 }
@@ -134,7 +141,7 @@ const RAIN_PHONE: MediaCrop = {
 
 const SHOWCASE_CROPS: Record<string, MediaCrop> = {
   rain: RAIN,
-  'mentalhealth-minisite': SHOWCASE_WIDE,
+  'mentalhealth-minisite': MENTAL_HEALTH,
   lumo: SHOWCASE_PHONE,
   'middle-earth-journey': SHOWCASE_WIDE,
   'wander-utah': SHOWCASE_PHONE,
@@ -186,9 +193,9 @@ export function mediaImageSizes(spec: MediaCrop, presentation: 'inline' | 'enlar
 export function showcaseImageSizes(spec: MediaCrop) {
   const factor = zoomFactor(spec)
   if (spec.shape === 'phone') {
-    return `(max-width: 820px) calc(min(34vw, 140px) * ${factor}), calc(min(18vw, 260px) * ${factor})`
+    return `(max-width: 820px) calc(min(46vw, 200px) * ${factor}), calc(min(32vw, 480px) * ${factor})`
   }
-  return `(max-width: 820px) calc(min(74vw, 340px) * ${factor}), calc(min(48vw, 720px) * ${factor})`
+  return `(max-width: 820px) calc(min(96vw, 480px) * ${factor}), calc(min(72vw, 1400px) * ${factor})`
 }
 
 export function listShowcaseCropSlugs() {

@@ -1,10 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import BlurImage from '@/components/media/BlurImage'
 import CroppedMedia from '@/components/media/CroppedMedia'
-import DeviceFrame from '@/components/media/DeviceFrame'
 import EmailCopyLink from '@/components/showcase/EmailCopyLink'
 import HomeWorkStrip from '@/components/home/HomeWorkStrip'
 import {
@@ -29,7 +28,7 @@ import {
   isShowcaseProjectHash,
   withoutHomeViewParam,
 } from '@/lib/home-grid'
-import { getShowcaseCrop, showcaseImageSizes } from '@/lib/media-crops'
+import { getShowcaseCrop, showcaseImageSizes, type MediaCrop } from '@/lib/media-crops'
 import { siteConfig } from '@/lib/site'
 
 const endeavors = getShowcaseEndeavors()
@@ -39,6 +38,27 @@ const bio = getShowcaseBioParts()
 interface HomeShowcaseProps {
   className?: string
   slides: ShowcaseSlide[]
+}
+
+/** Web mockups get a window bar. Full-bleed shots and phones stay a plain rounded screen. */
+function ShowcaseScreen({ spec, children }: { spec: MediaCrop; children: ReactNode }) {
+  const browser = spec.frame === 'laptop' && spec.crop.w < 1
+  const style = { '--screen-aspect': spec.aspect } as CSSProperties
+
+  return (
+    <div className="showcase-sheet home-showcase-shot">
+      <div className={`showcase-screen${browser ? ' is-browser' : ''}`} data-shape={spec.shape} style={style}>
+        {browser ? (
+          <div className="showcase-screen-bar" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+        ) : null}
+        <div className="showcase-screen-view">{children}</div>
+      </div>
+    </div>
+  )
 }
 
 function usePrefersReducedMotion() {
@@ -496,7 +516,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 >
                   {loaded ? (
                     <span className="home-showcase-frame">
-                      <DeviceFrame className="home-showcase-shot" spec={crop}>
+                      <ShowcaseScreen spec={crop}>
                         <CroppedMedia spec={crop}>
                           {mountVideo && slide.videoSrc ? (
                             <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />
@@ -513,7 +533,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                             loading={eager ? 'eager' : 'lazy'}
                           />
                         </CroppedMedia>
-                      </DeviceFrame>
+                      </ShowcaseScreen>
                     </span>
                   ) : null}
                 </Link>

@@ -457,6 +457,131 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
   }
 }
 
+/* Preview variants. ?frame=a|b|c. The default card is unchanged. */
+.showcase-device {
+  position: relative;
+  filter:
+    drop-shadow(0 18px 28px rgba(28, 28, 26, 0.16))
+    drop-shadow(0 2px 4px rgba(28, 28, 26, 0.08));
+}
+
+.showcase-device[data-device='iphone'] {
+  height: min(94cqb, 620px);
+  aspect-ratio: 900 / 1848;
+}
+
+.showcase-device[data-device='laptop'] {
+  width: min(94cqi, calc(86cqb * 1.383));
+  aspect-ratio: 1400 / 1012;
+}
+
+.showcase-device-screen {
+  position: absolute;
+  overflow: hidden;
+  background: #111;
+}
+
+.showcase-device[data-device='iphone'] .showcase-device-screen {
+  left: 3.43%;
+  top: 2.37%;
+  width: 93%;
+  height: 95.2%;
+  border-radius: 12% / 6%;
+}
+
+.showcase-device[data-device='laptop'] .showcase-device-screen {
+  left: 3.29%;
+  top: 9.68%;
+  width: 93.14%;
+  height: 77.67%;
+  border-radius: 1.4% / 2.3%;
+}
+
+.home-showcase-slide .showcase-device-bezel {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  background: transparent;
+  pointer-events: none;
+  user-select: none;
+}
+
+.home-showcase[data-frame] .home-showcase-panel::before,
+.home-showcase[data-frame] .home-showcase-panel::after {
+  content: none;
+}
+
+.showcase-device-screen > .cropped-media,
+.showcase-bleed-screen > .cropped-media,
+.showcase-plain > .cropped-media,
+.showcase-bleed:not(.is-phone) > .cropped-media {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100cqi, calc(var(--shot-aspect) * 100cqb));
+  max-width: none;
+  height: auto;
+  aspect-ratio: var(--shot-aspect);
+  border-radius: 0;
+  transform: translate(-50%, -50%);
+}
+
+.showcase-bleed {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #111;
+  container-type: size;
+}
+
+.showcase-bleed.is-phone {
+  background: #e6e4e0;
+}
+
+.showcase-bleed-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: min(86cqb, calc(42cqi / var(--shot-aspect)));
+  aspect-ratio: var(--shot-aspect);
+  overflow: hidden;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(28, 28, 26, 0.08);
+  transform: translate(-50%, -50%);
+  container-type: size;
+}
+
+.showcase-plain {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(28, 28, 26, 0.08),
+    0 18px 40px rgba(28, 28, 26, 0.05);
+}
+
+.showcase-plain[data-shape='phone'] {
+  height: min(64cqb, 420px);
+  aspect-ratio: var(--shot-aspect);
+}
+
+.showcase-plain[data-shape='wide'] {
+  width: min(72cqi, 560px);
+  aspect-ratio: var(--shot-aspect);
+}
+
+.showcase-plain,
+.showcase-device-screen,
+.showcase-bleed-screen {
+  container-type: size;
+}
+
 .home-showcase-slide img,
 .home-showcase-slide video {
   position: absolute;

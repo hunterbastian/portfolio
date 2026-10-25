@@ -16,6 +16,7 @@ import {
   getShowcaseCaption,
   getShowcaseChrome,
   getShowcaseEndeavors,
+  getShowcaseFrame,
   getShowcaseHash,
   getShowcaseKeyboardAction,
   getShowcaseLinks,
@@ -74,6 +75,45 @@ function ShowcaseScreen({ spec, slug, children }: { spec: MediaCrop; slug: strin
         ) : null}
         <div className="showcase-screen-view">{children}</div>
       </div>
+    </div>
+  )
+}
+
+function FrameVariant({
+  variant,
+  spec,
+  children,
+}: {
+  variant: 'a' | 'b' | 'c'
+  spec: MediaCrop
+  children: ReactNode
+}) {
+  const style = { '--shot-aspect': spec.aspect } as CSSProperties
+  if (variant === 'a') {
+    const device = spec.shape === 'phone' ? 'iphone' : 'laptop'
+    return (
+      <div className="showcase-device" data-device={device}>
+        <div className="showcase-device-screen">{children}</div>
+        {/* The hole in this PNG is measured in percentages. Keep the file unoptimized. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="showcase-device-bezel"
+          alt=""
+          src={device === 'iphone' ? '/frames/iphone.png' : '/frames/laptop.png'}
+        />
+      </div>
+    )
+  }
+  if (variant === 'b') {
+    return (
+      <div className={`showcase-bleed${spec.shape === 'phone' ? ' is-phone' : ''}`} style={style}>
+        {spec.shape === 'phone' ? <div className="showcase-bleed-screen">{children}</div> : children}
+      </div>
+    )
+  }
+  return (
+    <div className="showcase-plain" data-shape={spec.shape} style={style}>
+      {children}
     </div>
   )
 }
@@ -222,6 +262,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const [panelVisible, setPanelVisible] = useState(true)
   const reducedMotion = usePrefersReducedMotion()
   const lightboxOpenRef = useRef(false)
+  const [frame, setFrame] = useState(getShowcaseFrame(''))
 
   const markSeen = useCallback((nextIndex: number) => {
     setSeen((current) => {
@@ -277,6 +318,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   useLayoutEffect(() => {
     applyHomeShowcaseChrome()
 
+    setFrame(getShowcaseFrame(window.location.search))
     const nextIndex = getHomeShowcaseIndex(window.location.hash, HOME_SHOWCASE_SLUGS)
     if (nextIndex !== indexRef.current) {
       indexRef.current = nextIndex
@@ -404,7 +446,11 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const caption = active ? getShowcaseCaption(index, count, active) : null
 
   return (
-    <div className={className ? `home-showcase ${className}` : 'home-showcase'} data-ready={ready ? 'true' : undefined}>
+    <div
+      className={className ? `home-showcase ${className}` : 'home-showcase'}
+      data-frame={frame === 'current' ? undefined : frame}
+      data-ready={ready ? 'true' : undefined}
+    >
       <aside className="home-showcase-aside">
         <div className="home-showcase-identity">
           <h1>{siteConfig.personName}</h1>
@@ -533,6 +579,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                 >
                   {loaded ? (
                     <span className="home-showcase-frame">
+                      {frame === 'current' ? (
                       <ShowcaseScreen spec={crop} slug={slide.slug}>
                         <CroppedMedia spec={crop}>
                           {mountVideo && slide.videoSrc ? (
@@ -551,6 +598,26 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                           />
                         </CroppedMedia>
                       </ShowcaseScreen>
+                      ) : (
+                      <FrameVariant variant={frame} spec={crop}>
+                        <CroppedMedia spec={crop}>
+                          {mountVideo && slide.videoSrc ? (
+                            <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />
+                          ) : null}
+                          <BlurImage
+                            className="home-showcase-still home-showcase-still-light"
+                            src={slide.imageSrc}
+                            alt={slide.imageAlt}
+                            fill
+                            sizes={showcaseImageSizes(crop)}
+                            draggable={false}
+                            quality={slide.slug === 'rain' ? 80 : 90}
+                            fetchPriority={eager ? 'high' : 'low'}
+                            loading={eager ? 'eager' : 'lazy'}
+                          />
+                        </CroppedMedia>
+                      </FrameVariant>
+                      )}
                     </span>
                   ) : null}
                 </Link>

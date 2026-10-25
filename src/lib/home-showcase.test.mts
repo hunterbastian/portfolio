@@ -12,6 +12,7 @@ import {
   getShowcaseCaption,
   getShowcaseChrome,
   getShowcaseEndeavors,
+  getShowcaseFrame,
   getShowcaseHash,
   getShowcaseIndexFromHash,
   getShowcaseKeyboardAction,
@@ -24,6 +25,14 @@ import {
   HOME_SHOWCASE_CANVAS,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
 } from './home-showcase.ts'
+
+test('frame query selects a preview variant and otherwise stays on the current card', () => {
+  assert.equal(getShowcaseFrame(''), 'current')
+  assert.equal(getShowcaseFrame('?frame=a'), 'a')
+  assert.equal(getShowcaseFrame('?frame=b'), 'b')
+  assert.equal(getShowcaseFrame('?frame=c'), 'c')
+  assert.equal(getShowcaseFrame('?frame=nope'), 'current')
+})
 
 test('showcase slides follow the homepage order and MDX fields', () => {
   const slides = buildShowcaseSlides([

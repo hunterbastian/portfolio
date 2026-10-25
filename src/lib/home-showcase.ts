@@ -161,6 +161,15 @@ export function getShowcaseHash(index: number) {
   return `#${index + 1}`
 }
 
+export type ShowcaseFrame = 'current' | 'a' | 'b' | 'c'
+
+/** Preview-only. Missing or unknown values keep the current card treatment. */
+export function getShowcaseFrame(search: string): ShowcaseFrame {
+  const value = new URLSearchParams(search).get('frame')
+  if (value === 'a' || value === 'b' || value === 'c') return value
+  return 'current'
+}
+
 export const HOME_SHOWCASE_SLIDE_DRIFT_PX = 8
 export const HOME_SHOWCASE_SLIDE_DURATION_MS = 250
 export const HOME_SHOWCASE_SLIDE_EASING = 'cubic-bezier(0.22, 1, 0.36, 1)'

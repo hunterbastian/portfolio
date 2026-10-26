@@ -154,9 +154,15 @@ test('endeavors and links reuse the existing site URLs', () => {
   assert.equal(links[2]?.copyOnClick, true)
   assert.equal(links[3]?.href, contactSocialLinks.find((link) => link.label === 'LinkedIn')?.href)
   assert.equal(links[4]?.href, contactSocialLinks.find((link) => link.label === 'GitHub')?.href)
-  assert.equal(getShowcaseBio(), `${siteConfig.siteDescription} ${SHOWCASE_WEBSITE_PROJECT_LINE}`)
-  assert.equal(getShowcaseBio().includes('open to product design roles'), true)
-  assert.equal(getShowcaseBio().includes('from first sketch to shipped code'), false)
+  const bio = getShowcaseBio()
+  const previousWords = `${siteConfig.siteDescription} ${SHOWCASE_WEBSITE_PROJECT_LINE}`.split(/\s+/).length
+  assert.equal(
+    bio,
+    'I design calm digital products. Interaction design at UVU, based in Lehi. Also taking website projects for small brands and studios.',
+  )
+  assert.ok(bio.split(/\s+/).length * 2 <= previousWords + 2)
+  assert.match(bio, /website projects for small brands and studios/)
+  assert.equal(bio.includes('from first sketch to shipped code'), false)
   assert.equal(siteConfig.siteDescription.includes(SHOWCASE_WEBSITE_PROJECT_LINE), false)
 })
 
@@ -196,7 +202,7 @@ test('showcase travel direction follows the click, including wrap', () => {
   assert.equal(getShowcaseTravelDirection(0, 6, 7), -1)
 })
 
-test('showcase slide motion drifts from the visible slide and does not restart a partial fade', () => {
+test('showcase slide motion crossfades from the visible slide and does not restart a partial fade', () => {
   const forward = planShowcaseSlideMotion({
     direction: 1,
     nextIndex: 1,
@@ -206,10 +212,12 @@ test('showcase slide motion drifts from the visible slide and does not restart a
     transforms: ['none', 'none', 'none'],
   })
   assert.equal(forward?.source, 0)
-  assert.equal(forward?.duration, 250)
-  assert.equal(forward?.easing, 'cubic-bezier(0.22, 1, 0.36, 1)')
-  assert.equal(forward?.exit[1]?.transform, 'translate3d(-8px, 0, 0)')
-  assert.equal(forward?.enter[0]?.transform, 'translate3d(8px, 0, 0)')
+  assert.equal(forward?.duration, 600)
+  assert.equal(forward?.easing, 'cubic-bezier(0.4, 0, 0.2, 1)')
+  assert.equal(forward?.exit[1]?.transform, 'translate3d(0px, 0, 0)')
+  assert.equal(forward?.enter[0]?.transform, 'translate3d(0px, 0, 0)')
+  assert.equal(forward?.exit[0]?.opacity, 1)
+  assert.equal(forward?.enter[1]?.opacity, 1)
   assert.deepEqual(forward?.departures, [])
   assert.deepEqual(forward?.hidden, [2])
 
@@ -221,8 +229,8 @@ test('showcase slide motion drifts from the visible slide and does not restart a
     reduced: false,
     transforms: ['none', 'none'],
   })
-  assert.equal(backward?.exit[1]?.transform, 'translate3d(8px, 0, 0)')
-  assert.equal(backward?.enter[0]?.transform, 'translate3d(-8px, 0, 0)')
+  assert.equal(backward?.exit[1]?.transform, 'translate3d(0px, 0, 0)')
+  assert.equal(backward?.enter[0]?.transform, 'translate3d(0px, 0, 0)')
 
   const interrupted = planShowcaseSlideMotion({
     direction: 1,
@@ -235,7 +243,7 @@ test('showcase slide motion drifts from the visible slide and does not restart a
   assert.equal(interrupted?.source, 0)
   assert.equal(interrupted?.exit[0]?.transform, 'matrix(1, 0, 0, 1, -2, 0)')
   assert.equal(interrupted?.exit[0]?.opacity, 0.7)
-  assert.equal(interrupted?.enter[0]?.transform, 'translate3d(8px, 0, 0)')
+  assert.equal(interrupted?.enter[0]?.transform, 'translate3d(0px, 0, 0)')
   assert.deepEqual(interrupted?.hidden, [])
   assert.equal(interrupted?.departures.length, 1)
   assert.equal(interrupted?.departures[0]?.index, 1)

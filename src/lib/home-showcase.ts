@@ -160,9 +160,9 @@ export function getShowcaseHash(index: number) {
   return `#${index + 1}`
 }
 
-export const HOME_SHOWCASE_SLIDE_DRIFT_PX = 8
-export const HOME_SHOWCASE_SLIDE_DURATION_MS = 250
-export const HOME_SHOWCASE_SLIDE_EASING = 'cubic-bezier(0.22, 1, 0.36, 1)'
+export const HOME_SHOWCASE_SLIDE_DRIFT_PX = 0
+export const HOME_SHOWCASE_SLIDE_DURATION_MS = 600
+export const HOME_SHOWCASE_SLIDE_EASING = 'cubic-bezier(0.4, 0, 0.2, 1)'
 
 /** Forward travel exits left. Backward travel, including the wrap from the first slide, exits right. */
 export function getShowcaseTravelDirection(current: number, next: number, count: number): 1 | -1 {
@@ -208,11 +208,10 @@ function showcaseDrift(px: number) {
 }
 
 /**
- * Crossfade from the captured on-screen styles. A hidden incoming slide starts
- * one drift away; a slide that is already partly visible keeps its current
- * transform so a second click does not snap it back to the start. Other slides
- * that are still visible fade out from that captured frame instead of popping
- * to zero.
+ * Opacity crossfade from the captured on-screen styles. A slide that is already
+ * partly visible keeps its current transform so a second click does not snap it.
+ * Other slides that are still visible fade out from that captured frame.
+ * Reduced motion swaps with no duration.
  */
 export function planShowcaseSlideMotion(input: {
   direction: 1 | -1
@@ -302,16 +301,21 @@ export function formatDenverClock(date: Date) {
   return `${value('hour')}:${value('minute')}:${value('second')} ${value('timeZoneName')}`
 }
 
+const SHOWCASE_BIO_LEAD = 'I design calm digital products.'
+
+const SHOWCASE_BIO_REST =
+  'Interaction design at UVU, based in Lehi. Also taking website projects for small brands and studios.'
+
 export function getShowcaseBioParts() {
   return {
-    body: siteConfig.siteDescription,
-    hire: SHOWCASE_WEBSITE_PROJECT_LINE,
+    lead: SHOWCASE_BIO_LEAD,
+    rest: SHOWCASE_BIO_REST,
   }
 }
 
 export function getShowcaseBio() {
   const parts = getShowcaseBioParts()
-  return `${parts.body} ${parts.hire}`
+  return `${parts.lead} ${parts.rest}`
 }
 
 export function getShowcaseEndeavors(): ShowcaseEndeavor[] {

@@ -382,9 +382,10 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     >
       <aside className="home-showcase-aside">
         <div className="home-showcase-identity">
+          <p className="home-showcase-mark" aria-hidden="true">hb</p>
           <h1>{siteConfig.personName}</h1>
-          <p>{HOME_SHOWCASE_ROLE}</p>
-          <p className="home-showcase-place">
+          <p className="home-showcase-mute">{HOME_SHOWCASE_ROLE}</p>
+          <p className="home-showcase-place home-showcase-mute">
             <span>{HOME_SHOWCASE_LOCATION}</span>
             <DenverClock />
           </p>
@@ -557,10 +558,10 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               ))}
             </div>
             <div className="home-showcase-controls">
-              <button type="button" className="home-showcase-pill" aria-label="Previous project" onClick={() => go(indexRef.current - 1)}>
+              <button type="button" className="home-showcase-control" aria-label="Previous project" onClick={() => go(indexRef.current - 1)}>
                 Prev
               </button>
-              <button type="button" className="home-showcase-pill is-primary" aria-label="Next project" onClick={() => go(indexRef.current + 1)}>
+              <button type="button" className="home-showcase-control is-next" aria-label="Next project" onClick={() => go(indexRef.current + 1)}>
                 Next
               </button>
             </div>

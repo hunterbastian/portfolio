@@ -192,7 +192,13 @@ html[data-home-showcase] .home-showcase *::after {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 16px;
+  gap: 4px 10px;
+}
+
+@media (min-width: 821px) {
+  .home-showcase-links {
+    flex-wrap: nowrap;
+  }
 }
 
 .home-showcase-pill {
@@ -240,7 +246,7 @@ html[data-home-showcase] .home-showcase .home-showcase-text-link {
   background: none;
   color: var(--showcase-mute);
   font-variant-caps: all-small-caps;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-decoration: none;
   text-transform: none !important;
   white-space: nowrap;

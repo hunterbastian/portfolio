@@ -150,9 +150,12 @@ html[data-home-showcase] .home-showcase *::after {
 }
 
 .home-showcase-bio {
-  display: grid;
-  gap: 8px;
   max-width: 280px;
+  line-height: 1.6;
+}
+
+.home-showcase-bio-rest {
+  color: var(--showcase-mute);
 }
 
 .home-showcase-label {
@@ -188,7 +191,8 @@ html[data-home-showcase] .home-showcase *::after {
 .home-showcase-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  gap: 4px 16px;
 }
 
 .home-showcase-pill {
@@ -225,6 +229,31 @@ html[data-home-showcase] .home-showcase *::after {
 .home-showcase-pill.is-primary:hover {
   background: #2a2a2a;
   color: var(--showcase-bg);
+}
+
+html[data-home-showcase] .home-showcase .home-showcase-text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--showcase-mute);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: none !important;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html[data-home-showcase] .home-showcase .home-showcase-text-link:hover {
+  color: var(--showcase-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.28em;
+  text-decoration-thickness: 1px;
+  filter: none;
 }
 
 .home-showcase-arrow {

@@ -392,8 +392,11 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
 
         <div className="home-showcase-bottom">
           <div className="home-showcase-bio">
-            <p>{bio.body}</p>
-            <p>{bio.hire}</p>
+            <p>
+              <span className="home-showcase-bio-lead">{bio.lead}</span>
+              {' '}
+              <span className="home-showcase-bio-rest">{bio.rest}</span>
+            </p>
           </div>
           <div className="home-showcase-endeavors">
             <ul className="home-showcase-list">
@@ -415,7 +418,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
           <div className="home-showcase-actions">
             <nav className="home-showcase-links" aria-label="Contact">
               {links.map((item) => {
-                const pill = item.primary ? 'home-showcase-pill is-primary' : 'home-showcase-pill'
+                const pill = item.primary ? 'home-showcase-pill is-primary' : 'home-showcase-text-link'
                 if (item.copyOnClick) {
                   return (
                     <EmailCopyLink key={item.label} className={pill} href={item.href}>

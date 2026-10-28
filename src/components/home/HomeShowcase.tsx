@@ -569,7 +569,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                             fill
                             sizes="(max-width: 820px) 86vw, 520px"
                             draggable={false}
-                            quality={90}
+                            unoptimized
                             fetchPriority={eager ? 'high' : 'low'}
                             loading={eager ? 'eager' : 'lazy'}
                           />

@@ -121,6 +121,7 @@ export const IMAGE_BLUR_DATA = {
   "/showcase/middle-earth-journey.webp": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAsABUB8JZwAAuQiAFUGAAD+yji/O4msMCIEJq4seK0oEN/3I1giY98xwN3jnh6Ht6dwItreAAAA",
   "/showcase/nutricost.webp": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACQAQCdASoQAAsABUB8JZQAAqo3NQAA/u/XOdNjj5r9qPEUJKzu7LZCiEbRWPHwABAAAA==",
   "/showcase/porsche-app.webp": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAACwAQCdASoQAAsABUB8JaQAAsf0pqoAAP7v1HH+s3hhxItYzfzlBIu7zRelTZ7752yFEAAA",
+  "/showcase/rain-spec.webp": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoLABAABUB8JaQAAudV6gxAAAD+15qa8AJbW4KlB0UIyJCe45u4AxaqULsaf4crBctioyZ+PbgAAA==",
   "/showcase/rain.webp": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAABwAQCdASoQAAgABUB8JZwAAVs2AAD6MbEEIFmHfMJHJYQUAAA=",
   "/showcase/wander-utah.webp": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAsABUB8JaQAAsf2AxQAAP7v15pa/5F3D8fXKLuzvb5N7oAAAA==",
 } as const

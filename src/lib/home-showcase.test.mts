@@ -20,6 +20,8 @@ import {
   getShowcaseWebsiteProjectHref,
   SHOWCASE_WEBSITE_PROJECT_LINE,
   getShowcaseVideoSrc,
+  RAIN_POSTER_REVEAL_MS,
+  RAIN_SPEC_POSTER_SRC,
   planShowcaseSlideMotion,
   HOME_SHOWCASE_CANVAS,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
@@ -88,6 +90,8 @@ test('showcase slides follow the homepage order and MDX fields', () => {
   assert.equal(rain?.imageSrc, '/showcase/rain.webp')
   assert.equal(rain?.videoSrc, '/showcase/rain-loop.mp4')
   assert.equal(getShowcaseVideoSrc('rain'), '/showcase/rain-loop.mp4')
+  assert.equal(RAIN_SPEC_POSTER_SRC, '/showcase/rain-spec.webp')
+  assert.equal(RAIN_POSTER_REVEAL_MS, 2200)
   assert.equal(slides.at(-1)?.category, 'Graphic')
   assert.equal(slides.at(-1)?.videoSrc, '/showcase/nutricost-loop.mp4')
   assert.equal(getShowcaseVideoSrc('lumo'), null)

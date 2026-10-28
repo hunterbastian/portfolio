@@ -21,6 +21,9 @@ import {
   getShowcaseLinks,
   getShowcaseTravelDirection,
   planShowcaseSlideMotion,
+  RAIN_POSTER_REVEAL_MS,
+  RAIN_SPEC_POSTER_ASPECT,
+  RAIN_SPEC_POSTER_SRC,
   type ShowcaseSlide,
 } from '@/lib/home-showcase'
 import {
@@ -41,13 +44,21 @@ interface HomeShowcaseProps {
 }
 
 /** The screenshot itself, on the page. No card, tint, or device frame. */
-function ShowcaseShot({ spec, children }: { spec: MediaCrop; children: ReactNode }) {
+function ShowcaseShot({ className, spec, children }: { className?: string; spec: MediaCrop; children: ReactNode }) {
   const style = { '--shot-aspect': spec.aspect } as CSSProperties
+  const classes = className ? `showcase-shot home-showcase-shot ${className}` : 'showcase-shot home-showcase-shot'
   return (
-    <div className="showcase-shot home-showcase-shot" data-shape={spec.shape} style={style}>
+    <div className={classes} data-shape={spec.shape} style={style}>
       {children}
     </div>
   )
+}
+
+const RAIN_SPEC_CROP: MediaCrop = {
+  crop: { x: 0, y: 0, w: 1, h: 1 },
+  aspect: RAIN_SPEC_POSTER_ASPECT,
+  shape: 'wide',
+  frame: 'laptop',
 }
 
 function usePrefersReducedMotion() {
@@ -192,6 +203,8 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const suppressClick = useRef(false)
   const [panelVisible, setPanelVisible] = useState(true)
+  const [rainBeat, setRainBeat] = useState<'trailer' | 'poster'>('trailer')
+  const rainChoice = useRef<'trailer' | 'poster' | null>(null)
   const reducedMotion = usePrefersReducedMotion()
   const lightboxOpenRef = useRef(false)
 
@@ -372,8 +385,55 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    if (slides[index]?.slug !== 'rain') return
+    if (rainChoice.current) {
+      setRainBeat(rainChoice.current)
+      return
+    }
+    setRainBeat('trailer')
+    if (reducedMotion === null) return
+
+    let hold = 0
+    let fallback = 0
+    let video: HTMLVideoElement | null = null
+    const showPoster = () => {
+      if (!rainChoice.current) setRainBeat('poster')
+    }
+    const clearTimers = () => {
+      window.clearTimeout(hold)
+      window.clearTimeout(fallback)
+      video?.removeEventListener('playing', onPlaying)
+    }
+    const holdThenShow = () => {
+      window.clearTimeout(fallback)
+      window.clearTimeout(hold)
+      hold = window.setTimeout(showPoster, RAIN_POSTER_REVEAL_MS)
+    }
+    function onPlaying() {
+      holdThenShow()
+    }
+
+    if (reducedMotion) {
+      hold = window.setTimeout(showPoster, 1400)
+      return clearTimers
+    }
+
+    video = panelRef.current?.querySelector('.home-showcase-slide[data-pos="current"] video') ?? null
+    fallback = window.setTimeout(showPoster, RAIN_POSTER_REVEAL_MS + 6000)
+    if (video && !video.paused && video.getAttribute('data-ready') === 'true') holdThenShow()
+    else video?.addEventListener('playing', onPlaying)
+    return clearTimers
+  }, [index, reducedMotion, slides])
+
+  const chooseRainBeat = (beat: 'trailer' | 'poster') => {
+    rainChoice.current = beat
+    setRainBeat(beat)
+  }
+
   const active = slides[index]
   const caption = active ? getShowcaseCaption(index, count, active) : null
+  const rainPosterBeat = active?.slug === 'rain' && rainBeat === 'poster'
 
   return (
     <div
@@ -451,7 +511,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
       <section className="home-showcase-stage" aria-label="Work">
         <div
           ref={panelRef}
-          className="home-showcase-panel"
+          className={rainPosterBeat ? 'home-showcase-panel is-rain-poster' : 'home-showcase-panel'}
           aria-roledescription="carousel"
           aria-label="Selected work"
           onTouchStart={(event) => {
@@ -507,11 +567,11 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                   aria-label={`Open ${slide.title}`}
                 >
                   {loaded ? (
-                    <span className="home-showcase-frame">
-                      <ShowcaseShot spec={crop}>
+                    <span className={slide.slug === 'rain' ? 'home-showcase-frame is-beat' : 'home-showcase-frame'}>
+                      <ShowcaseShot spec={crop} className={slide.slug === 'rain' && rainBeat === 'poster' ? 'is-back' : undefined}>
                         <CroppedMedia spec={crop}>
                           {mountVideo && slide.videoSrc ? (
-                            <ShowcaseSlideVideo active={current && panelVisible} src={slide.videoSrc} />
+                            <ShowcaseSlideVideo active={current && panelVisible && !(slide.slug === 'rain' && rainBeat === 'poster')} src={slide.videoSrc} />
                           ) : null}
                           <BlurImage
                             className="home-showcase-still home-showcase-still-light"
@@ -526,6 +586,21 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                           />
                         </CroppedMedia>
                       </ShowcaseShot>
+                      {slide.slug === 'rain' ? (
+                        <ShowcaseShot spec={RAIN_SPEC_CROP} className={rainBeat === 'poster' ? 'home-showcase-spec' : 'home-showcase-spec is-back'}>
+                          <BlurImage
+                            className="home-showcase-still home-showcase-still-light"
+                            src={RAIN_SPEC_POSTER_SRC}
+                            alt=""
+                            fill
+                            sizes="(max-width: 820px) 86vw, 520px"
+                            draggable={false}
+                            unoptimized
+                            fetchPriority={eager ? 'high' : 'low'}
+                            loading={eager ? 'eager' : 'lazy'}
+                          />
+                        </ShowcaseShot>
+                      ) : null}
                     </span>
                   ) : null}
                 </Link>
@@ -541,6 +616,16 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
               {caption?.lead}
               <span className="home-showcase-mute"> · {caption?.tag}</span>
             </p>
+            {active.slug === 'rain' ? (
+              <div className="home-showcase-beats" role="group" aria-label="RAIN media">
+                <button type="button" aria-pressed={rainBeat === 'trailer'} onClick={() => chooseRainBeat('trailer')}>
+                  Trailer
+                </button>
+                <button type="button" aria-pressed={rainBeat === 'poster'} onClick={() => chooseRainBeat('poster')}>
+                  Poster
+                </button>
+              </div>
+            ) : null}
             <div className="home-showcase-dots" role="group" aria-label="Choose a project">
               {slides.map((slide, slideIndex) => (
                 <button

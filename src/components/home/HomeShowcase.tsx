@@ -393,11 +393,37 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     }
     setRainBeat('trailer')
     if (reducedMotion === null) return
-    const delay = reducedMotion ? 1400 : RAIN_POSTER_REVEAL_MS
-    const timer = window.setTimeout(() => {
+
+    let hold = 0
+    let fallback = 0
+    let video: HTMLVideoElement | null = null
+    const showPoster = () => {
       if (!rainChoice.current) setRainBeat('poster')
-    }, delay)
-    return () => window.clearTimeout(timer)
+    }
+    const clearTimers = () => {
+      window.clearTimeout(hold)
+      window.clearTimeout(fallback)
+      video?.removeEventListener('playing', onPlaying)
+    }
+    const holdThenShow = () => {
+      window.clearTimeout(fallback)
+      window.clearTimeout(hold)
+      hold = window.setTimeout(showPoster, RAIN_POSTER_REVEAL_MS)
+    }
+    function onPlaying() {
+      holdThenShow()
+    }
+
+    if (reducedMotion) {
+      hold = window.setTimeout(showPoster, 1400)
+      return clearTimers
+    }
+
+    video = panelRef.current?.querySelector('.home-showcase-slide[data-pos="current"] video') ?? null
+    fallback = window.setTimeout(showPoster, RAIN_POSTER_REVEAL_MS + 6000)
+    if (video && !video.paused && video.getAttribute('data-ready') === 'true') holdThenShow()
+    else video?.addEventListener('playing', onPlaying)
+    return clearTimers
   }, [index, reducedMotion, slides])
 
   const chooseRainBeat = (beat: 'trailer' | 'poster') => {
@@ -545,7 +571,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
                       <ShowcaseShot spec={crop} className={slide.slug === 'rain' && rainBeat === 'poster' ? 'is-back' : undefined}>
                         <CroppedMedia spec={crop}>
                           {mountVideo && slide.videoSrc ? (
-                            <ShowcaseSlideVideo active={current && panelVisible && rainBeat !== 'poster'} src={slide.videoSrc} />
+                            <ShowcaseSlideVideo active={current && panelVisible && !(slide.slug === 'rain' && rainBeat === 'poster')} src={slide.videoSrc} />
                           ) : null}
                           <BlurImage
                             className="home-showcase-still home-showcase-still-light"

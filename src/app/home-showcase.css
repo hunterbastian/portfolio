@@ -259,6 +259,7 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
   min-width: 0;
   flex-direction: column;
   gap: 24px;
+  container-type: inline-size;
 }
 
 .home-showcase-panel {
@@ -488,6 +489,25 @@ html[data-not-found-showcase] .not-found-showcase .home-showcase-arrow {
   color: var(--showcase-ink);
   text-decoration: underline;
   text-underline-offset: 0.28em;
+}
+
+@container (max-width: 640px) {
+  .home-showcase-bar:has(.home-showcase-beats) {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .home-showcase-bar:has(.home-showcase-beats) .home-showcase-caption {
+    flex: 1 1 100%;
+  }
+
+  .home-showcase-bar:has(.home-showcase-beats) .home-showcase-dots {
+    display: none;
+  }
+
+  .home-showcase-bar:has(.home-showcase-beats) .home-showcase-controls {
+    margin-left: auto;
+  }
 }
 
 .home-showcase-dots {

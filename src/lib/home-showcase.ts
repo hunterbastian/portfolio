@@ -111,7 +111,7 @@ export function getShowcaseVideoSrc(slug: string) {
 /** Spec poster shown after the RAIN trailer, still inside slide 4. */
 export const RAIN_SPEC_POSTER_SRC = `${SHOWCASE_MEDIA_DIRECTORY}/rain-spec.webp`
 export const RAIN_SPEC_POSTER_ASPECT = 1588 / 2246
-/** Hold the trailer, then reveal the poster. Arrows still leave the slide. */
+/** Hold the playing trailer, then reveal the poster. Arrows still leave the slide. */
 export const RAIN_POSTER_REVEAL_MS = 2200
 
 export function getShowcaseCategoryLabel(category: string) {

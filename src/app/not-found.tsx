@@ -36,7 +36,7 @@ function applyNotFoundChrome() {
   try {
     localStorage.removeItem(HOME_SHOWCASE_THEME_STORAGE_KEY)
   } catch {
-    // Private browsing can reject storage. The page still stays dark.
+    // Private browsing can reject storage. The page still stays light.
   }
 }
 

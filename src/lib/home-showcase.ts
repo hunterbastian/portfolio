@@ -15,13 +15,12 @@ export const HOME_SHOWCASE_SLUGS = [
   'nutricost',
 ] as const
 
-export const HOME_SHOWCASE_CANVAS = '#0E0E0D'
-export const HOME_SHOWCASE_INK = '#EDEBE6'
-export const HOME_SHOWCASE_MUTED = '#8F8D88'
+export const HOME_SHOWCASE_CANVAS = '#F7F7F5'
+export const HOME_SHOWCASE_INK = '#0A0A0A'
 export const HOME_SHOWCASE_TIME_ZONE = 'America/Denver'
 export const HOME_SHOWCASE_ROLE = 'Product Designer'
 export const HOME_SHOWCASE_LOCATION = 'Lehi, Utah'
-/** Old theme override. The site is dark-only and clears this key. */
+/** Old theme override. The site is light-only and clears this key. */
 export const HOME_SHOWCASE_THEME_STORAGE_KEY = 'hb-showcase-theme'
 
 const SHOWCASE_MEDIA_DIRECTORY = '/showcase'
@@ -99,8 +98,8 @@ export function getShowcaseImageSrc(slug: string) {
 export function getShowcaseChrome(): ShowcaseChrome {
   return {
     canvas: HOME_SHOWCASE_CANVAS,
-    colorScheme: 'dark',
-    statusBar: 'black',
+    colorScheme: 'light',
+    statusBar: 'default',
   }
 }
 

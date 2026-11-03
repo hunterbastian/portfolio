@@ -173,7 +173,7 @@ function applyHomeShowcaseChrome() {
   try {
     localStorage.removeItem(HOME_SHOWCASE_THEME_STORAGE_KEY)
   } catch {
-    // Private browsing can reject storage. The page still stays dark.
+    // Private browsing can reject storage. The page still stays light.
   }
 }
 
@@ -442,7 +442,7 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
     >
       <aside className="home-showcase-aside">
         <div className="home-showcase-identity">
-          <h1 className="home-showcase-name">{siteConfig.personName}</h1>
+          <h1>{siteConfig.personName}</h1>
           <p>{HOME_SHOWCASE_ROLE}</p>
           <p className="home-showcase-place">
             <span>{HOME_SHOWCASE_LOCATION}</span>
@@ -610,28 +610,12 @@ export default function HomeShowcase({ className, slides }: HomeShowcaseProps) {
           <div className="home-showcase-veil" aria-hidden="true" />
         </div>
 
-        {active && caption ? (
+        {active ? (
           <div className="home-showcase-bar">
-            <p className="sr-only" aria-live="polite">
-              {caption.lead} · {caption.tag}
+            <p className="home-showcase-caption" aria-live="polite">
+              {caption?.lead}
+              <span className="home-showcase-mute"> · {caption?.tag}</span>
             </p>
-            <div className="home-showcase-caption-stack">
-              {slides.map((slide, slideIndex) => (
-                <p
-                  key={slide.slug}
-                  className="home-showcase-caption"
-                  data-current={slideIndex === index ? 'true' : 'false'}
-                  aria-hidden="true"
-                >
-                  {slideIndex + 1} of {count}
-                  {' — '}
-                  <span className="home-showcase-caption-title">{slide.title}</span>
-                  {', '}
-                  {slide.year}
-                  <span className="home-showcase-mute"> · {getShowcaseCaption(slideIndex, count, slide).tag}</span>
-                </p>
-              ))}
-            </div>
             {active.slug === 'rain' ? (
               <div className="home-showcase-beats" role="group" aria-label="RAIN media">
                 <button type="button" aria-pressed={rainBeat === 'trailer'} onClick={() => chooseRainBeat('trailer')}>

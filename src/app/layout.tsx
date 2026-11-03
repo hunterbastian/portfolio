@@ -59,7 +59,7 @@ export const viewport = {
 
 const faviconVersion = siteConfig.faviconVersion
 const homeShowcaseSlugs = JSON.stringify([...HOME_SHOWCASE_SLUGS])
-const homeShowcaseBoot = `try{localStorage.removeItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")}catch(e){}function hbDark(extra){document.documentElement.dataset.homeShowcase="true";if(extra)document.documentElement.dataset[extra]="true";var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute("content","${HOME_SHOWCASE_CANVAS}");var s=document.querySelector('meta[name="color-scheme"]');if(s)s.setAttribute("content","dark");var a=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(a)a.setAttribute("content","black");}if(location.pathname==="/"){hbDark();var slugs=${homeShowcaseSlugs};var raw=(location.hash||"").trim();var hm=/^#(\\d+)$/.exec(raw);var hi=0;if(hm){var sn=+hm[1];hi=sn>=1?Math.min(sn,slugs.length)-1:0}else if(raw.charAt(0)==="#"){var slug=raw.slice(1).toLowerCase();for(var i=0;i<slugs.length;i++){if(slugs[i]===slug){hi=i;break}}}if(hi>0){var pl=document.createElement("link");pl.rel="preload";pl.as="image";pl.href="/showcase/"+slugs[hi]+".webp";pl.setAttribute("fetchpriority","high");document.head.appendChild(pl);}}if(location.pathname==="/playground"){hbDark("playgroundShowcase");}if(location.pathname==="/cv"){hbDark("cvShowcase");}var np=(location.pathname||"/").replace(/\\/+$/,"")||"/";var known=np==="/"||np==="/playground"||np==="/cv"||np==="/about"||np==="/archive"||np==="/logo"||np.indexOf("/projects/")===0||np.indexOf("/tools/")===0;if(!known){hbDark("notFoundShowcase");}`
+const homeShowcaseBoot = `try{localStorage.removeItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")}catch(e){}function hbLight(extra){document.documentElement.dataset.homeShowcase="true";if(extra)document.documentElement.dataset[extra]="true";var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute("content","${HOME_SHOWCASE_CANVAS}");var s=document.querySelector('meta[name="color-scheme"]');if(s)s.setAttribute("content","light");var a=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');if(a)a.setAttribute("content","default");}if(location.pathname==="/"){hbLight();var slugs=${homeShowcaseSlugs};var raw=(location.hash||"").trim();var hm=/^#(\\d+)$/.exec(raw);var hi=0;if(hm){var sn=+hm[1];hi=sn>=1?Math.min(sn,slugs.length)-1:0}else if(raw.charAt(0)==="#"){var slug=raw.slice(1).toLowerCase();for(var i=0;i<slugs.length;i++){if(slugs[i]===slug){hi=i;break}}}if(hi>0){var pl=document.createElement("link");pl.rel="preload";pl.as="image";pl.href="/showcase/"+slugs[hi]+".webp";pl.setAttribute("fetchpriority","high");document.head.appendChild(pl);}}if(location.pathname==="/playground"){hbLight("playgroundShowcase");}if(location.pathname==="/cv"){hbLight("cvShowcase");}var np=(location.pathname||"/").replace(/\\/+$/,"")||"/";var known=np==="/"||np==="/playground"||np==="/cv"||np==="/about"||np==="/archive"||np==="/logo"||np.indexOf("/projects/")===0||np.indexOf("/tools/")===0;if(!known){hbLight("notFoundShowcase");}`
 
 export const metadata = getSiteMetadata()
 
@@ -75,7 +75,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href={`/manifest.json?v=${faviconVersion}`} />
         <meta name="theme-color" content={HOME_SHOWCASE_CANVAS} suppressHydrationWarning />
-        <meta name="color-scheme" content="dark" suppressHydrationWarning />
+        <meta name="color-scheme" content="light" suppressHydrationWarning />
 
         {telemetryConfig.enableGa && telemetryConfig.gaId && (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
@@ -91,7 +91,7 @@ export default function RootLayout({
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" suppressHydrationWarning />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" suppressHydrationWarning />
         <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
         <script
           dangerouslySetInnerHTML={{
@@ -109,7 +109,7 @@ export default function RootLayout({
         
         {/* Critical CSS + selection highlight (static strings, no user input) */}
         <style dangerouslySetInnerHTML={{
-          __html: `html:root{color-scheme:dark;background-color:${HOME_SHOWCASE_CANVAS};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${HOME_SHOWCASE_CANVAS});line-height:1.5}html[data-home-showcase],html[data-home-showcase] body{color-scheme:dark;background-color:${HOME_SHOWCASE_CANVAS}!important}html[data-home-showcase] body{color:${HOME_SHOWCASE_INK}!important}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}::-moz-selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}`
+          __html: `html:root{color-scheme:light;background-color:${HOME_SHOWCASE_CANVAS};scrollbar-gutter:stable}body{margin:0;background-color:var(--background,${HOME_SHOWCASE_CANVAS});line-height:1.5}html[data-home-showcase],html[data-home-showcase] body{color-scheme:light;background-color:${HOME_SHOWCASE_CANVAS}!important}html[data-home-showcase] body{color:${HOME_SHOWCASE_INK}!important}.hero-section{min-height:0}.hero-section h1{line-height:1.2}::selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}::-moz-selection{background-color:rgba(169,193,255,.25)!important;color:inherit!important}`
         }} />
       </head>
       <body

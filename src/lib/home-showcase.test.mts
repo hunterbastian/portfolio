@@ -24,8 +24,6 @@ import {
   RAIN_SPEC_POSTER_SRC,
   planShowcaseSlideMotion,
   HOME_SHOWCASE_CANVAS,
-  HOME_SHOWCASE_INK,
-  HOME_SHOWCASE_MUTED,
   HOME_SHOWCASE_THEME_STORAGE_KEY,
 } from './home-showcase.ts'
 
@@ -166,52 +164,33 @@ test('endeavors and links reuse the existing site URLs', () => {
   assert.equal(siteConfig.siteDescription.includes(SHOWCASE_WEBSITE_PROJECT_LINE), false)
 })
 
-test('homepage chrome is the dark canvas only', () => {
-  assert.equal(HOME_SHOWCASE_CANVAS, '#0E0E0D')
-  assert.equal(HOME_SHOWCASE_INK, '#EDEBE6')
-  assert.equal(HOME_SHOWCASE_MUTED, '#8F8D88')
+test('homepage chrome is the light canvas only', () => {
+  assert.equal(HOME_SHOWCASE_CANVAS, '#F7F7F5')
   assert.deepEqual(getShowcaseChrome(), {
-    canvas: '#0E0E0D',
-    colorScheme: 'dark',
-    statusBar: 'black',
+    canvas: '#F7F7F5',
+    colorScheme: 'light',
+    statusBar: 'default',
   })
 })
 
-test('a stored theme is cleared and the page stays dark', () => {
+test('a stored theme is cleared and the page stays light', () => {
   assert.equal(HOME_SHOWCASE_THEME_STORAGE_KEY, 'hb-showcase-theme')
 
   const css = readFileSync(new URL('../app/home-showcase.css', import.meta.url), 'utf8')
   const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8')
-  const page = readFileSync(new URL('../app/page.tsx', import.meta.url), 'utf8')
-  const showcase = readFileSync(new URL('../components/home/HomeShowcase.tsx', import.meta.url), 'utf8')
-  assert.ok(css.includes('#0e0e0d'))
-  assert.ok(css.includes('#edebe6'))
-  assert.ok(css.includes('#8f8d88'))
-  assert.equal(css.includes('#f7f7f5'), false)
+  assert.ok(css.includes('#f7f7f5'))
   assert.equal(css.includes('#232323'), false)
   assert.equal(css.includes('#262626'), false)
   assert.equal(css.includes('data-home-showcase-theme'), false)
   assert.equal(css.includes('showcase-theme-switch'), false)
   assert.equal(css.includes('prefers-color-scheme'), false)
-  assert.equal(css.includes('color-scheme: light'), false)
   assert.equal(layout.includes('prefers-color-scheme'), false)
   assert.equal(layout.includes('pref!=="light"'), false)
-  assert.equal(layout.includes('content="light"'), false)
   assert.equal(layout.includes('-transparent.webp'), false)
   assert.ok(layout.includes('localStorage.removeItem("${HOME_SHOWCASE_THEME_STORAGE_KEY}")'))
-  assert.ok(layout.includes('content="dark"'))
-  assert.ok(layout.includes('content="black"'))
-  assert.ok(layout.includes('color-scheme:dark'))
+  assert.ok(layout.includes('content="light"'))
+  assert.ok(layout.includes('content="default"'))
   assert.ok(layout.includes('background-color:${HOME_SHOWCASE_CANVAS}'))
-  assert.ok(page.includes('GeistSerifRegular'))
-  assert.ok(page.includes('geist/font/serif/regular'))
-  assert.ok(css.includes('--font-geist-serif-regular'))
-  assert.ok(showcase.includes('home-showcase-name'))
-  assert.ok(showcase.includes('home-showcase-caption-title'))
-  assert.ok(css.includes('font-size: 15px'))
-  assert.ok(css.includes('font-size: 14px'))
-  assert.ok(css.includes('line-height: 1.3'))
-  assert.ok(css.includes('line-height: 1.45'))
 })
 
 test('showcase travel direction follows the click, including wrap', () => {

@@ -1,3 +1,4 @@
+import { GeistSerifRegular } from 'geist/font/serif/regular'
 import { Inter } from 'next/font/google'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import HomeShowcase from '@/components/home/HomeShowcase'
@@ -36,7 +37,7 @@ export default function HomePage() {
 
   return (
     <ErrorBoundary>
-      <HomeShowcase className={showcaseFont.className} slides={slides} />
+      <HomeShowcase className={`${showcaseFont.className} ${GeistSerifRegular.variable}`} slides={slides} />
     </ErrorBoundary>
   )
 }

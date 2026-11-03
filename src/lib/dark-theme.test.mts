@@ -2,13 +2,14 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 
-test('portfolio keeps the archive skin and paints the document chrome light', () => {
+test('portfolio keeps the archive skin and paints the document chrome dark', () => {
  const layout = readFileSync('src/app/layout.tsx', 'utf8')
  assert.match(layout, /import '\.\/dark-theme.css'/)
  assert.match(layout, /name="theme-color" content=\{HOME_SHOWCASE_CANVAS\}/)
- assert.match(layout, /name="color-scheme" content="light"/)
- assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="default"/)
- assert.doesNotMatch(layout, /name="color-scheme" content="dark"/)
+ assert.match(layout, /name="color-scheme" content="dark"/)
+ assert.match(layout, /name="apple-mobile-web-app-status-bar-style" content="black"/)
+ assert.doesNotMatch(layout, /name="color-scheme" content="light"/)
+ assert.doesNotMatch(layout, /prefers-color-scheme/)
  assert.doesNotMatch(layout, /35,\s*131,\s*226|#2383E2/i)
  const css = readFileSync('src/app/dark-theme.css', 'utf8')
  assert.match(css, /color-scheme: dark/)

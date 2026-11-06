@@ -7,6 +7,7 @@ import './home-editorial.css'
 import './home-showcase.css'
 import './loading.css'
 import './cards.css'
+import DocumentShell from '@/components/DocumentShell'
 import LoadingIndicator from '@/components/LoadingIndicator'
 import Footer from '@/components/Footer'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
@@ -119,6 +120,7 @@ export default function RootLayout({
           backgroundColor: 'var(--background)',
         }}
       >
+        <DocumentShell />
         <div className="site-intro-loader" aria-hidden="true">
           <LoadingIndicator branded />
         </div>

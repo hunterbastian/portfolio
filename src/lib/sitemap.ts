@@ -24,6 +24,7 @@ export interface SitemapEntry {
 
 export const STATIC_SITEMAP_ROUTES: SitemapRoute[] = [
   { path: '', changeFrequency: 'weekly', priority: 1 },
+  { path: '/projects', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/about', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/cv', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/archive', changeFrequency: 'monthly', priority: 0.6 },

@@ -6,6 +6,7 @@ import { STATIC_SITEMAP_ROUTES, getProjectSitemapEntry, getSitemapEntries, getSt
 test('STATIC_SITEMAP_ROUTES preserves route priorities and cadence', () => {
   assert.deepEqual(STATIC_SITEMAP_ROUTES, [
     { path: '', changeFrequency: 'weekly', priority: 1 },
+    { path: '/projects', changeFrequency: 'weekly', priority: 0.9 },
     { path: '/about', changeFrequency: 'monthly', priority: 0.9 },
     { path: '/cv', changeFrequency: 'monthly', priority: 0.7 },
     { path: '/archive', changeFrequency: 'monthly', priority: 0.6 },
@@ -18,6 +19,7 @@ test('getStaticSitemapEntries resolves static route URLs', () => {
 
   assert.deepEqual(getStaticSitemapEntries(lastModified), [
     { url: 'https://hunterbastian.com/', lastModified, changeFrequency: 'weekly', priority: 1 },
+    { url: 'https://hunterbastian.com/projects', lastModified, changeFrequency: 'weekly', priority: 0.9 },
     { url: 'https://hunterbastian.com/about', lastModified, changeFrequency: 'monthly', priority: 0.9 },
     { url: 'https://hunterbastian.com/cv', lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://hunterbastian.com/archive', lastModified, changeFrequency: 'monthly', priority: 0.6 },
@@ -49,15 +51,16 @@ test('getSitemapEntries appends project entries after static routes', () => {
     { slug: 'wanderutah', frontmatter: { date: '2025-05-01' } },
   ], lastModified)
 
-  assert.equal(entries.length, 7)
-  assert.deepEqual(entries.slice(0, 5).map((entry) => entry.url), [
+  assert.equal(entries.length, 8)
+  assert.deepEqual(entries.slice(0, 6).map((entry) => entry.url), [
     'https://hunterbastian.com/',
+    'https://hunterbastian.com/projects',
     'https://hunterbastian.com/about',
     'https://hunterbastian.com/cv',
     'https://hunterbastian.com/archive',
     'https://hunterbastian.com/tools/dither',
   ])
-  assert.deepEqual(entries.slice(5).map((entry) => entry.url), [
+  assert.deepEqual(entries.slice(6).map((entry) => entry.url), [
     'https://hunterbastian.com/projects/lumo',
     'https://hunterbastian.com/projects/wanderutah',
   ])

@@ -78,19 +78,10 @@ test('a thumbnail jumps the showcase only when it belongs to a carousel project'
   assert.equal(stepHomeGridIndex(3, 1, 4), 0)
 })
 
-test('homepage boot preloads slug hashes the same way as the showcase index', () => {
+test('home and projects boot into the dark cards canvas without a work preload', () => {
   const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8')
-  const start = layout.indexOf('var slugs=${homeShowcaseSlugs};')
-  const end = layout.indexOf('if(hi>0){', start)
-  assert.ok(start > 0 && end > start)
-  const snippet = layout
-    .slice(start, end)
-    .replace('${homeShowcaseSlugs}', JSON.stringify([...HOME_SHOWCASE_SLUGS]))
-    .replace(/\\\\/g, '\\')
-  const bootIndex = new Function('location', `${snippet}; return hi;`) as (location: { hash: string }) => number
-  const hashes = ['', '#1', '#4', '#8', '#9', '#0', '#rain', '#RAIN', '#mentalhealth-minisite', '#nope', ' #lumo ']
-  for (const hash of hashes) {
-    assert.equal(bootIndex({ hash }), getHomeShowcaseIndex(hash), hash)
-  }
-  assert.ok(layout.includes('pl.href="/showcase/"+slugs[hi]+".webp"'))
+  assert.ok(layout.includes('dataset.cardsPortfolio="true"'))
+  assert.ok(layout.includes('path==="/"||path==="/projects"'))
+  assert.equal(layout.includes('pl.href="/showcase/"+slugs[hi]+".webp"'), false)
+  assert.equal(layout.includes('prefers-color-scheme'), false)
 })

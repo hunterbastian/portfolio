@@ -138,10 +138,14 @@
 }
 
 .cards-bio p {
-  font-size: 22px;
+  font-family: var(--font-geist-serif-regular), "Times New Roman", Times, serif;
+  font-size: 14px;
+  font-style: normal;
   font-weight: 400;
-  letter-spacing: -0.02em;
+  font-synthesis: none;
+  letter-spacing: 0;
   line-height: 1.45;
+  text-transform: none !important;
   text-wrap: pretty;
 }
 
@@ -362,10 +366,6 @@ html:has(.cards-root) .email-copy-toast[data-visible='true'] {
       max(40px, env(safe-area-inset-right))
       max(48px, env(safe-area-inset-bottom))
       max(40px, env(safe-area-inset-left));
-  }
-
-  .cards-bio p {
-    font-size: 30px;
   }
 
   .cards-home-hero {

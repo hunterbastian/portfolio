@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { normalizeAppPathname } from '@/lib/pathname'
+import { isCardsPortfolioPath, normalizeAppPathname } from '@/lib/pathname'
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { MOTION_EASE_EXIT, MOTION_EASE_SOFT, motionDurationMs } from '@/lib/motion'
 import { useWebHaptics } from 'web-haptics/react'
@@ -111,7 +111,7 @@ export default function ScrollToTop() {
     })
   }
 
-  if (pathname === '/') return null
+  if (isCardsPortfolioPath(pathname)) return null
 
   return (
     <AnimatePresence initial={false}>

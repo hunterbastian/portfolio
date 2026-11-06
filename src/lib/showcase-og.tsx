@@ -3,7 +3,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
 
-import { HOME_SHOWCASE_LOCATION, HOME_SHOWCASE_ROLE } from './home-showcase.ts'
+import { HOME_SHOWCASE_LOCATION, HOME_SHOWCASE_ROLE, SHOWCASE_WEBSITE_PROJECT_LINE } from './home-showcase.ts'
 import { siteConfig } from './site.ts'
 
 export const SHOWCASE_OG_SIZE = { width: 1200, height: 630 } as const
@@ -44,6 +44,97 @@ async function loadShowcaseOgAssets() {
 export function getShowcaseOgAlt(pageLabel?: string) {
   if (!pageLabel) return `${siteConfig.personName}, ${HOME_SHOWCASE_ROLE} in ${HOME_SHOWCASE_LOCATION}`
   return `${pageLabel} — ${siteConfig.personName}`
+}
+
+export async function renderCardsOgImage(pageLabel?: string) {
+  const font = toArrayBuffer(await fs.readFile(FONT_PATH))
+  const hire = SHOWCASE_WEBSITE_PROJECT_LINE
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          backgroundColor: '#0E0E0D',
+          color: '#EDEBE6',
+          fontFamily: 'Inter',
+          padding: '72px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '18px',
+            fontWeight: 500,
+            letterSpacing: '0.16em',
+            lineHeight: 1,
+            textTransform: 'uppercase',
+          }}
+        >
+          <span>{siteConfig.personName}</span>
+          <span style={{ color: '#8F8D88' }}>{pageLabel ?? HOME_SHOWCASE_LOCATION}</span>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            maxWidth: '980px',
+          }}
+        >
+          <span
+            style={{
+              fontSize: '36px',
+              fontWeight: 500,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.35,
+            }}
+          >
+            {siteConfig.siteDescription}
+          </span>
+          <span
+            style={{
+              marginTop: '28px',
+              color: '#8F8D88',
+              fontSize: '24px',
+              fontWeight: 500,
+              letterSpacing: '-0.01em',
+              lineHeight: 1.4,
+            }}
+          >
+            {hire}
+          </span>
+        </div>
+        <span
+          style={{
+            color: '#8F8D88',
+            fontSize: '16px',
+            fontWeight: 500,
+            letterSpacing: '0.16em',
+            lineHeight: 1,
+            textTransform: 'uppercase',
+          }}
+        >
+          {HOME_SHOWCASE_ROLE}
+        </span>
+      </div>
+    ),
+    {
+      ...SHOWCASE_OG_SIZE,
+      fonts: [
+        {
+          name: 'Inter',
+          data: font,
+          weight: 500,
+          style: 'normal',
+        },
+      ],
+    },
+  )
 }
 
 export async function renderShowcaseOgImage({ pageLabel }: ShowcaseOgOptions = {}) {

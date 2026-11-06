@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { normalizeAppPathname } from '@/lib/pathname'
+import { isCardsPortfolioPath, normalizeAppPathname } from '@/lib/pathname'
 
 /**
  * Fixed top viewport blur. Each masked layer increases the backdrop blur
@@ -18,7 +18,7 @@ const BLUR_LAYERS = [
 
 export default function ProgressiveBlur() {
   const pathname = normalizeAppPathname(usePathname())
-  if (pathname === '/') return null
+  if (isCardsPortfolioPath(pathname)) return null
 
   return (
     <div

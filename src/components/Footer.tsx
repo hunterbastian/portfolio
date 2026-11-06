@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import { usePathname } from 'next/navigation'
-import { normalizeAppPathname } from '@/lib/pathname'
+import { isCardsPortfolioPath, normalizeAppPathname } from '@/lib/pathname'
 import { Summer as PixelSun } from '@/components/pixel/glyphs'
 import {
   FOOTER_COPYRIGHT_CLASS,
@@ -97,7 +97,7 @@ export default function Footer() {
     setCurrentYear(getFooterCopyrightYear())
   }, [])
 
-  if (pathname === '/') return null
+  if (isCardsPortfolioPath(pathname)) return null
 
   return (
     <footer

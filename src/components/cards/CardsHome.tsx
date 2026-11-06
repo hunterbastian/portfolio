@@ -1,3 +1,4 @@
+import { GeistSerifRegular } from 'geist/font/serif/regular'
 import Link from 'next/link'
 
 import CardsHeader from '@/components/cards/CardsHeader'
@@ -15,7 +16,7 @@ export default function CardsHome() {
       <div className="cards-frame-page cards-home">
         <CardsHeader heading />
         <div className="cards-home-hero">
-          <div className="cards-bio">
+          <div className={`cards-bio ${GeistSerifRegular.variable}`}>
             <p>{bio.body}</p>
             <p>{bio.hire}</p>
           </div>

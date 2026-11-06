@@ -25,7 +25,7 @@ function ProjectCardBody({
           alt=""
           className="cards-frame-image"
           fill
-          sizes="(min-width: 1100px) 340px, (min-width: 720px) 46vw, 100vw"
+          sizes="(min-width: 1100px) 340px, 46vw"
           src={imageSrc}
         />
       </div>

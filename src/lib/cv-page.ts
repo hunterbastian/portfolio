@@ -47,9 +47,14 @@ export const CV_PORTFOLIO_URL = 'https://hunterbastian.com'
 export const CV_LINKEDIN_LABEL = 'LinkedIn'
 export const CV_LINKEDIN_URL = 'https://linkedin.com/in/hunterbastian'
 export const CV_PRINT_BUTTON_LABEL = 'Print'
-export const CV_PRINT_ARIA_LABEL = 'Print or save as PDF'
+export const CV_PRINT_ARIA_LABEL = 'Print resume'
+export const CV_DOWNLOAD_LABEL = 'Download PDF'
+export const CV_DOWNLOAD_ARIA_LABEL = 'Download resume PDF'
+export const CV_RESUME_PDF_HREF = '/hunter-bastian-resume.pdf'
+export const CV_RESUME_PDF_FILENAME = 'hunter-bastian-resume.pdf'
 export const CV_RESUME_VIEW_ACTION = 'view'
 export const CV_RESUME_PRINT_ACTION = 'print'
+export const CV_RESUME_DOWNLOAD_ACTION = 'download'
 
 export const CV_CONTACT_LINKS: CvContactLink[] = [
   {

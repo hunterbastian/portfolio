@@ -12,8 +12,12 @@ import {
   CV_LOCATION_LABEL,
   CV_PORTFOLIO_LABEL,
   CV_PORTFOLIO_URL,
+  CV_DOWNLOAD_ARIA_LABEL,
+  CV_DOWNLOAD_LABEL,
   CV_PRINT_ARIA_LABEL,
   CV_PRINT_BUTTON_LABEL,
+  CV_RESUME_PDF_FILENAME,
+  CV_RESUME_PDF_HREF,
   CV_RESUME_PRINT_ACTION,
   CV_RESUME_VIEW_ACTION,
   activateCvContactClick,
@@ -27,7 +31,11 @@ import {
 test('cv page constants preserve visible contact and print copy', () => {
   assert.equal(CV_LOCATION_LABEL, 'Utah, USA')
   assert.equal(CV_PRINT_BUTTON_LABEL, 'Print')
-  assert.equal(CV_PRINT_ARIA_LABEL, 'Print or save as PDF')
+  assert.equal(CV_PRINT_ARIA_LABEL, 'Print resume')
+  assert.equal(CV_DOWNLOAD_LABEL, 'Download PDF')
+  assert.equal(CV_DOWNLOAD_ARIA_LABEL, 'Download resume PDF')
+  assert.equal(CV_RESUME_PDF_HREF, '/hunter-bastian-resume.pdf')
+  assert.equal(CV_RESUME_PDF_FILENAME, 'hunter-bastian-resume.pdf')
   assert.equal(CV_RESUME_VIEW_ACTION, 'view')
   assert.equal(CV_RESUME_PRINT_ACTION, 'print')
 })

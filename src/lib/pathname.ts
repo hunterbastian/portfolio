@@ -10,10 +10,10 @@ export function isHomePathname(pathname: string): boolean {
   return normalizeAppPathname(pathname) === '/'
 }
 
-/** Home and the project index share the dark Cards shell. */
+/** Home, the project index, and the resume share the dark Cards shell. */
 export function isCardsPortfolioPath(pathname: string): boolean {
   const path = normalizeAppPathname(pathname).replace(/\/+$/, '') || '/'
-  return path === '/' || path === '/projects'
+  return path === '/' || path === '/projects' || path === '/cv'
 }
 
 export type DocumentShell =
@@ -29,7 +29,6 @@ export function getDocumentShell(pathname: string): DocumentShell {
   const path = normalizeAppPathname(pathname).replace(/\/+$/, '') || '/'
   if (isCardsPortfolioPath(path)) return { kind: 'cards' }
   if (path === '/playground') return { kind: 'showcase', extra: 'playgroundShowcase' }
-  if (path === '/cv') return { kind: 'showcase', extra: 'cvShowcase' }
 
   const known =
     path === '/about' ||

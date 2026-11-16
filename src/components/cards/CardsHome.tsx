@@ -15,12 +15,12 @@ export default function CardsHome() {
       <div className="cards-frame-page cards-home">
         <CardsHeader heading />
         <div className="cards-home-hero">
-          <div className="cards-bio">
-            <p>{bio.body}</p>
-            <p>{bio.hire}</p>
-          </div>
-        </div>
-        <nav className="cards-nav" aria-label="Links">
+          <div className="cards-home-copy">
+            <div className="cards-bio">
+              <p>{bio.body}</p>
+              <p>{bio.hire}</p>
+            </div>
+            <nav className="cards-nav" aria-label="Links">
           {links.map((item) => {
             if (item.copyOnClick) {
               return (
@@ -50,8 +50,10 @@ export default function CardsHome() {
                 {item.label}
               </Link>
             )
-          })}
-        </nav>
+            })}
+            </nav>
+          </div>
+        </div>
       </div>
     </div>
   )

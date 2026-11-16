@@ -129,26 +129,62 @@
   padding-block: 64px;
 }
 
+/*
+ * Kuronuri 10 regular, Latin and Latin Extended only.
+ * Copyright 2026 lihbr. SIL Open Font License 1.1.
+ * See src/fonts/kuronuri/OFL.txt.
+ */
+@font-face {
+  font-family: "Kuronuri 10";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../../node_modules/@lihbr/kuronuri/dist/web/files/kuronuri-10-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+100-130, U+132-148, U+14a-151, U+154-17e, U+218-21b, U+237, U+281, U+2c7, U+2c9-2cb, U+2dd, U+1e80-1e85, U+1ef2-1ef3, U+20a9, U+20ab, U+2113;
+}
+
+@font-face {
+  font-family: "Kuronuri 10";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../../node_modules/@lihbr/kuronuri/dist/web/files/kuronuri-10-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0, U+d, U+20-7e, U+a0-ff, U+131, U+152-153, U+2bb, U+2c6, U+2da, U+2dc, U+2002-2003, U+2009-200b, U+2010-2016, U+2018-2022, U+2025-2027, U+2030, U+2032-2033, U+2035, U+2039-203c, U+2042, U+2044, U+2047-2049, U+2051, U+20ac, U+2122, U+2190-2199, U+21d0-21d9, U+2212, U+2215;
+}
+
+.cards-home-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  max-width: 34rem;
+}
+
 .cards-bio {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  max-width: 40rem;
-  text-align: center;
+  gap: 16px;
+  max-width: none;
+  text-align: left;
 }
 
 .cards-bio p {
-  font-size: 22px;
+  font-family: "Kuronuri 10", "Iowan Old Style", Palatino, "Palatino Linotype", "Times New Roman", serif;
+  font-size: 15px;
+  font-style: normal;
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.45;
+  font-synthesis: none;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-align: left;
+  text-transform: none !important;
   text-wrap: pretty;
 }
 
 .cards-nav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   column-gap: 22px;
   row-gap: 2px;
 }
@@ -362,10 +398,6 @@ html:has(.cards-root) .email-copy-toast[data-visible='true'] {
       max(40px, env(safe-area-inset-right))
       max(48px, env(safe-area-inset-bottom))
       max(40px, env(safe-area-inset-left));
-  }
-
-  .cards-bio p {
-    font-size: 30px;
   }
 
   .cards-home-hero {

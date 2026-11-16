@@ -6,7 +6,6 @@
  * Plain JavaScript so the CI Node 20 runtime can run it.
  */
 import { writeFileSync } from 'node:fs'
-import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 
@@ -191,10 +190,14 @@ export async function renderResumePdf() {
   return doc.save()
 }
 
-export async function writeResumePdf(destination = path.join(process.cwd(), 'public', resumePdfFilename)) {
+export async function writeResumePdf() {
+  if (resumePdfFilename !== 'hunter-bastian-resume.pdf') {
+    throw new Error('Resume PDF filename no longer matches public/hunter-bastian-resume.pdf')
+  }
+
   const bytes = await renderResumePdf()
-  writeFileSync(destination, bytes)
-  return destination
+  writeFileSync('public/hunter-bastian-resume.pdf', bytes)
+  return 'public/hunter-bastian-resume.pdf'
 }
 
 const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href

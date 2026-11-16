@@ -1,4 +1,13 @@
 import { getEmailButtonHref } from './email-button.ts'
+import {
+  resumeEmailAddress,
+  resumeLinkedInLabel,
+  resumeLinkedInUrl,
+  resumeLocationLabel,
+  resumePdfFilename,
+  resumePortfolioLabel,
+  resumePortfolioUrl,
+} from '../content/resume-data.mjs'
 
 type CvExternalContactAnalytics = {
   kind: 'external'
@@ -40,16 +49,21 @@ export interface CvPrintActivationInput {
   trackResumeAction: (action: typeof CV_RESUME_PRINT_ACTION) => void
 }
 
-export const CV_LOCATION_LABEL = 'Utah, USA'
-export const CV_EMAIL_ADDRESS = 'hunterbastianux@gmail.com'
-export const CV_PORTFOLIO_LABEL = 'hunterbastian.com'
-export const CV_PORTFOLIO_URL = 'https://hunterbastian.com'
-export const CV_LINKEDIN_LABEL = 'LinkedIn'
-export const CV_LINKEDIN_URL = 'https://linkedin.com/in/hunterbastian'
+export const CV_LOCATION_LABEL = resumeLocationLabel
+export const CV_EMAIL_ADDRESS = resumeEmailAddress
+export const CV_PORTFOLIO_LABEL = resumePortfolioLabel
+export const CV_PORTFOLIO_URL = resumePortfolioUrl
+export const CV_LINKEDIN_LABEL = resumeLinkedInLabel
+export const CV_LINKEDIN_URL = resumeLinkedInUrl
 export const CV_PRINT_BUTTON_LABEL = 'Print'
-export const CV_PRINT_ARIA_LABEL = 'Print or save as PDF'
+export const CV_PRINT_ARIA_LABEL = 'Print resume'
+export const CV_DOWNLOAD_LABEL = 'Download PDF'
+export const CV_DOWNLOAD_ARIA_LABEL = 'Download resume PDF'
+export const CV_RESUME_PDF_FILENAME = resumePdfFilename
+export const CV_RESUME_PDF_HREF = `/${resumePdfFilename}`
 export const CV_RESUME_VIEW_ACTION = 'view'
 export const CV_RESUME_PRINT_ACTION = 'print'
+export const CV_RESUME_DOWNLOAD_ACTION = 'download'
 
 export const CV_CONTACT_LINKS: CvContactLink[] = [
   {

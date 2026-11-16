@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "WATCHPACK_POLLING=true WATCHPACK_POLLING_INTERVAL=1000 next dev --hostname 127.0.0.1 --port 3000",
     "dev:turbo": "WATCHPACK_POLLING=true WATCHPACK_POLLING_INTERVAL=1000 next dev --turbo --hostname 127.0.0.1 --port 3000",
-    "generate:resume": "node --experimental-strip-types scripts/generate-resume-pdf.mts",
+    "generate:resume": "node scripts/generate-resume-pdf.mjs",
     "build": "npm run generate:resume && next build --webpack",
     "build:analyze": "ANALYZE=true npm run build",
     "start": "next start",

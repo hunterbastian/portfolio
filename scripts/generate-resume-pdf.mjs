@@ -1,28 +1,28 @@
 /**
- * Regenerates public/hunter-bastian-resume.pdf from the resume data in
- * src/content/homepage.ts and src/lib/cv-page.ts.
+ * Regenerates public/hunter-bastian-resume.pdf from src/content/resume-data.mjs.
  *
  * Run: npm run generate:resume
  * npm run build runs this first so the downloadable file stays in sync.
+ * Plain JavaScript so the CI Node 20 runtime can run it.
  */
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib'
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 
-import { cvSelectedWork, cvTools, educationItems, experienceItems } from '../src/content/homepage.ts'
 import {
-  CV_EMAIL_ADDRESS,
-  CV_LINKEDIN_URL,
-  CV_LOCATION_LABEL,
-  CV_PORTFOLIO_LABEL,
-  CV_RESUME_PDF_FILENAME,
-  formatCvEducationDetail,
-  getCvEntryDate,
-  getCvEntryDetail,
-} from '../src/lib/cv-page.ts'
-import { HOME_SHOWCASE_ROLE } from '../src/lib/home-showcase.ts'
-import { siteConfig } from '../src/lib/site.ts'
+  cvSelectedWork,
+  cvTools,
+  educationItems,
+  experienceItems,
+  resumeEmailAddress,
+  resumeLinkedInUrl,
+  resumeLocationLabel,
+  resumePdfFilename,
+  resumePersonName,
+  resumePortfolioLabel,
+  resumeRole,
+} from '../src/content/resume-data.mjs'
 
 const PAGE_WIDTH = 612
 const PAGE_HEIGHT = 792
@@ -33,7 +33,7 @@ const MUTED = rgb(0.33, 0.32, 0.3)
 const RULE = rgb(0.82, 0.81, 0.78)
 const FIXED_DATE = new Date('2026-01-01T00:00:00.000Z')
 
-export function toPdfText(value: string) {
+export function toPdfText(value) {
   return value
     .replaceAll('’', "'")
     .replaceAll('‘', "'")
@@ -45,9 +45,24 @@ export function toPdfText(value: string) {
     .replaceAll('↗', '')
 }
 
-function wrapText(text: string, font: PDFFont, size: number, maxWidth: number) {
+function getCvEntryDate(year) {
+  const trimmed = year.trim()
+  return trimmed.length > 0 ? trimmed : null
+}
+
+function getCvEntryDetail(description) {
+  const trimmed = description.trim()
+  return trimmed.length > 0 ? trimmed : null
+}
+
+function formatCvEducationDetail(item) {
+  const note = item.note?.trim()
+  return note ? `${item.level} · ${note}` : item.level
+}
+
+function wrapText(text, font, size, maxWidth) {
   const words = toPdfText(text).split(/\s+/).filter(Boolean)
-  const lines: string[] = []
+  const lines = []
   let line = ''
 
   for (const word of words) {
@@ -64,27 +79,14 @@ function wrapText(text: string, font: PDFFont, size: number, maxWidth: number) {
   return lines.length > 0 ? lines : ['']
 }
 
-interface PdfCursor {
-  page: PDFPage
-  y: number
-}
-
-function drawLines(
-  cursor: PdfCursor,
-  lines: string[],
-  font: PDFFont,
-  size: number,
-  color: ReturnType<typeof rgb>,
-  x = MARGIN,
-  leading = size + 2,
-) {
+function drawLines(cursor, lines, font, size, color, x = MARGIN, leading = size + 2) {
   for (const line of lines) {
     cursor.page.drawText(line, { x, y: cursor.y - size, size, font, color })
     cursor.y -= leading
   }
 }
 
-function drawRule(cursor: PdfCursor) {
+function drawRule(cursor) {
   cursor.y -= 4
   cursor.page.drawLine({
     start: { x: MARGIN, y: cursor.y },
@@ -95,7 +97,7 @@ function drawRule(cursor: PdfCursor) {
   cursor.y -= 8
 }
 
-function drawSection(cursor: PdfCursor, title: string, font: PDFFont) {
+function drawSection(cursor, title, font) {
   cursor.y -= 8
   drawLines(cursor, [title.toUpperCase()], font, 8, MUTED, MARGIN, 12)
   drawRule(cursor)
@@ -103,21 +105,21 @@ function drawSection(cursor: PdfCursor, title: string, font: PDFFont) {
 
 export async function renderResumePdf() {
   const doc = await PDFDocument.create()
-  doc.setTitle(`${siteConfig.personName} resume`)
-  doc.setAuthor(siteConfig.personName)
+  doc.setTitle(`${resumePersonName} resume`)
+  doc.setAuthor(resumePersonName)
   doc.setCreationDate(FIXED_DATE)
   doc.setModificationDate(FIXED_DATE)
 
   const regular = await doc.embedFont(StandardFonts.Helvetica)
   const bold = await doc.embedFont(StandardFonts.HelveticaBold)
   const page = doc.addPage([PAGE_WIDTH, PAGE_HEIGHT])
-  const cursor: PdfCursor = { page, y: PAGE_HEIGHT - MARGIN }
+  const cursor = { page, y: PAGE_HEIGHT - MARGIN }
 
-  drawLines(cursor, [siteConfig.personName], bold, 16, INK, MARGIN, 20)
-  drawLines(cursor, [`${HOME_SHOWCASE_ROLE}  ·  ${CV_LOCATION_LABEL}`], regular, 9, MUTED, MARGIN, 13)
+  drawLines(cursor, [resumePersonName], bold, 16, INK, MARGIN, 20)
+  drawLines(cursor, [`${resumeRole}  ·  ${resumeLocationLabel}`], regular, 9, MUTED, MARGIN, 13)
   drawLines(
     cursor,
-    [`${CV_EMAIL_ADDRESS}  ·  ${CV_PORTFOLIO_LABEL}  ·  ${CV_LINKEDIN_URL.replace('https://', '')}`],
+    [`${resumeEmailAddress}  ·  ${resumePortfolioLabel}  ·  ${resumeLinkedInUrl.replace('https://', '')}`],
     regular,
     8,
     MUTED,
@@ -189,7 +191,7 @@ export async function renderResumePdf() {
   return doc.save()
 }
 
-export async function writeResumePdf(destination = path.join(process.cwd(), 'public', CV_RESUME_PDF_FILENAME)) {
+export async function writeResumePdf(destination = path.join(process.cwd(), 'public', resumePdfFilename)) {
   const bytes = await renderResumePdf()
   writeFileSync(destination, bytes)
   return destination

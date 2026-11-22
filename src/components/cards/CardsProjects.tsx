@@ -26,6 +26,7 @@ function ProjectCardBody({
         <Image
           alt=""
           className="cards-frame-image"
+          fetchPriority={priority ? 'high' : 'auto'}
           fill
           priority={priority}
           sizes="(min-width: 1100px) 340px, 46vw"
@@ -59,7 +60,7 @@ export default function CardsProjects({ projects }: { projects: readonly Portfol
               <ProjectCardBody
                 category={card.category}
                 imageSrc={card.imageSrc}
-                priority={index < 3}
+                priority={index < 6}
                 title={card.title}
                 year={card.year}
               />

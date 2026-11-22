@@ -12,7 +12,8 @@ test('first-load and reduced-motion pages start visible', () => {
   assert.equal(getPageTransitionInitial(false, true), false)
 })
 
-test('client navigation has one entrance matching the project scroll offset', () => {
-  assert.deepEqual(getPageTransitionInitial(false, false), { opacity: 0, y: PAGE_ENTRANCE_INITIAL_Y })
-  assert.equal(getPageTransitionYOffset(), PAGE_ENTRANCE_INITIAL_Y)
+test('client navigation fades in without a vertical offset', () => {
+  assert.deepEqual(getPageTransitionInitial(false, false), { opacity: 0 })
+  assert.equal(PAGE_ENTRANCE_INITIAL_Y, 0)
+  assert.equal(getPageTransitionYOffset(), 0)
 })

@@ -113,8 +113,33 @@
   font-size: 13px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
   letter-spacing: 0.04em;
   line-height: 1;
+}
+
+.cards-clock-colon {
+  display: inline-block;
+  width: 0.35em;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cards-clock-colon {
+    animation: cards-clock-blink 1s steps(1, end) infinite;
+  }
+}
+
+@keyframes cards-clock-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0.28;
+  }
 }
 
 .cards-clock-sizer {
@@ -144,11 +169,20 @@
 }
 
 @font-face {
+  font-family: "Kuronuri 10 Fallback";
+  src: local("Times New Roman"), local("Times");
+  size-adjust: 100%;
+  ascent-override: 75%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
   font-family: "Kuronuri 10";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("../../node_modules/@lihbr/kuronuri/dist/web/files/kuronuri-10-latin-400-normal.woff2") format("woff2");
+  src: url("/fonts/kuronuri/kuronuri-10-latin-400-normal.woff2") format("woff2");
   unicode-range: U+0, U+d, U+20-7e, U+a0-ff, U+131, U+152-153, U+2bb, U+2c6, U+2da, U+2dc, U+2002-2003, U+2009-200b, U+2010-2016, U+2018-2022, U+2025-2027, U+2030, U+2032-2033, U+2035, U+2039-203c, U+2042, U+2044, U+2047-2049, U+2051, U+20ac, U+2122, U+2190-2199, U+21d0-21d9, U+2212, U+2215;
 }
 
@@ -169,7 +203,7 @@
 }
 
 .cards-bio p {
-  font-family: "Kuronuri 10", "Iowan Old Style", Palatino, "Palatino Linotype", "Times New Roman", serif;
+  font-family: "Kuronuri 10", "Kuronuri 10 Fallback", "Times New Roman", Times, serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
@@ -260,11 +294,17 @@
 
 .cards-project-card {
   height: 100%;
-  transition: background-color 150ms var(--ease-tactile), transform 120ms var(--ease-tactile);
+  transition:
+    background-color 180ms var(--ease-tactile),
+    transform 160ms var(--ease-tactile);
 }
 
 .cards-project-card:hover {
   background: var(--surface-hover);
+}
+
+.cards-project-card:hover .cards-frame-image {
+  filter: brightness(1.06);
 }
 
 .cards-project-card:active {
@@ -303,6 +343,7 @@
 
 .cards-frame-image {
   object-fit: cover;
+  transition: filter 180ms var(--ease-tactile);
 }
 
 .cards-project-copy {

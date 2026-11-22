@@ -48,7 +48,12 @@ export function getShowcaseOgAlt(pageLabel?: string) {
 
 export async function renderCardsOgImage(pageLabel?: string) {
   const font = toArrayBuffer(await fs.readFile(FONT_PATH))
-  const hire = SHOWCASE_WEBSITE_PROJECT_LINE
+  const summary = pageLabel === 'Resume'
+    ? `${siteConfig.personName}, product designer. Experience, education, and selected work.`
+    : pageLabel === 'Projects'
+      ? `Selected product, web, and graphic work by ${siteConfig.personName}.`
+      : siteConfig.siteDescription
+  const hire = pageLabel ? '' : SHOWCASE_WEBSITE_PROJECT_LINE
 
   return new ImageResponse(
     (
@@ -94,20 +99,22 @@ export async function renderCardsOgImage(pageLabel?: string) {
               lineHeight: 1.35,
             }}
           >
-            {siteConfig.siteDescription}
+            {summary}
           </span>
-          <span
-            style={{
-              marginTop: '28px',
-              color: '#8F8D88',
-              fontSize: '24px',
-              fontWeight: 500,
-              letterSpacing: '-0.01em',
-              lineHeight: 1.4,
-            }}
-          >
-            {hire}
-          </span>
+          {hire ? (
+            <span
+              style={{
+                marginTop: '28px',
+                color: '#8F8D88',
+                fontSize: '24px',
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+                lineHeight: 1.4,
+              }}
+            >
+              {hire}
+            </span>
+          ) : null}
         </div>
         <span
           style={{

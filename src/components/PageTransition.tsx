@@ -4,9 +4,8 @@ import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { normalizeAppPathname } from '@/lib/pathname'
 import type { ReactNode } from 'react'
-import { MOTION_EASE_SOFT, MOTION_EASE_EXIT } from '@/lib/motion'
 import { useIsInitialLoad } from '@/lib/initial-load'
-import { PAGE_TRANSITION_TIMING, getPageTransitionInitial } from '@/lib/page-transition'
+import { PAGE_FADE_EASE, PAGE_TRANSITION_TIMING, getPageTransitionInitial } from '@/lib/page-transition'
 
 function RouteScene({ children, pathname }: { children: ReactNode; pathname: string }) {
   const prefersReducedMotion = useReducedMotion() ?? false
@@ -18,17 +17,17 @@ function RouteScene({ children, pathname }: { children: ReactNode; pathname: str
       className="route-scene"
       data-route-scene={pathname}
       initial={getPageTransitionInitial(isInitialLoad, prefersReducedMotion)}
-      animate={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1 }}
       exit={{
         opacity: prefersReducedMotion ? 1 : 0,
         transition: {
           duration: prefersReducedMotion ? 0 : PAGE_TRANSITION_TIMING.exit / 1000,
-          ease: MOTION_EASE_EXIT,
+          ease: PAGE_FADE_EASE,
         },
       }}
       transition={{
         duration: prefersReducedMotion ? 0 : PAGE_TRANSITION_TIMING.enter / 1000,
-        ease: MOTION_EASE_SOFT,
+        ease: PAGE_FADE_EASE,
       }}
     >
       {children}

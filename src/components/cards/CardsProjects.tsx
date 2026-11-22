@@ -10,11 +10,13 @@ import { BLANK_LINK_TARGET, SAFE_BLANK_LINK_REL } from '@/lib/link-safety'
 function ProjectCardBody({
   category,
   imageSrc,
+  priority = false,
   title,
   year,
 }: {
   category: string
   imageSrc: string
+  priority?: boolean
   title: string
   year: string
 }) {
@@ -25,6 +27,7 @@ function ProjectCardBody({
           alt=""
           className="cards-frame-image"
           fill
+          priority={priority}
           sizes="(min-width: 1100px) 340px, 46vw"
           src={imageSrc}
         />
@@ -51,11 +54,12 @@ export default function CardsProjects({ projects }: { projects: readonly Portfol
         <div className="cards-header-rule" aria-hidden="true" />
         <h1 className="cards-page-title">Projects</h1>
         <ul className="cards-project-grid">
-          {cards.map((card) => {
+          {cards.map((card, index) => {
             const body = (
               <ProjectCardBody
                 category={card.category}
                 imageSrc={card.imageSrc}
+                priority={index < 3}
                 title={card.title}
                 year={card.year}
               />
